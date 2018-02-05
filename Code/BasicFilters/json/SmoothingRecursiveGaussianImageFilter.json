@@ -14,12 +14,12 @@
       "dim_vec" : 1,
       "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::SigmaArrayType",
-      "custom_itk_cast" :  "typename FilterType::SigmaArrayType itkVecSigma = sitkSTLVectorToITK<typename FilterType::SigmaArrayType>( this->GetSigma() );\n  filter->SetSigmaArray( itkVecSigma );",
+      "custom_itk_cast" : "typename FilterType::SigmaArrayType itkVecSigma = sitkSTLVectorToITK<typename FilterType::SigmaArrayType>( this->GetSigma() );\n  filter->SetSigmaArray( itkVecSigma );",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing. You may use the method SetSigma to set the same value across each axis or use the method SetSigmaArray if you need different values along each axis.",
+      "detaileddescriptionSet" : "Set the standard deviation of the Gaussian used for smoothing. Sigma is measured in the units of image spacing. You may use the method SetSigma to set the same value across each axis or use the method SetSigmaArray if you need different values along each axis.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Get the Sigma scalar. If the Sigma is anisotropic, we will just return the Sigma along the first dimension."
     },
     {
       "name" : "NormalizeAcrossScale",
@@ -27,9 +27,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "This method does not effect the output of this filter. \\sa RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
+      "detaileddescriptionSet" : "Set/Get the flag for normalizing the Gaussian over scale-space. This method does not effect the output of this filter.\n\n\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "This method does not effect the output of this filter. \\sa RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
+      "detaileddescriptionGet" : "Set/Get the flag for normalizing the Gaussian over scale-space. This method does not effect the output of this filter.\n\n\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     }
   ],
   "tests" : [

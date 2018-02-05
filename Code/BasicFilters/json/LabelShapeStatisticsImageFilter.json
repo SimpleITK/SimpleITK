@@ -45,7 +45,11 @@
     {
       "name" : "ComputeOrientedBoundingBox",
       "type" : "bool",
-      "default" : "false"
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the oriented bounding box should be computed or not. Default value is false because of potential memory consumption issues with sparse labels.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the oriented bounding box should be computed or not. Default value is false because of potential memory consumption issues with sparse labels."
     }
   ],
   "custom_methods" : [

@@ -29,8 +29,8 @@
       ]
     }
   ],
-  "briefdescription" : "Mask an image with the negative of a mask.\n",
-  "detaileddescription" : "This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe pixel type of the input 2 image must have a valid definition of the operator != with zero. This condition is required because internally this filter will perform the operation\nifpixel_from_mask_image!=0pixel_output_image=output_valueelsepixel_output_image=pixel_input_image\nThe pixel from the input 1 is cast to the pixel type of the output image.\nNote that the input and the mask images must be of the same size.\n\\warning Any pixel value other than 0 will not be masked out.\n\\see  MaskImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Apply the inverse of a mask to an image\n\n",
+  "briefdescription" : "Mask an image with the negation (or logical compliment) of a mask.",
+  "detaileddescription" : "This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nThe pixel type of the input 2 image must have a valid definition of the operator!=. This condition is required because internally this filter will perform the operation\n\n\\code\n* if pixel_from_mask_image != mask_value\n\n* pixel_output_image = output_value\n\n* else\n\n* pixel_output_image = pixel_input_image\n\n* \n\n\\endcode\n\nThe pixel from the input 1 is cast to the pixel type of the output image.\n\nNote that the input and the mask images must be of the same size.\n\n\\warning Only pixel value with mask_value ( defaults to 0 ) will be preserved.\n\n\\see MaskImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Apply the inverse of a mask to an image",
   "itk_module" : "ITKImageIntensity",
   "itk_group" : "ImageIntensity"
 }

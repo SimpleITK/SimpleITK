@@ -10,14 +10,22 @@
       "type" : "int32_t",
       "default" : "std::vector<int32_t>(3, 0)",
       "dim_vec" : 1,
-      "itk_type" : "typename FilterType::IndexType"
+      "itk_type" : "typename FilterType::IndexType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the first index extracted from the input image",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the first index extracted from the input image"
     },
     {
       "name" : "Stop",
       "type" : "int32_t",
       "default" : "std::vector<int32_t>(3, std::numeric_limits<int32_t>::max())",
       "dim_vec" : 1,
-      "itk_type" : "typename FilterType::IndexType"
+      "itk_type" : "typename FilterType::IndexType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the excluded end of the range",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the excluded end of the range"
     },
     {
       "name" : "Step",
@@ -25,7 +33,11 @@
       "default" : "std::vector<int>(3, 1)",
       "dim_vec" : 1,
       "set_as_scalar" : 1,
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the stride of indexes extracted An exception will be generated if 0.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the stride of indexes extracted An exception will be generated if 0."
     }
   ],
   "tests" : [
@@ -39,5 +51,7 @@
       ]
     }
   ],
-  "itk_module" : "ITKCommon"
+  "itk_module" : "ITKCommon",
+  "detaileddescription" : "This class is designed to facilitate the implementation of extended sliced based indexing into images.\n\nThe input and output image must be of the same dimension.\n\nThe input parameters are a starting and stopping index as well as a stepping size. The starting index indicates the first pixels to be used and for each dimension the index is incremented by the step until the index is equal to or \"beyond\" the stopping index. If the step is negative then the image will be reversed in the dimension, and the stopping index is expected to be less then the starting index. If the stopping index is already beyond the starting index then an image of size zero will be returned.\n\nThe output image's starting index is always zero. The origin is the physical location of the starting index. The output directions cosine matrix is that of the input but with sign changes matching that of the step's sign.\n\n\\note In certain combinations such as with start=1, and step>1 while the physical location of the center of the pixel remains the same, the extent (edge to edge space) of the output image will be beyond the extent of the original image.",
+  "briefdescription" : "Slices an image based on a starting index and a stopping index, and a step size."
 }
