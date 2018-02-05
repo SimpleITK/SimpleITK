@@ -19,17 +19,16 @@ See also :ref:`lbl_print_image_meta_data_dictionary`, :ref:`lbl_dicom_series_rea
 Code
 ----
 
-Python
-......
+.. tabs::
 
-.. literalinclude:: DicomSeriesReadModifySeriesWrite.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
 
+    .. literalinclude:: DicomSeriesReadModifySeriesWrite.py
+       :language: python
+       :lines: 19-
 
-R
-.
+  .. tab:: R
 
-.. literalinclude:: DicomSeriesReadModifySeriesWrite.R
-   :language: r
-   :lines:  18-
+    .. literalinclude:: DicomSeriesReadModifySeriesWrite.R
+       :language: r
+       :lines:  18-

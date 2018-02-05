@@ -9,16 +9,16 @@ Overview
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: ImageRegistrationMethodDisplacement1.cxx
-   :language: c++
-   :lines: 18-
+  .. tab:: C++
 
-Python
-......
+    .. literalinclude:: ImageRegistrationMethodDisplacement1.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: ImageRegistrationMethodDisplacement1.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
+
+    .. literalinclude:: ImageRegistrationMethodDisplacement1.py
+       :language: python
+       :lines: 1,19-

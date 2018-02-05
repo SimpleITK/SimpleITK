@@ -43,33 +43,35 @@ derive classes from the Command class.  Thus a user may  override the
 Command class's Execute method for custom call-backs. The following
 languages support deriving classes from the Command class:
 
-Python
-......
-.. literalinclude:: FilterProgressReporting.py
-   :language: python
-   :start-after: [python director command]
-   :end-before: [python director command]
+.. tabs::
 
-Java
-....
-.. literalinclude:: FilterProgressReporting.java
-   :language: java
-   :start-after: [java director command]
-   :end-before: [java director command]
+  .. group-tab:: C#
 
-CSharp
-......
-.. literalinclude:: FilterProgressReporting.cs
-   :language: c#
-   :start-after: [csharp director command]
-   :end-before: [csharp director command]
+    .. literalinclude:: FilterProgressReporting.cs
+       :language: c#
+       :start-after: [csharp director command]
+       :end-before: [csharp director command]
 
-Ruby
-....
-.. literalinclude:: FilterProgressReporting.rb
-   :language: ruby
-   :start-after: [ruby director command]
-   :end-before: [ruby director command]
+  .. group-tab:: Java
+
+    .. literalinclude:: FilterProgressReporting.java
+       :language: java
+       :start-after: [java director command]
+       :end-before: [java director command]
+
+  .. group-tab:: Python
+
+    .. literalinclude:: FilterProgressReporting.py
+       :language: python
+       :start-after: [python director command]
+       :end-before: [python director command]
+
+  .. group-tab:: Ruby
+
+    .. literalinclude:: FilterProgressReporting.rb
+       :language: ruby
+       :start-after: [ruby director command]
+       :end-before: [ruby director command]
 
 
 Command Functions and Lambdas for Wrapped Languages
@@ -80,63 +82,61 @@ often easier to simply define a callback inline with a lambda
 function. The following language supports inline function definitions
 for functions for the ProcessObject::AddCommand method:
 
-Python
-......
-.. literalinclude:: FilterProgressReporting.py
-   :language: python
-   :start-after: [python lambda command]
-   :end-before: [python lambda command]
+.. tabs::
 
-R
-.
-.. literalinclude:: FilterProgressReporting.R
-   :language: r
-   :start-after: [R lambda command]
-   :end-before: [R lambda command]
+  .. group-tab:: Python
+
+    .. literalinclude:: FilterProgressReporting.py
+       :language: python
+       :start-after: [python lambda command]
+       :end-before: [python lambda command]
+
+  .. group-tab:: R
+
+    .. literalinclude:: FilterProgressReporting.R
+       :language: r
+       :start-after: [R lambda command]
+       :end-before: [R lambda command]
 
 
 
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: FilterProgressReporting.cxx
-   :language: c++
-   :lines: 18-
+  .. group-tab:: CSharp
 
-Python
-......
+    .. literalinclude:: FilterProgressReporting.cs
+       :language: c#
+       :lines: 18-
 
-.. literalinclude:: FilterProgressReporting.py
-   :language: python
-   :lines: 1,19-
+  .. group-tab:: C++
 
-CSharp
-......
+    .. literalinclude:: FilterProgressReporting.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: FilterProgressReporting.cs
-   :language: c#
-   :lines: 18-
+  .. group-tab:: Java
 
-Java
-....
+    .. literalinclude:: FilterProgressReporting.java
+       :language: java
+       :lines: 18-
 
-.. literalinclude:: FilterProgressReporting.java
-   :language: java
-   :lines: 18-
+  .. group-tab:: Python
 
-R
-.
+    .. literalinclude:: FilterProgressReporting.py
+       :language: python
+       :lines: 1,19-
 
-.. literalinclude:: FilterProgressReporting.R
-   :language: r
-   :lines:  18-
+  .. group-tab:: R
 
-Ruby
-....
+    .. literalinclude:: FilterProgressReporting.R
+       :language: r
+       :lines:  18-
 
-.. literalinclude:: FilterProgressReporting.rb
-   :language: ruby
-   :lines:  18-
+  .. group-tab:: Ruby
+
+    .. literalinclude:: FilterProgressReporting.rb
+       :language: ruby
+       :lines:  18-

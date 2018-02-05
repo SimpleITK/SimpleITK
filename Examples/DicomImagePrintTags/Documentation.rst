@@ -19,16 +19,16 @@ See also :ref:`lbl_dicom_series_read_modify_write`, :ref:`lbl_dicom_series_reade
 Code
 ----
 
-Python
-......
+.. tabs::
 
-.. literalinclude:: DicomImagePrintTags.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
 
-R
-.
+    .. literalinclude:: DicomImagePrintTags.py
+       :language: python
+       :lines: 1,19-
 
-.. literalinclude:: DicomImagePrintTags.R
-   :language: r
-   :lines: 18-
+  .. tab:: R
+
+    .. literalinclude:: DicomImagePrintTags.R
+       :language: r
+       :lines: 18-

@@ -10,16 +10,16 @@ Overview
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: ImageRegistrationMethod2.cxx
-   :language: c++
-   :lines: 18-
+  .. tab:: C++
 
-Python
-......
+    .. literalinclude:: ImageRegistrationMethod2.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: ImageRegistrationMethod2.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
+
+    .. literalinclude:: ImageRegistrationMethod2.py
+       :language: python
+       :lines: 1,19-
