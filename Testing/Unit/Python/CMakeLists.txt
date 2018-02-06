@@ -24,8 +24,11 @@ sitk_add_python_test( Test.ConcurrentImageRead
   "${CMAKE_CURRENT_SOURCE_DIR}/ConcurrentImageRead.py"
   )
 
-if( Python.Test.ConcurrentImageRead )
-  set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABEL "UNSTABLE" )
+
+if(CMAKE_VERSION VERSION_GREATER "3.3")
+  if(TEST Python.Test.ConcurrentImageRead)
+    set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABELS "UNSTABLE" )
+    endif()
 endif()
 
 sitk_add_python_test( Test.ArrayView
