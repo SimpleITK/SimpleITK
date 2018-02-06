@@ -1,3 +1,12 @@
+
+foreach(p
+    CMP0064 # CMake 3.4
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
+
 #
 # Python Tests
 #
@@ -28,7 +37,7 @@ sitk_add_python_test( Test.ConcurrentImageRead
 if(CMAKE_VERSION VERSION_GREATER "3.3")
   if(TEST Python.Test.ConcurrentImageRead)
     set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABELS "UNSTABLE" )
-    endif()
+  endif()
 endif()
 
 sitk_add_python_test( Test.ArrayView
