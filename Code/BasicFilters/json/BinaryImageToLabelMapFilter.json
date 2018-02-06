@@ -41,7 +41,9 @@
     {
       "name" : "NumberOfObjects",
       "type" : "uint64_t",
-      "default" : 0
+      "default" : 0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     }
   ],
   "tests" : [
