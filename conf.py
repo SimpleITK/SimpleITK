@@ -155,3 +155,5 @@ texinfo_documents = [
      author, 'SimpleITK', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+extensions = ['sphinx_tabs.tabs']

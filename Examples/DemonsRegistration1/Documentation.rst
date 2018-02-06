@@ -27,16 +27,16 @@ See also: :ref:`lbl_demons_registration2`.
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: DemonsRegistration1.cxx
-   :language: c++
-   :lines: 18-
+  .. tab:: C++
 
-Python
-......
+    .. literalinclude:: DemonsRegistration1.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: DemonsRegistration1.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
+
+    .. literalinclude:: DemonsRegistration1.py
+       :language: python
+       :lines: 1,19-

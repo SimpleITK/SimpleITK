@@ -13,58 +13,51 @@ display with image with ImageJ.
 Code
 ----
 
-C++
-...
+.. tabs::
+  .. tab:: C#
 
-.. literalinclude:: HelloWorld.cxx
-   :language: c++
-   :lines: 18-
+    .. literalinclude:: HelloWorld.cs
+       :language: c#
+       :lines: 18-
 
-Python
-......
+  .. tab:: C++
 
-.. literalinclude:: HelloWorld.py
-   :language: python
-   :lines: 1,19-
+    .. literalinclude:: HelloWorld.cxx
+       :language: c++
+       :lines: 18-
 
-CSharp
-......
+  .. tab:: Java
 
-.. literalinclude:: HelloWorld.cs
-   :language: c#
-   :lines: 18-
+    .. literalinclude:: HelloWorld.java
+       :language: java
+       :lines: 18-
 
-Java
-....
+  .. tab:: Lua
 
-.. literalinclude:: HelloWorld.java
-   :language: java
-   :lines: 18-
+    .. literalinclude:: HelloWorld.lua
+       :language: lua
+       :lines:  18-
 
-Lua
-...
+  .. tab:: Python
 
-.. literalinclude:: HelloWorld.lua
-   :language: lua
-   :lines:  18-
+    .. literalinclude:: HelloWorld.py
+       :language: python
+       :lines: 1,19-
 
-R
-.
+  .. tab:: R
 
-.. literalinclude:: HelloWorld.R
-   :language: r
-   :lines:  18-
+    .. literalinclude:: HelloWorld.R
+       :language: r
+       :lines:  19-
 
-Ruby
-....
+  .. tab:: Ruby
 
-.. literalinclude:: HelloWorld.rb
-   :language: ruby
-   :lines:  18-
+    .. literalinclude:: HelloWorld.rb
+       :language: ruby
+       :lines:  18-
 
-Tcl
-...
+  .. tab:: Tcl
 
-.. literalinclude:: HelloWorld.tcl
-   :language: tcl
-   :lines: 18-
+    .. literalinclude:: HelloWorld.tcl
+       :language: tcl
+       :lines: 18-

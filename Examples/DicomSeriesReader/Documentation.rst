@@ -15,30 +15,28 @@ See also :ref:`lbl_dicom_series_read_modify_write`, :ref:`lbl_print_image_meta_d
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: DicomSeriesReader.cxx
-   :language: c++
-   :lines: 18-
+  .. tab:: C++
 
-Python
-......
+    .. literalinclude:: DicomSeriesReader.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: DicomSeriesReader.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Lua
 
+    .. literalinclude:: DicomSeriesReader.lua
+       :language: lua
+       :lines:  18-
 
-Lua
-...
+  .. tab:: Python
 
-.. literalinclude:: DicomSeriesReader.lua
-   :language: lua
-   :lines:  18-
+    .. literalinclude:: DicomSeriesReader.py
+       :language: python
+       :lines: 1,19-
 
-R
-.
-.. literalinclude:: DicomSeriesReader.R
-   :language: R
-   :lines:  23-
+  .. tab:: R
+
+    .. literalinclude:: DicomSeriesReader.R
+       :language: R
+       :lines:  23-
