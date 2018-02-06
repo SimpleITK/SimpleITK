@@ -9,12 +9,10 @@ Overview
 Code
 ----
 
-C++
-...
+.. tabs::
 
-Python
-......
+  .. tab:: Python
 
-.. literalinclude:: ImageRegistrationMethod3.py
-   :language: python
-   :lines: 1,19-
+    .. literalinclude:: ImageRegistrationMethod3.py
+       :language: python
+       :lines: 1,19-

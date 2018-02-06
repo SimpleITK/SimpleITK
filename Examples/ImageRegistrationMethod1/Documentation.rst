@@ -11,44 +11,40 @@ Overview
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: ImageRegistrationMethod1.cxx
-   :language: c++
-   :lines: 18-
+  .. tab:: C#
 
-Python
-......
+    .. literalinclude:: ImageRegistrationMethod1.cs
+       :language: c#
+       :lines: 18-
 
-.. literalinclude:: ImageRegistrationMethod1.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: C++
 
-CSharp
-......
+    .. literalinclude:: ImageRegistrationMethod1.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: ImageRegistrationMethod1.cs
-   :language: c#
-   :lines: 18-
+  .. tab:: Java
 
-Java
-....
+    .. literalinclude:: ImageRegistrationMethod1.java
+       :language: java
+       :lines: 18-
 
-.. literalinclude:: ImageRegistrationMethod1.java
-   :language: java
-   :lines: 18-
+  .. tab:: Lua
 
-Lua
-...
+    .. literalinclude:: ImageRegistrationMethod1.lua
+       :language: lua
+       :lines:  18-
 
-.. literalinclude:: ImageRegistrationMethod1.lua
-   :language: lua
-   :lines:  18-
+  .. tab:: Python
 
-R
-.
+    .. literalinclude:: ImageRegistrationMethod1.py
+       :language: python
+       :lines: 1,19-
 
-.. literalinclude:: ImageRegistrationMethod1.R
-   :language: r
-   :lines:  18-
+  .. tab:: R
+
+    .. literalinclude:: ImageRegistrationMethod1.R
+       :language: r
+       :lines:  18-

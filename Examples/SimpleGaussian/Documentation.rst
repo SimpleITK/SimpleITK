@@ -19,58 +19,52 @@ parameters set by class member functions.
 Code
 ----
 
-C++
-...
+.. tabs::
 
-.. literalinclude:: SimpleGaussian.cxx
-   :language: c++
-   :lines: 18-
+  .. tab:: C#
 
-Python
-......
+    .. literalinclude:: SimpleGaussian.cs
+       :language: c#
+       :lines: 18-
 
-.. literalinclude:: SimpleGaussian.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: C++
 
-CSharp
-......
+    .. literalinclude:: SimpleGaussian.cxx
+       :language: c++
+       :lines: 18-
 
-.. literalinclude:: SimpleGaussian.cs
-   :language: c#
-   :lines: 18-
+  .. tab:: Java
 
-Java
-....
+    .. literalinclude:: SimpleGaussian.java
+       :language: java
+       :lines: 18-
 
-.. literalinclude:: SimpleGaussian.java
-   :language: java
-   :lines: 18-
+  .. tab:: Lua
 
-Lua
-...
+    .. literalinclude:: SimpleGaussian.lua
+       :language: lua
+       :lines:  18-
 
-.. literalinclude:: SimpleGaussian.lua
-   :language: lua
-   :lines:  18-
+  .. tab:: Python
 
-R
-.
+    .. literalinclude:: SimpleGaussian.py
+       :language: python
+       :lines: 1,19-
 
-.. literalinclude:: SimpleGaussian.R
-   :language: r
-   :lines:  18-
+  .. tab:: R
 
-Ruby
-....
+    .. literalinclude:: SimpleGaussian.R
+       :language: r
+       :lines:  18-
 
-.. literalinclude:: SimpleGaussian.rb
-   :language: ruby
-   :lines:  18-
+  .. tab:: Ruby
 
-Tcl
-...
+    .. literalinclude:: SimpleGaussian.rb
+       :language: ruby
+       :lines:  18-
 
-.. literalinclude:: SimpleGaussian.tcl
-   :language: tcl
-   :lines: 18-
+  .. tab:: Tcl
+
+    .. literalinclude:: SimpleGaussian.tcl
+       :language: tcl
+       :lines: 18-

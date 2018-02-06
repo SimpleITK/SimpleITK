@@ -9,9 +9,10 @@ Overview
 Code
 ----
 
-Python
-......
+.. tabs::
 
-.. literalinclude:: N4BiasFieldCorrection.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
+
+    .. literalinclude:: N4BiasFieldCorrection.py
+       :language: python
+       :lines: 1,19-

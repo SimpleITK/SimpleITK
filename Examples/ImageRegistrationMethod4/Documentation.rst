@@ -9,9 +9,10 @@ Overview
 Code
 ----
 
-Python
-......
+.. tabs::
 
-.. literalinclude:: ImageRegistrationMethod4.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
+
+    .. literalinclude:: ImageRegistrationMethod4.py
+       :language: python
+       :lines: 1,19-

@@ -17,10 +17,11 @@ See also :ref:`lbl_print_image_meta_data_dictionary`, :ref:`lbl_dicom_series_rea
 Code
 ----
 
-Python
-......
+.. tabs::
 
-.. literalinclude:: DicomSeriesFromArray.py
-   :language: python
-   :lines: 1,19-
+  .. tab:: Python
+
+    .. literalinclude:: DicomSeriesFromArray.py
+       :language: python
+       :lines: 19-
 
