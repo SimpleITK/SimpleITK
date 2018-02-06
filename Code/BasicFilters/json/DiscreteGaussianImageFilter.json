@@ -74,14 +74,13 @@
       "settings" : [
         {
           "parameter" : "Variance",
-          "value" : "100.0",
-          "type" : "double",
-          "dim_vec" : 1,
           "value" : [
             100.0,
             100.0,
             100.0
-          ]
+          ],
+          "type" : "double",
+          "dim_vec" : 1
         },
         {
           "parameter" : "MaximumKernelWidth",

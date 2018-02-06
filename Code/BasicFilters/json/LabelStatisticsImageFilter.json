@@ -181,7 +181,7 @@
         }
       ],
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Return the computed bounding box for a label."
+      "detaileddescriptionGet" : "Return the computed bounding box for a label. A vector of minIndex, maxIndex pairs for each axis. The intervals include the endpoints."
     },
     {
       "name" : "Region",

@@ -75,11 +75,15 @@
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
       "custom_itk_cast" : "filter->SetDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_Direction ) );"
     },
-      {
-"name" : "Normalized",
-"type" : "bool",
-"default" : "false"
-}
+    {
+      "name" : "Normalized",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether or not to normalize the Gaussian. Default is false.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether or not to normalize the Gaussian. Default is false."
+    }
   ],
   "tests" : [
     {
