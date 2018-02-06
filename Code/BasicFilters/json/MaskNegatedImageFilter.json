@@ -6,6 +6,9 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::MaskNegatedImageFilter<InputImageType, InputImageType,  OutputImageType>",
+  "include_files" : [
+    "sitkToPixelType.hxx"
+  ],
   "inputs" : [
     {
       "name" : "Image",
@@ -16,7 +19,27 @@
       "type" : "Image"
     }
   ],
-  "members" : [],
+  "members" : [
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : 0,
+      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_OutsideValue, v );  filter->SetOutsideValue( v );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaskingValue",
+      "type" : "double",
+      "default" : 0,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Method to explicitly set the masking value of the mask. Defaults to 0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Method to get the masking value of the mask."
+    }
+  ],
   "tests" : [
     {
       "tag" : "2d",
