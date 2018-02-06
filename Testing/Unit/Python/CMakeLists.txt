@@ -23,6 +23,7 @@ sitk_add_python_test( Test.ProcessObject
 sitk_add_python_test( Test.ConcurrentImageRead
   "${CMAKE_CURRENT_SOURCE_DIR}/ConcurrentImageRead.py"
   )
+set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABEL "UNSTABLE" )
 
 sitk_add_python_test( Test.ArrayView
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkGetArrayViewFromImageTest.py"
