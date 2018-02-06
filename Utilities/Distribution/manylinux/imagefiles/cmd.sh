@@ -79,6 +79,6 @@ build_simpleitk || exit 1
 
 for PYTHON in ${PYTHON_VERSIONS}; do
     build_simpleitk_python &&
-    ctest -j ${NPROC} &&
+    ctest -j ${NPROC} -LE UNSTABLE &&
     auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name SimpleITK*.whl) -w ${OUT_DIR}/wheelhouse/
 done
