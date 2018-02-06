@@ -4,6 +4,14 @@ SimpleITK Sphinx Documentation
 This is a prototype of consolidated SimpleITK documentation in Sphinx
 and is under development.
 
+SimpleITK is a simplified, open source, interface to the National Library
+of Medicine's Insight Segmentation and Registration Toolkit (ITK), a C++
+open source image analysis toolkit which is widely used in academia and
+industry. SimpleITK is available for eight programming languages including
+C++, Python, R, Java, C#, Lua, Ruby, and TCL. Binary distributions of
+SimpleITK are currently available for all three major operating systems
+(Linux, OS X, and Windows).
+
 .. toctree::
    :maxdepth: 1
 
