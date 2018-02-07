@@ -80,15 +80,79 @@ jobs:
       - save_cache:
           key: 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
           paths: [ "/home/circleci/.ExternalData" ]
-
+  docs:
+    docker:
+      - image: circleci/python:2.7
+    working_directory: ~/
+    resource_class: medium
+    environment:
+      CTEST_DASHBOARD_ROOT: /home/circleci
+      CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
+      CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
+      DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
+      ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
+      CCACHE_NODIRECT: 1
+    steps:
+      - checkout:
+          path : ~/SimpleITK
+      - run:
+          name: Generate external data hash
+          command: |
+             cd SimpleITK
+             git log -n 1 ${CTEST_SOURCE_DIRECTORY}/Testing/Data/ | tee /home/circleci/external-data.hashable
+      - restore_cache:
+          keys:
+            - 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
+            - 'v1-external-data'
+      - restore_cache:
+          keys:
+            - ccache-{{ arch }}-{{ .Branch }}
+            - ccache-{{ arch }}-master
+      - run:
+          name: Dependencies
+          command: |
+            sudo apt-get install -y rsync lua5.1 ccache kwstyle doxygen
+            sudo pip install scikit-ci-addons
+            sudo pip install --upgrade pip
+            ci_addons circle/install_cmake.py 3.9.2
+      - run:
+          name: Building and Generating Doxygen
+          no_output_timeout: 20.0m
+          environment:
+                CTEST_CONFIGURATION_TYPE: "Release"
+                CTEST_BUILD_FLAGS: "-j 4"
+                CTEST_OUTPUT_ON_FAILURE: 1
+                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
+          command: |
+            export PATH=/usr/lib/ccache:${PATH}
+            mkdir ${CTEST_BINARY_DIRECTORY} && cd ${CTEST_BINARY_DIRECTORY}
+            cmake -DWRAP_DEFAULT=OFF -DBUILD_DOXYGEN=ON -DSimpleITK_USE_SYSTEM_LUA:BOOL=ON ${CTEST_SOURCE_DIRECTORY}/SuperBuild
+            make -j ${CTEST_BUILD_FLAGS} SimpleITK-doc
+      - run:
+          name: Archiving directory for artifact
+          command: |
+            tar -zcvf simpleitk_doxygen_html.tar.gz ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/Documentation/html
+      - store_artifacts:
+          path: simpleitk_doxygen_html.tar.gz
 workflows:
   version: 2
   build_and_test:
     jobs:
-        - build-and-test:
-            filters:
-              branches:
-                 ignore:
-                   - gh-pages
-                   - dashboard
-                   - hooks
+      - build-and-test:
+          filters:
+            branches:
+               ignore:
+                 - gh-pages
+                 - dashboard
+                 - hooks
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+        - docs
