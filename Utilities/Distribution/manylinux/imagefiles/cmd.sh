@@ -30,7 +30,7 @@ function build_simpleitk {
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DWRAP_DEFAULT:BOOL=OFF \
-        -DITK_REPOSITORY:STRING="https://github.com/InsightSoftwareConsortium/ITK.git" \
+        -DITK_GIT_REPOSITORY:STRING="https://github.com/InsightSoftwareConsortium/ITK.git" \
         ${SRC_DIR}/SuperBuild &&
     make  &&
     find ./ -name \*.o -delete
