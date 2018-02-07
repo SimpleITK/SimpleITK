@@ -1,10 +1,4 @@
-cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
-
-
-if(POLICY CMP0025)
-  cmake_policy(SET CMP0025 NEW)
-endif()
-
+cmake_minimum_required ( VERSION 3.0 FATAL_ERROR )
 
 project (LUA C)
 
