@@ -1,17 +1,21 @@
+defaults: &defaults
+  docker:
+    - image: circleci/python:2.7
+  working_directory: ~/
+  resource_class: large
+  environment:
+    CTEST_DASHBOARD_ROOT: /home/circleci
+    CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
+    CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
+    DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
+    ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
+    CCACHE_NODIRECT: 1
+
+
 version: 2
 jobs:
   build-and-test:
-    docker:
-      - image: circleci/python:2.7
-    working_directory: ~/
-    resource_class: large
-    environment:
-      CTEST_DASHBOARD_ROOT: /home/circleci
-      CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
-      CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
-      DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
-      ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
-      CCACHE_NODIRECT: 1
+    <<: *defaults
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -53,7 +57,7 @@ jobs:
                 CTEST_CONFIGURATION_TYPE: "Release"
                 CTEST_BUILD_FLAGS: "-j 4"
                 CTEST_OUTPUT_ON_FAILURE: 1
-                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
+                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
                 PARALLEL_LEVEL: 4
           command: |
             export PATH=/usr/lib/ccache:${PATH}
@@ -81,17 +85,7 @@ jobs:
           key: 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
           paths: [ "/home/circleci/.ExternalData" ]
   docs:
-    docker:
-      - image: circleci/python:2.7
-    working_directory: ~/
-    resource_class: medium
-    environment:
-      CTEST_DASHBOARD_ROOT: /home/circleci
-      CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
-      CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
-      DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
-      ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
-      CCACHE_NODIRECT: 1
+    <<: *defaults
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -121,8 +115,6 @@ jobs:
           environment:
                 CTEST_CONFIGURATION_TYPE: "Release"
                 CTEST_BUILD_FLAGS: "-j 4"
-                CTEST_OUTPUT_ON_FAILURE: 1
-                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
           command: |
             export PATH=/usr/lib/ccache:${PATH}
             mkdir ${CTEST_BINARY_DIRECTORY} && cd ${CTEST_BINARY_DIRECTORY}
@@ -131,7 +123,8 @@ jobs:
       - run:
           name: Archiving directory for artifact
           command: |
-            tar -zcvf simpleitk_doxygen_html.tar.gz ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/Documentation/html
+            cd ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/Documentation/
+            tar -zcvf simpleitk_doxygen_html.tar.gz html
       - store_artifacts:
           path: simpleitk_doxygen_html.tar.gz
 workflows:
