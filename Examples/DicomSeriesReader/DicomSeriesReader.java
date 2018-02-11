@@ -21,11 +21,11 @@ package examples;
 import org.itk.simple.*;
 
 public class DicomSeriesReader {
-  public static int test(String[] args) {
+  public static void main(String[] args) {
 
     if (args.length < 2) {
       System.out.println("Usage: DicomSeriesReader <input_directory> <output_file>");
-      return 1;
+      System.exit(1);
     }
 
     System.out.println("Reading Dicom directory: " + args[0]);
@@ -42,7 +42,5 @@ public class DicomSeriesReader {
     System.out.println("Writing " + args[1]);
 
     SimpleITK.writeImage(image, args[1]);
-
-    return 0;
   }
 }
