@@ -299,10 +299,7 @@ TEST_F(Image4D,Transforms) {
     // Index to Physical Point
     std::vector<int64_t> idx(4,1u);
     std::vector<double> pt = shortImage->TransformIndexToPhysicalPoint(idx);
-    EXPECT_EQ(10.0, pt[0]) << " Pt to Idx [0]";
-    EXPECT_EQ(12.1, pt[1]) << " Pt to Idx [1]";
-    EXPECT_EQ(14.2, pt[2]) << " Pt to Idx [2]";
-    EXPECT_EQ(16.3, pt[3]) << " Pt to Idx [3]";
+    EXPECT_EQ(v4(10.0, 12.1, 14.2, 16.3), pt);
 
 
     // Physical Point to Index
@@ -317,17 +314,11 @@ TEST_F(Image4D,Transforms) {
     // Continuous Index to Physical Point
     std::vector<double> idx(4,2.0);
     std::vector<double> pt = shortImage->TransformContinuousIndexToPhysicalPoint(idx);
-    EXPECT_EQ(20.0, pt[0]) << " Pt to Idx [0]";
-    EXPECT_EQ(23.1, pt[1]) << " Pt to Idx [1]";
-    EXPECT_EQ(26.2, pt[2]) << " Pt to Idx [2]";
-    EXPECT_EQ(29.3, pt[3]) << " Pt to Idx [3]";
+    EXPECT_EQ(v4(20.0, 23.1, 26.2, 29.3), pt);
 
     // Physical Point to Coninuous Index
     idx = shortImage->TransformPhysicalPointToContinuousIndex(pt);
-    EXPECT_EQ(2.0, idx[0]) << " Idx to Pt [0]";
-    EXPECT_EQ(2.0, idx[1]) << " Idx to Pt [1]";
-    EXPECT_EQ(2.0, idx[2]) << " Idx to Pt [2]";
-    EXPECT_EQ(2.0, idx[3]) << " Idx to Pt [3]";
+    EXPECT_VECTOR_NEAR(v4(2.0, 2.0, 2.0, 2.0), idx, 1e-20);
   }
 }
 
