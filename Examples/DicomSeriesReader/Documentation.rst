@@ -23,6 +23,12 @@ Code
        :language: c++
        :lines: 18-
 
+  ..tab:: Java
+
+    .. literalinclude:: DicomSeriesReader.java
+       :language: java
+       :lines: 18-
+
   .. tab:: Lua
 
     .. literalinclude:: DicomSeriesReader.lua
