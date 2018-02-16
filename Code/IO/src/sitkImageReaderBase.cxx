@@ -200,7 +200,9 @@ ImageReaderBase
     }
   else
     {
-    sitkExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
+    sitkExceptionMacro(  "Unknown PixelType: "
+                         << itk::ImageIOBase::GetComponentTypeAsString(componentType)
+                         << "(" <<(int) componentType << ")" );
     }
 
   sitkExceptionMacro( "Unable to load image." );
