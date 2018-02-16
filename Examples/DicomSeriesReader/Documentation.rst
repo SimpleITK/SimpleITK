@@ -23,7 +23,7 @@ Code
        :language: c++
        :lines: 18-
 
-  ..tab:: Java
+  .. tab:: Java
 
     .. literalinclude:: DicomSeriesReader.java
        :language: java
