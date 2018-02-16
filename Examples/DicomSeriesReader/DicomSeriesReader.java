@@ -16,8 +16,6 @@
 *
 *=========================================================================*/
 
-package examples;
-
 import org.itk.simple.*;
 
 public class DicomSeriesReader {
