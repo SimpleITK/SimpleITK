@@ -64,7 +64,7 @@ namespace itk
   {
     // no need to check if null
     delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
+    this->m_PimpleImage = SITK_NULLPTR;
 
     this->m_PimpleImage = new PimpleImage<TImageType>( image );
   }
@@ -110,7 +110,7 @@ namespace itk
     image->FillBuffer ( itk::NumericTraits<typename TImageType::PixelType>::Zero );
 
     delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
+    this->m_PimpleImage = SITK_NULLPTR;
     m_PimpleImage =  new PimpleImage<TImageType>( image );
   }
 
@@ -158,7 +158,7 @@ namespace itk
     image->FillBuffer ( zero );
 
     delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
+    this->m_PimpleImage = SITK_NULLPTR;
 
     m_PimpleImage = new PimpleImage<TImageType>( image );
   }
@@ -203,7 +203,7 @@ namespace itk
     image->SetBackgroundValue( 0 );
 
     delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
+    this->m_PimpleImage = SITK_NULLPTR;
 
     m_PimpleImage = new PimpleImage<TImageType>( image );
   }
