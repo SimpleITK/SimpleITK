@@ -48,7 +48,7 @@ struct DualMemberFunctionInstantiater
   template <class TPixelIDType1, class TPixelIDType2>
   typename EnableIf< IsInstantiated<TPixelIDType1,VImageDimension>::Value &&
                      IsInstantiated<TPixelIDType2,VImageDimension>::Value >::Type
-  operator()( TPixelIDType1* t1=NULL, TPixelIDType2*t2=NULL ) const
+  operator()( TPixelIDType1* t1=SITK_NULLPTR, TPixelIDType2*t2=SITK_NULLPTR ) const
     {
       (void)t1;
       (void)t2;
@@ -57,7 +57,7 @@ struct DualMemberFunctionInstantiater
       typedef TAddressor                                                             AddressorType;
 
       AddressorType addressor;
-      m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(), (ImageType1*)(NULL), (ImageType2*)(NULL) );
+      m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(), (ImageType1*)(SITK_NULLPTR), (ImageType2*)(SITK_NULLPTR) );
 
     }
 
@@ -65,7 +65,7 @@ struct DualMemberFunctionInstantiater
   template <class TPixelIDType1, class TPixelIDType2>
   typename DisableIf< IsInstantiated<TPixelIDType1,VImageDimension>::Value &&
                      IsInstantiated<TPixelIDType2,VImageDimension>::Value >::Type
-  operator()( TPixelIDType1*t1=NULL, TPixelIDType2*t2=NULL ) const
+  operator()( TPixelIDType1*t1=SITK_NULLPTR, TPixelIDType2*t2=SITK_NULLPTR ) const
     {
       (void)t1;
       (void)t2;

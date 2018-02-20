@@ -19,6 +19,7 @@
 #define sitkCreateInterpolator_hxx
 
 
+#include "sitkMacro.h"
 #include "sitkInterpolator.h"
 #include <itkNearestNeighborInterpolateImageFunction.h>
 #include <itkLinearInterpolateImageFunction.h>
@@ -140,7 +141,7 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     default:
-      return NULL;
+      return  SITK_NULLPTR;
     }
 
 }

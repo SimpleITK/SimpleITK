@@ -327,7 +327,7 @@ Image DisplacementFieldTransform::InternalGetDisplacementField( const TDisplacem
   // field, but it does not have the correct reference count.
   typedef typename TDisplacementFieldTransform::DisplacementFieldType DisplacementFieldType;
   DisplacementFieldType *itkDisplacement = const_cast<DisplacementFieldType*>(itkDisplacementTx->GetDisplacementField());
-  if (itkDisplacement != NULL)
+  if (itkDisplacement != SITK_NULLPTR)
     {
     return Image(GetVectorImageFromImage(itkDisplacement));
     }
@@ -339,7 +339,7 @@ Image DisplacementFieldTransform::InternalGetInverseDisplacementField( const TDi
 {
   typedef typename TDisplacementFieldTransform::DisplacementFieldType DisplacementFieldType;
   DisplacementFieldType *itkDisplacement = const_cast<DisplacementFieldType*>(itkDisplacementTx->GetInverseDisplacementField());
-  if (itkDisplacement != NULL)
+  if (itkDisplacement != SITK_NULLPTR)
     {
     return Image(GetVectorImageFromImage(itkDisplacement));
     }

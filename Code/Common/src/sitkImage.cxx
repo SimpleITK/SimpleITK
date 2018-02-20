@@ -33,11 +33,11 @@ namespace itk
   Image::~Image( )
   {
     delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
+    this->m_PimpleImage = SITK_NULLPTR;
   }
 
   Image::Image( )
-    : m_PimpleImage( NULL )
+    : m_PimpleImage( SITK_NULLPTR )
   {
     Allocate ( 0, 0, 0, 0, sitkUInt8, 1 );
   }
@@ -58,19 +58,19 @@ namespace itk
   }
 
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
-      : m_PimpleImage( NULL )
+      : m_PimpleImage( SITK_NULLPTR )
     {
       Allocate ( Width, Height, 0, 0, ValueEnum, 0 );
     }
 
     Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
-      : m_PimpleImage( NULL )
+      : m_PimpleImage( SITK_NULLPTR )
     {
       Allocate ( Width, Height, Depth, 0, ValueEnum, 0 );
     }
 
     Image::Image( const std::vector< unsigned int > &size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
-      : m_PimpleImage( NULL )
+      : m_PimpleImage( SITK_NULLPTR )
     {
       if ( size.size() == 2 )
         {
