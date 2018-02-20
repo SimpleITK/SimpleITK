@@ -25,9 +25,6 @@
 #include "itkByteSwapper.h"
 
 
-#include "Ancillary/hl_md5.h"
-#include "Ancillary/hl_sha1.h"
-
 namespace itk {
 
 /** \class HashImageFilter

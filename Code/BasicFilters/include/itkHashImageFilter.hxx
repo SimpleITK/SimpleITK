@@ -20,6 +20,9 @@
 
 #include "itkHashImageFilter.h"
 
+#include "Ancillary/hl_sha1.h"
+#include "itksys/MD5.h"
+
 namespace itk {
 
 //
@@ -72,9 +75,10 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
   typedef typename NumericTraits<PixelType>::ValueType ValueType;
   typedef itk::ByteSwapper<ValueType>                  Swapper;
 
-  ::MD5 md5;
-  ::HL_MD5_CTX md5Context;
-  md5.MD5Init ( &md5Context );
+
+  itksysMD5 *md5 = itksysMD5_New();
+  itksysMD5_Initialize( md5 );
+
   ::SHA1 sha1;
   ::HL_SHA1_CTX sha1Context;
   sha1.SHA1Reset ( &sha1Context );
@@ -101,7 +105,6 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
   typename ImageType::RegionType largestRegion = input->GetBufferedRegion();
   const size_t numberOfValues = largestRegion.GetNumberOfPixels()*numberOfComponent;
 
-
   // Possibly byte swap so we always calculate on little endian data
   Swapper::SwapRangeFromSystemToLittleEndian ( buffer, numberOfValues );
 
@@ -112,43 +115,47 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
       sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, numberOfValues*sizeof(ValueType) );
       break;
     case MD5:
-      md5.MD5Update ( &md5Context, (unsigned char*)buffer, numberOfValues*sizeof(ValueType) );
+      itksysMD5_Append( md5, (unsigned char*)buffer, static_cast<int>( numberOfValues*sizeof(ValueType) ) );
       break;
     }
 
   // Calculate and return the hash value
-  std::string hash;
-  int HashSize = SHA1HashSize;
-  unsigned char Digest[1024];
   switch ( this->m_HashFunction )
     {
     case SHA1:
     {
-    HashSize = SHA1HashSize;
+    const int HashSize = SHA1HashSize;
+     hl_uint8 Digest[1024];
     sha1.SHA1Result ( &sha1Context, Digest );
+
+    // Convert binary to hex string representation
+
+    std::ostringstream os;
+    for(int i=0; i<HashSize; ++i)
+      {
+      // set the width to 2, fill with 0, and convert to hex
+      os.width(2);
+      os.fill('0');
+      os << std::hex << static_cast<unsigned int>(Digest[i]);
+      }
+
+    this->GetHashOutput()->Set( os.str() );
+
     break;
     }
     case MD5:
     {
-    HashSize = 16;
-    md5.MD5Final ( Digest, &md5Context );
+    const size_t DigestSize = 32u;
+    char Digest[DigestSize];
+
+    // directly to HEX
+    itksysMD5_FinalizeHex( md5, Digest );
+
+    this->GetHashOutput()->Set( std::string(Digest, DigestSize) );
     break;
     }
     }
 
-  // Should we really covert the binary representation to a hex ASCII here
-  //
-  // Print to a string
-  std::ostringstream os;
-  for(int i=0; i<HashSize; ++i)
-    {
-    // set the width to 2, fill with 0, and convert to hex
-    os.width(2);
-    os.fill('0');
-    os << std::hex << static_cast<unsigned int>(Digest[i]);
-    }
-
-  this->GetHashOutput()->Set( os.str() );
 }
 
 
