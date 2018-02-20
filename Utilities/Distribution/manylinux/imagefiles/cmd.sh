@@ -6,7 +6,7 @@ export SRC_DIR="/tmp/SimpleITK"
 export BLD_DIR="/tmp/SimpleITK-build"
 export OUT_DIR="/work/io"
 
-SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.0rc3}
+SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 
 PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[0-6][^ ]\+ \?//g')}
 
