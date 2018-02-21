@@ -126,7 +126,7 @@ jobs:
             cd ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/Documentation/
             tar -zcvf simpleitk_doxygen_html.tar.gz html
       - store_artifacts:
-          path: simpleitk_doxygen_html.tar.gz
+          path: /home/circleci/SimpleITK-build/SimpleITK-build/Documentation/simpleitk_doxygen_html.tar.gz
 workflows:
   version: 2
   build_and_test:
