@@ -25,4 +25,7 @@
 #define SimpleITK_VERSION_TWEAK @SimpleITK_VERSION_TWEAK@
 #define SimpleITK_VERSION "@SimpleITK_VERSION@"
 
+// A ';' separated list of the modules enabled when ITK was compiled
+#define ITK_MODULES_ENABLED "@ITK_MODULES_ENABLED@"
+
 #endif
