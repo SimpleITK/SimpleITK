@@ -176,7 +176,7 @@ public:
   void Execute(const itk::Object*, const itk::EventObject&) SITK_OVERRIDE {}
 
 protected:
-  HolderCommand() : m_Object(NULL) {};
+  HolderCommand() : m_Object(SITK_NULLPTR) {};
   ~HolderCommand() { delete m_Object;}
 
 private:
@@ -195,19 +195,19 @@ private:
 //
 
 Transform::Transform( )
-  : m_PimpleTransform( NULL )
+  : m_PimpleTransform( SITK_NULLPTR )
   {
     m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, 3 > >();
   }
 
 Transform::Transform( itk::TransformBase *transformBase )
-  : m_PimpleTransform( NULL )
+  : m_PimpleTransform( SITK_NULLPTR )
 {
   this->InternalInitialization( transformBase );
 }
 
   Transform::Transform( unsigned int dimensions, TransformEnum type)
-    : m_PimpleTransform( NULL )
+    : m_PimpleTransform( SITK_NULLPTR )
   {
     if ( dimensions == 2 )
       {
@@ -227,11 +227,11 @@ Transform::Transform( itk::TransformBase *transformBase )
   Transform::~Transform()
   {
     delete m_PimpleTransform;
-    this->m_PimpleTransform = NULL;
+    this->m_PimpleTransform = SITK_NULLPTR;
   }
 
   Transform::Transform( const Transform &txf )
-    : m_PimpleTransform( NULL )
+    : m_PimpleTransform( SITK_NULLPTR )
   {
     Self::SetPimpleTransform( txf.m_PimpleTransform->ShallowCopy() );
   }
@@ -246,7 +246,7 @@ Transform::Transform( itk::TransformBase *transformBase )
 
 
 Transform::Transform( Image &image, TransformEnum txType )
-    : m_PimpleTransform( NULL )
+    : m_PimpleTransform( SITK_NULLPTR )
   {
 
 
@@ -372,7 +372,7 @@ void Transform::MakeUnique( void )
 Transform::Transform( PimpleTransformBase *pimpleTransform )
     : m_PimpleTransform( pimpleTransform )
   {
-    if ( pimpleTransform == NULL )
+    if ( pimpleTransform == SITK_NULLPTR )
       {
       sitkExceptionMacro("Invalid NULL PimpleTransform!");
       }
@@ -581,7 +581,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     nsstd::auto_ptr<PimpleTransformBase> temp;
     {
     // See if a new pimple transform can be created
-    PimpleTransformBase *p = NULL;
+    PimpleTransformBase *p = SITK_NULLPTR;
     if (!this->m_PimpleTransform->GetInverse(p))
       {
       return false;

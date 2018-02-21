@@ -103,7 +103,7 @@ private:
 ProcessObject::ProcessObject ()
   : m_Debug(ProcessObject::GetGlobalDefaultDebug()),
     m_NumberOfThreads(ProcessObject::GetGlobalDefaultNumberOfThreads()),
-    m_ActiveProcess(NULL),
+    m_ActiveProcess(SITK_NULLPTR),
     m_ProgressMeasurement(0.0)
 {
 }
@@ -399,7 +399,7 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     }
   catch (...)
     {
-    this->m_ActiveProcess = NULL;
+    this->m_ActiveProcess = SITK_NULLPTR;
     throw;
     }
 
@@ -480,7 +480,7 @@ void ProcessObject::OnActiveProcessDelete( )
       i->m_ITKTag = std::numeric_limits<unsigned long>::max();
       }
 
-  this->m_ActiveProcess = NULL;
+  this->m_ActiveProcess = SITK_NULLPTR;
 }
 
 

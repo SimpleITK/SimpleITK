@@ -63,7 +63,7 @@ namespace itk
         sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
 
-        if ( image == NULL )
+        if ( image == SITK_NULLPTR )
           {
           sitkExceptionMacro( << "Unable to initialize an image with NULL" );
           }
