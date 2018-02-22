@@ -33,6 +33,10 @@ sitk_add_python_test( Test.ConcurrentImageRead
   "${CMAKE_CURRENT_SOURCE_DIR}/ConcurrentImageRead.py"
   )
 
+sitk_add_python_test( Test.ImageReadWriteInt64
+  "${CMAKE_CURRENT_SOURCE_DIR}/ImageReadWriteInt64.py"
+  )
+
 
 if(CMAKE_VERSION VERSION_GREATER "3.3")
   if(TEST Python.Test.ConcurrentImageRead)
