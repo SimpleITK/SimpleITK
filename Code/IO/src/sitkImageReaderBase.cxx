@@ -251,22 +251,10 @@ ImageReaderBase
       return ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::LONG:
-      if (sizeof(long) == 4 )
-        return ImageTypeToPixelIDValue< itk::Image<int32_t, UnusedDimension> >::Result;
-      else
-        return ImageTypeToPixelIDValue< itk::Image<int64_t, UnusedDimension> >::Result;
+      return ImageTypeToPixelIDValue< itk::Image<long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::ULONG:
-      if (sizeof(unsigned long) == 4 )
-        return ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
-      else
-        return ImageTypeToPixelIDValue< itk::Image<uint64_t, UnusedDimension> >::Result;
-      break;
-    case itk::ImageIOBase::LONGLONG:
-      return ImageTypeToPixelIDValue< itk::Image<long long, UnusedDimension> >::Result;
-      break;
-    case itk::ImageIOBase::ULONGLONG:
-      return ImageTypeToPixelIDValue< itk::Image<unsigned long long, UnusedDimension> >::Result;
+      return ImageTypeToPixelIDValue< itk::Image<unsigned long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::FLOAT:
       return ImageTypeToPixelIDValue< itk::Image<float, UnusedDimension> >::Result;
@@ -329,22 +317,10 @@ ImageReaderBase
       return ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::LONG:
-      if (sizeof(long) == 4 )
-        return ImageTypeToPixelIDValue< itk::VectorImage<int32_t, UnusedDimension> >::Result;
-      else
-        return ImageTypeToPixelIDValue< itk::VectorImage<int64_t, UnusedDimension> >::Result;
+      return ImageTypeToPixelIDValue< itk::VectorImage<long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::ULONG:
-      if (sizeof(unsigned long) == 4 )
-        return ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
-      else
-        return ImageTypeToPixelIDValue< itk::VectorImage<uint64_t, UnusedDimension> >::Result;
-      break;
-    case itk::ImageIOBase::LONGLONG:
-      return ImageTypeToPixelIDValue< itk::VectorImage<int64_t, UnusedDimension> >::Result;
-      break;
-    case itk::ImageIOBase::ULONGLONG:
-      return ImageTypeToPixelIDValue< itk::VectorImage<uint64_t, UnusedDimension> >::Result;
+      return ImageTypeToPixelIDValue< itk::VectorImage<unsigned long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::FLOAT:
       return ImageTypeToPixelIDValue< itk::VectorImage<float, UnusedDimension> >::Result;
