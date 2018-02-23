@@ -1,0 +1,1 @@
+sitkVersionConfig.h LineLength 300
