@@ -60,7 +60,7 @@ similar for both images and hence the best initial guess for
 registration is to superimpose both mass centers. Note that this
 assumption will probably not hold in multi-modality registration.
 
-     * \sa itk::CenteredTransformInitializer
+\sa itk::CenteredTransformInitializer
      */
     class SITKBasicFilters_EXPORT  CenteredTransformInitializerFilter : public ProcessObject {
     public:
