@@ -29,6 +29,15 @@
       "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaskingValue",
+      "type" : "double",
+      "default" : 0,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Method to explicitly set the masking value of the mask. Defaults to 0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Method to get the masking value of the mask."
     }
   ],
   "tests" : [
@@ -66,6 +75,22 @@
       "inputs" : [
         "Input/VM1111Shrink-RGB.png",
         "Input/VM1111Shrink-mask.png"
+      ]
+    },
+    {
+      "tag" : "cthead1_maskvalue",
+      "description" : "cthead with mask value",
+      "settings" : [
+        {
+          "parameter" : "MaskingValue",
+          "type" : "double",
+          "value" : "100.0"
+        }
+      ],
+      "md5hash" : "3eb703113d03f38e7b8db4b180079a39",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/2th_cthead1.mha"
       ]
     }
   ],
