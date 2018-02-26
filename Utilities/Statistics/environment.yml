@@ -1,0 +1,11 @@
+name: sitk_stats
+
+channels:
+  - conda-forge
+
+dependencies:
+  - matplotlib
+  - numpy
+  - cartopy
+  - pandas
+  - requests
