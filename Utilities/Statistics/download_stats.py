@@ -182,24 +182,30 @@ FROM
 WHERE
   file.project = 'simpleitk' and details.installer.name != 'bandersnatch'
 GROUP BY
-  yyyymm, file.version,
+  yyyymm, file.version
 ORDER BY
-  yyyymm DESC, download_count DESC
+  yyyymm DESC, download_count DESC, file.version DESC
 LIMIT 100
 """
 #
 ##################################################
 
-pypi_ = pd.read_csv("psf-pypi-downloads-simpleitk-query.csv")
+df = pd.read_csv("psf-pypi-downloads-simpleitk-query.csv")
 print(df)
 
 # Load query results into a data frame
 df["yyyymm"] = pd.to_datetime(df["yyyymm"], format=("%Y-%m") )
-df = df.pivot(index='yyyymm', columns='file_version', values='download_count')
-df.index.name = "Date"
-df.columns.name = "Version"
+if "file_version" in df.columns:
+   df = df.pivot(index='yyyymm', columns='file_version', values='download_count')
+   df.columns.name = "Version"
+else:
+   df.set_index('yyyymm', inplace=True)
+
+
 df.fillna(0,inplace=True)
 df = df.astype(int)
+df.sort_index(ascending=False,inplace=True)
+
 print(df)
 print("Total PyPI Downloads: {0}".format(df.sum(axis=1).sum()))
 
@@ -211,20 +217,19 @@ plt.show()
 
 # Create Series for PyPI downloads by time
 s = df.sum(axis=1)
-s.index.name="Date"
 s.name= "PyPI Download Count"
-
+s.index.name="Date"
 
 # Manually enter dates of tags
 tags = pd.Series({"2017-04-05":"v1.0.0",
-                "2016-07-27":"v0.10.0",
+                  "2016-07-27":"v0.10.0",
                   "2015-09-25":"v0.9.1",
-                  "2015-05-012":"v0.9.0",
+                  "2015-05-12":"v0.9.0",
                   "2014-12-19":"v0.8.1",
-                  "2014-03-8":"v0.8.0",
+                  "2014-03-08":"v0.8.0",
                   "2013-11-21":"v0.7.1",
                   "2013-09-30":"v0.7.0",
-                  "2013-02-1":"v0.6.0"})
+                  "2013-02-01":"v0.6.0"})
 tags.index = pd.to_datetime(tags.index)
 tags.name = "Releases"
 
