@@ -20,6 +20,9 @@
 
 #include "itkConfigure.h"
 
+#include <cstring>
+#include <algorithm>
+
 namespace
 {
 
@@ -34,7 +37,7 @@ std::string MakeExtendedVersionString()
 
 static const std::string itkVersionString = ITK_VERSION_STRING;
 static const std::string extendedVersionString = MakeExtendedVersionString();
-
+static const char * itkModulesEnabled = ITK_MODULES_ENABLED;
 }
 
 namespace itk
@@ -84,6 +87,34 @@ namespace itk
   {
     return itkVersionString;
   }
+
+
+  std::vector<std::string> Version::ITKModulesEnabled()
+  {
+    // itkModulesEnabled is a semi-colon separate list of the ITK modules
+    // enabled during compilation. This method splits that one string
+    // into separate strings.
+    const char * strMods = itkModulesEnabled;
+    const char * strModsEnd = strMods+strlen( itkModulesEnabled );
+
+
+    std::vector<std::string> modules_vector;
+    modules_vector.reserve(std::count(strMods,
+                                      strModsEnd,
+                                      ';'));
+
+    while (strMods < strModsEnd)
+      {
+      const char *tokenMod = std::find(strMods, strModsEnd, ';');
+
+      modules_vector.push_back(std::string(strMods, tokenMod));
+
+      strMods = tokenMod+1;
+      }
+    return modules_vector;
+
+  }
+
   const std::string &Version::ExtendedVersionString()
   {
     return extendedVersionString;

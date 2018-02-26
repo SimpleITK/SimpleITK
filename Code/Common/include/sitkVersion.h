@@ -19,6 +19,9 @@
 #define sitkVersion_h
 
 #include "sitkCommon.h"
+#include <string>
+#include <vector>
+
 
 namespace itk
 {
@@ -44,6 +47,16 @@ namespace simple
     static unsigned int ITKMinorVersion();
     static unsigned int ITKPatchVersion();
     static const std::string &ITKVersionString();
+
+    /* \brief Return a vector of the names of the ITK modules enabled.
+     *
+     *
+     * This list of ITK modules dictates which ITK filers are enabled
+     * in SimpleITK during compilation. Optional, ITK modules enabled
+     * will be listed here, which enabled checking of features in
+     * SimpleITK.
+     */
+    static std::vector<std::string> ITKModulesEnabled();
 
     static const std::string &ExtendedVersionString();
     std::string ToString() { return Version::ExtendedVersionString(); }
