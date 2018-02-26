@@ -267,13 +267,13 @@ void ProcessObject::SetGlobalDefaultDirectionTolerance(double tolerance)
 
 void ProcessObject::SetGlobalDefaultNumberOfThreads(unsigned int n)
 {
-  MultiThreader::SetGlobalDefaultNumberOfThreads(n);
+  itk::ProcessObject::MultiThreaderType::SetGlobalDefaultNumberOfThreads(n);
 }
 
 
 unsigned int ProcessObject::GetGlobalDefaultNumberOfThreads()
 {
-  return MultiThreader::GetGlobalDefaultNumberOfThreads();
+  return itk::ProcessObject::MultiThreaderType::GetGlobalDefaultNumberOfThreads();
 }
 
 
