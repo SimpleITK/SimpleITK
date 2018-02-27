@@ -62,7 +62,7 @@ namespace itk {
       out << "  FileName: \"";
       this->ToStringHelper(out, this->m_FileName) << "\"" << std::endl;
 
-      out << "  Image Information:"
+      out << "  Image Information:" << std::endl
           << "    PixelType: ";
       this->ToStringHelper(out, this->m_PixelType) << std::endl;
       out << "    Dimension: " << this->m_Dimension << std::endl;
@@ -229,6 +229,10 @@ namespace itk {
 
       itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
       this->UpdateImageInformationFromImageIO(imageio);
+
+      sitkDebugMacro( "ImageIO: " << imageio->GetNameOfClass() );
+
+
       const unsigned int dimension = this->GetDimension();
       if (type == sitkUnknown)
         {
