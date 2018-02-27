@@ -23,8 +23,33 @@
 #include <sitkCastImageFilter.h>
 
 #include <sitkKernel.h>
+#include <sitkVersion.h>
+#include <sitkVersionConfig.h>
+#include <itkConfigure.h>
 
 namespace nsstd = itk::simple::nsstd;
+
+TEST( VersionTest, VersoinTest)
+{
+  typedef itk::simple::Version Version;
+
+  EXPECT_EQ(Version::MajorVersion(), SimpleITK_VERSION_MAJOR);
+  EXPECT_EQ(Version::MinorVersion(), SimpleITK_VERSION_MINOR);
+  EXPECT_EQ(Version::PatchVersion(), SimpleITK_VERSION_PATCH);
+  //EXPECT_EQ(Version::TweakVersion(), SimpleITK_VERSION_TWEAK);
+  std::cout << "Version String: " << Version::VersionString() << std::endl;
+  std::cout << "BuildDate String: " << Version::BuildDate() << std::endl;
+  EXPECT_EQ(Version::ITKMajorVersion(), ITK_VERSION_MAJOR);
+  EXPECT_EQ(Version::ITKMinorVersion(), ITK_VERSION_MINOR);
+  EXPECT_EQ(Version::ITKPatchVersion(), ITK_VERSION_PATCH);
+  std::cout << "ITK Version String: " << Version::ITKVersionString() << std::endl;
+
+  std::cout << "Extended Version String: " << Version::ExtendedVersionString() << std::endl;
+
+  std::vector<std::string> itk_modules = Version::ITKModulesEnabled();
+  EXPECT_NE( std::find( itk_modules.begin(), itk_modules.end(), "ITKCommon" ), itk_modules.end());
+  EXPECT_NE( std::find( itk_modules.begin(), itk_modules.end(), "ITKIOImageBase" ), itk_modules.end());
+}
 
 TEST( ConditionalTest, ConditionalTest1 ) {
 
