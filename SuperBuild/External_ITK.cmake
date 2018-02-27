@@ -79,6 +79,7 @@ ExternalProject_Add(${proj}
   UPDATE_COMMAND ""
   SOURCE_DIR ${proj}
   BINARY_DIR ${proj}-build
+  INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
   --no-warn-unused-cli
