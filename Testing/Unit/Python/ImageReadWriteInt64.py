@@ -50,8 +50,9 @@ class ImageReadWriteInt64(unittest.TestCase):
 
         base_hash = sitk.Hash(img);
         sitk.WriteImage(img, tmp_filename);
-        sitk.ReadImage(tmp_filename);
-        self.assertEqual(base_hash, sitk.Hash(img))
+        in_img = sitk.ReadImage(tmp_filename);
+        self.assertEqual(base_hash, sitk.Hash(in_img))
+        self.assertEqual(img.GetPixelID(), in_img.GetPixelID())
         print(img.GetPixelIDTypeAsString())
 
     @staticmethod
@@ -60,7 +61,7 @@ class ImageReadWriteInt64(unittest.TestCase):
         def do_test(self):
             fname = "test64.{0}".format(img_extension)
             if ImageReadWriteInt64.temp_directory:
-                fname = os.path.join(ConcurrentImageRead.temp_directory, fname)
+                fname = os.path.join(ImageReadWriteInt64.temp_directory, fname)
             img = self._create_img(img_type)
             self._read_write_test(img, fname)
 
@@ -82,5 +83,5 @@ for p_ext_hash in [ ("mha", sitk.sitkUInt64),
 if __name__ == '__main__':
     # hacky to get a temporary directory
     if len(sys.argv) > 1:
-        ConcurrentImageRead.temp_directory = sys.argv.pop()
+        ImageReadWriteInt64.temp_directory = sys.argv.pop()
     unittest.main()
