@@ -19,6 +19,7 @@
 #include "sitkImageReaderBase.h"
 #include "sitkMacro.h"
 #include "sitkExceptionObject.h"
+#include "sitkImageIOUtilities.h"
 
 #include <itksys/SystemTools.hxx>
 
@@ -59,8 +60,18 @@ ImageReaderBase
   this->ToStringHelper(out, this->m_OutputPixelType) << std::endl;
   out << "  LoadPrivateTags: ";
   this->ToStringHelper(out, this->m_LoadPrivateTags) << std::endl;
+  out << "  Registered ImageIO:" << std::endl;
+  out << ioutils::PrintRegisteredImageIOs();
   out << ProcessObject::ToString();
   return out.str();
+}
+
+
+std::vector<std::string>
+ImageReaderBase
+::GetRegisteredImageIOs() const
+{
+  return ioutils::GetRegisteredImageIOs();
 }
 
 itk::SmartPointer<ImageIOBase>

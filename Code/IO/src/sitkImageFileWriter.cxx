@@ -17,6 +17,7 @@
 *=========================================================================*/
 
 #include "sitkImageFileWriter.h"
+#include "sitkImageIOUtilities.h"
 
 #include <itkImageIOBase.h>
 #include <itkImageFileWriter.h>
@@ -67,10 +68,18 @@ std::string ImageFileWriter::ToString() const
 
   out << "  FileName: \"";
   this->ToStringHelper(out, this->m_FileName);
+  out << "  Registered ImageIO:" << std::endl;
+  out << ioutils::PrintRegisteredImageIOs();
   out << "\"" << std::endl;
 
   out << ProcessObject::ToString();
   return out.str();
+  }
+
+  std::vector<std::string>
+  ImageFileWriter::GetRegisteredImageIOs() const
+  {
+    return ioutils::GetRegisteredImageIOs();
   }
 
   ImageFileWriter::Self&

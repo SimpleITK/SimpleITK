@@ -90,6 +90,10 @@ TEST(IO,ImageFileReader) {
   reader.SetOutputPixelType( sitk::sitkVectorInt32 );
   EXPECT_EQ( reader.GetOutputPixelType(), sitk::sitkVectorInt32 );
 
+  std::vector<std::string> ios;
+  EXPECT_NO_THROW( ios = reader.GetRegisteredImageIOs() );
+  EXPECT_TRUE( std::find( ios.begin(), ios.end(), "GDCMImageIO") != ios.end() );
+
   reader.SetFileName( fileName );
   image = reader.Execute();
 }
@@ -137,6 +141,11 @@ TEST(IO,ImageFileWriter) {
 
   EXPECT_EQ ( "ImageFileWriter", writer.GetName() );
   EXPECT_NO_THROW ( writer.ToString() );
+
+  std::vector<std::string> ios;
+  EXPECT_NO_THROW( ios = writer.GetRegisteredImageIOs() );
+  EXPECT_TRUE( std::find( ios.begin(), ios.end(), "GDCMImageIO") != ios.end() );
+
 }
 
 TEST(IO,ReadWrite) {
@@ -310,6 +319,10 @@ TEST(IO, SeriesReader) {
   EXPECT_EQ ( 3u, image.GetDepth() );
   EXPECT_EQ ( "a51361940fdf6c33cf700e1002e5f5ca5b88cc42", sitk::Hash( image ) );
 
+  std::vector<std::string> ios;
+  EXPECT_NO_THROW( ios = reader.GetRegisteredImageIOs() );
+  EXPECT_TRUE( std::find( ios.begin(), ios.end(), "GDCMImageIO") != ios.end() );
+
   fileNames.resize(0);
   reader.SetFileNames ( fileNames );
   EXPECT_THROW( reader.Execute(), sitk::GenericException );
@@ -444,6 +457,11 @@ TEST(IO, ImageSeriesWriter )
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_3.DICOM" );
 
   EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
+
+  std::vector<std::string> ios;
+  EXPECT_NO_THROW( ios = writer.GetRegisteredImageIOs() );
+  EXPECT_TRUE( std::find( ios.begin(), ios.end(), "GDCMImageIO") != ios.end() );
+
 }
 
 

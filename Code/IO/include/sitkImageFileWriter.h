@@ -64,6 +64,11 @@ class SmartPointer;
       /** return user readable name of the filter */
       virtual std::string GetName() const { return std::string("ImageFileWriter"); }
 
+      /** \brief Get a vector of the names of registered itk ImageIOs
+       */
+      virtual std::vector<std::string> GetRegisteredImageIOs() const;
+
+
       /** \brief Enable compression if available for file type.
        *
        * These methods Set/Get/Toggle the UseCompression flag which

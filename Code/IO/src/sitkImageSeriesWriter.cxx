@@ -22,6 +22,7 @@
 #endif
 
 #include "sitkImageSeriesWriter.h"
+#include "sitkImageIOUtilities.h"
 
 #include <itkImageIOBase.h>
 #include <itkImageSeriesWriter.h>
@@ -73,10 +74,18 @@ namespace itk {
       out << "    \"" << *iter << "\"" << std::endl;
       ++iter;
       }
+    out << "  Registered ImageIO:" << std::endl;
+    out << ioutils::PrintRegisteredImageIOs();
 
     return out.str();
   }
 
+
+  std::vector<std::string>
+  ImageSeriesWriter::GetRegisteredImageIOs() const
+  {
+    return ioutils::GetRegisteredImageIOs();
+  }
 
   ImageSeriesWriter::Self&
   ImageSeriesWriter::SetUseCompression( bool UseCompression )
