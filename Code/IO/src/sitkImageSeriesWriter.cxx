@@ -75,7 +75,7 @@ namespace itk {
       ++iter;
       }
     out << "  Registered ImageIO:" << std::endl;
-    out << ioutils::PrintRegisteredImageIOs();
+    ioutils::PrintRegisteredImageIOs(out);
 
     return out.str();
   }

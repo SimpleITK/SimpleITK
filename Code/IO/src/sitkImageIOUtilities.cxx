@@ -27,10 +27,8 @@ namespace itk {
 namespace simple {
 namespace ioutils {
 
-std::string PrintRegisteredImageIOs()
+void PrintRegisteredImageIOs(std::ostream &out)
 {
-
-  std::ostringstream out;
 
   std::list<itk::LightObject::Pointer> allobjects =  itk::ObjectFactoryBase::CreateAllInstance("itkImageIOBase");
 
@@ -58,7 +56,6 @@ std::string PrintRegisteredImageIOs()
       out << std::endl;
       }
     }
-  return out.str();
 }
 
 std::vector<std::string> GetRegisteredImageIOs()

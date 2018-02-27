@@ -21,6 +21,7 @@
 
 #include <string>
 #include <vector>
+#include <ostream>
 
 namespace itk {
 namespace simple {
@@ -29,7 +30,7 @@ namespace ioutils {
 /* Internal method which prints all registed ImageIO names and the
  * file extensions they report as supporting.
  */
-SITKIO_HIDDEN std::string PrintRegisteredImageIOs();
+SITKIO_HIDDEN void PrintRegisteredImageIOs(std::ostream & out);
 
 /* Internal method which creates a string list of the names of the
 * ImageIOs registered.

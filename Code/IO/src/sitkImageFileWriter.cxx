@@ -69,7 +69,7 @@ std::string ImageFileWriter::ToString() const
   out << "  FileName: \"";
   this->ToStringHelper(out, this->m_FileName);
   out << "  Registered ImageIO:" << std::endl;
-  out << ioutils::PrintRegisteredImageIOs();
+  ioutils::PrintRegisteredImageIOs(out);
   out << "\"" << std::endl;
 
   out << ProcessObject::ToString();
@@ -166,7 +166,12 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
     writer->SetUseCompression( this->m_UseCompression );
     writer->SetFileName ( this->m_FileName.c_str() );
     writer->SetInput ( image );
-    writer->SetImageIO( GetImageIOBase( this->m_FileName ).GetPointer() );
+
+    itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
+
+    sitkDebugMacro( "ImageIO: " << imageio->GetNameOfClass() );
+
+    writer->SetImageIO( imageio );
 
     this->PreUpdate( writer.GetPointer() );
 

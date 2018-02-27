@@ -61,7 +61,7 @@ ImageReaderBase
   out << "  LoadPrivateTags: ";
   this->ToStringHelper(out, this->m_LoadPrivateTags) << std::endl;
   out << "  Registered ImageIO:" << std::endl;
-  out << ioutils::PrintRegisteredImageIOs();
+  ioutils::PrintRegisteredImageIOs(out);
   out << ProcessObject::ToString();
   return out.str();
 }
