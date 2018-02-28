@@ -98,6 +98,48 @@ TEST(IO,ImageFileReader) {
   image = reader.Execute();
 }
 
+#ifdef SITK_INT64_PIXELIDS
+TEST(IO, ReadWriteInt64){
+
+  namespace sitk = itk::simple;
+
+  sitk::Image img1 = sitk::Image(10,10, sitk::sitkUInt64);
+  img1.SetPixelAsUInt64(std::vector<uint32_t>(2,1), 1u);
+  img1.SetPixelAsUInt64(std::vector<uint32_t>(2,2), uint64_t(4294967296));
+
+  sitk::Image img2 = sitk::Image(10,10, sitk::sitkInt64);
+  img2.SetPixelAsInt64(std::vector<uint32_t>(2,1), 1u);
+  img2.SetPixelAsInt64(std::vector<uint32_t>(2,2), int64_t(4294967296));
+  img2.SetPixelAsInt64(std::vector<uint32_t>(2,3), -1);
+  img2.SetPixelAsInt64(std::vector<uint32_t>(2,4), int64_t(-4294967296));
+
+
+  const char *extension_list[] = {"mha",
+                                  "nii",
+                                  "nrrd",
+                                  SITK_NULLPTR};
+
+  for (unsigned int i = 0; extension_list[i]; ++i)
+    {
+    const std::string filename = dataFinder.GetOutputFile("IO.ReadWriteInt64.") + extension_list[i];
+
+    sitk::WriteImage(img1, filename);
+    sitk::Image out = sitk::ReadImage(filename);
+
+    EXPECT_EQ( img1.GetPixelID(), out.GetPixelID() ) << "filename : " << filename;
+    EXPECT_EQ( sitk::Hash(img1), sitk::Hash(out)) << "filename : " << filename;;
+
+    sitk::WriteImage(img2, filename);
+    out = sitk::ReadImage(filename);
+
+    EXPECT_EQ( img2.GetPixelID(), out.GetPixelID() ) << "filename : " << filename;;
+    EXPECT_EQ( sitk::Hash(img2), sitk::Hash(out)) << "filename : " << filename;;
+
+    }
+
+}
+#endif
+
 TEST(IO,ImageFileWriter) {
   namespace sitk = itk::simple;
 

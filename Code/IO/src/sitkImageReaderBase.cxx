@@ -279,7 +279,7 @@ ImageReaderBase
       return ImageTypeToPixelIDValue< itk::Image<int64_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::ULONGLONG:
-      return ImageTypeToPixelIDValue< itk::Image<int64_t, UnusedDimension> >::Result;
+      return ImageTypeToPixelIDValue< itk::Image<uint64_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::FLOAT:
       return ImageTypeToPixelIDValue< itk::Image<float, UnusedDimension> >::Result;
