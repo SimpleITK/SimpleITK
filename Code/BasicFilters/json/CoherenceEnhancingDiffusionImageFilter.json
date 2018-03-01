@@ -1,0 +1,100 @@
+{
+  "name" : "CoherenceEnhancingDiffusionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "filter_type" : "itk::CoherenceEnhancingDiffusionImageFilter<InputImageType>",
+  "members" : [
+    {
+      "name" : "DiffusionTime",
+      "type" : "double",
+      "default" : 1.0
+    },
+    {
+      "name" : "Lambda",
+      "type" : "double",
+      "default" : 0.05,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Exponent m involved in the function g defining eigenvalues.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Enhancement",
+      "enum" : [
+        "CED",
+        "cCED",
+        "EED",
+        "cEED",
+        "Isotropic"
+      ],
+      "default" : "itk::simple::CoherenceEnhancingDiffusionImageFilter::CED",
+      "itk_type" : "typename FilterType::EnhancementType",
+      "briefdescriptionSet" : "Switch between CED, EED, and variants.",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "NoiseScale",
+      "type" : "double",
+      "default" : 0.5
+    },
+    {
+      "name" : "FeatureScale",
+      "type" : "double",
+      "default" : 2.0
+    },
+    {
+      "name" : "Exponent",
+      "type" : "double",
+      "default" : 2.0,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Exponent m involved in the function g defining eigenvalues.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Alpha",
+      "type" : "double",
+      "default" : 0.01,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Exponent m involved in the function g defining eigenvalues.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "RatioToMaxStableTimeStep",
+      "type" : "double",
+      "default" : 0.7
+    },
+    {
+      "name" : "MaxTimeStepsBetweenTensorUpdates",
+      "type" : "uint8_t",
+      "default" : 5
+    },
+    {
+      "name" : "Adimensionize",
+      "type" : "bool",
+      "default" : "true"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [
+      ],
+      "tolerance" : 1e-7,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Coherence enhanging diffusion and edge enhancing diffusion.",
+  "detaileddescription" : "Implementation of Coherence Enhancing Diffusion (CED), and Edge Enhancing Diffusion (EED), as described by Weickert.\n\nCED heuristically smoothes everywhere except accross image contours, while EED smoothes nowhere but tangentially to image contours.\n\nThe non-linear diffusion tensor is defined in terms of the structure tensor.\n\nDenote by \\f$\\mu_i\\f$ the structure tensor eigenvalues, at a given point \\f$x\\f$ , with \\f$0\\leq i < d\\f$ . Let also \\f$\\mu_{\\rm min}\\f$ and \\f$\\mu_{\\rm max}\\f$ , be the smallest and largest eigenvalues respectively. The diffusion tensor is defined by the same eigenvectors, but with modified with eigenvalues \\f$\\lambda_i\\f$ .\n\nCoherence Enhancing Diffusion:\n\n\\f$\\lambda_i := g(\\mu_i - \\mu_{\\rm min})\\f$ , where \\f$g(s) = 1 - (1-\\alpha)*exp(-(\\lambda/s)^m)\\f$ \n\nNote the limit values \\f$g(0) = 1\\f$ , \\f$g(\\infty) = \\alpha\\f$ .\n\nEdge enhancing diffusion:\n\n\\f$\\lambda_i := g(\\mu_{\\rm max} - \\mu_i)\\f$ , where \\f$g(s) = \\alpha + (1-\\alpha)*exp(-(\\lambda/s)^m)\\f$ \n\nNote the limit values \\f$g(0) = \\alpha\\f$ , \\f$g(\\infty) = 1\\f$ .",
+  "itk_module" : "AnisotropicDiffusionLBR"
+}
