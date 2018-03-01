@@ -46,6 +46,7 @@ class SmartPointer;
 
       ImageReaderBase();
 
+
       /** \brief Set/Get The output PixelType of the image.
        *
        * By default the value is sitkUnknown, which enable the output
@@ -62,6 +63,10 @@ class SmartPointer;
 
       virtual std::string ToString() const;
 
+      /** \brief Get a vector of the names of registered itk ImageIOs
+       */
+      virtual std::vector<std::string> GetRegisteredImageIOs() const;
+
       /** \brief Set/Get loading private DICOM tags into Image's MetaData
        *
        * Unknown private tags may be encoded with Base64 encoding.
@@ -76,7 +81,6 @@ class SmartPointer;
     protected:
 
       itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
-
 
       void GetPixelIDFromImageIO( const std::string &fileName,
                                   PixelIDValueType &outPixelType,

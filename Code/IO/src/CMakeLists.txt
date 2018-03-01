@@ -7,6 +7,7 @@ set( SimpleITKIOSource
   sitkImageSeriesWriter.cxx
   sitkImportImageFilter.cxx
   sitkShow.cxx
+  sitkImageIOUtilities.cxx
   )
 
 set(use_itk_modules  ITKCommon ITKLabelMap ITKImageCompose
