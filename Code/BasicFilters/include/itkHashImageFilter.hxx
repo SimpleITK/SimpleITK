@@ -80,9 +80,6 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
     MD5Holder() : md5(itksysMD5_New()) {}
     ~MD5Holder() {itksysMD5_Delete(md5);}
     itksysMD5 *md5;
-  private:
-    MD5Holder &operator=(MD5Holder &);
-    MD5Holder(MD5Holder &);
   };
   MD5Holder holder;
 
