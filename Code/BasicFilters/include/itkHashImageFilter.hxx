@@ -75,8 +75,15 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
   typedef typename NumericTraits<PixelType>::ValueType ValueType;
   typedef itk::ByteSwapper<ValueType>                  Swapper;
 
+  struct MD5Holder
+  {
+    MD5Holder() : md5(itksysMD5_New()) {}
+    ~MD5Holder() {itksysMD5_Delete(md5);}
+    itksysMD5 *md5;
+  };
+  MD5Holder holder;
 
-  itksysMD5 *md5 = itksysMD5_New();
+  itksysMD5 *md5 = holder.md5;
   itksysMD5_Initialize( md5 );
 
   ::SHA1 sha1;
