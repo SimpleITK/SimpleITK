@@ -87,9 +87,8 @@ if(DEFINED SKBUILD)
     )
 
   install(TARGETS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME DESTINATION SimpleITK
-    LIBRARY DESTINATION SimpleITK
-    COMPONENT Runtime
+    RUNTIME DESTINATION SimpleITK COMPONENT Runtime
+    LIBRARY DESTINATION SimpleITK COMPONENT Runtime
     )
 else()
   include(LegacyPackaging.cmake)
