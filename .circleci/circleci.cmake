@@ -33,7 +33,7 @@ set_from_env(CTEST_SOURCE_DIRECTORY "CTEST_SOURCE_DIRECTORY" REQUIRED)
 set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" DEFAULT "Release")
 set_from_env(CTEST_BUILD_FLAGS "CTEST_BUILD_FLAGS")
 
-set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY")
+set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
 # Construct build name based on what is being built
 string(SUBSTRING $ENV{CIRCLE_SHA1} 0 7 commit_sha1)
@@ -57,7 +57,7 @@ if ( EXISTS  "${CTEST_SOURCE_DIRECTORY}/.circleci/config.yml")
 endif()
 
 
-SET (dashboard_cache "
+SET (_dashboard_cache "
     BUILD_DOCUMENTATION:BOOL=OFF
     BUILD_EXAMPLES:BOOL=OFF
     BUILD_SHARED_LIBS:BOOL=ON
@@ -67,8 +67,9 @@ SET (dashboard_cache "
     SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
 
     WRAP_DEFAULT:BOOL=OFF
-    WRAP_PYTHON:BOOL=ON
 " )
+
+set_from_env(dashboard_cache "CTEST_CACHE" DEFAULT ${_dashboard_cache})
 
 
 if (DEFINED ENV{DISTCC_DIR})
