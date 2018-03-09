@@ -73,6 +73,15 @@ jobs:
           command: |
             export PATH=/usr/lib/ccache:${PATH}
             export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib"
+            export CTEST_CACHE="
+              BUILD_DOCUMENTATION:BOOL=OFF
+              BUILD_EXAMPLES:BOOL=OFF
+              BUILD_SHARED_LIBS:BOOL=ON
+
+              SimpleITK_USE_SYSTEM_LUA:BOOL=ON
+              SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
+
+              WRAP_DEFAULT:BOOL=OFF"
             ctest -V -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - run:
           name: ccache stats
@@ -95,6 +104,42 @@ jobs:
       - save_cache:
           key: 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
           paths: [ "/home/circleci/.ExternalData" ]
+      - run:
+          name: Cleanup build
+          command: |
+            rm -rf "${CTEST_BINARY_DIRECTORY}/ITK" "${CTEST_BINARY_DIRECTORY}/ITK-build"
+            rm -rf "${CTEST_BINARY_DIRECTORY}/SimpleITK" "${CTEST_BINARY_DIRECTORY}/SimpleITK-build"
+      - persist_to_workspace:
+          root: /home/circleci/SimpleITK-build
+          paths:
+            - "*"
+  python-and-test:
+    <<: *defaults
+    steps:
+      - checkout:
+          path : ~/SimpleITK
+      - *generate-hash-step
+      - *restore-data-step
+      - *clone-dashboard-step
+      - *dependencies
+      - attach_workspace:
+          at: /home/circleci/SimpleITK-build
+      - run:
+          name: Build Python and Testing with CTest
+          no_output_timeout: 20.0m
+          environment:
+                CTEST_CONFIGURATION_TYPE: "Release"
+                CTEST_BUILD_FLAGS: "-j 4"
+                CTEST_OUTPUT_ON_FAILURE: 1
+                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+                PARALLEL_LEVEL: 2
+          command: |
+            export PATH=/usr/lib/ccache:${PATH}
+            export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/lib"
+            export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${CTEST_BINARY_DIRECTORY}
+              SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
+            export CTEST_BINARY_DIRECTORY="/home/circleci/SimpleITK-py"
+            ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
   docs:
     <<: *defaults
     steps:
@@ -132,6 +177,9 @@ workflows:
                  - gh-pages
                  - dashboard
                  - hooks
+      - python-and-test:
+          requires:
+            - build-and-test
 
   nightly:
     triggers:
