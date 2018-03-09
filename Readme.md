@@ -35,27 +35,6 @@ Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis Not
 
 B. C. Lowekamp, D. T. Chen, L. Ibáñez, D. Blezek, "The Design of SimpleITK", *Front. Neuroinform.*, 7:45. https://doi.org/10.3389/fninf.2013.00045, 2013.
 
-Development
-===========
-
-SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on [itk.org](https://itk.org/SimpleITK.git) and mirrored to [Github](https://github.com/SimpleITK/SimpleITK.git).
-
-Contribute
---------
-
-We encourage any contributions from the community!
-
-To submit code to SimpleITK, simply follow the standard GitHub workflow to make a pull request. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962) regarding the workflow and getting your computer setup.
-
-After cloning the repository, run `./Utilities/SetupForDevelopment.sh` from within the SimpleITK repository to setup Git hooks. Say "no" to setting up access to itk.org as only core developers need access for merging pull requests.
-
-Branches
-* **next** - An unstable branch which contains future features. These will be tested nightly on [CDash](https://open.cdash.org/index.php?project=SimpleITK). If the tests are passed, then they will be merged into master. Pull requests should never be based on this branch, however this is the default branch you should push changes to.
-* **master** - Stable branch of the code and suitable for most users when building SimpleITK.
-* **release** - Branch of the code from the latest release, and patches for the last can be based on and merged to.
-
-The comprehensive regression testing is reported to the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK). This include extensive nightly testing on the next branch, nightly distributions packages on the release or master branch, and continuous integration from Github pull requests.
-
 Documentation
 -------------
 With massive libraries like SimpleITK, good documentation is a must. The documentation for SimpleITK is split up into multiple levels:
