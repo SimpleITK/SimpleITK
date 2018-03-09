@@ -1,15 +1,45 @@
-defaults: &defaults
-  docker:
-    - image: circleci/python:2.7
-  working_directory: ~/
-  resource_class: large
-  environment:
-    CTEST_DASHBOARD_ROOT: /home/circleci
-    CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
-    CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
-    DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
-    ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
-    CCACHE_NODIRECT: 1
+referenced:
+  defaults: &defaults
+    docker:
+     - image: circleci/python:2.7
+    working_directory: ~/
+    resource_class: large
+    environment:
+      CTEST_DASHBOARD_ROOT: /home/circleci
+      CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
+      CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
+      DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
+      ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
+      CCACHE_NODIRECT: 1
+  dependencies: &dependencies
+    run:
+      name: Dependencies
+      command: |
+        sudo apt-get install -y rsync lua5.1 ccache kwstyle swig
+        sudo pip install --upgrade pip
+        sudo pip install numpy scikit-ci-addons
+        ci_addons circle/install_cmake.py 3.10.2
+  generate-hash-step: &generate-hash-step
+    run:
+      name: Generate external data hash
+      command: |
+        cd SimpleITK
+        git log -n 1 ${CTEST_SOURCE_DIRECTORY}/Testing/Data/ | tee /home/circleci/external-data.hashable
+  restore-data-step: &restore-data-step
+     restore_cache:
+       keys:
+         - 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
+         - 'v1-external-data'
+  restore-ccache-step: &restore-ccache-step
+    restore_cache:
+      keys:
+        - ccache-{{ arch }}-{{ .Branch }}
+        - ccache-{{ arch }}-master
+  clone-dashboard-step: &clone-dashboard-step
+     run:
+       name: Cloning dashboard branch
+       command: |
+         git clone --single-branch ${CIRCLE_REPOSITORY_URL} -b dashboard ${DASHBOARD_BRANCH_DIRECTORY}
 
 
 version: 2
@@ -19,30 +49,11 @@ jobs:
     steps:
       - checkout:
           path : ~/SimpleITK
-      - run:
-          name: Generate external data hash
-          command: |
-             cd SimpleITK
-             git log -n 1 ${CTEST_SOURCE_DIRECTORY}/Testing/Data/ | tee /home/circleci/external-data.hashable
-      - restore_cache:
-          keys:
-            - 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
-            - 'v1-external-data'
-      - restore_cache:
-          keys:
-            - ccache-{{ arch }}-{{ .Branch }}
-            - ccache-{{ arch }}-master
-      - run:
-          name: Cloning dashboard branch
-          command: |
-            git clone --single-branch ${CIRCLE_REPOSITORY_URL} -b dashboard ${DASHBOARD_BRANCH_DIRECTORY}
-      - run:
-          name: Dependencies
-          command: |
-            sudo apt-get install -y rsync lua5.1 ccache kwstyle
-            sudo pip install --upgrade pip
-            sudo pip install numpy scikit-ci-addons
-            ci_addons circle/install_cmake.py 3.10.2
+      - *generate-hash-step
+      - *restore-data-step
+      - *restore-ccache-step
+      - *clone-dashboard-step
+      - *dependencies
       - run:
           name: CCache initialization
           command: |
@@ -89,26 +100,9 @@ jobs:
     steps:
       - checkout:
           path : ~/SimpleITK
-      - run:
-          name: Generate external data hash
-          command: |
-             cd SimpleITK
-             git log -n 1 ${CTEST_SOURCE_DIRECTORY}/Testing/Data/ | tee /home/circleci/external-data.hashable
-      - restore_cache:
-          keys:
-            - 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
-            - 'v1-external-data'
-      - restore_cache:
-          keys:
-            - ccache-{{ arch }}-{{ .Branch }}
-            - ccache-{{ arch }}-master
-      - run:
-          name: Dependencies
-          command: |
-            sudo apt-get install -y rsync lua5.1 ccache kwstyle doxygen
-            sudo pip install scikit-ci-addons
-            sudo pip install --upgrade pip
-            ci_addons circle/install_cmake.py 3.9.2
+      - *generate-hash-step
+      - *restore-data-step
+      - *dependencies
       - run:
           name: Building and Generating Doxygen
           no_output_timeout: 20.0m
