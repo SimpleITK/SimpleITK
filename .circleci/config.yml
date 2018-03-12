@@ -3,16 +3,15 @@ referenced:
     docker:
      - image: circleci/python:2.7
     working_directory: ~/
-    resource_class: large
     environment:
       CTEST_DASHBOARD_ROOT: /home/circleci
       CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
       CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
-      CTEST_BUILD_FLAGS: "-j 4"
+      CTEST_BUILD_FLAGS: "-j 2"
       CTEST_CONFIGURATION_TYPE: "Release"
       CTEST_OUTPUT_ON_FAILURE: 1
       ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-      PARALLEL_LEVEL: 4
+      PARALLEL_LEVEL: 2
       DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
       ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
       CCACHE_NODIRECT: 1
@@ -119,7 +118,6 @@ jobs:
           path : ~/SimpleITK
       - *generate-hash-step
       - *restore-data-step
-      - *restore-ccache-step
       - *clone-dashboard-step
       - *dependencies
       - attach_workspace:
