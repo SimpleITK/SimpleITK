@@ -140,15 +140,25 @@ jobs:
           path : ~/SimpleITK
       - *generate-hash-step
       - *restore-data-step
+      - *restore-ccache-step
+      - *clone-dashboard-step
       - *dependencies
+      - run:
+          name: Additional Dependencies
+          command: |
+            sudo apt-get install -y doxygen
       - run:
           name: Building and Generating Doxygen
           no_output_timeout: 20.0m
           command: |
+            export CTEST_BUILD_TARGET=SimpleITK-doc
             export PATH=/usr/lib/ccache:${PATH}
-            mkdir ${CTEST_BINARY_DIRECTORY} && cd ${CTEST_BINARY_DIRECTORY}
-            cmake -DWRAP_DEFAULT=OFF -DBUILD_DOXYGEN=ON -DSimpleITK_USE_SYSTEM_LUA:BOOL=ON ${CTEST_SOURCE_DIRECTORY}/SuperBuild
-            make -j ${CTEST_BUILD_FLAGS} SimpleITK-doc
+            export CTEST_CACHE="
+             BUILD_SHARED_LIBS:BOOL=ON
+             WRAP_DEFAULT=OFF
+             BUILD_DOXYGEN=ON
+             SimpleITK_USE_SYSTEM_LUA:BOOL=ON"
+            ctest -V -Ddashboard_no_test:BOOL=1 -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - run:
           name: Archiving directory for artifact
           command: |
@@ -170,7 +180,6 @@ workflows:
       - python-and-test:
           requires:
             - build-and-test
-
   nightly:
     triggers:
       - schedule:
