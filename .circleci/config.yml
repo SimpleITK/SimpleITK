@@ -45,7 +45,12 @@ referenced:
        name: Cloning dashboard branch
        command: |
          git clone --single-branch ${CIRCLE_REPOSITORY_URL} -b dashboard ${DASHBOARD_BRANCH_DIRECTORY}
-
+  env-step: &env-step
+     run:
+       name: Additional Environment Variables
+       command: |
+         echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
+         echo 'export PATH=/usr/lib/ccache:${PATH}' >> $BASH_ENV
 
 version: 2
 jobs:
@@ -59,18 +64,17 @@ jobs:
       - *restore-ccache-step
       - *clone-dashboard-step
       - *dependencies
+      - *env-step
       - run:
           name: CCache initialization
           command: |
             ccache --show-stats
             ccache --zero-stats
             ccache --max-size=2.0G
-      - run: echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
       - run:
           name: Build and Testing with CTest
           no_output_timeout: 20.0m
           command: |
-            export PATH=/usr/lib/ccache:${PATH}
             export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib"
             export CTEST_CACHE="
               BUILD_DOCUMENTATION:BOOL=OFF
@@ -121,13 +125,13 @@ jobs:
       - *restore-data-step
       - *clone-dashboard-step
       - *dependencies
+      - *env-step
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
       - run:
           name: Build Python and Testing with CTest
           no_output_timeout: 20.0m
           command: |
-            export PATH=/usr/lib/ccache:${PATH}
             export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/lib"
             export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${CTEST_BINARY_DIRECTORY}
               SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
@@ -143,6 +147,7 @@ jobs:
       - *restore-ccache-step
       - *clone-dashboard-step
       - *dependencies
+      - *env-step
       - run:
           name: Additional Dependencies
           command: |
@@ -152,7 +157,6 @@ jobs:
           no_output_timeout: 20.0m
           command: |
             export CTEST_BUILD_TARGET=SimpleITK-doc
-            export PATH=/usr/lib/ccache:${PATH}
             export CTEST_CACHE="
              BUILD_SHARED_LIBS:BOOL=ON
              WRAP_DEFAULT=OFF
