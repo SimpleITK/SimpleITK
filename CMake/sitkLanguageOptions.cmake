@@ -1,11 +1,12 @@
 #
-# - This module finds the languages supported by SimpleITK, and
-#present the option to enable support
-#
-
-#
-# Currently this will search for Python, Java, TCL, Ruby, C#, R
-# Additionally it give the option to wrap LUA.
+# - This module finds the languages supported by SimpleITK. By default
+#a find package will be performed for each language, and if it is
+#detected wrapping for that language will be enabled
+#(WRAP_<languageName>=ON). This behavior can be overridden by setting
+#"WRAP_DEFAULT" to FALSE. Individual languages can be disabled with
+#the WRAP_<languageName> option. If either WRAP_DEFAULT or WRAP_<languageName> is
+#false then no find_package for the language will be performed, and
+#the language will not be wrapped.
 #
 
 include(sitkTargetLinkLibrariesWithDynamicLookup)
@@ -15,24 +16,53 @@ sitk_check_dynamic_lookup(MODULE
   SITK_UNDEFINED_SYMBOLS_ALLOWED
   )
 
-option(WRAP_DEFAULT "The default initial value for wrapping a language when it is detected on the system." ON)
+option(WRAP_DEFAULT "Enables automatic detection and wrapping for all languages." ON)
 mark_as_advanced(WRAP_DEFAULT)
 
+# Arguments:
+# - languageName - name of the language, will check variable
+#   `WRAP_<languageName>`
 #
-# Macro to set "_QUIET" and "_QUIET_LIBRARY" based on the first
-# argument being defined and true, to either REQUIRED or QUIET.
+# Modified Variables:
+#  - _do_find_package - always defined, true if find_pacakge for
+#    languages should be run.
+#  - _find_package_extra_args - may be set to `REQUIRED` of `QUIET` as
+#    needed.
+#  - WRAP_<languageName>_DEFAULT - may be set to `ON` or `OFF` if it
+#    can be determined with out a find_package call
 #
-macro(set_QUIET var)
-  if ( DEFINED  ${var} AND ${var} )
-    set( _QUIET "REQUIRED" )
+macro(sitkLanguageShouldDoFindPackage languageName )
+
+  if ( DEFINED  WRAP_${languageName} )
+    if ( WRAP_${languageName} )
+      # Variable `WRAP_<languageName>` is defined and TRUE, we need
+      # to call  `find_package` with `REQUIRED`
+      set(_do_find_package 1)
+      set(_find_package_extra_args  "REQUIRED")
+      set(WRAP_${languageName}_DEFAULT ON)
+    else()
+      # Variable `WRAP_<languageName>` is defined and FALSE, we do  *NOT* need
+      # to call  `find_package` at all to initialize the `WRAP_<languageName>_DEFAULT`
+      # variable
+      set(WRAP_${languageName}_DEFAULT OFF)
+      set(_do_find_package 0)
+    endif()
+  elseif( WRAP_DEFAULT )
+    # The variable `WRAP_<languageName>` is *NOT* defined and
+    # WRAP_DEFAULT=ON, so we must "quietly" do a find package to
+    # determine the value for `WRAP_<languageName>_DEFAULT` variable
+    set(_do_find_package 1)
+    set(_find_package_extra_args "QUIET")
   else()
-    set( _QUIET "QUIET" )
+    # The variable `WRAP_<languageName>` is *NOT* defined and explicitly all
+    # languages are disabled by WRAP_DEFAULT=OFF, we do *NOT* need to
+    # call `find_package` to initialize the
+    # `WRAP_<languageName>_DEFAULT` variable.
+    set(WRAP_${languageName}_DEFAULT OFF)
+    set(_do_find_package 0)
   endif()
-  if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
-    set( _QUIET_LIBRARY "QUIET" )
-  else()
-    set( _QUIET_LIBRARY ${_QUIET} )
-  endif()
+
+
 endmacro()
 
 #
@@ -42,21 +72,23 @@ endmacro()
 #-----------------------------------------------------------
 # Lua
 
-set_QUIET( WRAP_LUA )
-find_package ( Lua ${_QUIET} )
+sitkLanguageShouldDoFindPackage( LUA )
 
-if ( LUA_FOUND )
-  set( WRAP_LUA_DEFAULT ${WRAP_DEFAULT} )
-else()
-  set( WRAP_LUA_DEFAULT OFF )
+if( _do_find_package )
+
+  find_package ( Lua ${_find_package_extra_args} )
+
+  set( WRAP_LUA_DEFAULT ${LUA_FOUND} )
 endif()
 
-set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
-mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
 
 option ( WRAP_LUA "Wrap Lua" ${WRAP_LUA_DEFAULT} )
 
 if ( WRAP_LUA )
+
+  set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+  mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
+
   find_package( LuaInterp REQUIRED )
   list( APPEND SITK_LANGUAGES_VARS
     LUA_EXECUTABLE
@@ -72,28 +104,40 @@ endif()
 #-----------------------------------------------------------
 # Python
 
-set_QUIET( WRAP_PYTHON )
-find_package ( PythonInterp ${_QUIET})
-if ( PYTHONINTERP_FOUND )
-  find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET_LIBRARY} )
-else ()
-  find_package ( PythonLibs ${_QUIET_LIBRARY} )
-endif()
+sitkLanguageShouldDoFindPackage( PYTHON )
 
-if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
-    AND (PYTHON_VERSION_STRING VERSION_EQUAL PYTHONLIBS_VERSION_STRING) )
-  set( WRAP_PYTHON_DEFAULT ${WRAP_DEFAULT} )
-else()
-  set( WRAP_PYTHON_DEFAULT OFF )
+if( _do_find_package )
+
+  find_package ( PythonInterp ${_find_package_extra_args})
+
+  # if we don't need to link against a library, the make the
+  # find_package quiet.
+  if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
+    set( _find_package_extra_args "QUIET" )
+  endif()
+
+  if ( PYTHONINTERP_FOUND )
+    find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_find_package_extra_args} )
+  else ()
+    find_package ( PythonLibs ${_find_package_extra_args} )
+  endif()
+
+  if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
+      AND (PYTHON_VERSION_STRING VERSION_EQUAL PYTHONLIBS_VERSION_STRING) )
+    set( WRAP_PYTHON_DEFAULT ON )
+  else()
+    set( WRAP_PYTHON_DEFAULT OFF )
+  endif()
 endif()
 
 option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 
-if ( WRAP_PYTHON AND PYTHON_VERSION_STRING VERSION_LESS 2.7 )
-  message( WARNING "Python version less than 2.7: \"${PYTHON_VERSION_STRING}\"." )
-endif()
 
 if ( WRAP_PYTHON )
+  if ( PYTHON_VERSION_STRING VERSION_LESS 2.7 )
+    message( WARNING "Python version less than 2.7: \"${PYTHON_VERSION_STRING}\"." )
+  endif()
+
   list( APPEND SITK_LANGUAGES_VARS
     PYTHON_DEBUG_LIBRARY
     PYTHON_EXECUTABLE
@@ -114,14 +158,19 @@ endif ()
 #-----------------------------------------------------------
 # Java
 
-set_QUIET( WRAP_JAVA )
-find_package ( Java COMPONENTS Development Runtime ${_QUIET} )
-find_package ( JNI ${_QUIET} )
-if ( JAVA_FOUND AND JNI_FOUND )
-  set( WRAP_JAVA_DEFAULT ${WRAP_DEFAULT} )
-else ( ${JAVA_FOUND} AND JNI_FOUND )
-  set( WRAP_JAVA_DEFAULT OFF )
-endif ( )
+sitkLanguageShouldDoFindPackage( JAVA )
+
+if( _do_find_package )
+
+  find_package ( Java COMPONENTS Development Runtime ${_find_package_extra_args} )
+  find_package ( JNI ${_find_package_extra_args} )
+
+  if ( JAVA_FOUND AND JNI_FOUND )
+    set( WRAP_JAVA_DEFAULT ON )
+  else ( ${JAVA_FOUND} AND JNI_FOUND )
+    set( WRAP_JAVA_DEFAULT OFF )
+  endif ( )
+endif()
 
 option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
 
@@ -154,15 +203,14 @@ endif()
 #-----------------------------------------------------------
 # Tcl
 
-set_QUIET(WRAP_TCL)
+sitkLanguageShouldDoFindPackage( WRAP_TCL )
 
-find_package ( TCL ${_QUIET} )
+if( _do_find_package )
 
-if ( TCL_FOUND )
-  set ( WRAP_TCL_DEFAULT ${WRAP_DEFAULT} )
-else ( )
-  set ( WRAP_TCL_DEFAULT OFF )
-endif ( )
+  find_package ( TCL ${_find_package_extra_args} )
+
+  set ( WRAP_TCL_DEFAULT ${TCL_FOUND} )
+endif()
 
 option ( WRAP_TCL "Wrap Tcl" ${WRAP_TCL_DEFAULT} )
 
@@ -181,14 +229,18 @@ endif()
 #-----------------------------------------------------------
 # Ruby
 
-set_QUIET( WRAP_RUBY )
+sitkLanguageShouldDoFindPackage( RUBY )
 
-find_package ( Ruby ${_QUIET} )
-if ( RUBY_FOUND )
-  set ( WRAP_RUBY_DEFAULT ${WRAP_DEFAULT} )
-else ( )
-  set ( WRAP_RUBY_DEFAULT OFF )
-endif ( )
+if( _do_find_package )
+
+  find_package ( Ruby ${_find_package_extra_args} )
+
+  if ( RUBY_FOUND )
+    set ( WRAP_RUBY_DEFAULT ${WRAP_DEFAULT} )
+  else ( )
+    set ( WRAP_RUBY_DEFAULT OFF )
+  endif ( )
+endif()
 
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
@@ -207,14 +259,18 @@ endif()
 #-----------------------------------------------------------
 #  CSharp
 
-set_QUIET( WRAP_CSHARP )
+sitkLanguageShouldDoFindPackage( CSHARP )
 
-find_package( CSharp ${_QUIET} )
-if ( CSHARP_FOUND AND NOT MINGW )
-  set ( WRAP_CSHARP_DEFAULT ${WRAP_DEFAULT} )
-else ()
-  set ( WRAP_CSHARP_DEFAULT OFF )
-endif ()
+if( _do_find_package )
+
+  find_package( CSharp ${_find_package_extra_args} )
+
+  if ( CSHARP_FOUND AND NOT MINGW )
+    set ( WRAP_CSHARP_DEFAULT ON )
+  else ()
+    set ( WRAP_CSHARP_DEFAULT OFF )
+  endif ()
+endif()
 
 option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 
@@ -230,14 +286,18 @@ endif()
 #-----------------------------------------------------------
 #  R
 
-set_QUIET( WRAP_R )
+sitkLanguageShouldDoFindPackage( R )
 
-find_package(R ${_QUIET})
-if ( R_FOUND AND NOT WIN32 )
-  set ( WRAP_R_DEFAULT ${WRAP_DEFAULT} )
-else( )
-  set ( WRAP_R_DEFAULT OFF )
-endif( )
+if( _do_find_package )
+
+  find_package(R ${_find_package_extra_args})
+
+  if ( R_FOUND AND NOT WIN32 )
+    set ( WRAP_R_DEFAULT ON )
+  else( )
+    set ( WRAP_R_DEFAULT OFF )
+  endif( )
+endif()
 
 option ( WRAP_R "Wrap R" ${WRAP_R_DEFAULT} )
 
