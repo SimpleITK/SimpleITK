@@ -386,6 +386,8 @@ foreach (_varName ${_varNames})
          _varName MATCHES "^BUILD_DOXYGEN$"
        OR
          _varName MATCHES "^DOXYGEN_"
+       OR
+         _varName MATCHES "^CMAKE_DISABLE_FIND_PACKAGE_"
          )
     message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
     list(APPEND SimpleITK_VARS ${_varName})
