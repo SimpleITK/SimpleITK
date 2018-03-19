@@ -162,7 +162,9 @@ jobs:
              WRAP_DEFAULT=OFF
              BUILD_DOXYGEN=ON
              SimpleITK_USE_SYSTEM_LUA:BOOL=ON"
-            ctest -V -Ddashboard_no_test:BOOL=1 -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+            ctest -V -Ddashboard_no_test:BOOL=1\
+              -Ddashboard_track:BOOL=Doxygen\
+              -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - run:
           name: Archiving directory for artifact
           command: |
@@ -187,7 +189,7 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 3 * * *"
           filters:
             branches:
               only:
