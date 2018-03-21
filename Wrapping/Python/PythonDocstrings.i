@@ -4730,7 +4730,12 @@ passes as the initial translation to the transform. This second
 approach assumes that the moments of the anatomical objects are
 similar for both images and hence the best initial guess for
 registration is to superimpose both mass centers. Note that this
-assumption will probably not hold in multi-modality registration.   \\\\sa itk::CenteredTransformInitializer
+assumption will probably not hold in multi-modality registration.
+
+
+See:
+ itk::CenteredTransformInitializer
+
 
 C++ includes: sitkCenteredTransformInitializerFilter.h
 ";
@@ -5355,6 +5360,163 @@ Print ourselves out
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::~ClosingByReconstructionImageFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::CoherenceEnhancingDiffusionImageFilter "
+
+Coherence enhanging diffusion and edge enhancing diffusion.
+
+
+Implementation of Coherence Enhancing Diffusion (CED), and Edge
+Enhancing Diffusion (EED), as described by Weickert.
+
+CED heuristically smoothes everywhere except accross image contours,
+while EED smoothes nowhere but tangentially to image contours.
+
+The non-linear diffusion tensor is defined in terms of the structure
+tensor.
+
+Denote by $\\\\mu_i$ the structure tensor eigenvalues, at a given point $x$ , with $0\\\\leq i < d$ . Let also $\\\\mu_{\\\\rm min}$ and $\\\\mu_{\\\\rm max}$ , be the smallest and largest eigenvalues respectively. The diffusion
+tensor is defined by the same eigenvectors, but with modified with
+eigenvalues $\\\\lambda_i$ .
+
+Coherence Enhancing Diffusion:
+
+$\\\\lambda_i := g(\\\\mu_i - \\\\mu_{\\\\rm min})$ , where $g(s) = 1 - (1-\\\\alpha)*exp(-(\\\\lambda/s)^m)$
+
+Note the limit values $g(0) = 1$ , $g(\\\\infty) = \\\\alpha$ .
+
+Edge enhancing diffusion:
+
+$\\\\lambda_i := g(\\\\mu_{\\\\rm max} - \\\\mu_i)$ , where $g(s) = \\\\alpha + (1-\\\\alpha)*exp(-(\\\\lambda/s)^m)$
+
+Note the limit values $g(0) = \\\\alpha$ , $g(\\\\infty) = 1$ .
+See:
+ itk::simple::CoherenceEnhancingDiffusion for the procedural interface
+
+ itk::CoherenceEnhancingDiffusionImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkCoherenceEnhancingDiffusionImageFilter.h
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::AdimensionizeOff "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::AdimensionizeOn "
+
+Set the value of Adimensionize to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::CoherenceEnhancingDiffusionImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetAdimensionize "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetAlpha "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetDiffusionTime "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetEnhancement "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetExponent "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetFeatureScale "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetLambda "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetMaxTimeStepsBetweenTensorUpdates "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetNoiseScale "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetRatioToMaxStableTimeStep "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetAdimensionize "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetAlpha "
+
+Exponent m involved in the function g defining eigenvalues.
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetDiffusionTime "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetEnhancement "
+
+Switch between CED, EED, and variants.
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetExponent "
+
+Exponent m involved in the function g defining eigenvalues.
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetFeatureScale "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetLambda "
+
+Exponent m involved in the function g defining eigenvalues.
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetMaxTimeStepsBetweenTensorUpdates "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetNoiseScale "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetRatioToMaxStableTimeStep "
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusionImageFilter::~CoherenceEnhancingDiffusionImageFilter "
 
 Destructor
 
@@ -11344,7 +11506,7 @@ The output image may be of any dimension.
 
 This implementation was contributed as a paper to the Insight Journal https://hdl.handle.net/1926/500
 See:
- itk::simple::GaborImageSource for the procedural interface
+ itk::simple::GaborSource for the procedural interface
 
  itk::GaborImageSource for the Doxygen on the original ITK class.
 
@@ -11482,7 +11644,7 @@ value of the output data type (for instance, 255 for uchars)
 
 The output image may be of any dimension.
 See:
- itk::simple::GaussianImageSource for the procedural interface
+ itk::simple::GaussianSource for the procedural interface
 
  itk::GaussianImageSource for the Doxygen on the original ITK class.
 
@@ -13788,7 +13950,7 @@ The output image may be of any dimension.
 Tustison N., Avants B., Gee J. University of Pennsylvania
  This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/475
 See:
- itk::simple::GridImageSource for the procedural interface
+ itk::simple::GridSource for the procedural interface
 
  itk::GridImageSource for the Doxygen on the original ITK class.
 
@@ -15142,6 +15304,12 @@ return user readable name of the filter
 
 ";
 
+%feature("docstring")  itk::simple::ImageFileWriter::GetRegisteredImageIOs "
+
+Get a vector of the names of registered itk ImageIOs.
+
+";
+
 %feature("docstring")  itk::simple::ImageFileWriter::ImageFileWriter "
 ";
 
@@ -15191,6 +15359,12 @@ C++ includes: sitkImageReaderBase.h
 ";
 
 %feature("docstring")  itk::simple::ImageReaderBase::Execute "
+";
+
+%feature("docstring")  itk::simple::ImageReaderBase::GetRegisteredImageIOs "
+
+Get a vector of the names of registered itk ImageIOs.
+
 ";
 
 %feature("docstring")  itk::simple::ImageReaderBase::ImageReaderBase "
@@ -15802,6 +15976,12 @@ C++ includes: sitkImageSeriesWriter.h
 %feature("docstring")  itk::simple::ImageSeriesWriter::GetName "
 
 return user readable name of the filter
+
+";
+
+%feature("docstring")  itk::simple::ImageSeriesWriter::GetRegisteredImageIOs "
+
+Get a vector of the names of registered itk ImageIOs.
 
 ";
 
@@ -21670,6 +21850,12 @@ Execute the filter on the input image with the given parameters
 
 ";
 
+%feature("docstring")  itk::simple::MaskImageFilter::GetMaskingValue "
+
+Method to get the masking value of the mask.
+
+";
+
 %feature("docstring")  itk::simple::MaskImageFilter::GetName "
 
 Name of this class
@@ -21683,6 +21869,12 @@ Name of this class
 
 Default Constructor that takes no arguments and initializes default
 parameters
+
+";
+
+%feature("docstring")  itk::simple::MaskImageFilter::SetMaskingValue "
+
+Method to explicitly set the masking value of the mask. Defaults to 0
 
 ";
 
@@ -21751,16 +21943,43 @@ Execute the filter on the input image
 
 ";
 
+%feature("docstring")  itk::simple::MaskNegatedImageFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::MaskNegatedImageFilter::GetMaskingValue "
+
+Method to get the masking value of the mask.
+
+";
+
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::GetName "
 
 Name of this class
 
 ";
 
+%feature("docstring")  itk::simple::MaskNegatedImageFilter::GetOutsideValue "
+";
+
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::MaskNegatedImageFilter "
 
 Default Constructor that takes no arguments and initializes default
 parameters
+
+";
+
+%feature("docstring")  itk::simple::MaskNegatedImageFilter::SetMaskingValue "
+
+Method to explicitly set the masking value of the mask. Defaults to 0
+
+";
+
+%feature("docstring")  itk::simple::MaskNegatedImageFilter::SetOutsideValue "
+
+Method to explicitly set the outside value of the mask. Defaults to 0
 
 ";
 
@@ -26207,7 +26426,7 @@ This image source supports image which have a multi-component pixel
 equal to the image dimension, and variable length VectorImages. It is
 recommended that the component type be a real valued type.
 See:
- itk::simple::PhysicalPointImageSource for the procedural interface
+ itk::simple::PhysicalPointSource for the procedural interface
 
  itk::PhysicalPointImageSource for the Doxygen on the original ITK class.
 
@@ -37206,6 +37425,20 @@ This function directly calls the execute method of ClosingByReconstructionImageF
 
 ";
 
+%feature("docstring")  itk::simple::CoherenceEnhancingDiffusion "
+
+Coherence enhanging diffusion and edge enhancing diffusion.
+
+
+This function directly calls the execute method of CoherenceEnhancingDiffusionImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::CoherenceEnhancingDiffusionImageFilter for the object oriented interface
+
+
+";
+
 %feature("docstring")  itk::simple::CollidingFronts "
 
 Selects a region of space where two independent fronts run towards
@@ -40712,6 +40945,12 @@ See:
  itk::simple::ZeroFluxNeumannPadImageFilter for the object oriented interface
 
 
+";
+
+%feature("docstring")  itk::simple::ioutils::GetRegisteredImageIOs "
+";
+
+%feature("docstring")  itk::simple::ioutils::PrintRegisteredImageIOs "
 ";
 
 
