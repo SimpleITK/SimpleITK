@@ -5813,7 +5813,12 @@ passes as the initial translation to the transform. This second
 approach assumes that the moments of the anatomical objects are
 similar for both images and hence the best initial guess for
 registration is to superimpose both mass centers. Note that this
-assumption will probably not hold in multi-modality registration.   \\\\sa itk::CenteredTransformInitializer
+assumption will probably not hold in multi-modality registration.
+
+
+See:
+ itk::CenteredTransformInitializer
+
 
 C++ includes: sitkCenteredTransformInitializerFilter.h
 */"
@@ -6598,6 +6603,223 @@ public ";
 
 %javamethodmodifiers  itk::simple::ClosingByReconstructionImageFilter::~ClosingByReconstructionImageFilter "/**
 virtual itk::simple::ClosingByReconstructionImageFilter::~ClosingByReconstructionImageFilter()
+
+Destructor
+
+*/
+public ";
+
+
+%typemap(javaimports) itk::simple::CoherenceEnhancingDiffusionImageFilter "/**
+
+Coherence enhanging diffusion and edge enhancing diffusion.
+
+
+Implementation of Coherence Enhancing Diffusion (CED), and Edge
+Enhancing Diffusion (EED), as described by Weickert.
+
+CED heuristically smoothes everywhere except accross image contours,
+while EED smoothes nowhere but tangentially to image contours.
+
+The non-linear diffusion tensor is defined in terms of the structure
+tensor.
+
+Denote by $\\\\mu_i$ the structure tensor eigenvalues, at a given point $x$ , with $0\\\\leq i < d$ . Let also $\\\\mu_{\\\\rm min}$ and $\\\\mu_{\\\\rm max}$ , be the smallest and largest eigenvalues respectively. The diffusion
+tensor is defined by the same eigenvectors, but with modified with
+eigenvalues $\\\\lambda_i$ .
+
+Coherence Enhancing Diffusion:
+
+$\\\\lambda_i := g(\\\\mu_i - \\\\mu_{\\\\rm min})$ , where $g(s) = 1 - (1-\\\\alpha)*exp(-(\\\\lambda/s)^m)$
+
+Note the limit values $g(0) = 1$ , $g(\\\\infty) = \\\\alpha$ .
+
+Edge enhancing diffusion:
+
+$\\\\lambda_i := g(\\\\mu_{\\\\rm max} - \\\\mu_i)$ , where $g(s) = \\\\alpha + (1-\\\\alpha)*exp(-(\\\\lambda/s)^m)$
+
+Note the limit values $g(0) = \\\\alpha$ , $g(\\\\infty) = 1$ .
+See:
+ itk::simple::CoherenceEnhancingDiffusion for the procedural interface
+
+ itk::CoherenceEnhancingDiffusionImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkCoherenceEnhancingDiffusionImageFilter.h
+*/"
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::AdimensionizeOff "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::AdimensionizeOff()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::AdimensionizeOn "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::AdimensionizeOn()
+
+Set the value of Adimensionize to true or false respectfully.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::CoherenceEnhancingDiffusionImageFilter "/**
+itk::simple::CoherenceEnhancingDiffusionImageFilter::CoherenceEnhancingDiffusionImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::Execute "/**
+Image itk::simple::CoherenceEnhancingDiffusionImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::Execute "/**
+Image itk::simple::CoherenceEnhancingDiffusionImageFilter::Execute(const Image &image1, double diffusionTime, double lambda,
+CoherenceEnhancingDiffusionImageFilter::EnhancementType enhancement,
+double noiseScale, double featureScale, double exponent, double alpha,
+double ratioToMaxStableTimeStep, uint8_t
+maxTimeStepsBetweenTensorUpdates, bool adimensionize)
+
+Execute the filter on the input image with the given parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetAdimensionize "/**
+bool itk::simple::CoherenceEnhancingDiffusionImageFilter::GetAdimensionize() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetAlpha "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetAlpha() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetDiffusionTime "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetDiffusionTime() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetEnhancement "/**
+EnhancementType itk::simple::CoherenceEnhancingDiffusionImageFilter::GetEnhancement() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetExponent "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetExponent() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetFeatureScale "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetFeatureScale() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetLambda "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetLambda() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetMaxTimeStepsBetweenTensorUpdates "/**
+uint8_t itk::simple::CoherenceEnhancingDiffusionImageFilter::GetMaxTimeStepsBetweenTensorUpdates() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetName "/**
+std::string itk::simple::CoherenceEnhancingDiffusionImageFilter::GetName() const
+
+Name of this class
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetNoiseScale "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetNoiseScale() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::GetRatioToMaxStableTimeStep "/**
+double itk::simple::CoherenceEnhancingDiffusionImageFilter::GetRatioToMaxStableTimeStep() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetAdimensionize "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetAdimensionize(bool Adimensionize)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetAlpha "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetAlpha(double Alpha)
+
+Exponent m involved in the function g defining eigenvalues.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetDiffusionTime "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetDiffusionTime(double DiffusionTime)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetEnhancement "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetEnhancement(EnhancementType Enhancement)
+
+Switch between CED, EED, and variants.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetExponent "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetExponent(double Exponent)
+
+Exponent m involved in the function g defining eigenvalues.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetFeatureScale "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetFeatureScale(double FeatureScale)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetLambda "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetLambda(double Lambda)
+
+Exponent m involved in the function g defining eigenvalues.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetMaxTimeStepsBetweenTensorUpdates "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetMaxTimeStepsBetweenTensorUpdates(uint8_t MaxTimeStepsBetweenTensorUpdates)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetNoiseScale "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetNoiseScale(double NoiseScale)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::SetRatioToMaxStableTimeStep "/**
+Self& itk::simple::CoherenceEnhancingDiffusionImageFilter::SetRatioToMaxStableTimeStep(double RatioToMaxStableTimeStep)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::ToString "/**
+std::string itk::simple::CoherenceEnhancingDiffusionImageFilter::ToString() const
+
+Print ourselves out
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusionImageFilter::~CoherenceEnhancingDiffusionImageFilter "/**
+virtual itk::simple::CoherenceEnhancingDiffusionImageFilter::~CoherenceEnhancingDiffusionImageFilter()
 
 Destructor
 
@@ -14108,7 +14330,7 @@ The output image may be of any dimension.
 
 This implementation was contributed as a paper to the Insight Journal https://hdl.handle.net/1926/500
 See:
- itk::simple::GaborImageSource for the procedural interface
+ itk::simple::GaborSource for the procedural interface
 
  itk::GaborImageSource for the Doxygen on the original ITK class.
 
@@ -14297,7 +14519,7 @@ value of the output data type (for instance, 255 for uchars)
 
 The output image may be of any dimension.
 See:
- itk::simple::GaussianImageSource for the procedural interface
+ itk::simple::GaussianSource for the procedural interface
 
  itk::GaussianImageSource for the Doxygen on the original ITK class.
 
@@ -17192,7 +17414,7 @@ The output image may be of any dimension.
 Tustison N., Avants B., Gee J. University of Pennsylvania
  This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/475
 See:
- itk::simple::GridImageSource for the procedural interface
+ itk::simple::GridSource for the procedural interface
 
  itk::GridImageSource for the Doxygen on the original ITK class.
 
@@ -18891,6 +19113,14 @@ return user readable name of the filter
 */
 public ";
 
+%javamethodmodifiers  itk::simple::ImageFileWriter::GetRegisteredImageIOs "/**
+virtual std::vector<std::string> itk::simple::ImageFileWriter::GetRegisteredImageIOs() const
+
+Get a vector of the names of registered itk ImageIOs.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::ImageFileWriter::ImageFileWriter "/**
 itk::simple::ImageFileWriter::ImageFileWriter()
 */
@@ -18953,6 +19183,14 @@ C++ includes: sitkImageReaderBase.h
 
 %javamethodmodifiers  itk::simple::ImageReaderBase::Execute "/**
 virtual Image itk::simple::ImageReaderBase::Execute()=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageReaderBase::GetRegisteredImageIOs "/**
+virtual std::vector<std::string> itk::simple::ImageReaderBase::GetRegisteredImageIOs() const
+
+Get a vector of the names of registered itk ImageIOs.
+
 */
 public ";
 
@@ -19719,6 +19957,14 @@ public ";
 virtual std::string itk::simple::ImageSeriesWriter::GetName() const
 
 return user readable name of the filter
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageSeriesWriter::GetRegisteredImageIOs "/**
+virtual std::vector<std::string> itk::simple::ImageSeriesWriter::GetRegisteredImageIOs() const
+
+Get a vector of the names of registered itk ImageIOs.
 
 */
 public ";
@@ -27106,9 +27352,18 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::MaskImageFilter::Execute "/**
-Image itk::simple::MaskImageFilter::Execute(const Image &image, const Image &maskImage, double outsideValue)
+Image itk::simple::MaskImageFilter::Execute(const Image &image, const Image &maskImage, double outsideValue,
+double maskingValue)
 
 Execute the filter on the input image with the given parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::MaskImageFilter::GetMaskingValue "/**
+double itk::simple::MaskImageFilter::GetMaskingValue() const
+
+Method to get the masking value of the mask.
 
 */
 public ";
@@ -27131,6 +27386,14 @@ itk::simple::MaskImageFilter::MaskImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::MaskImageFilter::SetMaskingValue "/**
+Self& itk::simple::MaskImageFilter::SetMaskingValue(double MaskingValue)
+
+Method to explicitly set the masking value of the mask. Defaults to 0
 
 */
 public ";
@@ -27208,6 +27471,23 @@ Execute the filter on the input image
 */
 public ";
 
+%javamethodmodifiers  itk::simple::MaskNegatedImageFilter::Execute "/**
+Image itk::simple::MaskNegatedImageFilter::Execute(const Image &image, const Image &maskImage, double outsideValue,
+double maskingValue)
+
+Execute the filter on the input image with the given parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::MaskNegatedImageFilter::GetMaskingValue "/**
+double itk::simple::MaskNegatedImageFilter::GetMaskingValue() const
+
+Method to get the masking value of the mask.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::MaskNegatedImageFilter::GetName "/**
 std::string itk::simple::MaskNegatedImageFilter::GetName() const
 
@@ -27216,11 +27496,32 @@ Name of this class
 */
 public ";
 
+%javamethodmodifiers  itk::simple::MaskNegatedImageFilter::GetOutsideValue "/**
+double itk::simple::MaskNegatedImageFilter::GetOutsideValue() const
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::MaskNegatedImageFilter::MaskNegatedImageFilter "/**
 itk::simple::MaskNegatedImageFilter::MaskNegatedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::MaskNegatedImageFilter::SetMaskingValue "/**
+Self& itk::simple::MaskNegatedImageFilter::SetMaskingValue(double MaskingValue)
+
+Method to explicitly set the masking value of the mask. Defaults to 0
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::MaskNegatedImageFilter::SetOutsideValue "/**
+Self& itk::simple::MaskNegatedImageFilter::SetOutsideValue(double OutsideValue)
+
+Method to explicitly set the outside value of the mask. Defaults to 0
 
 */
 public ";
@@ -32750,7 +33051,7 @@ This image source supports image which have a multi-component pixel
 equal to the image dimension, and variable length VectorImages. It is
 recommended that the component type be a real valued type.
 See:
- itk::simple::PhysicalPointImageSource for the procedural interface
+ itk::simple::PhysicalPointSource for the procedural interface
 
  itk::PhysicalPointImageSource for the Doxygen on the original ITK class.
 
@@ -46684,6 +46985,27 @@ This function directly calls the execute method of ClosingByReconstructionImageF
 */
 public ";
 
+%javamethodmodifiers  itk::simple::CoherenceEnhancingDiffusion "/**
+Image itk::simple::CoherenceEnhancingDiffusion(const Image &image1, double diffusionTime=1, double lambda=0.05,
+CoherenceEnhancingDiffusionImageFilter::EnhancementType
+enhancement=itk::simple::CoherenceEnhancingDiffusionImageFilter::CED,
+double noiseScale=0.5, double featureScale=2, double exponent=2,
+double alpha=0.01, double ratioToMaxStableTimeStep=0.7, uint8_t
+maxTimeStepsBetweenTensorUpdates=5, bool adimensionize=true)
+
+Coherence enhanging diffusion and edge enhancing diffusion.
+
+
+This function directly calls the execute method of CoherenceEnhancingDiffusionImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::CoherenceEnhancingDiffusionImageFilter for the object oriented interface
+
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::CollidingFronts "/**
 Image itk::simple::CollidingFronts(const Image &image1, const std::vector< std::vector< unsigned int > >
 &seedPoints1=std::vector< std::vector< unsigned int > >(), const
@@ -48922,7 +49244,8 @@ Image itk::simple::MagnitudeAndPhaseToComplex(double constant, const Image &imag
 public ";
 
 %javamethodmodifiers  itk::simple::Mask "/**
-Image itk::simple::Mask(const Image &image, const Image &maskImage, double outsideValue=0)
+Image itk::simple::Mask(const Image &image, const Image &maskImage, double outsideValue=0,
+double maskingValue=0)
 
 Mask an image with a mask.
 
@@ -48957,7 +49280,8 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::MaskNegated "/**
-Image itk::simple::MaskNegated(const Image &image, const Image &maskImage)
+Image itk::simple::MaskNegated(const Image &image, const Image &maskImage, double outsideValue=0,
+double maskingValue=0)
 
 Mask an image with the negation (or logical compliment) of a mask.
 
@@ -51260,6 +51584,16 @@ See:
  itk::simple::ZeroFluxNeumannPadImageFilter for the object oriented interface
 
 
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ioutils::GetRegisteredImageIOs "/**
+SITKIO_HIDDEN std::vector<std::string> itk::simple::ioutils::GetRegisteredImageIOs()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ioutils::PrintRegisteredImageIOs "/**
+SITKIO_HIDDEN void itk::simple::ioutils::PrintRegisteredImageIOs(std::ostream &out)
 */
 public ";
 
