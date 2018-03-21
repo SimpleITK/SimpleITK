@@ -197,14 +197,28 @@ After proper configuration, SimpleITK can be built:
 Advanced Build Options
 ----------------------
 
-SimpleITK is aware of the enabled and disabled ITK Modules. It is
-possible to customize SimpleITK by disabling unneeded ITK modules or to
-extend SimpleITK by writing custom json file dependent an ITK Remote
-Modules being enabled.
+SimpleITK is aware of the modularity of ITK and automatically enables
+and disables filters based on which modules are available from the ITK
+build which SimpleITK is compiled against. This makes it possible to
+customize SimpleITK to be a small library or to wrap additional ITK
+remote modules simply by configuring ITK with the desired modules
+enabled.
 
-Additionally, each of the Examples directory, and each of the Wrapping
-subdirectories can be configured as independent CMake project dependent
-on an installed SimpleITK.
+For example, the CoherenceEnhancingDiffusionImageFilter is an optional
+filter in SimpleITK as it's part of the ITK remote module
+AnisotropicDiffusionLBR. This remote module is not enabled by default
+when building ITK and SimpleITK. To enable it when using SimpleITK's
+Superbuild add `-DModule_AnisotropicDiffusionLBR:BOOL=ON` to the
+command line or in the CMake GUI press the "Add Entry" button to
+define the variable as above.
+
+SimpleITK has a very flexible and robust build system utilizing
+CMake. It enables packagers to build SimpleITK in a variety of ways to
+suit their requirements and minimize recompilation of SimpleITK so
+that it can be wrapped for many different languages. Each of the
+language wrapping sub-directories e.g. "Wrapping/Python" can be
+configured and built as an independent project which is dependent on
+SimpleITK as an installed package of its libraries and header filers.
 
 
 Testing
