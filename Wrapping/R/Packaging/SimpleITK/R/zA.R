@@ -242,8 +242,17 @@ setMethod('as.array', "_p_itk__simple__Image",
           )
 
 as.image <- function(arr, spacing=rep(1, length(dim(arr))),
-                     origin=rep(0,length(dim(arr))))
+                     origin=rep(0,length(dim(arr))),
+                     isVector=FALSE)
   {
-    size <- dim(arr)
-    return(ArrayAsIm(arr, size, spacing,origin))
+    data_len <- dim(arr)
+    if(isVector) {
+      size <- head(data_len, length(data_len)-1)
+      number_of_components <- tail(data_len, 1)
+    }
+    else {
+      size <- data_len
+      number_of_components <- 1
+    }
+    return(ArrayAsIm(arr, size, spacing, origin, number_of_components))
   }
