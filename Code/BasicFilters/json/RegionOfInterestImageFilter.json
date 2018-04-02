@@ -31,6 +31,20 @@
       "custom_itk_cast" : " typename InputImageType::RegionType itkRegion(sitkSTLVectorToITK<typename InputImageType::IndexType>(m_Index), sitkSTLVectorToITK<typename InputImageType::SizeType>(m_Size));\n  filter->SetRegionOfInterest( itkRegion );"
     }
   ],
+  "custom_methods" : [
+    {
+      "name" : "SetRegionOfInterest",
+      "doc" : "Sets the region extracted by a single array of the starting indexes followed by the sizes in pixels.",
+      "return_type" : "void",
+      "parameters" : [
+        {
+          "type" : "const std::vector<unsigned int> &",
+          "var_name" : "Region"
+        }
+      ],
+      "body" : "size_t sz = Region.size(); this->SetIndex(std::vector<int>(Region.begin(), Region.begin()+sz/2)); this->SetSize(std::vector<unsigned int>(Region.begin()+sz/2, Region.end()));"
+    }
+  ],
   "tests" : [
     {
       "tag" : "defaults",

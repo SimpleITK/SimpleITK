@@ -26,7 +26,6 @@
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
 #include <sitkStatisticsImageFilter.h>
-#include <sitkLabelStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkFastMarchingBaseImageFilter.h>
 #include <sitkInverseDeconvolutionImageFilter.h>
