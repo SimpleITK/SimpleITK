@@ -18,7 +18,7 @@ The SimpleITK image class can contain 2 or 3 dimensional images. In
 ITK proper, certain types such as indexes, points, and sizes are
 templeted over the image dimensions. In SimpleITK we utilize the
 variable length std::vector for these types, so that non-templeted
-calls can wrap ITK's templeted image class. These types are called 
+calls can wrap ITK's templeted image class. These types are called
 Dimensional Vectors. If a dimensional vector's length is less that the
 dimension of the image, an exception will be generated when converted
 to the ITK type. If there are extra elements in the dimensional vector
@@ -40,7 +40,7 @@ are the defaults for the binary morphology filters, so that they can
 easily be applied after segmentation. This choice makes many mask
 manipulations easier. For example, "masking" an image ( scalar or
 vector ) is simply a matter of multiplying by a mask an
-image. Additionally, the set of { 0, 1 } pixels is closed under the 
+image. Additionally, the set of { 0, 1 } pixels is closed under the
 logical Boolean operators.
 
 \section ProcedualParameters Order of Procedural Parameters
@@ -57,6 +57,19 @@ in row major order. The vector \f$[1,2,3,4,5,6]\f$ represents the matrix
 \f[
 \left[\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \end{array}\right]
 \f]
+
+\section ImageRegions Image Regions as Index and Size
+
+The itk::ImageRegion is a frequently used class in ITK to define a
+sub-image area. It is defined by itk::Index and itk::Size of signed
+and unsigned integer types respecfully. In SimpleITK, the index and
+size elements are usually separated into two arguments with separate
+Set and Get methods.
+
+When specified as a single argument value, it is a 1 dimensional
+array with the index values followed by the size values i.e. \f$[idx_x,
+idx_y, idx_z, size_x, size_y, size_z]\f$.
+
 
 \section ImagesAsParameters Images As Parameters
 
