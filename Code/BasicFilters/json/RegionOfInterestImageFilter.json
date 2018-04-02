@@ -12,7 +12,7 @@
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
-      "briefdescriptionSet" : "",
+      "briefdescriptionSet" : "Size in pixels of the region extracted.",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "",
@@ -24,11 +24,11 @@
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
-      "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "\todo the internal setting of the method need work!!!",
+      "briefdescriptionSet" : "Set the inclusive starting index of the region extracted.",
+      "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "",
-      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetRegionOfInterest( itkRegion );"
+      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion(sitkSTLVectorToITK<typename InputImageType::IndexType>(m_Index), sitkSTLVectorToITK<typename InputImageType::SizeType>(m_Size));\n  filter->SetRegionOfInterest( itkRegion );"
     }
   ],
   "tests" : [
