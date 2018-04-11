@@ -136,6 +136,11 @@ TEST(LabelStatistics,Commands) {
   EXPECT_EQ ( 1, startCmd.m_Count );
   EXPECT_EQ ( 0, userCmd.m_Count );
 
+
+  sitk::RegionOfInterestImageFilter roiFilter;
+  roiFilter.SetRegionOfInterest(stats.GetRegion(2));
+  EXPECT_EQ("47170bb185bd6075b8122eed0db2841a", sitk::Hash(roiFilter.Execute(image), sitk::HashImageFilter::MD5));
+
  // internal filter does not get deleted since there are active measurements
   EXPECT_EQ ( 0, deleteCmd.m_Count );
 

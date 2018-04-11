@@ -12,7 +12,7 @@
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
-      "briefdescriptionSet" : "",
+      "briefdescriptionSet" : "Size in pixels of the region extracted.",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "",
@@ -24,11 +24,25 @@
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
-      "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "\todo the internal setting of the method need work!!!",
+      "briefdescriptionSet" : "Set the inclusive starting index of the region extracted.",
+      "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "",
-      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetRegionOfInterest( itkRegion );"
+      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion(sitkSTLVectorToITK<typename InputImageType::IndexType>(m_Index), sitkSTLVectorToITK<typename InputImageType::SizeType>(m_Size));\n  filter->SetRegionOfInterest( itkRegion );"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "SetRegionOfInterest",
+      "doc" : "Sets the region extracted by a single array of the starting indexes followed by the sizes in pixels.",
+      "return_type" : "void",
+      "parameters" : [
+        {
+          "type" : "const std::vector<unsigned int> &",
+          "var_name" : "Region"
+        }
+      ],
+      "body" : "size_t sz = Region.size(); this->SetIndex(std::vector<int>(Region.begin(), Region.begin()+sz/2)); this->SetSize(std::vector<unsigned int>(Region.begin()+sz/2, Region.end()));"
     }
   ],
   "tests" : [
@@ -71,7 +85,7 @@
     }
   ],
   "briefdescription" : "Extract a region of interest from the input image.",
-  "detaileddescription" : "Extract a region of interest from the input image or convert between itk::Image and RLEImage (a custom region can be used).\n\nThis filter produces an output image of the same dimension as the input image. The user specifies the region of the input image that will be contained in the output image. The origin coordinates of the output images will be computed in such a way that if mapped to physical space, the output image will overlay the input image with perfect registration. In other words, a registration process between the output image and the input image will return an identity transform.\n\nIf you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter . For example for extracting a 2D image from a slice of a 3D image.\n\nThe region to extract is set using the method SetRegionOfInterest.\n\n\\see ExtractImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Extract a portion of an image (region of interest) \n\n\nThis filter produces an output image of the same dimension as the input image. The user specifies the region of the input image that will be contained in the output image. The origin coordinates of the output images will be computed in such a way that if mapped to physical space, the output image will overlay the input image with perfect registration. In other words, a registration process between the output image and the input image will return an identity transform.\n\nThe region to extract is set using the method SetRegionOfInterest.\n\nSpecialized for RLEImage .",
+  "detaileddescription" : "This filter produces an output image of the same dimension as the input image. The user specifies the region of the input image that will be contained in the output image. The origin coordinates of the output images will be computed in such a way that if mapped to physical space, the output image will overlay the input image with perfect registration. In other words, a registration process between the output image and the input image will return an identity transform.\n\nIf you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter . For example for extracting a 2D image from a slice of a 3D image.\n\nThe region to extract is set using the method SetRegionOfInterest.\n\n\\see ExtractImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Extract a portion of an image (region of interest)",
   "itk_module" : "ITKImageGrid",
   "itk_group" : "ImageGrid"
 }
