@@ -2,9 +2,22 @@
   "name" : "PasteImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "NonLabelPixelIDTypeList",
+  "filter_type" : "itk::PasteImageFilter< InputImageType, InputImageType, OutputImageType >",
+  "inputs" : [
+    {
+      "name" : "DestinationImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "SourceImage",
+      "type" : "Image",
+      "no_size_check" : true,
+      "custom_itk_cast" : "filter->SetSourceImage( this->CastImageToITK<typename FilterType::SourceImageType>(*inSourceImage) );"
+    }
+  ],
   "members" : [
     {
       "name" : "SourceSize",
@@ -20,7 +33,7 @@
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
-      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_SourceIndex[i] );\n    itkRegion.SetSize( i, m_SourceSize[i] );\n    }\n  filter->SetSourceRegion( itkRegion );"
+      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inDestinationImage->GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_SourceIndex[i] );\n    itkRegion.SetSize( i, m_SourceSize[i] );\n    }\n  filter->SetSourceRegion( itkRegion );"
     },
     {
       "name" : "DestinationIndex",
