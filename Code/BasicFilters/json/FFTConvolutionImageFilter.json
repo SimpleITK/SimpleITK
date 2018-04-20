@@ -2,13 +2,24 @@
   "name" : "FFTConvolutionImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::FFTConvolutionImageFilter< InputImageType, InputImageType, OutputImageType >",
   "include_files" : [
     "sitkBoundaryConditions.hxx"
   ],
-  "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "KernelImage",
+      "type" : "Image",
+      "no_size_check" : 0
+    }
+  ],
   "members" : [
     {
       "name" : "Normalize",
