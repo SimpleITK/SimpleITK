@@ -62,7 +62,7 @@
     }
   ],
   "briefdescription" : "Apply a colormap to a label image and put it on top of the input image.",
-  "detaileddescription" : "Apply a colormap to a label image and put it on top of the input image. The set of colors is a good selection of distinct colors. The opacity of the label image can be defined by the user. The user can also choose if the want to use a background and which label value is the background. A background label produce a gray pixel with the same intensity than the input one.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis class was contributed to the Insight Journal https://hdl.handle.net/1926/172 \n\n\\see LabelToRGBImageFilter \n\n\\see LabelMapOverlayImageFilter , LabelOverlayFunctor\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Overlay a LabelMap on an image",
+  "detaileddescription" : "Apply a colormap to a label image and put it on top of the input image. The set of colors is a good selection of distinct colors. The opacity of the label image can be defined by the user. The user can also choose if the want to use a background and which label value is the background. A background label produce a gray pixel with the same intensity than the input one.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis class was contributed to the Insight Journal https://hdl.handle.net/1926/172 \n\n\\see LabelToRGBImageFilter \n\n\\see LabelMapOverlayImageFilter , LabelOverlayFunctor",
   "itk_module" : "ITKImageFusion",
   "itk_group" : "ImageFusion"
 }

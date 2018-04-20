@@ -29,7 +29,7 @@
     }
   ],
   "briefdescription" : "Computes the gradient magnitude of an image region at each pixel.",
-  "detaileddescription" : "\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Compute the gradient magnitude image",
+  "detaileddescription" : "\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKImageGradient",
   "itk_group" : "ImageGradient"
 }

@@ -39,7 +39,7 @@
     }
   ],
   "briefdescription" : "Labels the pixels on the border of the objects in a labeled image.",
-  "detaileddescription" : "LabelContourImageFilter takes a labeled image as input, where the pixels in the objects are the pixels with a value different of the BackgroundValue. Only the pixels on the contours of the objects are kept. The pixels not on the border are changed to BackgroundValue. The labels of the object are the same in the input and in the output image.\n\nThe connectivity can be changed to minimum or maximum connectivity with SetFullyConnected() . Full connectivity produces thicker contours.\n\nhttps://hdl.handle.net/1926/1352 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see BinaryContourImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Label the contours of connected components",
+  "detaileddescription" : "LabelContourImageFilter takes a labeled image as input, where the pixels in the objects are the pixels with a value different of the BackgroundValue. Only the pixels on the contours of the objects are kept. The pixels not on the border are changed to BackgroundValue. The labels of the object are the same in the input and in the output image.\n\nThe connectivity can be changed to minimum or maximum connectivity with SetFullyConnected() . Full connectivity produces thicker contours.\n\nhttps://hdl.handle.net/1926/1352 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see BinaryContourImageFilter",
   "itk_module" : "ITKImageLabel",
   "itk_group" : "ImageLabel"
 }

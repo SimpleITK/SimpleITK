@@ -36,7 +36,7 @@
     }
   ],
   "briefdescription" : "Grayscale erosion of an image.",
-  "detaileddescription" : "Erode an image using grayscale morphology. Erosion takes the maximum of all the pixels identified by the structuring element.\n\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\n\\see MorphologyImageFilter , GrayscaleFunctionErodeImageFilter , BinaryErodeImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Erode a grayscale image",
+  "detaileddescription" : "Erode an image using grayscale morphology. Erosion takes the maximum of all the pixels identified by the structuring element.\n\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\n\\see MorphologyImageFilter , GrayscaleFunctionErodeImageFilter , BinaryErodeImageFilter",
   "itk_module" : "ITKMathematicalMorphology",
   "itk_group" : "MathematicalMorphology"
 }
