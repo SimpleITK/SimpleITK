@@ -53,4 +53,5 @@ for test in j["tests"]:
 
 fp = file( fname, "w" )
 json.dump( j, fp, indent=2, separators=(',',' : ') )
+print  >>fp, ""
 fp.close()

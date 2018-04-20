@@ -98,5 +98,6 @@ for fname in sys.argv[1:]:
 
     with file( fname, "w" ) as fp:
       json.dump( j, fp, indent=2, separators=(',',' : ') )
+      print  >>fp, ""
   else:
     print "Unable to find include:",inc
