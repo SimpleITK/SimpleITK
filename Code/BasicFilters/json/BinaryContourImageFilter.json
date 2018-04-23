@@ -75,7 +75,7 @@
     }
   ],
   "briefdescription" : "Labels the pixels on the border of the objects in a binary image.",
-  "detaileddescription" : "BinaryContourImageFilter takes a binary image as input, where the pixels in the objects are the pixels with a value equal to ForegroundValue. Only the pixels on the contours of the objects are kept. The pixels not on the border are changed to BackgroundValue.\n\nThe connectivity can be changed to minimum or maximum connectivity with SetFullyConnected() . Full connectivity produces thicker contours.\n\nhttps://hdl.handle.net/1926/1352 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see LabelContourImageFilter BinaryErodeImageFilter SimpleContourExtractorImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Extract the boundaries of connected regions in a binary image \n\n\\li Extract the inner and outer boundaries of blobs in a binary image",
+  "detaileddescription" : "BinaryContourImageFilter takes a binary image as input, where the pixels in the objects are the pixels with a value equal to ForegroundValue. Only the pixels on the contours of the objects are kept. The pixels not on the border are changed to BackgroundValue.\n\nThe connectivity can be changed to minimum or maximum connectivity with SetFullyConnected() . Full connectivity produces thicker contours.\n\nhttps://hdl.handle.net/1926/1352 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see LabelContourImageFilter BinaryErodeImageFilter SimpleContourExtractorImageFilter",
   "itk_module" : "ITKImageLabel",
   "itk_group" : "ImageLabel"
 }

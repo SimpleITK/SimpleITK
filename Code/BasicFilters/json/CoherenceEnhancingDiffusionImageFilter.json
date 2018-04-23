@@ -86,9 +86,8 @@
     {
       "tag" : "defaults",
       "description" : "Simply run with default settings",
-      "settings" : [
-      ],
-      "tolerance" : 1e-7,
+      "settings" : [],
+      "tolerance" : 1e-07,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]

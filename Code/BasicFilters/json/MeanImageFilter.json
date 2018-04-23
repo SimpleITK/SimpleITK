@@ -48,7 +48,7 @@
     }
   ],
   "briefdescription" : "Applies an averaging filter to an image.",
-  "detaileddescription" : "Computes an image where a given pixel is the mean value of the the pixels in a neighborhood about the corresponding input pixel.\n\nA mean filter is one of the family of linear filters.\n\n\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Mean filter an image",
+  "detaileddescription" : "Computes an image where a given pixel is the mean value of the the pixels in a neighborhood about the corresponding input pixel.\n\nA mean filter is one of the family of linear filters.\n\n\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKSmoothing",
   "itk_group" : "Smoothing"
 }

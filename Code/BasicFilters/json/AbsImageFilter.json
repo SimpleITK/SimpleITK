@@ -28,7 +28,7 @@
     }
   ],
   "briefdescription" : "Computes the absolute value of each pixel.",
-  "detaileddescription" : "itk::Math::abs() is used to perform the computation.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Compute the absolute value of an image",
+  "detaileddescription" : "itk::Math::abs() is used to perform the computation.",
   "itk_module" : "ITKImageIntensity",
   "itk_group" : "ImageIntensity"
 }
