@@ -44,7 +44,7 @@
     }
   ],
   "briefdescription" : "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.",
-  "detaileddescription" : "The default value of the constant is 1. It can be changed with SetConstant() .\n\nThis transform is especially useful for normalizing a convolution kernel.\n\nThis code was contributed in the Insight Journal paper: \"FFT based\nconvolution\" by Lehmann G. https://hdl.handle.net/10380/3154 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see NormalizeImageFilter \n\n\\see StatisticsImageFilter \n\n\\see DivideImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Scale all pixels so that their sum is a specified constant",
+  "detaileddescription" : "The default value of the constant is 1. It can be changed with SetConstant() .\n\nThis transform is especially useful for normalizing a convolution kernel.\n\nThis code was contributed in the Insight Journal paper: \"FFT based\nconvolution\" by Lehmann G. https://hdl.handle.net/10380/3154 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see NormalizeImageFilter \n\n\\see StatisticsImageFilter \n\n\\see DivideImageFilter",
   "itk_module" : "ITKImageIntensity",
   "itk_group" : "ImageIntensity"
 }

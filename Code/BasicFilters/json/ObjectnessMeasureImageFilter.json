@@ -76,17 +76,17 @@
       "tag" : "dark_dots",
       "description" : "Simply run with default settings",
       "settings" : [
-          {
-              "parameter" : "ObjectDimension",
-              "value" : 0,
-              "cxx_value" : "0u"
-          },
-          {
-              "parameter" : "BrightObject",
-              "value" : "false",
-              "python_value" : "False",
-              "R_value" : "FALSE"
-          }
+        {
+          "parameter" : "ObjectDimension",
+          "value" : 0,
+          "cxx_value" : "0u"
+        },
+        {
+          "parameter" : "BrightObject",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        }
       ],
       "tolerance" : 0.01,
       "inputs" : [
