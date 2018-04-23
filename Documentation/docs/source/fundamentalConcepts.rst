@@ -34,7 +34,7 @@ The meaning of each of these meta-data elements
 is visually illustrated in :ref:`this figure <lbl_image_metadata>`.
 
 .. _lbl_image_metadata:
-.. figure:: ../../Images/ImageOriginAndSpacing.svg
+.. figure:: ../images/ImageOriginAndSpacing.svg
    :scale: 50 %
    :alt: Image meta-data.
 
@@ -74,7 +74,7 @@ treat images as an array will display a distorted image as shown in
 :ref:`this figure <lbl_isotropy>`.
 
 .. _lbl_isotropy:
-.. figure:: ../../Images/nonisotropicVsIsotropic.svg
+.. figure:: ../images/nonisotropicVsIsotropic.svg
    :scale: 50 %
    :alt: nonisotropic vs. isotropic pixels.
 
@@ -89,7 +89,7 @@ the physical world, the two images are considered different even though
 the intensity values and pixel spacing are the same.
 
 .. _lbl_spatial_location:
-.. figure:: ../../Images/spatialRelationship.svg
+.. figure:: ../images/spatialRelationship.svg
    :scale: 50 %
    :alt: images are spatial objects
 
@@ -272,7 +272,23 @@ new labels into the result.
 
 The SimpleITK interface includes three variants for specifying the resampling grid:
 1. Use the same grid as defined by the resampled image.
-2.
+2. Provide a second, reference, image which defines the grid.
+3. Specify the grid using: size, origin, spacing, and direction cosine matrix.
+
+Points that are mapped outside of the resampled image's spatial extent in physical
+space are set to a constant pixel value which you provide (default is zero).
+
+Common Errors
+=============
+
+It is not uncommon to end up with an empty (all black) image after resampling.
+This is due to:
+
+1. Using wrong settings for the resampling grid, not too common, but does happen.
+2. Using the inverse of the transformation :math:`T_f^m`. This is a relatively
+common error, which is readily addressed by invoking the transformation's
+`GetInverse` method.
+
 
 Additional Resources
 =====================
