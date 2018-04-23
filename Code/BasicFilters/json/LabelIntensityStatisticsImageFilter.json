@@ -98,6 +98,20 @@
       "label_map" : true
     },
     {
+      "name" : "Region",
+      "type" : "std::vector<unsigned int>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKImageRegionToSTL(value)",
+      "label_map" : true
+    },
+    {
       "name" : "Centroid",
       "type" : "std::vector<double>",
       "no_print" : true,

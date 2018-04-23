@@ -10,7 +10,7 @@ for i=1,#custom_methods do
   OUT=OUT..custom_methods[i].return_type..[[ ${name}::]]..custom_methods[i].name..'('
   if custom_methods[i].parameters then
     for pnum=1,#custom_methods[i].parameters do
-      if not pnum == 1 then
+      if pnum > 1 then
         OUT=OUT..', '
       end
       OUT=OUT..custom_methods[i].parameters[pnum].type ..' '.. custom_methods[i].parameters[pnum].var_name
