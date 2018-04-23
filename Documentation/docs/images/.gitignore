@@ -1,0 +1,6 @@
+# Ignore everythin, use a white list of files
+*
+!.gitignore
+!CMakeLists.txt
+!*.md5
+!*.sha512
