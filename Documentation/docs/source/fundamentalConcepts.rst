@@ -133,6 +133,32 @@ in space, we need to answer two questions:
     image's spatial location, but we highly recommend that you do not do so as it
     is error prone.
 
+Channels
+========
+
+As stated above, a SimpleITK image can have an arbitrary number of
+channels with the content of the channels being a scalar or complex value. This
+is determined when an image is created.
+
+In the medical domain, many image types have a single scalar channel (e.g. CT, US).
+Another common image type is a three channel image where each channel has scalar
+values in [0,255], often people refer to such an image as an RGB image. This terminology
+implies that the three channels should be interpreted using the
+`RGB color space <https://en.wikipedia.org/wiki/RGB_color_space>`_. In some cases you
+can have the same image type, but the channel values represent another color space, such as `HSV
+<https://en.wikipedia.org/wiki/HSL_and_HSV>`_ (it decouples the color and intensity
+information and is a bit more invariant to illumination changes).
+SimpleITK has no concept of color space, thus in both cases it will simply view a pixel value as a
+3-tuple.
+
+Word of caution: In some cases looks may be deceiving. Gray scale images are not always
+stored as a single channel image. In some cases an image that looks like a gray scale
+image is actually a three channel image with the intensity values repeated in each of
+the channels. Even worse, some gray scale images can be four
+channel images with the channels representing RGBA and the alpha channel set to all 255. This can
+result in a significant waste of memory and computation time. Always become familiar with your data.
+
+
 Additional Resources
 =====================
 1. The API for the SimpleITK
@@ -148,7 +174,9 @@ Transforms
 ++++++++++
 
 SimpleITK supports two types of spatial transforms, ones with a global (unbounded)
-spatial domain  and ones with a bounded spatial domain.
+spatial domain and ones with a bounded spatial domain. Points in SimpleITK are
+mapped by the transform using the `TransformPoint` method.
+
 
 All global domain transforms are of the form:
 
@@ -216,6 +244,44 @@ Additional Resources
    * `Transform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Transform.html>`_.
 
 2. To really understand the structure of SimpleITK transforms and how to work with them
+   we recommend some hands-on interaction using the
+   `SimpleITK Jupyter notebooks <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
+   (Python and R only).
+
+Resampling
+++++++++++
+
+Resampling as the verb implies is the action of sampling an image, which itself
+is a sampling of an original continuous signal.
+
+Generally speaking, resampling in SimpleITK involves four components:
+1. Image - the image we resample, given in coordinate system :math:`m`.
+2. Resampling grid - a regular grid of points given in coordinate system :math:`f`
+   which will be mapped to coordinate system :math:`m`.
+3. Transformation :math:`T_f^m` - maps points from coordinate system :math:`f`
+   to coordinate system :math:`m`, :math:`^mp = T_f^m(^fp)`.
+4. Interpolator - method for obtaining the intensity values at arbitrary points
+   in coordinate system :math:`m` from the values of the points defined by the Image.
+
+While SimpleITK provides a large number of interpolation methods, the two most
+commonly used are sitkLinear and sitkNearestNeighbor. The former is used for
+most interpolation tasks, a compromise between accuracy and computational
+efficiency. The later is used to interpolate labeled images representing a
+segmentation, it is the only interpolation approach which will not introduce
+new labels into the result.
+
+The SimpleITK interface includes three variants for specifying the resampling grid:
+1. Use the same grid as defined by the resampled image.
+2.
+
+Additional Resources
+=====================
+
+1. The API for the SimpleITK
+   `ResampleImageFilter class <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ResampleImageFilter.html>`_
+   in doxygen format. The procedural interface for this class supports the three variations for specifying the
+   resampling grid described above.
+2. To really understand the structure of SimpleITK images and how to work with them
    we recommend some hands-on interaction using the
    `SimpleITK Jupyter notebooks <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
    (Python and R only).
