@@ -20,6 +20,9 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import cmake
+import subprocess
+import os.path
 
 # -- General configuration ------------------------------------------------
 
@@ -50,6 +53,8 @@ master_doc = 'index'
 project = u'SimpleITK'
 copyright = u'2017, Insight Software Consortium'
 author = u'Insight Software Consortium'
+
+# TODO: Get proper version from CMake
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -97,7 +102,7 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['Documentation/docs/static']
 
-html_logo= 'Documentation/Images/simpleitk_logo.png'
+html_logo= 'Documentation/docs/images/simpleitk_logo.png'
 
 
 # -- Options for HTMLHelp output ------------------------------------------
@@ -157,3 +162,14 @@ texinfo_documents = [
 ]
 
 extensions = ['sphinx_tabs.tabs']
+
+
+# The images directory contains MD5/SHA512 hashed of the image data
+# files. So as not to contaminate the git repository with large
+# changing binary files, the image files need to be downloaded. We
+# utilize the CMake "ExternalData" mechanism to download the data from
+# a couple potential sources.
+cmake_exe = os.path.join(cmake.CMAKE_BIN_DIR, "cmake")
+image_path = "Documentation/docs/images/"
+subprocess.check_call([cmake_exe, "."], cwd=image_path)
+subprocess.check_call([cmake_exe, "--build", "."], cwd=image_path)
