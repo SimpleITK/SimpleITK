@@ -15,9 +15,11 @@ SimpleITK are currently available for all three major operating systems
 .. toctree::
    :maxdepth: 1
 
+
    Documentation/docs/source/installation
-   Documentation/docs/source/building
+   Documentation/docs/source/fundamentalConcepts.rst
    Documentation/docs/source/registrationOverview
+   Documentation/docs/source/building
    Documentation/docs/source/faq
    Examples/index
 
