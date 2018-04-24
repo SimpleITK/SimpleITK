@@ -34,8 +34,9 @@ import os.path
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-#   'sphinx.ext.imgmath',
-    'sphinx.ext.ifconfig']
+    'sphinx.ext.imgmath',
+    'sphinx.ext.ifconfig',
+    'sphinx_tabs.tabs']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -161,8 +162,6 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-extensions = ['sphinx_tabs.tabs']
-
 
 # The images directory contains MD5/SHA512 hashed of the image data
 # files. So as not to contaminate the git repository with large
@@ -173,3 +172,4 @@ cmake_exe = os.path.join(cmake.CMAKE_BIN_DIR, "cmake")
 image_path = "Documentation/docs/images/"
 subprocess.check_call([cmake_exe, "."], cwd=image_path)
 subprocess.check_call([cmake_exe, "--build", "."], cwd=image_path)
+
