@@ -18,7 +18,7 @@ that treat an image as an array which has two implications: (1) pixel/voxel spac
 is assumed to be isotropic and (2) there is no notion of an image's location in
 physical space.
 
-SimpleITK images are either 2D, 3D, or 4D, and can have an arbitrary number of
+SimpleITK images are either 2D, 3D, or 4D and can have an arbitrary number of
 channels with a scalar or complex value in each channel. The physical
 region in space which an image occupies is defined by the image's:
 
@@ -44,7 +44,7 @@ is visually illustrated in :ref:`this figure <lbl_image_metadata>`.
    a voxel beyond the last voxel.
 
 In SimpleITK, when we construct an image we specify its dimensionality, size and pixel
-type, all other components are set to reasonable default values:
+type, all other components are set to **reasonable default values**:
 
 1. origin - all zeros.
 2. spacing - all ones.
@@ -163,7 +163,7 @@ Additional Resources
 =====================
 1. The API for the SimpleITK
    `Image class <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Image.html>`_
-   in doxygen format.
+   in Doxygen format.
 2. To really understand the structure of SimpleITK images and how to work with them
    we recommend some hands-on interaction using the
    `SimpleITK Jupyter notebooks <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
@@ -178,7 +178,7 @@ spatial domain and ones with a bounded spatial domain. Points in SimpleITK are
 mapped by the transform using the `TransformPoint` method.
 
 
-All global domain transforms are of the form:
+All **global domain transforms** are of the form:
 
 .. math::
 
@@ -197,7 +197,7 @@ A variety of global 2D and 3D transformations are available
 transformations are available with various
 parameterizations which are useful for registration purposes.
 
-The second type of spatial transformation, bounded domain transformations are
+The second type of spatial transformation, **bounded domain transformations**, are
 defined to be identity outside their domain. These include the B-spline deformable
 transformation, often referred to as Free-Form Deformation, and the displacement
 field transformation.
@@ -210,7 +210,7 @@ The displacement field transformation uses a dense set of vectors representing
 displacement in a bounded spatial domain. It has no implicit constraints on
 transformation continuity or smoothness.
 
-Finally, SimpleITK supports a composite transformation with either a bounded or
+Finally, SimpleITK supports a **composite transformation** with either a bounded or
 global domain. This transformation represents multiple transformations applied
 one after the other :math:`T_0(T_1(T_2(...T_n(p)...)))`. The semantics are
 stack based, that is, first in last applied:
@@ -227,7 +227,7 @@ be optimized over.
 Additional Resources
 =====================
 
-1. The API for the SimpleITK transformation classes is available in doxygen format:
+1. The API for the SimpleITK transformation classes is available in Doxygen format:
 
    * `2D or 3D, translation <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1TranslationTransform.html>`_.
    * `VersorTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1VersorTransform.html>`_.
@@ -255,6 +255,7 @@ Resampling as the verb implies is the action of sampling an image, which itself
 is a sampling of an original continuous signal.
 
 Generally speaking, resampling in SimpleITK involves four components:
+
 1. Image - the image we resample, given in coordinate system :math:`m`.
 2. Resampling grid - a regular grid of points given in coordinate system :math:`f`
    which will be mapped to coordinate system :math:`m`.
@@ -271,6 +272,7 @@ segmentation, it is the only interpolation approach which will not introduce
 new labels into the result.
 
 The SimpleITK interface includes three variants for specifying the resampling grid:
+
 1. Use the same grid as defined by the resampled image.
 2. Provide a second, reference, image which defines the grid.
 3. Specify the grid using: size, origin, spacing, and direction cosine matrix.
@@ -284,10 +286,10 @@ Common Errors
 It is not uncommon to end up with an empty (all black) image after resampling.
 This is due to:
 
-1. Using wrong settings for the resampling grid, not too common, but does happen.
+1. Using wrong settings for the resampling grid (not too common, but does happen).
 2. Using the inverse of the transformation :math:`T_f^m`. This is a relatively
-common error, which is readily addressed by invoking the transformation's
-`GetInverse` method.
+   common error, which is readily addressed by invoking the transformation's
+   `GetInverse` method.
 
 
 Additional Resources
@@ -295,7 +297,7 @@ Additional Resources
 
 1. The API for the SimpleITK
    `ResampleImageFilter class <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ResampleImageFilter.html>`_
-   in doxygen format. The procedural interface for this class supports the three variations for specifying the
+   in Doxygen format. The procedural interface for this class supports the three variations for specifying the
    resampling grid described above.
 2. To really understand the structure of SimpleITK images and how to work with them
    we recommend some hands-on interaction using the
