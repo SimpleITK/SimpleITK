@@ -127,11 +127,11 @@ in space, we need to answer two questions:
 
    .. code-block:: python
 
-    image.TransformIndexToPhysicalPoint((0,0))
+     image.TransformIndexToPhysicalPoint((0,0))
 
-    This computation can also be done manually using the meta-data defining the
-    image's spatial location, but we highly recommend that you do not do so as it
-    is error prone.
+   This computation can also be done manually using the meta-data defining the
+   image's spatial location, but we highly recommend that you do not do so as it
+   is error prone.
 
 Channels
 ========
