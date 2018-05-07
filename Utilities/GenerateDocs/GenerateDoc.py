@@ -53,7 +53,7 @@ def find_xml_file(itk_path, json_obj):
         xname = itk_path + '/' + xf
         if os.path.isfile(xname):
             try:
-                xml_file = io.open(xname, "r")
+                xml_file = io.open(xname, "r", encoding='utf8')
                 print("xml file: ", xname)
             except BaseException:
                 xml_file = None
@@ -213,7 +213,7 @@ if __name__ == '__main__':
 
     #
     # Load the JSON file
-    with open(sitk_json, "r") as fp:
+    with io.open(sitk_json, "r", encoding='utf8') as fp:
         json_obj = json.load(fp, object_pairs_hook=OrderedDict)
 
     #print(json.dumps(json_obj, indent=1))
@@ -309,7 +309,8 @@ if __name__ == '__main__':
     if backup_flag:
         os.rename(sitk_json, sitk_json + ".BAK")
 
-    fp = file(sitk_json, "w")
-    json.dump(json_obj, fp, indent=2, separators=(',', ' : '))
-    print ("", file=fp)
+    fp = io.open(sitk_json, "w", encoding='utf8')
+    json_string = json.dumps(json_obj, indent=2, separators=(u',', u' : '), ensure_ascii=False, encoding='utf8')
+    fp.write(json_string)
+    print (u"", file=fp)
     fp.close()
