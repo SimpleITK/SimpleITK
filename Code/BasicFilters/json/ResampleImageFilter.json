@@ -141,6 +141,46 @@
       ]
     },
     {
+      "tag" : "bspline_resample",
+      "description" : "use the bspline resampler iterpolator in a coefficient image",
+      "settings" : [
+        {
+          "parameter" : "Size",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : [
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "parameter" : "OutputSpacing",
+          "type" : "double",
+          "dim_vec" : 1,
+          "value" : [
+            13.8281,
+            16.0781
+          ]
+        },
+        {
+          "parameter" : "Interpolator",
+          "value" : "itk::simple::sitkBSplineResamplerOrder3",
+          "lua_value" : "SimpleITK.sitkBSplineResamplerOrder3",
+          "python_value" : "SimpleITK.sitkBSplineResamplerOrder3",
+          "ruby_value" : "Simpleitk::SitkGaussian",
+          "java_value" : "InterpolatorEnum.sitkBSplineResamplerOrder3",
+          "tcl_value" : "$$sitkBSplineResamplerOrder3",
+          "csharp_value" : "InterpolatorEnum.sitkBSplineResamplerOrder3",
+          "R_value" : "'sitkBSplineResamplerOrder3'"
+        }
+      ],
+      "tolerance" : "0.001",
+      "inputs" : [
+        "Input/xforms/bspline_ceoff0.mha"
+      ]
+    },
+    {
       "tag" : "wCastwInterpolator",
       "description" : "Resample With Cast and Interpolator",
       "settings" : [
