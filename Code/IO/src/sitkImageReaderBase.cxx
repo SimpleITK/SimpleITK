@@ -47,7 +47,8 @@ ImageReaderBase
 ImageReaderBase
 ::ImageReaderBase()
   : m_OutputPixelType(sitkUnknown),
-    m_LoadPrivateTags(false)
+    m_LoadPrivateTags(false),
+    m_ImageIOName("")
 {
 }
 
@@ -60,6 +61,8 @@ ImageReaderBase
   this->ToStringHelper(out, this->m_OutputPixelType) << std::endl;
   out << "  LoadPrivateTags: ";
   this->ToStringHelper(out, this->m_LoadPrivateTags) << std::endl;
+  out << "  ImageIOName: ";
+  this->ToStringHelper(out, this->m_ImageIOName) << std::endl;
   out << "  Registered ImageIO:" << std::endl;
   ioutils::PrintRegisteredImageIOs(out);
   out << ProcessObject::ToString();
@@ -78,8 +81,26 @@ itk::SmartPointer<ImageIOBase>
 ImageReaderBase
 ::GetImageIOBase(const std::string &fileName)
 {
-  itk::ImageIOBase::Pointer iobase =
-    itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::ReadMode);
+  itk::ImageIOBase::Pointer iobase;
+  if (this->m_ImageIOName == "")
+    {
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::ReadMode);
+    }
+  else
+    {
+    std::list<itk::LightObject::Pointer> allobjects =  itk::ObjectFactoryBase::CreateAllInstance("itkImageIOBase");
+    for(std::list<itk::LightObject::Pointer>::iterator i = allobjects.begin(); i != allobjects.end(); ++i)
+      {
+      if ((*i)->GetNameOfClass() == m_ImageIOName)
+        {
+        iobase = dynamic_cast<itk::ImageIOBase*>(i->GetPointer());
+        }
+      }
+     if ( iobase.IsNull() )
+       {
+       sitkExceptionMacro("Unable to create ImageIO: \"" << m_ImageIOName << "\"");
+       }
+    }
 
 
   if ( iobase.IsNull() )
@@ -157,6 +178,21 @@ ImageReaderBase
   this->SetLoadPrivateTags(false);
 }
 
+ImageReaderBase::Self&
+ImageReaderBase
+::SetImageIO(const std::string &imageio)
+{
+  this->m_ImageIOName = imageio;
+  return *this;
+}
+
+
+std::string
+ImageReaderBase
+::GetImageIO(void) const
+{
+  return this->m_ImageIOName;
+}
 
 void
 ImageReaderBase
