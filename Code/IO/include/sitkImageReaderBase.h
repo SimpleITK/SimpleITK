@@ -72,7 +72,7 @@ class SmartPointer;
        * Unknown private tags may be encoded with Base64 encoding.
        * @{
        */
-      virtual Self& SetLoadPrivateTags(bool loadPrivateTags);
+      virtual SITK_RETURN_SELF_TYPE_HEADER  SetLoadPrivateTags(bool loadPrivateTags);
       virtual bool GetLoadPrivateTags() const;
       virtual void LoadPrivateTagsOn();
       virtual void LoadPrivateTagsOff();
