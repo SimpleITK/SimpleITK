@@ -22,11 +22,45 @@
 #include "sitkImageFileReader.h"
 
 #include <itkImageFileReader.h>
+#include <itkExtractImageFilter.h>
 
 #include "sitkMetaDataDictionaryCustomCast.hxx"
 
 namespace itk {
   namespace simple {
+
+  namespace {
+
+      // Simple ITK must use a zero based index
+      template< class TImageType>
+      static void FixNonZeroIndex( TImageType * img )
+      {
+        assert( img != SITK_NULLPTR );
+
+        typename TImageType::RegionType r = img->GetLargestPossibleRegion();
+        typename TImageType::IndexType idx = r.GetIndex();
+
+        for( unsigned int i = 0; i < TImageType::ImageDimension; ++i )
+          {
+
+          if ( idx[i] != 0 )
+            {
+            // if any of the indcies are non-zero, then just fix it
+            typename TImageType::PointType o;
+            img->TransformIndexToPhysicalPoint( idx, o );
+            img->SetOrigin( o );
+
+            idx.Fill( 0 );
+            r.SetIndex( idx );
+
+            // Need to set the buffered region to match largest
+            img->SetRegions( r );
+
+            return;
+            }
+          }
+      }
+  }
 
   Image ReadImage ( const std::string &filename, PixelIDValueEnum outputPixelType )
     {
@@ -61,6 +95,8 @@ namespace itk {
       out << std::endl;
       out << "  FileName: \"";
       this->ToStringHelper(out, this->m_FileName) << "\"" << std::endl;
+      out << "  ExtractSize: " << this->m_ExtractSize << std::endl;
+      out << "  ExtractIndex: " << this->m_ExtractIndex << std::endl;
 
       out << "  Image Information:" << std::endl
           << "    PixelType: ";
@@ -221,6 +257,29 @@ namespace itk {
       return this->m_pfGetMetaData(key);
     }
 
+  ImageFileReader &ImageFileReader::SetExtractSize( const std::vector<unsigned int> &size)
+  {
+    this->m_ExtractSize = size;
+    return *this;
+  }
+
+  const std::vector<unsigned int> &ImageFileReader::GetExtractSize( ) const
+  {
+    return this->m_ExtractSize;
+  }
+
+  ImageFileReader &ImageFileReader::SetExtractIndex( const std::vector<int> &index )
+  {
+    this->m_ExtractIndex = index;
+    return *this;
+  }
+
+
+  const std::vector<int> &ImageFileReader::GetExtractIndex( ) const
+  {
+    return this->m_ExtractIndex;
+  }
+
     Image ImageFileReader::Execute ()
     {
 
@@ -233,7 +292,19 @@ namespace itk {
       sitkDebugMacro( "ImageIO: " << imageio->GetNameOfClass() );
 
 
-      const unsigned int dimension = this->GetDimension();
+      unsigned int dimension = this->GetDimension();
+      if (!m_ExtractSize.empty())
+        {
+        dimension = 0;
+        for(unsigned int i = 0; i < m_ExtractSize.size(); ++i )
+          {
+          if (m_ExtractSize[i] != 0)
+            {
+            ++dimension;
+            }
+          }
+        }
+
       if (type == sitkUnknown)
         {
         type = this->GetPixelIDValue();
@@ -264,22 +335,117 @@ namespace itk {
   ImageFileReader::ExecuteInternal( itk::ImageIOBase *imageio )
   {
 
+    const unsigned int MAX_DIMENSION = 5;
     typedef TImageType                      ImageType;
     typedef itk::ImageFileReader<ImageType> Reader;
+
+    typedef typename ImageType::template Rebind<typename ImageType::PixelType, MAX_DIMENSION>::Type InternalImageType;
+    typedef itk::ImageFileReader<InternalImageType> InternalReader;
 
     // if the InstantiatedToken is correctly implemented this should
     // not occur
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
     assert( imageio != SITK_NULLPTR );
-    typename Reader::Pointer reader = Reader::New();
-    reader->SetImageIO( imageio );
-    reader->SetFileName( this->m_FileName.c_str() );
 
-    this->PreUpdate( reader.GetPointer() );
 
-    reader->Update();
+    if ( m_ExtractSize.empty() || m_ExtractSize.size() == ImageType::ImageDimension)
+      {
 
-    return Image( reader->GetOutput() );
+      typename Reader::Pointer reader = Reader::New();
+      reader->SetImageIO( imageio );
+      reader->SetFileName( this->m_FileName.c_str() );
+
+      if ( m_ExtractSize.empty() )
+        {
+
+        this->PreUpdate( reader.GetPointer() );
+        reader->Update();
+        return Image( reader->GetOutput() );
+        }
+
+
+      return this->ExecuteExtract<ImageType>(reader->GetOutput());
+
+      }
+    else
+      {
+      // Perform Reading->Extractor pipeline to adjust dimensions and
+      // do streamed ImageIO
+      typename InternalReader::Pointer reader = InternalReader::New();
+      reader->SetImageIO( imageio );
+      reader->SetFileName( this->m_FileName.c_str() );
+
+      return this->ExecuteExtract<ImageType>(reader->GetOutput());
+      }
+  }
+
+  template <class TImageType, class TInternalImageType>
+  Image
+  ImageFileReader::ExecuteExtract( TInternalImageType * itkImage )
+  {
+    typedef TInternalImageType InternalImageType;
+    typedef TImageType         ImageType;
+
+    typedef itk::ExtractImageFilter<InternalImageType, ImageType> ExtractType;
+    typename ExtractType::Pointer extractor = ExtractType::New();
+
+    extractor->InPlaceOn();
+    extractor->SetDirectionCollapseToSubmatrix();
+
+    extractor->SetInput(itkImage);
+
+    itkImage->UpdateOutputInformation();
+
+    const typename InternalImageType::RegionType largestRegion = itkImage->GetLargestPossibleRegion();
+    typename InternalImageType::RegionType region = largestRegion;
+
+    for (unsigned int i = 0; i < TInternalImageType::ImageDimension; ++i)
+      {
+      if ( i < m_ExtractSize.size() )
+        {
+        region.SetSize(i, m_ExtractSize[i]);
+        }
+      else if ( i >= ImageType::ImageDimension )
+        {
+        region.SetSize(i, 0u);
+        }
+      if ( i < m_ExtractIndex.size() )
+        {
+        region.SetIndex(i,m_ExtractIndex[i]);
+        }
+      }
+
+    extractor->SetExtractionRegion(region);
+
+    typename TInternalImageType::IndexType upperIndex = region.GetUpperIndex();
+    for (unsigned int i = 0; i < TInternalImageType::ImageDimension; ++i)
+      {
+      if (region.GetSize(i) == 0)
+        {
+        upperIndex[i] = region.GetIndex(i);
+        }
+      }
+
+    // check region is in largest possible
+    if ( !largestRegion.IsInside( region.GetIndex() ) ||
+         !largestRegion.IsInside( upperIndex ) )
+      {
+      sitkExceptionMacro( "The requested extraction region: "
+                          << region
+                          << " is not contained with in file's region: "
+                          << itkImage->GetLargestPossibleRegion() );
+      }
+
+    assert(itkImage->GetSource() != SITK_NULLPTR);
+    this->PreUpdate( itkImage->GetSource().GetPointer() );
+
+    extractor->Update();
+
+    ImageType *itkOutImage = extractor->GetOutput();
+    // copy meta-data dictionary
+    itkOutImage->SetMetaDataDictionary( itkImage->GetMetaDataDictionary() );
+    FixNonZeroIndex( itkOutImage );
+    return Image( itkOutImage );
   }
 
   }
