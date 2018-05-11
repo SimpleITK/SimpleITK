@@ -42,6 +42,16 @@ namespace itk {
      * the underlying itk::ImageIO. This information can be loaded
      * with the ReadImageInformation method.
      *
+     * Reading takes place by the ITK ImageIO factory mechanism. ITK
+     * contains many ImageIO classes which are responsible for reading
+     * separate file formats. By default, each ImageIO is asked if it
+     * "can read" the file, and the first one which "can read" the
+     * format is used. The list of available ImageIOs can be obtained
+     * using the GetRegisteredImageIOs method. The ImageIO used can be
+     * overridden with the SetImageIO method. This is useful in cases
+     * when multiple ImageIOs "can read" the file and the user wants
+     * to select a specific IO (not the first).
+     *
      * \sa itk::simple::ReadImage for the procedural interface
      */
     class SITKIO_EXPORT ImageFileReader
