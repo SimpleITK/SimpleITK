@@ -254,8 +254,12 @@ target_compile_options( sitkSystemInformationTest
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
 
-
-gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})
+ # CMake 3.10 added this method, to avoid configure time introspection
+if(NOT CMAKE_CROSSCOMPILING)
+   gtest_discover_tests( SimpleITKUnitTestDriver0 )
+ else()
+   gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})
+endif()
 
 ExternalData_Expand_Arguments(  SimpleITKData
   unused_argument
