@@ -68,10 +68,10 @@ public:
 
   /** \brief Get a vector of the coefficient images representing the BSpline
    *
-   * A lazy shallow copy of the images from ITK are performed. If they
+   * A lazy shallow copy of the images from ITK is performed. If they
    * are modified in SimpleITK a deep copy will occur. However, if
-   * the coefficients are modified in ITK, then no copy will occur and
-   * the images help by SimpleITK may change.
+   * the coefficient images are modified in ITK, then no copy will
+   * occur and the images held by SimpleITK may unexpectedly change.
    */
   std::vector<Image> GetCoefficientImages () const;
 
