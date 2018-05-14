@@ -168,9 +168,6 @@ MACRO(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
   IF(SWIG_MODULE_${name}_EXTRA_FLAGS)
     SET(swig_extra_flags ${swig_extra_flags} ${SWIG_MODULE_${name}_EXTRA_FLAGS})
   ENDIF(SWIG_MODULE_${name}_EXTRA_FLAGS)
-  if(NOT CMAKE_VERSION VERSION_LESS 3.2 )
-    set(USES_TERMINAL "USES_TERMINAL")
-  endif()
   ADD_CUSTOM_COMMAND(
     OUTPUT "${swig_generated_file_fullname}" ${swig_extra_generated_files}
     COMMAND "${SWIG_EXECUTABLE}"
@@ -184,7 +181,7 @@ MACRO(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
     -o "${swig_generated_file_fullname}"
     "${swig_source_file_fullname}"
     MAIN_DEPENDENCY "${swig_source_file_fullname}"
-    ${USES_TERMINAL}
+    "USES_TERMINAL"
     DEPENDS ${SWIG_MODULE_${name}_EXTRA_DEPS}
     COMMENT "Swig source to generate ${SWIG_MODULE_${name}_LANGUAGE} wrapping")
   SET_SOURCE_FILES_PROPERTIES("${swig_generated_file_fullname}" ${swig_extra_generated_files}
