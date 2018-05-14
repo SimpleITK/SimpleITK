@@ -19,3 +19,6 @@ sitk_add_r_test( ImageSlicing
 sitk_add_r_test( Transform
   "${CMAKE_CURRENT_SOURCE_DIR}/RTransformTests.R"
   )
+sitk_add_r_test( Image2Array2Image
+  "${CMAKE_CURRENT_SOURCE_DIR}/R2Img2R.R"
+  )

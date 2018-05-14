@@ -163,7 +163,8 @@ SEXP ImAsArray(itk::simple::Image src);
 itk::simple::Image ArrayAsIm(SEXP arr,
                              std::vector<unsigned int> size,
                              std::vector<double> spacing,
-                             std::vector<double> origin);
+                             std::vector<double> origin,
+                             unsigned int numberOfComponents);
 %}
 
 
