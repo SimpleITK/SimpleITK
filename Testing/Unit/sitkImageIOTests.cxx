@@ -589,3 +589,48 @@ TEST(IO, ImageFileReader_ImageInformation )
   EXPECT_VECTOR_NEAR(reader.GetSize(), v2( 179.0, 240.0), 1e-10);
   EXPECT_EQ( reader.GetMetaDataKeys().size(), 0u);
 }
+
+
+TEST(IO, ImageFileReader_SetImageIO )
+{
+  namespace sitk = itk::simple;
+
+  sitk::HashImageFilter hasher;
+  sitk::ImageFileReader reader;
+  sitk::Image image;
+
+  EXPECT_EQ( "", reader.GetImageIO());
+
+  reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Slice-Short.png" ) );
+
+  reader.SetImageIO("SomethingThatDoesNotExist");
+  EXPECT_ANY_THROW( reader.ReadImageInformation() );
+  EXPECT_ANY_THROW( reader.Execute() );
+  EXPECT_EQ( "SomethingThatDoesNotExist", reader.GetImageIO());
+
+  reader.SetImageIO("MetaImageIO");
+  EXPECT_ANY_THROW( reader.Execute() );
+  EXPECT_ANY_THROW( reader.ReadImageInformation() );
+
+  reader.SetImageIO("PNGImageIO");
+  EXPECT_EQ( "PNGImageIO", reader.GetImageIO());
+  EXPECT_NO_THROW( reader.ReadImageInformation() );
+
+  EXPECT_VECTOR_NEAR( v2(64,64), reader.GetSize(), 0.0 );
+  EXPECT_EQ ( 2u, reader.GetDimension() );
+  EXPECT_EQ ( 1u, reader.GetNumberOfComponents() );
+
+
+
+  EXPECT_NO_THROW( image = reader.Execute() );
+  EXPECT_EQ( "PNGImageIO", reader.GetImageIO());
+  EXPECT_EQ ( "bf0f7bae60b0322222e224941c31f37a981901aa", hasher.Execute ( image ) );
+
+
+  ASSERT_TRUE ( image.GetITKBase() != NULL );
+  EXPECT_EQ ( 2u, image.GetDimension() );
+  EXPECT_EQ ( 64u, image.GetWidth() );
+  EXPECT_EQ ( 64u, image.GetHeight() );
+  EXPECT_EQ ( 0u, image.GetDepth() );
+
+}
