@@ -6,10 +6,6 @@ set(SITE      "NoSiteGiven")
 set(BUILD_TESTING_DEFAULT ON)
 option( BUILD_TESTING "Turn on Testing for SimpleITK" ${BUILD_TESTING_DEFAULT} )
 
-if(CMAKE_GENERATOR MATCHES "Ninja" AND CMAKE_VERSION VERSION_LESS 3.2 )
-  message( FATAL_ERROR "Using \"Ninja\" generator requires CMake 3.2.0 or newer." )
-endif()
-
 configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
 
 
@@ -85,11 +81,7 @@ function(sitkSourceDownload outVar filename hash)
 endfunction()
 
 function(sitkSourceDownloadDependency proj)
-  if (CMAKE_VERSION VERSION_LESS 3.2)
-    add_dependencies(${proj}  "SuperBuildSimpleITKSource")
-  else()
-    ExternalProject_Add_StepDependencies(${proj} download "SuperBuildSimpleITKSource")
-  endif()
+  ExternalProject_Add_StepDependencies(${proj} download "SuperBuildSimpleITKSource")
 endfunction()
 
 #-----------------------------------------------------------------------------

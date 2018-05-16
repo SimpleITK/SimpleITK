@@ -38,10 +38,8 @@ sitk_add_python_test( Test.ImageReadWriteInt64
   )
 
 
-if(CMAKE_VERSION VERSION_GREATER "3.3")
-  if(TEST Python.Test.ConcurrentImageRead)
-    set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABELS "UNSTABLE" )
-  endif()
+if(TEST Python.Test.ConcurrentImageRead)
+  set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABELS "UNSTABLE" )
 endif()
 
 sitk_add_python_test( Test.ArrayView

@@ -375,10 +375,7 @@ function(_test_weak_link_project
       }
     ")
 
-    set(_rpath_arg)
-    if(APPLE AND ${CMAKE_VERSION} VERSION_GREATER 2.8.11)
-      set(_rpath_arg "-DCMAKE_MACOSX_RPATH='${CMAKE_MACOSX_RPATH}'")
-    endif()
+    set(_rpath_arg "-DCMAKE_MACOSX_RPATH='${CMAKE_MACOSX_RPATH}'")
 
     try_compile(project_compiles
                 "${test_project_bin_dir}"
