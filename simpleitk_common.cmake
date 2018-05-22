@@ -432,6 +432,7 @@ while(NOT dashboard_done)
       endif()
       ctest_test( BUILD "${dashboard_build_dir}"
                   RETURN_VALUE test_return
+                  EXCLUDE_LABEL UNSTABLE
                   ${CTEST_TEST_ARGS} )
       if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Test)
