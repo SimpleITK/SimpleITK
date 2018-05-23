@@ -168,7 +168,7 @@
           "value" : "itk::simple::sitkBSplineResamplerOrder3",
           "lua_value" : "SimpleITK.sitkBSplineResamplerOrder3",
           "python_value" : "SimpleITK.sitkBSplineResamplerOrder3",
-          "ruby_value" : "Simpleitk::sitkBSplineResamplerOrder3",
+          "ruby_value" : "Simpleitk::SitkBSplineResamplerOrder3",
           "java_value" : "InterpolatorEnum.sitkBSplineResamplerOrder3",
           "tcl_value" : "$$sitkBSplineResamplerOrder3",
           "csharp_value" : "InterpolatorEnum.sitkBSplineResamplerOrder3",
