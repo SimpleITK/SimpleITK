@@ -10,7 +10,7 @@ Additionally, there are several recommended third-party software
 packages.
 
 After you have installed SimpleITK, please look to the
-`Tutorial <https://simpleitk.github.io/ISBI2018_TUTORIAL/>`__
+`Tutorial <http://simpleitk.github.io/ISBI2018_TUTORIAL/>`__
 or the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
 more information.
 
