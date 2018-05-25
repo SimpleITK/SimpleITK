@@ -102,7 +102,25 @@ enum InterpolatorEnum {
    * \sa itk::WindowedSincInterpolateImageFunction
    * \sa itk::Function::BlackmanWindowFunction
    */
-  sitkBlackmanWindowedSinc = 10
+  sitkBlackmanWindowedSinc = 10,
+
+  /** \brief Interpolator for a BSpline coefficient image
+   *
+   *  This interpolator should be used with the resampling the image
+   *  intensities of a BSpline coefficient image. The order specifies
+   *  the order of the coefficient image, and defaults to 3.
+   *
+   *  \sa BSplineTransformation
+   *  \sa itk::BSplineResampleImageFunction
+   */
+  sitkBSplineResampler = 11,
+  sitkBSplineResamplerOrder3 = 11,
+  sitkBSplineResamplerOrder1 = 12,
+  sitkBSplineResamplerOrder2 = 13,
+  sitkBSplineResamplerOrder4 = 14,
+  sitkBSplineResamplerOrder5 = 15
+
+
 };
 
 #ifndef SWIG

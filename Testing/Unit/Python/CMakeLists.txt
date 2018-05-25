@@ -38,7 +38,7 @@ sitk_add_python_test( Test.ImageReadWriteInt64
   )
 
 
-if(TEST Python.Test.ConcurrentImageRead)
+if(TEST Python.Test.ConcurrentImageRead AND APPLE)
   set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABELS "UNSTABLE" )
 endif()
 

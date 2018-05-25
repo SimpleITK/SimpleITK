@@ -39,6 +39,12 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
     sitkInterpolatorToStringCaseMacro(WelchWindowedSinc);
     sitkInterpolatorToStringCaseMacro(LanczosWindowedSinc);
     sitkInterpolatorToStringCaseMacro(BlackmanWindowedSinc);
+    sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder1);
+    sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder2);
+//  sitkBSplineResampler = 11,
+    sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder3);
+    sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder4);
+    sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder5);
     }
   return os;
 }
