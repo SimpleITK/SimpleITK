@@ -43,6 +43,14 @@ struct ImageTypeToPixelIDValue
   enum { Result = PixelIDToPixelIDValue< typename ImageTypeToPixelID<TImageType>::PixelIDType>::Result };
 };
 
+
+template <unsigned int VImageDimension>
+struct ImageTypeToPixelIDValue< itk::ImageBase<VImageDimension> >
+{
+  enum { Result = -1 };
+};
+
+
 /** \brief Enumerated values of pixelIDs
  *
  * Each PixelID's value corresponds to the index of the PixelID type,
