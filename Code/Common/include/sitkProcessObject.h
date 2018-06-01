@@ -274,7 +274,12 @@ namespace itk {
 
         if ( itkImage.IsNull() )
           {
-          sitkExceptionMacro( "Unexpected template dispatch error!" );
+          sitkExceptionMacro("Failure to convert SimpleITK image of dimension: "
+                             << img.GetDimension() << " and pixel type: \""
+                             << img.GetPixelIDTypeAsString() << "\" to ITK image of dimension: "
+                             << TImageType::GetImageDimension() << " and pixel type: \""
+                             << GetPixelIDValueAsString(ImageTypeToPixelIDValue<TImageType>::Result)
+                             << "\"!" )
           }
         return itkImage;
       }

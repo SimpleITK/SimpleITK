@@ -22,6 +22,7 @@
 namespace itk
 {
 
+template <unsigned int VImageDimension> class ImageBase;
 template <typename TPixelType, unsigned int VImageDimension> class Image;
 template <typename TPixelType, unsigned int VImageDimension > class VectorImage;
 template < typename TLabelObject > class LabelMap;
