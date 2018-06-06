@@ -140,8 +140,8 @@ Recommended Software
 Fiji (Fiji is Just ImageJ)
 --------------------------
 
-SimpleITK has a built in function,
-`"itk::simple::Show()" <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__,
+SimpleITK has a built in function
+`itk::simple::Show() <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__
 which can be used for viewing images in an interactive session.
 Currently, this function by default Show invokes
 `Fiji <https://fiji.sc>`__ then
