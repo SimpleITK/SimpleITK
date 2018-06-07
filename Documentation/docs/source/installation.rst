@@ -14,10 +14,11 @@ After you have installed SimpleITK, please look to the
 or the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
 more information.
 
-.. contents:: On this page
-    :depth: 2
-    :local:
-    :backlinks: none
+..
+	.. contents:: On this page
+	    :depth: 2
+	    :local:
+	    :backlinks: none
 
 .. _installation-binaries:
 
