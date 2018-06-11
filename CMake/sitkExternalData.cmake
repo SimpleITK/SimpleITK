@@ -39,9 +39,6 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
     # Data published on Girder
     "https://data.kitware.com:443/api/v1/file/hashsum/%(algo)/%(hash)/download"
 
-    # Data published by MIDAS
-    "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
-
     # Data published by developers using git-gerrit-push.
     "https://insightsoftwareconsortium.github.io/ITKTestingData/%(algo)/%(hash)"
     "https://itk.org/files/ExternalData/%(algo)/%(hash)"
