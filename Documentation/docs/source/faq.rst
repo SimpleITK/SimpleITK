@@ -4,9 +4,10 @@ Frequently Asked Questions
 This page hosts frequently asked questions about SimpleITK, and their
 answers.
 
-.. contents:: On this page
-    :local:
-    :backlinks: none
+..
+    .. contents:: On this page
+        :local:
+        :backlinks: none
 
 
 Installation
