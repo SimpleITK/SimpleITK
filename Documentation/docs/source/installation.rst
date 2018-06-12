@@ -14,10 +14,11 @@ After you have installed SimpleITK, please look to the
 or the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
 more information.
 
-.. contents:: On this page
-    :depth: 2
-    :local:
-    :backlinks: none
+..
+	.. contents:: On this page
+	    :depth: 2
+	    :local:
+	    :backlinks: none
 
 .. _installation-binaries:
 
@@ -139,8 +140,8 @@ Recommended Software
 Fiji (Fiji is Just ImageJ)
 --------------------------
 
-SimpleITK has a built in function,
-`"itk::simple::Show()" <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__,
+SimpleITK has a built in function
+`itk::simple::Show() <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__
 which can be used for viewing images in an interactive session.
 Currently, this function by default Show invokes
 `Fiji <https://fiji.sc>`__ then

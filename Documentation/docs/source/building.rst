@@ -15,9 +15,10 @@ might prefer to **build SimpleITK from source**:
 -  You want to contribute to the development of SimpleITK
 -  To use the SimpleITK's C++ interface and/or use ITK directly
 
-.. contents:: On this page
-    :local:
-    :backlinks: none
+..
+  .. contents:: On this page
+      :local:
+      :backlinks: none
 
 Prerequisites
 =============

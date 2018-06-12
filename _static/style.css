@@ -1,0 +1,111 @@
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
+}
+
+
+/*BORDERS*/
+hr { /*All lines*/
+	display: none;
+}
+
+footer hr{ /*Footer line*/
+	display: block;
+}
+
+.wy-menu-vertical li.toctree-l1.current>a { /*TOC Border*/
+    border-bottom: solid 1px #e8e8e8;
+    border-top: solid 1px #e8e8e8;
+}
+
+
+/*FONTS*/
+.wy-menu-vertical p.caption { /*"Table of Contents"*/
+	color:#404040; /*MATCH FONT*/
+}
+
+.wy-menu-vertical a { /*TOC options*/
+	color:#404040; /*MATCH FONT*/
+}
+
+h1 { /*Main title*/
+    font-size: 200%;
+}
+
+
+/*BACKGROUND COLORS*/
+.highlight { /*Literal code highlight*/
+	background:#f4f4f4;
+}
+
+.wy-nav-content { /*Body*/
+	background-color: #fcfcfc; /*MATCH BACKGROUND*/
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.wy-nav-side { /*Side Navigation*/
+	background-color:#fcfcfc; /*MATCH BACKGROUND*/
+}
+
+.wy-side-nav-search { /*Color around logo*/
+	background-color: #fcfcfc; /*MATCH BACKGROUND*/
+}
+
+.wy-side-nav-search input[type=text] { /*Searchbox*/
+	border-color: #c0c0c0;
+	background-color: white;
+}
+
+.wy-menu-vertical li.current a { /*Sub-TOC*/
+	color:#404040; /*MATCH FONT*/
+	border-right:none;
+	background:#e4e4e4; /*MATCH WITH OTHER*/
+}
+
+.wy-menu-vertical li.on a, .wy-menu-vertical li.current>a { /*First layer*/
+	background:#f0f0f0;
+}
+
+.wy-menu-vertical li.toctree-l2.current>a { /*Second layer*/
+	background:#e4e4e4; /*MATCH WITH OTHER*/
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a { /*Third layer*/
+	background:#d8d8d8;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4>a { /*Fourth layer*/
+	background:#cccccc;
+}
+
+
+/*HOVER*/
+.wy-menu-vertical a:hover { /*Layer 1*/
+	background:#2b59a0;
+	color:#dda428;
+}
+
+.wy-menu-vertical li.current a:hover { /*Layer 2*/
+	background:#2b59a0;
+	color:#dda428;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a:hover { /*Layer 3*/
+	background:#2b59a0;
+	color:#dda428;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4>a:hover { /*Layer 4*/
+	background:#2b59a0;
+	color:#dda428;
+}
