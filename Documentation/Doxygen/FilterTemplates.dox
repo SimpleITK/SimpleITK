@@ -130,6 +130,13 @@ generated for the filter. Each entry in the list must be an object. If no tests
 are specified, a test will be generated that fails with the message that a test
 must be written for the filter
 
+- \b itk_module: (\e string) A string naming the ITK module the filter
+  originates from. If the ITK installation used for building SimpleITK does
+  not have this named module then the filter will be omitted in SimpleITK. This filed
+  is maintained JSONUpdateITKModules.py script.
+
+- \b itk_group: (\e string) A string naming the ITK group the ITK filter originates.
+
 - [OPTIONAL] \b include_files: (\e list) This list of strings specifies
 additional header files to include in the cxx file for this filter.
 
