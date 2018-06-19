@@ -129,3 +129,13 @@ add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
   COMMAND ${CMD_PREFIX} ${R_COMMAND} CMD INSTALL --build ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/R_libs --no-multiarch
   COMMENT "Installing R package for testing and building binary version for distribution"
   )
+
+if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
+  set(WRAP_R 1)
+
+  add_subdirectory("${SimpleITK_SOURCE_DIR}/Testing/Unit/R" "${CMAKE_BINARY_DIR}/Testing/Unit")
+
+  if(COMMAND ExternalData_Add_Target )
+    ExternalData_Add_Target( SimpleITKData )
+  endif()
+endif()
