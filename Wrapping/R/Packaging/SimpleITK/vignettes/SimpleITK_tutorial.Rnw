@@ -171,10 +171,6 @@ im[100, 120]
 <<fig=TRUE>>=
 im[1:100,]
 @@
-\item First 100 columns, then same data flipped
-<<fig=TRUE>>=
-im[c(1:100,100:1),]
-@@
 \item Remove the first 100 rows
 <<fig=TRUE>>=
 im[,-(1:100)]
@@ -184,7 +180,9 @@ im[,-(1:100)]
 im[seq(1,256, by=2), seq(1,256, by=2)]
 @@
 
-As you can see, we can use array acess techniques to images. The results of each of these operations is an image, not an array. Evidently, we can do some pretty crazy things using this notation, which means that it is very difficult to decide what to do with image metadata, such as spacing and origin. Currently nothing clever is being done with either - spacing is left as per the input, which could easily be wrong. Origin is left as default image constructor.
+As you can see, we can use array access techniques on images. The results of each of these operations is an image, not an array.
+These operations are constrained so that rules about image spacing and orientation are preserved. For example, errors
+are raised if directions are flipped  or if spacing is not uniform.
 \item Lets explore the image class in a little more detail to find out what access methods are available:
 <<>>=
 getMethod('$', class(im))
