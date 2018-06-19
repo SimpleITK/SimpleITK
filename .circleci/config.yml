@@ -20,7 +20,7 @@ referenced:
     run:
       name: Dependencies
       command: |
-        sudo apt-get install -y rsync lua5.1 ccache kwstyle swig  r-base r-base-dev
+        sudo apt-get install -y rsync lua5.1 ccache kwstyle swig
         sudo pip install --upgrade pip
         sudo pip install numpy scikit-ci-addons
         ci_addons circle/install_cmake.py 3.10.2
@@ -150,6 +150,10 @@ jobs:
       - *clone-dashboard-step
       - *dependencies
       - *env-step
+      - run:
+          name: Additional Dependencies
+          command: |
+            sudo apt-get install -y r-base r-base-dev
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
       - run:
