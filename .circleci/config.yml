@@ -20,7 +20,7 @@ referenced:
     run:
       name: Dependencies
       command: |
-        sudo apt-get install -y rsync lua5.1 ccache kwstyle swig
+        sudo apt-get install -y rsync lua5.1 ccache kwstyle swig  r-base r-base-dev
         sudo pip install --upgrade pip
         sudo pip install numpy scikit-ci-addons
         ci_addons circle/install_cmake.py 3.10.2
@@ -118,6 +118,7 @@ jobs:
             - "*"
   python-and-test:
     <<: *defaults
+    resource_class: medium
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -132,11 +133,35 @@ jobs:
           name: Build Python and Testing with CTest
           no_output_timeout: 20.0m
           command: |
+            export PARALLEL_LEVEL=2
             export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/lib"
             export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${CTEST_BINARY_DIRECTORY}
               SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
             export CTEST_BINARY_DIRECTORY="/home/circleci/SimpleITK-py"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+  r-and-test:
+    <<: *defaults
+    resource_class: medium
+    steps:
+      - checkout:
+          path : ~/SimpleITK
+      - *generate-hash-step
+      - *restore-data-step
+      - *clone-dashboard-step
+      - *dependencies
+      - *env-step
+      - attach_workspace:
+          at: /home/circleci/SimpleITK-build
+      - run:
+          name: Build R and Testing with CTest
+          no_output_timeout: 20.0m
+          command: |
+            export PARALLEL_LEVEL=2
+            export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/lib"
+            export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${CTEST_BINARY_DIRECTORY}
+              SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
+            export CTEST_BINARY_DIRECTORY="/home/circleci/SimpleITK-R"
+            ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/R" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
   docs:
     <<: *defaults
     steps:
@@ -184,6 +209,9 @@ workflows:
                  - dashboard
                  - hooks
       - python-and-test:
+          requires:
+            - build-and-test
+      - r-and-test:
           requires:
             - build-and-test
   nightly:
