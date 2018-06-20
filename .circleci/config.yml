@@ -4,10 +4,12 @@ referenced:
      - image: circleci/python:2.7
     working_directory: ~/
     resource_class: large
-    environment:
+  default_environment_keys:  &default_environment
+    <<: &default_environment_keys
       CTEST_DASHBOARD_ROOT: /home/circleci
       CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
       CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
+      ROOT_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
       CTEST_BUILD_FLAGS: "-j 4"
       CTEST_CONFIGURATION_TYPE: "Release"
       CTEST_OUTPUT_ON_FAILURE: 1
@@ -68,6 +70,8 @@ version: 2
 jobs:
   build-and-test:
     <<: *defaults
+    environment:
+      <<: *default_environment_keys
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -87,7 +91,7 @@ jobs:
           name: Build and Testing with CTest
           no_output_timeout: 20.0m
           command: |
-            export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib"
+            export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/SimpleITK-build/lib"
             export CTEST_CACHE="
               BUILD_DOCUMENTATION:BOOL=OFF
               BUILD_EXAMPLES:BOOL=OFF
@@ -122,6 +126,11 @@ jobs:
             - "*"
   python-and-test:
     <<: *defaults
+    environment:
+      <<: *default_environment_keys
+      CTEST_BUILD_FLAGS: "-j 2"
+      PARALLEL_LEVEL: 2
+      CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
     resource_class: medium
     steps:
       - checkout:
@@ -137,15 +146,21 @@ jobs:
           name: Build Python and Testing with CTest
           no_output_timeout: 20.0m
           command: |
-            export PARALLEL_LEVEL=2
-            export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/lib"
-            export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${CTEST_BINARY_DIRECTORY}
-              SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
-            export CTEST_BINARY_DIRECTORY="/home/circleci/SimpleITK-py"
+            env
+            export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/lib"
+            export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
+              SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+      - *junit-fotmatting
+      - *junit-store-test-results
   r-and-test:
     <<: *defaults
     resource_class: medium
+    environment:
+      <<: *default_environment_keys
+      CTEST_BUILD_FLAGS: "-j 2"
+      PARALLEL_LEVEL: 2
+      CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-R"
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -164,16 +179,16 @@ jobs:
           name: Build R and Testing with CTest
           no_output_timeout: 20.0m
           command: |
-            export PARALLEL_LEVEL=2
-            export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/lib"
-            export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${CTEST_BINARY_DIRECTORY}
-              SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
-            export CTEST_BINARY_DIRECTORY="/home/circleci/SimpleITK-R"
+            export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/lib"
+            export CTEST_CACHE="CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
+              SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/R" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-fotmatting
       - *junit-store-test-results
   docs:
     <<: *defaults
+    environment:
+      <<: *default_environment_keys
     steps:
       - checkout:
           path : ~/SimpleITK
