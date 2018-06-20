@@ -51,6 +51,18 @@ referenced:
        command: |
          echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
          echo 'export PATH=/usr/lib/ccache:${PATH}' >> $BASH_ENV
+  junit-fotmatting: &junit-fotmatting
+     run:
+       name: Formatting CTest for JUnit
+       when: always
+       command: |
+         env
+         mkdir -p /tmp/test-results
+         ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > /tmp/test-results/JUnit-${CIRCLE_NODE_INDEX}.xml
+  junit-store-test-results: &junit-store-test-results
+    store_test_results:
+          path: /tmp/test-results
+          destination: ctest
 
 version: 2
 jobs:
@@ -91,16 +103,8 @@ jobs:
           when: always
           command: |
             ccache --show-stats
-      - run:
-          name: Formatting CTest for JUnit
-          when: always
-          command: |
-            env
-            mkdir -p /tmp/test-results
-            ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > /tmp/test-results/JUnit-${CIRCLE_NODE_INDEX}.xml
-      - store_test_results:
-          path: /tmp/test-results
-          destination: ctest
+      - *junit-fotmatting
+      - *junit-store-test-results
       - save_cache:
           key: 'ccache-{{ arch }}-{{ .Branch }}-{{ epoch }}'
           paths: [ "/home/circleci/.ccache" ]
@@ -166,6 +170,8 @@ jobs:
               SWIG_EXECUTABLE:PATH=${CTEST_BINARY_DIRECTORY}/Swig/bin/swig"
             export CTEST_BINARY_DIRECTORY="/home/circleci/SimpleITK-R"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/R" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+      - *junit-fotmatting
+      - *junit-store-test-results
   docs:
     <<: *defaults
     steps:
