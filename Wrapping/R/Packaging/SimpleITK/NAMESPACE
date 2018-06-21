@@ -1,3 +1,1 @@
-import(methods)
-useDynLib(SimpleITK)
 exportPattern( "." )
