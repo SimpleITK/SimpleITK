@@ -3,7 +3,11 @@
   "template_code_filename" : "MultiInputImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "pixel_types" : "BasicPixelIDTypeList",
+  "include_files" : [
+    "sitkToPixelType.hxx"
+  ],
+
+  "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [
     {
       "name" : "Layout",
@@ -16,6 +20,7 @@
       "name" : "DefaultPixelValue",
       "type" : "double",
       "default" : "0.0",
+      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, filter->GetInput()->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_DefaultPixelValue, v );  filter->SetDefaultPixelValue( v );",
       "pixeltype" : "Output"
     }
   ],
@@ -105,6 +110,18 @@
         "Input/Ramp-One-Zero-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input4_rgb",
+      "description" : "four input of RGB",
+      "settings" : [],
+      "md5hash" : "8c0c3d651b3eb19e16dfc8d21b1bd3a5",
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd",
+        "Input/VM1111Shrink-RGBFloat.nrrd",
+        "Input/VM1111Shrink-RGBFloat.nrrd",
+        "Input/VM1111Shrink-RGBFloat.nrrd"
       ]
     }
   ],
