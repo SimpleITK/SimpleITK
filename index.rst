@@ -18,6 +18,7 @@ SimpleITK are currently available for all three major operating systems
    Documentation/docs/source/fundamentalConcepts
    Documentation/docs/source/registrationOverview
    Documentation/docs/source/conventions
+   Documentation/docs/source/IO
    Documentation/docs/source/filters
    Documentation/docs/source/building
    Documentation/docs/source/faq

@@ -76,6 +76,9 @@ be looked at to determine if a filter is available.
 What image file formats can SimpleITK read?
 -------------------------------------------
 
+See :ref:`here <image-io>`
+
+
 How do I read a RAW image into SimpleITK?
 -----------------------------------------
 
