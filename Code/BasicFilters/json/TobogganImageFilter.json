@@ -2,17 +2,17 @@
   "name" : "TobogganImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "filter_type" : "itk::TobogganImageFilter< InputImageType >",
   "number_of_inputs" : 1,
   "doc" : "Docs",
   "pixel_types" : "RealPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
   "members" : [],
   "tests" : [
     {
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "md5hash" : "fc9991365337cd4de60ae2db7d66f755",
+        "md5hash" : "d16db800662f9bd3703099d38387b529",
       "inputs" : [
         "Input/cthead1-grad-mag.mha"
       ]
