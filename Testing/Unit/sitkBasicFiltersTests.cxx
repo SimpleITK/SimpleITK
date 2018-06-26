@@ -905,7 +905,11 @@ TEST(BasicFilters,ResampleImageFilter_DefaultParameters)
   sitk::Image img(10,10,sitk::sitkUInt8);
   sitk::ResampleImageFilter filter;
 
-  EXPECT_ANY_THROW( filter.Execute(img) );
+  sitk::Image result = filter.Execute(img);
+
+  // Resample with default parameters returns a 0x0 image
+  EXPECT_EQ ( 0, result.GetWidth() );
+  EXPECT_EQ ( 0, result.GetHeight() );
 }
 
 
