@@ -32,6 +32,8 @@ int main (int argc, char *argv[])
 
   std::cout << "Starting sitkShowTest\n";
 
+  sitk::ImageViewer iv;
+
   if (argc > 1)
     {
     for (int i=1; i<argc; i++)
