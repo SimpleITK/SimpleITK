@@ -118,7 +118,7 @@ page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__
 under the version directory then the CSharp
 sub-directory. Installation instructions are available at `a visual
 guide to SimpleITK in
-Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A visual guide to SimpleITK in Java>`__.
+Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_in_Java>`__.
 
 Nightly binaries
 ----------------
