@@ -66,7 +66,7 @@ namespace simple
    *
    * The SimpleITK Image provides a single facade interface to several
    * ITK image types. Internally, the SimpleITK Image maintains a
-   * pointer to the ITK image class, and performing reference counting
+   * pointer to the ITK image class, and performs reference counting
    * and lazy copying. This means that deep copying of an image
    * including it's buffer is delayed until the image is
    * modified. This removes the need to use pointers to SimpleITK
