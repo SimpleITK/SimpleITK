@@ -60,18 +60,7 @@ set(SimpleITK_USE_FILE "${_SimpleITKConfig_DIR}/UseSimpleITK.cmake")
 
 # Locate ITK for required targets
 if(NOT ITK_CONFIG_TARGETS_FILE)
-  if("@SimpleITKConfig_TREE@" STREQUAL "build")
-    set(ITK_CONFIG_TARGETS_FILE "@ITK_DIR@/ITKTargets.cmake")
-  else()
-    # TODO: Add required ITK packages
-    find_package(ITK "@ITK_VERSION@" EXACT REQUIRED)
-  endif()
-endif()
-
-# Import ITK targets.
-if(NOT ITK_TARGETS_IMPORTED)
-  set(ITK_TARGETS_IMPORTED 1)
-  include("${ITK_CONFIG_TARGETS_FILE}")
+  find_package(ITK "@ITK_VERSION@" EXACT REQUIRED)
 endif()
 
 # Import SimpleITK targets.
