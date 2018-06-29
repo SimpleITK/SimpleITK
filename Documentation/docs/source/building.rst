@@ -38,6 +38,7 @@ To build SimpleITK you need:
 -  It is recommended to have numpy installed when testing Python
    bindings
 
+-  The R package requires R version 3.3 or greater.
 
 Recipes / Formulas / Short Cuts
 ===============================
@@ -57,7 +58,7 @@ building of SimpleITK (see their repository for more details):
    for the SimpleITK build are in `this GitHub
    repository <https://github.com/SimpleITK/SimpleITKCondaRecipe>`__.
 
--  For the **R language**: A devtools installer and instructions are
+-  For the **R language** (version 3.3 or greater): A devtools installer and instructions are
    available from `this GitHub
    repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
 

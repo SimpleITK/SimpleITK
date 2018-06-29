@@ -9,7 +9,7 @@ Authors@R: c(person("Richard", "Beare", role = c("aut", "cre"),
 		     person("Ziv", "Yaniv", role="aut",
 		     email = "zivrafael.yaniv@nih.gov"))
 Author: Richard Beare, Bradley Lowekamp, plus loads of others
-Depends: R (>= 3.2)
+Depends: R (>= 3.3)
 Imports: methods
 Description: This package is an interface to SimpleITK, which is a simplified
      interface to the Insight Toolkit (ITKv@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@) for medical image segmentation
