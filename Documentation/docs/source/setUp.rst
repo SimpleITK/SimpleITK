@@ -62,11 +62,15 @@ Add SimpleITK to the Build Path
 Right click on the project in the *Package Explorer* view and choose *Build Path --> Configure Build Path...*
 
 .. figure:: ../images/EclipseConfigureBuildPath.png
+   :scale: 60%
+   :align: center
    :alt: Build Path Option
 
 In the *Properties* dialog, click on *Java Build Path* and *Add External JARs...* then navigate to the SimpleITK jar file. When selected, click the down arrow to expose the options for the jar.
 
 .. figure:: ../images/BuildPathConfiguration.png
+   :scale: 70%
+   :align: center
    :alt: Build Path Configuration
 
 The three options of interest are: *Source attachment*, *Javdoc location* and *Native library location*. The *Source attachment* specifies where the source code for the SimpleITK jar file resides. In our case, it is distributed as *simpleitk-source.x.x.x.jar* where *x.x.x* is the version number of SimpleITK. The source attachment is useful for debugging the SimpleITK library, if necessary, because it allows the debugger to step through classes provided in the SimpleITK jar file. This setting is optional.
@@ -94,14 +98,19 @@ The SimpleITK Java bindings closely follow the C++ conventions, i.e. each class 
 C#
 ==
 
-This guide will show how to set up a C# project in Microsoft Visual Studio 2015 using SimpleITK binaries. The same steps should apply for all other versions of Visual Studio.
+This guide will show how to set up a C# project in Microsoft Visual Studio 2017 using SimpleITK binaries. The same steps should apply for all other versions of Visual Studio.
 
 Building SimpleITK
 ------------------
 For Windows, you have two options:
 
- - :ref:`Download <installation-binaries>` the binary for SimpleITK
+ - :ref:`Download <installation-binaries>` the binary for SimpleITK in your Documents
  - :doc:`Build <building>` the binary
+
+ .. figure:: ../images/SimpleITKCSharpUnzip.png
+   :scale: 45%
+   :align: center
+   :alt: Unzipped SimpleITK package
 
 For any other OS, you must build the binaries yourself.
 
@@ -109,4 +118,52 @@ Set Up Visual Studio
 --------------------
 Download `Visual Studio <https://visualstudio.microsoft.com/downloads/>`_ if you don't have it.
 
-Then, create a new project in Visual Studio. Choose *File --> New --> Project...*, then under Templates select ".NET" and "Console Project".
+Then, create a new project in Visual Studio. Choose *File --> New --> Project...*, then select "Visual C#" and "Console App".
+
+.. figure:: ../images/NewVisualStudioProject.png
+   :scale: 45%
+   :align: center
+   :alt: New Visual Studio Project
+
+Select Architecture
+-------------------
+The SimpleITK binary only supports a single architecture platform. Your project should be configured to match that same platform. By default, in the Toolbar "Debug" is selected for the Solution Configuration and "Any CPU" is selected for the Solution Platform, this needs to be changed.
+
+ - Bring up the "Configuration Manager" dialog from the menu *BUILD->Configuration Manger...*
+ - The architecture of the SimpleITK binary needs to be added, and the "Any CPU" architecture needs to be removed. This needs to be done for both the "Active solution platforms" and the "Platform".
+
+ .. figure:: ../images/VisualStudioConfigurationManager.png
+   :scale: 45%
+   :align: center
+   :alt: Visual Studio Configuration Manager
+
+Add Managed Library
+-------------------
+ - From the menu bar select *PROJECT->Add Reference...* to bring up the Reference Manager. Click *Browse...* and navigate the file system to unzip "SimpleITKCSharpManaged.dll" from the binary download, then click OK to add.
+
+ .. figure:: ../images/ManagedLibrary.png
+   :scale: 45%
+   :align: center
+   :alt: Add Managed Library
+
+Add Native Library
+------------------
+ - From the menu bar select *PROJECT->Add Existing Item...* Select "Executable Files" for the extension type. Then navigate the file system to the unzipped "SimpleITKCSharpNative.dll" file from the binary download. **IMPORTANT** in the "Add" button's pull down menu select "Add As Link".
+ - In the Solution Explorer right click on the "SimpleITKCSharpNative.dll", and select "Properties".
+ - Then for "Build Action", choose "Content", and "Copy to OutputDirectory" choose "Copy always".
+
+.. figure:: ../images/NativeLibraryProperties.png
+   :scale: 50%
+   :align: center
+   :alt: Native Library Properties
+
+Building an Example
+-------------------
+Now that we have configured the project, let up copy a basic SimpleITK example to compile and run. The :doc:`SimpleGaussian in C# <../../../Examples/SimpleGaussian/Documentation>` is a simple one to test our configuration. This can just be copied and pasted into the code editor.
+
+Then click *Build -> Build Solution*. Assuming you have followed all of the steps thus far, you should have an executable you can run from the command line or from Visual Studio by adding command line arguments in *Project -> ConsoleApp1 Properties... -> Debug*.
+
+.. figure:: ../images/VisualStudioExample.png
+   :scale: 60%
+   :align: center
+   :alt: Visual Studio Example Build
