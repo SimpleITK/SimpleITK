@@ -16,6 +16,7 @@ Examples
   DicomSeriesReadModifyWrite/Documentation
   DicomSeriesFromArray/Documentation
   FilterProgressReporting/Documentation
+  ImageGridManipulation/Documentation
   ImageRegistrationMethod1/Documentation
   ImageRegistrationMethod2/Documentation
   ImageRegistrationMethod3/Documentation
