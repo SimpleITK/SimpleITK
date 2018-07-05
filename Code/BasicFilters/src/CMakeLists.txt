@@ -1,5 +1,5 @@
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
-
+cmake_policy(SET CMP0057 NEW)
 
 # add_filter_library
 # This function is used to apply standard building options for the
@@ -128,19 +128,14 @@ endforeach()
 
 foreach( itk_module ${module_vars} )
 
-  # cmake >= 3.3
-  # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
-  list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
-  list (LENGTH SimpleITKBasicFiltersGeneratedSource_${itk_module} _len)
-  if (${_index} GREATER -1 AND ${_len} GREATER 0)
+  if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
     add_filter_library( SimpleITK_${itk_module}
                         SimpleITKBasicFiltersGeneratedSource_${itk_module}
                         itk_module )
-
   endif()
 
-  if (${_len} GREATER 0)
-    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+  if (SimpleITKBasicFiltersGeneratedSource_${itk_module})
+      list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
   endif()
 
 endforeach()
