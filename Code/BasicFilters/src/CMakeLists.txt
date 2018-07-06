@@ -1,5 +1,5 @@
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
-
+cmake_policy(SET CMP0057 NEW)
 
 # add_filter_library
 # This function is used to apply standard building options for the
@@ -128,72 +128,37 @@ endforeach()
 
 foreach( itk_module ${module_vars} )
 
-  # cmake >= 3.3
-  # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
-  list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
-  list (LENGTH SimpleITKBasicFiltersGeneratedSource_${itk_module} _len)
-  if (${_index} GREATER -1 AND ${_len} GREATER 0)
+  if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
     add_filter_library( SimpleITK_${itk_module}
                         SimpleITKBasicFiltersGeneratedSource_${itk_module}
                         itk_module )
-
   endif()
 
-  if (${_len} GREATER 0)
-    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+  if (SimpleITKBasicFiltersGeneratedSource_${itk_module})
+      list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
   endif()
 
 endforeach()
 
-#
-#
-#
 
-# sort the list to en-sure the same list across platforms
+# We should have dealt with all generated source files
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
+list(LENGTH SimpleITKBasicFiltersGeneratedSource _len)
+if(_len GREATER 0)
+  message(WARNING "Did not find module for source code: ${SimpleITKBasicFiltersGeneratedSource}")
+endif()
 
-# add additional files which may depend on Filters0-N
-list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} sitkAdditionalProcedures.cxx )
+#
+# Deal with files which may depend on any or all other filters.
+#
 
-list ( LENGTH SimpleITKBasicFiltersSource _length )
-math( EXPR _end_range "${_length} - 1 " )
+# add additional files which may depend on other modules
+list(APPEND SimpleITKBasicFilters1Source ${SimpleITKBasicFiltersGeneratedSource} sitkAdditionalProcedures.cxx)
 
+set(PREV_SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES})
 
-# Break all these source files into a bunch of libraries base on every
-# n files in the list.
-set ( _stride 25 )
-set ( _library_i 1 )
-foreach ( _start RANGE 0 ${_end_range} ${_stride} )
+# No dependencies on ITK modules just SimpleITK
+add_filter_library(SimpleITKBasicFilters1 SimpleITKBasicFilters1Source no_itk_deps)
 
-  math( EXPR _library_i "${_library_i} " )
-
-  # compute the end of the range ensuring that the inclusive range
-  # [_start, _end] is all valid indexes
-  math( EXPR _end "${_start} + ${_stride} - 1" )
-  if ( ${_end} VERSION_GREATER ${_end_range} OR
-      ${_end} VERSION_EQUAL ${_end_range} )
-    math( EXPR _end "${_end_range}" )
-    set(_last 1)
-  endif()
-
-  # extract out the range into SRC
-  set ( SRC "" )
-  foreach( _j RANGE ${_start} ${_end} )
-    list ( GET SimpleITKBasicFiltersSource ${_j} _v )
-    list ( APPEND SRC ${_v} )
-  endforeach()
-
-  add_filter_library(SimpleITKBasicFilters${_library_i} SRC ITK_MODULES_ENABLED)
-
-  if(_last)
-
-    set(_last_SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES})
-    list(REMOVE_ITEM _last_SimpleITK_LIBRARIES SimpleITKBasicFilters${_library_i})
-    # the last library include additional cxx files which may depend on
-    # other filter libraries
-    target_link_libraries ( SimpleITKBasicFilters${_library_i}
-      PRIVATE ${_last_SimpleITK_LIBRARIES} )
-  endif()
-
-
-endforeach ()
+target_link_libraries ( SimpleITKBasicFilters1
+  PRIVATE ${PREV_SimpleITK_LIBRARIES} )
