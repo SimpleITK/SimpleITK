@@ -44,8 +44,11 @@ matcher.SetNumberOfMatchPoints(7)
 matcher.ThresholdAtMeanIntensityOn()
 moving = matcher.Execute(moving,fixed)
 
+# The basic Demons Registration Filter
+# Note there is a whole family of Demons Registration algorithms included in SimpleITK
 demons = sitk.DemonsRegistrationFilter()
 demons.SetNumberOfIterations( 50 )
+# Standard deviation for Gaussian smoothing of displacement field
 demons.SetStandardDeviations( 1.0 )
 
 demons.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(demons) )
