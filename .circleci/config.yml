@@ -176,6 +176,11 @@ jobs:
       - run:
           name: Additional Dependencies
           command: |
+            sudo apt-get update -y
+            sudo apt-get -y install dirmngr apt-transport-https software-properties-common
+            sudo apt-key adv --keyserver http://keyserver.ubuntu.com --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+            sudo add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/"
+            sudo apt-get update -y
             sudo apt-get install -y r-base r-base-dev
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
