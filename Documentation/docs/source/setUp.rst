@@ -61,14 +61,14 @@ Add SimpleITK to the Build Path
 -------------------------------
 Right click on the project in the *Package Explorer* view and choose *Build Path --> Configure Build Path...*
 
-.. figure:: ../images/EclipseConfigureBuildPath.png
+.. figure:: ../images/EclipseConfigureBuildPath.jpg
    :scale: 60%
    :align: center
    :alt: Build Path Option
 
 In the *Properties* dialog, click on *Java Build Path* and *Add External JARs...* then navigate to the SimpleITK jar file. When selected, click the down arrow to expose the options for the jar.
 
-.. figure:: ../images/BuildPathConfiguration.png
+.. figure:: ../images/BuildPathConfiguration.jpg
    :scale: 70%
    :align: center
    :alt: Build Path Configuration
@@ -107,7 +107,7 @@ For Windows, you have two options:
  - :ref:`Download <installation-binaries>` the binary for SimpleITK in your Documents
  - :doc:`Build <building>` the binary
 
- .. figure:: ../images/SimpleITKCSharpUnzip.png
+ .. figure:: ../images/SimpleITKCSharpUnzip.jpg
    :scale: 45%
    :align: center
    :alt: Unzipped SimpleITK package
@@ -120,7 +120,7 @@ Download `Visual Studio <https://visualstudio.microsoft.com/downloads/>`_ if you
 
 Then, create a new project in Visual Studio. Choose *File --> New --> Project...*, then select "Visual C#" and "Console App".
 
-.. figure:: ../images/NewVisualStudioProject.png
+.. figure:: ../images/NewVisualStudioProject.jpg
    :scale: 45%
    :align: center
    :alt: New Visual Studio Project
@@ -132,7 +132,7 @@ The SimpleITK binary only supports a single architecture platform. Your project 
  - Bring up the "Configuration Manager" dialog from the menu *BUILD->Configuration Manger...*
  - The architecture of the SimpleITK binary needs to be added, and the "Any CPU" architecture needs to be removed. This needs to be done for both the "Active solution platforms" and the "Platform".
 
- .. figure:: ../images/VisualStudioConfigurationManager.png
+ .. figure:: ../images/VisualStudioConfigurationManager.jpg
    :scale: 45%
    :align: center
    :alt: Visual Studio Configuration Manager
@@ -141,7 +141,7 @@ Add Managed Library
 -------------------
  - From the menu bar select *PROJECT->Add Reference...* to bring up the Reference Manager. Click *Browse...* and navigate the file system to unzip "SimpleITKCSharpManaged.dll" from the binary download, then click OK to add.
 
- .. figure:: ../images/ManagedLibrary.png
+ .. figure:: ../images/ManagedLibrary.jpg
    :scale: 45%
    :align: center
    :alt: Add Managed Library
@@ -152,7 +152,7 @@ Add Native Library
  - In the Solution Explorer right click on the "SimpleITKCSharpNative.dll", and select "Properties".
  - Then for "Build Action", choose "Content", and "Copy to OutputDirectory" choose "Copy always".
 
-.. figure:: ../images/NativeLibraryProperties.png
+.. figure:: ../images/NativeLibraryProperties.jpg
    :scale: 50%
    :align: center
    :alt: Native Library Properties
@@ -163,7 +163,7 @@ Now that we have configured the project, let up copy a basic SimpleITK example t
 
 Then click *Build -> Build Solution*. Assuming you have followed all of the steps thus far, you should have an executable you can run from the command line or from Visual Studio by adding command line arguments in *Project -> ConsoleApp1 Properties... -> Debug*.
 
-.. figure:: ../images/VisualStudioExample.png
+.. figure:: ../images/VisualStudioExample.jpg
    :scale: 60%
    :align: center
    :alt: Visual Studio Example Build
