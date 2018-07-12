@@ -110,7 +110,7 @@ for(i in 1:filtered_image$GetDepth()) {
   image_slice$SetMetaData("0008|0012", format(Sys.time(), "%Y%m%d")) # Instance Creation Date
   image_slice$SetMetaData("0008|0013", format(Sys.time(), "%H%M%S")) # Instance Creation Time
   image_slice$SetMetaData("0020|0032", paste(filtered_image$TransformIndexToPhysicalPoint(c(0,0,i-1)), collapse="\\")) # Image Position (Patient)
-  image_slice$SetMetaData("0020,0013", as.character(i)) # Instance Number
+  image_slice$SetMetaData("0020|0013", as.character(i)) # Instance Number
 
   # Write to the output directory and add the extension dcm, to force writing in DICOM format.
   writer$SetFileName(file.path(args[[2]], sprintf("%d.dcm",i)))
