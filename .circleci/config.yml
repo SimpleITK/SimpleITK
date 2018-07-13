@@ -93,7 +93,7 @@ jobs:
           command: |
             export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/SimpleITK-build/lib"
             export CTEST_CACHE="
-              BUILD_DOCUMENTATION:BOOL=OFF
+              BUILD_DOCUMENTS:BOOL=OFF
               BUILD_EXAMPLES:BOOL=OFF
               BUILD_SHARED_LIBS:BOOL=ON
 
