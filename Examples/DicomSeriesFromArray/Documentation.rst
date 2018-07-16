@@ -5,7 +5,7 @@ Dicom Series From Array
 
 Overview
 --------
-This example illustrates how to write a DICOM series from a numeric array and create appropriate meta-data so it can be read my DICOM viewers.
+This example illustrates how to write a DICOM series from a numeric array and create appropriate meta-data so it can be read by DICOM viewers.
 
 Generating an array is done using a simple random number generator for this case but can come from other sources.
 
@@ -25,3 +25,8 @@ Code
        :language: python
        :lines: 19-
 
+  .. tab:: R
+
+    .. literalinclude:: DicomSeriesFromArray.R
+       :language: R
+       :lines: 18-
