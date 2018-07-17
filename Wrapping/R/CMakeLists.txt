@@ -74,7 +74,7 @@ configure_file(
 # data store.
 include(sitkExternalData)
 
-file( GLOB_RECURSE image_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/data/*.md5" )
+file( GLOB_RECURSE image_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/inst/extdata/*.md5" )
 
 foreach(link ${image_links})
   string( REGEX REPLACE "\\.md5$" "" link ${link} )
@@ -82,7 +82,7 @@ foreach(link ${image_links})
     image_location
     DATA{${link}}
     )
-  set( COPY_DATA_COMMAND ${COPY_DATA_COMMAND} COMMAND ${CMAKE_COMMAND} -E copy ${image_location} ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/data/ )
+  set( COPY_DATA_COMMAND ${COPY_DATA_COMMAND} COMMAND ${CMAKE_COMMAND} -E copy ${image_location} ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/inst/extdata/ )
 endforeach()
 
 
