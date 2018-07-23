@@ -51,6 +51,7 @@
 #include <sitkLandmarkBasedTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
+#include <sitkResampleImageFilter.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -895,6 +896,20 @@ TEST(BasicFilters,ResampleImageFilter_AdditionalProcedures)
                        img.GetSpacing(),
                        img.GetDirection() );
   EXPECT_EQ( "b187541bdcc89843d0a25a3761f344c358f3518a", sitk::Hash( out )) << " Procedural Interface 3 identity transform.";
+}
+
+TEST(BasicFilters,ResampleImageFilter_DefaultParameters)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image img(10,10,sitk::sitkUInt8);
+  sitk::ResampleImageFilter filter;
+
+  sitk::Image result = filter.Execute(img);
+
+  // Resample with default parameters returns a 0x0 image
+  EXPECT_EQ ( 0, result.GetWidth() );
+  EXPECT_EQ ( 0, result.GetHeight() );
 }
 
 

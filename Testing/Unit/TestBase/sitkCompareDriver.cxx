@@ -25,9 +25,17 @@
 #include "itksys/SystemTools.hxx"
 #include <iostream>
 
-DataFinder dataFinder;
+
 
 namespace sitk = itk::simple;
+
+// declared in SimpleITKTestHarness
+DataFinder dataFinder;
+
+namespace
+{
+
+
 
 struct TransformCompareType
 {
@@ -69,7 +77,7 @@ struct ProcessedOutputType
   ArgumentsList args;
 };
 
-static char my_to_lower(const char c)
+char my_to_lower(const char c)
 {
   return static_cast<char>( ::tolower(c));
 }
@@ -392,7 +400,7 @@ int ProcessArguments(int *ac, ArgumentStringType *av, ProcessedOutputType * proc
   return 0;
 }
 
-
+}
 
 
 int main(int argc, char *argv[])

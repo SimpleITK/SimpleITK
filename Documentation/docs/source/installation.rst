@@ -87,11 +87,12 @@ under the dev label:
 C# binary files
 ---------------
 
-**Binaries for select C# platform** can be found on `SimpleITK's
+**Binaries for select C# platforms** can be found on `SimpleITK's
 SourceForge
-page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/1.0.0/CSharp/>`__.
-Installing the library should only involve importing the unzipped files
-into you C# environment. The files have the following naming convention:
+page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__
+under the version directory then the CSharp sub-directory. Installing
+the library should only involve importing the unzipped files into you
+C# environment. The files have the following naming convention:
 
 ``SimpleITK-version-CSharp-buildplatform-targetplatform.zip``
 
@@ -113,10 +114,11 @@ Java binary files
 
 **Binaries for select Java platforms** can be found on `SimpleITK's
 SourceForge
-page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/1.0.0/Java/>`__.
-Installation instructions are available at `a visual guide to SimpleITK
-in
-Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A visual guide to SimpleITK in Java>`__.
+page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__
+under the version directory then the CSharp
+sub-directory. Installation instructions are available at `a visual
+guide to SimpleITK in
+Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_in_Java>`__.
 
 Nightly binaries
 ----------------

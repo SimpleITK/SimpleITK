@@ -302,6 +302,9 @@ endif()
 option ( WRAP_R "Wrap R" ${WRAP_R_DEFAULT} )
 
 if ( WRAP_R )
+  if ( R_VERSION_STRING VERSION_LESS 3.3 )
+    message( WARNING "R version less than 3.3: \"${R_VERSION_STRING}\"." )
+  endif()
   list( APPEND SITK_LANGUAGES_VARS
     R_INCLUDE_DIR
     R_LIBRARIES

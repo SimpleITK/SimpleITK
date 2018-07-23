@@ -22,9 +22,9 @@ referenced:
     run:
       name: Dependencies
       command: |
-        sudo apt-get install -y rsync lua5.1 ccache kwstyle swig
+        sudo apt-get install -y rsync lua5.1 ccache kwstyle
         sudo pip install --upgrade pip
-        sudo pip install numpy scikit-ci-addons
+        sudo pip install scikit-ci-addons
         ci_addons circle/install_cmake.py 3.10.2
   generate-hash-step: &generate-hash-step
     run:
@@ -93,7 +93,7 @@ jobs:
           command: |
             export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/SimpleITK-build/lib"
             export CTEST_CACHE="
-              BUILD_DOCUMENTATION:BOOL=OFF
+              BUILD_DOCUMENTS:BOOL=OFF
               BUILD_EXAMPLES:BOOL=OFF
               BUILD_SHARED_LIBS:BOOL=ON
 
@@ -140,6 +140,10 @@ jobs:
       - *clone-dashboard-step
       - *dependencies
       - *env-step
+      - run:
+          name: Additional Dependencies
+          command: |
+            sudo pip install numpy
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
       - run:
@@ -172,6 +176,11 @@ jobs:
       - run:
           name: Additional Dependencies
           command: |
+            sudo apt-get update -y
+            sudo apt-get -y install dirmngr apt-transport-https software-properties-common
+            sudo apt-key adv --keyserver http://keyserver.ubuntu.com --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+            sudo add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/"
+            sudo apt-get update -y
             sudo apt-get install -y r-base r-base-dev
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
