@@ -639,7 +639,7 @@ class Doxy2RProc(Doxy2SWIG):
         self.EmptyText = False
         self.piecesdict = dict()
         self.currentFunc=''
-        self.Usage=dict()
+        self.NotesCPP=dict()
 
     def parse_Text(self, node):
         txt = node.data
@@ -733,12 +733,13 @@ class Doxy2RProc(Doxy2SWIG):
 
                 # now the potentially repeated bits (overloading)
                 # Rd doesn't allow multiple usage statements, so
-                # collect them
-                usage=defn + argstring
-                if not name in self.Usage:
-                    self.Usage[self.currentname]=""
+                # collect them. Changed to using a note section, as
+                # usage needs to be R code, not c++
+                notecpp=defn + argstring
+                if not name in self.NotesCPP:
+                    self.NotesCPP[self.currentname]=""
 
-                self.Usage[self.currentname] = self.Usage[self.currentname] + '\n\n' + usage
+                self.NotesCPP[self.currentname] = self.NotesCPP[self.currentname] + '\n\n' + notecpp
 
     def do_sectiondef(self, node):
         kind = node.attributes['kind'].value
@@ -750,11 +751,11 @@ class Doxy2RProc(Doxy2SWIG):
         if os.path.isdir(fname):
             for FuncName in self.piecesdict:
                 outname=os.path.join(fname, FuncName + ".Rd")
-                ## add the usage to the end
-                if FuncName in self.Usage:
+                ## add the note to the end
+                if FuncName in self.NotesCPP:
                     self.currentname=FuncName
-                    usage = '\\usage{\n%s\n}\n' % self.Usage[FuncName]
-                    self.add_text(usage)
+                    notecpp = '\\note{\n%s\n}\n' % self.NotesCPP[FuncName]
+                    self.add_text(notecpp)
                 self.pieces = self.piecesdict[FuncName]
                 Doxy2SWIG.write(self,outname)
         else:
