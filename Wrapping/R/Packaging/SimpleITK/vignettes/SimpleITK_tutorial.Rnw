@@ -150,7 +150,7 @@ setMethod('show', '_p_itk__simple__Image',
 @@
 \item Load an image
 <<>>=
-im <- ReadImage(system.file("data/cthead1.png", package="SimpleITK"))
+im <- ReadImage(system.file("extdata/cthead1.png", package="SimpleITK"))
 @@
 \item Display
 <<fig=TRUE>>=

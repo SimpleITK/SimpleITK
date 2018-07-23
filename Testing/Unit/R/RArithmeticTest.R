@@ -6,11 +6,11 @@
 
 library(SimpleITK)
 
-testimA <- ReadImage(system.file("data/cthead1-Float.mha", package="SimpleITK"))
-testimB <- ReadImage(system.file("data/cthead1-Float.mha", package="SimpleITK"))
+testimA <- ReadImage(system.file("extdata/cthead1-Float.mha", package="SimpleITK"))
+testimB <- ReadImage(system.file("extdata/cthead1-Float.mha", package="SimpleITK"))
 
 # need to cast to signed types to compare with R arithmetic
-testimInt <- ReadImage(system.file("data/cthead1.png", package="SimpleITK"))
+testimInt <- ReadImage(system.file("extdata/cthead1.png", package="SimpleITK"))
 testimInt <- Cast(testimInt, 'sitkInt16')
 
 testArrayA <- as.array(testimA)
