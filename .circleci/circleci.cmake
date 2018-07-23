@@ -62,6 +62,7 @@ endif()
 
 
 SET (_dashboard_cache "
+    ITK_GIT_REPOSITORY:STRING=\"https://github.com/InsightSoftwareConsortium/ITK.git\"
     BUILD_DOCUMENTS:BOOL=OFF
     BUILD_EXAMPLES:BOOL=OFF
     BUILD_SHARED_LIBS:BOOL=ON
