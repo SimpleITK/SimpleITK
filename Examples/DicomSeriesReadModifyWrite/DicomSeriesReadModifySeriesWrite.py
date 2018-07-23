@@ -102,7 +102,7 @@ for i in range(filtered_image.GetDepth()):
     image_slice.SetMetaData("0008|0012", time.strftime("%Y%m%d")) # Instance Creation Date
     image_slice.SetMetaData("0008|0013", time.strftime("%H%M%S")) # Instance Creation Time
     image_slice.SetMetaData("0020|0032", '\\'.join(map(str,filtered_image.TransformIndexToPhysicalPoint((0,0,i))))) # Image Position (Patient)
-    image_slice.SetMetaData("0020,0013", str(i)) # Instance Number
+    image_slice.SetMetaData("0020|0013", str(i)) # Instance Number
 
     # Write to the output directory and add the extension dcm, to force writing in DICOM format.
     writer.SetFileName(os.path.join(sys.argv[2],str(i)+'.dcm'))
