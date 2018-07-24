@@ -36,7 +36,7 @@ import sys
 import types
 import os.path
 import getopt
-
+import regex
 
 debug = 0
 
@@ -451,8 +451,36 @@ class Doxy2R(Doxy2SWIG):
         self.FilterTitle = True
         self.sitkClassName=''
         self.EmptyText = False
+        # compiled regular expressions
+        # common formula types in xml version of documentation
         self.dollarFormula = re.compile("^\\$(.+)\\$$")
         self.arrayFormula = re.compile("^\\\\\\[(.+)\\\\\\]$")
+        # more complex formula layout, that breaks R documentation
+        # checks.
+        self.mathstuff1 = re.compile(r"\\begin\{array\}\{[^}]+\}")
+        self.mathstuff2 = re.compile(r"\\begin\{array\}")
+        self.mathstuff3 = re.compile(r"\\end\{array\}")
+        # a complex recursive regular expression, to deal with formula
+        # inside mbox and text structures
+        self.mathstuff4 = regex.compile(r"\\mbox({((?>[^}{]*(?1)?)*)})", flags=regex.V1)
+        self.mathstuff5 = regex.compile(r"\\text({((?>[^}{]*(?1)?)*)})", flags=regex.V1)
+        # the special doxygen tags - note - not greedy
+        self.mathstuff6 = re.compile(r"\\f\$(.+?)\\f\$")
+        # alignment tags
+        self.mathstuff7 = re.compile(r" & ")
+    def filterLatexMath(self, txt):
+        m1 = self.mathstuff1.sub("", txt)
+        m1 = self.mathstuff2.sub("", m1)
+        m1 = self.mathstuff3.sub("", m1)
+        if self.mathstuff4.search(m1) is not None:
+           (m1, cc) = self.mathstuff4.subn(r"\2", m1)
+           (m1, cc) = self.mathstuff6.subn(r"\1", m1)
+        if self.mathstuff5.search(m1) is not None:
+           (m1, cc) = self.mathstuff5.subn(r"\2", m1)
+           (m1, cc) = self.mathstuff6.subn(r"\1", m1)
+        (m1, cc) = self.mathstuff7.subn(" ", m1)
+        return(m1)
+
     def parse_Text(self, node):
         txt = node.data
         txt = txt.replace('\\', r'\\\\')
@@ -475,10 +503,10 @@ class Doxy2R(Doxy2SWIG):
             f2 = self.arrayFormula.match(txt)
             if f1 is not None:
                 self.add_text(' \\eqn{')
-                self.add_text(f1.group(1))
+                self.add_text(self.filterLatexMath(f1.group(1)))
             elif f2 is not None:
                 self.add_text(' \\deqn{')
-                self.add_text(f2.group(1))
+                self.add_text(self.filterLatexMath(f2.group(1)))
             else:
                 print("Unmatched formula")
                 print(txt)
