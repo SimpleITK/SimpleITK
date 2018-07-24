@@ -35,6 +35,10 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
 
   endif()
 
+  # optional examples directory with testing
+  option(BUILD_EXAMPLES "Build the Examples directory." ON)
+
+
 else()
   set(SimpleITK_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 endif()

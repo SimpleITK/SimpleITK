@@ -101,6 +101,10 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
 
   add_subdirectory("${SimpleITK_SOURCE_DIR}/Testing/Unit/Python" "${CMAKE_BINARY_DIR}/Testing/Unit")
 
+  if(BUILD_EXAMPLES)
+    add_subdirectory("${SimpleITK_SOURCE_DIR}/Examples" "${CMAKE_BINARY_DIR}/Examples")
+  endif()
+
   if(COMMAND ExternalData_Add_Target )
     ExternalData_Add_Target( SimpleITKData )
   endif()
