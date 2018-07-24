@@ -50,6 +50,7 @@ writeSITKNamespace <- function(objlist) {
 
 handExports <- function() {
   f <- c('import(methods)',
+         'importFrom("utils", "head", "tail")',
          'useDynLib(SimpleITK)',
          'exportClasses("_p_itk__simple__Image")',
          'export("as.image")',
