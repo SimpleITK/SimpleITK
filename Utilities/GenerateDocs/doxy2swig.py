@@ -753,10 +753,16 @@ class Doxy2RProc(Doxy2SWIG):
                     self.add_text('\\name{%s}\n' %(name))
                     self.add_text('\\alias{%s}\n' %(name))
                     self.add_text('\\description{\n')
-                    self.generic_parse(others['briefdescription'])
+                    if others['briefdescription'] is None:
+                       self.add_text('See class definition - most likely nameImageFilter')
+                    else:
+                       self.generic_parse(others['briefdescription'])
                     self.add_text('\n}\n\n')
                     self.add_text('\\details{\n')
-                    self.generic_parse(others['detaileddescription'])
+                    if others['detaileddescription'] is None:
+                       self.add_text('See class definition - most likely nameImageFilter')
+                    else:
+                       self.generic_parse(others['detaileddescription'])
                     self.add_text('\n}\n\n')
 
                 # now the potentially repeated bits (overloading)
