@@ -753,13 +753,17 @@ class Doxy2RProc(Doxy2SWIG):
                     self.add_text('\\name{%s}\n' %(name))
                     self.add_text('\\alias{%s}\n' %(name))
                     self.add_text('\\description{\n')
-                    if others['briefdescription'] is None:
+                    if others['briefdescription'] is None or \
+                       others['briefdescription'].firstChild.data.isspace() or \
+                       others['briefdescription'].firstChild.data == '':
                        self.add_text('See class definition - most likely nameImageFilter')
                     else:
                        self.generic_parse(others['briefdescription'])
                     self.add_text('\n}\n\n')
                     self.add_text('\\details{\n')
-                    if others['detaileddescription'] is None:
+                    if others['detaileddescription'] is None or \
+                       others['detaileddescription'].firstChild.data.isspace() or \
+                       others['detaileddescription'].firstChild.data == '':
                        self.add_text('See class definition - most likely nameImageFilter')
                     else:
                        self.generic_parse(others['detaileddescription'])
