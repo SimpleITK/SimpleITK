@@ -46,14 +46,14 @@ inputImage <- Cast( inputImage, 'sitkFloat32' )
 
 corrector <- N4BiasFieldCorrectionImageFilter()
 
-numberFilltingLevels <- 4
+numberFittingLevels <- 4
 
 if (length ( args ) > 6) {
-    numberFilltingLevels <- strtoi( args[[6]] )
+    numberFittingLevels <- strtoi( args[[6]] )
 }
 
 if (length ( args ) > 5) {
-    corrector$SetMaximumNumberOfIterations( rep(strtoi( args[[5]], numberFilltingLevels)) )
+    corrector$SetMaximumNumberOfIterations( rep(strtoi( args[[5]], numberFittingLevels)) )
 }
 
 output <- corrector$Execute( inputImage, maskImage )

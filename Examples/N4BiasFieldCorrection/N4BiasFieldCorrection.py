@@ -30,10 +30,7 @@ if len ( sys.argv ) < 2:
     sys.exit ( 1 )
 
 
-
-
 inputImage = sitk.ReadImage( sys.argv[1] )
-
 
 if len ( sys.argv ) > 4:
     maskImage = sitk.ReadImage( sys.argv[4] )
@@ -48,14 +45,13 @@ inputImage = sitk.Cast( inputImage, sitk.sitkFloat32 )
 
 corrector = sitk.N4BiasFieldCorrectionImageFilter();
 
-numberFilltingLevels = 4
+numberFittingLevels = 4
 
 if len ( sys.argv ) > 6:
-    numberFilltingLevels = int( sys.argv[6] )
+    numberFittingLevels = int( sys.argv[6] )
 
 if len ( sys.argv ) > 5:
-    corrector.SetMaximumNumberOfIterations( [ int( sys.argv[5] ) ] *numberFilltingLevels  )
-
+    corrector.SetMaximumNumberOfIterations( [ int( sys.argv[5] ) ] *numberFittingLevels  )
 
 
 output = corrector.Execute( inputImage, maskImage )
