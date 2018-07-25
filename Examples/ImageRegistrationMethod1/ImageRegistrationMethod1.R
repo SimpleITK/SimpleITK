@@ -26,13 +26,10 @@ library(SimpleITK)
 
 commandIteration <- function(method)
 {
-     res <- function() {
-     msg <- paste("Optimizer iteration number ", method$GetOptimizerIteration(),
-                  " = ", method$GetMetricValue(), " : ", method$GetOptimizerPosition(),
-                  "\n" )
-     cat(msg)
-    }
-    return(res)
+    msg <- paste("Optimizer iteration number ", method$GetOptimizerIteration(),
+                 " = ", method$GetMetricValue(), " : ", method$GetOptimizerPosition(),
+                 "\n" )
+    cat(msg)
 }
 
 args <- commandArgs( TRUE )
@@ -52,7 +49,7 @@ Reg$SetOptimizerAsRegularStepGradientDescent(4.0, .01, 200 )
 Reg$SetInitialTransform(TranslationTransform(fixed$GetDimension()))
 Reg$SetInterpolator('sitkLinear')
 
-Reg$AddCommand('sitkIterationEvent', commandIteration(Reg))
+Reg$AddCommand('sitkIterationEvent', function() commandIteration(Reg))
 
 outTx = Reg$Execute(fixed, moving)
 

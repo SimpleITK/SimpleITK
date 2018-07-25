@@ -1,5 +1,5 @@
-Image Registration Method1
-==========================
+Image Registration Method 1
+===========================
 
 .. include:: ../../Documentation/docs/source/registrationExamplePrefix.rst
 
