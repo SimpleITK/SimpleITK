@@ -58,8 +58,6 @@ R.SetSmoothingSigmasPerLevel([2,1,1])
 
 R.SetMetricAsJointHistogramMutualInformation(20)
 R.MetricUseFixedImageGradientFilterOff()
-R.MetricUseFixedImageGradientFilterOff()
-
 
 R.SetOptimizerAsGradientDescent(learningRate=1.0,
                                 numberOfIterations=100,
@@ -97,8 +95,6 @@ R.SetInitialTransform(displacementTx, inPlace=True)
 
 R.SetMetricAsANTSNeighborhoodCorrelation(4)
 R.MetricUseFixedImageGradientFilterOff()
-R.MetricUseFixedImageGradientFilterOff()
-
 
 R.SetShrinkFactorsPerLevel([3,2,1])
 R.SetSmoothingSigmasPerLevel([2,1,1])

@@ -22,3 +22,9 @@ Code
     .. literalinclude:: ImageRegistrationMethodDisplacement1.py
        :language: python
        :lines: 1,19-
+
+  .. tab:: R
+
+    .. literalinclude:: ImageRegistrationMethodDisplacement1.R
+       :language: R
+       :lines: 18-
