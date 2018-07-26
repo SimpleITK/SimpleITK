@@ -1,6 +1,8 @@
 %\documentclass{article}
 \documentclass{InsightArticle}
 
+%\VignetteIndexEntry{Introduction to SimpleITK}
+
 % to be able to use options in graphics
 \ifx\pdfoutput\undefined
 \usepackage[dvips,
