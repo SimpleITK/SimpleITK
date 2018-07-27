@@ -16,3 +16,9 @@ Code
     .. literalinclude:: ImageRegistrationMethod4.py
        :language: python
        :lines: 1,19-
+
+  .. tab:: R
+
+    .. literalinclude:: ImageRegistrationMethod4.R
+       :language: R
+       :lines: 18-
