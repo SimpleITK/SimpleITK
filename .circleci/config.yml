@@ -24,6 +24,7 @@ referenced:
       command: |
         sudo apt-get install -y rsync lua5.1 ccache kwstyle
         sudo pip install --upgrade pip
+        sudo pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
         sudo pip install cmake==3.10.3
   generate-hash-step: &generate-hash-step
     run:
