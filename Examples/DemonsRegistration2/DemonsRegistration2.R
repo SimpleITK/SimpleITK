@@ -24,12 +24,9 @@ library(SimpleITK)
 
 commandIteration <- function(filter)
 {
-     res <- function() {
-     msg <- paste("Iteration number ", filter$GetElapsedIterations(),
-                  " = ", filter$GetMetric(), "\n" )
-     cat(msg)
-    }
-    return(res)
+    msg <- paste("Iteration number ", filter$GetElapsedIterations(),
+                 " = ", filter$GetMetric(), "\n" )
+    cat(msg)
 }
 
 args <- commandArgs( TRUE )
@@ -59,20 +56,20 @@ demons$SetNumberOfIterations(200)
 # Standard deviation for Gaussian smoothing of displacement field
 demons$SetStandardDeviations(1.0)
 
-demons$AddCommand( 'sitkIterationEvent', commandIteration(demons) )
+demons$AddCommand( 'sitkIterationEvent', function() commandIteration(demons) )
 
 
 if (length(args) > 3) {
-    initialTransform = ReadTransform(args[[3]])
+    initialTransform <- ReadTransform(args[[3]])
 
-    toDisplacementFilter = TransformToDisplacementFieldFilter()
+    toDisplacementFilter <- TransformToDisplacementFieldFilter()
     toDisplacementFilter$SetReferenceImage(fixed)
 
-    displacementField = toDisplacementFilter$Execute(initialTransform)
+    displacementField <- toDisplacementFilter$Execute(initialTransform)
 
-    displacementField = demons$Execute(fixed, moving, displacementField)
+    displacementField <- demons$Execute(fixed, moving, displacementField)
 } else {
-    displacementField = demons$Execute(fixed, moving)
+    displacementField <- demons$Execute(fixed, moving)
 }
 
 
@@ -80,6 +77,6 @@ cat("-------\n")
 cat("Number Of Iterations: ",demons$GetElapsedIterations(), "\n")
 cat(" RMS: ", demons$GetRMSChange(), "\n")
 
-outTx = DisplacementFieldTransform(displacementField)
+outTx <- DisplacementFieldTransform(displacementField)
 
 WriteTransform(outTx, tail(args, n=1))

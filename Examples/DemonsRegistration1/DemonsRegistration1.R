@@ -24,12 +24,9 @@ library(SimpleITK)
 
 commandIteration <- function(filter)
 {
-     res <- function() {
-     msg <- paste("Iteration number ", filter$GetElapsedIterations(),
-                  " = ", filter$GetMetric(), "\n" )
-     cat(msg)
-    }
-    return(res)
+    msg <- paste("Iteration number ", filter$GetElapsedIterations(),
+                 " = ", filter$GetMetric(), "\n" )
+    cat(msg)
 }
 
 args <- commandArgs( TRUE )
@@ -56,7 +53,7 @@ demons$SetNumberOfIterations( 50 )
 # Standard deviation for Gaussian smoothing of displacement field
 demons$SetStandardDeviations( 1.0 )
 
-demons$AddCommand( 'sitkIterationEvent', commandIteration(demons) )
+demons$AddCommand( 'sitkIterationEvent', function() commandIteration(demons) )
 
 displacementField <- demons$Execute( fixed, moving )
 
