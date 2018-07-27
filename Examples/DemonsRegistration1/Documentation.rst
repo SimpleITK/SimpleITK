@@ -40,3 +40,9 @@ Code
     .. literalinclude:: DemonsRegistration1.py
        :language: python
        :lines: 1,19-
+
+  .. tab:: R
+
+    .. literalinclude:: DemonsRegistration1.R
+       :language: R
+       :lines: 18-

@@ -27,12 +27,31 @@ if len( sys.argv ) < 2:
     print( "Usage: python " + __file__ + "<output_directory>" )
     sys.exit ( 1 )
 
+def writeSlices(series_tag_values, new_img, i):
+    image_slice = new_img[:,:,i]
+
+    # Tags shared by the series.
+    list(map(lambda tag_value: image_slice.SetMetaData(tag_value[0], tag_value[1]), series_tag_values))
+
+    # Slice specific tags.
+    image_slice.SetMetaData("0008|0012", time.strftime("%Y%m%d")) # Instance Creation Date
+    image_slice.SetMetaData("0008|0013", time.strftime("%H%M%S")) # Instance Creation Time
+
+    # Setting the type to CT preserves the slice location.
+    image_slice.SetMetaData("0008|0060", "CT")  # set the type to CT so the thickness is carried over
+
+    # (0020, 0032) image position patient determines the 3D spacing between slices.
+    image_slice.SetMetaData("0020|0032", '\\'.join(map(str,new_img.TransformIndexToPhysicalPoint((0,0,i))))) # Image Position (Patient)
+    image_slice.SetMetaData("0020,0013", str(i)) # Instance Number
+
+    # Write to the output directory and add the extension dcm, to force writing in DICOM format.
+    writer.SetFileName(os.path.join(sys.argv[1],str(i)+'.dcm'))
+    writer.Execute(image_slice)
 
 # Create a new series from a numpy array
 new_arr = np.random.uniform(-10, 10, size = (3,4,5)).astype(np.int16)
 new_img = sitk.GetImageFromArray(new_arr)
 new_img.SetSpacing([2.5,3.5,4.5])
-
 
 # Write the 3D image as a series
 # IMPORTANT: There are many DICOM tags that need to be updated when you modify an
@@ -48,8 +67,6 @@ writer = sitk.ImageFileWriter()
 # Use the study/series/frame of reference information given in the meta-data
 # dictionary and not the automatically generated information from the file IO
 writer.KeepOriginalImageUIDOn()
-
-
 
 modification_time = time.strftime("%H%M%S")
 modification_date = time.strftime("%Y%m%d")
@@ -67,24 +84,8 @@ series_tag_values = [("0008|0031",modification_time), # Series Time
                                                     direction[1],direction[4],direction[7])))),
                   ("0008|103e", "Created-SimpleITK")] # Series Description
 
-for i in range(new_img.GetDepth()):
-    image_slice = new_img[:,:,i]
-    # Tags shared by the series.
-    for tag, value in series_tag_values:
-        image_slice.SetMetaData(tag, value)
-    # Slice specific tags.
-    image_slice.SetMetaData("0008|0012", time.strftime("%Y%m%d")) # Instance Creation Date
-    image_slice.SetMetaData("0008|0013", time.strftime("%H%M%S")) # Instance Creation Time
-    # Setting the type to CT preserves the slice location.
-    image_slice.SetMetaData("0008|0060", "CT")  # set the type to CT so the thickness is carried over
-    
-    # (0020, 0032) image position patient determines the 3D spacing between slices.
-    image_slice.SetMetaData("0020|0032", '\\'.join(map(str,new_img.TransformIndexToPhysicalPoint((0,0,i))))) # Image Position (Patient)
-    image_slice.SetMetaData("0020,0013", str(i)) # Instance Number
-
-    # Write to the output directory and add the extension dcm, to force writing in DICOM format.
-    writer.SetFileName(os.path.join(sys.argv[1],str(i)+'.dcm'))
-    writer.Execute(image_slice)
+# Write slices to output directory
+list(map(lambda i: writeSlices(series_tag_values, new_img, i), range(new_img.GetDepth())))
     
 # Re-read the series
 # Read the original series. First obtain the series file names using the
