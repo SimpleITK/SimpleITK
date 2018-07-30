@@ -7,6 +7,7 @@
 \alias{Image-class}
 \alias{[,_p_itk__simple__Image-method}
 \alias{[[,_p_itk__simple__Image-method}
+\alias{as.image}
 
 \title{Class \code{"_p_itk__simple__Image"}}
 \description{
