@@ -552,6 +552,8 @@ class Doxy2R(Doxy2SWIG):
             # check that we actually got a detailed description.
             # Not having a title is illegal in R
             # use the class name otherwise
+            if self.EmptyText:
+                self.add_text(self.sitkClassName)
             self.add_text('}\n')
     def do_briefdescription(self, node):
         # there are brief descriptions all over the place and
@@ -704,6 +706,8 @@ class Doxy2RProc(Doxy2SWIG):
             # check that we actually got a detailed description.
             # Not having a title is illegal in R
             # use the class name otherwise
+            if self.EmptyText:
+                self.add_text(self.sitkClassName)
             self.add_text('}\n')
     def do_briefdescription(self, node):
         # there are brief descriptions all over the place and
@@ -725,7 +729,6 @@ class Doxy2RProc(Doxy2SWIG):
         tmp = node.parentNode.parentNode.parentNode
         compdef = tmp.getElementsByTagName('compounddef')[0]
         cdef_kind = compdef.attributes['kind'].value
-
         self.FilterTitle = False;
 
         if prot == 'public':
@@ -781,7 +784,7 @@ class Doxy2RProc(Doxy2SWIG):
 
     def do_sectiondef(self, node):
         kind = node.attributes['kind'].value
-        if kind in ('public-func', 'func'):
+        if kind in ('public-func', 'func', 'user-defined'):
             self.generic_parse(node)
 
     def write(self, fname, mode='w'):
