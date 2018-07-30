@@ -23,9 +23,9 @@ referenced:
       name: Dependencies
       command: |
         sudo apt-get install -y rsync lua5.1 ccache kwstyle
-        sudo pip install --upgrade pip
-        sudo pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
-        sudo pip install cmake==3.10.3
+        sudo python -m pip install --upgrade pip
+        sudo python -m pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
+        sudo python -m pip install cmake==3.10.3
   generate-hash-step: &generate-hash-step
     run:
       name: Generate external data hash
@@ -143,6 +143,7 @@ jobs:
       - run:
           name: Additional Dependencies
           command: |
+            python --version
             sudo pip install numpy
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
@@ -180,6 +181,7 @@ jobs:
       - run:
           name: Additional Dependencies
           command: |
+            python --version
             sudo pip install numpy
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
