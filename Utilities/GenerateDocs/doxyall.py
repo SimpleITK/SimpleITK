@@ -89,7 +89,10 @@ for x in files:
             ThisClassName = ThisClassName.replace("itk::simple::", "")
             ThisClassName = ThisClassName.replace("itk::Functor::", "")
             ## Get rid of the ITK classes
-            if ThisClassName.find("itk::") >=0 or ThisClassName.find("<") >=0:
+            if ThisClassName.find("itk::") >=0 or \
+               ThisClassName.find("<") >=0 or \
+               ThisClassName.isspace() or \
+               ThisClassName == '':
                 continue
 
             outfile=outdir + "/" + ThisClassName + ".Rd"

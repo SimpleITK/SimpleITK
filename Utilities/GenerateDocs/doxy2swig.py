@@ -791,6 +791,10 @@ class Doxy2RProc(Doxy2SWIG):
         ## fname is the destination folder
         if os.path.isdir(fname):
             for FuncName in self.piecesdict:
+                if FuncName == '' or \
+                   FuncName.isspace() or \
+                   FuncName == '\n':
+                    continue
                 outname=os.path.join(fname, FuncName + ".Rd")
                 ## add the note to the end
                 if FuncName in self.NotesCPP:
