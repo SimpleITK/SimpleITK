@@ -29,6 +29,7 @@ get_cmake_property( _varNames VARIABLES )
 foreach (_varName ${_varNames})
   if(_varName MATCHES "^ITK_"
       OR _varName MATCHES "^ITKV3"
+      OR _varName MATCHES "^ITKV4"
       OR _varName MATCHES "FFTW"
       OR _varName MATCHES "^Module_")
     message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to ITK external project.")
@@ -83,6 +84,7 @@ ExternalProject_Add(${proj}
   CMAKE_ARGS
   --no-warn-unused-cli
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
+  -DITK_LEGACY_REMOVE:BOOL=ON
   ${ep_itk_args}
   ${ep_common_args}
   -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
@@ -92,7 +94,6 @@ ExternalProject_Add(${proj}
   -DBUILD_SHARED_LIBS:BOOL=${ITK_BUILD_SHARED_LIBS}
   -DCMAKE_SKIP_RPATH:BOOL=ON
   -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-  -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_USE_KWSTYLE:BOOL=OFF
   -DITK_USE_GIT_PROTOCOL:BOOL=${ITK_USE_GIT_PROTOCOL}
   -DITK_INSTALL_PACKAGE_DIR=lib/cmake/ITK
