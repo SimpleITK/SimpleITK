@@ -468,7 +468,13 @@ class Doxy2R(Doxy2SWIG):
         self.mathstuff6 = re.compile(r"\\f\$(.+?)\\f\$")
         # alignment tags
         self.mathstuff7 = re.compile(r" & ")
+
     def filterLatexMath(self, txt):
+        """
+        Removes the more complex formatting from latex formula.
+        R documentation format doesn't deal with structures like
+        equation arrays or the various boxes.
+        """
         m1 = self.mathstuff1.sub("", txt)
         m1 = self.mathstuff2.sub("", m1)
         m1 = self.mathstuff3.sub("", m1)
@@ -759,7 +765,10 @@ class Doxy2RProc(Doxy2SWIG):
                     if others['briefdescription'] is None or \
                        others['briefdescription'].firstChild.data.isspace() or \
                        others['briefdescription'].firstChild.data == '':
-                       self.add_text('See class definition - most likely nameImageFilter')
+                       ## not creating a link because the guess isn't always correct. There
+                       ## are things like the TransformInitializerFilter family that don't
+                       ## match this pattern.
+                       self.add_text('See class definition - most likely %sImageFilter' %(name))
                     else:
                        self.generic_parse(others['briefdescription'])
                     self.add_text('\n}\n\n')
@@ -767,7 +776,10 @@ class Doxy2RProc(Doxy2SWIG):
                     if others['detaileddescription'] is None or \
                        others['detaileddescription'].firstChild.data.isspace() or \
                        others['detaileddescription'].firstChild.data == '':
-                       self.add_text('See class definition - most likely nameImageFilter')
+                       ## not creating a link because the guess isn't always correct. There
+                       ## are things like the TransformInitializerFilter family that don't
+                       ## match this pattern.
+                      self.add_text('See class definition - most likely %sImageFilter' %(name))
                     else:
                        self.generic_parse(others['detaileddescription'])
                     self.add_text('\n}\n\n')
