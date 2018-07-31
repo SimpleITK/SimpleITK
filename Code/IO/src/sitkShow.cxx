@@ -18,6 +18,8 @@
 #include "sitkShow.h"
 #include "sitkMacro.h"
 #include "sitkImageFileWriter.h"
+#include "itkLogger.h"
+#include "itkStdStreamLogOutput.h"
 #include <itkMacro.h>
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>
@@ -35,6 +37,8 @@
 #include <unistd.h>
 #endif
 
+itk::Logger::Pointer logger;
+
 #define localDebugMacro(x)\
   {                                                                     \
     if (debugOn)                                                        \
@@ -42,7 +46,7 @@
       std::ostringstream msg;                                           \
       msg << "Debug: In " __FILE__ ", line " << __LINE__ << ": " x      \
           << "\n\n";                                                    \
-      ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );         \
+      logger->Info( msg.str() );                                        \
       }                                                                 \
   }                                                                     \
 
@@ -430,7 +434,7 @@ namespace itk
 
 #endif
 
-  localDebugMacro( << "FindApplication search path: " << paths << std::endl
+  localDebugMacro( << "FindApplication searching for " << name << " in path " << paths << std::endl
                    << "Result: " << ExecutableName << std::endl );
 
   return ExecutableName;
@@ -602,6 +606,16 @@ namespace itk
   std::string Macro = "";
   std::vector<std::string> CommandLine;
 
+  if (!logger)
+    {
+    itk::StdStreamLogOutput::Pointer coutput = itk::StdStreamLogOutput::New();
+    coutput->SetStream(std::cout);
+    logger = itk::Logger::New();
+    logger->SetName("org.sitk.showLogger");
+    logger->SetPriorityLevel(itk::LoggerBase::INFO);
+    logger->SetLevelForFlushing(itk::LoggerBase::CRITICAL);
+    logger->AddLogOutput(coutput);
+    }
 
   bool colorFlag = false;
 
@@ -611,7 +625,6 @@ namespace itk
   colorFlag = ( (image.GetNumberOfComponentsPerPixel() == 3)
                   && ((image.GetPixelIDValue() == sitkVectorUInt8)
                       || (image.GetPixelIDValue() == sitkVectorUInt16)) );
-
 
   ExecutableName = FindImageJ(debugOn);
 
@@ -658,6 +671,8 @@ namespace itk
   else
     {
       itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
+      localDebugMacro( "SITK_SHOW_COMMAND: " + Command );
+
       if (!Command.length())
         {
         if (fijiFlag)
