@@ -1,7 +1,7 @@
 referenced:
   defaults: &defaults
     docker:
-     - image: circleci/python:2.7
+     - image: circleci/python:2.7-stretch
     working_directory: ~/
     resource_class: large
   default_environment_keys:  &default_environment
@@ -23,9 +23,9 @@ referenced:
       name: Dependencies
       command: |
         sudo apt-get install -y rsync lua5.1 ccache kwstyle
-        sudo pip install --upgrade pip
-        sudo pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
-        sudo pip install cmake==3.10.3
+        sudo python -m pip install --upgrade pip
+        sudo python -m pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
+        sudo python -m pip install cmake==3.10.3
   generate-hash-step: &generate-hash-step
     run:
       name: Generate external data hash
@@ -124,7 +124,7 @@ jobs:
           root: /home/circleci/SimpleITK-build
           paths:
             - "*"
-  python-and-test:
+  python2.7-and-test:
     <<: *defaults
     environment:
       <<: *default_environment_keys
@@ -143,6 +143,45 @@ jobs:
       - run:
           name: Additional Dependencies
           command: |
+            python --version
+            sudo pip install numpy
+      - attach_workspace:
+          at: /home/circleci/SimpleITK-build
+      - run:
+          name: Build Python and Testing with CTest
+          no_output_timeout: 20.0m
+          command: |
+            env
+            export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/lib"
+            export CTEST_CACHE="
+                        CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
+                        SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
+                        BUILD_EXAMPLES:BOOL=ON"
+            ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+      - *junit-fotmatting
+      - *junit-store-test-results
+  python3.6-and-test:
+    <<: *defaults
+    docker:
+     - image: circleci/python:3.6-stretch
+    environment:
+      <<: *default_environment_keys
+      CTEST_BUILD_FLAGS: "-j 2"
+      PARALLEL_LEVEL: 2
+      CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
+    resource_class: medium
+    steps:
+      - checkout:
+          path : ~/SimpleITK
+      - *generate-hash-step
+      - *restore-data-step
+      - *clone-dashboard-step
+      - *dependencies
+      - *env-step
+      - run:
+          name: Additional Dependencies
+          command: |
+            python --version
             sudo pip install numpy
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
@@ -246,7 +285,11 @@ workflows:
                  - gh-pages
                  - dashboard
                  - hooks
-      - python-and-test:
+      - python2.7-and-test:
+          requires:
+            - build-and-test
+
+      - python3.6-and-test:
           requires:
             - build-and-test
       - r-and-test:
