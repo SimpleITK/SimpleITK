@@ -19,6 +19,7 @@
 #include "sitkMacro.h"
 #include "sitkImageFileWriter.h"
 #include <itkMacro.h>
+#include <itkTextOutput.h>
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>
 #include <stdlib.h>
@@ -602,6 +603,10 @@ namespace itk
   std::string Macro = "";
   std::vector<std::string> CommandLine;
 
+  if (!ShowImageCount)
+    {
+    itk::OutputWindow::SetInstance( itk::TextOutput::New() );
+    }
 
   bool colorFlag = false;
 
