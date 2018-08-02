@@ -256,7 +256,7 @@ target_compile_options( sitkSystemInformationTest
 
  # CMake 3.10 added this method, to avoid configure time introspection
 if(NOT CMAKE_CROSSCOMPILING)
-   gtest_discover_tests( SimpleITKUnitTestDriver0 )
+   gtest_discover_tests( SimpleITKUnitTestDriver0 DISCOVERY_TIMEOUT 15 )
  else()
    gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})
 endif()
