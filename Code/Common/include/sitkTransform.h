@@ -178,7 +178,24 @@ public:
   // Make composition
   SITK_RETURN_SELF_TYPE_HEADER AddTransform( Transform t );
 
+  /** Apply transform to a point.
+   *
+   * The dimension of the point must match the transform.
+   */
   std::vector< double > TransformPoint( const std::vector< double > &point ) const;
+
+  /** Apply transform to a vector at a point.
+   *
+   * The ITK concept of a vector is a direction at a specific point,
+   * for example the difference between two points is a vector.
+   *
+   * For linear transforms the point does not matter, in general
+   * the vector is transformed by the Jacobian with respect to point
+   * position.
+   *
+   * The dimension of the vector and point must match the transform.
+   */
+  std::vector< double > TransformVector( const std::vector< double > &vector, const std::vector< double > &point) const;
 
   // write
   void WriteTransform( const std::string &filename ) const;

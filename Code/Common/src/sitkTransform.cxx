@@ -562,6 +562,14 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   }
 
 
+std::vector< double > Transform::TransformVector( const std::vector< double > &vector,
+                                                  const std::vector< double > &point ) const
+  {
+    assert( m_PimpleTransform );
+    return this->m_PimpleTransform->TransformVector( vector, point );
+  }
+
+
   bool Transform::IsLinear() const
   {
     assert( m_PimpleTransform );
