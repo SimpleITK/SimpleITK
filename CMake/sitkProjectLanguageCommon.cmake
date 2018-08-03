@@ -88,9 +88,9 @@ set(SimpleITK_WRAPPING_COMMON_DIR
 
 if ( CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
   file(GLOB SWIG_EXTRA_DEPS
-    "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
-    "${SimpleITK_SOURCE_DIR}/Code/Registration/include/*.h"
-    "${SimpleITK_SOURCE_DIR}/Code/IO/include/*.h")
+    "${SimpleITK_SOURCE_DIR}/Code/Common/include/[^.]*.h"
+    "${SimpleITK_SOURCE_DIR}/Code/Registration/include/[^.]*.h"
+    "${SimpleITK_SOURCE_DIR}/Code/IO/include/[^.]*.h")
   list( APPEND SWIG_EXTRA_DEPS
     "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
     ${SimpleITKBasicFiltersGeneratedHeader} )
