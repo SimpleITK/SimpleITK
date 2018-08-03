@@ -328,15 +328,24 @@ workflows:
       - python2.7-and-test:
           requires:
             - build-and-test
+          filters:
+            branches:
+               ignore: next
       - python3.6-and-test:
           requires:
             - build-and-test
       - r-and-test:
           requires:
             - build-and-test
+          filters:
+            branches:
+               ignore: next
       - java-and-test:
           requires:
             - build-and-test
+          filters:
+            branches:
+               ignore: next
 
   nightly:
     triggers:
