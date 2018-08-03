@@ -395,15 +395,6 @@ endif()
 
 
 #------------------------------------------------------------------------------
-# Options for documentation
-option ( BUILD_DOCUMENTS "Build the Documentation subdirectory" OFF )
-
-if ( BUILD_DOCUMENTS )
-  add_subdirectory ( Documentation )
-endif()
-
-
-#------------------------------------------------------------------------------
 # Configure SimpleITKConfig.cmake for the build tree.
 set(SimpleITKConfig_TREE "build")
 set(SimpleITKConfig_CODE "")
