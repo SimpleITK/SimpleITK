@@ -169,8 +169,8 @@ set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
 # Create cached list of all template components
 file( GLOB template_components
-      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/*.h.in
-      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/*.cxx.in
+      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/[^.]*.h.in
+      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/[^.]*.cxx.in
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 
@@ -455,14 +455,14 @@ install(EXPORT SimpleITKTargets
   COMPONENT Development)
 
 file( GLOB __files
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.hxx
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.hxx
-  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.hxx
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.hxx
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/[^.]*.h
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/[^.]*.hxx
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/[^.]*.h
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/[^.]*.hxx
+  ${CMAKE_SOURCE_DIR}/Code/IO/include/[^.]*.h
+  ${CMAKE_SOURCE_DIR}/Code/IO/include/[^.]*.hxx
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/[^.]*.h
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/[^.]*.hxx
   )
 
 install(FILES ${__files}
