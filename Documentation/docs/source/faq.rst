@@ -104,6 +104,34 @@ sample.mhd:
         ElementType = MET_USHORT
         ElementDataFile = image.raw    (this tag must be last in a MetaImageHeader)
 
+Why isn't ImageJ found by the Show function (RuntimeError: Exception thrown...)?
+---------------------------------------------------------------------------------
+
+The SimpleITK ``Show`` function expects the ImageJ program to be installed in
+specific locations. The recommended installation locations are:
+
+- On Windows: in your user directory (e.g. C:\Users\[your name]\Fiji.app).
+- On Linux: in ~/bin .
+- On Mac: in /Applications .
+
+To see the locations where the function is searching set its debugOn flag.
+
+In Python:
+
+.. code-block :: python
+
+  sitk.Show(image, debugOn=True)
+
+In R:
+
+.. code-block :: r
+
+  Show(image, "file_name", TRUE)
+
+
+You can also indicate where a viewer (not necessarily ImageJ) is found by setting
+the path to the viewer in an environment variable SITK_SHOW_COMMAND.
+
 Can I use another image file viewer beside ImageJ?
 --------------------------------------------------
 
