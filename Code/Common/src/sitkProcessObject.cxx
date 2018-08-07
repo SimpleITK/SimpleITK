@@ -110,7 +110,7 @@ ProcessObject::ProcessObject ()
   static bool firstTime=true;
   if (firstTime)
     {
-    if (itk::OutputWindow::GetInstance()->GetObjectName() == "Win32OutputWindow")
+    if (itk::OutputWindow::GetInstance()->GetNameOfClass() == "Win32OutputWindow")
       {
       itk::OutputWindow::SetInstance( itk::TextOutput::New() );
       }
