@@ -125,8 +125,8 @@ endif()
 add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
   POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/R_libs
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.R ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/R/
   # install for running tests and create binary package
+  COMMAND ${CMD_PREFIX} ${R_COMMAND} -f ${CMAKE_CURRENT_SOURCE_DIR}/processSwigCode.R --args ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.R ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/R/SimpleITK.R ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/man/hidden_methods.Rd
   COMMAND ${CMD_PREFIX} ${R_COMMAND} -f ${CMAKE_CURRENT_SOURCE_DIR}/mkNamespace.R --args ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/NAMESPACE
   COMMAND ${CMD_PREFIX} ${R_COMMAND} CMD INSTALL --build ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/R_libs --no-multiarch
   COMMENT "Installing R package for testing and building binary version for distribution"

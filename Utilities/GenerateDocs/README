@@ -15,9 +15,22 @@ the SwigDocUpdate.sh script can be run to convert the SimpleITK
 Doxygen XML into Swig .i files so that when SimpleITK is built, inline
 documenation for some wrapped languages will be available.
 
+Building the documentation target from the SuperBuild framework requires:
+        The correct cmake flags: -DBUILD_DOXYGEN:BOOL=ON
+        Run "make SimpleITK-doc" after a SuperBuild config, or "make Documentation"
+	in the SimpleITK-build directory.
+        This will create the SimpleITK-build/Documentation/xml content.
+
 Important end use scripts (see script files for more details:
         JSONDocUpdate.sh - Copies ITK Doxygen into SimpleITK JSON
-        SwigDocUpdate.sh - Copies SimpleITK Doxygen into Swig .i files
+        SwigDocUpdate.sh - Copies SimpleITK Doxygen into Swig .i files and
+                           R .Rd files.
+
+        SwigDocUpdate requires python, with the regex library. regex is required for
+	an evil recursive regular expression used to match bracket pairs of mbox in latex
+	maths. R documentation doesn't implement all latex, and leaving the \mbox and \text
+	fields causes problems when creating pdf versions of documentation in the package
+	build process.
 
 Configuration:
         The config_vars.sh file needs to be manually modified for the system and build configuration.

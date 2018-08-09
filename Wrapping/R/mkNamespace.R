@@ -50,6 +50,7 @@ writeSITKNamespace <- function(objlist) {
 
 handExports <- function() {
   f <- c('import(methods)',
+         'importFrom("utils", "head", "tail")',
          'useDynLib(SimpleITK)',
          'exportClasses("_p_itk__simple__Image")',
          'export("as.image")',
@@ -62,9 +63,17 @@ handExports <- function() {
   f
 }
 
+manualexclusions <- c("DoubleDoubleMap", "RCommand", "VectorBool", "VectorDouble", "VectorFloat",
+                      "VectorInt16", "VectorInt32", "VectorInt64",
+                      "VectorInt8", "VectorOfImage", "VectorString",
+                      "VectorUInt16", "VectorUInt32", "VectorUInt64",
+                      "VectorUInt8", "VectorUIntList")
+
+
 newNAMESPACE <- function(oldnamespace, targetnamespace) {
   byhand <- handExports()
   swigstuff <- parseSWIGNamespaceFile(oldnamespace)
+  swigstuff$filters <- setdiff(swigstuff$filters, manualexclusions)
   auto <- writeSITKNamespace(swigstuff)
   writeLines(c(byhand, auto), targetnamespace)
 }
