@@ -155,7 +155,9 @@ public:
   virtual PimpleTransformBase* AddTransform( Transform &t ) = 0;
 
 
-  virtual std::vector< double > TransformPoint( const std::vector< double > &t ) const = 0;
+  virtual std::vector< double > TransformPoint( const std::vector< double > &p ) const = 0;
+  virtual std::vector< double > TransformVector( const std::vector< double > &v,
+                                                 const std::vector< double > &p) const = 0;
 
 protected:
 
@@ -362,13 +364,33 @@ public:
     {
       if (pt.size() != this->GetInputDimension() )
         {
-        sitkExceptionMacro("vector dimension mismatch");
+        sitkExceptionMacro("point dimension mismatch");
         }
 
       typename TransformType::OutputPointType opt =
         this->m_Transform->TransformPoint( sitkSTLVectorToITK< typename TransformType::InputPointType >(pt));
 
       return sitkITKVectorToSTL<double>( opt );
+    }
+
+
+  virtual std::vector< double > TransformVector( const std::vector< double > &vec, const std::vector< double > &pt ) const
+    {
+      if (vec.size() != this->GetInputDimension() )
+        {
+        sitkExceptionMacro("vector dimension mismatch");
+        }
+
+      const typename TransformType::OutputVectorType & itk_vec = sitkSTLVectorToITK< typename TransformType::InputVectorType >(vec);
+
+      if (pt.size() != this->GetInputDimension() )
+        {
+        sitkExceptionMacro("point dimension mismatch");
+        }
+
+      const typename TransformType::OutputPointType &itk_pt = sitkSTLVectorToITK< typename TransformType::InputPointType >(pt);
+
+      return sitkITKVectorToSTL<double>( this->m_Transform->TransformVector( itk_vec, itk_pt ) );
     }
 
 private:

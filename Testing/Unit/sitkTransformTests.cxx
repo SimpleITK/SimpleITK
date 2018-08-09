@@ -461,9 +461,7 @@ TEST(TransformTest, TransformPoint) {
   sitk::Transform tx2 = sitk::Transform( 2, sitk::sitkIdentity );
   sitk::Transform tx3 = sitk::Transform( 3, sitk::sitkIdentity );
 
-  std::vector<double> ipt;
-  ipt.push_back( 1.1 );
-  ipt.push_back( 2.22 );
+  std::vector<double> ipt = v2( 1.1, 2.22 );
 
   std::vector<double> opt;
 
@@ -486,6 +484,32 @@ TEST(TransformTest, TransformPoint) {
   EXPECT_EQ( opt[0], 1.1 );
   EXPECT_EQ( opt[1], 2.22 );
   EXPECT_EQ( opt[2], 3.333 );
+
+}
+
+
+TEST(TransformTest, TransformVector) {
+  sitk::Transform tx2 = sitk::Transform( 2, sitk::sitkIdentity );
+  sitk::Transform tx3 = sitk::Transform( 3, sitk::sitkIdentity );
+
+  std::vector<double> ipt = v2( 0, 0 );
+  std::vector<double> ivec = v2( 1, 2 );
+
+  std::vector<double> ovec;
+
+  ovec = tx2.TransformVector( ivec, ipt );
+  EXPECT_EQ( ovec, v2( 1, 2) );
+
+  EXPECT_ANY_THROW( tx3.TransformVector( ivec, ipt ) );
+
+  ipt = v3( 0, 0, 0 );
+  ivec = v3( 1, 2, 3 );
+
+  EXPECT_ANY_THROW( ovec = tx2.TransformVector( ivec, ipt ) );
+  EXPECT_EQ( ovec, v2( 1, 2 ) );
+
+  ovec = tx3.TransformVector( ivec, ipt );
+  EXPECT_EQ( ivec, v3( 1, 2, 3) );
 
 }
 
@@ -520,19 +544,24 @@ TEST(TransformTest,AffineTransform)
   tx->Scale( v2(1,2));
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,1) ), v2(1,2),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformVector( v2(1,1), v2(0,0)), v2(1,2), 1e-15);
   tx->Scale( 2 );
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,1) ), v2(2,4),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformVector( v2(1,1), v2(0,0)), v2(2,4), 1e-15);
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Shear(0,1, 2.0);
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,2) ), v2(5,2),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformVector( v2(1,1), v2(0,0)), v2(3,1), 1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformVector( v2(1,1), v2(1,1)), v2(3,1), 1e-15);
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Translate(v2(10.0,-10.0));
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(10.0,-10.0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,2) ), v2(11.0,-8.0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformVector( v2(5,1), v2(0,0)), v2(5,1), 1e-15);
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Rotate(0,1,itk::Math::pi_over_2);
