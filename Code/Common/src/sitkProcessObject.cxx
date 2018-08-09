@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 #include "nsstd/functional.h"
 
@@ -110,7 +111,7 @@ ProcessObject::ProcessObject ()
   static bool firstTime=true;
   if (firstTime)
     {
-    if (itk::OutputWindow::GetInstance()->GetNameOfClass() == "Win32OutputWindow")
+    if (!strcmp(itk::OutputWindow::GetInstance()->GetNameOfClass(), "Win32OutputWindow"))
       {
       itk::OutputWindow::SetInstance( itk::TextOutput::New() );
       }
