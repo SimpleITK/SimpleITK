@@ -29,6 +29,7 @@ set ( SimpleITKUnitTestSource
   sitkImportImageTest.cxx
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
+  sitkImageViewerTest.cxx
   )
 
 if ( SimpleITK_4D_IMAGES )
