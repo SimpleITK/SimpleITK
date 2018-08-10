@@ -21,9 +21,11 @@
 #include "itkProcessObject.h"
 #include "itkCommand.h"
 #include "itkImageToImageFilter.h"
+#include "itkTextOutput.h"
 
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 #include "nsstd/functional.h"
 
@@ -106,6 +108,15 @@ ProcessObject::ProcessObject ()
     m_ActiveProcess(SITK_NULLPTR),
     m_ProgressMeasurement(0.0)
 {
+  static bool firstTime=true;
+  if (firstTime)
+    {
+    if (!strcmp(itk::OutputWindow::GetInstance()->GetNameOfClass(), "Win32OutputWindow"))
+      {
+      itk::OutputWindow::SetInstance( itk::TextOutput::New() );
+      }
+    firstTime = false;
+    }
 }
 
 
