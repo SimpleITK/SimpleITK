@@ -47,6 +47,8 @@ namespace simple
   *
   * SITK_SHOW_COLOR_COMMAND:  Specify a different application for color images.
   *
+  * SITK_SHOW_3D_COMMAND:  Specify a different application for 3D images.
+  *
   * These environment variables are only checked at SimpleITK's launch.
   */
 class ImageViewer
@@ -83,8 +85,8 @@ public:
    *
    * This command string may include the following %tokens:
    *
-   * \li \c "%a" for the ImageJ application
-   * \li \c "%f" for SimpleITK's temporary image file
+   * \li \c '%a' for the image viewing application (Fiji or ImageJ by default)
+   * \li \c '%f' for SimpleITK's temporary image file
    *
    *  For example, the default command string on Linux systems is:
    *
@@ -110,10 +112,10 @@ public:
    *  open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
    *  \endcode
    *
-   *  The string after \c "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite
+   *  The string after \c '-eval' is an ImageJ macro the opens the file and runs ImageJ's Make Composite
    *  command to display the image in color.
    *
-   *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
+   *  If the \c '%f' token is not found in the command string, the temporary file name is automatically
    *  appended to the command argument list.
    *
    *  Note: Using the ImageViewer::SetCommand method overrides the default command and/or any environment
@@ -125,6 +127,10 @@ public:
   /**@}*/
 
   /** \brief Set/Get file extension of the temporary image file (default='.nii')
+   *
+   * If the viewing application is Fiji, the default image format is [MetaIO](https://itk.org/Wiki/ITK/MetaIO), '.mha'.
+   *
+   * If the viewing application is ImaegJ, the default image format is [NifTi](https://nifti.nimh.nih.gov/nifti-1/), '.nii'.  This is because by default ImageJ does not come with the MetaIO plugin.
    * @{
    */
   void SetFileExtension( const std::string & ext );
@@ -158,8 +164,12 @@ public:
   const std::string & GetTitle() const;
   /**@}*/
 
+  /** \brief Launch the viewing application with to display the given image.
+   */
   void Execute ( const Image &image );
 
+  /** \brief Print ourself out to a string.
+   */
   std::string ToString() const;
 
 

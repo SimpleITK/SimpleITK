@@ -29,10 +29,10 @@ namespace simple
 
   /** Display an image using Fiji, ImageJ or another application.
    *
-   *  This function requires that Fiji ( https://fiji.sc ) or ImageJ
-   *  (http://rsb.info.nih.gov/ij/) be properly installed for Mac
+   *  This function requires that [Fiji](https://fiji.sc) or [ImageJ](http://rsb.info.nih.gov/ij/)
+   *  be properly installed for Mac
    *  and Windows, and in the user's path for Linux.  ImageJ must have
-   *  a plugin for reading Nifti formatted files (http://www.loci.wisc.edu/bio-formats/imagej).
+   *  a plugin for reading [Nifti formatted files](http://www.loci.wisc.edu/bio-formats/imagej).
    *
    *  Nifti is the default file format used to export images.  A different
    *  format can be chosen by setting the SITK_SHOW_EXTENSION environment variable.
@@ -48,8 +48,8 @@ namespace simple
    *  SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND allow
    *  the following %tokens in their strings.
    *
-   *      \li \c "%a"  for the ImageJ application
-   *      \li \c "%f"  for SimpleITK's temporary image file
+   *  \li \c '%a'  for the display application
+   *  \li \c '%f'  for SimpleITK's temporary image file
    *
    *  For example, the default SITK_SHOW_COMMAND string on Linux systems is:
    *
@@ -75,10 +75,10 @@ namespace simple
    *  open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
    *  \endcode
    *
-   *  The string after \c "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite
+   *  The string after \c '-eval' is an ImageJ macro the opens the file and runs ImageJ's Make Composite
    *  command to display the image in color.
    *
-   *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
+   *  If the \c '%f' token is not found in the command string, the temporary file name is automatically
    *  appended to the command argument list.
    *
    *
@@ -92,6 +92,11 @@ namespace simple
    *  The boolean parameter debugOn prints the search path Show uses to find ImageJ, the full path
    *  to the ImageJ it found, and the full command line used to invoke ImageJ.
    *
+   *
+   *  Note: The SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND environment
+   *  variables are only checked when SimpleITK is launched.  This is a change in behavior from
+   *  previous versions of SimpleITK.  Previously, the environment variables were checked every
+   *  time Show was called.
    **/
    void SITKIO_EXPORT Show ( const Image &image, const std::string& title = "", const bool debugOn=ProcessObject::GetGlobalDefaultDebug() );
 }
