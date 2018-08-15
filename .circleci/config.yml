@@ -159,10 +159,10 @@ jobs:
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-fotmatting
       - *junit-store-test-results
-  python3.6-and-test:
+  python3.7-and-test:
     <<: *defaults
     docker:
-     - image: circleci/python:3.6-stretch
+     - image: circleci/python:3.7-stretch
     environment:
       <<: *default_environment_keys
       CTEST_BUILD_FLAGS: "-j 2"
@@ -330,7 +330,7 @@ workflows:
           filters:
             branches:
                ignore: next
-      - python3.6-and-test:
+      - python3.7-and-test:
           requires:
             - build-and-test
       - r-and-test:
