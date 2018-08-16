@@ -69,6 +69,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertEqual(len(img[:,2:1]), 0)
         self.assertEqual(len(img[-6:0,:]), 0)
         self.assertEqual(len(img[0:0,:]), 0)
+        self.assertEqual(len(img[-4:-1:-2,-2:-1:1]), 0)
 
 
 
@@ -84,7 +85,7 @@ class TestImageIndexingInterface(unittest.TestCase):
 
         # some negative cases
         self.assertImageNDArrayEquals(img[-4:-1,-2:-1],nda[-2:-1,-4:-1])
-        self.assertImageNDArrayEquals(img[-4:-1:-2,-2:-1:1],nda[-2:-1:1,-4:-1:-2])
+        self.assertImageNDArrayEquals(img[-1:-4:-2,-2:-1:1],nda[-2:-1:1,-1:-4:-2])
         self.assertImageNDArrayEquals(img[::-1,:],nda[:,::-1])
 
         # check some exceptions
