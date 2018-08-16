@@ -56,7 +56,7 @@ validate_MD5() {
 download_object() {
   algo="$1" ; hash="$2" ; path="$3"
   mkdir -p $(dirname "$path") &&
-  if wget "https://simpleitk.github.io/SimpleITKExternalData/$algo)/$hash" -O "$path.tmp$$" 1>&2 ||
+  if wget "https://simpleitk.github.io/SimpleITKExternalData/$algo/$hash" -O "$path.tmp$$" 1>&2 ||
      wget "https://www.itk.org/files/ExternalData/$algo/$hash" -O "$path.tmp$$" 1>&2; then
     mv "$path.tmp$$" "$path"
   else
