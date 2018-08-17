@@ -560,6 +560,16 @@ namespace simple
     double GetOptimizerConvergenceValue() const;
     double GetMetricValue() const;
 
+    /** Current number of points used of metric evaluation
+     *
+     * This is a active measurement connected to the registration
+     * processes during registration. This number is number of point
+     * in the virtual domain which overlap the fixed image and the
+     * moving image. It is valid for sparse or dense sampling. After
+     * execution of registration this will contain the last value.
+     */
+    uint64_t GetMetricNumberOfValidPoints() const;
+
 
     unsigned int GetCurrentLevel() const;
 
@@ -627,6 +637,7 @@ namespace simple
     nsstd::function<double()> m_pfGetOptimizerLearningRate;
     nsstd::function<double()> m_pfGetOptimizerConvergenceValue;
     nsstd::function<double()> m_pfGetMetricValue;
+    nsstd::function<uint64_t()> m_pfGetMetricNumberOfValidPoints;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
     nsstd::function<std::string()> m_pfGetOptimizerStopConditionDescription;
 
@@ -766,6 +777,7 @@ namespace simple
     std::string m_StopConditionDescription;
     double m_MetricValue;
     unsigned int m_Iteration;
+    uint64_t m_NumberOfValidPoints;
 
     itk::ObjectToObjectOptimizerBaseTemplate<double> *m_ActiveOptimizer;
   };

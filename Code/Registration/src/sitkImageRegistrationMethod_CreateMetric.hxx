@@ -32,6 +32,18 @@ namespace itk
 namespace simple
 {
 
+namespace
+{
+  struct NumberOfValidPointsCustomCast
+  {
+    template<typename TMetric>
+    static unsigned int CustomCast(const TMetric *metric)
+    {
+      return static_cast<uint64_t>(std::min<itk::SizeValueType>(metric->GetNumberOfValidPoints(), std::numeric_limits<uint64_t>::max()));
+    }
+  };
+}
+
 template <class TImageType>
 itk::ImageToImageMetricv4<TImageType,
                           TImageType,
@@ -52,6 +64,7 @@ ImageRegistrationMethod::CreateMetric( )
     typedef itk::ANTSNeighborhoodCorrelationImageToImageMetricv4<FixedImageType, MovingImageType > _MetricType;
 
       typename _MetricType::Pointer metric = _MetricType::New();
+      this->m_pfGetMetricNumberOfValidPoints = nsstd::bind(&NumberOfValidPointsCustomCast::CustomCast<_MetricType>,metric.GetPointer());
       typename _MetricType::RadiusType radius;
       radius.Fill( m_MetricRadius );
       metric->SetRadius( radius );
@@ -63,6 +76,7 @@ ImageRegistrationMethod::CreateMetric( )
       typedef itk::CorrelationImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
 
       typename _MetricType::Pointer metric = _MetricType::New();
+      this->m_pfGetMetricNumberOfValidPoints = nsstd::bind(&NumberOfValidPointsCustomCast::CustomCast<_MetricType>,metric.GetPointer());
       metric->Register();
       return metric.GetPointer();
     }
@@ -70,6 +84,7 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::DemonsImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      this->m_pfGetMetricNumberOfValidPoints = nsstd::bind(&NumberOfValidPointsCustomCast::CustomCast<_MetricType>,metric.GetPointer());
       metric->SetIntensityDifferenceThreshold(m_MetricIntensityDifferenceThreshold);
       metric->Register();
       return metric.GetPointer();
@@ -78,6 +93,7 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::JointHistogramMutualInformationImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      this->m_pfGetMetricNumberOfValidPoints = nsstd::bind(&NumberOfValidPointsCustomCast::CustomCast<_MetricType>,metric.GetPointer());
       metric->SetNumberOfHistogramBins(m_MetricNumberOfHistogramBins);
       metric->SetVarianceForJointPDFSmoothing(m_MetricVarianceForJointPDFSmoothing);
       metric->Register();
@@ -87,6 +103,7 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::MeanSquaresImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      this->m_pfGetMetricNumberOfValidPoints = nsstd::bind(&NumberOfValidPointsCustomCast::CustomCast<_MetricType>,metric.GetPointer());
       metric->Register();
       return metric.GetPointer();
     }
@@ -94,6 +111,7 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::MattesMutualInformationImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      this->m_pfGetMetricNumberOfValidPoints = nsstd::bind(&NumberOfValidPointsCustomCast::CustomCast<_MetricType>,metric.GetPointer());
       metric->SetNumberOfHistogramBins(m_MetricNumberOfHistogramBins);
       metric->Register();
       return metric.GetPointer();

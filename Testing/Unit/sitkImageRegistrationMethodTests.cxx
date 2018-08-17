@@ -61,6 +61,10 @@ public:
         {
         std::cout << " ( " << m_Method.GetOptimizerConvergenceValue() << " )";
         }
+      if (m_Method.GetMetricNumberOfValidPoints() != 0u)
+        {
+        std::cout << " [ #" << m_Method.GetMetricNumberOfValidPoints() << " ]";
+        }
       std::cout << std::endl;
 
       std::cout.copyfmt(state);
@@ -1096,7 +1100,11 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
   R.SetMetricSamplingPercentage(.02,1u);
 
   outTx1 = R.Execute(fixedImage, movingImage);
+  EXPECT_GT( R.GetMetricNumberOfValidPoints(), 1200u );
+  EXPECT_LT( R.GetMetricNumberOfValidPoints(), 1300u );
   outTx2 = R.Execute(fixedImage, movingImage);
+  EXPECT_GT( R.GetMetricNumberOfValidPoints(), 1200u );
+  EXPECT_LT( R.GetMetricNumberOfValidPoints(), 1300u );
 
   EXPECT_VECTOR_DOUBLE_NEAR(outTx1.GetParameters(), outTx1.GetParameters(), 1e-10)  << "Same registration with fixed seed and regular sampling";
 
@@ -1105,7 +1113,12 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
   R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
 
   outTx1 = R.Execute(fixedImage, movingImage);
+  EXPECT_GT( R.GetMetricNumberOfValidPoints(), 9*fixedImage.GetNumberOfPixels()/10 );
+  EXPECT_LT( R.GetMetricNumberOfValidPoints(), fixedImage.GetNumberOfPixels() );
   outTx2 = R.Execute(fixedImage, movingImage);
+  EXPECT_GT( R.GetMetricNumberOfValidPoints(), 9*fixedImage.GetNumberOfPixels()/10 );
+  EXPECT_LT( R.GetMetricNumberOfValidPoints(), fixedImage.GetNumberOfPixels() );
+
 
   EXPECT_VECTOR_DOUBLE_NEAR(outTx1.GetParameters(), outTx1.GetParameters(), 1e-10)  << "Same registration with fixed seed and regular sampling";
 
