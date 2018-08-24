@@ -45,9 +45,10 @@ namespace itk {
     {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
 
+    // SetRecursive must be called before SetInputDirectory
+    gdcmSeries->SetRecursive( recursive );
     gdcmSeries->SetInputDirectory( directory );
     gdcmSeries->SetUseSeriesDetails( useSeriesDetails );
-    gdcmSeries->SetRecursive( recursive );
     gdcmSeries->SetLoadSequences( loadSequences );
     //Skip private tags. Loading DICOM files is faster when private tags are not needed.
     gdcmSeries->SetLoadPrivateTags( false );
