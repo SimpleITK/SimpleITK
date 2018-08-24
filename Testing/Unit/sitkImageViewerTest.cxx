@@ -64,17 +64,17 @@ TEST(ImageViewerTest,Methods)
   words.push_back( std::string("beta") );
 
   std::vector<std::string> path;
-  iv.SetSearchPath( words );
-  path = iv.GetSearchPath();
+  iv.SetGlobalDefaultSearchPath( words );
+  path = iv.GetGlobalDefaultSearchPath();
   EXPECT_EQ( compare_word_lists(words, path), true );
 
   std::vector<std::string> names;
-  iv.SetExecutableNames( words );
-  names = iv.GetExecutableNames();
+  iv.SetGlobalDefaultExecutableNames( words );
+  names = iv.GetGlobalDefaultExecutableNames();
   EXPECT_EQ( compare_word_lists(words, names), true );
 
-  iv.SetDebug( true );
-  EXPECT_EQ( iv.GetDebug(), true );
+  iv.SetGlobalDebug( true );
+  EXPECT_EQ( iv.GetGlobalDebug(), true );
 
   iv.SetFileExtension( ".png" );
   EXPECT_EQ( iv.GetFileExtension(), ".png" );

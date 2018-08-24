@@ -29,7 +29,7 @@ void SITKIO_EXPORT Show ( const Image &image, const std::string& title, const bo
   ImageViewer iv;
 
   iv.SetTitle( title );
-  ImageViewer::SetDebug( debugOn );
+  ImageViewer::SetGlobalDebug( debugOn );
 
   iv.Execute( image );
   }
