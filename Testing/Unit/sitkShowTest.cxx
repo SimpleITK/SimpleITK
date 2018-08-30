@@ -41,7 +41,7 @@ int main (int argc, char *argv[])
         std::cout << "Reading " << argv[i] << std::endl;
         img = sitk::ReadImage( argv[i] );
         std::cout << "Showing " << argv[i] << std::endl;
-        sitk::Show(img);
+        sitk::Show(img, "sitkShowTest", true);
         }
       catch (std::exception &e)
         {
