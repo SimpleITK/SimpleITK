@@ -67,6 +67,7 @@
 #include "sitkImageFileWriter.h"
 #include "sitkImageSeriesWriter.h"
 #include "sitkImportImageFilter.h"
+#include "sitkImageViewer.h"
 
 
 #include "sitkHashImageFilter.h"
