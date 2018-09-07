@@ -358,7 +358,7 @@
                 # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
                 idx = tuple(idx) + (slice(None),)*(dim-len(idx))
             except TypeError:
-              # if the len function didn't work then, assume is a
+              # if the len function did not work then, assume is a
               # non-iterable, and make it a single element in a tuple.
               idx = (idx,) + (slice(None),)*(dim-1)
 
@@ -786,7 +786,7 @@ def GetImageFromArray( arr, isVector=False):
 
 
 
-// Enable Java classes derived from Command Execute method to be
+// Enable Python classes derived from Command Execute method to be
 // called from C++
 %feature("director") itk::simple::Command;
 
