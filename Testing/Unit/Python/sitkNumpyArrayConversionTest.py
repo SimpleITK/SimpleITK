@@ -88,6 +88,93 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
 
         self.assertEqual( h, sitk.Hash( img ))
 
+    def test_isVector(self):
+        """ Test Behavior of isVector option. """
+
+        # Check 2D
+        nda = np.arange(6, dtype=np.float32).reshape([2,3])
+
+        img = sitk.GetImageFromArray(nda)
+        self.assertEqual(img.GetSize(), nda.shape[::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkFloat32)
+        self.assertEqual(img.GetPixel([1,0]), 1)
+
+        img = sitk.GetImageFromArray(nda, isVector=False)
+        self.assertEqual(img.GetSize(), nda.shape[::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkFloat32)
+        self.assertEqual(img.GetPixel([1,0]), 1)
+
+        img = sitk.GetImageFromArray(nda, isVector=True)
+        self.assertEqual(img.GetSize(), nda.shape[::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkVectorFloat32)
+        self.assertEqual(img.GetNumberOfComponentsPerPixel(), 1)
+        self.assertEqual(img.GetPixel([1,0]), (1,))
+
+
+        # Check 3D
+        nda = np.arange(30, dtype=np.float32).reshape([2,3,5])
+
+        img = sitk.GetImageFromArray(nda)
+        self.assertEqual(img.GetSize(), nda.shape[::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkFloat32)
+        self.assertEqual(img.GetPixel([1,0,0]), 1)
+        self.assertEqual(img.GetPixel([0,1,0]), 5)
+
+        img = sitk.GetImageFromArray(nda, isVector=False)
+        self.assertEqual(img.GetSize(), nda.shape[::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkFloat32)
+        self.assertEqual(img.GetPixel([1,0,0]), 1)
+        self.assertEqual(img.GetPixel([0,1,0]), 5)
+
+        img = sitk.GetImageFromArray(nda, isVector=True)
+        self.assertEqual(img.GetSize(), (3,2))
+        self.assertEqual(img.GetPixelID(), sitk.sitkVectorFloat32)
+        self.assertEqual(img.GetNumberOfComponentsPerPixel(), 5)
+        self.assertEqual(img.GetPixel([1,0,0]), (5,6,7,8,9))
+        self.assertEqual(img.GetPixel([0,1,0]), (15,16,17,18,19))
+
+        # Check 4D
+        nda = np.arange(210, dtype=np.float32).reshape([3,5,7,2])
+
+        # Special case to default to VectorImage
+        img = sitk.GetImageFromArray(nda)
+        self.assertEqual(img.GetSize(), (7,5,3))
+        self.assertEqual(img.GetPixelID(), sitk.sitkVectorFloat32)
+        self.assertEqual(img.GetNumberOfComponentsPerPixel(), 2)
+        self.assertEqual(img.GetPixel([1,0,0]), (2,3))
+        self.assertEqual(img.GetPixel([0,1,0]), (14,15))
+
+
+        img = sitk.GetImageFromArray(nda, isVector=True)
+        self.assertEqual(img.GetSize(), (7,5,3))
+        self.assertEqual(img.GetPixelID(), sitk.sitkVectorFloat32)
+        self.assertEqual(img.GetNumberOfComponentsPerPixel(), 2)
+        self.assertEqual(img.GetPixel([1,0,0]), (2,3))
+        self.assertEqual(img.GetPixel([0,1,0]), (14,15))
+
+        # 4D Image may not be supported by SimpleITK
+        try:
+            sitk.Image([1]*4, sitk.sitkUInt8)
+        except RuntimeError:
+            return
+
+        img = sitk.GetImageFromArray(nda, isVector=False)
+        self.assertEqual(img.GetSize(), nda.shape[::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkFloat32)
+        self.assertEqual(img.GetPixel([1,0,0,0]), 1)
+        self.assertEqual(img.GetPixel([0,1,0,0]), 2)
+
+
+        nda = np.arange(210*9, dtype=np.float32).reshape([3,5,7,9,2])
+
+        img = sitk.GetImageFromArray(nda, isVector=True)
+        self.assertEqual(img.GetSize(), nda.shape[-2::-1])
+        self.assertEqual(img.GetPixelID(), sitk.sitkVectorFloat32)
+        self.assertEqual(img.GetPixel([1,0,0,0]), (2,3))
+        self.assertEqual(img.GetPixel([0,1,0,0]), (18,19))
+        self.assertEqual(img.GetPixel([0,0,1,0]), (126,127))
+
+
     def test_vector_image_to_numpy(self):
         """Test converting back and forth between numpy and SimpleITK
         images were the SimpleITK image has multiple componets and
