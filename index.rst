@@ -40,7 +40,9 @@ How to Cite
 If you find SimpleITK useful in your research, support our efforts by citing
 the relevant publication(s):
 
-Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis Notebooks: a Collaborative Environment for Education and Reproducible Research", *J Digit Imaging.*, https://doi.org/10.1007/s10278-017-0037-8, 2017 (freely read `here <http://em.rdcu.be/wf/click?upn=KP7O1RED-2BlD0F9LDqGVeSIWDx8-2B-2B8r81HkSA5fUW53U-3D_kZYp45lAKoeuSXKlMMKnLRu-2FO1jcvtAwo2UFz30PH9bPLAejS1IjjDkfGx8EIWfnvmrgAH2RF3xvrb1fezqultdVNEEAM7Fc2RGY-2BOVhjR-2BAN-2B7Wi6qUoM6BYtn1ZWsTzFdNZQxBXXJ2Nf0BaU5NhQLQVs2hoM2TXsKZ7pnKQXZVJEAOyLbQSvZkJOvdc7Gk36rdNDa3pn5vH17-2FvszYj4mKlZlgROxTE-2Be2yQ-2FOLAYsoDHZNvVuG4vJr4xNpQnmAI16Nz8h3GJi-2F9GKnpBsAg-3D-3D.>`_).
+R. Beare, B. C. Lowekamp, Z. Yaniv, "Image Segmentation, Registration and Characterization in R with SimpleITK", *J Stat Softw*, 86(8), https://doi.org/10.18637/jss.v086.i08, 2018.
+
+Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis Notebooks: a Collaborative Environment for Education and Reproducible Research", *J Digit Imaging.*, https://doi.org/10.1007/s10278-017-0037-8, 31(3): 290-303, 2018 (freely read `here <http://em.rdcu.be/wf/click?upn=KP7O1RED-2BlD0F9LDqGVeSIWDx8-2B-2B8r81HkSA5fUW53U-3D_kZYp45lAKoeuSXKlMMKnLRu-2FO1jcvtAwo2UFz30PH9bPLAejS1IjjDkfGx8EIWfnvmrgAH2RF3xvrb1fezqultdVNEEAM7Fc2RGY-2BOVhjR-2BAN-2B7Wi6qUoM6BYtn1ZWsTzFdNZQxBXXJ2Nf0BaU5NhQLQVs2hoM2TXsKZ7pnKQXZVJEAOyLbQSvZkJOvdc7Gk36rdNDa3pn5vH17-2FvszYj4mKlZlgROxTE-2Be2yQ-2FOLAYsoDHZNvVuG4vJr4xNpQnmAI16Nz8h3GJi-2F9GKnpBsAg-3D-3D.>`_).
 
 B. C. Lowekamp, D. T. Chen, L. Ibáñez, D. Blezek, "The Design of SimpleITK", *Front. Neuroinform.*, 7:45. https://doi.org/10.3389/fninf.2013.00045, 2013.
 
