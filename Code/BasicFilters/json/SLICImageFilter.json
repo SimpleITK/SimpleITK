@@ -103,7 +103,7 @@
       "inputs" : [
         "Input/VM1111Shrink-RGB.png"
       ],
-      "md5hash" : "11de1c8d69340e9acf37f382c1599ff1",
+      "tolerance" : 0.05,
       "measurements_results" : [
         {
           "name" : "AverageResidual",
@@ -114,27 +114,44 @@
     },
     {
       "tag" : "gray_scale",
-      "description" : "running on scalar image",
+      "description" : "Run on scalar image, minimal number of iterations to improve consistency of results.",
       "settings" : [
         {
           "parameter" : "SuperGridSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
           "value" : [
-            10,
-            10
+            20,
+            20
           ]
+        },
+        {
+          "parameter" : "MaximumNumberOfIterations",
+          "value" : 2,
+          "cxx_value" : "2u"
+        },
+        {
+          "parameter" : "EnforceConnectivity",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        },
+        {
+          "parameter" : "InitializationPerturbation",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
         }
       ],
-      "md5hash" : "c7dc411a0b8cd9b36ca63cb70352369a",
       "inputs" : [
         "Input/cthead1.png"
       ],
+      "tolerance" : 1.0,
       "measurements_results" : [
         {
           "name" : "AverageResidual",
-          "value" : "0.03121",
-          "tolerance" : 0.0001
+          "value" : "0.20",
+          "tolerance" : 0.05
         }
       ]
     }
