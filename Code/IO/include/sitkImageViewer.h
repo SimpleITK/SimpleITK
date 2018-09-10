@@ -171,13 +171,13 @@ public:
 private:
 
   // hidden, no accessors
-  static int m_GlobalViewerImageCount;
+  static int  m_GlobalViewerImageCount;
   static bool m_GlobalAreDefaultsInitialized;
 
   // global only
   static std::vector<std::string> m_GlobalDefaultSearchPath;
   static std::vector<std::string> m_GlobalDefaultExecutableNames;
-  static unsigned int m_GlobalProcessDelay;
+  static unsigned int             m_GlobalProcessDelay;
 
   static std::string m_GlobalDefaultViewCommand;
   static std::string m_GlobalDefaultFileExtension;
@@ -186,14 +186,14 @@ private:
 
   static bool m_GlobalDebug;
 
-  std::string viewCommand;
-  std::string customCommand;
+  std::string m_ViewCommand;
+  std::string m_CustomCommand;
 
-  std::string application;
+  std::string m_Application;
 
-  std::string fileExtension;
+  std::string m_FileExtension;
 
-  std::string title;
+  std::string m_Title;
 
   static void initializeDefaults();
 

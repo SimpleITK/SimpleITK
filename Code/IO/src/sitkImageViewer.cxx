@@ -226,13 +226,13 @@ ImageViewer::ImageViewer()
     initializeDefaults();
     }
 
-  viewCommand = m_GlobalDefaultViewCommand;
+  m_ViewCommand = m_GlobalDefaultViewCommand;
 
-  application = m_GlobalDefaultApplication;
+  m_Application = m_GlobalDefaultApplication;
 
-  fileExtension = "";
+  m_FileExtension = "";
 
-  customCommand = "";
+  m_CustomCommand = "";
   }
 
 
@@ -307,30 +307,30 @@ void ImageViewer::SetGlobalDefaultExecutableNames( const std::vector<std::string
 
 void ImageViewer::SetCommand(const std::string & command )
   {
-  customCommand = command;
+  m_CustomCommand = command;
   }
 
 const std::string & ImageViewer::GetCommand() const
   {
   // if there's a user specified, custom command, it gets used no matter what.
-  if (customCommand.length() > 0)
+  if (m_CustomCommand.length() > 0)
     {
-    return customCommand;
+    return m_CustomCommand;
     }
 
-  return viewCommand;
+  return m_ViewCommand;
   }
 
 void ImageViewer::SetFileExtension(const std::string & ext )
   {
-  fileExtension = ext;
+  m_FileExtension = ext;
   }
 
 const std::string & ImageViewer::GetFileExtension() const
   {
-  if (fileExtension.length())
+  if (m_FileExtension.length())
     {
-    return fileExtension;
+    return m_FileExtension;
     }
   return m_GlobalDefaultFileExtension;
   }
@@ -357,22 +357,22 @@ unsigned int ImageViewer::GetProcessDelay()
 
 void ImageViewer::SetTitle(const std::string & t )
   {
-  title = t;
+  m_Title = t;
   }
 
 const std::string & ImageViewer::GetTitle() const
   {
-  return title;
+  return m_Title;
   }
 
 void ImageViewer::SetApplication( const std::string & app )
   {
-  application = app;
+  m_Application = app;
   }
 
 const std::string & ImageViewer::GetApplication() const
   {
-  return application;
+  return m_Application;
   }
 
 
@@ -407,16 +407,16 @@ void ImageViewer::Execute( const Image & image )
   std::vector<std::string> CommandLine;
   std::string ext;
 
-  if (fileExtension.length())
+  if (m_FileExtension.length())
     {
-    ext = fileExtension;
+    ext = m_FileExtension;
     }
   else
     {
     ext = m_GlobalDefaultFileExtension;
     }
 
-  TempFile = BuildFullFileName(title, ext, m_GlobalViewerImageCount++);
+  TempFile = BuildFullFileName(m_Title, ext, m_GlobalViewerImageCount++);
 
   // write out the image
   WriteImage ( image, TempFile );
@@ -424,7 +424,7 @@ void ImageViewer::Execute( const Image & image )
   Command = this->GetCommand();
 
   // Replace the string tokens and split the command string into separate words.
-  CommandLine = ConvertCommand( Command, application, TempFile, title );
+  CommandLine = ConvertCommand( Command, m_Application, TempFile, m_Title );
 
   // run the compiled command-line in a process which will detach
   ExecuteCommand( CommandLine, ImageViewer::GetProcessDelay() );
