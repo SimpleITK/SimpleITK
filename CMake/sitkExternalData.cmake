@@ -32,6 +32,10 @@ file:///var/bigharddrive/%(algo)/%(hash)")
 mark_as_advanced(ExternalData_URL_TEMPLATES)
 if(NOT SimpleITK_FORBID_DOWNLOADS)
   list(APPEND ExternalData_URL_TEMPLATES
+
+    # Data mirrored from SimpleITKExternalData repository
+    "https://erie.nlm.nih.gov/SimpleITKExternalData/%(algo)/%(hash)"
+
     # Data published by MIDAS
     "https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
 
