@@ -71,16 +71,16 @@ namespace itk
 namespace
 {
   // forward declaration of some helper functions
-  std::string ReplaceWords( const std::string command, const std::string app, const std::string filename,
-                            const std::string title, bool& fileFlag );
-  std::string UnquoteWord( const std::string word );
-  std::vector<std::string> ConvertCommand( const std::string command, const std::string app, const std::string filename,
-                                           const std::string title="" );
-  std::string FormatFileName ( const std::string TempDirectory, const std::string name, const std::string extension,
-                               const int tagID );
-  std::string BuildFullFileName( const std::string name, const std::string extension, const int tagID );
+  std::string ReplaceWords( const std::string & command, const std::string & app, const std::string & filename,
+                            const std::string & title, bool& fileFlag );
+  std::string UnquoteWord( const std::string & word );
+  std::vector<std::string> ConvertCommand( const std::string & command, const std::string & app,
+                                           const std::string & filename, const std::string & title="" );
+  std::string FormatFileName ( const std::string & TempDirectory, const std::string & name,
+                               const std::string & extension, const int tagID );
+  std::string BuildFullFileName( const std::string & name, const std::string & extension, const int tagID );
 #ifdef _WIN32
-  std::string DoubleBackslashes( const std::string word );
+  std::string DoubleBackslashes( const std::string & word );
 #endif
 
   void ExecuteCommand( const std::vector<std::string> & cmdLine, const unsigned int timeout=500 );
@@ -280,7 +280,7 @@ std::string ImageViewer::FindViewingApplication()
 
 
 //
-// A bunch of Set/Get methods for the class
+// A bunch of Set/Get methods for the class static variables
 //
 
 const std::vector<std::string>& ImageViewer::GetGlobalDefaultSearchPath()
@@ -304,6 +304,21 @@ void ImageViewer::SetGlobalDefaultExecutableNames( const std::vector<std::string
   ImageViewer::m_GlobalDefaultExecutableNames = names;
   ImageViewer::m_GlobalDefaultApplication = FindViewingApplication();
   }
+
+void ImageViewer::SetGlobalDefaultFileExtension( const std::string & ext )
+  {
+  ImageViewer::m_GlobalDefaultFileExtension = ext;
+  }
+
+const std::string & ImageViewer::GetGlobalDefaultFileExtension()
+  {
+  return ImageViewer::m_GlobalDefaultFileExtension;
+  }
+
+
+//
+// A bunch of Set/Get methods for the class member variables
+//
 
 void ImageViewer::SetCommand(const std::string & command )
   {
@@ -544,8 +559,8 @@ void ExecuteCommand( const std::vector<std::string> & cmdLine, const unsigned in
 // application and file name respectively.  %% will send % to the output string.
 // Multiple occurrences of a token are allowed.
 //
-std::string ReplaceWords( const std::string command,  const std::string app,  const std::string filename,
-                          const std::string title, bool& fileFlag )
+std::string ReplaceWords( const std::string & command,  const std::string & app,  const std::string & filename,
+                          const std::string & title, bool& fileFlag )
   {
   std::string result;
 
@@ -607,7 +622,7 @@ std::string ReplaceWords( const std::string command,  const std::string app,  co
 // if there are any.  We need to do this because the way arguments are passed
 // to itksysProcess_Execute
 //
-std::string UnquoteWord( const std::string word )
+std::string UnquoteWord( const std::string & word )
   {
   size_t l = word.length();
 
@@ -637,8 +652,8 @@ std::string UnquoteWord( const std::string word )
     }
   }
 
-std::vector<std::string> ConvertCommand( const std::string command, const std::string app, const std::string filename,
-                                         const std::string title )
+std::vector<std::string> ConvertCommand( const std::string & command, const std::string & app,
+                                         const std::string & filename, const std::string & title )
   {
 
   std::string t;
@@ -726,7 +741,7 @@ std::vector<std::string> ConvertCommand( const std::string command, const std::s
   }
 
 //
-std::string FormatFileName ( const std::string TempDirectory, const std::string name, const std::string extension,
+std::string FormatFileName ( const std::string & TempDirectory, const std::string & name, const std::string & extension,
                              const int tagID )
   {
   std::string TempFile = TempDirectory;
@@ -787,7 +802,7 @@ std::string FormatFileName ( const std::string TempDirectory, const std::string 
 
 //
 //
-std::string BuildFullFileName(const std::string name, const std::string extension, const int tagID )
+std::string BuildFullFileName(const std::string & name, const std::string & extension, const int tagID )
   {
   std::string TempDirectory;
 

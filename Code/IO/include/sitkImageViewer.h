@@ -53,6 +53,10 @@ class SITKIO_EXPORT ImageViewer
 public:
   ImageViewer();
 
+  /** return user readable name of the class */
+  virtual std::string GetName() const { return std::string("ImageViewer"); }
+
+
   /** \brief Set/Get the search path used to find the viewing application
    * @{
    */
@@ -65,6 +69,13 @@ public:
    */
   static void SetGlobalDefaultExecutableNames( const std::vector<std::string> & names );
   static const std::vector<std::string> & GetGlobalDefaultExecutableNames();
+  /**@}*/
+
+  /** \brief Set/Get name list used to find the default file extension application
+   * @{
+   */
+  static void SetGlobalDefaultFileExtension( const std::string & ext );
+  static const std::string & GetGlobalDefaultFileExtension();
   /**@}*/
 
   /** \brief Set/Get the full path to the viewing application.
