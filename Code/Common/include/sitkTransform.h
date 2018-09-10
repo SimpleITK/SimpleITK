@@ -178,6 +178,18 @@ public:
   // Make composition
   SITK_RETURN_SELF_TYPE_HEADER AddTransform( Transform t );
 
+
+  /** \brief Remove nested composite transforms
+   *
+   * This method has no effect on non-composite transforms.
+   *
+   * If this transform is a composite which contains another nested
+   * composite transform, then the nested composite's transforms are
+   * placed into this transform. Nested composite transform may not be
+   * written to a file.
+   */
+   SITK_RETURN_SELF_TYPE_HEADER FlattenTransform();
+
   /** Apply transform to a point.
    *
    * The dimension of the point must match the transform.

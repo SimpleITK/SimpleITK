@@ -612,6 +612,15 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
     return tx;
   }
 
+  Transform &Transform::FlattenTransform()
+  {
+    assert( m_PimpleTransform );
+    this->MakeUnique();
+    this->m_PimpleTransform->FlattenTransform();
+    return *this;
+  }
+
+
   std::string Transform::ToString( void ) const
   {
     assert( m_PimpleTransform );

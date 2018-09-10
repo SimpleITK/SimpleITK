@@ -312,6 +312,54 @@ TEST(TransformTest, AddTransform) {
 
 }
 
+
+TEST(TransformTest, FlattenTransform) {
+
+  sitk::Transform tx1 = sitk::Transform( 2, sitk::sitkAffine );
+
+  EXPECT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 2u);
+
+  EXPECT_NO_THROW( tx1.FlattenTransform() );
+
+  EXPECT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 2u);
+
+  sitk::Transform tx2 = sitk::Transform( 2, sitk::sitkScale);
+  EXPECT_EQ( tx2.GetParameters().size(), 2u );
+  EXPECT_EQ( tx2.GetFixedParameters().size(), 2u);
+
+  // create composite transform
+  tx2.AddTransform(sitk::TranslationTransform(2));
+  EXPECT_EQ( tx2.GetParameters().size(), 2u );
+  EXPECT_EQ( tx2.GetFixedParameters().size(), 0u);
+
+  // add composite to existing transform to create nested composites
+  tx1.AddTransform(tx2);
+
+  // There should be nested composite transforms here
+  std::cout << tx1.ToString() << std::endl;
+
+  EXPECT_EQ( tx1.GetParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 0u);
+
+  const ::testing::TestInfo *info = ::testing::UnitTest::GetInstance()->current_test_info();
+  std::string filename = std::string(info->test_case_name()) + "." + info->name() + ".txt";
+
+  filename = dataFinder.GetOutputFile(filename);
+
+  EXPECT_ANY_THROW(sitk::WriteTransform(tx1, filename));
+
+  // Can not write nested composite transforms
+  EXPECT_NO_THROW(tx1.FlattenTransform());
+
+  EXPECT_EQ( tx1.GetParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 0u);
+
+  EXPECT_NO_THROW(sitk::WriteTransform(tx1, filename));
+}
+
+
 TEST(TransformTest, ReadTransformResample) {
 
   const char *txFiles[] = {

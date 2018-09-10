@@ -130,6 +130,8 @@ public:
 
   virtual void SetIdentity() = 0;
 
+  virtual void FlattenTransform() = 0;
+
   // Tries to construct an inverse of the transform, if true is returned
   // the inverse was successful, and outputTransform is modified to
   // the new class and ownership it passed to the caller.  Otherwise
@@ -301,6 +303,27 @@ public:
 
 
 #endif
+
+
+  virtual void FlattenTransform()
+    {
+      this->FlattenTransform(this->m_Transform.GetPointer());
+    }
+
+  template <typename UTransform>
+  void FlattenTransform( UTransform *self)
+    {
+      Unused(self);
+      // nothing to do
+    }
+
+  template <typename UScalar, unsigned int UDimension>
+  void FlattenTransform( itk::CompositeTransform<UScalar, UDimension> *self)
+    {
+      self->FlattenTransformQueue();
+      // TODO: If there is only one transform remove it from the
+      // composite transform.
+    }
 
   virtual bool GetInverse(PimpleTransformBase * &outputTransform) const
     {
