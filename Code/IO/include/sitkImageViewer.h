@@ -71,11 +71,18 @@ public:
   static const std::vector<std::string> & GetGlobalDefaultExecutableNames();
   /**@}*/
 
-  /** \brief Set/Get name list used to find the default file extension application
+  /** \brief Set/Get the default file extension
    * @{
    */
   static void SetGlobalDefaultFileExtension( const std::string & ext );
   static const std::string & GetGlobalDefaultFileExtension();
+  /**@}*/
+
+  /** \brief Set/Get the default application
+   * @{
+   */
+  static void SetGlobalDefaultApplication( const std::string & app );
+  static const std::string & GetGlobalDefaultApplication();
   /**@}*/
 
   /** \brief Set/Get the full path to the viewing application.

@@ -215,6 +215,7 @@ void ImageViewer::initializeDefaults()
   m_GlobalAreDefaultsInitialized = true;
   }
 
+
 //
 // Constructor
 //
@@ -315,6 +316,16 @@ const std::string & ImageViewer::GetGlobalDefaultFileExtension()
   return ImageViewer::m_GlobalDefaultFileExtension;
   }
 
+void ImageViewer::SetGlobalDefaultApplication( const std::string & app )
+  {
+  ImageViewer::m_GlobalDefaultApplication = app;
+  }
+
+const std::string & ImageViewer::GetGlobalDefaultApplication()
+  {
+  return ImageViewer::m_GlobalDefaultApplication;
+  }
+
 
 //
 // A bunch of Set/Get methods for the class member variables
@@ -402,9 +413,12 @@ std::string ImageViewer::ToString() const
   out << "  Command: " << this->GetCommand() << std::endl;
 
   out << "  Application: " << this->GetApplication() << std::endl;
-  out << "  File extension: " << this->GetFileExtension() << std::endl;
+  out << "  Default Application: " << ImageViewer::GetGlobalDefaultApplication() << std::endl;
+  out << "  File Extension: " << this->GetFileExtension() << std::endl;
+  out << "  Default File Extension: " << ImageViewer::GetGlobalDefaultFileExtension() << std::endl;
   out << "  Search Path: " << ImageViewer::GetGlobalDefaultSearchPath() << std::endl;
   out << "  Executable Names: " << ImageViewer::GetGlobalDefaultExecutableNames() << std::endl;
+  out << "  Debug Flag: " << ImageViewer::GetGlobalDebug() << std::endl;
 
   return out.str();
   }
@@ -546,7 +560,6 @@ void ExecuteCommand( const std::vector<std::string> & cmdLine, const unsigned in
       sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
     }
   }
-
 
 
 //
