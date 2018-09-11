@@ -358,7 +358,7 @@
                 # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
                 idx = tuple(idx) + (slice(None),)*(dim-len(idx))
             except TypeError:
-              # if the len function didn't work then, assume is a
+              # if the len function did not work then, assume is a
               # non-iterable, and make it a single element in a tuple.
               idx = (idx,) + (slice(None),)*(dim-1)
 
@@ -761,23 +761,33 @@ def GetArrayFromImage(image):
     return numpy.array(arrayView, copy=True)
 
 
-def GetImageFromArray( arr, isVector=False):
-    """Get a SimpleITK Image from a numpy array. If isVector is True, then a 3D array will be treated as a 2D vector image, otherwise it will be treated as a 3D image"""
+def GetImageFromArray( arr, isVector=None):
+    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D images are automatically considered 3D vector images."""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
     z = numpy.asarray( arr )
 
-    assert z.ndim in ( 2, 3, 4 ), \
-      "Only arrays of 2, 3 or 4 dimensions are supported."
+    if isVector is None:
+      if z.ndim == 4:
+        isVector = True
 
-    if ( z.ndim == 3 and isVector ) or (z.ndim == 4):
+    if isVector:
       id = _get_sitk_vector_pixelid( z )
-      img = Image( z.shape[-2::-1] , id, z.shape[-1] )
-    elif z.ndim in ( 2, 3 ):
+      if z.ndim > 2:
+        number_of_components = z.shape[-1]
+        shape = z.shape[-2::-1]
+      else:
+        number_of_components = 1
+        shape = z.shape[::-1]
+    else:
+      number_of_components = 1
       id = _get_sitk_pixelid( z )
-      img = Image( z.shape[::-1], id )
+      shape = z.shape[::-1]
+
+    # SimpleITK throws an exception if the image dimension is not supported
+    img = Image( shape, id, number_of_components )
 
     _SimpleITK._SetImageFromArray( z.tostring(), img )
 
@@ -786,7 +796,7 @@ def GetImageFromArray( arr, isVector=False):
 
 
 
-// Enable Java classes derived from Command Execute method to be
+// Enable Python classes derived from Command Execute method to be
 // called from C++
 %feature("director") itk::simple::Command;
 
