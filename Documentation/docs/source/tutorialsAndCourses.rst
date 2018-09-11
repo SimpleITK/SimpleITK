@@ -3,8 +3,39 @@
 Tutorials and Courses
 ---------------------
 
+Whether you are a student at the beginging of a research career in biomedical image analysis or a seasoned veteran, you will
+likely find attending a SimpleITK tutorial beneficial. These tutorials will shorten the time it
+takes you to master SimpleITK, with all of the material (code, data, presentations) provided using permisive licenses. After the
+tutorial, you can readily use the code in your research or go on to use it in your own teaching activities. Additionaly,
+attending a tutorial allows you to directly interact with the SimpleITK team. This is your oppurtunity to request specific features,
+and get advice on how to best utilize SimpleITK for your research needs.
+
+While SimpleITK supports eight programming languages, the lingua franca of the biomedical data science community is either
+Python or R, hence most tutorials utilize Jupyter notebooks in one or both of these languagues.
+
+
+SimpleITK tutorials and courses have been given in the following venues:
+
+.. image:: ../images/isbi.png
+   :width: 13%
+   :target: https://biomedicalimaging.org/2018/
+   :alt: IEEE International Symposium on Biomedical Imaging Logo
+.. image:: ../images/miccai.png
+   :width: 30%
+   :target: http://miccai.org/
+   :alt: MICCAI Society Logo
+.. image:: ../images/spie.png
+   :width: 30%
+   :target: https://spie.org/conferences-and-exhibitions/medical-imaging/conferences
+   :alt: SPIE Medical Imaging Logo
+.. image:: ../images/imageJ.png
+   :width: 20%
+   :target: https://imagej.net/Conference
+   :alt: ImageJ User and Developer Conference Logo
+
 Upcoming
 ++++++++
+
 
 
 Past
