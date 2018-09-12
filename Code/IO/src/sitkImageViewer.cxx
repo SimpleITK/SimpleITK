@@ -51,7 +51,7 @@
 
 #define localDebugMacro(x)\
   {                                                                     \
-    if (itk::simple::ImageViewer::GetGlobalDebug())                     \
+    if (itk::simple::ImageViewer::GetGlobalDefaultDebug())                     \
       {                                                                 \
       std::ostringstream msg;                                           \
       msg << "Debug: In " __FILE__ ", line " << __LINE__ << ": " x      \
@@ -99,7 +99,7 @@ std::string ImageViewer::m_GlobalDefaultViewCommand;
 std::string ImageViewer::m_GlobalDefaultApplication;
 std::string ImageViewer::m_GlobalDefaultFileExtension;
 
-bool ImageViewer::m_GlobalDebug=false;
+bool ImageViewer::m_GlobalDefaultDebug=false;
 
 //
 // this is an ugly mess
@@ -361,14 +361,24 @@ const std::string & ImageViewer::GetFileExtension() const
   return m_GlobalDefaultFileExtension;
   }
 
-void ImageViewer::SetGlobalDebug( const bool dbg )
+void ImageViewer::SetGlobalDefaultDebug( const bool dbg )
   {
-  m_GlobalDebug = dbg;
+  m_GlobalDefaultDebug = dbg;
   }
 
-bool ImageViewer::GetGlobalDebug()
+bool ImageViewer::GetGlobalDefaultDebug()
   {
-  return m_GlobalDebug;
+  return m_GlobalDefaultDebug;
+  }
+
+void ImageViewer::SetGlobalDefaultDebugOn()
+  {
+  m_GlobalDefaultDebug = true;
+  }
+
+void ImageViewer::SetGlobalDefaultDebugOff()
+  {
+  m_GlobalDefaultDebug = false;
   }
 
 void ImageViewer::SetProcessDelay( const unsigned int d )
@@ -418,7 +428,7 @@ std::string ImageViewer::ToString() const
   out << "  Default File Extension: " << ImageViewer::GetGlobalDefaultFileExtension() << std::endl;
   out << "  Search Path: " << ImageViewer::GetGlobalDefaultSearchPath() << std::endl;
   out << "  Executable Names: " << ImageViewer::GetGlobalDefaultExecutableNames() << std::endl;
-  out << "  Debug Flag: " << ImageViewer::GetGlobalDebug() << std::endl;
+  out << "  Debug Flag: " << ImageViewer::GetGlobalDefaultDebug() << std::endl;
 
   return out.str();
   }

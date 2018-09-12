@@ -73,8 +73,11 @@ TEST(ImageViewerTest,Methods)
   names = iv.GetGlobalDefaultExecutableNames();
   EXPECT_EQ( compare_word_lists(words, names), true );
 
-  iv.SetGlobalDebug( true );
-  EXPECT_EQ( iv.GetGlobalDebug(), true );
+  iv.SetGlobalDefaultDebug( true );
+  EXPECT_EQ( iv.GetGlobalDefaultDebug(), true );
+
+  iv.SetGlobalDefaultDebugOff();
+  EXPECT_EQ( iv.GetGlobalDefaultDebug(), false );
 
   iv.SetFileExtension( ".png" );
   EXPECT_EQ( iv.GetFileExtension(), ".png" );

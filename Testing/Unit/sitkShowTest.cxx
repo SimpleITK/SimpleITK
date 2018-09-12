@@ -31,7 +31,7 @@ int main (int argc, char *argv[])
   sitk::Image img;
   sitk::ImageViewer viewer;
 
-  sitk::ImageViewer::SetGlobalDebug(true);
+  sitk::ImageViewer::SetGlobalDefaultDebug(true);
   viewer.SetTitle("sitkShowTest");
 
   std::cout << "Starting sitkShowTest\n";

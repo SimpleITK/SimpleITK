@@ -152,12 +152,15 @@ public:
 
   /** \brief Set/Get Debug flag.
    *
-   * Turning on the Debug flag produces output showing the command string used to
+   * Turning on/off the Debug flag produces output showing the command string used to
    * launch the viewing application.
    * @{
    */
-  static void SetGlobalDebug( const bool dbg );
-  static bool GetGlobalDebug();
+  static void SetGlobalDefaultDebug( const bool dbg );
+  static bool GetGlobalDefaultDebug();
+
+  static void SetGlobalDefaultDebugOn();
+  static void SetGlobalDefaultDebugOff();
   /**@}*/
 
   /** \brief Set/Get Process delay, the wait time after launching the viewing application.
@@ -202,7 +205,7 @@ private:
   static std::string m_GlobalDefaultApplication;
 
 
-  static bool m_GlobalDebug;
+  static bool m_GlobalDefaultDebug;
 
   std::string m_ViewCommand;
   std::string m_CustomCommand;
