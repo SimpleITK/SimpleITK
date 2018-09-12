@@ -1,5 +1,4 @@
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
-cmake_policy(SET CMP0057 NEW)
 
 # add_filter_library
 # This function is used to apply standard building options for the

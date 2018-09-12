@@ -1,7 +1,5 @@
 
-if(POLICY CMP0012)
-  cmake_policy(SET CMP0012 NEW)
-endif()
+cmake_policy(VERSION 3.10.0)
 
 set(VIRTUALENV_ARGS --clear --no-pip)
 if ( "@SimpleITK_FORBID_DOWNLOADS@" )

@@ -17,11 +17,6 @@
 
 include(CMakePushCheckState)
 
-
-if(POLICY CMP0067) # CMake 3.8.2
-  cmake_policy(SET CMP0067 NEW)
-endif()
-
 #
 # Function to wrap try compiles on the aggregate cxx test file1
 #
