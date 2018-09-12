@@ -22,6 +22,9 @@
 #include <sitkImageSeriesWriter.h>
 #include <sitkHashImageFilter.h>
 #include <sitkPhysicalPointImageSource.h>
+#include <sitkAdditiveGaussianNoiseImageFilter.h>
+#include <sitkExtractImageFilter.h>
+#include <sitkRegionOfInterestImageFilter.h>
 
 TEST(IO,ImageFileReader) {
 
@@ -43,7 +46,6 @@ TEST(IO,ImageFileReader) {
 
   reader.SetLoadPrivateTags(false);
   EXPECT_EQ( reader.GetLoadPrivateTags(), false );
-
 
   typedef std::map<std::string,std::string> MapType;
   MapType mapping;
@@ -633,4 +635,226 @@ TEST(IO, ImageFileReader_SetImageIO )
   EXPECT_EQ ( 64u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
 
+}
+
+
+TEST(IO, ImageFileReader_Extract1 )
+{
+
+  sitk::ImageFileReader reader;
+  EXPECT_EQ( reader.GetExtractIndex(), std::vector<int>() );
+
+  EXPECT_EQ( reader.GetExtractSize(), std::vector<unsigned int>() );
+
+  reader.SetFileName( dataFinder.GetFile( "Input/cthead1-Float.mha" ) );
+
+  ASSERT_NO_THROW ( reader.ReadImageInformation() );
+
+  std::vector<unsigned int> fullSize;
+  const std::vector<uint64_t> fullSize64 = reader.GetSize();
+  fullSize = std::vector<unsigned int>(fullSize64.begin(), fullSize64.end());
+
+  sitk::Image fullImage = reader.Execute();
+
+  EXPECT_EQ( fullSize, fullImage.GetSize() );
+
+  std::vector<unsigned int> extractSize(fullSize);
+  for ( unsigned int i = 0; i < extractSize.size(); ++i )
+    {
+    extractSize[i] = std::max(1u, extractSize[i]/2);
+    }
+
+  reader.SetExtractSize(extractSize);
+  EXPECT_EQ( extractSize, reader.GetExtractSize() );
+
+  sitk::Image extractImage1 = reader.Execute();
+
+  EXPECT_EQ( fullSize64, reader.GetSize() );
+  EXPECT_EQ( extractSize, extractImage1.GetSize() );
+  EXPECT_EQ( fullImage.GetOrigin(), reader.GetOrigin() );
+  EXPECT_EQ( fullImage.GetOrigin(), extractImage1.GetOrigin() );
+  EXPECT_EQ( fullImage.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ),
+             extractImage1.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ));
+  EXPECT_EQ( fullImage.GetPixelAsFloat( std::vector<uint32_t>( 2, 13 ) ),
+             extractImage1.GetPixelAsFloat( std::vector<uint32_t>( 2, 13 ) ));
+
+  std::vector<int> extractIndex(fullSize.size());
+  std::fill( extractIndex.begin(), extractIndex.end(), 2);
+
+  reader.SetExtractIndex( extractIndex );
+  EXPECT_EQ( extractIndex, reader.GetExtractIndex() );
+
+  sitk::Image extractImage2 = reader.Execute();
+
+  EXPECT_EQ( fullSize64, reader.GetSize() );
+  EXPECT_EQ( extractSize, extractImage1.GetSize() );
+  EXPECT_EQ( fullImage.GetOrigin(), reader.GetOrigin() );
+  EXPECT_NE( fullImage.GetOrigin(), extractImage2.GetOrigin() );
+  EXPECT_EQ( fullImage.GetPixelAsFloat( std::vector<uint32_t>( 2, 2 ) ),
+             extractImage2.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ));
+  EXPECT_EQ( fullImage.GetPixelAsFloat( std::vector<uint32_t>( 2, 15 ) ),
+             extractImage2.GetPixelAsFloat( std::vector<uint32_t>( 2, 13 ) ));
+}
+
+
+TEST(IO, ImageFileReader_Extract2 )
+{
+
+  sitk::Image generatedImage(100,100,100, sitk::sitkInt16);
+  generatedImage.SetOrigin(v3(2.0, 4.0, 6.0));
+  generatedImage.SetSpacing(v3(1.0, 2.0, 3.0));
+
+  generatedImage = sitk::AdditiveGaussianNoise(generatedImage, 256.0, 0.0, 99u);
+
+  generatedImage.SetMetaData( "MyKey", "my_value" );
+
+  const ::testing::TestInfo *info = ::testing::UnitTest::GetInstance()->current_test_info();
+  std::string filename = std::string(info->test_case_name()) + "." + info->name() + ".mha";
+  filename = dataFinder.GetOutputFile(filename);
+
+  sitk::WriteImage(generatedImage, filename);
+
+  std::vector<int> extractIndex(0);
+  std::vector<unsigned int> extractSize(0);
+
+  sitk::ImageFileReader reader;
+
+  //
+  // Test extraction with zero sized extract properties
+  //
+  reader.SetFileName(filename);
+  reader.SetExtractIndex(extractIndex);
+  reader.SetExtractSize(extractSize);
+
+  sitk::Image result;
+  EXPECT_NO_THROW( result = reader.Execute() );
+  EXPECT_EQ( sitk::Hash(generatedImage), sitk::Hash(result) );
+  EXPECT_TRUE( reader.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", reader.GetMetaData("MyKey") );
+  EXPECT_TRUE( result.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", result.GetMetaData("MyKey") );
+  EXPECT_EQ( generatedImage.GetOrigin(), result.GetOrigin() );
+  EXPECT_EQ( generatedImage.GetSpacing(), result.GetSpacing() );
+
+  extractIndex.resize(3);
+  extractSize.resize(3);
+
+  //
+  // Test extraction with a 3d roi
+  //
+  extractIndex[0] = 1;
+  extractIndex[1] = 2;
+  extractIndex[2] = 3;
+
+  extractSize[0] = 2;
+  extractSize[1] = 3;
+  extractSize[2] = 5;
+
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_EQ( extractIndex, reader.GetExtractIndex() );
+  reader.SetExtractSize(extractSize);
+  EXPECT_EQ( extractSize, reader.GetExtractSize() );
+
+  EXPECT_NO_THROW( result = reader.Execute() );
+  EXPECT_EQ( sitk::Hash(sitk::RegionOfInterest( generatedImage, extractSize, extractIndex )),
+             sitk::Hash(result) );
+  EXPECT_TRUE( reader.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", reader.GetMetaData("MyKey") );
+  EXPECT_TRUE( result.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", result.GetMetaData("MyKey") );
+  EXPECT_EQ( generatedImage.GetSpacing(), result.GetSpacing() );
+  EXPECT_EQ( v3(3.0, 8.0, 15.0), result.GetOrigin() );
+  EXPECT_EQ( 3, result.GetDimension() );
+  EXPECT_EQ( extractSize, result.GetSize() );
+
+
+  //
+  // Test extraction with collapsing x-dim
+  //
+  extractIndex[0] = 2;
+  extractIndex[1] = 3;
+  extractIndex[2] = 4;
+
+  extractSize[0] = 0;
+  extractSize[1] = 1;
+  extractSize[2] = 2;
+
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_EQ( extractIndex, reader.GetExtractIndex() );
+  reader.SetExtractSize(extractSize);
+  EXPECT_EQ( extractSize, reader.GetExtractSize() );
+
+  result = reader.Execute();
+
+  EXPECT_EQ( sitk::Hash(sitk::Extract( generatedImage, extractSize, extractIndex )),
+             sitk::Hash(result) );
+  EXPECT_TRUE( reader.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", reader.GetMetaData("MyKey") );
+  EXPECT_TRUE( result.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", result.GetMetaData("MyKey") );
+  EXPECT_EQ( v2(2.0, 3.0), result.GetSpacing() );
+  EXPECT_EQ( v2(10.0, 18.0), result.GetOrigin() );
+  EXPECT_EQ( 2u, result.GetDimension() );
+  EXPECT_EQ( 1u, result.GetSize()[0] );
+  EXPECT_EQ( 2u, result.GetSize()[1] );
+
+  //
+  // Test extraction with collapsing y-dim
+  //
+  extractIndex[0] = 2;
+  extractIndex[1] = 5;
+  extractIndex[2] = 7;
+
+  extractSize[0] = 3;
+  extractSize[1] = 0;
+  extractSize[2] = 5;
+
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_EQ( extractIndex, reader.GetExtractIndex() );
+  reader.SetExtractSize(extractSize);
+  EXPECT_EQ( extractSize, reader.GetExtractSize() );
+
+  EXPECT_NO_THROW(result = reader.Execute());
+
+  EXPECT_EQ( sitk::Hash(sitk::Extract( generatedImage, extractSize, extractIndex )),
+             sitk::Hash(result) );
+  EXPECT_TRUE( reader.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", reader.GetMetaData("MyKey") );
+  EXPECT_TRUE( result.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", result.GetMetaData("MyKey") );
+  EXPECT_EQ( v2(1.0, 3.0), result.GetSpacing() );
+  EXPECT_EQ( v2(4.0, 27.0), result.GetOrigin() );
+  EXPECT_EQ( 2u, result.GetDimension() );
+  EXPECT_EQ( 3u, result.GetSize()[0] );
+  EXPECT_EQ( 5u, result.GetSize()[1] );
+
+//
+  // Test extraction with collapsing z-dim
+  //
+  extractIndex[0] = 1;
+  extractIndex[1] = 3;
+  extractIndex[2] = 5;
+
+  extractSize[0] = 3;
+  extractSize[1] = 5;
+  extractSize[2] = 0;
+
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_EQ( extractIndex, reader.GetExtractIndex() );
+  reader.SetExtractSize(extractSize);
+  EXPECT_EQ( extractSize, reader.GetExtractSize() );
+
+  EXPECT_NO_THROW(result = reader.Execute());
+
+  EXPECT_EQ( sitk::Hash(sitk::Extract( generatedImage, extractSize, extractIndex )),
+             sitk::Hash(result) );
+  EXPECT_TRUE( reader.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", reader.GetMetaData("MyKey") );
+  EXPECT_TRUE( result.HasMetaDataKey("MyKey") );
+  EXPECT_EQ( "my_value", result.GetMetaData("MyKey") );
+  EXPECT_EQ( v2(1.0, 2.0), result.GetSpacing() );
+  EXPECT_EQ( v2(3.0, 10.0), result.GetOrigin() );
+  EXPECT_EQ( 2u, result.GetDimension() );
+  EXPECT_EQ( 3u, result.GetSize()[0] );
+  EXPECT_EQ( 5u, result.GetSize()[1] );
 }
