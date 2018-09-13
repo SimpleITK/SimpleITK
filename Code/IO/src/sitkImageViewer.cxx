@@ -801,7 +801,7 @@ std::string FormatFileName ( const std::string & TempDirectory, const std::strin
   // Function that converts slashes or backslashes to double backslashes.  We need
   // to do this so the file name is properly parsed by ImageJ if it's used in a macro.
   //
-  std::string DoubleBackslashes(const std::string word)
+  std::string DoubleBackslashes(const std::string & word)
   {
     std::string result;
 
