@@ -150,11 +150,12 @@ namespace itk {
        *
        * The dimension of the image can be reduced by specifying a
        * dimension's size as 0. For example a size of $[10,20,30,0,0]$
-       * results in a 2D image with size of $[10,20,30]$. This
-       * enables reading a 5D image into a 3D image. If the size is
-       * larger or more dimensions than the image in the file, an
-       * exception will be generated. Missing dimensions are treated
-       * the same as 0.
+       * results in a 3D image with size of $[10,20,30]$. This
+       * enables reading a 5D image into a 3D image. If the length of
+       * the specified size is greater than the dimension of the image
+       * file, an exception will be generated. If the size's length is
+       * less than the image's dimension then the missing values are
+       * assumed to be zero.
        *
        * /sa ExtractImageFilter
        */
