@@ -3,7 +3,6 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "\todo this filter should work with VectorImages too.",
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "uint8_t",
   "members" : [
