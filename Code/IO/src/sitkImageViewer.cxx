@@ -150,7 +150,7 @@ void ImageViewer::initializeDefaults()
   std::string ProgramFiles;
   std::vector<std::string> win_dirs = { "PROGRAMFILES", "PROGRAMFILES(x86)", "PROGRAMW6432" };
 
-  for (int i=0; i<win_dirs.size(); i++)
+  for (unsigned int i=0; i<win_dirs.size(); i++)
     {
     if ( itksys::SystemTools::GetEnv ( win_dirs[i], ProgramFiles ) )
       {
