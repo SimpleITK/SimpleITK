@@ -157,6 +157,12 @@ namespace itk {
        * less than the image's dimension then the missing values are
        * assumed to be zero.
        *
+       * When the dimension of the image is reduced, the direction
+       * cosine matrix will be set to the identity. However, the
+       * spacing for the selected axis will remain. The matrix from
+       * the file can still be obtained by
+       * ImageFileReader::GetDirection.
+       *
        * /sa ExtractImageFilter
        */
       SITK_RETURN_SELF_TYPE_HEADER SetExtractSize( const std::vector<unsigned int> &size);
