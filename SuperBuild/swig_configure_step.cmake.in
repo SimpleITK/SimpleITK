@@ -4,7 +4,7 @@
 # enviroment. If there is a problem with them in the future they can
 # be addressed in CMake with the same structure.
 
-cmake_policy(SET CMP0012 NEW)
+cmake_policy(VERSION 3.10.0)
 
 set(ENV{CC} "@CMAKE_C_COMPILER_LAUNCHER@ @CMAKE_C_COMPILER@")
 set(ENV{CFLAGS} "@CMAKE_C_FLAGS@ @CMAKE_C_FLAGS_RELEASE@")

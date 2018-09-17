@@ -6,12 +6,9 @@ SET(MSVC_INCREMENTAL_DEFAULT ON)
 
 project ( SimpleITK )
 
-cmake_policy( VERSION 3.0 )
+cmake_policy( VERSION 3.10 )
 
 foreach(p
-    CMP0042 # CMake 3.0
-    CMP0063 # CMake 3.3.2
-    CMP0064 # CMake 3.4
     )
   if(POLICY ${p})
     cmake_policy(SET ${p} NEW)
