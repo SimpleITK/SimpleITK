@@ -858,3 +858,115 @@ TEST(IO, ImageFileReader_Extract2 )
   EXPECT_EQ( 3u, result.GetSize()[0] );
   EXPECT_EQ( 5u, result.GetSize()[1] );
 }
+
+
+TEST(IO, ImageFileReader_5DExtract )
+{
+  const std::string file = dataFinder.GetDirectory( ) + "/Input/points_5d.mha";
+
+  sitk::ImageFileReader reader;
+  reader.SetFileName(file);
+
+  reader.ReadImageInformation();
+
+  EXPECT_EQ(reader.GetPixelID(), sitk::sitkVectorFloat32);
+  EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkVectorFloat32);
+  EXPECT_EQ(reader.GetDimension(), 5u);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 5u);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), v5(0.0, 0.0, 0.0, 0.0, 0.0), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v5(1.0, 1.0, 1.0, 1.0, 1.0), 1e-6);
+  std::vector<double> direction_i5(25u, 0.0);
+  for (unsigned int i = 0; i < 5; ++i)
+    direction_i5[i*5+i] = 1.0;
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), direction_i5, 1e-8);
+  EXPECT_VECTOR_NEAR(reader.GetSize(), v5(5.0, 5.0, 5.0, 5.0, 5.0), 1e-10);
+
+
+  EXPECT_ANY_THROW(reader.Execute());
+
+  std::vector<unsigned int> extractSize(5);
+  std::vector<int> extractIndex(5, 0);
+
+  // extract first 3d region
+  extractSize[0]=5u;
+  extractSize[1]=5u;
+  extractSize[2]=5u;
+  extractSize[3]=0u;
+  extractSize[4]=0u;
+
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  sitk::Image output = reader.Execute();
+
+  EXPECT_EQ(output.GetSize(), std::vector<unsigned int>(3u, 5u));
+  EXPECT_VECTOR_DOUBLE_NEAR(output.GetOrigin(), v3(0.0, 0.0, 0.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(output.GetSpacing(), v3(1.0, 1.0, 1.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(output.GetDirection(), v9(1.0, 0.0, 0.0,
+                                                      0.0, 1.0, 0.0,
+                                                      0.0, 0.0, 1.0), 1e-8);
+  EXPECT_VECTOR_NEAR(output.GetPixelAsVectorFloat32(std::vector< uint32_t >(3u,0u)),
+                     v5(0.0, 0.0, 0.0, 0.0, 0.0), 1e-10);
+  EXPECT_VECTOR_NEAR(output.GetPixelAsVectorFloat32(std::vector< uint32_t >(3u,4u)),
+                            v5(4.0, 4.0, 4.0, 0.0, 0.0), 1e-10);
+
+
+  // extract  2d region
+  extractSize[0]=0u;
+  extractSize[1]=3u;
+  extractSize[2]=0u;
+  extractSize[3]=3u;
+  extractSize[4]=0u;
+
+  extractIndex[0]=1;
+  extractIndex[1]=1;
+  extractIndex[2]=2;
+  extractIndex[3]=2;
+  extractIndex[4]=4;
+
+
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  output = reader.Execute();
+
+  EXPECT_EQ(output.GetSize(), std::vector<unsigned int>(2u, 3u));
+  EXPECT_VECTOR_DOUBLE_NEAR(output.GetOrigin(), v2(1.0, 2.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(output.GetSpacing(), v2(1.0, 1.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(output.GetDirection(), v4(1.0, 0.0,
+                                                      0.0, 1.0), 1e-8);
+  EXPECT_VECTOR_NEAR(output.GetPixelAsVectorFloat32(std::vector< uint32_t >(2u,0u)),
+                     v5(1.0, 1.0, 2.0, 2.0, 4.0), 1e-10);
+  EXPECT_VECTOR_NEAR(output.GetPixelAsVectorFloat32(std::vector< uint32_t >(2u,1u)),
+                            v5(1.0, 2.0, 2.0, 3.0, 4.0), 1e-10);
+
+
+  // Try some error cases
+  extractSize =  std::vector<unsigned int>(5u, 1u);
+  extractIndex = std::vector<int>(5u, 5u);
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_ANY_THROW(reader.Execute());
+
+  extractSize[0] = 1u;
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_ANY_THROW(reader.Execute());
+
+  extractSize[0] = 1u;
+  extractSize[1] = 6u;
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_ANY_THROW(reader.Execute());
+
+  extractSize =  std::vector<unsigned int>(5u, 0u);
+  extractSize[0] = 1u;
+  extractSize[1] = 1u;
+  extractIndex[4] = -1;
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_ANY_THROW(reader.Execute());
+
+  extractIndex[4] = 5;
+  reader.SetExtractSize(extractSize);
+  reader.SetExtractIndex(extractIndex);
+  EXPECT_ANY_THROW(reader.Execute());
+}

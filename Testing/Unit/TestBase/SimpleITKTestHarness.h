@@ -171,6 +171,14 @@ inline std::vector<double> v4(double v1, double v2, double v3, double v4)
   return temp;
 }
 
+
+inline std::vector<double> v5(double v1, double v2, double v3, double v4, double v5)
+{
+  std::vector<double> temp(5);
+  temp[0]=v1;temp[1]=v2;temp[2]=v3;temp[3]=v4;temp[4]=v5;
+  return temp;
+}
+
 inline std::vector<double> v6(double v1, double v2, double v3,
                               double v4, double v5, double v6)
 {
