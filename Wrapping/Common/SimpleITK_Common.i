@@ -195,6 +195,7 @@ namespace std
 %include "sitkImageReaderBase.h"
 %include "sitkImageSeriesReader.h"
 %include "sitkImageFileReader.h"
+%include "sitkImageViewer.h"
 
  // Basic Filters
 %include "sitkHashImageFilter.h"

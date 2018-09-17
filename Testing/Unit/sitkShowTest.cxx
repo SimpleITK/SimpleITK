@@ -29,6 +29,10 @@ int main (int argc, char *argv[])
 {
 
   sitk::Image img;
+  sitk::ImageViewer viewer;
+
+  sitk::ImageViewer::SetGlobalDefaultDebug(true);
+  viewer.SetTitle("sitkShowTest");
 
   std::cout << "Starting sitkShowTest\n";
 
@@ -41,7 +45,7 @@ int main (int argc, char *argv[])
         std::cout << "Reading " << argv[i] << std::endl;
         img = sitk::ReadImage( argv[i] );
         std::cout << "Showing " << argv[i] << std::endl;
-        sitk::Show(img);
+        viewer.Execute(img);
         }
       catch (std::exception &e)
         {
