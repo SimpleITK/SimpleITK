@@ -650,18 +650,16 @@ TEST(IO, ImageFileReader_Extract1 )
 
   ASSERT_NO_THROW ( reader.ReadImageInformation() );
 
-  std::vector<unsigned int> fullSize;
   const std::vector<uint64_t> fullSize64 = reader.GetSize();
-  fullSize = std::vector<unsigned int>(fullSize64.begin(), fullSize64.end());
 
   sitk::Image fullImage = reader.Execute();
 
-  EXPECT_EQ( fullSize, fullImage.GetSize() );
+  EXPECT_VECTOR_NEAR( reader.GetSize(), fullImage.GetSize(), 1e-10 );
 
-  std::vector<unsigned int> extractSize(fullSize);
+  std::vector<unsigned int> extractSize(fullSize64.size());
   for ( size_t i = 0; i < extractSize.size(); ++i )
     {
-    extractSize[i] = std::max(1u, extractSize[i]/2);
+    extractSize[i] = std::max(1u, static_cast<unsigned int>(fullSize64[i]/2));
     }
 
   reader.SetExtractSize(extractSize);
@@ -678,7 +676,7 @@ TEST(IO, ImageFileReader_Extract1 )
   EXPECT_EQ( fullImage.GetPixelAsFloat( std::vector<uint32_t>( 2, 13 ) ),
              extractImage1.GetPixelAsFloat( std::vector<uint32_t>( 2, 13 ) ));
 
-  std::vector<int> extractIndex(fullSize.size());
+  std::vector<int> extractIndex(fullSize64.size());
   std::fill( extractIndex.begin(), extractIndex.end(), 2);
 
   reader.SetExtractIndex( extractIndex );
