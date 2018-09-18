@@ -659,7 +659,7 @@ TEST(IO, ImageFileReader_Extract1 )
   EXPECT_EQ( fullSize, fullImage.GetSize() );
 
   std::vector<unsigned int> extractSize(fullSize);
-  for ( unsigned int i = 0; i < extractSize.size(); ++i )
+  for ( size_t i = 0; i < extractSize.size(); ++i )
     {
     extractSize[i] = std::max(1u, extractSize[i]/2);
     }
@@ -828,7 +828,7 @@ TEST(IO, ImageFileReader_Extract2 )
   EXPECT_EQ( 3u, result.GetSize()[0] );
   EXPECT_EQ( 5u, result.GetSize()[1] );
 
-//
+  //
   // Test extraction with collapsing z-dim
   //
   extractIndex[0] = 1;
