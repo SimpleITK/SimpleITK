@@ -148,7 +148,10 @@ void ImageViewer::initializeDefaults()
 #ifdef _WIN32
 
   std::string ProgramFiles;
-  std::vector<std::string> win_dirs = { "PROGRAMFILES", "PROGRAMFILES(x86)", "PROGRAMW6432" };
+  std::vector<std::string> win_dirs;
+  win_dirs.push_back("PROGRAMFILES");
+  win_dirs.push_back("PROGRAMFILES(x86)");
+  win_dirs.push_back("PROGRAMW6432");
 
   for (unsigned int i=0; i<win_dirs.size(); i++)
     {
