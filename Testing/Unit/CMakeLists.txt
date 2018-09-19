@@ -282,6 +282,7 @@ ExternalData_Expand_Arguments(  SimpleITKData
   unused_argument
   DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.mha}
   DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/points_5d.mha}
   DATA{${SimpleITK_DATA_ROOT}/Input/4D.nii.gz}
   DATA{${SimpleITK_DATA_ROOT}/Input/BlackDots.png}
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
