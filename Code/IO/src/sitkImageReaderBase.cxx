@@ -88,18 +88,7 @@ ImageReaderBase
     }
   else
     {
-    std::list<itk::LightObject::Pointer> allobjects =  itk::ObjectFactoryBase::CreateAllInstance("itkImageIOBase");
-    for(std::list<itk::LightObject::Pointer>::iterator i = allobjects.begin(); i != allobjects.end(); ++i)
-      {
-      if ((*i)->GetNameOfClass() == m_ImageIOName)
-        {
-        iobase = dynamic_cast<itk::ImageIOBase*>(i->GetPointer());
-        }
-      }
-     if ( iobase.IsNull() )
-       {
-       sitkExceptionMacro("Unable to create ImageIO: \"" << m_ImageIOName << "\"");
-       }
+    iobase = ioutils::CreateImageIOByName(m_ImageIOName);
     }
 
 
