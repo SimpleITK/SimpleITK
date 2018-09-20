@@ -90,9 +90,11 @@ class SmartPointer;
        * The  default value is an empty string (""). This indicates
        * that the ImageIO will be automatically determined by the ITK
        * ImageIO factory mechanism.
+       * @{
        */
       virtual SITK_RETURN_SELF_TYPE_HEADER SetImageIO(const std::string &imageio);
       virtual std::string GetImageIO( void ) const;
+      /* @} */
 
 
     protected:
