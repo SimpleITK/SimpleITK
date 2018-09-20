@@ -68,6 +68,10 @@ std::string ImageFileWriter::ToString() const
 
   out << "  FileName: \"";
   this->ToStringHelper(out, this->m_FileName);
+
+  out << "  ImageIOName: ";
+  this->ToStringHelper(out, this->m_ImageIOName) << std::endl;
+
   out << "  Registered ImageIO:" << std::endl;
   ioutils::PrintRegisteredImageIOs(out);
   out << "\"" << std::endl;
@@ -132,13 +136,37 @@ ImageFileWriter& ImageFileWriter::Execute ( const Image& image )
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
 }
 
+
+ImageFileWriter::Self&
+ImageFileWriter
+::SetImageIO(const std::string &imageio)
+{
+  this->m_ImageIOName = imageio;
+  return *this;
+}
+
+
+std::string
+ImageFileWriter
+::GetImageIO(void) const
+{
+  return this->m_ImageIOName;
+}
+
+
 itk::SmartPointer<ImageIOBase>
 ImageFileWriter
 ::GetImageIOBase(const std::string &fileName)
 {
-  itk::ImageIOBase::Pointer iobase =
-    itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::WriteMode);
-
+  itk::ImageIOBase::Pointer iobase;
+  if (this->m_ImageIOName == "")
+    {
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::WriteMode);
+    }
+  else
+    {
+    iobase = ioutils::CreateImageIOByName(m_ImageIOName);
+    }
 
   if ( iobase.IsNull() )
     {
