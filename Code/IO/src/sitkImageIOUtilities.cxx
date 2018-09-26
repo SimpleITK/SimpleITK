@@ -82,7 +82,7 @@ std::vector<std::string> GetRegisteredImageIOs()
 }
 
 
-typename itk::SmartPointer<ImageIOBase> CreateImageIOByName(const std::string & ioname)
+itk::SmartPointer<ImageIOBase> CreateImageIOByName(const std::string & ioname)
 {
   itk::ImageIOBase::Pointer iobase;
   std::list<itk::LightObject::Pointer> allobjects =  itk::ObjectFactoryBase::CreateAllInstance("itkImageIOBase");
