@@ -233,6 +233,7 @@ namespace itk {
     {
       itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
       this->UpdateImageInformationFromImageIO(imageio);
+      sitkDebugMacro("ImageIO: " << imageio);
     }
 
 

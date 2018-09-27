@@ -24,6 +24,15 @@
 #include <ostream>
 
 namespace itk {
+
+
+// Forward decalaration for pointer
+class ImageIOBase;
+
+
+template<class T>
+class SmartPointer;
+
 namespace simple {
 namespace ioutils {
 
@@ -36,6 +45,9 @@ SITKIO_HIDDEN void PrintRegisteredImageIOs(std::ostream & out);
 * ImageIOs registered.
  */
 SITKIO_HIDDEN std::vector<std::string> GetRegisteredImageIOs();
+
+
+SITKIO_HIDDEN itk::SmartPointer<ImageIOBase> CreateImageIOByName(const std::string & ioname);
 
 }
 }

@@ -25,6 +25,10 @@
 #include "sitkMemberFunctionFactory.h"
 
 namespace itk {
+
+// Forward decalaration for pointer
+class ImageIOBase;
+
   namespace simple {
 
     /** \class ImageSeriesWriter
@@ -58,6 +62,22 @@ namespace itk {
       /** \brief Get a vector of the names of registered itk ImageIOs
        */
       virtual std::vector<std::string> GetRegisteredImageIOs() const;
+
+      /** \brief Set/Get name of ImageIO to use
+       *
+       * An option to override the automatically detected ImageIO used
+       * to write the image. The available ImageIOs are listed by the
+       * GetRegisteredImageIOs method. If the ImageIO can not be
+       * constructed an exception will be generated.
+       *
+       * The  default value is an empty string (""). This indicates
+       * that the ImageIO will be automatically determined by the ITK
+       * ImageIO factory mechanism.
+       * @{
+       */
+      virtual SITK_RETURN_SELF_TYPE_HEADER SetImageIO(const std::string &imageio);
+      virtual std::string GetImageIO( void ) const;
+      /* @} */
 
       /** return user readable name of the filter */
       virtual std::string GetName() const { return std::string("ImageSeriesWriter"); }
@@ -94,6 +114,8 @@ namespace itk {
 
     private:
 
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
+
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
 
@@ -103,6 +125,8 @@ namespace itk {
 
       bool                     m_UseCompression;
       std::vector<std::string> m_FileNames;
+
+      std::string m_ImageIOName;
     };
 
   SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool useCompression=false );

@@ -74,6 +74,10 @@ namespace itk {
       out << "    \"" << *iter << "\"" << std::endl;
       ++iter;
       }
+
+    out << "  ImageIOName: ";
+    this->ToStringHelper(out, this->m_ImageIOName) << std::endl;
+
     out << "  Registered ImageIO:" << std::endl;
     ioutils::PrintRegisteredImageIOs(out);
 
@@ -86,6 +90,45 @@ namespace itk {
   {
     return ioutils::GetRegisteredImageIOs();
   }
+
+  ImageSeriesWriter::Self&
+  ImageSeriesWriter
+  ::SetImageIO(const std::string &imageio)
+  {
+    this->m_ImageIOName = imageio;
+    return *this;
+  }
+
+
+  std::string
+  ImageSeriesWriter
+  ::GetImageIO(void) const
+  {
+    return this->m_ImageIOName;
+  }
+
+  itk::SmartPointer<ImageIOBase>
+  ImageSeriesWriter
+  ::GetImageIOBase(const std::string &fileName)
+  {
+    itk::ImageIOBase::Pointer iobase;
+    if (this->m_ImageIOName == "")
+      {
+      iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::WriteMode);
+      }
+    else
+      {
+      iobase = ioutils::CreateImageIOByName(m_ImageIOName);
+      }
+
+    if ( iobase.IsNull() )
+      {
+      sitkExceptionMacro( "Unable to determine ImageIO writer for \"" << fileName << "\"" );
+      }
+
+    return iobase;
+  }
+
 
   ImageSeriesWriter::Self&
   ImageSeriesWriter::SetUseCompression( bool UseCompression )
@@ -165,6 +208,12 @@ namespace itk {
     writer->SetUseCompression( this->m_UseCompression );
     writer->SetFileNames( this->m_FileNames );
     writer->SetInput( image );
+
+    itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileNames[0] );
+
+    sitkDebugMacro( "ImageIO: " << imageio->GetNameOfClass() );
+
+    writer->SetImageIO( imageio );
 
     this->PreUpdate( writer.GetPointer() );
 

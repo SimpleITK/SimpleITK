@@ -82,6 +82,22 @@ class SmartPointer;
       SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
+      /** \brief Set/Get name of ImageIO to use
+       *
+       * An option to override the automatically detected ImageIO used
+       * to write the image. The available ImageIOs are listed by the
+       * GetRegisteredImageIOs method. If the ImageIO can not be
+       * constructed an exception will be generated.
+       *
+       * The  default value is an empty string (""). This indicates
+       * that the ImageIO will be automatically determined by the ITK
+       * ImageIO factory mechanism.
+       * @{
+       */
+      virtual SITK_RETURN_SELF_TYPE_HEADER SetImageIO(const std::string &imageio);
+      virtual std::string GetImageIO( void ) const;
+      /* @} */
+
 
       /** \brief Use the original study/series/frame of reference.
        *
@@ -113,6 +129,7 @@ class SmartPointer;
       bool        m_UseCompression;
       std::string m_FileName;
       bool        m_KeepOriginalImageUID;
+      std::string m_ImageIOName;
 
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
