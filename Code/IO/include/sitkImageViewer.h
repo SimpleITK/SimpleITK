@@ -53,7 +53,7 @@ class SITKIO_EXPORT ImageViewer
 public:
   ImageViewer();
 
-  /** return user readable name of the class */
+  /** Return the user readable name of the class */
   virtual std::string GetName() const { return std::string("ImageViewer"); }
 
 
@@ -72,30 +72,38 @@ public:
   /**@}*/
 
   /** \brief Set/Get the default file extension
+   *
+   * The file extension determines the image file type used when
+   * writing out the temporary image file.
    * @{
    */
   static void SetGlobalDefaultFileExtension( const std::string & ext );
   static const std::string & GetGlobalDefaultFileExtension();
   /**@}*/
 
-  /** \brief Set/Get the default application
+  /** \brief Set/Get the default application used in the command string.
    * @{
    */
   static void SetGlobalDefaultApplication( const std::string & app );
   static const std::string & GetGlobalDefaultApplication();
   /**@}*/
 
-  /** \brief Set/Get the full path to the viewing application.
+  /** \brief Set the full path to the viewing application used in the command string.
    *
-   * The SetApplication method expects a full path name.  Using
-   * this method overrides the default application search.
-   * @{
+   * The SetApplication method expects a full path name.
+   *
+   * Using this method overrides the default application search.
+   *
+   * By default, when this method is called, the command string is
+   * set to "%a %f" which simply means 'the application path'
+   * followed by 'the temporary image file'.
    */
-  void SetApplication( const std::string & app );
-  const std::string & GetApplication() const;
-  /**@}*/
+  void SetApplication( const std::string & app, const std::string & command = "%a %f" );
 
-  /** \brief Set/Get command string used to launch the viewing application
+  /** \brief Get the full path to the viewing application used in the command string.  */
+  const std::string & GetApplication() const;
+
+  /** \brief Set the command string used to launch the viewing application
    *
    * This command string may include the following %tokens:
    *
@@ -133,17 +141,17 @@ public:
    *
    *  Note: Using the ImageViewer::SetCommand method overrides the default command and/or the
    *  SITK_SHOW_COMMAND environment variable.
-   * @{
    */
   void SetCommand( const std::string & command );
+
+  /* \brief Get the command string used to launch the viewing application */
   const std::string & GetCommand() const;
-  /**@}*/
 
   /** \brief Set/Get file extension of the temporary image file (default='.nii')
    *
    * If the viewing application is Fiji, the default image format is [MetaIO](https://itk.org/Wiki/ITK/MetaIO), '.mha'.
    *
-   * If the viewing application is ImaegJ, the default image format is [NifTi](https://nifti.nimh.nih.gov/nifti-1/), '.nii'.  This is because by default ImageJ does not come with the MetaIO plugin.
+   * If the viewing application is ImageJ, the default image format is [NifTi](https://nifti.nimh.nih.gov/nifti-1/), '.nii'.  This is because by default ImageJ does not come with the MetaIO plugin.
    * @{
    */
   void SetFileExtension( const std::string & ext );
@@ -180,7 +188,7 @@ public:
   const std::string & GetTitle() const;
   /**@}*/
 
-  /** \brief Launch the viewing application with to display the given image.
+  /** \brief Launch the viewing application to display the given image.
    */
   void Execute ( const Image &image );
 

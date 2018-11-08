@@ -404,9 +404,10 @@ const std::string & ImageViewer::GetTitle() const
   return m_Title;
   }
 
-void ImageViewer::SetApplication( const std::string & app )
+void ImageViewer::SetApplication( const std::string & app, const std::string & command )
   {
   m_Application = app;
+  this->SetCommand( command );
   }
 
 const std::string & ImageViewer::GetApplication() const
