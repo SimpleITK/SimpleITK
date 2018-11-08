@@ -1098,6 +1098,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
   // set fixed seed and expect the same results
   R.SetMetricSamplingStrategy(R.REGULAR);
   R.SetMetricSamplingPercentage(.02,1u);
+  EXPECT_VECTOR_NEAR( R.GetMetricSamplingPercentagePerLevel(), std::vector<float>(1, 0.02), 1e-9);
 
   outTx1 = R.Execute(fixedImage, movingImage);
   EXPECT_GT( R.GetMetricNumberOfValidPoints(), 1200u );
@@ -1111,6 +1112,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
   // set wall clock seed and expect the same results with full sampling
   R.SetMetricSamplingStrategy(R.NONE);
   R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
+  EXPECT_VECTOR_NEAR( R.GetMetricSamplingPercentagePerLevel(), std::vector<float>(1, 0.02), 1e-9);
 
   outTx1 = R.Execute(fixedImage, movingImage);
   EXPECT_GT( R.GetMetricNumberOfValidPoints(), 9*fixedImage.GetNumberOfPixels()/10 );
@@ -1124,17 +1126,17 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
 
 
   // Use wall clock random seed.
- R.SetMetricSamplingStrategy(R.RANDOM);
- R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
+  R.SetMetricSamplingStrategy(R.RANDOM);
+  R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
 
- R.Execute(fixedImage, movingImage);
- double firstValue = R.GetMetricValue();
- double totalDiff = 0.0;
+  R.Execute(fixedImage, movingImage);
+  double firstValue = R.GetMetricValue();
+  double totalDiff = 0.0;
 
- for( unsigned int i=1; i<5; ++i)
-   {
-   R.Execute(fixedImage, movingImage);
-   totalDiff += std::abs(firstValue -R.GetMetricValue());
-   }
- EXPECT_TRUE(totalDiff > 1e-10) << "Expect difference between metric values with random sampling\n";
+  for( unsigned int i=1; i<5; ++i)
+    {
+    R.Execute(fixedImage, movingImage);
+    totalDiff += std::abs(firstValue -R.GetMetricValue());
+    }
+  EXPECT_TRUE(totalDiff > 1e-10) << "Expect difference between metric values with random sampling\n";
 }
