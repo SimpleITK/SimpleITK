@@ -472,6 +472,9 @@ namespace simple
     SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage, unsigned int seed = sitkWallClock);
     /** @} */
 
+    /** \brief Get the percentage of pixels used for metric evaluation.  */
+    const std::vector<double> &GetMetricSamplingPercentagePerLevel() const;
+
     enum MetricSamplingStrategyType {
       NONE,
       REGULAR,

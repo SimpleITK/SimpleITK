@@ -527,6 +527,13 @@ ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel(const std::vector<d
   return *this;
 }
 
+
+const std::vector<double> &
+ImageRegistrationMethod::GetMetricSamplingPercentagePerLevel( ) const
+{
+  return m_MetricSamplingPercentage;
+}
+
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetMetricSamplingStrategy( MetricSamplingStrategyType strategy)
 {
