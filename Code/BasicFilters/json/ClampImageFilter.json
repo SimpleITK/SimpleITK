@@ -6,14 +6,16 @@
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "BasicPixelIDTypeList",
-  "custom_type2" : "const PixelIDValueEnum type2 = m_OutputPixelType;",
+  "custom_type2" : "PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;",
   "output_image_type" : "InputImageType2",
   "filter_type" : "itk::ClampImageFilter<InputImageType,OutputImageType>",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "vector_pixel_types_by_component2" : "VectorPixelIDTypeList",
   "members" : [
     {
       "name" : "OutputPixelType",
       "type" : "PixelIDValueEnum",
-      "default" : "itk::simple::sitkFloat32",
+      "default" : "itk::simple::sitkUnknown",
       "custom_itk_cast" : ""
     },
     {
@@ -108,6 +110,27 @@
       ],
       "inputs" : [
         "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "rgb",
+      "description" : "Visible Human RGB vector",
+      "md5hash" : "25219307a68bebbe202040ea61c7687d",
+      "settings" : [
+        {
+          "parameter" : "OutputPixelType",
+          "value" : "itk::simple::sitkVectorUInt8",
+          "lua_value" : "SimpleITK.sitkVectorUInt8",
+          "python_value" : "SimpleITK.sitkVectorUInt8",
+          "ruby_value" : "Simpleitk::SitkVectorUInt8",
+          "java_value" : "PixelIDValueEnum.sitkVectorUInt8",
+          "tcl_value" : "$$sitkVectorUInt8",
+          "csharp_value" : "PixelIDValueEnum.sitkVectorUInt8",
+          "R_value" : "'sitkVectorUInt8'"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
       ]
     }
   ],
