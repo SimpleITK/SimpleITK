@@ -452,10 +452,18 @@ namespace simple
 
     /** \brief Set percentage of pixels sampled for metric evaluation.
      *
+     * The percentage is of the number of pixels in the virtual domain
+     * per level after the shrink factor has been applied.
+     *
      * The seed parameter is used to seed the pseudo-random number
      * generator used in generating the sampling set of points. If the
      * seed parameter is 0, then the wall clock is used, otherwise the
      * fixed seed is used for reproducible behavior.
+     *
+     * When providing multiple values the number of entries must match
+     * the number of shrink factors and smoothing sigmas. If a single
+     * value is given, then the same percentage is used for all
+     * levels.
      *
      * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingPercentage
      * @{
@@ -463,6 +471,9 @@ namespace simple
     SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentage(double percentage, unsigned int seed = sitkWallClock);
     SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage, unsigned int seed = sitkWallClock);
     /** @} */
+
+    /** \brief Get the percentage of pixels used for metric evaluation.  */
+    const std::vector<double> &GetMetricSamplingPercentagePerLevel() const;
 
     enum MetricSamplingStrategyType {
       NONE,
@@ -509,12 +520,16 @@ namespace simple
     /** \brief Set the shrink factors for each level where each level
      * has the same shrink factor for each dimension.
      *
+     * This virtual domain is the image domain with is shrink.
+     *
      * \sa  itk::ImageRegistrationMethodv4::SetShrinkFactorsPerLevel
      */
     SITK_RETURN_SELF_TYPE_HEADER SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
 
-    /** \brief Set the sigmas of Gaussian used for smoothing at each
-     * level.
+    /** \brief Set the sigmas of Gaussian used for smoothing.
+     *
+     * The smoothing is applied to both the fixed and the moving
+     * images at each level.
      *
      * \sa  itk::ImageRegistrationMethodv4::SetSmoothingSigmasPerLevel
      */
