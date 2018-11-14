@@ -47,6 +47,57 @@ unsigned int sitkGetOrder(void)
   return TBSplineTransform::SplineOrder;
 }
 
+
+template<typename TBSplineTransform>
+void SetCoefficientImages(TBSplineTransform* bspline, std::vector<Image> coefficientImages)
+{
+  unsigned char numberOfDimensions = TBSplineTransform::SpaceDimension;
+
+  if (coefficientImages.size() != numberOfDimensions)
+    {
+    sitkExceptionMacro( << "Expected " << (int)(numberOfDimensions)
+                        << " coefficient images to match the transform's dimensions!");
+    }
+
+  typename TBSplineTransform::CoefficientImageArray  itkImages;
+
+  for (unsigned int i = 0; i < numberOfDimensions; ++i)
+    {
+    Image &sitkImage = coefficientImages[i];
+
+    if (sitkImage.GetPixelID() != sitkFloat64)
+      {
+      sitkExceptionMacro( << "Expected all coefficient images to have pixel type: "
+                          << GetPixelIDValueAsString(sitkFloat64) );
+      }
+
+    if (sitkImage.GetDimension() != numberOfDimensions)
+      {
+      sitkExceptionMacro( "Expected all coefficient images to be of dimension " << numberOfDimensions );
+      }
+
+    if (sitkImage.GetSize() != coefficientImages[0].GetSize())
+      {
+      sitkExceptionMacro( "Expected all coefficient images to be the same size " << coefficientImages[0].GetSize() );
+      }
+
+    typedef typename TBSplineTransform::ImageType itkImageType;
+
+
+    itkImageType * itkImage = dynamic_cast <itkImageType*>(sitkImage.GetITKBase());
+
+    if ( itkImage == SITK_NULLPTR )
+      {
+      sitkExceptionMacro( "Unexpected casting error!");
+      }
+    // The images are deep copied inside the BSpline transform, so no
+    // additional copying is needed.
+    itkImages[i] = itkImage;
+    }
+
+  bspline->SetCoefficientImages(itkImages);
+}
+
 }
 
 
@@ -60,6 +111,15 @@ BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned int order)
 {
   Self::InternalInitialization(Self::GetITKBase());
 }
+
+
+BSplineTransform::BSplineTransform(std::vector<Image> &coefficientImages, unsigned int order)
+  : Transform( CreateBSplinePimpleTransform(coefficientImages.size(), order) )
+{
+  Self::InternalInitialization(Self::GetITKBase());
+  this->m_pfSetCoefficientImages(coefficientImages);
+}
+
 
 BSplineTransform::BSplineTransform( const BSplineTransform &arg )
   : Transform(arg)
@@ -183,6 +243,7 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfGetTransformDomainPhysicalDimensions = SITK_NULLPTR;
   this->m_pfSetTransformDomainPhysicalDimensions = SITK_NULLPTR;
   this->m_pfGetCoefficientImages = SITK_NULLPTR;
+  this->m_pfSetCoefficientImages = SITK_NULLPTR;
   this->m_pfGetOrder = SITK_NULLPTR;
 
   callInternalInitialization(visitor);
@@ -215,6 +276,7 @@ void BSplineTransform::InternalInitialization(TransformType *t)
 
   std::vector<Image> (*pfImageArrayConvert)(const typename TransformType::CoefficientImageArray &) = &sitkImageArrayConvert<typename TransformType::CoefficientImageArray>;
   this->m_pfGetCoefficientImages = nsstd::bind(pfImageArrayConvert, nsstd::bind(&TransformType::GetCoefficientImages,t) );
+  this->m_pfSetCoefficientImages = nsstd::bind(SetCoefficientImages<TransformType>, t, nsstd::placeholders::_1);
 
   this->m_pfGetOrder =  &sitkGetOrder<TransformType>;
 }
