@@ -1,5 +1,5 @@
-Simple Gaussian
-===============
+Reading-Gaussian Blurring-Writing
+=================================
 
 
 Overview

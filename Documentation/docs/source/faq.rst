@@ -104,13 +104,14 @@ sample.mhd:
         ElementType = MET_USHORT
         ElementDataFile = image.raw    (this tag must be last in a MetaImageHeader)
 
+
 Why isn't ImageJ found by the Show function (RuntimeError: Exception thrown...)?
 ---------------------------------------------------------------------------------
 
 The SimpleITK ``Show`` function expects the ImageJ program to be installed in
 specific locations. The recommended installation locations are:
 
-- On Windows: in your user directory (e.g. C:\Users\[your name]\Fiji.app).
+- On Windows: in your user directory (e.g. C:\\Users\\your_user_name\\Fiji.app).
 - On Linux: in ~/bin .
 - On Mac: in /Applications .
 
