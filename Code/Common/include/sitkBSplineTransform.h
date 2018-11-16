@@ -43,6 +43,17 @@ public:
 
   explicit BSplineTransform(unsigned int dimensions, unsigned int order=3);
 
+  /** Construct a BSpline from a set of coeefficientImages
+   *
+   * The coefficient images must be of pixel type sitkFloat64, the
+   * number of images must equal the dimension of the transform ( 2 or
+   * 3 ), all must be the same dimensions. The image's spacing,
+   * origin, size and direction cosine matrix are used to define the
+   * transform domain. The transform domain is reduced by the spline
+   * order.
+   */
+  explicit BSplineTransform( std::vector<Image> &coefficientImages, unsigned int order=3 );
+
   BSplineTransform( const BSplineTransform & );
 
   explicit BSplineTransform( const Transform &);
@@ -121,6 +132,8 @@ private:
 
   nsstd::function<std::vector<Image> ()> m_pfGetCoefficientImages;
   nsstd::function< unsigned int()> m_pfGetOrder;
+
+  nsstd::function<void (std::vector<Image> &)> m_pfSetCoefficientImages;
 
 };
 

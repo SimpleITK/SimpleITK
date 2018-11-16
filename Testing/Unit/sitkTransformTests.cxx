@@ -831,6 +831,60 @@ TEST(TransformTest,BSplineTransform_order)
 }
 
 
+TEST(TransformTest,BSplineTransform_coefficientImages)
+{
+  sitk::Image coeffImage1 =  sitk::Image( 10, 10, sitk::sitkFloat64 );
+  coeffImage1.SetSpacing(std::vector<double>(2, 3.0));
+  sitk::Image coeffImage2 =  sitk::Image( 10, 10, sitk::sitkFloat64 );
+  coeffImage2.SetSpacing(std::vector<double>(2, 3.0));
+
+  std::vector<sitk::Image> coefficientImages;
+  coefficientImages.push_back(coeffImage1);
+  coefficientImages.push_back(coeffImage2);
+
+  sitk::BSplineTransform tx(coefficientImages);
+
+  std::cout << tx.ToString() << std::endl;
+  EXPECT_EQ( tx.GetParameters().size(), 200u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx.GetTransformDomainDirection(), v4(1.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx.GetTransformDomainMeshSize(), std::vector<unsigned int>(2,7u) );
+  EXPECT_EQ( tx.GetTransformDomainOrigin(), v2(3.0,3.0) );
+  EXPECT_EQ( tx.GetTransformDomainPhysicalDimensions(), v2(21.0,21.0) );
+
+  std::vector<double> originalParams = tx.GetParameters();
+
+  std::vector<uint32_t> idx(2);
+  for (idx[1] = 0; idx[1] <coeffImage1.GetSize()[1]; ++idx[1])
+    {
+    for (idx[0] = 0; idx[0] < coeffImage1.GetSize()[0]; ++idx[0])
+      {
+      coeffImage1.SetPixelAsDouble(idx, 123.456);
+      }
+    }
+
+  // Check the images are not shallow copies, sharing the image buffer
+  EXPECT_EQ( tx.GetParameters(), originalParams );
+
+  // coefficient images expected to have same size
+  coefficientImages[1] = sitk::Image(10, 11, sitk::sitkFloat64);
+  EXPECT_THROW( new sitk::BSplineTransform(coefficientImages), sitk::GenericException );
+
+  // coefficient image pixel type expected as sitk::sitkFloat64
+  coefficientImages[1] = sitk::Image(10, 10, sitk::sitkFloat32);
+  EXPECT_THROW( new sitk::BSplineTransform(coefficientImages), sitk::GenericException );
+
+  coefficientImages[1] = sitk::Image(10, 10, sitk::sitkVectorFloat64);
+  EXPECT_THROW( new sitk::BSplineTransform(coefficientImages), sitk::GenericException );
+
+  // number of coefficient images expected to match transformation dimension
+  coefficientImages.pop_back();
+  EXPECT_THROW( new sitk::BSplineTransform(coefficientImages), sitk::GenericException );
+
+  coefficientImages.push_back(coeffImage2);
+  coefficientImages.push_back(coeffImage2);
+  EXPECT_THROW( new sitk::BSplineTransform(coefficientImages), sitk::GenericException );
+}
 
 TEST(TransformTest,DisplacementFieldTransform)
 {
