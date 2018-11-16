@@ -1098,7 +1098,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
   // set fixed seed and expect the same results
   R.SetMetricSamplingStrategy(R.REGULAR);
   R.SetMetricSamplingPercentage(.02,1u);
-  EXPECT_VECTOR_NEAR( R.GetMetricSamplingPercentagePerLevel(), std::vector<float>(1, 0.02), 1e-9);
+  EXPECT_VECTOR_NEAR( R.GetMetricSamplingPercentagePerLevel(), std::vector<float>(1, 0.02f), 1e-9);
 
   outTx1 = R.Execute(fixedImage, movingImage);
   EXPECT_GT( R.GetMetricNumberOfValidPoints(), 1200u );
@@ -1112,7 +1112,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
   // set wall clock seed and expect the same results with full sampling
   R.SetMetricSamplingStrategy(R.NONE);
   R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
-  EXPECT_VECTOR_NEAR( R.GetMetricSamplingPercentagePerLevel(), std::vector<float>(1, 0.02), 1e-9);
+  EXPECT_VECTOR_NEAR( R.GetMetricSamplingPercentagePerLevel(), std::vector<float>(1, 0.02f), 1e-9);
 
   outTx1 = R.Execute(fixedImage, movingImage);
   EXPECT_GT( R.GetMetricNumberOfValidPoints(), 9*fixedImage.GetNumberOfPixels()/10 );
