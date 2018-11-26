@@ -29,21 +29,6 @@ if len(sys.argv)<2:
     print('Usage: ' + __file__ + ' image_file_name', file=sys.stderr)
     sys.exit(1)
 
-# Find out which image IOs are supported
-file_reader = sitk.ImageFileReader()
-image_ios_tuple = file_reader.GetRegisteredImageIOs()
-print("The supported image IOs are: " + str(image_ios_tuple))
-print('-'*20)
-
-# Force the use of a specific IO.
-file_reader.SetImageIO('JPEGImageIO')
-file_reader.SetFileName(sys.argv[1])
-try:
-    image = file_reader.Execute()
-except Exception as err:
-    print('Reading failed: ', err)
-    print('-'*20)
-
 # Read image information without reading the bulk data.
 file_reader = sitk.ImageFileReader()
 file_reader.SetFileName(sys.argv[1])

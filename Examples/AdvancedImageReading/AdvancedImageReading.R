@@ -29,25 +29,6 @@ if (length(args) < 1) {
    quit(save="no", status=1)
 }
 
-# Find out which image IOs are supported
-file_reader <- ImageFileReader()
-image_ios <- file_reader$GetRegisteredImageIOs()
-cat('The supported image IOs are: ', image_ios, '\n')
-cat(rep('-',20),'\n', sep='')
-
-# Force the use of a specific IO.
-file_reader$SetImageIO('JPEGImageIO')
-file_reader$SetFileName(args[1])
-image <- tryCatch(file_reader$Execute(),
-                  warning = function(err) {
-                      message(err)
-                      cat('\n',rep('-',20),'\n', sep='')
-                  }
-                  )
-
-#try(image <- file_reader$Execute())
-#cat(rep('-',20),'\n', sep='')
-
 # Read image information without reading the bulk data.
 file_reader <- ImageFileReader()
 file_reader$SetFileName(args[1])
