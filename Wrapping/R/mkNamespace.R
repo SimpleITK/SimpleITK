@@ -11,7 +11,6 @@ parseSWIGNamespaceFile <- function(nspace) {
 
   ## parse the text file using the R parser, as the swig generated namespace is
   ## basically like function calls
-
   cde <- parse(nspace)
   ## Turn this into lists with useful structure
   cde <- lapply(cde, as.list)
@@ -23,9 +22,9 @@ parseSWIGNamespaceFile <- function(nspace) {
   names(fargs) <- fnames
 
   ## We're interested in the export list, which includes all the image filters
-  ## get all names starting with new_ and ending in ImageFilter
-  allclasses <- grep("^new_.+", fargs$export, value=TRUE)
-  classnames <- gsub("^new_(.+)$", "\\1", allclasses)
+  ## get all names starting with delete_ and ending in ImageFilter
+  allclasses <- grep("^delete_.+", fargs$export, value=TRUE)
+  classnames <- gsub("^delete_(.+)$", "\\1", allclasses)
   imagefilterfunctions <- gsub("^(.+)ImageFilter$", "\\1", classnames)
   classnamesreduced <- grep("^(.+)ImageFilter$", classnames, value=TRUE, invert=TRUE)
   otherfilterfunctions <- gsub("^(.+)Filter$", "\\1", classnamesreduced)
@@ -56,7 +55,7 @@ handExports <- function() {
          'export("as.image")',
          'export("ReadImage", "ReadTransform", "WriteImage", "WriteTransform",
   "GaborSource", "GridSource", "GaussianSource", "PhysicalPointSource",
-  "GetPixelIDValueAsString", "GetPixelIDValueFromString")',
+  "GetPixelIDValueAsString", "GetPixelIDValueFromString", "Show")',
          'export("ImageSeriesReader_GetGDCMSeriesFileNames","ImageSeriesReader_GetGDCMSeriesIDs")',
          'exportMethods("$", "print", "show", "as.array")')
 
@@ -67,7 +66,11 @@ manualexclusions <- c("DoubleDoubleMap", "RCommand", "VectorBool", "VectorDouble
                       "VectorInt16", "VectorInt32", "VectorInt64",
                       "VectorInt8", "VectorOfImage", "VectorString",
                       "VectorUInt16", "VectorUInt32", "VectorUInt64",
-                      "VectorUInt8", "VectorUIntList")
+                      "VectorUInt8", "VectorUIntList", "ImageFilter_0",
+                      "ImageFilter_1", "ImageFilter_2", "ImageFilter_3",
+                      "ImageFilter_4", "ImageFilter_5", "ImageFilter_6",
+                      "ImageFilter_7", "ImageFilter_8", "ImageFilter_9",
+                      "ProcessObject", "ImageReaderBase")
 
 
 newNAMESPACE <- function(oldnamespace, targetnamespace) {
