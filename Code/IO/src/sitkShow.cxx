@@ -439,7 +439,7 @@ namespace itk
   //
   // Find an ImageJ or Fiji executable for Show.
   //
-  static std::string FindImageJ(const bool debugOn)
+  static std::string FindFijiOrImageJ(const bool debugOn)
   {
   std::string ExecutableName;
 
@@ -602,8 +602,8 @@ namespace itk
   std::string Macro = "";
   std::vector<std::string> CommandLine;
 
-
   bool colorFlag = false;
+  bool fijiFlag = false;
 
 
   // If the image is 3 channel, 8 or 16 bit, assume it's a color image.
@@ -612,81 +612,80 @@ namespace itk
                   && ((image.GetPixelIDValue() == sitkVectorUInt8)
                       || (image.GetPixelIDValue() == sitkVectorUInt16)) );
 
-
-  ExecutableName = FindImageJ(debugOn);
-
-#if !defined(__APPLE__) && !defined(_WIN32)
-  // is the imagej we're running a script or a binary?
-  bool ImageJScriptFlag = itksys::SystemTools::FileHasSignature( ExecutableName.c_str(), "#!" );
-#endif
-
-  bool fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
-
-  TempFile = BuildFullFileName(title, fijiFlag);
-
-  // write out the image
-  WriteImage ( image, TempFile );
-
+  itksys::SystemTools::GetEnv ( "SITK_SHOW_3D_COMMAND", Command3D );
 
   // check for user-defined environment variables for the command string
   //
-  if (colorFlag)
+  if (Command3D.length() && (image.GetDimension() == 3))
     {
-    itksys::SystemTools::GetEnv ( "SITK_SHOW_COLOR_COMMAND", Command );
-    if (!Command.length())
-      {
-      itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
-      }
-    if (!Command.length())
-      {
-      if (fijiFlag)
-        {
-        Command = FijiShowCommand;
-        }
-      else
-        {
-        Command = ShowColorImageCommand;
-#if !defined(__APPLE__) && !defined(_WIN32)
-        if (!ImageJScriptFlag)
-          {
-          Command = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
-          }
-#endif
-        }
-      }
+    Command = Command3D;
     }
   else
     {
-      itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
+    if (colorFlag)
+      {
+      itksys::SystemTools::GetEnv ( "SITK_SHOW_COLOR_COMMAND", Command );
       if (!Command.length())
         {
+        itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
+        }
+      if (!Command.length())
+        {
+        ExecutableName = FindFijiOrImageJ(debugOn);
+
+        fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
         if (fijiFlag)
           {
           Command = FijiShowCommand;
           }
         else
           {
-          Command = ShowImageCommand;
+          Command = ShowColorImageCommand;
 #if !defined(__APPLE__) && !defined(_WIN32)
-          if (!ImageJScriptFlag)
+          if (!itksys::SystemTools::FileHasSignature( ExecutableName.c_str(), "#!" ))
             {
-            Command = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+            // is the imagej we're running a script or a binary?
+            // if its a binary, use the '-eval' flag, not '-e'.
+            // don't blame me.  imagej is ugly.  -dave
+            Command = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
             }
 #endif
           }
         }
-    }
-  itksys::SystemTools::GetEnv ( "SITK_SHOW_3D_COMMAND", Command3D );
-  if (!Command3D.length())
-    {
-    Command3D = Command;
+      }
+    else
+      {
+        itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
+        if (!Command.length())
+          {
+          ExecutableName = FindFijiOrImageJ(debugOn);
+
+          fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
+          if (fijiFlag)
+            {
+            Command = FijiShowCommand;
+            }
+          else
+            {
+            Command = ShowImageCommand;
+#if !defined(__APPLE__) && !defined(_WIN32)
+            if (!itksys::SystemTools::FileHasSignature( ExecutableName.c_str(), "#!" ))
+              {
+              // is the imagej we're running a script or a binary?
+              // if its a binary, use the '-eval' flag, not '-e'.
+              // don't blame me.  imagej is ugly.  -dave
+              Command = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+              }
+#endif
+            }
+          }
+      }
     }
 
-  if (image.GetDimension() == 3)
-    {
-    Command = Command3D;
-    }
+  TempFile = BuildFullFileName(title, fijiFlag);
 
+  // write out the image
+  WriteImage ( image, TempFile );
 
   // Replace the string tokens and split the command string into separate words.
   CommandLine = ConvertCommand(Command, ExecutableName, TempFile, title);
