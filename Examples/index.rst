@@ -28,5 +28,6 @@ Examples
   ITKIntegration/Documentation
   N4BiasFieldCorrection/Documentation
   SimpleGaussian/Documentation
+  ImageViewing/Documentation
   AdvancedImageReading/Documentation
   ImageIOSelection/Documentation

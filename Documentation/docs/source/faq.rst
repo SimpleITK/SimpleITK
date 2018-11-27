@@ -104,6 +104,7 @@ sample.mhd:
         ElementType = MET_USHORT
         ElementDataFile = image.raw    (this tag must be last in a MetaImageHeader)
 
+.. _lbl_imageJ_not_found:
 
 Why isn't ImageJ found by the Show function (RuntimeError: Exception thrown...)?
 ---------------------------------------------------------------------------------
