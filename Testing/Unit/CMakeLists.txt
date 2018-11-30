@@ -36,6 +36,10 @@ if ( SimpleITK_4D_IMAGES )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/sitkImageViewerTest.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/sitkImageViewerTest.h ESCAPE_QUOTES)
+
+
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CTest)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
@@ -51,6 +55,10 @@ set( PythonVirtualenvHome  ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVi
 
 
 add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
+target_include_directories(SimpleITKUnitTestDriver0
+  PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+)
 target_link_libraries ( SimpleITKUnitTestDriver0 GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 target_compile_options( SimpleITKUnitTestDriver0
   PRIVATE
