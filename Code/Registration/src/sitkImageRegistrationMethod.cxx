@@ -152,6 +152,11 @@ ImageRegistrationMethod::SetInitialTransformAsBSpline( BSplineTransform &transfo
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetInitialTransform ( Transform &transform, bool inPlace )
 {
+
+  // clear before making unique, is case the same transform is being
+  // assigned again.
+  this->m_InitialTransform = Transform();
+
   if (inPlace)
     {
     // The registration framework will modify this transform. We
