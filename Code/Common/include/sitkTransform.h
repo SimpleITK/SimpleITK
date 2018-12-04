@@ -168,12 +168,18 @@ public:
   std::vector<double> GetParameters( void ) const;
   /**@}*/
 
+  /** Return the number of optimizable parameters */
+  unsigned int GetNumberOfParameters( void ) const;
+
   /** Set/Get Fixed Transform Parameter
    * @{
    */
   void SetFixedParameters ( const std::vector<double>& parameters );
   std::vector<double> GetFixedParameters( void ) const;
   /**@}*/
+
+  /** Get the number of fixed parameters */
+  unsigned int GetNumberOfFixedParameters( void ) const;
 
   // Make composition
   SITK_RETURN_SELF_TYPE_HEADER AddTransform( Transform t );
