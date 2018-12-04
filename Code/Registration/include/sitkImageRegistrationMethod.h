@@ -61,6 +61,7 @@ class EventObject;
 
 namespace simple
 {
+  class BSplineTransform;
 
   /** \brief An interface method to the modular ITKv4 registration framework.
    *
@@ -143,6 +144,25 @@ namespace simple
     bool GetInitialTransformInPlace() const
     { return this->m_InitialTransformInPlace;}
     /** @} */
+
+    /** \brief Set an initial BSpline transform to optimize.
+      *
+      * A specialization of SetInitialTransform for
+      * BSplineTransforms which can take an additional scaleFactors
+      * parameter. The scaleFactors specifies the a isotropic scaling
+      * factor per level for the BSpline transform mesh size with
+      * respect to the initial transform. For example to double the
+      * BSpline mesh resolution at each of 3 levels the vector
+      * [1,2,4] should be provided.
+      *
+      * If a per level scale factor is 0 or omitted than no transform
+      * adapter will be created for that level.
+      *
+      * \sa itk::BSplineTransformParametersAdaptor
+      **/
+    void SetInitialTransformAsBSpline( BSplineTransform &transform,
+                                       bool inPlace=true,
+                                       const std::vector<unsigned int> &scaleFactors=std::vector<unsigned int>() );
 
     /** \brief Set a fixed transform component towards moving domain.
      *
@@ -749,6 +769,7 @@ namespace simple
     double m_OptimizerLineSearchAccuracy;
 
 
+    std::vector<unsigned int> m_TransformBSplineScaleFactors;
 
     std::vector<double> m_OptimizerWeights;
 
