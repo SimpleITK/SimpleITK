@@ -506,7 +506,8 @@ namespace simple
      *
      * By default the image gradient is computed by
      * itk::GradientRecursiveGaussianImageFiter. If disabled then a
-     * central difference function with be computed as needed.
+     * central difference function will be computed for each sample as
+     * needed.
      *
      * \sa itk::ImageToImageMetricv4::SetUseMovingImageGradientFilter
      * @{
@@ -517,10 +518,10 @@ namespace simple
     /** @} */
 
 
-    /** \brief Set the shrink factors for each level where each level
-     * has the same shrink factor for each dimension.
+    /** \brief Set the isotropic shrink factors for each level.
      *
-     * This virtual domain is the image domain with is shrink.
+     * The virtual domain image is shrunk by this factor relative to
+     * the full size of the original virtual domain.
      *
      * \sa  itk::ImageRegistrationMethodv4::SetShrinkFactorsPerLevel
      */
@@ -529,7 +530,8 @@ namespace simple
     /** \brief Set the sigmas of Gaussian used for smoothing.
      *
      * The smoothing is applied to both the fixed and the moving
-     * images at each level.
+     * images at each level. The number of smoothing sigmas must match
+     * the number of shrink factors.
      *
      * \sa  itk::ImageRegistrationMethodv4::SetSmoothingSigmasPerLevel
      */
