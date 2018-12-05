@@ -23,6 +23,7 @@ Examples
   ImageRegistrationMethod4/Documentation
   ImageRegistrationMethodBSpline1/Documentation
   ImageRegistrationMethodBSpline2/Documentation
+  ImageRegistrationMethodBSpline3/Documentation
   ImageRegistrationMethodDisplacement1/Documentation
   ImageRegistrationMethodExhaustive/Documentation
   ITKIntegration/Documentation
