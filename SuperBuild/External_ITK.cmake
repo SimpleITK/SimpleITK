@@ -52,7 +52,7 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://itk.org/ITK.git" CACHE STRING "URL of 
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-set(ITK_GIT_TAG " 0d52c43179b3a72340788ee883b27a8c5e716f68" CACHE
+set(ITK_GIT_TAG "4cfd25bee7a590244bd28155e37640fe55ec4181" CACHE
   STRING "Tag in ITK git repo") # release-4.13
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
