@@ -25,20 +25,82 @@
 #include "itkDisplacementFieldTransform.h"
 #include "itkDisplacementFieldTransformParametersAdaptor.h"
 
+#include "itkBSplineTransform.h"
+#include "itkBSplineTransformParametersAdaptor.h"
+
 namespace itk
 {
 namespace simple
 {
 
+template<typename TTransformBase,
+         typename TFixedImageType,
+         typename TTransformType>
+typename TransformParametersAdaptorBase<TTransformBase>::Pointer
+CreateTransformParametersAdaptorBSpline(TTransformType *bsplineTransform,
+                                        const FixedArray<unsigned int, TTransformBase::InputSpaceDimension> &shrinkFactors,
+                                        const TFixedImageType* fixedImage,
+                                        unsigned int scaleFactor  )
+{
+
+  if ( scaleFactor < 1 )
+    {
+    return SITK_NULLPTR;
+    }
+
+  typedef TTransformType BSplineTransformType;
+  typedef TFixedImageType FixedImageType;
+  const unsigned int Dimension = FixedImageType::ImageDimension;
+
+
+
+  typedef  itk::ShrinkImageFilter< FixedImageType, FixedImageType> ShrinkFilterType;
+
+  typename ShrinkFilterType::Pointer shrinkFilter = ShrinkFilterType::New();
+  shrinkFilter->SetShrinkFactors( shrinkFactors );
+  shrinkFilter->SetInput( fixedImage );
+  shrinkFilter->UpdateOutputInformation();
+
+  TFixedImageType * shrinkOutput = shrinkFilter->GetOutput();
+
+  typename BSplineTransformType::MeshSizeType meshSize = bsplineTransform->GetTransformDomainMeshSize();
+
+  typename BSplineTransformType::MeshSizeType requiredMeshSize;
+  for( unsigned int d = 0; d < Dimension; d++ )
+    {
+    requiredMeshSize[d] = meshSize[d] * scaleFactor;
+
+    }
+
+  typename BSplineTransformType::PhysicalDimensionsType fixedPhysicalDimensions;
+  for( unsigned int i=0; i< Dimension; i++ )
+    {
+    fixedPhysicalDimensions[i] = fixedImage->GetSpacing()[i] *
+      static_cast<double>(
+      fixedImage->GetLargestPossibleRegion().GetSize()[i] - 1 );
+    }
+
+
+  typedef itk::BSplineTransformParametersAdaptor<BSplineTransformType> BSplineAdaptorType;
+  typename BSplineAdaptorType::Pointer bsplineAdaptor = BSplineAdaptorType::New();
+  bsplineAdaptor->SetTransform( bsplineTransform );
+  bsplineAdaptor->SetRequiredTransformDomainMeshSize( requiredMeshSize );
+  bsplineAdaptor->SetRequiredTransformDomainOrigin( shrinkOutput->GetOrigin() );
+  bsplineAdaptor->SetRequiredTransformDomainDirection( shrinkOutput->GetDirection() );
+  bsplineAdaptor->SetRequiredTransformDomainPhysicalDimensions( fixedPhysicalDimensions );
+
+  return bsplineAdaptor.GetPointer();
+}
+
 
 
 
 template<typename TTransformBase, typename TFixedImageType>
-  typename TransformParametersAdaptorBase<TTransformBase>::Pointer
-  CreateTransformParametersAdaptorDisplacementField(TTransformBase *transform,
-                                                    const FixedArray<unsigned int, TTransformBase::InputSpaceDimension> &shrinkFactors,
-                                                    const TFixedImageType* fixedImage,
-                                                    unsigned int level  )
+typename TransformParametersAdaptorBase<TTransformBase>::Pointer
+CreateTransformParametersAdaptorDisplacementField(TTransformBase *transform,
+                                                  const FixedArray<unsigned int, TTransformBase::InputSpaceDimension> &shrinkFactors,
+                                                  const TFixedImageType* fixedImage,
+                                                  unsigned int level  )
 {
   Unused(level);
   Unused(fixedImage);
@@ -97,18 +159,45 @@ ImageRegistrationMethod::CreateTransformParametersAdaptor(TRegistrationMethod* m
   const FixedImageType *fixedImage = method->GetFixedImage();
 
   typedef itk::DisplacementFieldTransform<double, FixedImageType::ImageDimension> DisplacementFieldTransformType;
-  const bool isDisplacementField = (dynamic_cast<DisplacementFieldTransformType *>(transform) != SITK_NULLPTR);
+  DisplacementFieldTransformType *displacementField = dynamic_cast<DisplacementFieldTransformType *>(transform);
+
+  typedef itk::BSplineTransform<double, FixedImageType::ImageDimension, 3> BSplineTransformO3Type;
+  BSplineTransformO3Type *bsplineO3 = dynamic_cast<BSplineTransformO3Type *>(transform);
+
+  typedef itk::BSplineTransform<double, FixedImageType::ImageDimension, 2> BSplineTransformO2Type;
+  BSplineTransformO2Type *bsplineO2 = dynamic_cast<BSplineTransformO2Type *>(transform);
 
   for( unsigned int level = 0; level < numberOfLevels; ++level )
     {
     const typename TRegistrationMethod::ShrinkFactorsPerDimensionContainerType &shrinkFactors = method->GetShrinkFactorsPerDimension(level);
-    TransformParametersAdaptorTypePointer adaptor = SITK_NULLPTR;
-    if (isDisplacementField)
+
+    unsigned int bsplineScaleFactor = 0;
+    if ( m_TransformBSplineScaleFactors.size() > level )
       {
-      adaptor = CreateTransformParametersAdaptorDisplacementField( transform,
-                                                                   shrinkFactors,
-                                                                   fixedImage,
-                                                                   level );
+      bsplineScaleFactor = m_TransformBSplineScaleFactors[level];
+      }
+
+    TransformParametersAdaptorTypePointer adaptor = SITK_NULLPTR;
+    if (displacementField != SITK_NULLPTR)
+      {
+      adaptor = CreateTransformParametersAdaptorDisplacementField<TransformType>( displacementField,
+                                                                                  shrinkFactors,
+                                                                                  fixedImage,
+                                                                                  level );
+      }
+    else if (bsplineO3 != SITK_NULLPTR)
+      {
+      adaptor = CreateTransformParametersAdaptorBSpline<TransformType>( bsplineO3,
+                                                                        shrinkFactors,
+                                                                        fixedImage,
+                                                                        bsplineScaleFactor );
+      }
+    else if (bsplineO2 != SITK_NULLPTR)
+      {
+      adaptor = CreateTransformParametersAdaptorBSpline<TransformType>( bsplineO2,
+                                                                        shrinkFactors,
+                                                                        fixedImage,
+                                                                        bsplineScaleFactor );
       }
 
 

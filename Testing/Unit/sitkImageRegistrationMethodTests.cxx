@@ -75,6 +75,37 @@ private:
 
 };
 
+class MultiIteration
+  : public itk::simple::Command
+{
+public:
+
+  MultiIteration( const itk::simple::Transform &tx,
+                  const itk::simple::ImageRegistrationMethod &m )
+    :m_tx(tx), m_Method(m)
+    {}
+
+  virtual void Execute( )
+    {
+      // use sitk's output operator for std::vector etc..
+      using itk::simple::operator<<;
+      if ( m_Method.GetOptimizerIteration() == 0 )
+        {
+        std::cout << "===Custom Event===" << std::endl;
+        std::cout << m_tx.ToString();
+
+        m_NumberOfParametersPerLevel.push_back(m_tx.GetNumberOfParameters());
+        }
+
+    }
+
+  std::vector<unsigned int> m_NumberOfParametersPerLevel;
+private:
+  const itk::simple::Transform &m_tx;
+  const itk::simple::ImageRegistrationMethod &m_Method;
+
+};
+
 }
 
 //
@@ -1139,4 +1170,206 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
     totalDiff += std::abs(firstValue -R.GetMetricValue());
     }
   EXPECT_TRUE(totalDiff > 1e-10) << "Expect difference between metric values with random sampling\n";
+}
+
+
+
+TEST_F(sitkRegistrationMethodTest, BSpline_adaptor)
+{
+  sitk::Image fixedImage = MakeDualGaussianBlobs( v2(64, 64), v2(54, 74), std::vector<unsigned int>(2,256) );
+  sitk::Image movingImage = MakeDualGaussianBlobs( v2(61, 65), v2(51.2, 75.5), std::vector<unsigned int>(2,256) );
+
+  fixedImage = sitk::AdditiveGaussianNoise(fixedImage,  0.5, 0, 1u);
+
+  sitk::BSplineTransform tx = sitk::BSplineTransformInitializer(fixedImage, std::vector<uint32_t>(2, 3u));
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  unsigned int numberOfIterations=2;
+  R.SetOptimizerAsGradientDescent(1.0,
+                                  numberOfIterations);
+  R.SetInitialTransform(tx, false);
+
+  std::vector<unsigned int> shrinkFactors(2);
+  shrinkFactors[0] = 2;
+  shrinkFactors[1] = 1;
+  R.SetShrinkFactorsPerLevel( shrinkFactors );
+  R.SetSmoothingSigmasPerLevel( v2(2.0, 1.0) );
+
+  // Check the regular SetInitialTransform does not change resolution
+
+
+  sitk::Transform outTx;
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
+
+  // Check defaul AsBSpline does not change resolution
+
+  R.SetInitialTransformAsBSpline(tx, false);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
+
+  // Check [1,1] does not change resolution
+
+  std::vector<unsigned int> bsplineScaleFactors(2);
+  bsplineScaleFactors[0] = 1;
+  bsplineScaleFactors[1] = 1;
+  R.SetInitialTransformAsBSpline(tx, false, bsplineScaleFactors);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 72u);
+  // EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
+
+  // Check [1,2] DOES
+
+  bsplineScaleFactors[0] = 1;
+  bsplineScaleFactors[1] = 2;
+  R.SetInitialTransformAsBSpline(tx, false, bsplineScaleFactors);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 162u);
+
+// Check [2,2] DOES
+
+  bsplineScaleFactors[0] = 2;
+  bsplineScaleFactors[1] = 2;
+  R.SetInitialTransformAsBSpline(tx, false, bsplineScaleFactors);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 162u);
+
+
+  // Check [2,7] DOES
+
+  bsplineScaleFactors[0] = 2;
+  bsplineScaleFactors[1] = 7;
+  R.SetInitialTransformAsBSpline(tx, false, bsplineScaleFactors);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 1152u);
+
+  // Check [2,1] does something reasonable
+
+  bsplineScaleFactors[0] = 2;
+  bsplineScaleFactors[1] = 1;
+  R.SetInitialTransformAsBSpline(tx, false, bsplineScaleFactors);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 72u);
+  //EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
+
+  // Check [2] preserves the doubling when 2 levels are used
+  bsplineScaleFactors.pop_back();
+
+
+  R.SetInitialTransformAsBSpline(tx, false, bsplineScaleFactors);
+
+  outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetParameters()[0], 0.0);
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 162u);
+
+}
+
+
+TEST_F(sitkRegistrationMethodTest, BSpline_adaptor_inplace)
+{
+  sitk::Image fixedImage = MakeDualGaussianBlobs( v2(64, 64), v2(54, 74), std::vector<unsigned int>(2,256) );
+  sitk::Image movingImage = MakeDualGaussianBlobs( v2(61, 65), v2(51.2, 75.5), std::vector<unsigned int>(2,256) );
+
+  sitk::BSplineTransform tx = sitk::BSplineTransformInitializer(fixedImage, std::vector<uint32_t>(2, 3u));
+  EXPECT_EQ( tx.GetNumberOfParameters(), 72u);
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  // Add initial transform to registration class, to test that it is
+  // cleared before the new on in made unique
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  unsigned int numberOfIterations=10;
+  R.SetOptimizerAsGradientDescent(1.0,
+                                  numberOfIterations);
+  // Check [1,2,4] inplace
+  std::vector<unsigned int> bsplineScaleFactors(3);
+  bsplineScaleFactors[0] = 1;
+  bsplineScaleFactors[1] = 2;
+  bsplineScaleFactors[2] = 4;
+  R.SetInitialTransformAsBSpline(tx, true, bsplineScaleFactors);
+
+  std::vector<unsigned int> shrinkFactors(3);
+  shrinkFactors[0] = 2;
+  shrinkFactors[1] = 2;
+  shrinkFactors[2] = 1;
+
+  R.SetShrinkFactorsPerLevel( shrinkFactors );
+  R.SetSmoothingSigmasPerLevel( v3(4.0, 2.0, 1.0) );
+
+  // Use a command to monitor the number of parameters
+  MultiIteration cmd1(tx, R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd1);
+
+  sitk::Transform outTx = R.Execute(fixedImage, movingImage);
+  std::cout << "Metric: " << R.GetMetricValue() << std::endl;
+  std::cout << "Number of Iterations: " << R.GetOptimizerIteration() << std::endl;
+
+  EXPECT_EQ( tx.GetNumberOfParameters(), 450u);
+  EXPECT_EQ( outTx.GetNumberOfParameters(), 450u);
+  EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
+  EXPECT_EQ( outTx.GetParameters(), tx.GetParameters() );
+  ASSERT_EQ( cmd1.m_NumberOfParametersPerLevel.size(), 3);
+  EXPECT_EQ( cmd1.m_NumberOfParametersPerLevel[0], 72u);
+  EXPECT_EQ( cmd1.m_NumberOfParametersPerLevel[1], 162u);
+  EXPECT_EQ( cmd1.m_NumberOfParametersPerLevel[2], 450u);
+
+
 }

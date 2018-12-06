@@ -162,71 +162,97 @@ TEST(TransformTest, SetGetParameters) {
 
   tx = sitk::Transform( 3, sitk::sitkTranslation );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 3u );
   EXPECT_TRUE( tx.GetFixedParameters().empty() );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 0u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkScale );
   EXPECT_EQ( tx.GetParameters().size(), 2u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 2u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 2u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkScaleLogarithmic );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 3u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkEuler );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 3u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 2u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkEuler );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), euler3DNumberOfFixedParameters );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), euler3DNumberOfFixedParameters );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkSimilarity );
   EXPECT_EQ( tx.GetParameters().size(), 4u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 4u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 2u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkSimilarity );
   EXPECT_EQ( tx.GetParameters().size(), 7u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 7u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkQuaternionRigid );
   EXPECT_EQ( tx.GetParameters().size(), 7u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 7u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkVersor );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 3u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkVersorRigid );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkAffine );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 2u );
   EXPECT_TRUE(tx.IsLinear());
 
   sitk::Image displacement = sitk::Image( 10, 10, sitk::sitkVectorFloat64 );
 
   tx =  sitk::Transform ( displacement );
   EXPECT_EQ( tx.GetParameters().size(), 200u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 200u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 10u );
   EXPECT_TRUE(!tx.IsLinear());
 
   displacement = sitk::Image( 10, 10, 10, sitk::sitkVectorFloat64 );
 
   tx =  sitk::Transform ( displacement );
   EXPECT_EQ( tx.GetParameters().size(), 3000u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 3000u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 18u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 18u );
 
   tx = sitk::Transform(3,sitk::sitkIdentity);
   tx.SetFixedParameters(std::vector<double>());
@@ -245,49 +271,49 @@ TEST(TransformTest, CopyOnWrite) {
 
   tx2.SetParameters( params );
 
-  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  ASSERT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetParameters()[1], 0.0 );
 
-  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  ASSERT_EQ( tx2.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
 
-  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  ASSERT_EQ( tx3.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx3.GetParameters()[1], 0.0 );
 
   params[1] = 0.3;
   tx3.SetParameters( params );
 
-  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  ASSERT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetParameters()[1], 0.0 );
 
-  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  ASSERT_EQ( tx2.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
 
-  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  ASSERT_EQ( tx3.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
 
   tx1 = tx2;
 
-  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  ASSERT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetParameters()[1], 0.2 );
 
-  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  ASSERT_EQ( tx2.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
 
-  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  ASSERT_EQ( tx3.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
 
 
   params[1] = 0.4;
   tx1.SetParameters( params );
 
-  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  ASSERT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetParameters()[1], 0.4 );
 
-  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  ASSERT_EQ( tx2.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
 
-  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  ASSERT_EQ( tx3.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
 
 }
@@ -317,21 +343,21 @@ TEST(TransformTest, FlattenTransform) {
 
   sitk::Transform tx1 = sitk::Transform( 2, sitk::sitkAffine );
 
-  EXPECT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 2u);
 
   EXPECT_NO_THROW( tx1.FlattenTransform() );
 
-  EXPECT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 2u);
 
   sitk::Transform tx2 = sitk::Transform( 2, sitk::sitkScale);
-  EXPECT_EQ( tx2.GetParameters().size(), 2u );
+  EXPECT_EQ( tx2.GetNumberOfParameters(), 2u );
   EXPECT_EQ( tx2.GetFixedParameters().size(), 2u);
 
   // create composite transform
   tx2.AddTransform(sitk::TranslationTransform(2));
-  EXPECT_EQ( tx2.GetParameters().size(), 2u );
+  EXPECT_EQ( tx2.GetNumberOfParameters(), 2u );
   EXPECT_EQ( tx2.GetFixedParameters().size(), 0u);
 
   // add composite to existing transform to create nested composites
@@ -340,7 +366,7 @@ TEST(TransformTest, FlattenTransform) {
   // There should be nested composite transforms here
   std::cout << tx1.ToString() << std::endl;
 
-  EXPECT_EQ( tx1.GetParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 2u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 0u);
 
   const ::testing::TestInfo *info = ::testing::UnitTest::GetInstance()->current_test_info();
@@ -353,7 +379,7 @@ TEST(TransformTest, FlattenTransform) {
   // Can not write nested composite transforms
   EXPECT_NO_THROW(tx1.FlattenTransform());
 
-  EXPECT_EQ( tx1.GetParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 2u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 0u);
 
   EXPECT_NO_THROW(sitk::WriteTransform(tx1, filename));
@@ -582,7 +608,9 @@ TEST(TransformTest,AffineTransform)
   EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(2) ) );
   std::cout << tx->ToString() << std::endl;
   EXPECT_EQ( tx->GetParameters().size(), 6u );
+  EXPECT_EQ( tx->GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx->GetNumberOfFixedParameters(), 2u );
   EXPECT_EQ( tx->GetMatrix(), v4(1.0,0.0, 0.0,1.0) );
 
   EXPECT_EQ( tx->SetTranslation( trans2d ).GetTranslation(), trans2d );
@@ -623,7 +651,9 @@ TEST(TransformTest,AffineTransform)
   // 3d
   EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(3) ) );
   EXPECT_EQ( tx->GetParameters().size(), 12u );
+  EXPECT_EQ( tx->GetNumberOfParameters(), 12u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetNumberOfFixedParameters(), 3u );
 
   EXPECT_EQ( tx->SetTranslation( trans3d ).GetTranslation(), trans3d );
   EXPECT_EQ( tx->SetCenter( center3d ).GetCenter(), center3d );
@@ -643,7 +673,9 @@ TEST(TransformTest,AffineTransform)
   tx1 = sitk::AffineTransform(2);
   EXPECT_EQ( tx1.GetDimension(), 2u );
   EXPECT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 6u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetNumberOfFixedParameters(), 2u );
   EXPECT_EQ( tx1.GetCenter(), std::vector<double>(2, 0.0) );
   EXPECT_EQ( tx1.GetTranslation(), std::vector<double>(2, 0.0) );
 
@@ -726,7 +758,9 @@ TEST(TransformTest,BSplineTransform)
   nsstd::auto_ptr<sitk::BSplineTransform> tx(new sitk::BSplineTransform(2));
   std::cout << tx->ToString() << std::endl;
   EXPECT_EQ( tx->GetParameters().size(), 32u );
+  EXPECT_EQ( tx->GetNumberOfParameters(), 32u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx->GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx->GetTransformDomainDirection(), v4(1.0,0.0,0.0,1.0) );
   EXPECT_EQ( tx->GetTransformDomainMeshSize(), std::vector<unsigned int>(2,1u) );
   EXPECT_EQ( tx->GetTransformDomainOrigin(), v2(0.0,0.0) );
@@ -734,7 +768,9 @@ TEST(TransformTest,BSplineTransform)
 
   tx.reset(new sitk::BSplineTransform(3));
   EXPECT_EQ( tx->GetParameters().size(), 192u );
+  EXPECT_EQ( tx->GetNumberOfParameters(), 192u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 18u );
+  EXPECT_EQ( tx->GetNumberOfFixedParameters(), 18u );
 
   tx.reset(new sitk::BSplineTransform(2));
   EXPECT_EQ( tx->SetTransformDomainDirection(v4(-1.0,0.0,0.0,-1.0)).GetTransformDomainDirection(), v4(-1.0,0.0,0.0,-1.0) );
@@ -743,7 +779,9 @@ TEST(TransformTest,BSplineTransform)
   // copy constructor
   sitk::BSplineTransform tx1( *(tx.get()) );
   EXPECT_EQ( tx1.GetParameters().size(), 32u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 32u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx1.GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx1.GetTransformDomainDirection(), v4(-1.0,0.0,0.0,-1.0) );
   EXPECT_EQ( tx1.GetTransformDomainMeshSize(), std::vector<unsigned int>(2,1u) );
   EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(1.1,1.2) );
@@ -766,7 +804,9 @@ TEST(TransformTest,BSplineTransform)
   sitk::Transform tx3( *tx );
   tx.reset();
   EXPECT_EQ( tx3.GetParameters().size(), 32u );
+  EXPECT_EQ( tx3.GetNumberOfParameters(), 32u );
   EXPECT_EQ( tx3.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx3.GetNumberOfFixedParameters(), 10u );
 
   tx.reset( new sitk::BSplineTransform(2));
 
@@ -846,7 +886,9 @@ TEST(TransformTest,BSplineTransform_coefficientImages)
 
   std::cout << tx.ToString() << std::endl;
   EXPECT_EQ( tx.GetParameters().size(), 200u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 200u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx.GetTransformDomainDirection(), v4(1.0,0.0,0.0,1.0) );
   EXPECT_EQ( tx.GetTransformDomainMeshSize(), std::vector<unsigned int>(2,7u) );
   EXPECT_EQ( tx.GetTransformDomainOrigin(), v2(3.0,3.0) );
@@ -899,13 +941,17 @@ TEST(TransformTest,DisplacementFieldTransform)
   nsstd::auto_ptr<sitk::DisplacementFieldTransform> tx(new sitk::DisplacementFieldTransform(2));
   std::cout << tx->ToString() << std::endl;
   EXPECT_EQ( tx->GetParameters().size(), 0u );
+  EXPECT_EQ( tx->GetNumberOfParameters(), 0u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx->GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx->GetDimension(), 2u );
 
   // copy constructor
   sitk::DisplacementFieldTransform tx1( *tx );
   EXPECT_EQ( tx1.GetParameters().size(), 0u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 0u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx1.GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx1.GetDimension(), 2u );
 
   sitk::DisplacementFieldTransform tx2(3);
@@ -915,7 +961,9 @@ TEST(TransformTest,DisplacementFieldTransform)
   // assignment operator
   tx1 = tx2;
   EXPECT_EQ( tx1.GetParameters().size(), 0u );
+  EXPECT_EQ( tx1.GetNumberOfParameters(), 0u );
   EXPECT_EQ( tx1.GetFixedParameters().size(), 18u );
+  EXPECT_EQ( tx1.GetNumberOfFixedParameters(), 18u );
   EXPECT_EQ( tx1.GetDimension(), 3u );
 
 
@@ -924,7 +972,9 @@ TEST(TransformTest,DisplacementFieldTransform)
   sitk::DisplacementFieldTransform tx3(disImage);
   EXPECT_EQ( tx3.GetDimension(), 2u );
   EXPECT_EQ( tx3.GetParameters().size(), 200u );
+  EXPECT_EQ( tx3.GetNumberOfParameters(), 200u );
   EXPECT_EQ( tx3.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx3.GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx3.GetFixedParameters()[0], 10.0 );
 
   EXPECT_EQ( disImage.GetSize()[0], 0u);

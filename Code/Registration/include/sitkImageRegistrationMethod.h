@@ -61,6 +61,7 @@ class EventObject;
 
 namespace simple
 {
+  class BSplineTransform;
 
   /** \brief An interface method to the modular ITKv4 registration framework.
    *
@@ -143,6 +144,25 @@ namespace simple
     bool GetInitialTransformInPlace() const
     { return this->m_InitialTransformInPlace;}
     /** @} */
+
+    /** \brief Set an initial BSpline transform to optimize.
+      *
+      * A specialization of SetInitialTransform for
+      * BSplineTransforms which can take an additional scaleFactors
+      * parameter. The scaleFactors specifies the a isotropic scaling
+      * factor per level for the BSpline transform mesh size with
+      * respect to the initial transform. For example to double the
+      * BSpline mesh resolution at each of 3 levels the vector
+      * [1,2,4] should be provided.
+      *
+      * If a per level scale factor is 0 or omitted than no transform
+      * adapter will be created for that level.
+      *
+      * \sa itk::BSplineTransformParametersAdaptor
+      **/
+    void SetInitialTransformAsBSpline( BSplineTransform &transform,
+                                       bool inPlace=true,
+                                       const std::vector<unsigned int> &scaleFactors=std::vector<unsigned int>() );
 
     /** \brief Set a fixed transform component towards moving domain.
      *
@@ -506,7 +526,8 @@ namespace simple
      *
      * By default the image gradient is computed by
      * itk::GradientRecursiveGaussianImageFiter. If disabled then a
-     * central difference function with be computed as needed.
+     * central difference function will be computed for each sample as
+     * needed.
      *
      * \sa itk::ImageToImageMetricv4::SetUseMovingImageGradientFilter
      * @{
@@ -517,10 +538,10 @@ namespace simple
     /** @} */
 
 
-    /** \brief Set the shrink factors for each level where each level
-     * has the same shrink factor for each dimension.
+    /** \brief Set the isotropic shrink factors for each level.
      *
-     * This virtual domain is the image domain with is shrink.
+     * The virtual domain image is shrunk by this factor relative to
+     * the full size of the original virtual domain.
      *
      * \sa  itk::ImageRegistrationMethodv4::SetShrinkFactorsPerLevel
      */
@@ -529,7 +550,8 @@ namespace simple
     /** \brief Set the sigmas of Gaussian used for smoothing.
      *
      * The smoothing is applied to both the fixed and the moving
-     * images at each level.
+     * images at each level. The number of smoothing sigmas must match
+     * the number of shrink factors.
      *
      * \sa  itk::ImageRegistrationMethodv4::SetSmoothingSigmasPerLevel
      */
@@ -747,6 +769,7 @@ namespace simple
     double m_OptimizerLineSearchAccuracy;
 
 
+    std::vector<unsigned int> m_TransformBSplineScaleFactors;
 
     std::vector<double> m_OptimizerWeights;
 

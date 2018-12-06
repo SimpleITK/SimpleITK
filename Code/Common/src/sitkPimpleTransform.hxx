@@ -94,8 +94,15 @@ public:
       return std::vector< double >( p.begin(), p.end() );
     }
 
+  unsigned int GetNumberOfFixedParameters( void ) const
+  {
+    return this->GetTransformBase()->GetFixedParameters().GetSize();
+  }
 
-  unsigned int GetNumberOfParameters( void ) const { return this->GetTransformBase()->GetNumberOfParameters(); }
+  unsigned int GetNumberOfParameters( void ) const
+  {
+    return this->GetTransformBase()->GetNumberOfParameters();
+  }
 
 
   void SetParameters( const std::vector< double > &inParams )
