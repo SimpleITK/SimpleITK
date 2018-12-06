@@ -50,6 +50,12 @@ Code
 
 .. tabs::
 
+  .. tab:: C++
+
+    .. literalinclude:: ImageRegistrationMethodBSpline3.cxx
+       :language: c++
+       :lines: 18-
+
   .. tab:: Python
 
     .. literalinclude:: ImageRegistrationMethodBSpline3.py
