@@ -27,7 +27,7 @@ problems.
 
 The initial transform is the low resolution BSpline. The scaling
 factor of each BSpline used per level is specified with the
-ImageRegistration::SetInitialBSpline method's third argument as an
+``ImageRegistration::SetInitialBSpline`` method's third argument as an
 integer array. The first value is usually 1 and it is reasonable to
 double the resolution at each registration level. For this example the
 last resolution is 5, so that the result is comparable to the
@@ -36,12 +36,9 @@ transformation from the :ref:`previous
 
 It can be important to monitor and observe the transform at each level
 or iteration. When the "inplace" option is enabled, the transform
-passed as the initial transform will be updated during the
+passed as the initial transform will be up to date during the
 registration process which enables it to be used in :ref:`event
 commands <lbl_filter_progress_reporting>`.
-
-The previous :ref:`lbl_image_registration_method_bspline2`, is e
-
 
 See also: :ref:`lbl_image_registration_method_bspline1`, :ref:`lbl_image_registration_method_bspline2`.
 

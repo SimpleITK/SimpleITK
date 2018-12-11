@@ -106,4 +106,4 @@ if ( not "SITK_NOSHOW" in os.environ ):
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
     cimg = sitk.Compose(simg1, simg2, simg1//2.+simg2//2.)
-    sitk.Show( cimg, "ImageRegistration1 Composition" )
+    sitk.Show( cimg, "Image Registration Composition" )
