@@ -1,3 +1,5 @@
+.. _lbl_filter_progress_reporting:
+
 Filter Progress Reporting
 =========================
 

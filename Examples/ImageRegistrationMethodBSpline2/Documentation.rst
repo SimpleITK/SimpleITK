@@ -1,5 +1,9 @@
+.. _lbl_image_registration_method_bspline2:
+
 Image Registration Method BSpline 2
 ===================================
+
+.. include:: ../../Documentation/docs/source/registrationExamplePrefix.rst
 
 
 Overview
