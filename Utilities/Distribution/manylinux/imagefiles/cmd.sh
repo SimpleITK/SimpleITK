@@ -77,8 +77,11 @@ function build_simpleitk_python {
 build_simpleitk || exit 1
 
 
+
 for PYTHON in ${PYTHON_VERSIONS}; do
+    PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    PLATFORM=$(${PYTHON_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
     build_simpleitk_python &&
-    ctest -j ${NPROC} -LE UNSTABLE &&
-    auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name SimpleITK*.whl) -w ${OUT_DIR}/wheelhouse/
+    ( ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}.log ||
+    auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name SimpleITK*.whl) -w ${OUT_DIR}/wheelhouse/ )
 done
