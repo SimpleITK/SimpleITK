@@ -6,7 +6,8 @@ OPENSSL_ROOT=openssl-1.0.2n
 # Hash from https://www.openssl.org/source/openssl-1.0.2n.tar.gz.sha256
 # Matches hash at https://github.com/Homebrew/homebrew-core/blob/99b8ea3594d1f1f78b0fff1fd8ca7d782aa07e13/Formula/openssl.rb#L11
 OPENSSL_HASH=370babb75f278c39e0c50e8c4e7493bc0f18db6867478341a832a982fd15a8fe
-CMAKE_ROOT=cmake-3.9.6
+CMAKE_ROOT=cmake-3.11.4
+
 
 function check_var {
     if [ -z "$1" ]; then
