@@ -553,8 +553,10 @@ namespace itk
       case itksysProcess_State_Exited:
         {
         int exitValue = itksysProcess_GetExitValue(kp);
+        localDebugMacro( << "Normal process exit.  exitValue = " << exitValue );
         if ( exitValue != 0 )
           {
+          itksysProcess_Delete( kp );
           sitkExceptionMacro (  << "Process returned " << exitValue << ".\n" << "Command line: " << cmdstream.str() );
           }
         }
@@ -591,6 +593,7 @@ namespace itk
         sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
       }
 
+    itksysProcess_Delete( kp );
   }
 
   void Show( const Image &image, const std::string& title, const bool debugOn)
