@@ -97,6 +97,9 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertRaises(IndexError, lambda : img[1] )
         self.assertRaises(IndexError, lambda : img[1,1,1] )
 
+        # check empty image
+        self.assertImageNDArrayEquals(img[-1:0,-1:0], nda[-1:0,-1:0])
+
 
     def test_3d_extract(self):
          """testing __getitem__ for extrating 2D slices from 3D image"""
