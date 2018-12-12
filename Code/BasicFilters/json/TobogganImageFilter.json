@@ -12,7 +12,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-        "md5hash" : "d16db800662f9bd3703099d38387b529",
+      "md5hash" : "d16db800662f9bd3703099d38387b529",
       "inputs" : [
         "Input/cthead1-grad-mag.mha"
       ]

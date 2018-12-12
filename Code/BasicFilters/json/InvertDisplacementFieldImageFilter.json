@@ -77,7 +77,7 @@
     }
   ],
   "briefdescription" : "Iteratively estimate the inverse field of a displacement field.",
-  "detaileddescription" : "\\author Nick Tustison \n\nBrian Avants",
+  "detaileddescription" : "\\author Nick Tustison \n\n\\author Brian Avants",
   "itk_module" : "ITKDisplacementField",
   "itk_group" : "DisplacementField"
 }

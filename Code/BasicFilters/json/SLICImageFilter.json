@@ -13,10 +13,10 @@
       "dim_vec" : 1,
       "doc" : "",
       "itk_type" : "typename FilterType::SuperGridSizeType",
-      "briefdescriptionSet" : "The expected superpixel size and shape.",
-      "detaileddescriptionSet" : "The requested size of a superpixel used to form a regular grid for initialization and limits the search space for pixels. The size may be set anisotropically to provide a directional bias. This may be set to reflect spacing of this image.",
-      "briefdescriptionGet" : "The expected superpixel size and shape.",
-      "detaileddescriptionGet" : "The requested size of a superpixel used to form a regular grid for initialization and limits the search space for pixels. The size may be set anisotropically to provide a directional bias. This may be set to reflect spacing of this image."
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "SpatialProximityWeight",
