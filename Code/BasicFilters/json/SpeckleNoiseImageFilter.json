@@ -11,9 +11,9 @@
       "type" : "double",
       "default" : "1.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the standard deviation of the gamma distribution. Defaults to 1.0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the standard deviation of the gamma distribution. Defaults to 1.0."
     },
     {
       "name" : "Seed",
@@ -73,7 +73,7 @@
     }
   ],
   "briefdescription" : "Alter an image with speckle (multiplicative) noise.",
-  "detaileddescription" : "The speckle noise follows a Gamma distribution of mean 1 and standard deviation provided by the user. The noise is proportional to the pixel intensity.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158",
+  "detaileddescription" : "The speckle noise follows a gamma distribution of mean 1 and standard deviation provided by the user. The noise is proportional to the pixel intensity.\n\nIt can be modeled as:\n\n\\par \n\\f$ I = I_0 \\ast G \\f$ \n\n\\par \nwhere \\f$ G \\f$ is a is a gamma distributed random variable of mean 1 and variance proportional to the noise level:\n\n\\par \n\\f$ G \\sim \\Gamma(\\frac{1}{\\sigma^2}, \\sigma^2) \\f$ \n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158",
   "itk_module" : "ITKImageNoise",
   "itk_group" : "ImageNoise"
 }

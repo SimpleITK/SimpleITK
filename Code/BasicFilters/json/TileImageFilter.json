@@ -6,7 +6,6 @@
   "include_files" : [
     "sitkToPixelType.hxx"
   ],
-
   "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [
     {
