@@ -293,7 +293,7 @@
         def __iter__( self ):
 
             if len(self) == 0:
-              raise StopIteration
+              return
 
             dim = self.GetDimension()
             size = self.GetSize()
