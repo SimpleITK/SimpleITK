@@ -48,7 +48,7 @@ VariableListToArgs( ITK_VARS  ep_itk_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 
 
-set(ITK_GIT_REPOSITORY "${git_protocol}://itk.org/ITK.git" CACHE STRING "URL of ITK Git repository")
+set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/ITK.git" CACHE STRING "URL of ITK Git repository")
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
