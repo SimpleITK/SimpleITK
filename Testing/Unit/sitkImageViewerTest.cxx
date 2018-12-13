@@ -61,7 +61,29 @@ TEST(ImageViewerTest,Methods)
 
   EXPECT_EQ( iv.GetName(), "ImageViewer" );
 
-  //
+  iv.SetFileExtension( ".png" );
+  EXPECT_EQ( iv.GetFileExtension(), ".png" );
+
+  iv.SetApplication( "testapp", "testcommand" );
+  EXPECT_EQ( iv.GetApplication(), "testapp" );
+  EXPECT_EQ( iv.GetCommand(), "testcommand" );
+
+
+  unsigned int delay;
+  delay = iv.GetProcessDelay();
+
+#ifdef _WIN32
+  EXPECT_EQ( delay, 1 );
+#else
+  EXPECT_EQ( delay, 500 );
+#endif
+  iv.SetProcessDelay( delay );
+  }
+
+TEST(ImageViewerTest,GlobalDefaults)
+  {
+  itk::simple::ImageViewer iv;
+
   std::vector<std::string> words;
   words.push_back( std::string("alpha") );
   words.push_back( std::string("beta") );
@@ -82,23 +104,30 @@ TEST(ImageViewerTest,Methods)
 
   iv.SetGlobalDefaultDebugOff();
   EXPECT_EQ( iv.GetGlobalDefaultDebug(), false );
+  iv.SetGlobalDefaultDebugOn();
+  EXPECT_EQ( iv.GetGlobalDefaultDebug(), true );
 
-  iv.SetFileExtension( ".png" );
-  EXPECT_EQ( iv.GetFileExtension(), ".png" );
+  iv.SetGlobalDefaultFileExtension( ".mha" );
+  EXPECT_EQ( iv.GetGlobalDefaultFileExtension(), ".mha" );
 
-  unsigned int delay;
-  delay = iv.GetProcessDelay();
+  iv.SetGlobalDefaultApplication( "testapp" );
+  EXPECT_EQ( iv.GetGlobalDefaultApplication(), "testapp" );
+  }
 
-#ifdef _WIN32
-  EXPECT_EQ( delay, 1 );
-#else
-  EXPECT_EQ( delay, 500 );
-#endif
-  iv.SetProcessDelay( delay );
-
-  //
+TEST(ImageViewerTest,Execute)
+  {
+  itk::simple::ImageViewer iv;
   itk::simple::Image img( 10,10, itk::simple::sitkUInt8 );
+
   iv.SetGlobalDefaultDebug( true );
   iv.SetCommand( CMAKE_COMMAND  " -E md5sum" );
+  iv.SetTitle( "test" );
   iv.Execute( img );
+
+  // strings to exercise the command conversion code
+  itk::simple::ImageViewer iv2;
+  iv2.SetTitle( "" );
+  iv2.SetFileExtension( "" );
+  iv2.SetApplication( "nilla_wafers", "\"banana pudding\" %a %f %% %t" );
+  EXPECT_THROW( iv2.Execute(img), sitk::GenericException );
   }
