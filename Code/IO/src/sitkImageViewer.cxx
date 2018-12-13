@@ -530,14 +530,15 @@ void ExecuteCommand( const std::vector<std::string> & cmdLine, const unsigned in
       // This first case is what we expect if everything went OK.
 
       // We want the other process to continue going
-      itksysProcess_Delete( kp ); // implicitly disowns
       break;
 
     case itksysProcess_State_Exited:
       {
       int exitValue = itksysProcess_GetExitValue(kp);
+      localDebugMacro( << "Normal process exit.  exitValue = " << exitValue );
       if ( exitValue != 0 )
         {
+        itksysProcess_Delete( kp );
         sitkExceptionMacro (  << "Process returned " << exitValue << ".\n" << "Command line: " << cmdstream.str() );
         }
       }
@@ -573,6 +574,9 @@ void ExecuteCommand( const std::vector<std::string> & cmdLine, const unsigned in
       itksysProcess_Delete( kp );
       sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
     }
+
+  localDebugMacro( << "Done.  Deleting process." );
+  itksysProcess_Delete( kp );
   }
 
 
