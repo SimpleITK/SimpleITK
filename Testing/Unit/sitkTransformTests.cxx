@@ -36,6 +36,8 @@
 #include "sitkResampleImageFilter.h"
 #include "sitkHashImageFilter.h"
 
+#include "sitkBSplineTransformInitializerFilter.h"
+
 
 #include "itkMath.h"
 
@@ -788,16 +790,28 @@ TEST(TransformTest,BSplineTransform)
   EXPECT_EQ( tx1.GetTransformDomainPhysicalDimensions(), v2(1.0,1.0) );
 
   sitk::BSplineTransform tx2(2);
+  tx2.SetTransformDomainOrigin( v2(2.3,2.4) );
+  tx2.SetTransformDomainDirection(v4(-1.0,0.0,0.0,-1.0));
 
   // assignment operator
   tx1 = tx2;
   EXPECT_EQ( tx1.GetDimension(), 2u );
-  EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(0.0,0.0) );
+  EXPECT_EQ( tx1.GetTransformDomainOrigin(), tx2.GetTransformDomainOrigin() );
+  EXPECT_EQ( tx1.GetNumberOfFixedParameters(), tx2.GetNumberOfFixedParameters() );
+  EXPECT_EQ( tx1.GetTransformDomainDirection(), tx2.GetTransformDomainDirection() );
+  EXPECT_EQ( tx1.GetTransformDomainMeshSize(), tx2.GetTransformDomainMeshSize() );
+  EXPECT_EQ( tx1.GetTransformDomainPhysicalDimensions(), tx2.GetTransformDomainPhysicalDimensions() );
 
   // copy on write
   tx1.SetTransformDomainOrigin( v2(1.3,1.4) );
+
   EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(1.3,1.4) );
-  EXPECT_EQ( tx2.GetTransformDomainOrigin(), v2(0.0,0.0) );
+  EXPECT_EQ( tx2.GetTransformDomainOrigin(), v2(2.3,2.4) );
+
+  EXPECT_EQ( tx1.GetNumberOfFixedParameters(), tx2.GetNumberOfFixedParameters() );
+  EXPECT_EQ( tx1.GetTransformDomainDirection(), tx2.GetTransformDomainDirection() );
+  EXPECT_EQ( tx1.GetTransformDomainMeshSize(), tx2.GetTransformDomainMeshSize() );
+  EXPECT_EQ( tx1.GetTransformDomainPhysicalDimensions(), tx2.GetTransformDomainPhysicalDimensions() );
 
   // todo test other attributes...
 
@@ -830,6 +844,35 @@ TEST(TransformTest,BSplineTransform)
   EXPECT_TRUE(!tx->SetInverse());
   EXPECT_NO_THROW(tx->GetOrder());
   EXPECT_THROW(tx->GetInverse(),sitk::GenericException);
+}
+
+TEST(TransformTest,BSpline_CopyOnWrite)
+{
+  std::vector<unsigned int> imageSize(3,10u);
+  sitk::Image image(imageSize, sitk::sitkUInt8);
+  std::vector<unsigned int> transformDomainMeshSize(image.GetDimension(), 8);
+  sitk::BSplineTransform tx =  sitk::BSplineTransformInitializer(image, transformDomainMeshSize);
+  sitk::BSplineTransform copy_tx = tx;
+
+  EXPECT_EQ( tx.GetTransformDomainOrigin(), copy_tx.GetTransformDomainOrigin() );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), copy_tx.GetNumberOfFixedParameters() );
+  EXPECT_EQ( tx.GetTransformDomainDirection(), copy_tx.GetTransformDomainDirection() );
+  EXPECT_EQ( tx.GetTransformDomainMeshSize(), copy_tx.GetTransformDomainMeshSize() );
+  EXPECT_EQ( tx.GetTransformDomainPhysicalDimensions(), copy_tx.GetTransformDomainPhysicalDimensions() );
+
+  EXPECT_EQ( tx.GetParameters(), copy_tx.GetParameters() );
+  EXPECT_EQ( tx.GetFixedParameters(), copy_tx.GetFixedParameters() );
+
+  tx.MakeUnique();
+
+  EXPECT_EQ( tx.GetTransformDomainOrigin(), copy_tx.GetTransformDomainOrigin() );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), copy_tx.GetNumberOfFixedParameters() );
+  EXPECT_EQ( tx.GetTransformDomainDirection(), copy_tx.GetTransformDomainDirection() );
+  EXPECT_EQ( tx.GetTransformDomainMeshSize(), copy_tx.GetTransformDomainMeshSize() );
+  EXPECT_EQ( tx.GetTransformDomainPhysicalDimensions(), copy_tx.GetTransformDomainPhysicalDimensions() );
+
+  EXPECT_EQ( tx.GetParameters(), copy_tx.GetParameters() );
+  EXPECT_EQ( tx.GetFixedParameters(), copy_tx.GetFixedParameters() );
 }
 
 TEST(TransformTest,BSplineTransform_order)
