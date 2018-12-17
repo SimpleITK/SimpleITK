@@ -122,12 +122,13 @@ TEST(ImageViewerTest,Execute)
   iv.SetGlobalDefaultDebug( true );
   iv.SetCommand( CMAKE_COMMAND  " -E md5sum" );
   iv.SetTitle( "test" );
+  iv.SetFileExtension( ".png" );
   iv.Execute( img );
 
   // strings to exercise the command conversion code
   itk::simple::ImageViewer iv2;
   iv2.SetTitle( "" );
   iv2.SetFileExtension( "" );
-  iv2.SetApplication( "nilla_wafers", "\"banana pudding\" %a %f %% %t" );
+  iv2.SetApplication( "nilla_wafers", "\"banana pudding\" %a %f %% %t \'%" );
   EXPECT_THROW( iv2.Execute(img), sitk::GenericException );
   }
