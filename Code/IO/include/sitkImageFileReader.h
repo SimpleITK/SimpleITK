@@ -226,12 +226,15 @@ namespace itk {
    * \brief ReadImage is a procedural interface to the ImageFileReader
    *     class which is convenient for most image reading tasks.
    *
-   *     For more complicated use cases such as requiring loading of
-   *     all tags, including private ones, from a DICOM file the
-   *     object oriented interface should be used. The reader can be explicitly
-   *     set to load all tags (LoadPrivateTagsOn()).
+   *  \param outputPixelType see ImageReaderBase::SetOutputPixelType
+   *  \param imageIO see ImageReaderBase::SetImageIO
+   *
+   * \sa itk::simple::ImageFileReader for reading a single file.
+   * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
    */
-  SITKIO_EXPORT Image ReadImage ( const std::string &filename, PixelIDValueEnum outputPixelType = sitkUnknown );
+  SITKIO_EXPORT Image ReadImage ( const std::string &filename,
+                                  PixelIDValueEnum outputPixelType = sitkUnknown,
+                                  const std::string &imageIO = "");
   }
 }
 
