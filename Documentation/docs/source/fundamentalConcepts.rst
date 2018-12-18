@@ -164,7 +164,7 @@ Additional Resources
 1. The API for the SimpleITK
    `Image class <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Image.html>`_
    in Doxygen format.
-2. To really understand the structure of SimpleITK images and how to work with them
+2. To really understand the structure of SimpleITK images and how to work with them,
    we recommend some hands-on interaction using the
    `SimpleITK Jupyter notebooks <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
    (Python and R only).
@@ -190,7 +190,7 @@ as follows:
 * Matrix - the matrix :math:`A`.
 * Center - the point :math:`\mathbf{c}`.
 * Translation - the vector :math:`\mathbf{t}`.
-* Offset - the expression :math:`\mathbf{t} + \mathbf{c} - A\mathbf{c}`
+* Offset - the expression :math:`\mathbf{t} + \mathbf{c} - A\mathbf{c}`.
 
 A variety of global 2D and 3D transformations are available
 (translation, rotation, rigid, similarity, affine...). Some of these
@@ -229,7 +229,7 @@ Additional Resources
 
 1. The API for the SimpleITK transformation classes is available in Doxygen format:
 
-   * `2D or 3D, translation <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1TranslationTransform.html>`_.
+   * `2D or 3D translation <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1TranslationTransform.html>`_.
    * `VersorTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1VersorTransform.html>`_.
    * `Euler2DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Euler2DTransform.html>`_
      and `Euler3DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Euler3DTransform.html>`_.
@@ -243,7 +243,7 @@ Additional Resources
    * `2D or 3D DisplacementFieldTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1DisplacementFieldTransform.html>`_.
    * `Transform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Transform.html>`_.
 
-2. To really understand the structure of SimpleITK transforms and how to work with them
+2. To really understand the structure of SimpleITK transforms and how to work with them,
    we recommend some hands-on interaction using the
    `SimpleITK Jupyter notebooks <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
    (Python and R only).
@@ -251,7 +251,7 @@ Additional Resources
 Resampling
 ++++++++++
 
-Resampling as the verb implies is the action of sampling an image, which itself
+Resampling, as the verb implies, is the action of sampling an image, which itself
 is a sampling of an original continuous signal.
 
 Generally speaking, resampling in SimpleITK involves four components:
@@ -266,9 +266,9 @@ Generally speaking, resampling in SimpleITK involves four components:
 
 While SimpleITK provides a large number of interpolation methods, the two most
 commonly used are sitkLinear and sitkNearestNeighbor. The former is used for
-most interpolation tasks, a compromise between accuracy and computational
+most interpolation tasks and is a compromise between accuracy and computational
 efficiency. The later is used to interpolate labeled images representing a
-segmentation, it is the only interpolation approach which will not introduce
+segmentation. It is the only interpolation approach which will not introduce
 new labels into the result.
 
 The SimpleITK interface includes three variants for specifying the resampling grid:
