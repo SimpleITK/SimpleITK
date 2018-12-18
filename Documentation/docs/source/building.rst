@@ -1,11 +1,13 @@
+.. _building_simpleitk:
+
 Building SimpleITK
 ******************
 
 
 In many cases a user does not need to build SimpleITK because of the
-pre-built binaries available (see :ref:`Downloading the binaries
+available pre-built binaries (see :ref:`Downloading the binaries
 <installation-binaries>`). However there are several reasons a user
-might prefer to **build SimpleITK from source**:
+might prefer to **build SimpleITK from source code**:
 
 -  The binary files for your programming language of choice are not
    (yet) distributed
@@ -41,7 +43,9 @@ To build SimpleITK you need:
 
 -  The R package requires R version 3.3 or greater.
 
-Recipes / Formulas / Short Cuts
+-  The Lua package requires Lua version 5.1 or greater.
+
+Recipes / Formulas / Short cuts
 ===============================
 
 Before you start please make sure you have the required `Prerequisites`_ installed.
@@ -69,8 +73,8 @@ building of SimpleITK (see their repository for more details):
    for multiple language wrappings.
 
 -  For the **Lua language** with the Luarocks module deployment system,
-   a SimpleITK rockspec is available form `this GitHub
-   repository <https://github.com/SimpleITK/SimpleITKLuaRock>`__.
+   a SimpleITK rockspec is available at the `Luarocks repository <https://luarocks.org/modules/dave3d/simpleitk>`__
+   or from `this GitHub repository <https://github.com/SimpleITK/SimpleITKLuaRock>`__.
 
 
 Source code
@@ -84,7 +88,7 @@ All of the instructions assume you are working on the command line.
 
 Words of caution for building on the Windows operating system:
 
-* Windows has issues with long directory paths, we recommend cloning the
+* Windows has issues with long directory paths. We recommend cloning the
   source code near the root (e.g. C:\\src).
 * To avoid potential issues do not clone the source into a path which has spaces
   in the directory name (e.g. C:\\Users\\SimpleITK Source).
@@ -101,8 +105,8 @@ First obtain the SimpleITK source code:
 Building using SuperBuild
 -------------------------
 
-After downloading SimpleITK's source code we **STRONGLY** recommend to
-run cmake on the SuperBuild subdirectory of SimpleITK. Execute the
+After downloading SimpleITK's source code we **STRONGLY** recommend
+running cmake on the SuperBuild subdirectory of SimpleITK. Execute the
 following commands in the parent of the SimpleITK source directory to
 configure the SuperBuild:
 
@@ -139,20 +143,19 @@ CMake `Ninja <https://ninja-build.org>`__ generator.
 Building Manually
 -----------------
 
-
 By not using the superbuild, you must manually specify all dependencies
 used during the building of SimpleITK instead of using the known
 working versions provided by the superbuild as external projects. This
 may be useful if you are providing a system package of SimpleITK or tightly
 integrating it into another build system. The versions of external
-project used and tested by SimpleITK can be found by examining the
+projects used and tested by SimpleITK can be found by examining the
 External CMake files in the Superbuild sub-directory.
 
 
 Additional Prerequisites
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-The following are dependencies when not using the SuperBuild:
+The following are dependencies you will need when not using the SuperBuild:
 
 #. Setup the prerequisites as described above (i.e. CMake and supported
    compiler)
@@ -174,7 +177,8 @@ The following are dependencies when not using the SuperBuild:
 Configuration and Building
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-After the source code is obtained, SimpleITK can be configured:
+After the source code is obtained, SimpleITK can be configured on
+Unix-like systems like so:
 
 .. code-block :: bash
 
@@ -186,8 +190,9 @@ If all the dependencies are installed in standard places, then the CMake
 configuration should detect them properly. Otherwise, if there are
 configuration errors, the proper CMake variable should be set. CMake
 variables can be either set with a CMake interactive GUI such as
-`ccmake` or `cmake-qt`, or as arguments on the command line by using
-the following format: `-D<var>=<value>`.
+`ccmake` or `cmake-qt`, as arguments on the command line by using
+the following format: `-D<var>=<value>`, or by editing the CMakeCache.txt
+file.
 
 After proper configuration, SimpleITK can be built:
 
@@ -226,9 +231,9 @@ SimpleITK as an installed package of its libraries and header filers.
 Testing
 -------
 
-After compilation the prudent thing to due is to test SimpleITK to
-ensure your build is stable and suitable for installation and use. The
-following commands execute the SimpleITK tests.
+After compilation the prudent thing to do is to test SimpleITK to
+ensure that your build is stable and suitable for installation and use.
+The following commands execute the SimpleITK tests.
 
 .. code-block :: bash
 
