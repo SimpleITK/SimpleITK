@@ -3,8 +3,8 @@ Installation
 
 SimpleITK provides a simplified interface to ITK in a variety of
 languages. You can either download binaries, if they are available for
-your platform and prefered language, or you can build SimpleITK
-yourself.
+your platform and prefered language, or you can :ref:`build SimpleITK <building_simpleitk>`
+yourself from the source code.
 
 Additionally, there are several recommended third-party software
 packages.
@@ -55,16 +55,16 @@ binary wheel:
 
  pip install SimpleITK
 
-This requires a recent version of  pip (>=9.0), to properly detect
+This installation requires a recent version of  pip (>=9.0), to properly detect
 compatibility with the `PEP 427
 <https://www.python.org/dev/peps/pep-0427/>`__ tags in the wheel
-filenames. You can update your pip using ``pip install -U pip``. It
-also requires that your Python environment is compatible with one of
+filenames. You can update your version of pip using ``pip install -U pip``.
+Also your Python environment must be compatible with one of
 the pre-compiled binary wheels.
 
 Alternatively, the wheels can be manually downloaded from `sourceforge
 <http://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__ or
-`PyPI <https://pypi.python.org/pypi/SimpleITK>`__, then installed with pip.
+`PyPI <https://pypi.python.org/pypi/SimpleITK>`__, and then installed with pip.
 
 
 Conda-based distributions (Anaconda, Miniconda)
@@ -98,8 +98,8 @@ C# environment. The files have the following naming convention:
 
 eg.
 
-| ``SimpleITK-1.0.0-CSharp-win32-x86.zip``
-| ``SimpleITK-1.0.0-CSharp-win64-x64.zip``
+| ``SimpleITK-1.2.0-CSharp-win32-x86.zip``
+| ``SimpleITK-1.2.0-CSharp-win64-x64.zip``
 
 Details about how to set up a C# Visual Studio project with SimpleITK
 can be found in the `Visual Guide to SimpleITK with
@@ -143,39 +143,21 @@ Fiji (Fiji is Just ImageJ)
 --------------------------
 
 SimpleITK has a built in function
-`itk::simple::Show() <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__
+`itk::simple::Show() <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__
 which can be used for viewing images in an interactive session.
-Currently, this function by default Show invokes
-`Fiji <https://fiji.sc>`__ then
-`ImageJ <http://rsbweb.nih.gov/ij/>`__ to display images. ImageJ was
-chosen because it can handle all the image types that SimpleITK
-supports, even 3D vector images with n components.
+By default this Show function searches for an installed
+`Fiji <https://fiji.sc>`__ to display images.  If Fiji is not found,
+then it searches for `ImageJ <http://rsbweb.nih.gov/ij/>`__. Fiji/ImageJ were
+chosen because they can handle all the image types that SimpleITK
+supports, including 3D vector images with n components.
 
 The Show function first searches the "PATH" environment variable, then
 additional standard locations are examined, if problems are encountered
 the correct path can be added to this environment variable and the
 **"debugOn**" option to **"Show**" flag set.
 
-ImageJ
-^^^^^^
-
-If ImageJ is used then we recommend downloading a recent version of
-`ImageJ <http://rsbweb.nih.gov/ij/download.html>`__ from the official
-home page. Recent versions come with support for the
-`Nifti <http://nifti.nimh.nih.gov/nifti-1/>`__ ( \*.nii ) file format,
-which SimpleITK uses to export to ImageJ.
-
-**Note:** **Linux installation** requires an additional step. The
-**"Show**" function searches for an executable named ImageJ or imagej,
-however the default tarball does not come with this file. Instead it
-comes with a file names
-`script <http://imagej.nih.gov/ij/download/linux/unix-script.txt>`__.
-This file contains the installation instructions. In short the file
-should be renamed to "imagej" and the site specific variables for the
-installation location, and java must be set. Also consider the
-"newwindow" variable... Do you really want a new instance of ImageJ
-launched each time you use Show? Lastly, as the installation
-instructions indicate, the imagej wrapper should be in your path.
+The Show function can also be configured to invoke some other viewing application
+using the SITK_SHOW_COMMAND environment variable.
 
 IPython and Jupyter
 -------------------
@@ -183,7 +165,7 @@ IPython and Jupyter
 If you are using python, `IPython <http://ipython.org/>`__ with
 `Jupyter <http://jupyter.org>`__ is terrific environment to perform
 interactive computing for image processing. With the addition of numpy
-and scipy, you'll have a powerful interactive environment.
+and scipy, you will have a powerful interactive environment.
 
 We have instructional `SimpleITK Jupyter
 Notebooks <http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/>`__
