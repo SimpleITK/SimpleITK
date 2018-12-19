@@ -101,7 +101,7 @@ public:
     }
 
   std::vector<unsigned int> m_NumberOfParametersPerLevel;
-  std::vector<unsigned int> m_OptimizerPositionSize;
+  std::vector<size_t> m_OptimizerPositionSize;
 private:
   const itk::simple::Transform &m_tx;
   const itk::simple::ImageRegistrationMethod &m_Method;
