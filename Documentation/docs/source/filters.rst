@@ -411,7 +411,7 @@ SimpleITK Filters
    * - `NotImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1NotImageFilter.html>`_
      - Implements the NOT logical operator pixel-wise on an image.
    * - `ObjectnessMeasureImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1ObjectnessMeasureImageFilter.html>`_
-     - 
+     - Enhance M-dimensional objects in N-dimensional images.
    * - `OpeningByReconstructionImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1OpeningByReconstructionImageFilter.html>`_
      - Opening by reconstruction of an image.
    * - `OrImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1OrImageFilter.html>`_
@@ -464,6 +464,8 @@ SimpleITK Filters
      - Deconvolve an image using the Richardson-Lucy deconvolution algorithm.
    * - `RoundImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1RoundImageFilter.html>`_
      - Rounds the value of each pixel.
+   * - `SLICImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1SLICImageFilter.html>`_
+     - Simple Linear Iterative Clustering (SLIC) super-pixel segmentation.
    * - `STAPLEImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1STAPLEImageFilter.html>`_
      - The STAPLE filter implements the Simultaneous Truth and Performance Level Estimation algorithm for generating ground truth volumes from a set of binary expert segmentations.
    * - `SaltAndPepperNoiseImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1SaltAndPepperNoiseImageFilter.html>`_
@@ -542,6 +544,8 @@ SimpleITK Filters
      - An inverse deconvolution filter regularized in the Tikhonov sense.
    * - `TileImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1TileImageFilter.html>`_
      - Tile multiple input images into a single output image.
+   * - `TobogganImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1TobogganImageFilter.html>`_
+     - toboggan image segmentation The Toboggan segmentation takes a gradient magnitude image as input and produces an (over-)segmentation of the image based on connecting each pixel to a local minimum of gradient. It is roughly equivalent to a watershed segmentation of the lowest level.
    * - `TransformToDisplacementFieldFilter <https://www.itk.org/Doxygen/html/classitk_1_1TransformToDisplacementFieldFilter.html>`_
      - Generate a displacement field from a coordinate transform.
    * - `TriangleThresholdImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1TriangleThresholdImageFilter.html>`_
