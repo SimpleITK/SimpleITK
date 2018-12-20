@@ -1,3 +1,5 @@
+.. _lbl_filter:
+
 SimpleITK Filters
 =================
 
