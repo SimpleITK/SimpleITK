@@ -50853,12 +50853,22 @@ public ";
 
 %javamethodmodifiers  itk::simple::ReadImage "/**
 SITKIO_EXPORT Image itk::simple::ReadImage(const std::vector< std::string > &fileNames, PixelIDValueEnum
-outputPixelType=sitkUnknown)
+outputPixelType=sitkUnknown, const std::string &imageIO=\"\")
 
 ReadImage is a procedural interface to the ImageSeriesReader class which is convenient for most image reading tasks.
 
 
-Note that when reading a series of images that have meta-data
+
+
+Parameters:
+
+outputPixelType:
+see ImageReaderBase::SetOutputPixelType
+
+imageIO:
+see ImageReaderBase::SetImageIO
+
+ Note that when reading a series of images that have meta-data
 associated with them (e.g. a DICOM series) the resulting image will
 have an empty meta-data dictionary. If you need the meta-data
 dictionaries associated with each slice then you should use the ImageSeriesReader class.
@@ -50875,15 +50885,27 @@ public ";
 
 %javamethodmodifiers  itk::simple::ReadImage "/**
 SITKIO_EXPORT Image itk::simple::ReadImage(const std::string &filename, PixelIDValueEnum
-outputPixelType=sitkUnknown)
+outputPixelType=sitkUnknown, const std::string &imageIO=\"\")
 
 ReadImage is a procedural interface to the ImageFileReader class which is convenient for most image reading tasks.
 
 
-For more complicated use cases such as requiring loading of all tags,
-including private ones, from a DICOM file the object oriented
-interface should be used. The reader can be explicitly set to load all
-tags (LoadPrivateTagsOn()).
+
+
+Parameters:
+
+outputPixelType:
+see ImageReaderBase::SetOutputPixelType
+
+imageIO:
+see ImageReaderBase::SetImageIO
+
+
+See:
+ itk::simple::ImageFileReader for reading a single file.
+
+ itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
+
 
 */
 public ";
