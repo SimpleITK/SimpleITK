@@ -62,10 +62,15 @@ namespace itk {
       }
   }
 
-  Image ReadImage ( const std::string &filename, PixelIDValueEnum outputPixelType )
+  Image ReadImage ( const std::string &filename,
+                    PixelIDValueEnum outputPixelType,
+                    const std::string &imageIO )
     {
       ImageFileReader reader;
-      return reader.SetFileName ( filename ).SetOutputPixelType(outputPixelType).Execute();
+      reader.SetFileName(filename);
+      reader.SetOutputPixelType(outputPixelType);
+      reader.SetImageIO(imageIO);
+      return reader.Execute();
     }
 
 

@@ -89,6 +89,13 @@ TEST(IO,ImageFileReader) {
   EXPECT_EQ( image.GetPixelID(), sitk::sitkVectorInt16 );
   EXPECT_EQ( sitk::Hash(image), "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5") << "Short to " <<  sitk::sitkVectorInt16;
 
+  EXPECT_NO_THROW(image=sitk::ReadImage( fileName, sitk::sitkInt32, "NrrdImageIO" ) );
+  EXPECT_EQ( image.GetPixelID(), sitk::sitkInt32 );
+  EXPECT_EQ( sitk::Hash(image), "f1045032b6862753b7e6b71771b552c40b8eaf32") << "Short to " <<  sitk::sitkInt32;
+
+  EXPECT_THROW(sitk::ReadImage( fileName, sitk::sitkInt32, "DoesNoExistImageIO" ), sitk::GenericException );
+  EXPECT_ANY_THROW(sitk::ReadImage( fileName, sitk::sitkInt32, "GDCMImageIO" ));
+
   reader.SetOutputPixelType( sitk::sitkVectorInt32 );
   EXPECT_EQ( reader.GetOutputPixelType(), sitk::sitkVectorInt32 );
 

@@ -177,6 +177,9 @@ namespace itk {
    * \brief ReadImage is a procedural interface to the ImageSeriesReader
    *     class which is convenient for most image reading tasks.
    *
+   *  \param outputPixelType see ImageReaderBase::SetOutputPixelType
+   *  \param imageIO see ImageReaderBase::SetImageIO
+
    *     Note that when reading a series of images that have meta-data
    *     associated with them (e.g. a DICOM series) the resulting
    *     image will have an empty meta-data dictionary.
@@ -186,7 +189,9 @@ namespace itk {
    * \sa itk::simple::ImageFileReader for reading a single file.
    * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
    */
-  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames, PixelIDValueEnum outputPixelType=sitkUnknown );
+  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames,
+                                  PixelIDValueEnum outputPixelType=sitkUnknown,
+                                  const std::string &imageIO="");
   }
 }
 

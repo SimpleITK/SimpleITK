@@ -30,10 +30,15 @@
 namespace itk {
   namespace simple {
 
-  Image ReadImage ( const std::vector<std::string> &filenames, PixelIDValueEnum outputPixelType )
+  Image ReadImage ( const std::vector<std::string> &filenames,
+                    PixelIDValueEnum outputPixelType,
+                    const std::string &imageIO )
     {
     ImageSeriesReader reader;
-    return reader.SetFileNames ( filenames ).SetOutputPixelType(outputPixelType).Execute();
+    reader.SetFileNames(filenames);
+    reader.SetOutputPixelType(outputPixelType);
+    reader.SetImageIO(imageIO);
+    return reader.Execute();
     }
 
 
