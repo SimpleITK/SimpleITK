@@ -20,7 +20,7 @@ I am using the binary distribution of SimpleITK for Anaconda, why do I get an er
           Referenced from: .../lib/python2.7/site-packages/SimpleITK/_SimpleITK.so
           Reason: image not found
 
-This type of error can occour if a dependent library of SimpleITK can
+This type of error can occour if a library SimpleITK depends on can
 not be found. It may be that the version of the dependent library has
 changed in the Python environment and is no longer compatible. One
 solution is to create a `environment.yml` file with all the packages
