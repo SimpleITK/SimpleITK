@@ -95,8 +95,8 @@ public:
    * Using this method overrides the default application search.
    *
    * By default, when this method is called, the command string is
-   * set to "%a %f" which simply means 'the application path'
-   * followed by 'the temporary image file'.
+   * set to "%a %f" which simply means *the application path*
+   * followed by *the temporary image file*.
    */
   void SetApplication( const std::string & app, const std::string & command = "%a %f" );
 
