@@ -19852,8 +19852,7 @@ The SetApplication method expects a full path name.
 Using this method overrides the default application search.
 
 By default, when this method is called, the command string is set to
-\"%a %f\" which simply means 'the application path' followed by 'the
-temporary image file'.
+\"%a %f\" which simply means the application path followed by the temporary image file.
 
 */
 public ";
@@ -31403,8 +31402,7 @@ See:
 
  itk::simple::ObjectnessMeasure for the procedural interface
 
- itk::ObjectnessMeasureImageFilter for the Doxygen on the original ITK
-class.
+ itk::ObjectnessMeasureImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkObjectnessMeasureImageFilter.h
@@ -50862,6 +50860,9 @@ ReadImage is a procedural interface to the ImageSeriesReader class which is conv
 
 Parameters:
 
+fileNames:
+a vector of file names
+
 outputPixelType:
 see ImageReaderBase::SetOutputPixelType
 
@@ -50893,6 +50894,9 @@ ReadImage is a procedural interface to the ImageFileReader class which is conven
 
 
 Parameters:
+
+filename:
+the filename of an Image e.g. \"cthead.mha\"
 
 outputPixelType:
 see ImageReaderBase::SetOutputPixelType
