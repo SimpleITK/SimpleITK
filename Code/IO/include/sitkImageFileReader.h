@@ -226,6 +226,7 @@ namespace itk {
    * \brief ReadImage is a procedural interface to the ImageFileReader
    *     class which is convenient for most image reading tasks.
    *
+   *  \param filename the filename of an Image e.g. "cthead.mha"
    *  \param outputPixelType see ImageReaderBase::SetOutputPixelType
    *  \param imageIO see ImageReaderBase::SetImageIO
    *
