@@ -370,9 +370,17 @@ could fail to build in the Superbuild process with messages such as:
  [10/13] Performing build step for 'PCRE'
 
 To install the command line developer tools enter the following:
-'''xcode-select --install
 
-To reset the default command line tools path: '''xcode-select --reset
+
+.. code-block :: bash
+
+   xcode-select --install
+
+To reset the default command line tools path:
+
+.. code-block :: bash
+
+   xcode-select --reset
 
 Do I need to download an option package for TR1 support?
 --------------------------------------------------------
