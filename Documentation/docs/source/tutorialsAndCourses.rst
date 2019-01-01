@@ -36,6 +36,7 @@ SimpleITK tutorials and courses have been given in the following venues:
 Upcoming
 ++++++++
 
+* SPIE Medical Imaging 2019 Course, San Diego CA, USA: `SimpleITK Jupyter Notebooks: Biomedical Image Analysis in Python <https://simpleitk.github.io/SPIE2019_COURSE/>`__ [`git repository <https://github.com/SimpleITK/SPIE2019_COURSE>`__].
 
 
 Past
