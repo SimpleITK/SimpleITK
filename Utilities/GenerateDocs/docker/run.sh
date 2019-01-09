@@ -23,4 +23,4 @@ DOCKER_TAG=simpleitk_doxygen
 
 docker build --pull=true --rm=true -t ${DOCKER_TAG} -f Dockerfile .
 
-docker run --rm -e _USER=$(id -un)  -e _USERID=$(id -u)  -e_GROUPID=$(id -g) $extra_args -v $(pwd):/work/io -t  ${DOCKER_TAG}
+docker run --rm -t -e _USER=$(id -un)  -e _USERID=$(id -u)  -e_GROUPID=$(id -g) $extra_args -v $(pwd):/work/io  ${DOCKER_TAG}
