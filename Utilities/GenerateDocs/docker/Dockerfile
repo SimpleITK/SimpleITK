@@ -1,7 +1,7 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 RUN apt-get update && \
-    apt-get install -y cmake cmake-curses-gui gcc g++ git python python-dev doxygen ninja-build gnuplot wget texlive-full
+    DEBIAN_FRONTEND=noninteractive apt-get install -y cmake cmake-curses-gui gcc g++ git python python-dev doxygen ninja-build gnuplot wget texlive-full
 
 WORKDIR /tmp/
 COPY ./cmd.sh /work/bin/
