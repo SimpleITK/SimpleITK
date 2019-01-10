@@ -21,6 +21,8 @@ echo " extra_args: "  ${extra_args}
 
 DOCKER_TAG=simpleitk_doxygen
 
+SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.2.0}
+
 docker build --pull=true --rm=true -t ${DOCKER_TAG} -f Dockerfile .
 
-docker run --rm -t -e _USER=$(id -un)  -e _USERID=$(id -u)  -e_GROUPID=$(id -g) $extra_args -v $(pwd):/work/io  ${DOCKER_TAG}
+docker run --rm -t -e SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG} -e _USER=$(id -un)  -e _USERID=$(id -u)  -e_GROUPID=$(id -g) $extra_args -v $(pwd):/work/io  ${DOCKER_TAG}
