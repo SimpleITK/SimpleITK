@@ -15,6 +15,33 @@ the SwigDocUpdate.sh script can be run to convert the SimpleITK
 Doxygen XML into Swig .i files so that when SimpleITK is built, inline
 documenation for some wrapped languages will be available.
 
+Building documentation with docker
+        A docker configuration is available in the docker subdirectory.
+	It contains a Dockerfile and run scripts to build the documentation.
+        Results are saved in the docker folder. The process is executed from
+        the docker folder using a command like:
+
+        SIMPLEITK_GIT_TAG=v1.2.0 ./run.sh
+
+        or to use another git repo:
+
+        SIMPLEITK_GIT_TAG=MyTestBranch SIMPLEITK_GIT_REPO=https://github.com/username/SimpleITK.git ./run.sh
+
+        Testing changes to the documentation scripts can use the docker framework as follows:
+        1) Execute run.sh to create the appropriate container.
+        2) Enter the docker via the bash entry point, with environment variables specifying the appropriate repo and branch:
+
+        docker run -e _USER=$(id -un)  -e _USERID=$(id -u)  -e_GROUPID=$(id -g) \
+        -e SIMPLEITK_GIT_TAG=v1.2.0  -e SIMPLEITK_GIT_REPO=https://github.com/username/SimpleITK.git \
+        -v $(pwd):/work/io -ti --entrypoint /bin/bash  simpleitk_doxygen
+
+        The bash entrypoint will place you in the /tmp directory. Run the documentation process using:
+
+        /work/bin/cmd.sh
+
+        This will check out SimpleITK and build the documents. You can change the documentation scripts for testing within the
+        checked out copies.
+
 Building the documentation target from the SuperBuild framework requires:
         The correct cmake flags: -DBUILD_DOXYGEN:BOOL=ON
         Run "make SimpleITK-doc" after a SuperBuild config, or "make Documentation"
