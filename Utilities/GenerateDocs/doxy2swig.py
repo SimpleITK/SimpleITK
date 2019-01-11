@@ -468,6 +468,24 @@ class Doxy2R(Doxy2SWIG):
         self.mathstuff6 = re.compile(r"\\f\$(.+?)\\f\$")
         # alignment tags
         self.mathstuff7 = re.compile(r" & ")
+        # Rd related issues - %, \" etc
+        self.Rdpercent = re.compile("%")
+        self.escapedquote=re.compile(r'\\"')
+
+    def rdescape(self, value):
+        """escape percent signs in Rd files"""
+        v1=self.Rdpercent.sub(r"\%", value)
+        v1=self.escapedquote.sub(r'"', v1)
+        return(v1)
+
+    def add_text(self, value):
+        """Adds text corresponding to `value` into `self.pieces`."""
+        if type(value) in (list, tuple):
+            value=[self.rdescape(x) for x in value]
+            self.pieces.extend(value)
+        else:
+            value=self.rdescape(value)
+            self.pieces.append(value)
 
     def filterLatexMath(self, txt):
         """
