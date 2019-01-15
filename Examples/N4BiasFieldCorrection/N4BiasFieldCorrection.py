@@ -33,7 +33,7 @@ if len ( sys.argv ) < 2:
 inputImage = sitk.ReadImage( sys.argv[1] )
 
 if len ( sys.argv ) > 4:
-    maskImage = sitk.ReadImage( sys.argv[4] )
+    maskImage = sitk.ReadImage( sys.argv[4], sitk.sitkUint8 )
 else:
     maskImage = sitk.OtsuThreshold( inputImage, 0, 1, 200 )
 

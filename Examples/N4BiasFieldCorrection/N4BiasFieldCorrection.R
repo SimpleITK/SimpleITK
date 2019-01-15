@@ -32,7 +32,7 @@ if (length(args) < 2) {
 inputImage <- ReadImage(args[[1]])
 
 if (length( args ) > 4) {
-    maskImage <- ReadImage( args[[4]] )
+    maskImage <- ReadImage( args[[4]], 'sitkUint8' )
 } else {
     maskImage <- OtsuThreshold( inputImage, 0, 1, 200 )
 }
