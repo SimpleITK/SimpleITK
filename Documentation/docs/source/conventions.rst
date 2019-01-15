@@ -17,6 +17,7 @@ Image Access
 
 `Image <http://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Image.html>`_ access is in x,y,z order, ``GetPixel(x,y,z)`` or ``image[x,y,z]``, with zero based indexing.
 
+.. _lbl_conventions_mask_image:
 
 Mask Image Types and Default Values
 ...................................
