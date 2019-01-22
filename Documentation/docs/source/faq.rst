@@ -54,7 +54,7 @@ How do I read a RAW image into SimpleITK?
 -----------------------------------------
 
 In general raw image files are missing information. They do not contain
-the nessesary header information to describe the basic size and type for
+the necessary header information to describe the basic size and type for
 the data, so this format is intrinsically deficient. The
 `RawImageIO <https://www.itk.org/Doxygen/html/classitk_1_1RawImageIO.html>`__
 class is not available in SimpleITK so there is no direct way to
