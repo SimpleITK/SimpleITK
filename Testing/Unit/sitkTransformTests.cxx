@@ -776,7 +776,7 @@ TEST(TransformTest,BSplineTransform)
 
   tx.reset(new sitk::BSplineTransform(2));
   EXPECT_EQ( tx->SetTransformDomainDirection(v4(-1.0,0.0,0.0,-1.0)).GetTransformDomainDirection(), v4(-1.0,0.0,0.0,-1.0) );
-  EXPECT_EQ( tx->SetTransformDomainOrigin( v2(1.1,1.2) ).GetTransformDomainOrigin(), v2(1.1,1.2) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->SetTransformDomainOrigin( v2(1.1,1.2) ).GetTransformDomainOrigin(), v2(1.1,1.2), 1e-15 );
 
   // copy constructor
   sitk::BSplineTransform tx1( *(tx.get()) );
@@ -786,7 +786,7 @@ TEST(TransformTest,BSplineTransform)
   EXPECT_EQ( tx1.GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx1.GetTransformDomainDirection(), v4(-1.0,0.0,0.0,-1.0) );
   EXPECT_EQ( tx1.GetTransformDomainMeshSize(), std::vector<unsigned int>(2,1u) );
-  EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(1.1,1.2) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx1.GetTransformDomainOrigin(), v2(1.1,1.2), 1e-15);
   EXPECT_EQ( tx1.GetTransformDomainPhysicalDimensions(), v2(1.0,1.0) );
 
   sitk::BSplineTransform tx2(2);
@@ -805,8 +805,8 @@ TEST(TransformTest,BSplineTransform)
   // copy on write
   tx1.SetTransformDomainOrigin( v2(1.3,1.4) );
 
-  EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(1.3,1.4) );
-  EXPECT_EQ( tx2.GetTransformDomainOrigin(), v2(2.3,2.4) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx1.GetTransformDomainOrigin(), v2(1.3,1.4), 1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx2.GetTransformDomainOrigin(), v2(2.3,2.4), 1e-15);
 
   EXPECT_EQ( tx1.GetNumberOfFixedParameters(), tx2.GetNumberOfFixedParameters() );
   EXPECT_EQ( tx1.GetTransformDomainDirection(), tx2.GetTransformDomainDirection() );
@@ -934,7 +934,7 @@ TEST(TransformTest,BSplineTransform_coefficientImages)
   EXPECT_EQ( tx.GetNumberOfFixedParameters(), 10u );
   EXPECT_EQ( tx.GetTransformDomainDirection(), v4(1.0,0.0,0.0,1.0) );
   EXPECT_EQ( tx.GetTransformDomainMeshSize(), std::vector<unsigned int>(2,7u) );
-  EXPECT_EQ( tx.GetTransformDomainOrigin(), v2(3.0,3.0) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTransformDomainOrigin(), v2(3.0,3.0), 1e-15 );
   EXPECT_EQ( tx.GetTransformDomainPhysicalDimensions(), v2(21.0,21.0) );
 
   std::vector<double> originalParams = tx.GetParameters();
