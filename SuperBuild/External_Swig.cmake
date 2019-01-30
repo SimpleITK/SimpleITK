@@ -85,7 +85,7 @@ if(NOT SWIG_DIR)
     set(swig_source_dir ${CMAKE_CURRENT_BINARY_DIR}/Swig-prefix/src/Swig)
     set(swig_install_dir ${CMAKE_CURRENT_BINARY_DIR}/Swig)
 
-    if ( APPLE AND DEFINED CMAKE_OSX_SYSROOT )
+    if ( APPLE AND CMAKE_OSX_SYSROOT )
       set(REQUIRED_C_FLAGS "-isysroot ${CMAKE_OSX_SYSROOT}")
       set(REQUIRED_CXX_FLAGS "-isysroot ${CMAKE_OSX_SYSROOT}")
     endif()
