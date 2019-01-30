@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'SimpleITK'
-copyright = u'2017, Insight Software Consortium'
+copyright = u'2019, Insight Software Consortium'
 author = u'Insight Software Consortium'
 
 # TODO: Get proper version from CMake
