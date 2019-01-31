@@ -411,6 +411,12 @@ namespace itk
   paths.push_back( "/Developer" );
   paths.push_back( "/opt/" + directory );
   paths.push_back( "/usr/local/" + directory );
+  std::string homedir;
+  if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
+    {
+    paths.push_back( homedir + "/Applications/" + directory );
+    }
+
 
   ExecutableName = itksys::SystemTools::FindDirectory( name.c_str(), paths );
 
