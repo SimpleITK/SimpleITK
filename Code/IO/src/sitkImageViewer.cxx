@@ -174,6 +174,12 @@ void ImageViewer::initializeDefaults()
   m_GlobalDefaultSearchPath.push_back(  "/Developer/" );
   m_GlobalDefaultSearchPath.push_back(  "/opt/" );
   m_GlobalDefaultSearchPath.push_back(  "/usr/local/" );
+  std::string homedir;
+  if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
+    {
+    m_GlobalDefaultSearchPath.push_back( homedir + "/Applications/" );
+    }
+
 
 #else
 
