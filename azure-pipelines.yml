@@ -1,0 +1,120 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - master
+  - next
+  - release
+jobs:
+  - job: Linux
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'Ubuntu-16.04'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - bash: |
+          set -x
+          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+            git checkout $(System.PullRequest.SourceCommitId)
+          fi
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+        displayName: Download dashboard scripts
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: sudo python -m pip install ninja
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        workingDirectory: $(Agent.BuildDirectory)
+  - job: macOS
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'macOS-10.13'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - bash: |
+          set -x
+          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+            git checkout $(System.PullRequest.SourceCommitId)
+          fi
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+        displayName: Download dashboard scripts
+        workingDirectory: $(Agent.BuildDirectory)
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: sudo python -m pip install ninja
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        workingDirectory: $(Agent.BuildDirectory)
+
+  - job: Windows
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - script: |
+          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
+        displayName: Checkout pull request HEAD
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+        displayName: Download dashboard scripts
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: python -m pip install ninja
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          cmake --version
+          ninja --version
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          ctest -S ${BUILD_SOURCESDIRECTORY}/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        workingDirectory: $(Agent.BuildDirectory)
