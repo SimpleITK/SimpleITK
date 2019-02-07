@@ -30,7 +30,6 @@ if(NOT PCRE_DIR)
   set(pcre_install_dir ${CMAKE_CURRENT_BINARY_DIR}/PCRE)
 
   if ( APPLE AND CMAKE_OSX_SYSROOT )
-    message( "CMAKE_OSX_SYSROOT: ${CMAKE_OSX_SYSROOT}")
     set(REQUIRED_C_FLAGS "-isysroot ${CMAKE_OSX_SYSROOT}")
     set(REQUIRED_CXX_FLAGS "-isysroot ${CMAKE_OSX_SYSROOT}")
   endif()
