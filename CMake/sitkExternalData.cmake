@@ -19,7 +19,7 @@ if(NOT ExternalData_OBJECT_STORES)
 endif()
 list(APPEND ExternalData_OBJECT_STORES
   # Local data store populated by the ITK pre-commit hook
-  "${SimpleITK_SOURCE_DIR}/../.ExternalData"
+  "${SimpleITK_SOURCE_DIR}/.ExternalData"
   )
 
 set(ExternalData_BINARY_ROOT ${CMAKE_BINARY_DIR}/ExternalData)
