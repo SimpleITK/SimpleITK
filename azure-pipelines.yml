@@ -117,4 +117,6 @@ jobs:
           CTEST_OUTPUT_ON_FALURE: 1
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
         workingDirectory: $(Agent.BuildDirectory)
