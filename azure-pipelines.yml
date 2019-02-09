@@ -7,6 +7,8 @@ trigger:
   - master
   - next
   - release
+variables:
+  ExternalDataVersion: 1.2.0
 jobs:
   - job: Linux
     timeoutInMinutes: 0
@@ -26,7 +28,11 @@ jobs:
       - bash: |
           set -x
           git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-        displayName: Download dashboard scripts
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
+        displayName: Download dashboard scripts and testing data
         workingDirectory: $(Agent.BuildDirectory)
       - script: sudo python -m pip install ninja
         displayName: 'Install ninja dependency'
@@ -61,7 +67,11 @@ jobs:
       - bash: |
           set -x
           git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-        displayName: Download dashboard scripts
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
+        displayName: Download dashboard scripts  and testing data
         workingDirectory: $(Agent.BuildDirectory)
       - task: UsePythonVersion@0
         displayName: Enable Python
@@ -101,7 +111,11 @@ jobs:
       - bash: |
           set -x
           git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-        displayName: Download dashboard scripts
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
+        displayName: Download dashboard scripts and testing data
         workingDirectory: $(Agent.BuildDirectory)
       - script: python -m pip install ninja
         displayName: 'Install ninja dependency'
