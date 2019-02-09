@@ -119,16 +119,16 @@ jobs:
         workingDirectory: $(Agent.BuildDirectory)
       - script: python -m pip install ninja
         displayName: 'Install ninja dependency'
-      - bash: |
-          set -x
+      - script: |
           cmake --version
-          ninja --version
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          ctest -S ${BUILD_SOURCESDIRECTORY}/azure.cmake -V -j 4
+          ctest -S "$(Build.SourcesDirectory)/azure.cmake" -V -j 4
         displayName: Build and test
         env:
           CTEST_BUILD_CONFIGURATION: MinSizeRel
           CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
         workingDirectory: $(Agent.BuildDirectory)
