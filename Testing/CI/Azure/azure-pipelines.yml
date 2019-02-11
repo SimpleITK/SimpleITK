@@ -1,0 +1,134 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - master
+  - next
+  - release
+variables:
+  ExternalDataVersion: 1.2.0
+jobs:
+  - job: Linux
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'Ubuntu-16.04'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - bash: |
+          set -x
+          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+            git checkout $(System.PullRequest.SourceCommitId)
+          fi
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
+        displayName: Download dashboard scripts and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: sudo python -m pip install ninja
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        workingDirectory: $(Agent.BuildDirectory)
+  - job: macOS
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'macOS-10.13'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - bash: |
+          set -x
+          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+            git checkout $(System.PullRequest.SourceCommitId)
+          fi
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
+        displayName: Download dashboard scripts  and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: sudo python -m pip install ninja
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        workingDirectory: $(Agent.BuildDirectory)
+
+  - job: Windows
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'vs2017-win2016'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - script: |
+          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
+        displayName: Checkout pull request HEAD
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
+        displayName: Download dashboard scripts and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: python -m pip install ninja
+        displayName: 'Install ninja dependency'
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+        workingDirectory: $(Agent.BuildDirectory)
