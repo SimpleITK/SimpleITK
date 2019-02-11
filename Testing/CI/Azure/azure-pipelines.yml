@@ -41,7 +41,7 @@ jobs:
           c++ --version
           cmake --version
           ninja --version
-          ctest -S ${BUILD_SOURCESDIRECTORY}/azure.cmake -V -j 4
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
         displayName: Build and test
         env:
           CTEST_BUILD_CONFIGURATION: MinSizeRel
@@ -86,7 +86,7 @@ jobs:
           c++ --version
           cmake --version
           ninja --version
-          ctest -S ${BUILD_SOURCESDIRECTORY}/azure.cmake -V -j 4
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
         displayName: Build and test
         env:
           CTEST_BUILD_CONFIGURATION: MinSizeRel
@@ -121,7 +121,7 @@ jobs:
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
-          ctest -S "$(Build.SourcesDirectory)/azure.cmake" -V -j 4
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
         displayName: Build and test
         env:
           CTEST_BUILD_CONFIGURATION: MinSizeRel
