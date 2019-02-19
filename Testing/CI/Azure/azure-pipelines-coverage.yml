@@ -33,15 +33,14 @@ jobs:
           cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
         displayName: Download dashboard scripts and testing data
         workingDirectory: $(Agent.BuildDirectory)
-      - script: sudo python -m pip install ninja
-        displayName: 'Install ninja dependency'
       - bash: |
           ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake
-        displayName: Build and test
+        displayName: Build and test with coverage
         env:
           CTEST_BUILD_CONFIGURATION: Debug
+          CTEST_BUILD_FLAGS: -j 2
           CTEST_OUTPUT_ON_FALURE: 1
-          CTEST_CMAKE_GENERATOR: "Ninja"
+          CTEST_CMAKE_GENERATOR: "Unix Makefiles"
           CTEST_COVERAGE_COMMAND: /usr/bin/gcov
           CTEST_CACHE: |
               BUILD_DOCUMENTS:BOOL=OFF
@@ -51,9 +50,6 @@ jobs:
               CMAKE_CXX_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
               CMAKE_C_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
               CMAKE_EXE_LINKER_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
-              CMAKE_JOB_POOLS:STRING=compile=2;link=1
-              CMAKE_JOB_POOL_COMPILE:STRING=compile
-              CMAKE_JOB_POOL_LINK:STRING=link
               COVERAGE_COMMAND:PATH=/usr/bin/gcov
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
               WRAP_DEFAULT:BOOL=OFF
