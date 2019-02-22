@@ -14,13 +14,6 @@ SET(CTEST_CUSTOM_COVERAGE_EXCLUDE
 
  # Exclude files from the Testing directories
  ".*/Testing/.*"
-
- # Exclude files from the Utilities directories
- ".*/Utilities/.*"
-
- # exclude certain wrapping files
- "/Wrapping/SimpleITKLuaMain.cxx"
- "/Wrapping/.*_wrap.cxx"
  )
 
 SET(CTEST_CUSTOM_WARNING_EXCEPTION
