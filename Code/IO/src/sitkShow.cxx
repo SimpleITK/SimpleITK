@@ -592,8 +592,6 @@ namespace itk
         itksysProcess_Delete( kp );
         sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
       }
-
-    itksysProcess_Delete( kp );
   }
 
   void Show( const Image &image, const std::string& title, const bool debugOn)
