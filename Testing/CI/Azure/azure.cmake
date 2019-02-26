@@ -49,12 +49,11 @@ set_from_env(CTEST_COVERAGE_COMMAND "CTEST_COVERAGE_COMMAND")
 set(dashboard_loop 0)
 
 
-
 if(NOT CTEST_BUILD_NAME)
   if(DEFINED ENV{SYSTEM_PULLREQUEST_SOURCEBRANCH})
     set(branch "-$ENV{SYSTEM_PULLREQUEST_SOURCEBRANCH}")
     set(dashboard_model "Experimental")
-  elseif(ENV{BUILD_SOURCEBRANCHNAME} STREQUAL "master")
+  elseif("$ENV{BUILD_SOURCEBRANCHNAME}" STREQUAL "master")
     set(branch "-master")
     set(dashboard_model "Continuous")
   else()
@@ -68,8 +67,7 @@ if(NOT CTEST_BUILD_NAME)
     set(pr "")
   endif()
 
-  set(CTEST_BUILD_NAME
-    "$ENV{AGENT_OS}-Build$ENV{BUILD_BUILDID}${pr}${branch}${wrapping}")
+  set(CTEST_BUILD_NAME "$ENV{AGENT_NAME}-$ENV{AGENT_JOBNAME}-$ENV{BUILD_BUILDID}${pr}${branch}")
 endif()
 
 if ( EXISTS "${CTEST_SOURCE_DIRECTORY}/azure.yml")
