@@ -1,9 +1,6 @@
 trigger:
-  batch: true
-  branches:
-    include:
-      - master
-      - release
+  - master
+  - release
 pr: none
 jobs:
   - job: 'VS19'
