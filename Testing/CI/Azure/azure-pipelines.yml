@@ -117,7 +117,15 @@ jobs:
           cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
         displayName: Download dashboard scripts and testing data
         workingDirectory: $(Agent.BuildDirectory)
-      - script: python -m pip install ninja
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+                python --version
+                python -m pip install ninja
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
