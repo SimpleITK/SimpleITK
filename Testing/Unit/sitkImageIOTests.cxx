@@ -578,9 +578,9 @@ TEST(IO, ImageFileReader_ImageInformation )
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), image.GetOrigin(), 1e-6);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v3(0.859375, 0.8593899, 1.600000 ), 1e-6);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), image.GetSpacing(), 1e-6);
-  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v9(1, 0, 0,
-                                                      0, 0.46665081166793676, -0.88444164305490258,
-                                                      -0, 0.88444164305490258, 0.46665081166793676 ), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v9(1, 0, -0,
+                                                      0,  0.46665081166793676, 0.88444164305490258,
+                                                      0, -0.88444164305490258, 0.46665081166793676 ), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), image.GetDirection(), 1e-16);
   EXPECT_VECTOR_NEAR(reader.GetSize(), v3(256.0, 256.0, 1.0), 1e-10);
 
