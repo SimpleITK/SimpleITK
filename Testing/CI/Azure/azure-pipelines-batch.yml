@@ -1,35 +1,50 @@
 trigger:
+
   - master
   - release
+variables:
+  ExternalDataVersion: 1.2.0
 pr: none
 jobs:
-  - job: 'VS19'
+  - job: VS2019
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
     pool:
-      name: 'Default'
-      demands:
-      - VisualStudio_16.0
-    timeoutInMinutes: 360
-    workspace:
-      clean: all
+      vmImage: 'windows-2019'
+
     steps:
-        - script: |
-            git clone -b dashboard --single-branch $(Build.Repository.Uri) SimpleITK-dashboard
-          displayName: Download dashboard scripts and testing data
-          workingDirectory: $(Agent.BuildDirectory)
-        - script: |
-            env
-            cmake --version
-            ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
-          displayName: Build and test
-          env:
-            CTEST_BUILD_CONFIGURATION: MinSizeRel
-            CTEST_OUTPUT_ON_FALURE: 1
-            CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
-            DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
-            ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-            CXXFLAGS: /MP
-            CFLAGS: /MP
-          workingDirectory: $(Agent.BuildDirectory)
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - script: |
+          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
+        displayName: Checkout pull request HEAD
+      - bash: |
+          set -x
+          # 3.14.0 is required for VS2019 by 3.14.0-rc3 does not detect the VS2019 installation
+          choco install cmake.portable --pre  --version 3.14.0-rc2
+        displayName: "Chocolatey install..."
+      - bash: |
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
+        displayName: Download dashboard scripts and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+
   - job: 'LinuxGCC'
     pool:
       name: 'Default'
