@@ -134,9 +134,7 @@ namespace itk {
       PixelIDValueType pixelType;
       this->GetPixelIDFromImageIO(iobase, pixelType, m_Dimension);
 
-      std::vector<double> direction;
-
-      direction.reserve(m_Dimension*m_Dimension);
+      std::vector<double> direction(m_Dimension*m_Dimension);
 
       std::vector<double> origin(m_Dimension);
       std::vector<double> spacing(m_Dimension);
@@ -146,8 +144,10 @@ namespace itk {
         origin[i] = iobase->GetOrigin(i);
         spacing[i] = iobase->GetSpacing(i);
         size[i] = iobase->GetDimensions(i);
-        const  std::vector< double > temp_direction = iobase->GetDirection(i);
-        direction.insert(direction.end(), temp_direction.begin(), temp_direction.end());
+        for( unsigned int col = 0; col < m_Dimension; ++col)
+          {
+          direction[i*m_Dimension+col] = iobase->GetDirection(col)[i];
+          }
         }
 
       // release functions bound to old meta data dictionary
