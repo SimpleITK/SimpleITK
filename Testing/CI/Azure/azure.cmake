@@ -12,9 +12,11 @@ function(set_from_env var env_var)
     if (ARGV2 STREQUAL "REQUIRED")
       message(FATAL_ERROR "Required environment variable \"${env_var}\" not defined.")
     elseif (ARGV2 STREQUAL "DEFAULT")
+      message("Setting \"${var}\" to default \"${ARGV3}\".")
       set(${var} ${ARGV3} PARENT_SCOPE)
     endif()
   else()
+    message("Setting \"${var}\" to \"$ENV{${env_var}}\" from environment.")
     set(${var} $ENV{${env_var}} PARENT_SCOPE)
   endif()
 endfunction()
@@ -34,23 +36,26 @@ set_from_env(CTEST_CMAKE_GENERATOR "CTEST_CMAKE_GENERATOR" DEFAULT "Ninja" )
 set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" DEFAULT "Release")
 set_from_env(CTEST_SOURCE_DIRECTORY "BUILD_SOURCESDIRECTORY" REQUIRED)
 #set_from_env(CTEST_BINARY_DIRECTORY "CTEST_BINARY_DIRECTORY")
-#set_from_env(CTEST_BUILD_FLAGS "CTEST_BUILD_FLAGS")
+set_from_env(CTEST_BUILD_FLAGS "CTEST_BUILD_FLAGS")
 set_from_env(CTEST_BUILD_TARGET "CTEST_BUILD_TARGET")
 set_from_env(CTEST_TEST_ARGS "CTEST_TEST_ARGS")
 
 
 set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
+
+set_from_env(dashboard_do_coverage "DASHBOARD_DO_COVERAGE" 0)
+set_from_env(CTEST_COVERAGE_COMMAND "CTEST_COVERAGE_COMMAND")
+
 # Construct build name based on what is being built
 set(dashboard_loop 0)
-
 
 
 if(NOT CTEST_BUILD_NAME)
   if(DEFINED ENV{SYSTEM_PULLREQUEST_SOURCEBRANCH})
     set(branch "-$ENV{SYSTEM_PULLREQUEST_SOURCEBRANCH}")
     set(dashboard_model "Experimental")
-  elseif(ENV{BUILD_SOURCEBRANCHNAME} STREQUAL "master")
+  elseif("$ENV{BUILD_SOURCEBRANCHNAME}" STREQUAL "master")
     set(branch "-master")
     set(dashboard_model "Continuous")
   else()
@@ -64,8 +69,7 @@ if(NOT CTEST_BUILD_NAME)
     set(pr "")
   endif()
 
-  set(CTEST_BUILD_NAME
-    "$ENV{AGENT_OS}-Build$ENV{BUILD_BUILDID}${pr}${branch}${wrapping}")
+  set(CTEST_BUILD_NAME "$ENV{AGENT_NAME}-$ENV{AGENT_JOBNAME}-$ENV{BUILD_BUILDID}${pr}${branch}")
 endif()
 
 if ( EXISTS "${CTEST_SOURCE_DIRECTORY}/azure.yml")

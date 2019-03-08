@@ -34,7 +34,16 @@ jobs:
           cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
         displayName: Download dashboard scripts and testing data
         workingDirectory: $(Agent.BuildDirectory)
-      - script: sudo python -m pip install ninja
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+          python --version
+          sudo python -m pip install setuptools
+          sudo python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
@@ -49,6 +58,17 @@ jobs:
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
         workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'
+
   - job: macOS
     timeoutInMinutes: 0
     cancelTimeoutInMinutes: 300
@@ -79,7 +99,10 @@ jobs:
           versionSpec: '3.6'
           architecture: 'x64'
           addToPath: true
-      - script: sudo python -m pip install ninja
+      - script: |
+          python --version
+          sudo python -m pip install setuptools
+          sudo python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
@@ -94,6 +117,16 @@ jobs:
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
         workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'
 
   - job: Windows
     timeoutInMinutes: 0
@@ -117,7 +150,16 @@ jobs:
           cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
         displayName: Download dashboard scripts and testing data
         workingDirectory: $(Agent.BuildDirectory)
-      - script: python -m pip install ninja
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+          python --version
+          python -m pip install setuptools
+          python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
@@ -132,3 +174,13 @@ jobs:
           CXXFLAGS: /MP
           CFLAGS: /MP
         workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'

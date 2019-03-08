@@ -1,0 +1,93 @@
+trigger:
+
+  - master
+  - release
+variables:
+  ExternalDataVersion: 1.2.0
+pr: none
+jobs:
+  - job: VS2019
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'windows-2019'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - script: |
+          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
+        displayName: Checkout pull request HEAD
+      - bash: |
+          set -x
+          # 3.14.0 is required for VS2019 by 3.14.0-rc3 does not detect the VS2019 installation
+          choco install cmake.portable --pre  --version 3.14.0-rc2
+        displayName: "Chocolatey install..."
+      - bash: |
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
+        displayName: Download dashboard scripts and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        env:
+          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+
+  - job: 'LinuxGCC'
+    pool:
+      name: 'Default'
+      demands:
+      - Agent.OS -equals Linux
+    strategy:
+      matrix:
+       default: {}
+       devtools-3:
+         env_file: '/opt/rh/devtoolset-3/enable'
+       devtools-4:
+         env_file: '/opt/rh/devtoolset-4/enable'
+       devtools-6:
+         env_file: '/opt/rh/devtoolset-6/enable'
+       devtools-7:
+         env_file: '/opt/rh/devtoolset-7/enable'
+       devtools-8:
+         env_file: '/opt/rh/devtoolset-8/enable'
+    timeoutInMinutes: 360
+    workspace:
+      clean: all
+    steps:
+        - script: |
+            git clone -b dashboard --single-branch $(Build.Repository.Uri) SimpleITK-dashboard
+          displayName: Download dashboard scripts and testing data
+          workingDirectory: $(Agent.BuildDirectory)
+        - script: |
+            [[ ! -z "$(env_file)" ]] && source $(env_file)
+            cmake --version
+            gcc --version
+            ccache -p
+            ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+            ccache --show-stats
+          displayName: Build and test
+          env:
+            CTEST_OUTPUT_ON_FALURE: 1
+            DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+            CTEST_CACHE: |
+              BUILD_DOCUMENTS:BOOL=OFF
+              BUILD_EXAMPLES:BOOL=ON
+              BUILD_SHARED_LIBS:BOOL=OFF
+              BUILD_TESTING:BOOL=ON
+              WRAP_DEFAULT:BOOL=ON
+              CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
+              CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
+          workingDirectory: $(Agent.BuildDirectory)
