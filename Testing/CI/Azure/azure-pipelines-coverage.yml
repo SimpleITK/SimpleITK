@@ -1,0 +1,59 @@
+# Nightly Coverage
+
+trigger:
+  branches:
+    exclude:
+    - "*"
+pr: none
+
+variables:
+  ExternalDataVersion: 1.2.0
+jobs:
+  - job: Linux
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'Ubuntu-16.04'
+
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - bash: |
+          set -x
+          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+            git checkout $(System.PullRequest.SourceCommitId)
+          fi
+      - bash: |
+          set -x
+          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+
+          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
+        displayName: Download dashboard scripts and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - bash: |
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake
+        displayName: Build and test with coverage
+        env:
+          CTEST_BUILD_CONFIGURATION: Debug
+          CTEST_BUILD_FLAGS: -j 2
+          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_CMAKE_GENERATOR: "Unix Makefiles"
+          CTEST_COVERAGE_COMMAND: /usr/bin/gcov
+          CTEST_CACHE: |
+              BUILD_DOCUMENTS:BOOL=OFF
+              BUILD_EXAMPLES:BOOL=OFF
+              BUILD_SHARED_LIBS:BOOL=OFF
+              BUILD_TESTING:BOOL=ON
+              CMAKE_CXX_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+              CMAKE_C_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+              CMAKE_EXE_LINKER_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+              COVERAGE_COMMAND:PATH=/usr/bin/gcov
+              SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
+              WRAP_DEFAULT:BOOL=OFF
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          DASHBOARD_DO_COVERAGE: 1
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 1
+        workingDirectory: $(Agent.BuildDirectory)
