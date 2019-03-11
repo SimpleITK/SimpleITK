@@ -563,23 +563,32 @@ TEST(IO, ImageFileReader_ImageInformation )
   EXPECT_ANY_THROW( reader.GetMetaData("nothing") );
 
 
+  sitk::Image image = sitk::ReadImage(dicomFile1);
   reader.ReadImageInformation();
 
   EXPECT_EQ(reader.GetPixelID(), sitk::sitkInt16);
+  EXPECT_EQ(reader.GetPixelID(), image.GetPixelID());
   EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkInt16);
+  EXPECT_EQ(reader.GetPixelIDValue(), image.GetPixelIDValue());
   EXPECT_EQ(reader.GetDimension(), 3u);
+  EXPECT_EQ(reader.GetDimension(), image.GetDimension());
   EXPECT_EQ(reader.GetNumberOfComponents(), 1u);
+  EXPECT_EQ(reader.GetNumberOfComponents(), image.GetNumberOfComponentsPerPixel());
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), v3(-112, -21.687999, 126.894000 ), 1e-6);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), image.GetOrigin(), 1e-6);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v3(0.859375, 0.8593899, 1.600000 ), 1e-6);
-  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v9(1, 0, 0,
-                                                      0, 0.46665081166793676, -0.88444164305490258,
-                                                      -0, 0.88444164305490258, 0.46665081166793676 ), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), image.GetSpacing(), 1e-6);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v9(1, 0, -0,
+                                                      0,  0.46665081166793676, 0.88444164305490258,
+                                                      0, -0.88444164305490258, 0.46665081166793676 ), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), image.GetDirection(), 1e-16);
   EXPECT_VECTOR_NEAR(reader.GetSize(), v3(256.0, 256.0, 1.0), 1e-10);
 
   std::vector<std::string> keys = reader.GetMetaDataKeys();
   for(unsigned int i = 0; i < keys.size(); ++i )
     {
     EXPECT_TRUE( reader.HasMetaDataKey(keys[i]) );
+    EXPECT_TRUE( image.HasMetaDataKey(keys[i]) );
     EXPECT_NO_THROW( reader.GetMetaData( keys[i]) );
     }
   EXPECT_EQ(reader.GetMetaData( "0008|0031"), "153128");

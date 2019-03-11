@@ -40,7 +40,10 @@ namespace itk {
      *
      * An interface is also provided to access the information from
      * the underlying itk::ImageIO. This information can be loaded
-     * with the ReadImageInformation method.
+     * with the ReadImageInformation method. The information is from
+     * the itk::ImageIO interface. In some degenerate cases reading
+     * the bulk data may produce different results. Please see
+     * itk::ImageFileReader for more details.
      *
      * Reading takes place by the ITK ImageIO factory mechanism. ITK
      * contains many ImageIO classes which are responsible for reading
