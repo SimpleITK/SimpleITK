@@ -9,12 +9,13 @@ pr: none
 variables:
   ExternalDataVersion: 1.2.0
 jobs:
-  - job: Linux
+  - job: LinuxCoverage
     timeoutInMinutes: 0
     cancelTimeoutInMinutes: 300
     pool:
-      vmImage: 'Ubuntu-16.04'
-
+      name: 'Default'
+      demands:
+      - Agent.OS -equals Linux
     steps:
       - checkout: self
         clean: true
@@ -38,9 +39,7 @@ jobs:
         displayName: Build and test with coverage
         env:
           CTEST_BUILD_CONFIGURATION: Debug
-          CTEST_BUILD_FLAGS: -j 2
           CTEST_OUTPUT_ON_FALURE: 1
-          CTEST_CMAKE_GENERATOR: "Unix Makefiles"
           CTEST_COVERAGE_COMMAND: /usr/bin/gcov
           CTEST_CACHE: |
               BUILD_DOCUMENTS:BOOL=OFF
