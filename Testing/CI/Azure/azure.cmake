@@ -37,6 +37,9 @@ file(RELATIVE_PATH dashboard_source_name "${workspace}" "$ENV{BUILD_SOURCESDIREC
 
 # Make environment variables to CMake variables for CTest
 set_from_env(CTEST_CMAKE_GENERATOR "CTEST_CMAKE_GENERATOR" DEFAULT "Ninja" )
+if (DEFINED ENV{CTEST_BUILD_CONFIGURATION})
+  message(WARNING "Ignoring depricated variable CTEST_BUILD_CONFIGURATION")
+endif()
 set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" DEFAULT "Release")
 set_from_env(CTEST_SOURCE_DIRECTORY "BUILD_SOURCESDIRECTORY" REQUIRED)
 #set_from_env(CTEST_BINARY_DIRECTORY "CTEST_BINARY_DIRECTORY")

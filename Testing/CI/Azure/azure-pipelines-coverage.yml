@@ -38,7 +38,7 @@ jobs:
           ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake
         displayName: Build and test with coverage
         env:
-          CTEST_BUILD_CONFIGURATION: Debug
+          CTEST_CONFIGURATION_TYPE: Debug
           CTEST_OUTPUT_ON_FALURE: 1
           CTEST_COVERAGE_COMMAND: /usr/bin/gcov
           CTEST_CACHE: |
@@ -92,7 +92,7 @@ jobs:
           CTEST_MEMORYCHECK_COMMAND_OPTIONS: "--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes"
           CTEST_OUTPUT_ON_FALURE: 1
           CTEST_TEST_TIMEOUT: 10000
-          CTEST_BUILD_CONFIGURATION: "Debug"
+          CTEST_CONFIGURATION_TYPE: Debug
           CTEST_CACHE: |
             BUILD_SHARED_LIBS:BOOL=ON
             SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
