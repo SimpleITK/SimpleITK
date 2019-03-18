@@ -25,8 +25,12 @@ set_from_env(CTEST_SITE "AGENT_MACHINENAME" REQUIRED)
 set(CTEST_SITE "Azure.${CTEST_SITE}")
 set(CTEST_UPDATE_VERSION_ONLY 1)
 
-set_from_env(PARALLEL_LEVEL "PARALLEL_LEVEL" DEFAULT 2 )
+include( ProcessorCount )
+ProcessorCount( _processor_count )
+set_from_env(PARALLEL_LEVEL "PARALLEL_LEVEL" DEFAULT "${_processor_count}" )
 set( CTEST_TEST_ARGS ${CTEST_TEST_ARGS} PARALLEL_LEVEL ${PARALLEL_LEVEL})
+
+
 set_from_env(workspace "AGENT_BUILDDIRECTORY" REQUIRED)
 file(TO_CMAKE_PATH "${workspace}" CTEST_DASHBOARD_ROOT)
 file(RELATIVE_PATH dashboard_source_name "${workspace}" "$ENV{BUILD_SOURCESDIRECTORY}")
