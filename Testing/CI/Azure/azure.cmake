@@ -45,11 +45,18 @@ set_from_env(CTEST_BUILD_TARGET "CTEST_BUILD_TARGET")
 set_from_env(CTEST_TEST_ARGS "CTEST_TEST_ARGS")
 
 
+set_from_env(CTEST_TEST_TIMEOUT "CTEST_TEST_TIMEOUT")
+
 set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
 
 set_from_env(dashboard_do_coverage "DASHBOARD_DO_COVERAGE" 0)
 set_from_env(CTEST_COVERAGE_COMMAND "CTEST_COVERAGE_COMMAND")
+
+set_from_env(dashboard_do_memcheck "DASHBOARD_DO_MEMCHECK" 0)
+set_from_env(CTEST_MEMORYCHECK_COMMAND "CTEST_MEMORYCHECK_COMMAND")
+set_from_env(CTEST_MEMORYCHECK_COMMAND_OPTIONS "CTEST_MEMORYCHECK_COMMAND_OPTIONS")
+
 
 # Construct build name based on what is being built
 set(dashboard_loop 0)

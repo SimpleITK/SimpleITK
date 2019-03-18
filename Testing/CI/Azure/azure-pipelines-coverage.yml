@@ -56,3 +56,49 @@ jobs:
           DASHBOARD_DO_COVERAGE: 1
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 1
         workingDirectory: $(Agent.BuildDirectory)
+  - job: 'LinuxValgrind'
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      name: 'Default'
+      demands:
+      - Agent.OS -equals Linux
+    workspace:
+      clean: all
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - bash: |
+          set -x
+          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+            git checkout $(System.PullRequest.SourceCommitId)
+          fi
+      - script: |
+          git clone -b dashboard --single-branch $(Build.Repository.Uri) SimpleITK-dashboard
+        displayName: Download dashboard scripts and testing data
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          [[ ! -z "$(env_file)" ]] && source $(env_file)
+          cmake --version
+          gcc --version
+          ccache -p
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+        displayName: Build and test
+        env:
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          DASHBOARD_DO_MEMCHECK: 1
+          CTEST_MEMORYCHECK_COMMAND: "/usr/bin/valgrind"
+          CTEST_MEMORYCHECK_COMMAND_OPTIONS: "--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes"
+          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_TEST_TIMEOUT: 10000
+          CTEST_BUILD_CONFIGURATION: "Debug"
+          CTEST_CACHE: |
+            BUILD_SHARED_LIBS:BOOL=ON
+            SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
+            WRAP_DEFAULT:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
+            CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
+        workingDirectory: $(Agent.BuildDirectory)
