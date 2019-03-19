@@ -16,6 +16,8 @@ jobs:
       name: 'Default'
       demands:
       - Agent.OS -equals Linux
+    workspace:
+      clean: all
     steps:
       - checkout: self
         clean: true
@@ -99,6 +101,4 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
-            CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
-            CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
         workingDirectory: $(Agent.BuildDirectory)
