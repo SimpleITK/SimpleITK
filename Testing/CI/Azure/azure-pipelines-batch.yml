@@ -38,7 +38,7 @@ jobs:
         displayName: Build and test
         workingDirectory: $(Agent.BuildDirectory)
         env:
-          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
