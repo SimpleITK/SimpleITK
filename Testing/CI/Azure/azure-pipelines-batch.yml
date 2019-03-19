@@ -4,6 +4,7 @@ trigger:
   - release
 variables:
   ExternalDataVersion: 1.2.0
+  ctest.cache: ''
 pr: none
 jobs:
   - job: VS2019
@@ -90,4 +91,5 @@ jobs:
               WRAP_DEFAULT:BOOL=ON
               CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
               CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
+              $(ctest.cache)
           workingDirectory: $(Agent.BuildDirectory)
