@@ -47,6 +47,7 @@ jobs:
           CFLAGS: /MP
 
   - job: 'LinuxGCC'
+    timeoutInMinutes: 360
     pool:
       name: 'Default'
       demands:
@@ -54,6 +55,10 @@ jobs:
     strategy:
       matrix:
        default: {}
+       ITK-master:
+         ctest.cache: |
+           ITK_GIT_TAG:STRING=master
+           CMAKE_CXX_STANDARD:STRING=11
        devtools-3:
          env_file: '/opt/rh/devtoolset-3/enable'
        devtools-4:
@@ -64,7 +69,6 @@ jobs:
          env_file: '/opt/rh/devtoolset-7/enable'
        devtools-8:
          env_file: '/opt/rh/devtoolset-8/enable'
-    timeoutInMinutes: 360
     workspace:
       clean: all
     steps:
