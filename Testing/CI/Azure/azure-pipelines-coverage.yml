@@ -16,6 +16,8 @@ jobs:
       name: 'Default'
       demands:
       - Agent.OS -equals Linux
+    workspace:
+      clean: all
     steps:
       - checkout: self
         clean: true
