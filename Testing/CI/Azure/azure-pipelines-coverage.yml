@@ -40,6 +40,7 @@ jobs:
           ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake
         displayName: Build and test with coverage
         env:
+          CCACHE_DISABLE: 1
           CTEST_CONFIGURATION_TYPE: Debug
           CTEST_OUTPUT_ON_FALURE: 1
           CTEST_COVERAGE_COMMAND: /usr/bin/gcov
@@ -88,6 +89,7 @@ jobs:
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
         displayName: Build and test
         env:
+          CCACHE_DISABLE: 1
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           DASHBOARD_DO_MEMCHECK: 1
           CTEST_MEMORYCHECK_COMMAND: "/usr/bin/valgrind"
