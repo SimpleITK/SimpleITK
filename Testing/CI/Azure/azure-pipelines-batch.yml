@@ -81,7 +81,6 @@ jobs:
             gcc --version
             ccache -p
             ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
-            ccache --show-stats
           displayName: Build and test
           env:
             CTEST_OUTPUT_ON_FALURE: 1
