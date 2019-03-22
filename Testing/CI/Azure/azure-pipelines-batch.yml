@@ -71,6 +71,11 @@ jobs:
     workspace:
       clean: all
     steps:
+        - bash: |
+            set -x
+            if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+              git checkout $(System.PullRequest.SourceCommitId)
+            fi
         - script: |
             git clone -b dashboard --single-branch $(Build.Repository.Uri) SimpleITK-dashboard
           displayName: Download dashboard scripts and testing data
