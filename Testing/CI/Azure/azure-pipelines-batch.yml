@@ -22,9 +22,9 @@ jobs:
         displayName: Checkout pull request HEAD
       - bash: |
           set -x
-          # 3.14.0 is required for VS2019 by 3.14.0-rc3 does not detect the VS2019 installation
-          choco install cmake.portable --pre  --version 3.14.0-rc2
-        displayName: "Chocolatey install..."
+          # Atleast 3.14 is required for VS2019, install the latest
+          choco install cmake.portable
+        displayName: "Chocolatey install of CMake..."
       - bash: |
           git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
 
