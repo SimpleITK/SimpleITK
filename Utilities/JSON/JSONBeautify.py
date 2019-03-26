@@ -12,14 +12,11 @@ except ImportError:
 
 fname = sys.argv[1]
 
-print "Processing ", fname
+print( "Processing ", fname)
 
-fp = file( fname, "r" )
-j = json.load( fp,object_pairs_hook=OrderedDict )
-fp.close()
+with open( fname, "r" ) as fp:
+    j = json.load( fp, object_pairs_hook=OrderedDict )
 
-
-fp = file( fname, "w" )
-json.dump( j, fp, indent=2, separators=(',',' : ') )
-print  >>fp, ""
-fp.close()
+with open( fname, "w" ) as fp:
+    json.dump( j, fp, indent=2, separators=(',',' : ') )
+    print("", file=fp)
