@@ -18,6 +18,17 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethod2
     0.02
   )
 
+sitk_add_csharp_test( Example.ImageRegistrationMethod2
+  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod2.cs"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  ${SimpleITK_TEST_OUTPUT_DIR}/CSharpImageRegistrationMethod2Test.hdf5
+  TRANSFORM_COMPARE
+    ${SimpleITK_TEST_OUTPUT_DIR}/CSharpImageRegistrationMethod2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
+    0.02
+  )
+
 sitk_add_python_test( Example.ImageRegistrationMethod2
   "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod2.py"
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
