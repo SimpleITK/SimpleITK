@@ -297,13 +297,13 @@ your fellow users you can install the package in a local directory:
 
  mkdir my_R_libs
 
-2. Add an environment variable to your .bashrc
+2. In your home directory create a file named .Renviron with the following line
 
 .. code-block :: bash
 
- export R_LIBS="/path_to/my_R_libs"
+  R_LIBS_USER="/path_to/my_R_libs"
 
-3. source your .bashrc and check the R library path, in an R shell
+3. Check that the R library paths include this directory, in an R shell or from RStudio:
 
 .. code-block :: R
 
