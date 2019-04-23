@@ -2,10 +2,19 @@
   "name" : "CannySegmentationLevelSetImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "RealPixelIDTypeList",
   "filter_type" : "itk::CannySegmentationLevelSetImageFilter<InputImageType, InputImageType>",
-  "custom_set_input" : "filter->SetInput( image1 ); filter->SetFeatureImage( image2 );",
+  "inputs" : [
+    {
+      "name" : "InitialImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "FeatureImage",
+      "type" : "Image"
+    }
+  ],
   "members" : [
     {
       "name" : "Threshold",
@@ -85,7 +94,7 @@
       "name" : "CannyImage",
       "type" : "Image",
       "default" : "Image()",
-      "custom_itk_cast" : "this->CastITKToImage(filter->GetCannyImage());",
+      "custom_itk_cast" : "this->m_CannyImage = this->CastITKToImage(filter->GetCannyImage());",
       "no_print" : true,
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the Canny image that was used to create the speed and advection images"
