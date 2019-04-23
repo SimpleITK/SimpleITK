@@ -20,11 +20,6 @@ jobs:
           if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
         displayName: Checkout pull request HEAD
       - bash: |
-          set -x
-          # Atleast 3.14 is required for VS2019, install the latest
-          choco install cmake.portable
-        displayName: "Chocolatey install of CMake..."
-      - bash: |
           git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
 
           curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
