@@ -1,0 +1,33 @@
+parameters:
+  downloadData: True  # defaults for any parameters that aren't specified
+
+steps:
+     - checkout: self
+       clean: true
+     - ${{ if ne(variables['Agent.OS'], 'Windows_NT') }}:
+       - bash: |
+           set -x
+           if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
+             git checkout $(System.PullRequest.SourceCommitId)
+           fi
+         displayName: Checkout pull request HEAD
+       - bash: |
+           set -x
+           git clone -b dashboard --depth 1 --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+         displayName: Download dashboard scripts and testing data
+         workingDirectory: $(Agent.BuildDirectory)
+     - ${{ if eq(variables['Agent.OS'], 'Windows_NT') }}:
+       - script: |
+           if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
+         displayName: Checkout pull request HEAD
+       - script: |
+           git clone -b dashboard  --depth 1 --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
+         workingDirectory: $(Agent.BuildDirectory)
+         displayName: 'Download dashboard script'
+     - ${{ if parameters.downloadData }}:
+       - script: |
+           curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
+           cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
+           cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
+         workingDirectory: $(Agent.BuildDirectory)
+         displayName: 'Download test data'
