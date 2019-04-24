@@ -17,22 +17,7 @@ jobs:
       vmImage: 'Ubuntu-16.04'
 
     steps:
-      - checkout: self
-        clean: true
-      - bash: |
-          set -x
-          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
-            git checkout $(System.PullRequest.SourceCommitId)
-          fi
-      - bash: |
-          set -x
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
-        displayName: Download dashboard scripts and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
@@ -82,22 +67,7 @@ jobs:
       vmImage: 'macOS-10.13'
 
     steps:
-      - checkout: self
-        clean: true
-      - bash: |
-          set -x
-          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
-            git checkout $(System.PullRequest.SourceCommitId)
-          fi
-      - bash: |
-          set -x
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
-        displayName: Download dashboard scripts  and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
@@ -146,22 +116,8 @@ jobs:
     cancelTimeoutInMinutes: 300
     pool:
       vmImage: 'vs2017-win2016'
-
     steps:
-      - checkout: self
-        clean: true
-      - script: |
-          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
-        displayName: Checkout pull request HEAD
-      - bash: |
-          set -x
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
-        displayName: Download dashboard scripts and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:

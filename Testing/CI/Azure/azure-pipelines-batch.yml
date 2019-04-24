@@ -14,19 +14,7 @@ jobs:
       vmImage: 'windows-2019'
 
     steps:
-      - checkout: self
-        clean: true
-      - script: |
-          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
-        displayName: Checkout pull request HEAD
-      - bash: |
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
-        displayName: Download dashboard scripts and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - script: |
           cmake --version
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
@@ -66,10 +54,7 @@ jobs:
     workspace:
       clean: all
     steps:
-        - script: |
-            git clone -b dashboard --single-branch $(Build.Repository.Uri) SimpleITK-dashboard
-          displayName: Download dashboard scripts and testing data
-          workingDirectory: $(Agent.BuildDirectory)
+        - template: templates/git-download-steps.yml
         - script: |
             [[ ! -z "$(env_file)" ]] && source $(env_file)
             cmake --version
