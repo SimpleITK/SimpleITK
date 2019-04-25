@@ -1,0 +1,78 @@
+trigger:
+
+  - master
+  - release
+variables:
+  ExternalDataVersion: 1.2.0
+  ctest.cache: ''
+pr: none
+jobs:
+  - job: VS2019
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'windows-2019'
+
+    steps:
+      - template: templates/git-download-steps.yml
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        env:
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+
+  - job: 'LinuxGCC'
+    timeoutInMinutes: 360
+    pool:
+      name: 'Default'
+      demands:
+      - Agent.OS -equals Linux
+    strategy:
+      matrix:
+       default: {}
+       ITK-master:
+         ctest.cache: |
+           ITK_GIT_TAG:STRING=master
+           CMAKE_CXX_STANDARD:STRING=11
+       devtools-3:
+         env_file: '/opt/rh/devtoolset-3/enable'
+       devtools-4:
+         env_file: '/opt/rh/devtoolset-4/enable'
+       devtools-6:
+         env_file: '/opt/rh/devtoolset-6/enable'
+       devtools-7:
+         env_file: '/opt/rh/devtoolset-7/enable'
+       devtools-8:
+         env_file: '/opt/rh/devtoolset-8/enable'
+    workspace:
+      clean: all
+    steps:
+        - template: templates/git-download-steps.yml
+        - script: |
+            [[ ! -z "$(env_file)" ]] && source $(env_file)
+            cmake --version
+            gcc --version
+            ccache -p
+            ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+            ccache --show-stats
+          displayName: Build and test
+          env:
+            CTEST_OUTPUT_ON_FALURE: 1
+            DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+            CTEST_CACHE: |
+              BUILD_DOCUMENTS:BOOL=OFF
+              BUILD_EXAMPLES:BOOL=ON
+              BUILD_SHARED_LIBS:BOOL=OFF
+              BUILD_TESTING:BOOL=ON
+              WRAP_DEFAULT:BOOL=ON
+              CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
+              CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
+              $(ctest.cache)
+          workingDirectory: $(Agent.BuildDirectory)
