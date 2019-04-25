@@ -1,61 +1,161 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
   - master
+  - next
   - release
 variables:
   ExternalDataVersion: 1.2.0
-strategy:
-  maxParallel: 2
-  matrix:
-    XCode_10:
-      imageName: 'macos-10.13'
-      xcodeVersion: 10.2
+jobs:
+  - job: Linux
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'Ubuntu-16.04'
 
-pool:
-  vmImage: $(imageName)
+    steps:
+      - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+          python --version
+          sudo python -m pip install setuptools
+          sudo python -m pip install ninja scikit-ci-addons
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_JAVA:BOOL=ON
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'
 
-steps:
-  - template: templates/git-download-steps.yml
-  - task: UsePythonVersion@0
-    displayName: Enable Python
-    inputs:
-      versionSpec: '3.6'
-      architecture: 'x64'
-      addToPath: true
-  - script: |
-      python --version
-      sudo python -m pip install setuptools numpy
-      sudo python -m pip install ninja scikit-ci-addons
-    displayName: 'Install ninja dependency'
-  - bash: |
-      set -x
-      env
-      sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer/
-      c++ --version
-      cmake --version
-      ninja --version
-      ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
-    displayName: Build and test
-    env:
-      CTEST_CONFIGURATION_TYPE: MinSizeRel
-      CTEST_OUTPUT_ON_FALURE: 1
-      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
-      ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-      CTEST_CACHE: |
-        BUILD_DOCUMENTS:BOOL=OFF
-        BUILD_EXAMPLES:BOOL=ON
-        BUILD_SHARED_LIBS:BOOL=OFF
-        BUILD_TESTING:BOOL=ON
-        WRAP_DEFAULT:BOOL=OFF
-        WRAP_PYTHON:BOOL=ON
-        WRAP_JAVA:BOOL=ON
-    workingDirectory: $(Agent.BuildDirectory)
-  - script: |
-      ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-    condition: succeededOrFailed()
-    displayName: 'Format CTest output in JUnit format'
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-      testRunTitle: 'CTest $(Agent.OS)'
-    condition: succeededOrFailed()
-    displayName: 'Publish test results'
+  - job: macOS
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'macOS-10.13'
+
+    steps:
+      - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+          python --version
+          sudo python -m pip install setuptools numpy
+          sudo python -m pip install ninja scikit-ci-addons
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_PYTHON:BOOL=ON
+            WRAP_JAVA:BOOL=ON
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'
+
+  - job: Windows
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+          python --version
+          python -m pip install setuptools
+          python -m pip install ninja scikit-ci-addons
+        displayName: 'Install ninja dependency'
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
+        displayName: Build and test
+        env:
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_CSHARP:BOOL=ON
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'
