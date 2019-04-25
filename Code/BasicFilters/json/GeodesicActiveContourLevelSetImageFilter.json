@@ -2,11 +2,20 @@
   "name" : "GeodesicActiveContourLevelSetImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "doc" : "Level Set filter that uses propagation, curvature and advection terms.",
   "pixel_types" : "RealPixelIDTypeList",
   "filter_type" : "itk::GeodesicActiveContourLevelSetImageFilter<InputImageType, InputImageType>",
-  "custom_set_input" : "filter->SetInput( image1 ); filter->SetFeatureImage( image2 );",
+  "inputs" : [
+    {
+      "name" : "InitialImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "FeatureImage",
+      "type" : "Image"
+    }
+  ],
   "members" : [
     {
       "name" : "MaximumRMSError",
