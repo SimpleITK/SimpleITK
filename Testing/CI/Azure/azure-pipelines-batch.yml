@@ -4,7 +4,7 @@ trigger:
   - release
 variables:
   ExternalDataVersion: 1.2.0
-  ctest.cache: ''
+  ctest.cache_extra: ''
 pr: none
 jobs:
   - job: VS2019
@@ -38,7 +38,7 @@ jobs:
       matrix:
        default: {}
        ITK-master:
-         ctest.cache: |
+         ctest.cache_extra: |
            ITK_GIT_TAG:STRING=master
            CMAKE_CXX_STANDARD:STRING=11
        devtools-3:
@@ -74,5 +74,5 @@ jobs:
               WRAP_DEFAULT:BOOL=ON
               CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
               CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
-              $(ctest.cache)
+              $(ctest.cache_extra)
           workingDirectory: $(Agent.BuildDirectory)
