@@ -23,3 +23,14 @@ set_tests_properties( CSharp.Example.ImageGetBuffer
     "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.ConnectedThresholdOutput2.png"
     "a9695df04cde5b9c5481d8c253a5b3aa"
   )
+
+  sitk_add_csharp_test( Example.CannySegmentationLevelSetImageFilter
+  "${CMAKE_CURRENT_SOURCE_DIR}/CannySegmentationLevelSetImageFilter.cs"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySlice.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/ThresholdSegmentationLevelSetVentricle.png}
+  "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.CannySegmentationLevelSetImageFilter.png"
+      7.0 0.1 -10.0
+      127.5 15
+  IMAGE_MD5_COMPARE
+    "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.CannySegmentationLevelSetImageFilter.png"
+    "a9695df04cde5b9c5481d8c253a5b3aa")
