@@ -107,7 +107,7 @@ SimpleITK Filters
    * - `ClosingByReconstructionImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1ClosingByReconstructionImageFilter.html>`_
      - Closing by reconstruction of an image.
    * - `CoherenceEnhancingDiffusionImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1CoherenceEnhancingDiffusionImageFilter.html>`_
-     - Coherence enhanging diffusion and edge enhancing diffusion.
+     - Coherence enhancing diffusion and edge enhancing diffusion.
    * - `CollidingFrontsImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1CollidingFrontsImageFilter.html>`_
      - Selects a region of space where two independent fronts run towards each other.
    * - `ComplexToImaginaryImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1ComplexToImaginaryImageFilter.html>`_
@@ -217,7 +217,7 @@ SimpleITK Filters
    * - `GradientRecursiveGaussianImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1GradientRecursiveGaussianImageFilter.html>`_
      - Computes the gradient of an image by convolution with the first derivative of a Gaussian.
    * - `GrayscaleConnectedClosingImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1GrayscaleConnectedClosingImageFilter.html>`_
-     - Enhance pixels associated with a dark object (identified by a seed pixel) where the dark object is surrounded by a brigher object.
+     - Enhance pixels associated with a dark object (identified by a seed pixel) where the dark object is surrounded by a brighter object.
    * - `GrayscaleConnectedOpeningImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1GrayscaleConnectedOpeningImageFilter.html>`_
      - Enhance pixels associated with a bright object (identified by a seed pixel) where the bright object is surrounded by a darker object.
    * - `GrayscaleDilateImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1GrayscaleDilateImageFilter.html>`_
@@ -387,7 +387,7 @@ SimpleITK Filters
    * - `MorphologicalWatershedFromMarkersImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1MorphologicalWatershedFromMarkersImageFilter.html>`_
      - Morphological watershed transform from markers.
    * - `MorphologicalWatershedImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1MorphologicalWatershedImageFilter.html>`_
-     - Watershed segmentation implementation with morphogical operators.
+     - Watershed segmentation implementation with morphological operators.
    * - `MultiLabelSTAPLEImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1MultiLabelSTAPLEImageFilter.html>`_
      - This filter performs a pixelwise combination of an arbitrary number of input images, where each of them represents a segmentation of the same scene (i.e., image).
    * - `MultiplyImageFilter <https://www.itk.org/Doxygen/html/classitk_1_1MultiplyImageFilter.html>`_

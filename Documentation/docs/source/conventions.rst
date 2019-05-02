@@ -9,7 +9,7 @@ Dimensional Vectors
 
 Dimensional Vectors must contain at least the number of elements as the dimensions of the image, elements beyond the image's dimension will be truncated.
 
-The SimpleITK image class can contain 2 or 3 dimensional images. In ITK proper, certain types such as indexes, points, and sizes are templeted over the image dimensions. In SimpleITK we utilize the variable length ``std::vector`` for these types, so that non-templeted calls can wrap ITK's templeted image class. These types are called Dimensional Vectors. If a dimensional vector's length is less that the dimension of the image, an exception will be generated when converted to the ITK type. If there are extra elements in the dimensional vector these values will be ignored.
+The SimpleITK image class can contain 2 or 3 dimensional images. In ITK proper, certain types such as indexes, points, and sizes are templated over the image dimensions. In SimpleITK we utilize the variable length ``std::vector`` for these types, so that non-templated calls can wrap ITK's templated image class. These types are called Dimensional Vectors. If a dimensional vector's length is less that the dimension of the image, an exception will be generated when converted to the ITK type. If there are extra elements in the dimensional vector these values will be ignored.
 
 
 Image Access
@@ -48,7 +48,7 @@ Matrices are represented as a single dimensional vector with the entries in row 
 Image Regions as Index and Size
 ...............................
 
-The `itk::ImageRegion <http://itk.org/Doxygen/html/classitk_1_1ImageRegion.html>`_ is a frequently used class in ITK to define a sub-image area. It is defined by `itk::Index <http://itk.org/Doxygen/html/classitk_1_1Index.html>`_ and `itk::Size <http://itk.org/Doxygen/html/classitk_1_1Size.html>`_ of signed and unsigned integer types respecfully. In SimpleITK, the index and size elements are usually separated into two arguments with separate Set and Get methods.
+The `itk::ImageRegion <http://itk.org/Doxygen/html/classitk_1_1ImageRegion.html>`_ is a frequently used class in ITK to define a sub-image area. It is defined by `itk::Index <http://itk.org/Doxygen/html/classitk_1_1Index.html>`_ and `itk::Size <http://itk.org/Doxygen/html/classitk_1_1Size.html>`_ of signed and unsigned integer types respectfully. In SimpleITK, the index and size elements are usually separated into two arguments with separate Set and Get methods.
 
 When specified as a single argument value, it is a 1 dimensional array with the index values followed by the size values i.e. :math:`[idx_x, idx_y, idx_z, size_x, size_y, size_z]`.
 

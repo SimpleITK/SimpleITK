@@ -3,7 +3,7 @@ Installation
 
 SimpleITK provides a simplified interface to ITK in a variety of
 languages. You can either download binaries, if they are available for
-your platform and prefered language, or you can :ref:`build SimpleITK <building_simpleitk>`
+your platform and preferred language, or you can :ref:`build SimpleITK <building_simpleitk>`
 yourself from the source code.
 
 Additionally, there are several recommended third-party software

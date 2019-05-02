@@ -2,7 +2,7 @@ namespace itk {
 namespace simple {
 /**
 \page GitPage Git philosophy
-This document records the standard operating procedure and philosopy
+This document records the standard operating procedure and philosophy
 of SimpleITK's use of Git.
 
 \section TopicBranch The life of a topic branch
