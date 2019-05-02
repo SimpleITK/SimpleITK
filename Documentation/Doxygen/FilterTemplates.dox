@@ -93,7 +93,7 @@ into SimpleITK.
 
 - \b name: (\e string) This must be the name of the ITK filter.
 
-- \b templage_code_filename: (\e string) Which of the template files should be
+- \b template_code_filename: (\e string) Which of the template files should be
 used to generate the filter. Choices are: "ImageFilter",
 "RegionGrowingImageFilter", "StructuringElementImageFilter",
 "LevelSetImageFilter", "MathematicalMorphologyImageFilter"
@@ -148,7 +148,7 @@ additional header files to include in the cxx file for this filter.
 pixel type to use for the output image of the filter.
 
 - [OPTIONAL] \b filter_type: (\e string) Explicitly sets the
-  FilterType used. This method overides
+  FilterType used. This method overrides
   additional_template_types. Useful typedefs are InputImageType, and
   OutputImageType.
 
@@ -188,7 +188,7 @@ custom method are:
 
   - \b body: (\e string) This string is the body of the method and will be
   placed directly into the header file. The parameter names specified with
-  \b var_name in each of the parameter obects can be used in this body
+  \b var_name in each of the parameter objects can be used in this body
 
 A sample custom method might look like:
 
@@ -249,14 +249,14 @@ non-basic types (std::vector< unsigned int >() for example)
 - \b briefdescriptionSet/briefdescriptionGet: (\e string) Brief
   Doxygen documentation for this individual parameter.  The two forms
   (Set/Get) are used for the SetMember and GetMember functions.  This
-  field is automatically generated from ITK's Doxgen for members that
+  field is automatically generated from ITK's Doxygen for members that
   mirror ITK's members. If the member if a custom,
   this field will not be modified.
 
 - \b detaileddescriptionSet/detaileddescriptionGet: (\e string)
   Detailed Doxygen documentation for this individual parameter.  The
   two forms (Set/Get) are used for the SetMember and GetMember
-  functions. This field is automatically generated from ITK's Doxgen
+  functions. This field is automatically generated from ITK's Doxygen
   for members that mirror ITK's members.  If the member if a custom,
   this field will not be modified.
 
@@ -315,7 +315,7 @@ each test.
 
 - \b tag: (\e string) The tag to identify this specific test for the filter
 
-- \b descriptoin: (\e string) Documentation to describe this specific test
+- \b description: (\e string) Documentation to describe this specific test
 
 - \b inputA: (\e string) The path from the SOURCE_DIR/Testing/Data directory
 for the (first) input image
@@ -395,7 +395,7 @@ The code generation system is designed to be agnostic of what subdirectory is
 being parsed. An example of this is BasicFilters.  Here will just refer to
 $FILTER_DIR
 
-There are four important subdirectores in
+There are four important subdirectories in
 $SimpleITK_SOURCE_DIR/Code/$FILTER_DIR:
 
   - \b include: Manually written header files

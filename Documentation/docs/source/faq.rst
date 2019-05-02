@@ -20,7 +20,7 @@ I am using the binary distribution of SimpleITK for Anaconda, why do I get an er
           Referenced from: .../lib/python2.7/site-packages/SimpleITK/_SimpleITK.so
           Reason: image not found
 
-This type of error can occour if a library SimpleITK depends on can
+This type of error can occur if a library SimpleITK depends on can
 not be found. It may be that the version of the dependent library has
 changed in the Python environment and is no longer compatible. One
 solution is to create a `environment.yml` file with all the packages
@@ -202,7 +202,7 @@ compiler.
 The first lines set a variable pointing to the standard location for the
 ImageJ directory. If ImageJ is installed somewhere else, the line should
 be modified. The second line provides the command to launch ImageJ using
-the Java compiler. It includes flags that point to ImageJ's plugiin
+the Java compiler. It includes flags that point to ImageJ's plugin
 directory and ImageJ's ij.jar file.
 
 The SITK\_SHOW\_COMMAND tells SimpleITK.Show() to launch Java with
@@ -228,7 +228,7 @@ different Python versions and distributions have different programs for
 creating and managing virtual environments.
 
 The use of a virtual environment allows you to elegantly deal with
-package compatability issues, to quote `The Hitchhiker’s Guide to
+package compatibility issues, to quote `The Hitchhiker’s Guide to
 Python! <https://docs.python-guide.org/en/latest/>`__:
 
     A Virtual Environment is a tool to keep the dependencies required by
@@ -274,7 +274,7 @@ Is my compiler supported?
 -------------------------
 
 SimpleITK uses advanced C++ meta-programming to instantiate ITK's Images
-and Filters. Addtionally, we use some headers which are included in the
+and Filters. Additionally, we use some headers which are included in the
 C99 and C++ TR1 extension. Therefore SimpleITK places additional
 requirements on the compiler beyond what is required for ITK. In
 principle we require C++x03 with C99's "stdint.h" and TR1's

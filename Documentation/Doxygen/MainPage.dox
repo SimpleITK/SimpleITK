@@ -34,7 +34,7 @@ https://www.itk.org
 \section howto How to use this documentation
 
 This documentation describes the C++ API of the SimpleITK interface
-to the Insight Toolkit. The wrapped languages have a very simular
+to the Insight Toolkit. The wrapped languages have a very similar
 interface, that should only be trivially different.  The
 Related Pages link presents interface conventions, user and
 developer information. Additionally the Example tab provides a

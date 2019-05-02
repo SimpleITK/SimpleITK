@@ -104,7 +104,7 @@ The following is a brief overview on how to contribute a nightly
 build to SimpleITK. Additional relevant information can be found on
 the <a
 href="http://www.cmake.org/cmake/help/ctest-2-8-docs.html">CTest</a>
-documentation page along with simular information on how to setup a
+documentation page along with similar information on how to setup a
 dashboard for <a
 href="http://www.vtk.org/Wiki/ITK_Policy_and_Procedure_for_Adding_Dashboards"
 >ITK</a>.
@@ -173,7 +173,7 @@ $ ctest -S ~/Dashboards/SimpleITKScripts/simpleitk_nightly.cmake
 
 Depending on your system the tool needed is different. For Unix and
 Mac OSX operating system it's the cron daemon, while on windows it is
-Schedualer. More information can be found on the general <a
+Scheduler. More information can be found on the general <a
 href="http://www.vtk.org/Wiki/CMake_Scripting_Of_CTest#Setting_Up_Cron.2FScheduler">CMake
 Scripting Of CTest</a> wiki page.
 

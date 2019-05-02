@@ -17,7 +17,7 @@ For any other OS, you must build the binaries yourself.
 
 Set Up Eclipse
 ---------------
-Download `Eclipse <http://www.eclipse.org/>`_ on your platform of choice. Eclipse is a commonly used integrated development environemnt (IDE) used for Java because it makes development, debugging and deployment streamlined.
+Download `Eclipse <http://www.eclipse.org/>`_ on your platform of choice. Eclipse is a commonly used integrated development environment (IDE) used for Java because it makes development, debugging and deployment streamlined.
 
 Then, create a new project in Eclipse. Choose *File --> New --> Project...*, choosing Java Project in the Eclipse project wizard dialog, and name the project as you like. In this example, our project is called SimpleITK Demo. Create a new class by choosing *File --> New --> Class*, or simply copy the code below and paste into the project item in the Package Explorer view and Eclipse will automatically create the class and hierarchy for you.
 
