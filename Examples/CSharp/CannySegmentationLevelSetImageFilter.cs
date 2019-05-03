@@ -101,7 +101,7 @@ namespace itk.simple.examples
             SitkImage output = cannySegmentation.Execute(initialModel, diffusedImage);
 
             BinaryThresholdImageFilter thresholder= new BinaryThresholdImageFilter();
-            thresholder.SetUpperThreshold(-10.0);
+            thresholder.SetUpperThreshold(10.0);
             thresholder.SetLowerThreshold(0.0);
 
             thresholder.SetOutsideValue(0);
