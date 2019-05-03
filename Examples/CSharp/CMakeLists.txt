@@ -33,4 +33,4 @@ set_tests_properties( CSharp.Example.ImageGetBuffer
       127.5 15
   IMAGE_MD5_COMPARE
     "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.CannySegmentationLevelSetImageFilter.png"
-    "a9695df04cde5b9c5481d8c253a5b3aa")
+    "a275b65bab21559f1398e4cf5765938a")
