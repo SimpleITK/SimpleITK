@@ -1,20 +1,8 @@
-# Kitware Local Git Setup Scripts - Sample Project Configuration
-#
-# Copy to "config" and edit as necessary.
-
 [hooks]
-	url = https://itk.org/ITK.git
-	branch = hooks
-
-[ssh]
-	host = itk.org
-	key = id_git_itk
-	request-url = https://www.kitware.com/Admin/SendPassword.cgi
-
-[stage]
-	url = git://itk.org/stage/SimpleITK.git
-	pushurl = git@itk.org:stage/SimpleITK.git
-
+  url = http://public.kitware.com/GitSetup.git
 [upstream]
-	url = https://itk.org/SimpleITK.git
-	#pushurl = git@/itk.org/SimpleITK.git
+  url = https://github.com/SimpleITK/SimpleITK.git
+  remote = upstream
+[github]
+  organization-name = SimpleITK
+  repo-name = SimpleITK

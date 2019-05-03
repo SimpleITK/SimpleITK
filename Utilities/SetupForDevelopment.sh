@@ -78,31 +78,38 @@ elif test ${git_version_arr[0]} -eq $git_required_major_version; then
 fi
 echo -e "Git version $git_version is OK.\n"
 
-cd "${BASH_SOURCE%/*}/.." &&
 Utilities/GitSetup/setup-user && echo &&
-Utilities/GitSetup/setup-hooks && Utilities/DevelopmentSetupScripts/SetupHooks.sh && echo &&
-( read -ep "Do you want to setup access itk.org? [y/N]: " access;
-    if [ "$access" == "y" ] || [ "$access" == "Y" ]; then
-        Utilities/GitSetup/setup-upstream && echo &&
-        Utilities/GitSetup/setup-stage && echo &&
-        Utilities/GitSetup/setup-ssh ||
-        echo 'Failed to setup SSH.  Run this again to retry.'
-   fi)  && echo &&
-Utilities/GitSetup/tips
+Utilities/GitSetup/setup-hooks && echo &&
+(Utilities/GitSetup/setup-upstream ||
+ echo 'Failed to setup origin.  Run this again to retry.') && echo &&
+(Utilities/GitSetup/setup-github ||
+ echo 'Failed to setup GitHub.  Run this again to retry.') && echo &&
+Utilities/GitSetup/tips &&
+Utilities/GitSetup/github-tips
 
 
+### LOCAL CONFIG TO REVIEW
 
-cd Utilities/DevelopmentSetupScripts
+# Rebase master by default
+git config rebase.stat true
+git config branch.master.rebase true
 
-echo "Setting up useful Git aliases..."
-./SetupGitAliases.sh || exit 1
-echo
 
 # Disable legacy Gerrit hooks
-echo "Disable legacy Gerrit hook..."
-git config --unset hooks.GerritId
+hook=$(git config --get hooks.GerritId) &&
+if "$hook"; then
+    echo "Disable legacy Gerrit hook..." &&
+	git config hooks.GerritId false &&
+        (git config --get remote.gerrit.url > /dev/null &&
+        git remote remove gerrit)
+fi
+
+git config --get remote.stage.url > /dev/null &&
+    ( echo "Removing legacy stage repo..." &&
+          git remote remove stage )
+
 
 
 # Record the version of this setup so Hooks/pre-commit can check it.
-SetupForDevelopment_VERSION=3
+SetupForDevelopment_VERSION=4
 git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}
