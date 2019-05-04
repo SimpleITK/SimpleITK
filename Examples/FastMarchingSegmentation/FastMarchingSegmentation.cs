@@ -1,5 +1,4 @@
-﻿
-/*=========================================================================
+﻿/*=========================================================================
 *
 *  Copyright Insight Software Consortium
 *
@@ -47,7 +46,7 @@ namespace itk.simple.examples
             string inputFilename = args[0];
             string outputFilename = args[1];
 
-            uint[] seedPosition = { Convert.ToUInt32(args[2]), Convert.ToUInt32(args[3]) };
+            uint[] seedPosition = { Convert.ToUInt32(args[2]), Convert.ToUInt32(args[3]),0 };
 
             double sigma = double.Parse(args[4], CultureInfo.InvariantCulture);
             double alpha = double.Parse(args[5], CultureInfo.InvariantCulture); ;
@@ -78,8 +77,10 @@ namespace itk.simple.examples
 
             //VectorUIntList trialPoints; Add trialPoints into list if using multiple seeds. Here we only use one seedpoint
 
-            VectorUInt32 trialPoint = new VectorUInt32() { seedPosition[0], seedPosition[1], 0 };
-
+            VectorUInt32 trialPoint = new VectorUInt32(3);
+            trialPoint[0] = seedPosition[0];
+            trialPoint[1] = seedPosition[1];
+            trialPoint[2] = seedPosition[2];
 
             fastMarching.AddTrialPoint(trialPoint);
 
