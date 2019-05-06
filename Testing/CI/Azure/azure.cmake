@@ -115,3 +115,27 @@ string(TIMESTAMP build_date "%Y-%m-%d")
 message("CDash Build Identifier: ${build_date} ${CTEST_BUILD_NAME}")
 
 include("${DASHBOARD_BRANCH_DIRECTORY}/simpleitk_common.cmake")
+
+function(print_if var)
+  if( NOT ${${var}} EQUAL 0 )
+    message(SEND_ERROR  "\tUnexpected result ${var}: ${${var}}")
+  endif()
+endfunction()
+
+
+if(NOT ${configure_return} EQUAL 0 OR
+   NOT ${build_return} EQUAL 0 OR
+   NOT ${build_errors} EQUAL 0 OR
+   NOT ${build_warnings} EQUAL 0 OR
+   NOT ${test_return} EQUAL 0)
+  message(FATAL_ERROR
+    "Build did not complete without warnings, errors, or failures.")
+  print_if(configure_return)
+  print_if(build_return)
+  print_if(build_errors)
+  print_if(build_warnings)
+  print_if(test_return)
+
+else()
+  return(0)
+endif()
