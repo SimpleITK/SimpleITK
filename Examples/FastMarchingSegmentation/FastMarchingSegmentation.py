@@ -23,7 +23,7 @@ import SimpleITK as sitk
 import sys
 import os
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 10:
     print("Usage: {0} <inputImage> <outputImage> <seedX> <seedY> <Sigma> <SigmoidAlpha> <SigmoidBeta> <TimeThreshold>".format(sys.argv[0]))
     sys.exit(1)
 
@@ -36,6 +36,7 @@ sigma = float(sys.argv[5])
 alpha = float(sys.argv[6])
 beta = float(sys.argv[7])
 timeThreshold = float(sys.argv[8])
+stoppingTime = float(sys.argv[9])
 
 inputImage = sitk.ReadImage(inputFilename, sitk.sitkFloat32)
 
@@ -67,6 +68,8 @@ trialPoint = (seedPosition[0], seedPosition[1], seedValue)
 
 
 fastMarching.AddTrialPoint(trialPoint)
+
+fastMarching.SetStoppingValue(stoppingTime)
 
 fastMarchingOutput = fastMarching.Execute(sigmoidOutput)
 

@@ -92,7 +92,7 @@ namespace itk.simple.examples
             //  SetStoppingValue(). In principle, the stopping value should be a
             //  little bit higher than the threshold value.
 
-            //fastMarching.SetStoppingValue(stoppingTime);
+            fastMarching.SetStoppingValue(stoppingTime);
 
             SitkImage fastmarchingOutput = fastMarching.Execute(sigmoidOutput);
 

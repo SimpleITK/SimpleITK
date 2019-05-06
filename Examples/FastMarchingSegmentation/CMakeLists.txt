@@ -12,7 +12,7 @@ sitk_add_test(NAME CXX.Example.FastMarchingSegmentation1
   $<TARGET_FILE:FastMarchingSegmentation>
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySlice.png}
     ${SimpleITK_TEST_OUTPUT_DIR}/CXXFastMarchingSegmentation1.mha
-    81 114 1.0 -0.5 3.0 100 100
+    81 114 1.0 -0.5 3.0 100 110
   IMAGE_COMPARE
     ${SimpleITK_TEST_OUTPUT_DIR}/CXXFastMarchingSegmentation1.mha
     DATA{${SimpleITK_DATA_ROOT}/Baseline/FastMarchingSegmentation1.mha}
@@ -23,7 +23,7 @@ sitk_add_python_test( Example.FastMarchingSegmentation1
   "${CMAKE_CURRENT_SOURCE_DIR}/FastMarchingSegmentation.py"
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySlice.png}
     ${SimpleITK_TEST_OUTPUT_DIR}/PythonFastMarchingSegmentation1.mha
-    81 114 1.0 -0.5 3.0 100 100
+    81 114 1.0 -0.5 3.0 100 110
   IMAGE_COMPARE
     ${SimpleITK_TEST_OUTPUT_DIR}/PythonFastMarchingSegmentation1.mha
     DATA{${SimpleITK_DATA_ROOT}/Baseline/FastMarchingSegmentation1.mha}
