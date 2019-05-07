@@ -78,9 +78,9 @@ namespace itk.simple.examples
             //VectorUIntList trialPoints; Add trialPoints into list if using multiple seeds. Here we only use one seedpoint
 
             VectorUInt32 trialPoint = new VectorUInt32(3);
-            trialPoint[0] = seedPosition[0];
-            trialPoint[1] = seedPosition[1];
-            trialPoint[2] = seedPosition[2];
+            trialPoint.Add(seedPosition[0]);
+            trialPoint.Add(seedPosition[1]);
+            trialPoint.Add(seedPosition[2]);
 
             fastMarching.AddTrialPoint(trialPoint);
 
@@ -92,7 +92,7 @@ namespace itk.simple.examples
             //  SetStoppingValue(). In principle, the stopping value should be a
             //  little bit higher than the threshold value.
 
-            //fastMarching.SetStoppingValue(stoppingTime);
+            fastMarching.SetStoppingValue(stoppingTime);
 
             SitkImage fastmarchingOutput = fastMarching.Execute(sigmoidOutput);
 

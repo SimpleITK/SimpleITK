@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
     std::cerr << " inputImage  outputImage seedX seedY";
-    std::cerr << " Sigma SigmoidAlpha SigmoidBeta TimeThreshold" << std::endl;
+    std::cerr << " Sigma SigmoidAlpha SigmoidBeta TimeThreshold StoppingTime" << std::endl;
 
     return EXIT_FAILURE;
     }
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
   const double alpha =  atof( argv[6] );
   const double beta  =  atof( argv[7] );
   const double timeThreshold = atof( argv[8] );
-
+  const double stoppingTime = atof( argv[9] );
 
   sitk::Image inputImage = sitk::ReadImage( inputFilename, sitk::sitkFloat32 );
 
@@ -85,6 +85,8 @@ int main(int argc, char *argv[])
   trialPoint[2] = 0u; // Seed Value
 
   fastMarching.AddTrialPoint( trialPoint );
+
+  fastMarching.SetStoppingValue(stoppingTime);
 
   sitk::Image fastmarchingOutput = fastMarching.Execute( sigmoidOutput );
 
