@@ -2,11 +2,17 @@
   "name" : "MinimumMaximumImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 1,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::MinimumMaximumImageFilter<InputImageType>",
   "no_procedure" : true,
   "no_return_image" : true,
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    }
+  ],
   "members" : [],
   "measurements" : [
     {
