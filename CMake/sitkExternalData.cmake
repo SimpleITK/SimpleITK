@@ -34,10 +34,7 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
   list(APPEND ExternalData_URL_TEMPLATES
 
     # Data mirrored from SimpleITKExternalData repository
-    "https://erie.nlm.nih.gov/SimpleITKExternalData/%(algo)/%(hash)"
-
-    # Data published by MIDAS
-    "https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
+    "https://s3.amazonaws.com/simpleitk/public/%(algo)/%(hash)"
 
     # Data published on GitHub Pages
     "https://simpleitk.github.io/SimpleITKExternalData/%(algo)/%(hash)"
