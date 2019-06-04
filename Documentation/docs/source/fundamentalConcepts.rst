@@ -18,9 +18,10 @@ that treat an image as an array which has two implications: (1) pixel/voxel spac
 is assumed to be isotropic and (2) there is no notion of an image's location in
 physical space.
 
-SimpleITK images are either 2D, 3D, or 4D and can have an arbitrary number of
-channels with a scalar or complex value in each channel. The physical
-region in space which an image occupies is defined by the image's:
+SimpleITK images are either 2D, 3D, or 4D and can be a scalar, labelmap
+(scalar with run length encoding), complex value or have an arbitrary
+number of  scalar channels. The region in physical space which an
+image occupies is defined by the image's:
 
 1. Origin (vector like type) - location in the world coordinate system of
    the voxel with all zero indexes.
