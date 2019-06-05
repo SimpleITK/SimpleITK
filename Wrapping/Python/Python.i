@@ -378,8 +378,8 @@
 
             # If we have a 3D image, we can extract 2D image if one index is an int and the reset are slices
             slice_dim = -1
-            if ( dim == 3 ):
-              # find only a single dimension with has an integer index
+            if ( dim > 2 ):
+              # find only a single dimension which has an integer index
               for i in range(len(idx)):
                 if type(idx[i]) is slice:
                   continue
