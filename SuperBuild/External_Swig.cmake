@@ -28,21 +28,17 @@ if(NOT SWIG_DIR)
     mark_as_advanced(SWIG_GIT_TAG)
   endif()
 
-  set(SWIG_DOWNLOAD_SOURCE_HASH "82133dfa7bba75ff9ad98a7046be687c")
-  set(SWIGWIN_DOWNLOAD_HASH "a49524dad2c91ae1920974e7062bfc93" )
-
   if(WIN32)
     # binary SWIG for windows
     #------------------------------------------------------------------------------
 
-    sitkSourceDownload(SWIGWIN_URL "swigwin-${SWIG_TARGET_VERSION}.zip"  ${SWIGWIN_DOWNLOAD_HASH})
+    sitkSourceDownload(SWIGWIN_URL "swigwin-${SWIG_TARGET_VERSION}.zip")
 
     set(swig_source_dir "${CMAKE_CURRENT_BINARY_DIR}/swigwin")
 
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
       URL "${SWIGWIN_URL}"
-      URL_HASH MD5=${SWIGWIN_DOWNLOAD_HASH}
       SOURCE_DIR ${swig_source_dir}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
@@ -103,10 +99,9 @@ if(NOT SWIG_DIR)
         GIT_TAG "${SWIG_GIT_TAG}"
         )
     else()
-      sitkSourceDownload(SWIG_URL "swig-${SWIG_TARGET_VERSION}.tar.gz" ${SWIG_DOWNLOAD_SOURCE_HASH})
+      sitkSourceDownload(SWIG_URL "swig-${SWIG_TARGET_VERSION}.tar.gz")
       set(SWIG_DOWNLOAD_STEP
         URL "${SWIG_URL}"
-        URL_HASH MD5=${SWIG_DOWNLOAD_SOURCE_HASH}
         )
     endif()
 

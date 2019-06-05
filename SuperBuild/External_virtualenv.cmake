@@ -8,7 +8,6 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 set(proj virtualenv)
 
 set(${proj}_TARGET_VERSION 15.1.0)
-set(${proj}_DOWNLOAD_SOURCE_HASH "44e19f4134906fe2d75124427dc9b716")
 
 # based on the standard EP_PREFIX locations, but since we don't build
 # or install, then standards install directory is also the source
@@ -16,11 +15,10 @@ set(${proj}_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-bu
 set(${proj}_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 set(${proj}_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 
-sitkSourceDownload(${proj}_URL "virtualenv-${${proj}_TARGET_VERSION}.tar.gz" ${${proj}_DOWNLOAD_SOURCE_HASH})
+sitkSourceDownload(${proj}_URL "virtualenv-${${proj}_TARGET_VERSION}.tar.gz")
 
 ExternalProject_Add(${proj}
   URL "${${proj}_URL}"
-  URL_HASH MD5=${${proj}_DOWNLOAD_SOURCE_HASH}
   SOURCE_DIR ${${proj}_source_dir}
   BINARY_DIR ${${proj}_binary_dir}
   INSTALL_DIR ${${proj}_install_dir}
