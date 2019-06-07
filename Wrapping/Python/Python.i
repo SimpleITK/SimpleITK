@@ -762,7 +762,7 @@ def GetArrayFromImage(image):
 
 
 def GetImageFromArray( arr, isVector=None):
-    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D images are automatically considered 3D vector images."""
+    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D arrays are automatically considered 3D vector images, but 3D arrays are 3D images."""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
