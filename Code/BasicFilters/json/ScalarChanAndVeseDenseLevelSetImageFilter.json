@@ -2,14 +2,25 @@
   "name" : "ScalarChanAndVeseDenseLevelSetImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "RealPixelIDTypeList",
   "filter_type" : "itk::ScalarChanAndVeseDenseLevelSetImageFilter<InputImageType, InputImageType, InputImageType, itk::ScalarChanAndVeseLevelSetFunction< InputImageType, InputImageType > >",
   "include_files" : [
     "itkAtanRegularizedHeavisideStepFunction.h",
     "itkHeavisideStepFunction.h"
   ],
-  "custom_set_input" : "filter->SetFunctionCount( 1 );\n  filter->SetLevelSet( 0, image1 );\n  filter->SetInput( image2 );",
+  "inputs" : [
+    {
+      "name" : "InitialImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFunctionCount( 1 ); filter->SetLevelSet(0, this->CastImageToITK<typename FilterType::InputImageType>(*inInitialImage));"
+    },
+    {
+      "name" : "FeatureImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetInput(this->CastImageToITK<typename FilterType::FeatureImageType>(*inFeatureImage));"
+    }
+  ],
   "members" : [
     {
       "name" : "MaximumRMSError",
