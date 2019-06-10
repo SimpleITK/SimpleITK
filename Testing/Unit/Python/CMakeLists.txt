@@ -6,7 +6,7 @@ sitk_add_python_test( Test.ImageTests
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageTests.py" )
 
 sitk_add_python_test( Test.ImageIndexing
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageIndexingTest.py" )
+  "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageIndexingTest.py" )
 
 sitk_add_python_test( Test.IOTest
   "${CMAKE_CURRENT_SOURCE_DIR}/IOTest.py"

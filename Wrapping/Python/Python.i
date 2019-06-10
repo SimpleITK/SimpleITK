@@ -378,8 +378,8 @@
 
             # If we have a 3D image, we can extract 2D image if one index is an int and the reset are slices
             slice_dim = -1
-            if ( dim == 3 ):
-              # find only a single dimension with has an integer index
+            if ( dim > 2 ):
+              # find only a single dimension which has an integer index
               for i in range(len(idx)):
                 if type(idx[i]) is slice:
                   continue
@@ -762,7 +762,7 @@ def GetArrayFromImage(image):
 
 
 def GetImageFromArray( arr, isVector=None):
-    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D images are automatically considered 3D vector images."""
+    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D arrays are automatically considered 3D vector images, but 3D arrays are 3D images."""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
