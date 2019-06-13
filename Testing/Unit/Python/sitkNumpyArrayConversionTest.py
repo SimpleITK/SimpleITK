@@ -57,8 +57,8 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
             self._helper_check_sitk_to_numpy_type(sitk.sitkInt64, np.int64)
         self._helper_check_sitk_to_numpy_type(sitk.sitkFloat32, np.float32)
         self._helper_check_sitk_to_numpy_type(sitk.sitkFloat64, np.float64)
-        #self._helper_check_sitk_to_numpy_type(sitk.sitkComplexFloat32, np.complex64)
-        #self._helper_check_sitk_to_numpy_type(sitk.sitkComplexFloat64, np.complex128)
+        self._helper_check_sitk_to_numpy_type(sitk.sitkComplexFloat32, np.complex64)
+        self._helper_check_sitk_to_numpy_type(sitk.sitkComplexFloat64, np.complex128)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorUInt8, np.uint8)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorInt8, np.int8)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorUInt16, np.uint16)
@@ -173,6 +173,43 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
         self.assertEqual(img.GetPixel([1,0,0,0]), (2,3))
         self.assertEqual(img.GetPixel([0,1,0,0]), (18,19))
         self.assertEqual(img.GetPixel([0,0,1,0]), (126,127))
+
+
+    def test_complex_image_to_numpy(self):
+        """Test converting back and forth between numpy and SimpleITK
+        images where the SimpleITK image is of complex type."""
+
+
+        # Check 2D
+        img_real = sitk.GaussianSource( sitk.sitkFloat32,  [100,100], sigma=[10]*3, mean = [50,50] )
+        img_imaginary = sitk.GaussianSource( sitk.sitkFloat32,  [100,100], sigma=[20]*3, mean = [10,10] )
+        img = sitk.RealAndImaginaryToComplex(img_real, img_imaginary);
+        h = sitk.Hash( img )
+
+        nda = sitk.GetArrayFromImage(img)
+
+        self.assertEqual(nda.shape, (100,100))
+        self.assertEqual(nda[0,0], img.GetPixel([0,0]))
+        self.assertEqual(nda[2,1], img.GetPixel([1,2]))
+
+        img2 = sitk.GetImageFromArray( nda )
+        self.assertEqual( h, sitk.Hash(img2) )
+        self.assertEqual( img.GetSize(), (100,100) )
+
+        # check 4D
+        img = sitk.Image( [10, 9, 8, 7], sitk.sitkComplexFloat64 )
+        h = sitk.Hash( img )
+
+        nda = sitk.GetArrayFromImage(img)
+
+        self.assertEqual(nda.shape, (7,8,9,10))
+        self.assertEqual(nda[0,0,0,0], 0+0j)
+
+
+        img2 = sitk.GetImageFromArray(nda)
+        self.assertEqual(img2.GetSize(), img.GetSize())
+        self.assertEqual(img2.GetNumberOfComponentsPerPixel(), img.GetNumberOfComponentsPerPixel())
+        self.assertEqual(h, sitk.Hash(img2))
 
 
     def test_vector_image_to_numpy(self):
