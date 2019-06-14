@@ -35,7 +35,7 @@ SimpleITK tutorials and courses have been given in the following venues:
 
 Upcoming
 ++++++++
-* IEEE Engineering in Medicine and Biology Conference (EMBC) 2019, Berlin Germany: `SimpleITK: A Tool for Biomedical Image Processing, from Cells to Anatomical Structures <https://embc.embs.org/2019/workshops/>`__ .
+* IEEE Engineering in Medicine and Biology Conference (EMBC) 2019, Berlin Germany: `SimpleITK: A Tool for Biomedical Image Processing, from Cells to Anatomical Structures <https://embc.embs.org/2019/workshops/>`__ [`git repository <https://github.com/SimpleITK/EMBC2019_WORKSHOP>`__].
 
 
 
