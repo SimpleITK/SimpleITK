@@ -714,7 +714,7 @@ def _get_sitk_vector_pixelid(numpy_array_type):
         for key in _np_sitk:
             if numpy.issubdtype(numpy_array_type.dtype, key):
                 return _np_sitk[key]
-        raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
+        raise TypeError('dtype: {0} is not supported as an array.'.format(numpy_array_type.dtype))
 
 
 # SimplyITK <-> Numpy Array conversion support.
@@ -770,7 +770,7 @@ def GetImageFromArray( arr, isVector=None):
     z = numpy.asarray( arr )
 
     if isVector is None:
-      if z.ndim == 4:
+      if z.ndim == 4 and z.dtype != numpy.complex64 and z.dtype != numpy.complex128:
         isVector = True
 
     if isVector:

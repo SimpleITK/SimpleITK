@@ -1432,21 +1432,17 @@ TEST_F(Image, GetBuffer)
   ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
 
 
-  // currently Int64 pixel types are instantiated yet,
-  // so an exception will be thrown.
-  try
+  // Int64 pixel types might not be instantiated
+  if ( sitk::sitkUInt64 != sitk::sitkUnknown )
     {
     img = sitk::Image( 10, 10, sitk::sitkUInt64 );
     EXPECT_EQ( img.GetBufferAsUInt64()[99], 0u ) << " Get last element in buffer ";
-
+    }
+  if ( sitk::sitkInt64 != sitk::sitkUnknown )
+    {
     img = sitk::Image( 10, 10, sitk::sitkInt64 );
     EXPECT_EQ( img.GetBufferAsInt64()[99], 0u ) << " Get last element in buffer ";
     }
-  catch ( std::exception &e)
-    {
-    std::cout << "Exception: " << e.what() << std::endl;
-    }
-
   img = sitk::Image( 10, 10, sitk::sitkFloat32 );
   EXPECT_EQ( img.GetBufferAsFloat()[99], 0u ) << " Get last element in buffer ";
   ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
@@ -1456,6 +1452,22 @@ TEST_F(Image, GetBuffer)
 
   img = sitk::Image( 10, 10, sitk::sitkFloat64 );
   EXPECT_EQ( img.GetBufferAsDouble()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkComplexFloat32 );
+  EXPECT_EQ( img.GetBufferAsFloat()[199], 0.0f ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkComplexFloat64 );
+  EXPECT_EQ( img.GetBufferAsDouble()[199], 0.0 ) << " Get last element in buffer ";
   ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
@@ -1540,20 +1552,16 @@ TEST_F(Image, GetBufferVector)
   ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
 
-
-  // currently Int64 pixel types are instantiated yet,
-  // so an exception will be thrown.
-  try
+  // Int64 pixel types might not be instantiated
+  if ( sitk::sitkVectorUInt64 != sitk::sitkUnknown )
     {
     img = sitk::Image( 10, 10, sitk::sitkVectorUInt64 );
     EXPECT_EQ( img.GetBufferAsUInt64()[99], 0u ) << " Get last element in buffer ";
-
+    }
+  if ( sitk::sitkVectorInt64 != sitk::sitkUnknown )
+    {
     img = sitk::Image( 10, 10, sitk::sitkVectorInt64 );
     EXPECT_EQ( img.GetBufferAsInt64()[99], 0u ) << " Get last element in buffer ";
-    }
-  catch ( std::exception &e)
-    {
-    std::cout << "Exception: " << e.what() << std::endl;
     }
 
   img = sitk::Image( 10, 10, sitk::sitkVectorFloat32 );

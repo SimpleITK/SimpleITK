@@ -125,9 +125,12 @@ sitk_GetMemoryViewFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     pixelSize  = sizeof( double );
     break;
   case sitk::ConditionalValue< sitk::sitkComplexFloat32 != sitk::sitkUnknown, sitk::sitkComplexFloat32, -12 >::Value:
+    sitkBufferPtr = (const void *)sitkImage->GetBufferAsFloat();
+    pixelSize  = 2*sizeof( float );
+    break;
   case sitk::ConditionalValue< sitk::sitkComplexFloat64 != sitk::sitkUnknown, sitk::sitkComplexFloat64, -13 >::Value:
-    PyErr_SetString( PyExc_RuntimeError, "Images of Complex Pixel types currently are not supported." );
-    SWIG_fail;
+    sitkBufferPtr = (const void *)sitkImage->GetBufferAsDouble();
+    pixelSize  = 2*sizeof( double );
     break;
   default:
     PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
@@ -287,9 +290,12 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
         pixelSize  = sizeof( double );
         break;
       case sitk::ConditionalValue< sitk::sitkComplexFloat32 != sitk::sitkUnknown, sitk::sitkComplexFloat32, -12 >::Value:
+        sitkBufferPtr = (void *)sitkImage->GetBufferAsFloat();
+        pixelSize  = 2*sizeof( float );
+        break;
       case sitk::ConditionalValue< sitk::sitkComplexFloat64 != sitk::sitkUnknown, sitk::sitkComplexFloat64, -13 >::Value:
-        PyErr_SetString( PyExc_RuntimeError, "Images of Complex Pixel types currently are not supported." );
-        goto fail;
+        sitkBufferPtr = (void *)sitkImage->GetBufferAsDouble();
+        pixelSize  = 2*sizeof( double );
         break;
       default:
         PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
