@@ -31,7 +31,7 @@ namespace itk.simple.examples
         static void Main(string[] args)
         {
 
-            if (args.Length < 2)
+            if (args.Length < 1)
             {
                 Console.WriteLine("Usage: inputImage outputImage");
                 return;
