@@ -114,14 +114,24 @@ jobs:
   - job: Windows
     timeoutInMinutes: 0
     cancelTimeoutInMinutes: 300
+    strategy:
+      matrix:
+        vs2017:
+          imageName: 'vs2017-win2016'
+          ctest.cmake_generator: "Visual Studio 15 2017 Win64"
+        vs2015:
+          imageName: 'vs2015-win2012r2'
+          ctest.cmake_generator: "Visual Studio 14 2015 Win64"
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: vs2015-win2012r2
     steps:
       - template: templates/git-download-steps.yml
+      - bash: |
+          ls -la 'C:/ProgramData/Chocolatey'
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
-          versionSpec: '3.6'
+          versionSpec: '3.7'
           architecture: 'x64'
           addToPath: true
       - script: |
@@ -136,7 +146,7 @@ jobs:
         env:
           CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FALURE: 1
-          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+          CTEST_CMAKE_GENERATOR: "$(ctest.cmake_generator)"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: /MP
