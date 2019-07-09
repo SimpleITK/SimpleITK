@@ -255,6 +255,7 @@ jobs:
       - run:
           name: Prerequisite Dependencies
           command: |
+            sudo apt-get update -y
             sudo apt-get install -y python-pip
       - *dependencies
       - *env-step
