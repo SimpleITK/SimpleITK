@@ -1,0 +1,53 @@
+{
+  "name" : "ProxTVImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members": [
+    {
+      "name": "MaximumNumberOfIterations",
+      "type": "unsigned int",
+      "default": "10u",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get and set the maximum number of iterations.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get and set the maximum number of iterations."
+    },
+    {
+      "name": "Weights",
+      "type": "double",
+      "default": "std::vector<double>(3, 1.0)",
+      "dim_vec": 1,
+      "set_as_scalar": 1,
+      "doc": "",
+      "itk_type": "typename FilterType::ArrayType"
+    },
+    {
+      "name": "Norms",
+      "type": "double",
+      "default": "std::vector<double>(3, 1.0)",
+      "dim_vec": 1,
+      "set_as_scalar": 1,
+      "doc": "",
+      "itk_type": "typename FilterType::ArrayType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test ProxTVImageFilter with default parametrs",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Applies a total variation noise reduction filter to an image.",
+  "detaileddescription" : "ProxTVImageFilter from https://github.com/InsightSoftwareConsortium/ITKTotalVariation",
+  "itk_module" : "TotalVariation",
+  "itk_group" : "Smoothing"
+}
