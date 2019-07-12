@@ -26,7 +26,7 @@ f.write('''SimpleITK Filters
 
    * - Filter Name\n     - Brief Description''')
 
-entryFormat = "\n   * - `{0} <https://www.itk.org/Doxygen/html/classitk_1_1{1}.html>`_\n     - {2}"
+entryFormat = "\n   * - `{0} <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1{1}.html>`_\n     - {2}"
 json_list = []
 for fname in sys.argv[1:]:
     with open( fname, "r" ) as fp:
