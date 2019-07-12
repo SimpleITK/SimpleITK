@@ -3,11 +3,11 @@
 Tutorials and Courses
 ---------------------
 
-Whether you are a student at the beginging of a research career in biomedical image analysis or a seasoned veteran, you will
+Whether you are a student at the beginning of a research career in biomedical image analysis or a seasoned veteran, you will
 likely find attending a SimpleITK tutorial beneficial. These tutorials will shorten the time it
-takes you to master SimpleITK, with all of the material (code, data, presentations) provided using permisive licenses. After the
-tutorial, you can readily use the code in your research or go on to use it in your own teaching activities. Additionaly,
-attending a tutorial allows you to directly interact with the SimpleITK team. This is your oppurtunity to request specific features,
+takes you to master SimpleITK, with all of the material (code, data, presentations) provided using permissive licenses. After the
+tutorial, you can readily use the code in your research or go on to use it in your own teaching activities. Additionally,
+attending a tutorial allows you to directly interact with the SimpleITK team. This is your opportunity to request specific features,
 and get advice on how to best utilize SimpleITK for your research needs.
 
 While SimpleITK supports eight programming languages, the lingua franca of the biomedical data science community is either
@@ -35,12 +35,14 @@ SimpleITK tutorials and courses have been given in the following venues:
 
 Upcoming
 ++++++++
+* IEEE Engineering in Medicine and Biology Conference (EMBC) 2019, Berlin Germany: `SimpleITK: A Tool for Biomedical Image Processing, from Cells to Anatomical Structures <https://embc.embs.org/2019/workshops/>`__ [`git repository <https://github.com/SimpleITK/EMBC2019_WORKSHOP>`__].
 
-* SPIE Medical Imaging 2019 Course, San Diego CA, USA: `SimpleITK Jupyter Notebooks: Biomedical Image Analysis in Python <https://simpleitk.github.io/SPIE2019_COURSE/>`__ [`git repository <https://github.com/SimpleITK/SPIE2019_COURSE>`__].
+
 
 
 Past
 ++++
+* SPIE Medical Imaging 2019 Course, San Diego CA, USA: `SimpleITK Jupyter Notebooks: Biomedical Image Analysis in Python <https://simpleitk.github.io/SPIE2019_COURSE/>`__ [`git repository <https://github.com/SimpleITK/SPIE2019_COURSE>`__].
 * IEEE International Symposium on Biomedical Imaging (ISBI)2018 Tutorial, Washington DC, USA: `Biomedical Image Analysis in Python and R using SimpleITK Jupyter Notebooks <https://simpleitk.github.io/ISBI2018_TUTORIAL/>`__ [`git repository <https://github.com/SimpleITK/ISBI2018_TUTORIAL>`__].
 * SPIE Medical Imaging 2018 Course, Houston TX, USA: `SimpleITK Jupyter Notebooks: Biomedical Image Analysis in Python <https://simpleitk.github.io/SPIE2018_COURSE/>`__ [`git repository <https://github.com/SimpleITK/SPIE2018_COURSE>`__].
 * The International Symposium on Biomedical Imaging (ISBI) 2016, Prague, Czech republic: `SimpleITK: An Interactive, Python-Based Introduction to SimpleITK with the Insight Segmentation and Registration Toolkit (ITK) <http://biomedicalimaging.org/2016/?page_id=572>`__.

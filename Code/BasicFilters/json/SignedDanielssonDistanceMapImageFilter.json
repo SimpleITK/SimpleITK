@@ -35,6 +35,17 @@
       "detaileddescriptionGet" : "Get whether spacing is used."
     }
   ],
+  "measurements" : [
+    {
+      "name" : "VoronoiMap",
+      "type" : "Image",
+      "default" : "Image()",
+      "custom_itk_cast" : "this->m_VoronoiMap = this->CastITKToImage(filter->GetVoronoiMap());",
+      "no_print" : true,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get Voronoi Map This map shows for each pixel what object is closest to it. Each object should be labeled by a number (larger than 0), so the map has a value for each pixel corresponding to the label of the closest object."
+    }
+  ],
   "tests" : [
     {
       "tag" : "default",

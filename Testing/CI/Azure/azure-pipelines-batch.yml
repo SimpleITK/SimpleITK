@@ -1,9 +1,9 @@
 trigger:
-
   - master
   - release
 variables:
   ExternalDataVersion: 1.2.0
+  ctest.cache_extra: ''
 pr: none
 jobs:
   - job: VS2019
@@ -13,39 +13,88 @@ jobs:
       vmImage: 'windows-2019'
 
     steps:
-      - checkout: self
-        clean: true
-        fetchDepth: 5
-      - script: |
-          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
-        displayName: Checkout pull request HEAD
-      - bash: |
-          set -x
-          # 3.14.0 is required for VS2019 by 3.14.0-rc3 does not detect the VS2019 installation
-          choco install cmake.portable --pre  --version 3.14.0-rc2
-        displayName: "Chocolatey install..."
-      - bash: |
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
-        displayName: Download dashboard scripts and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - script: |
           cmake --version
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
         displayName: Build and test
         workingDirectory: $(Agent.BuildDirectory)
         env:
-          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: /MP
           CFLAGS: /MP
 
+  - job: macOS
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    strategy:
+      maxParallel: 2
+      matrix:
+        XCode_10:
+          imageName: 'macos-10.14'
+          xcodeVersion: 10.2
+        XCode_9_4:
+          imageName: 'macos-10.14'
+          xcodeVersion: 9.4.1
+        XCode_9_3:
+          imageName: 'macos-10.13'
+          xcodeVersion: 9.3
+    pool:
+      vmImage: $(imageName)
+
+    steps:
+      - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+          addToPath: true
+      - script: |
+          python --version
+          sudo python -m pip install setuptools numpy
+          sudo python -m pip install ninja scikit-ci-addons
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          xcode-select -p
+          sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer/
+          xcode-select -p
+          c++ --version
+          cmake --version
+          ninja --version
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
+        displayName: Build and test
+        env:
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_PYTHON:BOOL=ON
+            WRAP_JAVA:BOOL=ON
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+        condition: succeededOrFailed()
+        displayName: 'Format CTest output in JUnit format'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
+          testRunTitle: 'CTest $(Agent.OS)'
+        condition: succeededOrFailed()
+        displayName: 'Publish test results'
+
   - job: 'LinuxGCC'
+    timeoutInMinutes: 360
     pool:
       name: 'Default'
       demands:
@@ -53,6 +102,10 @@ jobs:
     strategy:
       matrix:
        default: {}
+       ITK-master:
+         ctest.cache_extra: |
+           ITK_GIT_TAG:STRING=master
+           CMAKE_CXX_STANDARD:STRING=11
        devtools-3:
          env_file: '/opt/rh/devtoolset-3/enable'
        devtools-4:
@@ -63,14 +116,10 @@ jobs:
          env_file: '/opt/rh/devtoolset-7/enable'
        devtools-8:
          env_file: '/opt/rh/devtoolset-8/enable'
-    timeoutInMinutes: 360
     workspace:
       clean: all
     steps:
-        - script: |
-            git clone -b dashboard --single-branch $(Build.Repository.Uri) SimpleITK-dashboard
-          displayName: Download dashboard scripts and testing data
-          workingDirectory: $(Agent.BuildDirectory)
+        - template: templates/git-download-steps.yml
         - script: |
             [[ ! -z "$(env_file)" ]] && source $(env_file)
             cmake --version
@@ -90,4 +139,5 @@ jobs:
               WRAP_DEFAULT:BOOL=ON
               CMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache
               CMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache
+              $(ctest.cache_extra)
           workingDirectory: $(Agent.BuildDirectory)

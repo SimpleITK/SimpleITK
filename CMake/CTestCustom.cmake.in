@@ -14,13 +14,6 @@ SET(CTEST_CUSTOM_COVERAGE_EXCLUDE
 
  # Exclude files from the Testing directories
  ".*/Testing/.*"
-
- # Exclude files from the Utilities directories
- ".*/Utilities/.*"
-
- # exclude certain wrapping files
- "/Wrapping/SimpleITKLuaMain.cxx"
- "/Wrapping/.*_wrap.cxx"
  )
 
 SET(CTEST_CUSTOM_WARNING_EXCEPTION
@@ -61,6 +54,9 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Warning when compiling ITK v4.5.1 with clang
   "clang: warning: argument unused during.*-fno-ipa-cp-clone"
+
+  # Warning when compiling SWIG
+  "clang: warning: argument unused.*-ansi"
 
   # Warning from RHEL5 GCC 4.1 about visibility change
   "warning: lowering visibility of .* to match its type"

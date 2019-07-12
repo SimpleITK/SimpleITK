@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Useful alias to see what commits are on the current branch with respect to
+# upstream/master
+git config alias.prepush 'log --graph --stat upstream/master..'
+
+
+
+# Remove old gerrit alias
+git config alias.gerrit-push >/dev/null && git config --unset alias.gerrit-push
+git config alias.gerrit-merge >/dev/null && git config --unset alias.gerrit-merge

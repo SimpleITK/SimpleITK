@@ -1,11 +1,10 @@
 SimpleITK
 =========
 
-|  | CircleCI | ReadTheDocs |
-|:-------:|:---------:|:-------------:|
-| release | [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/release.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/release) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=release)](http://simpleitk.readthedocs.io/en/release/) |
-| master | [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=master)](http://simpleitk.readthedocs.io/en/master/) |
-| next | [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/next.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/next) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=next)](http://simpleitk.readthedocs.io/en/next/)  |
+|  | CircleCI | ReadTheDocs | AzurePipelines |
+|:-------:|:---------:|:-------------:|:-------------:|
+| release | [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/release.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/release) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=release)](http://simpleitk.readthedocs.io/en/release/) | [![Build Status](https://dev.azure.com/SimpleITK-DevOps/SimpleITK/_apis/build/status/SimpleITK.SimpleITK?branchName=release)](https://dev.azure.com/SimpleITK-DevOps/SimpleITK/_build/latest?definitionId=2&branchName=release) |
+| master | [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=master)](http://simpleitk.readthedocs.io/en/master/) | [![Build Status](https://dev.azure.com/SimpleITK-DevOps/SimpleITK/_apis/build/status/SimpleITK.SimpleITK?branchName=release)](https://dev.azure.com/SimpleITK-DevOps/SimpleITK/_build/latest?definitionId=2&branchName=release) |
 
 
 SimpleITK is an image analysis toolkit with a large number of components supporting general filtering operations, image segmentation and registration. It is built on top of the Insight Segmentation and Registration Toolkit [ITK](https://www.itk.org) with the intent of providing a simplified interface to ITK. SimpleITK itself is written in C++ but is available for a large number of programming languages. Currently these include:
@@ -42,7 +41,7 @@ Documentation
 -------------
 With massive libraries like SimpleITK, good documentation is a must. The documentation for SimpleITK is split up into multiple levels:
 1. [API Documentation](https://itk.org/SimpleITKDoxygen/html/) - This contains class and function documentation. The descriptions for functions and classes are primarily borrowed from the original ITK C++ classes.
-2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/next/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages. [This site replaced the
+2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/master/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages. [This site replaced the
 [SimpleITK Wiki](https://itk.org/Wiki/SimpleITK)  which is mostly of interest for historical reasons.]
 3. [Juypyter Notebook Repository](http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/) - This repository contains a collection of Jupyter Notebooks illustrating the use of SimpleITK for educational and research activities. The notebooks demonstrate the use of SimpleITK for interactive image analysis using the Python and R programming languages. Recommended reading, if you are starting with SimpleITK.
 

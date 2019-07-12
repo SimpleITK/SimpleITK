@@ -53,7 +53,7 @@ include( sitkSITKLegacyNaming )
 add_custom_target( SuperBuildSimpleITKSource )
 
 #
-# sitkSourceDownload( <output variable> <filename> <md5 hash> )
+# sitkSourceDownload( <output variable> <filename> )
 #
 # A function to get a filename for an ExternalData source file used in
 # a superbuild. Adds a target which downloads all source code
@@ -69,9 +69,14 @@ add_custom_target( SuperBuildSimpleITKSource )
 # Note: Hash files are created under the SOURCE directory in the
 # .ExternalSource sub-directory during configuration.
 #
-function(sitkSourceDownload outVar filename hash)
-  set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/.ExternalSource/${filename}")
-  file(WRITE  "${link_file}.md5" ${hash} )
+function(sitkSourceDownload outVar filename)
+
+  set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/ExternalSource/${filename}")
+  if( NOT EXISTS "${link_file}.md5")
+    set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/.ExternalSource/${filename}")
+    file(WRITE  "${link_file}.md5" ${hash} )
+  endif()
+
   ExternalData_Expand_arguments(
     SuperBuildSimpleITKSourceReal
     link
@@ -237,6 +242,9 @@ list( APPEND ep_common_list
   CMAKE_JOB_POOL_COMPILE
 
   CMAKE_GENERATOR
+  CMAKE_GENERATOR_INSTANCE
+  CMAKE_GENERATOR_PLATFORM
+  CMAKE_GENERATOR_TOOLSET
   CMAKE_EXTRA_GENERATOR
   MEMORYCHECK_COMMAND_OPTIONS
   MEMORYCHECK_SUPPRESSIONS_FILE

@@ -400,8 +400,11 @@ namespace simple
      *
      * The pointer to the buffer is not referenced
      * counted. Additionally, while this image is made unique before
-     * returnign the pointer, additional copying and usage may
-     * introduce unexpected aliasing.
+     * returning the pointer, additional copying and usage may
+     * introduce unexpected aliasing of the image's buffer.
+     *
+     * Vector and Complex pixel types are both accessed via the
+     * appropriate component type method.
      *
      * The correct method for the current pixel type of the image must
      * be called or else an exception will be generated. For vector

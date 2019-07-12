@@ -17,23 +17,7 @@ jobs:
       vmImage: 'Ubuntu-16.04'
 
     steps:
-      - checkout: self
-        clean: true
-        fetchDepth: 5
-      - bash: |
-          set -x
-          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
-            git checkout $(System.PullRequest.SourceCommitId)
-          fi
-      - bash: |
-          set -x
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
-        displayName: Download dashboard scripts and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
@@ -53,10 +37,17 @@ jobs:
           ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
         displayName: Build and test
         env:
-          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FALURE: 1
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_JAVA:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -76,23 +67,7 @@ jobs:
       vmImage: 'macOS-10.13'
 
     steps:
-      - checkout: self
-        clean: true
-        fetchDepth: 5
-      - bash: |
-          set -x
-          if [ -n "$(System.PullRequest.SourceCommitId)" ]; then
-            git checkout $(System.PullRequest.SourceCommitId)
-          fi
-      - bash: |
-          set -x
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5 $(Build.SourcesDirectory)/.ExternalData/MD5
-        displayName: Download dashboard scripts  and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
@@ -101,7 +76,7 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          sudo python -m pip install setuptools
+          sudo python -m pip install setuptools numpy
           sudo python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - bash: |
@@ -112,10 +87,18 @@ jobs:
           ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
         displayName: Build and test
         env:
-          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FALURE: 1
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_PYTHON:BOOL=ON
+            WRAP_JAVA:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -133,23 +116,8 @@ jobs:
     cancelTimeoutInMinutes: 300
     pool:
       vmImage: 'vs2017-win2016'
-
     steps:
-      - checkout: self
-        clean: true
-        fetchDepth: 5
-      - script: |
-          if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
-        displayName: Checkout pull request HEAD
-      - bash: |
-          set -x
-          git clone -b dashboard --single-branch ${BUILD_REPOSITORY_URI} SimpleITK-dashboard
-
-          curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-          cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
-        displayName: Download dashboard scripts and testing data
-        workingDirectory: $(Agent.BuildDirectory)
+      - template: templates/git-download-steps.yml
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
@@ -166,13 +134,20 @@ jobs:
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
         displayName: Build and test
         env:
-          CTEST_BUILD_CONFIGURATION: MinSizeRel
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FALURE: 1
           CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: /MP
           CFLAGS: /MP
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml

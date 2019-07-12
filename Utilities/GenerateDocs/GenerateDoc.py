@@ -309,8 +309,7 @@ if __name__ == '__main__':
     if backup_flag:
         os.rename(sitk_json, sitk_json + ".BAK")
 
-    fp = io.open(sitk_json, "w", encoding='utf8')
-    json_string = json.dumps(json_obj, indent=2, separators=(u',', u' : '), ensure_ascii=False, encoding='utf8')
-    fp.write(json_string)
-    print (u"", file=fp)
-    fp.close()
+    with io.open(sitk_json, "w", encoding='utf8') as fp:
+        json_string = json.dumps(json_obj, indent=2, separators=(u',', u' : '), ensure_ascii=False)
+        fp.write(json_string)
+        print (u"", file=fp)

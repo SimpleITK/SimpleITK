@@ -38,7 +38,8 @@ if active then
   }
   out << std::endl;]]
 else
-OUT=[[  out << "  ${name}: " << this->m_${name} << std::endl;]]
+OUT=[[  out << "  ${name}: " << this->m_${name} << std::endl;
+]]
 end
 end)))
   out << ProcessObject::ToString();

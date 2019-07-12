@@ -1,32 +1,48 @@
-
-# Development
+# Contributing to SimpleITK
 
 We welcome contributions from the community!
 
-SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on [itk.org](https://itk.org/SimpleITK.git) and mirrored to [Github](https://github.com/SimpleITK/SimpleITK.git). We are currently using Github for pull requests, and issue tracking.
+SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on [Github](https://github.com/SimpleITK/SimpleITK.git) and mirrored on [itk.org](https://itk.org/SimpleITK.git) and the [Insight Software Consortium](https://github.com/InsightSoftwareConsortium/SimpleITK). For pull requests and issue tracking  Github is also used.
 
-# Contribute
+There are many ways to contribute to SimpleITK:
+ - Report Bugs and Issues
+ - Improve SimpleITK Examples and Documentation
+ - Request new features
+ - Enhance the code coverage
+ - Contribute code to fix bugs or add new features.
 
-To submit code to SimpleITK, simply follow the standard GitHub workflow to make a pull request. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962) regarding the workflow and getting your computer setup.
+## Setup for development
 
-New feature topics should be based on the `master` branch, while bugs fixes for the recent release should be based on the `release` branch. A topic should *never* be based on the `next` branch.
+The following documentation is for an advanced contributor who is already familiar with git and GitHub workflow. The [ITK](https://github.com/InsightSoftwareConsortium/ITK) documentation may provide more details, or many online resource can orient you.
 
-## Setup
+After you have cloned and forked the SimpleITK repository run the following command from the root:
+```
+./Utilities/SetupForDevelopment.sh
+```
 
-After cloning the repository, run `./Utilities/SetupForDevelopment.sh` from within the SimpleITK repository to setup Git hooks. Say "no" to setting up access to itk.org as only core developers need access for merging pull requests.
+This script will configure your local checkout with the `upstream` repository and your own fork. Additionally, local hooks and aliases are added.
 
-This setup script also sets up some alias for the legacy ITK's Gerrit review system.
+## Workflow
+
+Submitting code to SimpleITK follows the standard pull request GitHub workflow. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://guides.github.com/introduction/flow/) regarding the workflow and getting your computer setup.
+
+SimpleITK uses a branchy workflow where each PR should be a new topic branch. Locally, you create a branch with a concise and precise name then commit your changes to that branch. The branch should be based on your target branch which will usually be `master` for new features and improvements or `release` for back patches such as bugs fixes.
+
+After completing the local branch, push it to your fork, then create a GitHub pull request in the SimpleITK upstream repository. The pull request is then required to have an approving *code review*, and the *continuous integration* testing pass before the topic is merged into the upstream repository.
 
 ## Branches
 
-* **next** - An unstable branch which contains future features for testing. These will be tested nightly on [CDash](https://open.cdash.org/index.php?project=SimpleITK). If the tests pass, then they will be merged into master. Pull requests should never be based on this branch, however this is the default branch you should push changes to.
-* **master** - Stable branch of the code and suitable for most users when building SimpleITK. New features should be based on this branch.
-* **release** - Branch of the code from the stable release. Patches which are bug fixes for the most recent releae should be based on the `release` branch.
+* **master** - Stable branch of the code which is expected to available to users when building SimpleITK. New features should be based on this branch.
+* **release** - Branch of the code from the stable release. Patches which are bug fixes for the most recent release should be based on the `release` branch.
+* **dashboard** - CMake scripts used for continuous integration and nightly testing
 
 ## Testing
 
 Testing is very important for SimpleITK, to ensure quality and reliable code that "just works". Please include tests in pull request that add features or fix bugs.
 
-Pull request will be reviewed and run through the continuous integration building and testing infrastructure to ensure quality code before being merged into the **next** branch for nightly testing.
+Pull requests are run through the continuous integration building and
+testing infrastructure to ensure quality code. Many options are tested
+on the PR, but more are run when merged into master. It is important
+to check the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK) to verify no new warnings or regression test failures are introduced after your patch has been merged.
 
-The comprehensive regression testing is reported to the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK). This include the extensive nightly testing on the **next** branch, nightly distributions packages on the **release** or **master** branch, and continuous integration from Github pull requests.
+The regression testing is reported to the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK).

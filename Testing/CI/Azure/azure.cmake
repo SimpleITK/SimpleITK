@@ -25,14 +25,21 @@ set_from_env(CTEST_SITE "AGENT_MACHINENAME" REQUIRED)
 set(CTEST_SITE "Azure.${CTEST_SITE}")
 set(CTEST_UPDATE_VERSION_ONLY 1)
 
-set_from_env(PARALLEL_LEVEL "PARALLEL_LEVEL" DEFAULT 2 )
+include( ProcessorCount )
+ProcessorCount( _processor_count )
+set_from_env(PARALLEL_LEVEL "PARALLEL_LEVEL" DEFAULT "${_processor_count}" )
 set( CTEST_TEST_ARGS ${CTEST_TEST_ARGS} PARALLEL_LEVEL ${PARALLEL_LEVEL})
+
+
 set_from_env(workspace "AGENT_BUILDDIRECTORY" REQUIRED)
 file(TO_CMAKE_PATH "${workspace}" CTEST_DASHBOARD_ROOT)
 file(RELATIVE_PATH dashboard_source_name "${workspace}" "$ENV{BUILD_SOURCESDIRECTORY}")
 
 # Make environment variables to CMake variables for CTest
 set_from_env(CTEST_CMAKE_GENERATOR "CTEST_CMAKE_GENERATOR" DEFAULT "Ninja" )
+if (DEFINED ENV{CTEST_BUILD_CONFIGURATION})
+  message(WARNING "Ignoring depricated variable CTEST_BUILD_CONFIGURATION")
+endif()
 set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" DEFAULT "Release")
 set_from_env(CTEST_SOURCE_DIRECTORY "BUILD_SOURCESDIRECTORY" REQUIRED)
 #set_from_env(CTEST_BINARY_DIRECTORY "CTEST_BINARY_DIRECTORY")
@@ -41,11 +48,18 @@ set_from_env(CTEST_BUILD_TARGET "CTEST_BUILD_TARGET")
 set_from_env(CTEST_TEST_ARGS "CTEST_TEST_ARGS")
 
 
+set_from_env(CTEST_TEST_TIMEOUT "CTEST_TEST_TIMEOUT")
+
 set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
 
 set_from_env(dashboard_do_coverage "DASHBOARD_DO_COVERAGE" 0)
 set_from_env(CTEST_COVERAGE_COMMAND "CTEST_COVERAGE_COMMAND")
+
+set_from_env(dashboard_do_memcheck "DASHBOARD_DO_MEMCHECK" 0)
+set_from_env(CTEST_MEMORYCHECK_COMMAND "CTEST_MEMORYCHECK_COMMAND")
+set_from_env(CTEST_MEMORYCHECK_COMMAND_OPTIONS "CTEST_MEMORYCHECK_COMMAND_OPTIONS")
+
 
 # Construct build name based on what is being built
 set(dashboard_loop 0)
@@ -101,3 +115,27 @@ string(TIMESTAMP build_date "%Y-%m-%d")
 message("CDash Build Identifier: ${build_date} ${CTEST_BUILD_NAME}")
 
 include("${DASHBOARD_BRANCH_DIRECTORY}/simpleitk_common.cmake")
+
+function(print_if var)
+  if( NOT ${${var}} EQUAL 0 )
+    message(SEND_ERROR  "\tUnexpected result ${var}: ${${var}}")
+  endif()
+endfunction()
+
+
+if(NOT ${configure_return} EQUAL 0 OR
+   NOT ${build_return} EQUAL 0 OR
+   NOT ${build_errors} EQUAL 0 OR
+   NOT ${build_warnings} EQUAL 0 OR
+   NOT ${test_return} EQUAL 0)
+  message(FATAL_ERROR
+    "Build did not complete without warnings, errors, or failures.")
+  print_if(configure_return)
+  print_if(build_return)
+  print_if(build_errors)
+  print_if(build_warnings)
+  print_if(test_return)
+
+else()
+  return(0)
+endif()

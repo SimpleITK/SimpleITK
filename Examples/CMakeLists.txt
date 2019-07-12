@@ -34,6 +34,7 @@ set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 
 # Add example organized sub-directories with multiple languages
 add_subdirectory(HelloWorld)
+add_subdirectory(FastMarchingSegmentation)
 add_subdirectory(SimpleGaussian)
 add_subdirectory(ImageRegistrationMethod1)
 add_subdirectory(ImageRegistrationMethod2)

@@ -12,6 +12,12 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ImageRegistrationMethod2.cs
+       :language: c#
+       :lines: 18-
+
   .. tab:: C++
 
     .. literalinclude:: ImageRegistrationMethod2.cxx

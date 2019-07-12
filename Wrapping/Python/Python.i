@@ -378,8 +378,8 @@
 
             # If we have a 3D image, we can extract 2D image if one index is an int and the reset are slices
             slice_dim = -1
-            if ( dim == 3 ):
-              # find only a single dimension with has an integer index
+            if ( dim > 2 ):
+              # find only a single dimension which has an integer index
               for i in range(len(idx)):
                 if type(idx[i]) is slice:
                   continue
@@ -714,7 +714,7 @@ def _get_sitk_vector_pixelid(numpy_array_type):
         for key in _np_sitk:
             if numpy.issubdtype(numpy_array_type.dtype, key):
                 return _np_sitk[key]
-        raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
+        raise TypeError('dtype: {0} is not supported as an array.'.format(numpy_array_type.dtype))
 
 
 # SimplyITK <-> Numpy Array conversion support.
@@ -762,7 +762,7 @@ def GetArrayFromImage(image):
 
 
 def GetImageFromArray( arr, isVector=None):
-    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D images are automatically considered 3D vector images."""
+    """Get a SimpleITK Image from a numpy array. If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be considered the component index. By default when isVector is None, 4D arrays are automatically considered 3D vector images, but 3D arrays are 3D images."""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
@@ -770,7 +770,7 @@ def GetImageFromArray( arr, isVector=None):
     z = numpy.asarray( arr )
 
     if isVector is None:
-      if z.ndim == 4:
+      if z.ndim == 4 and z.dtype != numpy.complex64 and z.dtype != numpy.complex128:
         isVector = True
 
     if isVector:

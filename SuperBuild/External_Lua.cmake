@@ -8,14 +8,12 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 set(proj Lua)
 
 set(lua_TARGET_VERSION 5.1.5)
-set(lua_DOWNLOAD_SOURCE_HASH "2e115fe26e435e33b0d5c022e4490567")
-
 
 # follow the standard EP_PREFIX locations
 set(lua_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-build)
 set(lua_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj})
 set(lua_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
-sitkSourceDownload(lua_URL "lua-${lua_TARGET_VERSION}.tar.gz" ${lua_DOWNLOAD_SOURCE_HASH})
+sitkSourceDownload(lua_URL "lua-${lua_TARGET_VERSION}.tar.gz" )
 
 
 file(WRITE "${lua_binary_dir}/CMakeCacheInit.txt" "${ep_common_cache}" )
@@ -27,7 +25,6 @@ set(lua_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
 
 ExternalProject_Add(Lua
   URL "${lua_URL}"
-  URL_HASH MD5=${lua_DOWNLOAD_SOURCE_HASH}
   PATCH_COMMAND ${lua_PATCH_COMMAND}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
