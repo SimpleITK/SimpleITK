@@ -61,21 +61,24 @@ add_custom_target( SuperBuildSimpleITKSource )
 # the build tree, and can be locally cache with other ExternalData
 # controlled environment variables.
 #
+# <output variable> is set to the downloaded file.
+# <output variable>_HASH is set to a hash of the file of the form ALGO=HASH_VALUE
+#
 # The "SuperBuildSimpleITKSource" target needs to be manually added as
 # a dependencies to the ExternalProject.
 #
 #   add_dependencies( PROJ "SuperBuildSimpleITKSource" )
 #
-# Note: Hash files are created under the SOURCE directory in the
-# .ExternalSource sub-directory during configuration.
-#
 function(sitkSourceDownload outVar filename)
 
   set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/ExternalSource/${filename}")
   if( NOT EXISTS "${link_file}.md5")
-    set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/.ExternalSource/${filename}")
-    file(WRITE  "${link_file}.md5" ${hash} )
+    message(FATALERROR "The source download file: \"${link_file}.md5\" does not exists.")
   endif()
+
+  file(READ "${link_file}.md5" _HASH)
+  string(STRIP "${_HASH}" _HASH)
+  set(${outVar}_HASH "MD5=${_HASH}" PARENT_SCOPE)
 
   ExternalData_Expand_arguments(
     SuperBuildSimpleITKSourceReal
