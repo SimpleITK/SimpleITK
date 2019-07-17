@@ -19,6 +19,7 @@ sitkSourceDownload(${proj}_URL "virtualenv-${${proj}_TARGET_VERSION}.tar.gz")
 
 ExternalProject_Add(${proj}
   URL "${${proj}_URL}"
+  URL_HASH "${${proj}_URL_HASH}"
   SOURCE_DIR ${${proj}_source_dir}
   BINARY_DIR ${${proj}_binary_dir}
   INSTALL_DIR ${${proj}_install_dir}

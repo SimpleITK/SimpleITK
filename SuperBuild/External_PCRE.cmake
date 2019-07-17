@@ -42,6 +42,7 @@ if(NOT PCRE_DIR)
 
   ExternalProject_add(PCRE
     URL "${PCRE_URL}"
+    URL_HASH "${PCRE_URL_HASH}"
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
     DEPENDS "${PCRE_DEPENDENCIES}"
     ${External_Project_USES_TERMINAL}
