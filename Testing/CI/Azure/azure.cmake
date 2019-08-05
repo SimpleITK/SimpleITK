@@ -3,21 +3,22 @@
 # ------------
 #
 # Sets a CMake variable from an environment variable. If the
-# environment variable  is not  defined then either a fatal error is
-# generated or the CMake variable is not modified.
+# environment variable is not defined then the exist CMake value will
+# persist. Next if a "DEFAULT" argument is provided then the "value"
+# parameter will be use to set the variable.
 #
 # set_from_env( <variable> <environment variable> [REQUIRED|DEFAULT value] )
 function(set_from_env var env_var)
-  if(NOT DEFINED ENV{${env_var}})
-    if (ARGV2 STREQUAL "REQUIRED")
-      message(FATAL_ERROR "Required environment variable \"${env_var}\" not defined.")
-    elseif (ARGV2 STREQUAL "DEFAULT")
-      message("Setting \"${var}\" to default \"${ARGV3}\".")
-      set(${var} ${ARGV3} PARENT_SCOPE)
-    endif()
-  else()
+  if( DEFINED ENV{${env_var}})
     message("Setting \"${var}\" to \"$ENV{${env_var}}\" from environment.")
     set(${var} $ENV{${env_var}} PARENT_SCOPE)
+  elseif (DEFINED ${var})
+    message("Using defined value for \"${var}\" of \"${${var}}\"")
+  elseif (ARGV2 STREQUAL "REQUIRED")
+    message(FATAL_ERROR "Required environment variable \"${env_var}\" not defined.")
+  elseif (ARGV2 STREQUAL "DEFAULT")
+    message("Setting \"${var}\" to default \"${ARGV3}\".")
+    set(${var} ${ARGV3} PARENT_SCOPE)
   endif()
 endfunction()
 
