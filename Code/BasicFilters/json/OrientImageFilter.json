@@ -1,0 +1,54 @@
+{
+  "name" : "OrientImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n",
+  "include_files" : [
+    "sitkOrientImageFilter_Support.hxx"
+  ],
+  "members" : [
+    {
+      "name" : "DesiredCoordinateOrientation",
+      "type" : "std::string",
+      "default" : "std::string()",
+      "custom_itk_cast" : "if (this->m_DesiredCoordinateOrientation != std::string() ) filter->SetDesiredCoordinateOrientation ( sitkStringToSpatialOrientation( this->m_DesiredCoordinateOrientation ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : ""
+    }
+  ],
+  "measurements" : [
+    {
+      "name" : "FlipAxes",
+      "type" : "std::vector<bool>",
+      "default" : "std::vector<bool>()",
+      "custom_itk_cast" : "this->m_FlipAxes = sitkITKVectorToSTL<bool>(filter->GetFlipAxes());",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get flip axes."
+    },
+    {
+      "name" : "PermuteOrder",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>()",
+      "custom_itk_cast" : "this->m_PermuteOrder = sitkITKVectorToSTL<unsigned int>(filter->GetPermuteOrder());",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get axes permute order."
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "default",
+      "md5hash" : "3eb703113d03f38e7b8db4b180079a39",
+      "settings" : [],
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "itk_module" : "ITKImageGrid",
+  "itk_group" : "ImageGrid",
+  "detaileddescription" : "This class satisfies a common requirement in medical imaging, which is to properly orient a 3 dimensional image with respect to anatomical features. Due to the wide variety of hardware used to generate 3D images of human anatomy, and the even wider variety of image processing software, it is often necessary to re-orient image volume data.\n\nOrientImageFilter depends on a set of constants that describe all possible labeled according to the following scheme: Directions are labeled in terms of following pairs:\n\n\\li Left and Right (Subject's left and right)\n\n\\li Anterior and Posterior (Subject's front and back)\n\n\\li Inferior and Superior (Subject's bottom and top, i.e. feet and head)\n\n\n\nThe initials of these directions are used in a 3 letter code in the enumerated type itk::SpatialOrientation::ValidCoordinateOrientationFlags . The initials are given fastest moving index first, second fastest second, third fastest third. Examples:\n\n\\li ITK_COORDINATE_ORIENTATION_RIP\n\\li Right to Left varies fastest (0th pixel on Subject's right)\n\n\\li Inferior to Superior varies second fastest\n\n\\li Posterior to Anterior varies slowest.\n\n\n\n\\li ITK_COORDINATE_ORIENTATION_LSA\n\\li Left to Right varies fastest (0th pixel on Subject's left)\n\n\\li Superior to Inferior varies second fastest\n\n\\li Anterior to Posterior varies slower\n\n\n\n\n\nIn order to use this filter, you need to supply an input image, the current orientation of the input image (set with SetGivenCoordinateOrientation) and the desired orientation. (set with SetDesiredCoordinateOrientation). You may explicitly set the DesiredOrientation with SetDesiredCoordinateOrientation (if UseImageDirection is \"off\") or you can use the image's direction cosines to set the DesiredOrientation (if UseImageDirection is \"on\"). When reading image files that define the coordinate orientation of the image, the current orientation is stored in the MetadataDictionary for the itk::Image object and the Image.Direction direction cosine matrix created from the file.\n\nAs an example, if you wished to keep all images within your program in the orientation corresponding to the Analyze file format's 'CORONAL' orientation you could do something like the following\n\n\\code\n// DEPRECATED -- using metadata for orientation is no longer supported\n\n//\n\n#include \"itkAnalyzeImageIO.h\"\n\n#include \"itkMetaDataObject.h \"\n\n#include \"itkImage.h \"\n\n#include \"itkOrientImageFilter.h \"\n\nusing ImageType = itk::Image<unsigned char,3> ;\n\nusing ImageReaderType = itk::ImageFileReader< TstImageType > ;\n\nImageType::Pointer ReadAnalyzeFile(const char *path)\n\n{\n\n itk::AnalyzeImageIO::Pointer io = itk::AnalyzeImageIO::New();\n\n ImageReaderType::Pointer fileReader = ImageReaderType::New();\n\n fileReader->SetImageIO(io);\n\n fileReader->SetFileName(path);\n\n fileReader->Update();\n\n ImageType::Pointer rval = fileReader->GetOutput();\n\n\n// DEPRECATED -- use direction cosines\n\n//\n\n itk::SpatialOrientation::ValidCoordinateOrientationFlags fileOrientation;\n\n itk::ExposeMetaData<itk::SpatialOrientation::ValidCoordinateOrientationFlags>\n\n (rval->GetMetaDataDictionary(),itk::ITK_CoordinateOrientation,fileOrientation);\n\n itk::OrientImageFilter<ImageType,ImageType>::Pointer orienter =\n\n itk::OrientImageFilter<ImageType,ImageType>::New ();\n\n orienter->SetGivenCoordinateOrientation(fileOrientation); // deprecated\n\n\n orienter->SetDesiredCoordinateOrientation(itk::SpatialOrientation::ITK_COORDINATE_ORIENTATION_RIP );\n\n orienter->SetInput(rval);\n\n orienter->Update();\n\n rval = orienter->GetOutput();\n\n return rval;\n\n}\n\n\\endcode\n\nOr , using the direction cosines of the image, \\code\n#include \"itkAnalyzeImageIO.h\"\n\n#include \"itkImage.h \"\n\n#include \"itkOrientImageFilter.h \"\n\nusing ImageType = itk::Image<unsigned char,3> ;\n\nusing ImageReaderType = itk::ImageFileReader< ImageType > ;\n\nImageType::Pointer ReadAnalyzeFile(const char *path)\n\n{\n\n itk::AnalyzeImageIO::Pointer io = itk::AnalyzeImageIO::New();\n\n ImageReaderType::Pointer fileReader = ImageReaderType::New();\n\n fileReader->SetImageIO(io);\n\n fileReader->SetFileName(path);\n\n fileReader->Update();\n\n ImageType::Pointer rval = fileReader->GetOutput();\n\n\n itk::OrientImageFilter<ImageType,ImageType>::Pointer orienter =\n\n itk::OrientImageFilter<ImageType,ImageType>::New ();\n\n orienter->UseImageDirectionOn();\n\n orienter->SetDesiredCoordinateOrientation(itk::SpatialOrientation::ITK_COORDINATE_ORIENTATION_RIP );\n\n orienter->SetInput(rval);\n\n orienter->Update();\n\n rval = orienter->GetOutput();\n\n return rval;\n\n}\n\n\\endcode",
+  "briefdescription" : "Permute axes and then flip images as needed to obtain agreement in coordinateOrientation codes."
+}
