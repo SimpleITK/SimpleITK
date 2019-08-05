@@ -3,9 +3,9 @@
 # ------------
 #
 # Sets a CMake variable from an environment variable. If the
-# environment variable is not defined then the exist CMake value will
+# environment variable is not defined then the existing CMake value will
 # persist. Next if a "DEFAULT" argument is provided then the "value"
-# parameter will be use to set the variable.
+# parameter will be used to set the variable.
 #
 # set_from_env( <variable> <environment variable> [REQUIRED|DEFAULT value] )
 function(set_from_env var env_var)
@@ -64,6 +64,7 @@ set_from_env(CTEST_TEST_ARGS "CTEST_TEST_ARGS")
 
 
 set_from_env(CTEST_TEST_TIMEOUT "CTEST_TEST_TIMEOUT")
+set_from_env(CTEST_OUTPUT_ON_FAILURE "CTEST_OUTPUT_ON_FAILURE")
 
 set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 

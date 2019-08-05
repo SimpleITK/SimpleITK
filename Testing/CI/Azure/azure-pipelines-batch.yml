@@ -70,7 +70,7 @@ jobs:
         displayName: Build and test
         env:
           CTEST_CONFIGURATION_TYPE: MinSizeRel
-          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_OUTPUT_ON_FAILURE: 1
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CTEST_CACHE: |
@@ -129,7 +129,7 @@ jobs:
             ccache --show-stats
           displayName: Build and test
           env:
-            CTEST_OUTPUT_ON_FALURE: 1
+            CTEST_OUTPUT_ON_FAILURE: 1
             DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
             CTEST_CACHE: |
               BUILD_DOCUMENTS:BOOL=OFF
