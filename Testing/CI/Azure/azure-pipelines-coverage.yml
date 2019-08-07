@@ -26,7 +26,7 @@ jobs:
         env:
           CCACHE_DISABLE: 1
           CTEST_CONFIGURATION_TYPE: Debug
-          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_COVERAGE_COMMAND: /usr/bin/gcov
           CTEST_CACHE: |
               BUILD_DOCUMENTS:BOOL=OFF
@@ -69,7 +69,7 @@ jobs:
           DASHBOARD_DO_MEMCHECK: 1
           CTEST_MEMORYCHECK_COMMAND: "/usr/bin/valgrind"
           CTEST_MEMORYCHECK_COMMAND_OPTIONS: "--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes"
-          CTEST_OUTPUT_ON_FALURE: 1
+          CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_TEST_TIMEOUT: 10000
           CTEST_CONFIGURATION_TYPE: Debug
           CTEST_CACHE: |

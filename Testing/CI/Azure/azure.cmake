@@ -3,27 +3,45 @@
 # ------------
 #
 # Sets a CMake variable from an environment variable. If the
-# environment variable  is not  defined then either a fatal error is
-# generated or the CMake variable is not modified.
+# environment variable is not defined then the existing CMake value will
+# persist. Next if a "DEFAULT" argument is provided then the "value"
+# parameter will be used to set the variable.
 #
 # set_from_env( <variable> <environment variable> [REQUIRED|DEFAULT value] )
 function(set_from_env var env_var)
-  if(NOT DEFINED ENV{${env_var}})
-    if (ARGV2 STREQUAL "REQUIRED")
-      message(FATAL_ERROR "Required environment variable \"${env_var}\" not defined.")
-    elseif (ARGV2 STREQUAL "DEFAULT")
-      message("Setting \"${var}\" to default \"${ARGV3}\".")
-      set(${var} ${ARGV3} PARENT_SCOPE)
-    endif()
-  else()
+  if( DEFINED ENV{${env_var}})
     message("Setting \"${var}\" to \"$ENV{${env_var}}\" from environment.")
     set(${var} $ENV{${env_var}} PARENT_SCOPE)
+  elseif (DEFINED ${var})
+    message("Using defined value for \"${var}\" of \"${${var}}\"")
+  elseif (ARGV2 STREQUAL "REQUIRED")
+    message(FATAL_ERROR "Required environment variable \"${env_var}\" not defined.")
+  elseif (ARGV2 STREQUAL "DEFAULT")
+    message("Setting \"${var}\" to default \"${ARGV3}\".")
+    set(${var} ${ARGV3} PARENT_SCOPE)
   endif()
 endfunction()
 
 set_from_env(CTEST_SITE "AGENT_MACHINENAME" REQUIRED)
 set(CTEST_SITE "Azure.${CTEST_SITE}")
-set(CTEST_UPDATE_VERSION_ONLY 1)
+
+set_from_env(workspace "AGENT_BUILDDIRECTORY" REQUIRED)
+file(TO_CMAKE_PATH "${workspace}" CTEST_DASHBOARD_ROOT)
+
+set_from_env(dashboard_git_branch "DASHBOARD_GIT_BRANCH")
+if( DEFINED dashboard_git_branch)
+  set(CTEST_UPDATE_VERSION_ONLY 1)
+  set_from_env(CTEST_SOURCE_DIRECTORY "CTEST_SOURCE_DIRECTORY" DEFAULT "${CTEST_DASHBOARD_ROOT}/sitk")
+  if (EXISTS "${CTEST_SOURCE_DIRECTORY}")
+    message(WARNING "The source path \"${CTEST_SOURCE_DIRECTORY}\" already exists!")
+  endif()
+else()
+  set(CTEST_UPDATE_VERSION_ONLY 1)
+  file(RELATIVE_PATH dashboard_source_name "${workspace}" "$ENV{BUILD_SOURCESDIRECTORY}")
+  set_from_env(CTEST_SOURCE_DIRECTORY "BUILD_SOURCESDIRECTORY" REQUIRED)
+endif()
+set_from_env(CTEST_BINARY_DIRECTORY "CTEST_BINARY_DIRECTORY")
+
 
 include( ProcessorCount )
 ProcessorCount( _processor_count )
@@ -31,24 +49,22 @@ set_from_env(PARALLEL_LEVEL "PARALLEL_LEVEL" DEFAULT "${_processor_count}" )
 set( CTEST_TEST_ARGS ${CTEST_TEST_ARGS} PARALLEL_LEVEL ${PARALLEL_LEVEL})
 
 
-set_from_env(workspace "AGENT_BUILDDIRECTORY" REQUIRED)
-file(TO_CMAKE_PATH "${workspace}" CTEST_DASHBOARD_ROOT)
-file(RELATIVE_PATH dashboard_source_name "${workspace}" "$ENV{BUILD_SOURCESDIRECTORY}")
 
 # Make environment variables to CMake variables for CTest
 set_from_env(CTEST_CMAKE_GENERATOR "CTEST_CMAKE_GENERATOR" DEFAULT "Ninja" )
+set_from_env(CTEST_CMAKE_GENERATOR_TOOLSET "CTEST_CMAKE_GENERATOR_TOOLSET")
+set_from_env(CTEST_CMAKE_GENERATOR_PLATFORM "CTEST_CMAKE_GENERATOR_PLATFORM")
 if (DEFINED ENV{CTEST_BUILD_CONFIGURATION})
   message(WARNING "Ignoring depricated variable CTEST_BUILD_CONFIGURATION")
 endif()
 set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" DEFAULT "Release")
-set_from_env(CTEST_SOURCE_DIRECTORY "BUILD_SOURCESDIRECTORY" REQUIRED)
-#set_from_env(CTEST_BINARY_DIRECTORY "CTEST_BINARY_DIRECTORY")
 set_from_env(CTEST_BUILD_FLAGS "CTEST_BUILD_FLAGS")
 set_from_env(CTEST_BUILD_TARGET "CTEST_BUILD_TARGET")
 set_from_env(CTEST_TEST_ARGS "CTEST_TEST_ARGS")
 
 
 set_from_env(CTEST_TEST_TIMEOUT "CTEST_TEST_TIMEOUT")
+set_from_env(CTEST_OUTPUT_ON_FAILURE "CTEST_OUTPUT_ON_FAILURE")
 
 set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
