@@ -40,10 +40,106 @@
     {
       "tag" : "default",
       "description" : "default",
-      "md5hash" : "3eb703113d03f38e7b8db4b180079a39",
+      "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
       "settings" : [],
       "inputs" : [
-        "Input/cthead1.png"
+        "Input/RA-Short.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "FlipAxes",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            0,
+            0
+          ],
+          "tolerance" : 1e-23
+        },
+        {
+          "name" : "PermuteOrder",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            1,
+            2
+          ],
+          "tolerance" : 1e-23
+        }
+      ]
+    },
+    {
+      "tag" : "RIP",
+      "description" : "default",
+      "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
+      "settings" : [
+        {
+          "parameter" : "DesiredCoordinateOrientation",
+          "type" : "std::string",
+          "value" : "\"RIP\""
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "FlipAxes",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            0,
+            0
+          ],
+          "tolerance" : 1e-23
+        },
+        {
+          "name" : "PermuteOrder",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            1,
+            2
+          ],
+          "tolerance" : 1e-23
+        }
+      ]
+    },
+    {
+      "tag" : "RAS",
+      "description" : "default",
+      "md5hash" : "92a4a9bf5c1fab11c11d84070924000f",
+      "settings" : [
+        {
+          "parameter" : "DesiredCoordinateOrientation",
+          "type" : "std::string",
+          "value" : "\"RAS\""
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "FlipAxes",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            1,
+            1
+          ],
+          "tolerance" : 1e-23
+        },
+        {
+          "name" : "PermuteOrder",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            2,
+            1
+          ],
+          "tolerance" : 1e-23
+        }
       ]
     }
   ],
