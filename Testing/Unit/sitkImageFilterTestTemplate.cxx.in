@@ -251,7 +251,7 @@ $(foreach settings
   filter.Set${parameter} ( vec );\
   for(unsigned int i = 0; i < filter.Get${parameter}().size(); ++i)\
     {\
-    ASSERT_EQ ( filter.Get${parameter}()[i], vec[i] ) << "Failed to set ${parameter} to ${value}";\
+    ASSERT_EQ ( filter.Get${parameter}()[i], vec[i] ) << "Failed to set ${parameter} to: \\\"" << vec << "\\\"";\
     }\
   }'
   else
@@ -270,7 +270,7 @@ $(foreach settings
   ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
         else
           OUT = OUT .. '\
-  ASSERT_EQ ( ${temp}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
+  ASSERT_EQ ( ${temp}, filter.Get${parameter}() ) << "Failed to set ${parameter} to: \\\"" << ${temp} << "\\\"";'
         end
       end
 end)
