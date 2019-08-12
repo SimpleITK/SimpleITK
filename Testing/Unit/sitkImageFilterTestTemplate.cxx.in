@@ -321,7 +321,20 @@ $(for i = 1,#measurements_results do
     PARAMS=PARAMS..' '
   end
   if measurements_results[i].tolerance then
-    OUT=OUT..'  EXPECT_NEAR( '..measurements_results[i].value..', filter.Get'..measurements_results[i].name..'('..PARAMS..'), '..measurements_results[i].tolerance..' ) << "Measurement failure";'
+    if measurements_results[i].dim_vec then
+      OUT=OUT..'{\
+   double arr[] = {'
+      for j=1,#measurements_results[i].value-1 do
+        OUT=OUT..measurements_results[i].value[j]..", "
+      end
+      OUT=OUT..measurements_results[i].value[#measurements_results[i].value]
+      OUT=OUT..'};\
+   std::vector< double > vec1(arr, arr + '..#measurements_results[i].value..');\
+   EXPECT_VECTOR_NEAR( vec1, filter.Get'..measurements_results[i].name..'('..PARAMS..'), '..measurements_results[i].tolerance..' ) << "Measurement failure";\
+   }'
+    else
+      OUT=OUT..'  EXPECT_NEAR( '..measurements_results[i].value..', filter.Get'..measurements_results[i].name..'('..PARAMS..'), '..measurements_results[i].tolerance..' ) << "Measurement failure";'
+    end
   else
     if (measurements_results[i].value == "true") then
       OUT=OUT..'  EXPECT_TRUE( filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure";'
