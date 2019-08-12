@@ -19,6 +19,7 @@
 #define sitkOrientImageFilter_Support_hxx
 
 #include "itkSpatialOrientation.h"
+#include "itkSpatialOrientationAdapter.h"
 
 // This file is intended to contain the definition of static
 // membervariables needed by JSON Expand templated image filters.
@@ -87,10 +88,17 @@ namespace itk {
       return stringToCode;
     }
 
+
+    const std::map< std::string, itk::SpatialOrientation::ValidCoordinateOrientationFlags > &sitkGetStringToCode()
+    {
+      const static std::map< std::string, SpatialOrientation::ValidCoordinateOrientationFlags> stringToCode = sitkCreateStringToCode();
+      return stringToCode;
+    }
+
     itk::SpatialOrientation::ValidCoordinateOrientationFlags
     sitkStringToSpatialOrientation(const std::string &str)
     {
-      const static std::map< std::string, SpatialOrientation::ValidCoordinateOrientationFlags> stringToCode = sitkCreateStringToCode();
+      const  std::map< std::string, SpatialOrientation::ValidCoordinateOrientationFlags> &stringToCode = sitkGetStringToCode();
 
       std::map< std::string, SpatialOrientation::ValidCoordinateOrientationFlags>::const_iterator iter = stringToCode.find(str);
 
@@ -102,6 +110,43 @@ namespace itk {
     }
 
     }
+
+  std::string OrientImageFilter::GetOrientationFromDirectionCosines( const std::vector<double> &direction )
+  {
+    const  std::map< std::string, SpatialOrientation::ValidCoordinateOrientationFlags> &stringToCode = sitkGetStringToCode();
+
+    typedef typename itk::ImageBase<3>::DirectionType DirectionType;
+    const DirectionType itkDirection = sitkSTLToITKDirection<DirectionType>(direction);
+
+    itk::SpatialOrientation::ValidCoordinateOrientationFlags itkOrientation =
+      itk::SpatialOrientationAdapter().FromDirectionCosines(itkDirection);
+
+    for ( std::map< std::string, SpatialOrientation::ValidCoordinateOrientationFlags>::const_iterator iter = stringToCode.begin();
+          iter != stringToCode.end();
+          ++iter)
+      {
+      if (iter->second == itkOrientation)
+        {
+        return iter->first;
+        }
+      }
+
+    return "unknown";
+  }
+
+  std::vector<double> OrientImageFilter::GetDirectionCosinesFromOrientation( const std::string &str )
+  {
+    itk::SpatialOrientation::ValidCoordinateOrientationFlags itkOrientation =
+      sitkStringToSpatialOrientation(str);
+
+    typedef typename itk::ImageBase<3>::DirectionType DirectionType;
+    const DirectionType itkDirection =
+      itk::SpatialOrientationAdapter().ToDirectionCosines(itkOrientation);
+
+    return sitkITKDirectionToSTL(itkDirection);
+
+  }
+
   }
 }
 

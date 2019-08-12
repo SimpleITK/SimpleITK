@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
   "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n",
+  "public_declarations" : "std::string GetOrientationFromDirectionCosines( const std::vector<double> &direction );\nstd::vector<double> GetDirectionCosinesFromOrientation( const std::string &str );",
   "include_files" : [
     "sitkOrientImageFilter_Support.hxx"
   ],
