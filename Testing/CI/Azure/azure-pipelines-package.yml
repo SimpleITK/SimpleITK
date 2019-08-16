@@ -1,0 +1,328 @@
+trigger:
+   tags:
+     include:
+       - '*'
+   branches:
+     exclude:
+       - '*'
+variables:
+  ExternalDataVersion: 1.2.0
+jobs:
+  - job: Configure
+    displayName: Configure Variables
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    steps:
+      - checkout: none
+      - bash: |
+          echo "##vso[task.setvariable variable=BuildHash;isOutput=true]${CONFIGURE_BUILDHASH:-release}"
+        name: configure
+  - job: Linux
+    dependsOn: Configure
+    condition: ne( variables['configure.skiplinux'], 'true' )
+    timeoutInMinutes: 200
+    strategy:
+      matrix:
+        manylinux1_i686:
+          ARCH: i686
+        manylinux1_x86_64:
+          ARCH: x86_64
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    variables:
+      SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - template: templates/git-download-steps.yml
+      - bash: |
+          cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
+          docker build --pull=true --rm=true -t simpleitk_manylinux_${ARCH} -f Dockerfile-${ARCH} .
+        displayName: Build Docker Image
+      - bash: |
+          echo "Building SimpleITK tag \"${SIMPLEITK_GIT_TAG}\"..."
+          cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
+          ./run.sh
+        env:
+          ExternalData_OBJECT_STORES: "$(Build.SourcesDirectory)/.ExternalData/MD5"
+          SIMPLEITK_GIT_TAG: "$(SimpleITKBuildHash)"
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/wheelhouse'
+          contents: '*.whl'
+          targetFolder: $(Build.ArtifactStagingDirectory)/python
+          flattenFolders: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
+
+  - job: MacOS
+    dependsOn: Configure
+    condition: ne( variables['configure.skipmacos'], 'true' )
+    timeoutInMinutes: 200
+    variables:
+      xcodeVersion: 9.4.1
+      coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
+      CTEST_CONFIGURATION_TYPE: Release
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    pool:
+      vmImage: 'macos-10.13'
+    steps:
+      - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+      - script: |
+          python --version
+          sudo python -m pip install setuptools numpy
+          sudo python -m pip install ninja scikit-ci-addons
+        displayName: 'Install ninja dependency'
+      - bash: |
+          set -x
+          xcode-select -p
+          sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer/
+          xcode-select -p
+          c++ --version
+          cmake --version
+          ninja --version
+        displayName: 'XCode configuration'
+      - bash: |
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
+        displayName: 'Build and test core'
+        workingDirectory: $(Agent.BuildDirectory)
+        env:
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
+          CTEST_OUTPUT_ON_FALURE: 1
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+            CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+            CMAKE_OSX_DEPLOYMENT_TARGET=10.6
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=OFF
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+      - bash: |
+          set -x
+          Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build
+          mkdir -p $(Build.ArtifactStagingDirectory)/archives
+          shopt -s extglob
+          mv SimpleITK@(Data|)*@(zip|gz|xz) $(Build.ArtifactStagingDirectory)/archives
+        workingDirectory: $(Build.SourcesDirectory)
+        displayName: Generate Source and Data Archives
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
+          artifactName: Archives
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+        displayName: Build Python 36
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.7'
+          architecture: 'x64'
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+        displayName: Build Python 37
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.5'
+          architecture: 'x64'
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+        displayName: Build Python 35
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '2.7'
+          architecture: 'x64'
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+        displayName: Build Python 27
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
+
+  - job: VS2017
+    dependsOn: Configure
+    condition: ne( variables['configure.skipwindows'], 'true' )
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    strategy:
+      matrix:
+        x86:
+          PYTHON_ARCH: x86
+          CMAKE_PLATFORM: Win32
+          VCVAR_OPTIONS: x86
+        x64:
+          PYTHON_ARCH: x64
+          CMAKE_PLATFORM: x64
+          VCVAR_OPTIONS: amd64
+    pool:
+      vmImage: 'vs2017-win2016'
+    variables:
+      coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
+      CTEST_CONFIGURATION_TYPE: Release
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - template: templates/git-download-steps.yml
+      - bash: |
+         choco install ninja -fdvy
+         which jar.exe
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+          true
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        env:
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
+          CTEST_CMAKE_GENERATOR: "Ninja"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+          CC: cl.exe
+          CXX: cl.exe
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+      - bash : |
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
+        displayName: Cleanup build
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_java.sh
+        displayName: Build Java
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/java
+          artifactName: Java
+        continueOnError: true
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_csharp.sh
+        displayName: Build CSharp
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/csharp
+          artifactName: CSharp
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.7'
+          architecture: '$(PYTHON_ARCH)'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 37
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: '$(PYTHON_ARCH)'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 36
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.5'
+          architecture: '$(PYTHON_ARCH)'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 35
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
+
+  - job: VS2009
+    dependsOn: Configure
+    condition: ne( variables['configure.skipwindows'], 'true' )
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    strategy:
+      matrix:
+        x86:
+          PYTHON_ARCH: x86
+          VCVAR_OPTIONS: x86
+          CMAKE_PLATFORM: Win32
+        x64:
+          PYTHON_ARCH: x64
+          CMAKE_PLATFORM: x64
+          VCVAR_OPTIONS: amd64
+    pool:
+      vmImage: 'vs2017-win2016'
+    variables:
+      coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
+      CTEST_CONFIGURATION_TYPE: MinSizeRel
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - template: templates/git-download-steps.yml
+      - bash: |
+         choco upgrade vcpython27 -fdv -y --debug
+         choco install ninja -fdvy
+        displayName: "Installing Visual Studio for Python 2.7..."
+      - script: |
+          call "C:\Program Files (x86)\Common Files\Microsoft\Visual C++ for Python\9.0\vcvarsall.bat" $(VCVAR_OPTIONS)
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+          true
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        continueOnError: true
+        env:
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
+          CTEST_CMAKE_GENERATOR: "Ninja"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+          CC: cl.exe
+          CXX: cl.exe
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=OFF
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+      - bash : |
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
+        displayName: Cleanup build
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '2.7'
+          architecture: '$(PYTHON_ARCH)'
+      - script: |
+          call "C:\Program Files (x86)\Common Files\Microsoft\Visual C++ for Python\9.0\vcvarsall.bat" $(VCVAR_OPTIONS)
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 27
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
