@@ -107,6 +107,18 @@ jobs:
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+      - bash: |
+          set -x
+          Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build
+          mkdir -p $(Build.ArtifactStagingDirectory)/archives
+          shopt -s extglob
+          mv SimpleITK@(Data|)*@(zip|gz|xz) $(Build.ArtifactStagingDirectory)/archives
+        workingDirectory: $(Build.SourcesDirectory)
+        displayName: Generate Source and Data Archives
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
+          artifactName: Archives
       - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
         displayName: Build Python 36
         continueOnError: true
