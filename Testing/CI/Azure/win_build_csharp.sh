@@ -25,7 +25,7 @@ export CXX=cl.exe
 ctest -D dashboard_source_config_dir="Wrapping/CSharp" \
       -D "CTEST_BUILD_NAME:STRING=${AGENT_NAME}-${AGENT_JOBNAME}-csharp" \
       -D "CTEST_CMAKE_GENERATOR:STRING=Ninja" \
-      -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V || true
+      -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V || echo "##vso[task.logissue type=warning]There was a build or testing issue."
 
 ( cd ${CTEST_BINARY_DIRECTORY} && cmake --build "${CTEST_BINARY_DIRECTORY}" --config "${CTEST_CONFIGURATION_TYPE}" --target dist -v )
 
