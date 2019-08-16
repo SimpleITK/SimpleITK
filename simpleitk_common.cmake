@@ -118,7 +118,7 @@ endif()
 
 # Select Git source to use.
 if(NOT DEFINED dashboard_git_url)
-set(dashboard_git_url "git://itk.org/SimpleITK.git")
+  set(dashboard_git_url "https://github.com/SimpleITK/SimpleITK.git")
 endif()
 if(NOT DEFINED dashboard_git_branch)
 # SimpleITK currently doesn't have a nightly-master
