@@ -32,6 +32,7 @@ export CC=cl.exe
 export CXX=cl.exe
 
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
+      -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${AGENT_NAME}-${AGENT_JOBNAME}-py${PYTHON_VERSION}" \
       -D "CTEST_CMAKE_GENERATOR:STRING=Ninja" \
       -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V || true
