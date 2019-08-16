@@ -47,7 +47,7 @@ find_data_objects() {
 }
 
 validate_MD5() {
-  md5sum=$(md5sum "$1" | sed 's/ .*//') &&
+  md5sum=$(cmake -E md5sum "$1" | sed 's/ .*//') &&
   if test "$md5sum" != "$2"; then
     die "Object MD5/$2 is corrupt: $1"
   fi
@@ -56,8 +56,8 @@ validate_MD5() {
 download_object() {
   algo="$1" ; hash="$2" ; path="$3"
   mkdir -p $(dirname "$path") &&
-  if wget "https://simpleitk.github.io/SimpleITKExternalData/$algo/$hash" -O "$path.tmp$$" 1>&2 ||
-     wget "https://www.itk.org/files/ExternalData/$algo/$hash" -O "$path.tmp$$" 1>&2; then
+  if curl "https://simpleitk.github.io/SimpleITKExternalData/$algo/$hash" --output "$path.tmp$$" 1>&2 ||
+     curl "https://www.itk.org/files/ExternalData/$algo/$hash" --output "$path.tmp$$" 1>&2; then
     mv "$path.tmp$$" "$path"
   else
     rm -f "$path.tmp$$"
