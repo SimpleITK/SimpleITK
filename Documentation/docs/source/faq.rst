@@ -30,6 +30,20 @@ required for your project, then create a new environment:
 
   conda env create -f environment.yml
 
+Why am I getting "ModuleNotFoundError: No module named '_SimpleITK'" when importing SimpleITK on Windows?
+---------------------------------------------------------------------------------------------------------
+
+        Traceback (most recent call last):
+          File "C:\Python37\lib\site-packages\SimpleITK\SimpleITK.py", line 14, in swig_import_helper
+            return importlib.import_module(mname)
+          ...
+          File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+        ImportError: DLL load failed: The specified module could not be found.
+
+The above error occurs on Microsoft windows when system libraries SimpleITK depends on are not available on the system.
+This issue can be resolved by installing the appropriate
+`Redistributable for Visual Studio <https://www.microsoft.com/en-us/download/details.aspx?id=48145>`__ package.
+
 
 How to Use
 ==========
