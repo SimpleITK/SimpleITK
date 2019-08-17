@@ -156,7 +156,6 @@ jobs:
     dependsOn: Configure
     condition: ne( variables['configure.skipwindows'], 'true' )
     timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
     strategy:
       matrix:
         x86:
@@ -263,7 +262,6 @@ jobs:
     dependsOn: Configure
     condition: ne( variables['configure.skipwindows'], 'true' )
     timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
     strategy:
       matrix:
         x86:
