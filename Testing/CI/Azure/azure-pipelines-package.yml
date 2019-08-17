@@ -261,7 +261,7 @@ jobs:
   - job: VS2009
     dependsOn: Configure
     condition: ne( variables['configure.skipwindows'], 'true' )
-    timeoutInMinutes: 0
+    timeoutInMinutes: 360
     strategy:
       matrix:
         x86:
