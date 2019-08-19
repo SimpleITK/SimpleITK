@@ -109,11 +109,12 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
       - bash: |
-          set -x
-          Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build
+          set -xe
+          Utilities/Maintenance/SourceTarball.bash ${DASHBOARD_GIT_BRANCH:+-v ${DASHBOARD_GIT_BRANCH}} --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build
           mkdir -p $(Build.ArtifactStagingDirectory)/archives
+          ls -la
           shopt -s extglob
-          mv SimpleITK@(Data|)*@(zip|gz|xz) $(Build.ArtifactStagingDirectory)/archives
+          mv SimpleITK@(Data|)-*@(zip|gz|xz) $(Build.ArtifactStagingDirectory)/archives
         workingDirectory: $(Build.SourcesDirectory)
         displayName: Generate Source and Data Archives
       - task: PublishBuildArtifacts@1
