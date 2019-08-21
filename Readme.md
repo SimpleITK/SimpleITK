@@ -24,6 +24,16 @@ Unlike ITK's support of n-dimensional spatio-temporal images, SimpleITK supports
 
 SimpleITK is licensed under the [Apache License](http://www.opensource.org/licenses/apache2.0.php) in the [same way as ITK](https://www.itk.org/Wiki/ITK_Release_4/Licensing).
 
+Acknowledgments
+--------------
+SimpleITK development has been supported by:
+
+* The Intramural Research Program of the National Institutes of Health, National Institute of Allergy and Infectious Diseases.
+
+* The US National Library of Medicine under the American Recovery and Reinvestment Act (ARRA) and under the Intramural Research Program of the U.S. National Institutes of Health.
+
+* The Insight Software Consortium and the ITK user and developer communities.
+
 How to Cite
 --------
 
