@@ -114,7 +114,7 @@ namespace itk {
     itk::ImageIOBase::Pointer iobase;
     if (this->m_ImageIOName == "")
       {
-      iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::WriteMode);
+      iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeType::WriteMode);
       }
     else
       {
