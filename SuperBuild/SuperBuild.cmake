@@ -71,14 +71,16 @@ add_custom_target( SuperBuildSimpleITKSource )
 #
 function(sitkSourceDownload outVar filename)
 
+  set(algo "SHA512")
+  set(algo_extension ".sha512")
   set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/ExternalSource/${filename}")
-  if( NOT EXISTS "${link_file}.md5")
-    message(FATALERROR "The source download file: \"${link_file}.md5\" does not exists.")
+  if( NOT EXISTS "${link_file}${algo_extension}")
+    message(FATALERROR "The source download file: \"${link_file}${algo_extension}\" does not exists.")
   endif()
 
-  file(READ "${link_file}.md5" _HASH)
+  file(READ "${link_file}${algo_extension}" _HASH)
   string(STRIP "${_HASH}" _HASH)
-  set(${outVar}_HASH "MD5=${_HASH}" PARENT_SCOPE)
+  set(${outVar}_HASH "${algo}=${_HASH}" PARENT_SCOPE)
 
   ExternalData_Expand_arguments(
     SuperBuildSimpleITKSourceReal
