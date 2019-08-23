@@ -35,23 +35,76 @@ return_pipe_status() {
 }
 
 find_data_objects() {
+  # Find all content links in the tree.
   git ls-tree --full-tree -r "$1" |
-  egrep '\.(md5)$' |
+  egrep '\.(md5|sha512)$' |
   while read mode type obj path; do
     case "$path" in
       *.md5)  echo MD5/$(git cat-file blob $obj) ;;
+      *.sha512) echo SHA512/$(git cat-file blob $obj);;
       *)      die "Unknown ExternalData content link: $path" ;;
     esac
   done | sort | uniq
   return_pipe_status
 }
 
-validate_MD5() {
-  md5sum=$(cmake -E md5sum "$1" | sed 's/ .*//') &&
-  if test "$md5sum" != "$2"; then
-    die "Object MD5/$2 is corrupt: $1"
-  fi
+# Check for a tool to get MD5 sums from.
+if type -p md5sum >/dev/null; then
+    readonly md5tool="md5sum"
+    readonly md5regex="s/ .*//"
+elif type -p md5 >/dev/null; then
+    readonly md5tool="md5"
+    readonly md5regex="s/.*= //"
+elif type -p cmake >/dev/null; then
+    readonly md5tool="cmake -E md5sum"
+    readonly md5regex="s/ .*//"
+else
+    die "No 'md5sum' or 'md5' tool found."
+fi
+
+compute_MD5() {
+    $md5tool "$1" | sed -e "$md5regex"
 }
+
+
+# Check for a tool to get SHA512 sums from.
+if type -p sha512sum >/dev/null; then
+    readonly sha512tool="sha512sum"
+    readonly sha512regex="s/ .*//"
+elif type -p cmake >/dev/null; then
+    readonly sha512tool="cmake -E sha512"
+    readonly sha512regex="s/ .*//"
+else
+    die "No 'sha512sum' tool found."
+fi
+
+compute_SHA512 () {
+    $sha512tool "$1" | sed -e "$sha512regex"
+}
+
+
+validate () {
+    local algo="$1"
+    readonly algo
+    shift
+
+    local file="$1"
+    readonly file
+    shift
+
+    local expected="$1"
+    readonly expected
+    shift
+
+    local actual="$( "compute_$algo" "$file" )"
+    readonly actual
+
+
+    if ! [ "$actual" = "$expected" ]; then
+        die "Object $expected is corrupt: $file"
+    fi
+}
+
 
 download_object() {
   algo="$1" ; hash="$2" ; path="$3"
@@ -78,8 +131,7 @@ index_data_objects() {
     else
       download_object "$algo" "$hash" "$path" &&
       file="$path"
-    fi &&
-    validate_$algo "$file" "$hash" &&
+    fi &&    validate "$algo" "$file" "$hash" &&
     obj=$(git hash-object -t blob -w "$file") &&
     echo "100644 blob $obj	$path" ||
     return
