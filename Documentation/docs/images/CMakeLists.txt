@@ -14,10 +14,11 @@ include(sitkExternalData)
 set(_target "SimpleITKSphinx-Data")
 set(_output_path "${CMAKE_CURRENT_SOURCE_DIR}/")
 
-file( GLOB_RECURSE image_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*.md5" )
+set(_algo "sha512")
+file( GLOB_RECURSE image_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/*.${_algo}" )
 
 foreach(link ${image_links})
-  string( REGEX REPLACE "\\.md5$" "" link ${link} )
+  string( REGEX REPLACE "\\.${_algo}$" "" link ${link} )
   ExternalData_Expand_Arguments( "${_target}"
     image_location
     DATA{${link}}
