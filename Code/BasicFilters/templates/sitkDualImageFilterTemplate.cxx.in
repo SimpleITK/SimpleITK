@@ -88,18 +88,24 @@ OUT=[[
 ]]
 end
 local inputName2 = "image2"
+local input2_size_check = true
 if not (number_of_inputs >  1) and (inputs and (#inputs > 1)) then
   inputName2 = inputs[2].name:sub(1,1):lower() .. inputs[2].name:sub(2,-1)
+  input2_size_check = not inputs[2].no_size_check
 end
 if number_of_inputs >= 2 or (inputs and (#inputs >= 2)) then
   OUT=OUT..[[
   PixelIDValueType type2 = ]]..inputName2..[[.GetPixelIDValue();
 
   // todo need better error handling and potential type conversion
-  if ( ]]..inputName1..[[.GetDimension() != ]]..inputName2..[[.GetDimension() ||
-       ]]..inputName1..[[.GetSize() != ]]..inputName2..[[.GetSize() )
+  if ( ]]..inputName1..[[.GetDimension() != ]]..inputName2..[[.GetDimension()]]
+     if input2_size_check then
+       OUT=OUT..[[ ||
+           ]]..inputName1..[[.GetSize() != ]]..inputName2..[[.GetSize()]]
+      end
+        OUT=OUT..[[ )
     {
-      sitkExceptionMacro ( "Both images for ${name} don't match type or dimension!" );
+      sitkExceptionMacro ( "Both images for ${name} do not match dimension or size!" );
     }]]
 else
 OUT=OUT..[[
