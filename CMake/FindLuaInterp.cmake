@@ -38,7 +38,7 @@ endif()
 # handle the QUIETLY and REQUIRED arguments and set LUA_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Lua
+find_package_handle_standard_args(LuaInterp
                                   REQUIRED_VARS LUA_EXECUTABLE
                                   VERSION_VAR LUA_VERSION_STRING)
 
