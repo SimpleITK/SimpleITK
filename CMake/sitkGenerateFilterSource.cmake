@@ -6,7 +6,7 @@ if ( NOT SimpleITK_LUA_EXECUTABLE )
   get_property( SAVE_LUA_EXECUTABLE_TYPE CACHE LUA_EXECUTABLE PROPERTY TYPE )
   get_property( SAVE_LUA_EXECUTABLE_DOCSTRING CACHE LUA_EXECUTABLE PROPERTY HELPSTRING )
 
-  find_package( LuaInterp REQUIRED 5.1 )
+  find_package( LuaInterp 5.1  REQUIRED )
   set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
 
   if (DEFINED SAVE_LUA_EXECUTABLE)
