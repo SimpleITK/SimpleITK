@@ -82,6 +82,17 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertImageNDArrayEquals(img[1::2,0::2],nda[0::2,1::2])
         self.assertImageNDArrayEquals(img[:3:2,:2:2],nda[:2:2,:3:2])
 
+        # check step size indexing
+        self.assertImageNDArrayEquals(img[::2,:],nda[:,::2])
+        self.assertImageNDArrayEquals(img[:,::2],nda[::2,:])
+        self.assertImageNDArrayEquals(img[::2,::2],nda[::2,::2])
+        self.assertImageNDArrayEquals(img[::3,:],nda[:,::3])
+        self.assertImageNDArrayEquals(img[:,::3],nda[::3,:])
+        self.assertImageNDArrayEquals(img[::3,::3],nda[::3,::3])
+        self.assertImageNDArrayEquals(img[::2,::3],nda[::3,::2])
+        self.assertImageNDArrayEquals(img[::3,::2],nda[::2,::3])
+
+
 
         # some negative cases
         self.assertImageNDArrayEquals(img[-4:-1,-2:-1],nda[-2:-1,-4:-1])
@@ -121,6 +132,12 @@ class TestImageIndexingInterface(unittest.TestCase):
 
          self.assertImageNDArrayEquals(img[::-1,:,-2], nda[-2,:,::-1])
          self.assertImageNDArrayEquals(img[::-1,0,1:-1], nda[1:-1,0,::-1])
+
+         test_array = np.array([0,1,2,3,4]*6).reshape(3,2,5)
+         test_array = test_array.swapaxes(2,0)
+         test_img = sitk.GetImageFromArray(test_array)
+         sliced = test_img[:,:,::2]
+         self.assertEqual(sliced.GetSize(), (3,2,3))
 
 
     def test_3d(self):
