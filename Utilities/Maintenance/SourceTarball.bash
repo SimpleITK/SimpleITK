@@ -72,7 +72,7 @@ if type -p sha512sum >/dev/null; then
     readonly sha512tool="sha512sum"
     readonly sha512regex="s/ .*//"
 elif type -p cmake >/dev/null; then
-    readonly sha512tool="cmake -E sha512"
+    readonly sha512tool="cmake -E sha512sum"
     readonly sha512regex="s/ .*//"
 else
     die "No 'sha512sum' tool found."
