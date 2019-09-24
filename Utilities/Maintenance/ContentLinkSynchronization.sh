@@ -39,12 +39,40 @@ if test $# -lt 1 || test "$1" = "-h" || test "$1" = "--help"; then
   die "Usage: $0 <ExternalData_OBJECT_STORES path>"
 fi
 
-if ! type md5sum > /dev/null; then
-  die "Please install the md5sum executable."
+
+# Check for a tool to get MD5 sums from.
+if type -p md5sum >/dev/null; then
+    readonly md5tool="md5sum"
+    readonly md5regex="s/ .*//"
+elif type -p md5 >/dev/null; then
+    readonly md5tool="md5"
+    readonly md5regex="s/.*= //"
+elif type -p cmake >/dev/null; then
+    readonly md5tool="cmake -E md5sum"
+    readonly md5regex="s/ .*//"
+else
+    die "No 'md5sum' or 'md5' tool found."
 fi
-if ! type sha512sum > /dev/null; then
-  die "Please install the sha512sum executable."
+
+compute_md5() {
+    $md5tool "$1" | sed -e "$md5regex"
+}
+
+
+# Check for a tool to get SHA512 sums from.
+if type -p sha512sum >/dev/null; then
+    readonly sha512tool="sha512sum"
+    readonly sha512regex="s/ .*//"
+elif type -p cmake >/dev/null; then
+    readonly sha512tool="cmake -E sha512sum"
+    readonly sha512regex="s/ .*//"
+else
+    die "No 'sha512sum' tool found."
 fi
+
+compute_sha512 () {
+    $sha512tool "$1" | sed -e "$sha512regex"
+}
 
 top_level_dir=$(git rev-parse --show-toplevel)
 cd "$top_level_dir"
@@ -82,12 +110,12 @@ verify_and_create() {
       fi
     fi
     echo "Verifying    ${algo_file}..."
-    object_algo_hash=$(${algo}sum "${object_store}/${algo_upper}/${algo_hash}" | cut -f 1 -d ' ')
+    object_algo_hash=$(compute_${algo} "${object_store}/${algo_upper}/${algo_hash}" )
     if test "${algo_hash}" != "${object_algo_hash}"; then
       die "${algo}sum for ${object_store}/${algo_upper}/${algo_hash} does not equal hash in ${algo_file}!"
     fi
 
-    object_alt_algo_hash=$(${alt_algo}sum "${object_store}/${algo_upper}/${algo_hash}" | cut -f 1 -d ' ')
+    object_alt_algo_hash=$(compute_${alt_algo} "${object_store}/${algo_upper}/${algo_hash}" )
     if test -e  "${alt_algo_file}"; then
       echo "Verifying    ${alt_algo_file}..."
       alt_algo_hash=$(cat "${alt_algo_file}" | tr -d '[[:space:]]')
