@@ -326,3 +326,60 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/python
           artifactName: Python
+
+
+  - job: Rtools
+    dependsOn: Configure
+    condition: ne( variables['configure.skipwindows'], 'true' )
+    timeoutInMinutes: 360
+
+    pool:
+      vmImage: 'vs2017-win2016'
+    variables:
+      coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
+      CTEST_CONFIGURATION_TYPE: MinSizeRel
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - template: templates/git-download-steps.yml
+      - bash: |
+         choco upgrade r.project
+         choco install ninja -fdvy
+        displayName: "Installing R and ninja."
+      - pwsh: |
+          Invoke-WebRequest "https://github.com/hannesmuehleisen/choco-rtools/raw/master/rtools.3.5.0.nupkg" -OutFile "..\rtools.3.5.0.nupkg"
+          choco install rtools -s ..\rtools.3.5.0.nupkg -f -y --no-progress
+        displayName: 'Installing RTools'
+      - bash: |
+          R CMD config CC
+          R CMD config CXX
+          R CMD config CFLAGS
+          R CMD config CXX11FLAGS
+          R CMD config CPPFLAGS
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+          true
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        continueOnError: true
+        env:
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
+          CTEST_CMAKE_GENERATOR: "Ninja"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: --param ggc-min-expand=0 --param ggc-min-heapsize=2648000
+          CFLAGS: --param ggc-min-expand=0 --param ggc-min-heapsize=2648000
+          CC: gcc
+          CXX: gcc
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=OFF
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_R:BOOL=ON
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+      - bash : |
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
+        displayName: Cleanup build
