@@ -10,144 +10,46 @@ trigger:
 variables:
   ExternalDataVersion: 1.2.0
 jobs:
-  - job: Linux
+
+  - job: WindowsR
     timeoutInMinutes: 0
     cancelTimeoutInMinutes: 300
     pool:
-      vmImage: 'Ubuntu-16.04'
-
+      vmImage: 'windows-latest'
     steps:
       - template: templates/git-download-steps.yml
-      - task: UsePythonVersion@0
-        displayName: Enable Python
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-          addToPath: true
-      - script: |
-          python --version
-          sudo python -m pip install setuptools
-          sudo python -m pip install ninja scikit-ci-addons
-        displayName: 'Install ninja dependency'
-      - bash: |
-          set -x
-          c++ --version
-          cmake --version
-          ninja --version
-          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
-        displayName: Build and test
-        env:
-          CTEST_CONFIGURATION_TYPE: MinSizeRel
-          CTEST_OUTPUT_ON_FAILURE: 1
-          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
-          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-          CTEST_CACHE: |
-            BUILD_DOCUMENTS:BOOL=OFF
-            BUILD_EXAMPLES:BOOL=ON
-            BUILD_SHARED_LIBS:BOOL=OFF
-            BUILD_TESTING:BOOL=ON
-            WRAP_DEFAULT:BOOL=OFF
-            WRAP_JAVA:BOOL=ON
-        workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
-
-  - job: macOS
-    timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
-    pool:
-      vmImage: 'macOS-10.13'
-
-    steps:
-      - template: templates/git-download-steps.yml
-      - task: UsePythonVersion@0
-        displayName: Enable Python
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-          addToPath: true
-      - script: |
-          python --version
-          sudo python -m pip install setuptools numpy
-          sudo python -m pip install ninja scikit-ci-addons
-        displayName: 'Install ninja dependency'
-      - bash: |
-          set -x
-          c++ --version
-          cmake --version
-          ninja --version
-          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
-        displayName: Build and test
-        env:
-          CTEST_CONFIGURATION_TYPE: MinSizeRel
-          CTEST_OUTPUT_ON_FAILURE: 1
-          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
-          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-          CTEST_CACHE: |
-            BUILD_DOCUMENTS:BOOL=OFF
-            BUILD_EXAMPLES:BOOL=ON
-            BUILD_SHARED_LIBS:BOOL=OFF
-            BUILD_TESTING:BOOL=ON
-            WRAP_DEFAULT:BOOL=OFF
-            WRAP_PYTHON:BOOL=ON
-            WRAP_JAVA:BOOL=ON
-        workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
-
-  - job: Windows
-    timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: templates/git-download-steps.yml
-      - task: UsePythonVersion@0
-        displayName: Enable Python
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-          addToPath: true
-      - script: |
-          python --version
-          python -m pip install setuptools
-          python -m pip install ninja scikit-ci-addons
-        displayName: 'Install ninja dependency'
+      - pwsh: |
+          choco install r.project -y --no-progress
+          Invoke-WebRequest "https://github.com/hannesmuehleisen/choco-rtools/raw/master/rtools.3.5.0.nupkg" -OutFile "..\rtools.3.5.0.nupkg"
+          choco install rtools -s ..\rtools.3.5.0.nupkg -f -y --no-progress
+          choco install ninja
+          # Set the timezone
+          tzutil /s "GMT Standard Time"
+        displayName: 'Installing R, rtools and ninja'
+      - pwsh: |
+          Write-Host "##vso[task.setvariable variable=PATH]C:\Rtools\bin;C:\Rtools\mingw_64\bin;${env:PATH};C:\Progra~1\R\R-3.6.1\bin"
+        displayName: 'Setting PATH'
       - script: |
           cmake --version
+          which R
+          gcc -V
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
         displayName: Build and test
         env:
           CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FAILURE: 1
-          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+          CTEST_CMAKE_GENERATOR: "Ninja"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-          CXXFLAGS: /MP
-          CFLAGS: /MP
+          CXXFLAGS: "--param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
+          CFLAGS: "--param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
           CTEST_CACHE: |
             BUILD_DOCUMENTS:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_CSHARP:BOOL=ON
+            WRAP_R:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
