@@ -52,6 +52,9 @@ jobs:
             WRAP_R:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
+          ls $(Agent.BuildDirectory)/
+          grep CMAKE_CXX_COMPILER_ID -r $(Agent.BuildDirectory)/
+      - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
         condition: succeededOrFailed()
         displayName: 'Format CTest output in JUnit format'
