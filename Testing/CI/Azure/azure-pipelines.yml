@@ -32,7 +32,7 @@ jobs:
       - script: |
           cmake --version
           which R
-          gcc -V
+          gcc --version
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
         displayName: Build and test
         env:
