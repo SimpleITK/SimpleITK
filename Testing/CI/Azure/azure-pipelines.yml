@@ -54,6 +54,7 @@ jobs:
       - script: |
           ls $(Agent.BuildDirectory)/
           grep CMAKE_CXX_COMPILER_ID -r $(Agent.BuildDirectory)/
+        displayName: Diagnostics
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
         condition: succeededOrFailed()
