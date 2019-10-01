@@ -19,26 +19,43 @@ jobs:
     steps:
       - template: templates/git-download-steps.yml
       - pwsh: |
-          choco install r.project -y --no-progress
-          Invoke-WebRequest "https://github.com/hannesmuehleisen/choco-rtools/raw/master/rtools.3.4.0.nupkg" -OutFile "..\rtools.3.4.0.nupkg"
-          choco install rtools -s ..\rtools.3.5.0.nupkg -f -y --no-progress
+          Invoke-WebRequest "https://github.com/richardbeare/choco-rtools/raw/master/rtools.4.0.nupkg" -OutFile "rtools.3.5.0.nupkg"
+          choco install rtools --source . -f -y --no-progress
+          Invoke-WebRequest "https://github.com/richardbeare/choco-rtools/raw/master/rtesting.3.7.nupkg" -OutFile "rtesting.3.7.nupkg"
+          choco install rtesting --source . -f -y --no-progress
           choco install ninja
           # Set the timezone
           tzutil /s "GMT Standard Time"
         displayName: 'Installing R, rtools and ninja'
       - pwsh: |
-          Write-Host "##vso[task.setvariable variable=PATH]C:\Rtools\bin;C:\Rtools\mingw_64\bin;${env:PATH};C:\Progra~1\R\R-3.6.1\bin"
+          Write-Host "##vso[task.setvariable variable=PATH]C:\rtools40\bin;C:\rtools40\mingw64\bin;${env:PATH};C:\Progra~1\R\R-testing\bin"
         displayName: 'Setting PATH'
+      - bash: |
+          set -x
+          which R
+          which ninja
+          gcc --version
+          echo "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake"
+          echo "$(Agent.BuildDirectory)"
+          ls
+          ls SimpleITK-dashboard
+          echo $(Build.Repository.URI)
+        displayName: Display config
+        workingDirectory: $(Agent.BuildDirectory)
       - script: |
           cmake --version
           which R
+          which ninja
           gcc --version
-          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -VV -j 4
+          ls
         displayName: Build and test
         env:
           CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_CMAKE_GENERATOR: "Ninja"
+          CXX: 'C:\rtools40\mingw64\bin\c++.exe'
+          CC: 'C:\rtools40\mingw64\bin\gcc.exe'
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: "-Wa,-mbig-obj --param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
@@ -50,6 +67,7 @@ jobs:
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
             WRAP_R:BOOL=ON
+            ITK_GIT_TAG:STRING=master
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ls $(Agent.BuildDirectory)/
