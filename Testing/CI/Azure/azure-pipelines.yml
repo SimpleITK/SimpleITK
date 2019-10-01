@@ -20,7 +20,7 @@ jobs:
       - template: templates/git-download-steps.yml
       - pwsh: |
           choco install r.project -y --no-progress
-          Invoke-WebRequest "https://github.com/hannesmuehleisen/choco-rtools/raw/master/rtools.3.5.0.nupkg" -OutFile "..\rtools.3.5.0.nupkg"
+          Invoke-WebRequest "https://github.com/hannesmuehleisen/choco-rtools/raw/master/rtools.3.4.0.nupkg" -OutFile "..\rtools.3.4.0.nupkg"
           choco install rtools -s ..\rtools.3.5.0.nupkg -f -y --no-progress
           choco install ninja
           # Set the timezone
