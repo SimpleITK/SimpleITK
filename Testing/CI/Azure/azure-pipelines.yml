@@ -41,8 +41,8 @@ jobs:
           CTEST_CMAKE_GENERATOR: "Ninja"
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-          CXXFLAGS: "--param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
-          CFLAGS: "--param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
+          CXXFLAGS: "-Wa,-mbig-obj --param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
+          CFLAGS: "-Wa,-mbig-obj --param ggc-min-expand=0 --param ggc-min-heapsize=2648000"
           CTEST_CACHE: |
             BUILD_DOCUMENTS:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
@@ -53,7 +53,9 @@ jobs:
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ls $(Agent.BuildDirectory)/
-          grep CMAKE_CXX_COMPILER_ID -r $(Agent.BuildDirectory)/
+          echo $(Agent.BuildDirectory)
+          grep CMAKE_CXX_COMPILER_ID -r $(Agent.BuildDirectory)
+          grep MINGW -r $(Agent.BuildDirectory)
         condition: succeededOrFailed()
         displayName: Diagnostics
       - script: |
