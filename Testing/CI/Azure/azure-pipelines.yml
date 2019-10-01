@@ -54,8 +54,7 @@ jobs:
       - script: |
           ls $(Agent.BuildDirectory)/
           echo $(Agent.BuildDirectory)
-          grep CMAKE_CXX_COMPILER_ID -r $(Agent.BuildDirectory)
-          grep MINGW -r $(Agent.BuildDirectory)
+          grep CXXFLAGS -r $(Agent.BuildDirectory)
         condition: succeededOrFailed()
         displayName: Diagnostics
       - script: |
