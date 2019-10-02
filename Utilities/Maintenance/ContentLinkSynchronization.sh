@@ -34,22 +34,63 @@
 die() {
   echo "$@" 1>&2; exit 1
 }
+do_cleanup=false
+object_store=""
+help=false
+while [[ $# -gt 0 ]] ;
+do
+    opt="$1";
+    shift;
+    case "$opt" in
+        "-h"|"--help")
+           help=true;;
+        "--cleanup" )
+           do_cleanup=true;;
+        *) if test "${object_store}" = "" ; then object_store=$opt; else echo >&2 "Invalid option: $opt"; exit 1; fi;;
+   esac
+done
 
-if test $# -lt 1 || test "$1" = "-h" || test "$1" = "--help"; then
-  die "Usage: $0 <ExternalData_OBJECT_STORES path>"
+if test "${object_store}" = "" || $help; then
+  die "Usage: $0 <ExternalData_OBJECT_STORES path> [--cleanup]"
 fi
 
-if ! type md5sum > /dev/null; then
-  die "Please install the md5sum executable."
+
+# Check for a tool to get MD5 sums from.
+if type -p md5sum >/dev/null; then
+    readonly md5tool="md5sum"
+    readonly md5regex="s/ .*//"
+elif type -p md5 >/dev/null; then
+    readonly md5tool="md5"
+    readonly md5regex="s/.*= //"
+elif type -p cmake >/dev/null; then
+    readonly md5tool="cmake -E md5sum"
+    readonly md5regex="s/ .*//"
+else
+    die "No 'md5sum' or 'md5' tool found."
 fi
-if ! type sha512sum > /dev/null; then
-  die "Please install the sha512sum executable."
+
+compute_md5() {
+    $md5tool "$1" | sed -e "$md5regex"
+}
+
+
+# Check for a tool to get SHA512 sums from.
+if type -p sha512sum >/dev/null; then
+    readonly sha512tool="sha512sum"
+    readonly sha512regex="s/ .*//"
+elif type -p cmake >/dev/null; then
+    readonly sha512tool="cmake -E sha512sum"
+    readonly sha512regex="s/ .*//"
+else
+    die "No 'sha512sum' tool found."
 fi
+
+compute_sha512 () {
+    $sha512tool "$1" | sed -e "$sha512regex"
+}
 
 top_level_dir=$(git rev-parse --show-toplevel)
 cd "$top_level_dir"
-
-object_store=$1
 
 mkdir -p ${object_store}/{MD5,SHA512}
 
@@ -82,12 +123,12 @@ verify_and_create() {
       fi
     fi
     echo "Verifying    ${algo_file}..."
-    object_algo_hash=$(${algo}sum "${object_store}/${algo_upper}/${algo_hash}" | cut -f 1 -d ' ')
+    object_algo_hash=$(compute_${algo} "${object_store}/${algo_upper}/${algo_hash}" )
     if test "${algo_hash}" != "${object_algo_hash}"; then
       die "${algo}sum for ${object_store}/${algo_upper}/${algo_hash} does not equal hash in ${algo_file}!"
     fi
 
-    object_alt_algo_hash=$(${alt_algo}sum "${object_store}/${algo_upper}/${algo_hash}" | cut -f 1 -d ' ')
+    object_alt_algo_hash=$(compute_${alt_algo} "${object_store}/${algo_upper}/${algo_hash}" )
     if test -e  "${alt_algo_file}"; then
       echo "Verifying    ${alt_algo_file}..."
       alt_algo_hash=$(cat "${alt_algo_file}" | tr -d '[[:space:]]')
@@ -97,13 +138,38 @@ verify_and_create() {
     else
       echo "Creating     ${alt_algo_file}..."
       echo "${object_alt_algo_hash}" > "${alt_algo_file}"
-      cp "${object_store}/${algo_upper}/${algo_hash}" "${object_store}/${alt_algo_upper}/${alt_algo_hash}"
+      if [ ! -x  "${object_store}/${alt_algo_upper}/${object_alt_algo_hash}" ]; then
+        cp "${object_store}/${algo_upper}/${algo_hash}" "${object_store}/${alt_algo_upper}/${object_alt_algo_hash}"
+      fi
     fi
   done || exit 1
 }
 
+cleanup() {
+  algo=$1
+  alt_algo=$2
+
+  algo_upper=$(echo $algo | awk '{print toupper($0)}')
+  alt_algo_upper=$(echo $alt_algo | awk '{print toupper($0)}')
+
+  for algo_file_name in `ls "${object_store}/${algo_upper}"`; do
+    algo_file=${object_store}/${algo_upper}/${algo_file_name}
+    echo "Verifying  ${algo_file}"
+    alt_algo_file=$("compute_${algo}" "${algo_file}")
+    if test ! -e "${object_store}/${alt_algo_upper}/${alt_algo_file}"; then
+      die "extra file ${algo_file} ..."
+    fi
+  done || exit 1
+}
+
+
 verify_and_create md5 sha512
 verify_and_create sha512 md5
+
+if $do_cleanup; then
+  cleanup md5 sha512
+  cleanup sha512 md5
+fi
 
 echo ""
 echo "Verification completed successfully."
