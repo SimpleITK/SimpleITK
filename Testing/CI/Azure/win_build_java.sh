@@ -22,6 +22,7 @@ export CXX=cl.exe
 
 
 ctest -D dashboard_source_config_dir="Wrapping/Java" \
+      -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${AGENT_NAME}-${AGENT_JOBNAME}-java" \
       -D "CTEST_CMAKE_GENERATOR:STRING=Ninja" \
       -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V || echo "##vso[task.logissue type=warning]There was a build or testing issue."
