@@ -110,7 +110,7 @@ jobs:
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
       - bash: |
           set -xe
-          Utilities/Maintenance/SourceTarball.bash ${DASHBOARD_GIT_BRANCH:+-v ${DASHBOARD_GIT_BRANCH}} --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build
+          Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build ${DASHBOARD_GIT_BRANCH}
           mkdir -p $(Build.ArtifactStagingDirectory)/archives
           ls -la
           shopt -s extglob
@@ -259,7 +259,7 @@ jobs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/python
           artifactName: Python
 
-  - job: VS2009
+  - job: VS2008
     dependsOn: Configure
     condition: ne( variables['configure.skipwindows'], 'true' )
     timeoutInMinutes: 360
