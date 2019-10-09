@@ -52,8 +52,8 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/I
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-set(ITK_GIT_TAG "3213404416666c17dbabc8fb0a07f1d27362f32c" CACHE
-  STRING "Tag in ITK git repo") # after 4.13.2 along release-4.13
+set(_DEFAULT_ITK_GIT_TAG "3213404416666c17dbabc8fb0a07f1d27362f32c") # after 4.13.2 along release-4.13
+set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
 
@@ -73,6 +73,14 @@ else()
     "-DITK_TEMPLATE_VISIBILITY_DEFAULT:BOOL=OFF" )
 endif()
 
+
+if( ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG )
+  # only remove legacy with the tested, and predefined version of ITK
+  list( APPEND ep_itk_args
+    "-DITK_LEGACY_REMOVE:BOOL=ON"
+    )
+endif()
+
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
 
 ExternalProject_Add(${proj}
@@ -85,7 +93,6 @@ ExternalProject_Add(${proj}
   CMAKE_ARGS
   --no-warn-unused-cli
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
-  -DITK_LEGACY_REMOVE:BOOL=ON
   ${ep_itk_args}
   ${ep_common_args}
   -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
