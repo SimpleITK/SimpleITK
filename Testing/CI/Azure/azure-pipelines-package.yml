@@ -290,6 +290,7 @@ jobs:
           call "C:\Program Files (x86)\Common Files\Microsoft\Visual C++ for Python\9.0\vcvarsall.bat" $(VCVAR_OPTIONS)
           cmake --version
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+          ctest --build "${COREBINARYDIRECTORY}/SimpleITK-build" --config "${CTEST_CONFIGURATION_TYPE}" --target sitkCompareDriver
           true
         displayName: Build and test
         workingDirectory: $(Agent.BuildDirectory)
@@ -306,7 +307,7 @@ jobs:
             BUILD_DOCUMENTS:BOOL=OFF
             BUILD_EXAMPLES:BOOL=OFF
             BUILD_SHARED_LIBS:BOOL=OFF
-            BUILD_TESTING:BOOL=ON
+            BUILD_TESTING:BOOL=OFF
             WRAP_DEFAULT:BOOL=OFF
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
       - bash : |
