@@ -3,18 +3,18 @@ referenced:
     docker:
      - image: circleci/python:2.7-stretch
     working_directory: ~/
-    resource_class: large
+    resource_class: medium
   default_environment_keys:  &default_environment
     <<: &default_environment_keys
       CTEST_DASHBOARD_ROOT: /home/circleci
       CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
       CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
       ROOT_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
-      CTEST_BUILD_FLAGS: "-j 4"
-      CTEST_CONFIGURATION_TYPE: "Release"
+      CTEST_BUILD_FLAGS: "-j 1"
+      CTEST_CONFIGURATION_TYPE: "MinSizeRel"
       CTEST_OUTPUT_ON_FAILURE: 1
       ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-      PARALLEL_LEVEL: 4
+      PARALLEL_LEVEL: 2
       DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
       ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
       CCACHE_NODIRECT: 1
