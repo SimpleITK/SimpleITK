@@ -26,10 +26,52 @@ import sys
 class ImageTests(unittest.TestCase):
     """These tests are suppose to test the python interface to the sitk::Image"""
 
-
-
     def setUp(self):
-        pass
+        super(ImageTests, self).setUp()
+        self.addTypeEqualityFunc(sitk.Image, self.assertImageEqual)
+
+    def assertImageEqual(self, img1, img2, msg=None):
+        """ utility to compare two images"""
+        self.assertEqual(img1.GetPixelID(), img2.GetPixelID())
+        self.assertEqual(img1.GetOrigin(), img2.GetOrigin())
+        self.assertEqual(img1.GetSpacing(), img2.GetSpacing())
+        self.assertEqual(img1.GetDirection(), img2.GetDirection())
+
+        self.assertEqual(img1.GetMetaDataKeys(), img2.GetMetaDataKeys())
+
+        for k in img1.GetMetaDataKeys():
+            aself.assertEqual(img1.GetMetaData(k), img2.GetMetaData(k))
+
+        self.assertEqual(sitk.Hash(img1), sitk.Hash(img2))
+
+    def test_deepcopy(self):
+        """Test the custom __deepcopy__ method"""
+
+        import copy
+
+        sz = [10, 10]
+        img = sitk.Image(sz, sitk.sitkFloat32)
+        img[1, 2] = 3.14
+        img.SetSpacing([1.2, 3.4])
+
+        img_dc = copy.deepcopy(img)
+
+        self.assertEqual(img, img_dc)
+
+        img_dc.SetOrigin([7, 8])
+        self.assertNotEqual(img.GetOrigin(), img_dc.GetOrigin())
+
+        img_dc.SetOrigin(img.GetOrigin())
+
+        img_dc[9, 9] = 1.234
+        self.assertNotEqual(sitk.Hash(img), sitk.Hash(img_dc))
+
+        img_c = copy.copy(img)
+        self.assertEqual(img, img_c)
+
+        img_c.SetOrigin([7, 8])
+        self.assertNotEqual(img.GetOrigin(), img_c.GetOrigin())
+
 
     def test_iterable(self):
         """Test that the Image object is iterable"""
