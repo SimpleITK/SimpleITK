@@ -21,7 +21,7 @@ jobs:
     steps:
       - template: templates/git-download-steps.yml
       - bash: |
-          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake
+          ctest -D "dashboard_track:STRING=Nightly" -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake
         displayName: Build and test with coverage
         env:
           CCACHE_DISABLE: 1
@@ -61,7 +61,7 @@ jobs:
           cmake --version
           gcc --version
           ccache -p
-          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+          ctest -D "dashboard_track:STRING=Nightly" -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
         displayName: Build and test
         env:
           CCACHE_DISABLE: 1
