@@ -83,6 +83,7 @@
 %pythoncode %{
    import operator
    import sys
+   from collections import namedtuple
 %}
 
 %extend itk::simple::Image {
@@ -98,6 +99,48 @@
           dc = Image(self)
           dc.MakeUnique()
           return dc
+
+        def __setstate__(self, args):
+          if args[0] != 0:
+            raise ValueError("Unable to handle SimpleITK.Image pickle version {0}".args[0])
+
+          state = namedtuple('state_tuple_0', "version buffer origin spacing direction metadata")(*args)
+
+          _SetImageFromArray(state.buffer, self)
+          self.SetOrigin(state.origin)
+          self.SetSpacing(state.spacing)
+          self.SetDirection(state.direction)
+          for k,v in state.metadata.items():
+            self.SetMetaData(k,v)
+
+        def __reduce_ex__(self, protocol ):
+          version = 0
+          size = tuple(self.GetSize())
+          t = int(self.GetPixelIDValue())
+          ncomponents = int(self.GetNumberOfComponentsPerPixel())
+
+          mv = _GetMemoryViewFromImage(self)
+          origin = tuple(self.GetOrigin())
+          spacing = tuple(self.GetSpacing())
+          direction = tuple(self.GetDirection())
+          metadata = {k:self.GetMetaData(k) for k in self.GetMetaDataKeys()}
+
+          if protocol >= 5:
+            import sys
+            if sys.hexversion >= 0x03080000:
+              import pickle
+            elif sys.hexversion >= 0x03060000:
+              try:
+                import pickle5 as pickle
+              except ImportError:
+                raise ImportError("Pickle protocol 5 requires the pickle5 module for Python 3.6, 3.7")
+            P = (version, pickle.PickleBuffer(mv), origin, spacing, direction, metadata)
+          else:
+            P = (version, mv.tobytes(), origin, spacing, direction, metadata)
+
+          return self.__class__, (size, t, ncomponents), P
+
+
 
         # mathematical operators
 

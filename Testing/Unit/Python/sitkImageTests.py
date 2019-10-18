@@ -21,14 +21,21 @@ import unittest
 
 import SimpleITK as sitk
 import sys
-
+import tempfile
+import os.path
+import shutil
 
 class ImageTests(unittest.TestCase):
-    """These tests are suppose to test the python interface to the sitk::Image"""
+    """Tests for the Python interface for the Image class"""
 
     def setUp(self):
         super(ImageTests, self).setUp()
         self.addTypeEqualityFunc(sitk.Image, self.assertImageEqual)
+        self.test_dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir)
+
 
     def assertImageEqual(self, img1, img2, msg=None):
         """ utility to compare two images"""
@@ -72,6 +79,67 @@ class ImageTests(unittest.TestCase):
         img_c.SetOrigin([7, 8])
         self.assertNotEqual(img.GetOrigin(), img_c.GetOrigin())
 
+    def test_pickle_file(self):
+       """Test the custom pickling and un-pickling interface"""
+
+       try:
+           import pickle5 as pickle
+       except ImportError:
+           import pickle
+
+       import copy
+
+       # test the default protocol
+       img = sitk.Image( [10, 9, 11], sitk.sitkFloat32 )
+       img = sitk.AdditiveGaussianNoise(img)
+
+       fname = os.path.join(self.test_dir, "image_protocol_default.pickle")
+       with open(fname, 'wb') as fp:
+         p = pickle.dump(copy.deepcopy(img), fp)
+
+       with open(fname, 'rb') as fp:
+         ret = pickle.load(fp)
+
+       self.assertEqual(img, ret, msg="pickle file with default protocol")
+
+       # test all available protocols
+       for prot in reversed(range(1, pickle.HIGHEST_PROTOCOL+1)):
+         fname = os.path.join(self.test_dir, "image_protocol_{0}.pickle".format(prot))
+
+         print("Testing pickle protocol {0}.".format(fname))
+         with open(fname, 'wb') as fp:
+           pickle.dump(copy.deepcopy(img), fp, protocol=prot)
+
+         with open(fname, 'rb') as fp:
+           ret = pickle.load(fp)
+
+         self.assertEqual(img, ret, msg="pickle file with {0}".format(fname))
+
+    def test_pickle(self):
+       """Test the custom pickling and un-pickling interface"""
+
+       try:
+           import pickle5 as pickle
+       except ImportError:
+           import pickle
+
+       import copy
+
+       # test the default protocol
+       img = sitk.Image( [10, 9, 11], sitk.sitkFloat32 )
+       img = sitk.AdditiveGaussianNoise(img)
+
+       p = pickle.dumps(copy.deepcopy(img))
+       ret = pickle.loads(p)
+
+       self.assertEqual(img, ret, msg="pickle with default protocol")
+
+       # test all available protocols
+       for prot in reversed(range(1, pickle.HIGHEST_PROTOCOL+1)):
+           print("Testing pickle protocol {0}.".format(prot))
+           p = pickle.dumps(copy.deepcopy(img), protocol=prot)
+           ret = pickle.loads(p)
+           self.assertEqual(img, ret, msg="pickle with {0} protocol".format(prot))
 
     def test_iterable(self):
         """Test that the Image object is iterable"""
