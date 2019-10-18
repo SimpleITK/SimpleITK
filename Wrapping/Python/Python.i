@@ -87,8 +87,17 @@
 
 %extend itk::simple::Image {
 
-
         %pythoncode %{
+
+        def __copy__(self):
+          """Create a SimpleITK shallow copy, where the internal image share is shared with copy on write implementation."""
+          return Image(self)
+
+        def __deepcopy__(self, memo):
+          """Create a new copy of the data and image class."""
+          dc = Image(self)
+          dc.MakeUnique()
+          return dc
 
         # mathematical operators
 
