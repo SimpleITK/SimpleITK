@@ -19,7 +19,7 @@ matrix:
       sudo: required
 
 before_script:
-  - sudo apt-get remove cmake && sudo apt-get install swig lua5.1 libinsighttoolkit4-dev doxygen graphviz
+  - sudo apt-get remove cmake && sudo apt-get install swig lua5.3 libinsighttoolkit4-dev doxygen graphviz
   - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
   - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
   - cmake --version
