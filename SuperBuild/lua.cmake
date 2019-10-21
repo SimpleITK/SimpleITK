@@ -31,6 +31,8 @@ if(NOT LUA_INSTALL_INCLUDE_DIR)
   set(LUA_INSTALL_INCLUDE_DIR "include")
 endif()
 
+set_property(GLOBAL PROPERTY C_STANDARD 99)
+add_definitions(-DLUA_COMPAT_5_2)
 
 if( MSVC )
   # suppress warning in Visual Studio about the securtiy of methods
@@ -46,15 +48,16 @@ if("${CMAKE_C_COMPILER_ID}" STREQUAL "AppleClang" )
   SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wno-empty-body -Wno-deprecated-declarations" )
 endif()
 
+
 # define the lua core source files
-set (LUA_CORE_SRCS src/lapi.c src/lcode.c src/ldebug.c src/ldo.c src/ldump.c
+set (LUA_CORE_SRCS src/lapi.c src/lcode.c src/lctype.c src/ldebug.c src/ldo.c src/ldump.c
      src/lfunc.c src/lgc.c src/llex.c src/lmem.c src/lobject.c src/lopcodes.c
      src/lparser.c src/lstate.c src/lstring.c src/ltable.c src/ltm.c  src/lundump.c
      src/lvm.c src/lzio.c)
 
 # define the lua lib source files
-set (LUA_LIB_SRCS src/lauxlib.c src/lbaselib.c src/ldblib.c src/liolib.c
-     src/lmathlib.c src/loslib.c src/ltablib.c src/lstrlib.c src/loadlib.c src/linit.c)
+set (LUA_LIB_SRCS src/lauxlib.c src/lbaselib.c src/lbitlib.c src/lcorolib.c src/ldblib.c src/liolib.c
+     src/lmathlib.c src/loslib.c src/ltablib.c src/lstrlib.c src/lutf8lib.c src/loadlib.c src/linit.c)
 
 # create the library
 add_library (lua ${LUA_LIB_SRCS} ${LUA_CORE_SRCS})
