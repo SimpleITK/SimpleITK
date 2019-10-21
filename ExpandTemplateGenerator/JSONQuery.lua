@@ -45,7 +45,7 @@ bad_count = 0
 
 for i=2,#arg do
     json_path=arg[i]
-    cmd = loadstring("return json_table."..json_path)
+    cmd = load("return json_table."..json_path)
     if not cmd then
         io.stderr:write("Warning: bad path -> "..json_path.."\n")
         bad_count = bad_count+1

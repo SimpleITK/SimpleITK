@@ -193,7 +193,7 @@ function expand(str, ...)
       else  -- expression
         var = 'return '.. var
       end
-      local f = assert(loadstring(var))
+      local f = assert(load(var))
       local t = searchlist[1]
       assert(type(t)=='table' or type(t)=='userdata', 'expecting table')
       setfenv(f, setmetatable({}, {__index=get, __newindex=t}))
