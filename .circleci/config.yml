@@ -22,7 +22,7 @@ referenced:
     run:
       name: Dependencies
       command: |
-        sudo apt-get install -y rsync lua5.1 ccache kwstyle
+        sudo apt-get install -y rsync lua5.3 ccache kwstyle
         sudo python -m pip install --upgrade pip
         sudo python -m pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
         sudo python -m pip install cmake==3.13.3

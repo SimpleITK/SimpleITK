@@ -6,7 +6,7 @@ if ( NOT SimpleITK_LUA_EXECUTABLE )
   get_property( SAVE_LUA_EXECUTABLE_TYPE CACHE LUA_EXECUTABLE PROPERTY TYPE )
   get_property( SAVE_LUA_EXECUTABLE_DOCSTRING CACHE LUA_EXECUTABLE PROPERTY HELPSTRING )
 
-  find_package( LuaInterp 5.1  REQUIRED )
+  find_package( LuaInterp 5.3  REQUIRED )
   set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
 
   if (DEFINED SAVE_LUA_EXECUTABLE)
@@ -45,10 +45,10 @@ endif()
 
 if( SITK_LUA_VERSION_RESULT_VARIABLE
       OR
-    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_GREATER "5.1"
+    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_GREATER "5.3"
       OR
-    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.2" )
-  message(SEND_ERROR "Lua version 5.1 is required for SimpleITK_LUA_EXECUTABLE_VERSION.")
+    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.4" )
+  message(SEND_ERROR "Lua version 5.3 is required for SimpleITK_LUA_EXECUTABLE_VERSION.")
 endif()
 
 # Sets "out_var" variable name to the value in the json path specified

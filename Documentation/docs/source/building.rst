@@ -43,7 +43,7 @@ To build SimpleITK you need:
 
 -  The R package requires R version 3.3 or greater.
 
--  The Lua package requires Lua version 5.1 or greater.
+-  The Lua package requires Lua version 5.3 or greater.
 
 Recipes / Formulas / Short cuts
 ===============================
@@ -166,7 +166,7 @@ The following are dependencies you will need when not using the SuperBuild:
    with SimpleITK, as future ITK versions are generally backwards
    compatible.
 
-#. `Lua <https://www.lua.org/>`__ 5.1
+#. `Lua <https://www.lua.org/>`__ 5.3.5
 
 #. `SWIG <http://www.swig.org/>`__ >= 3.0.11
 

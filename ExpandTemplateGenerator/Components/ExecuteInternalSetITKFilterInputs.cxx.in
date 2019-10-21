@@ -8,7 +8,7 @@ end)
 $(if inputs then
 for i = 1,#inputs do
   if inputs[i].optional then
-    OUT = OUT .. '  if ( in'..inputs[i].name..' != NULL )\  {\n  '
+    OUT = OUT .. '  if ( in'..inputs[i].name..' != NULL ) {\n'
   else
     OUT = OUT .. '  assert( '..'in' .. inputs[i].name ..' != NULL );\n'
   end
