@@ -87,9 +87,10 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          sudo python -m pip install setuptools numpy
-          sudo python -m pip install ninja scikit-ci-addons
-        displayName: 'Install ninja dependency'
+          python -m pip install --upgrade pip
+          python -m pip install setuptools
+          python -m pip install numpy ninja scikit-ci-addons
+        displayName: 'Install python tools and dependency'
       - bash: |
           set -x
           c++ --version
@@ -137,9 +138,10 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          python -m pip install setuptools numpy
-          python -m pip install ninja scikit-ci-addons
-        displayName: 'Install ninja dependency'
+          python -m pip install --upgrade pip
+          python -m pip install setuptools
+          python -m pip install numpy ninja scikit-ci-addons
+        displayName: 'Install python tools and dependency'
       - script: |
           cmake --version
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4

@@ -77,8 +77,8 @@ jobs:
           architecture: 'x64'
       - script: |
           python --version
-          sudo python -m pip install setuptools numpy
-          sudo python -m pip install ninja scikit-ci-addons
+          python -m pip install setuptools numpy
+          python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
