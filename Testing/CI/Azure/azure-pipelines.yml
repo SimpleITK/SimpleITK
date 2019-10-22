@@ -1,7 +1,5 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# These pipelines are executed on every PR, and merge. They should provide quick
+# coverage for the common wrapped language and the SimpleITK core and examples.
 
 trigger:
   - master
@@ -18,6 +16,17 @@ jobs:
 
     steps:
       - template: templates/git-download-steps.yml
+      - bash: |
+          set -x
+          sudo apt-get update
+          sudo apt-get -y install software-properties-common libcurl4-openssl-dev libssh2-1-dev
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+          sudo add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/ubuntu xenial/"
+          sudo apt-get update
+          sudo apt-get -y install r-base-dev
+          R --version
+        displayName: System Dependencies
+        workingDirectory: $(Agent.BuildDirectory)
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
@@ -26,9 +35,10 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          sudo python -m pip install setuptools
-          sudo python -m pip install ninja scikit-ci-addons
-        displayName: 'Install ninja dependency'
+          python -m pip install --upgrade pip
+          python -m pip install setuptools
+          python -m pip install numpy ninja scikit-ci-addons
+        displayName: 'Install python tools and dependency'
       - bash: |
           set -x
           c++ --version
@@ -47,7 +57,8 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_JAVA:BOOL=ON
+            WRAP_R:BOOL=ON
+            WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -126,7 +137,7 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          python -m pip install setuptools
+          python -m pip install setuptools numpy
           python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - script: |
@@ -148,6 +159,7 @@ jobs:
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
             WRAP_CSHARP:BOOL=ON
+            WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
