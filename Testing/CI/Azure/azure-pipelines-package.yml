@@ -108,6 +108,7 @@ jobs:
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+            SimpleITK_PYTHON_USE_VIRTUALENV:BOOL=OFF
       - bash: |
           set -xe
           Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build ${DASHBOARD_GIT_BRANCH}
