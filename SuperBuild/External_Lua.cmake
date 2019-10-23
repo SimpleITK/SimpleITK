@@ -7,7 +7,7 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 
 set(proj Lua)
 
-set(lua_TARGET_VERSION 5.1.5)
+set(lua_TARGET_VERSION 5.3.5)
 
 # follow the standard EP_PREFIX locations
 set(lua_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-build)

@@ -307,11 +307,11 @@ include(ExternalProject)
 #------------------------------------------------------------------------------
 # Lua
 #------------------------------------------------------------------------------
-option ( SimpleITK_USE_SYSTEM_LUA "Use a pre-compiled version of LUA 5.1 previously configured for your system" OFF )
+option ( SimpleITK_USE_SYSTEM_LUA "Use a pre-compiled version of LUA 5.3 previously configured for your system" OFF )
 sitk_legacy_naming( SimpleITK_USE_SYSTEM_LUA USE_SYSTEM_LUA)
 mark_as_advanced(SimpleITK_USE_SYSTEM_LUA)
 if ( SimpleITK_USE_SYSTEM_LUA )
-  find_package( LuaInterp 5.1 REQUIRED )
+  find_package( LuaInterp 5.3 REQUIRED )
   set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
   mark_as_advanced( SimpleITK_LUA_EXECUTABLE )
   unset( LUA_EXECUTABLE CACHE )
