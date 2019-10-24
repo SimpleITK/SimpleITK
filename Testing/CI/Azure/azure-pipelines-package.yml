@@ -122,7 +122,15 @@ jobs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
           artifactName: Archives
       - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
-        displayName: Build Python 36
+        displayName: Build Python 38
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.8'
+          architecture: 'x64'
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+        displayName: Build Python 37
         continueOnError: true
       - task: UsePythonVersion@0
         displayName: Enable Python
@@ -224,6 +232,17 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/csharp
           artifactName: CSharp
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.8'
+          architecture: '$(PYTHON_ARCH)'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 37
+        continueOnError: true
+
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
