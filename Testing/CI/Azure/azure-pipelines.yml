@@ -74,8 +74,11 @@ jobs:
   - job: macOS
     timeoutInMinutes: 0
     cancelTimeoutInMinutes: 300
+    variables:
+      imageName: 'macos-10.14'
+      xcodeVersion: 10.2
     pool:
-      vmImage: 'macOS-10.13'
+      vmImage: $(imageName)
 
     steps:
       - template: templates/git-download-steps.yml
@@ -92,10 +95,13 @@ jobs:
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
+          xcode-select -p
+          sudo xcode-select -s /Applications/Xcode_$(xcodeVersion).app/Contents/Developer/
+          xcode-select -p
           c++ --version
           cmake --version
           ninja --version
-          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
+          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
         displayName: Build and test
         env:
           CTEST_CONFIGURATION_TYPE: MinSizeRel
