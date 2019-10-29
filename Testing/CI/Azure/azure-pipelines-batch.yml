@@ -33,15 +33,15 @@ jobs:
     strategy:
       maxParallel: 2
       matrix:
+        XCode_11:
+          imageName: 'macos-10.14'
+          xcodeVersion: 11.1
         XCode_10:
           imageName: 'macos-10.14'
           xcodeVersion: 10.2
         XCode_9_4:
           imageName: 'macos-10.14'
           xcodeVersion: 9.4.1
-        XCode_9_3:
-          imageName: 'macos-10.13'
-          xcodeVersion: 9.3
     pool:
       vmImage: $(imageName)
 
