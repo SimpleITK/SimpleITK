@@ -34,7 +34,8 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
                                          Transform transform,
                                          InterpolatorEnum interpolator,
                                          double defaultPixelValue,
-                                         PixelIDValueEnum outputPixelType )
+                                         PixelIDValueEnum outputPixelType,
+                                         bool useNearestNeighborExtrapolator)
 {
   ResampleImageFilter filter;
   filter.SetReferenceImage( image1 );
@@ -42,6 +43,7 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
   filter.SetInterpolator( interpolator );
   filter.SetDefaultPixelValue( defaultPixelValue );
   filter.SetOutputPixelType(outputPixelType);
+  filter.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator);
   return filter.Execute ( image1);
 }
 
@@ -50,7 +52,8 @@ Image Resample ( const Image& image1,
                  Transform transform,
                  InterpolatorEnum interpolator,
                  double defaultPixelValue,
-                 PixelIDValueEnum outputPixelType )
+                 PixelIDValueEnum outputPixelType,
+                 bool useNearestNeighborExtrapolator)
 {
   ResampleImageFilter filter;
   filter.SetReferenceImage( referenceImage );
@@ -58,6 +61,7 @@ Image Resample ( const Image& image1,
   filter.SetInterpolator( interpolator );
   filter.SetDefaultPixelValue( defaultPixelValue );
   filter.SetOutputPixelType(outputPixelType);
+  filter.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator);
   return filter.Execute ( image1);
 }
 
@@ -70,10 +74,11 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
                                          std::vector<double> outputSpacing,
                                          std::vector<double> outputDirection,
                                          double defaultPixelValue,
-                                         PixelIDValueEnum outputPixelType )
+                                         PixelIDValueEnum outputPixelType,
+                                         bool useNearestNeighborExtrapolator)
 {
   ResampleImageFilter filter;
-  return filter.Execute ( image1, size, transform, interpolator, outputOrigin, outputSpacing, outputDirection, defaultPixelValue, outputPixelType );
+  return filter.Execute ( image1, size, transform, interpolator, outputOrigin, outputSpacing, outputDirection, defaultPixelValue, outputPixelType, useNearestNeighborExtrapolator);
 }
 
 SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
