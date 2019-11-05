@@ -184,3 +184,50 @@ jobs:
           testRunTitle: 'CTest $(Agent.OS)'
         condition: succeededOrFailed()
         displayName: 'Publish test results'
+  - job:  WindowsVS2008
+    timeoutInMinutes: 240
+    strategy:
+      matrix:
+        x86:
+          CTEST_CMAKE_GENERATOR: "Visual Studio 9 2008"
+        x64:
+          CTEST_CMAKE_GENERATOR: "Visual Studio 9 2008 Win64"
+    pool:
+      name: 'Default'
+      demands:
+        - VS90COMNTOOLS
+    workspace:
+      clean: all
+    variables:
+      coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
+      CTEST_CONFIGURATION_TYPE: MinSizeRel
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 5
+      - script: |
+           if DEFINED SYSTEM_PULLREQUEST_SOURCECOMMITID git checkout $(System.PullRequest.SourceCommitId)
+        displayName: Checkout pull request HEAD
+      - script: |
+          git clone -b dashboard --single-branch %BUILD_REPOSITORY_URI% SimpleITK-dashboard
+        displayName: Download dashboard scripts
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: |
+          cmake --version
+          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        env:
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=N
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
