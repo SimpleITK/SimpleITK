@@ -74,14 +74,14 @@ From the command line prompt, execute:
 
 .. code-block :: bash
 
- conda install -c https://conda.anaconda.org/simpleitk SimpleITK
+ conda install -c simpleitk simpleitk
 
 Beta and release candidate packages are also available on Anaconda cloud
 under the dev label:
 
 .. code-block :: bash
 
- conda install -c https://conda.anaconda.org/simpleitk/label/dev SimpleITK
+ conda install -c simpleitk/label/dev simpleitk
 
 
 C# binary files
