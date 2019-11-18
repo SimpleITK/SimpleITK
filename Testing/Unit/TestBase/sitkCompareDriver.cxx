@@ -400,6 +400,36 @@ int ProcessArguments(int *ac, ArgumentStringType *av, ProcessedOutputType * proc
   return 0;
 }
 
+// For a baselineFilename of 'something.ext' search for existing files with names of the format 'something.#.ext'
+// starting at 1, until the filename does not exist. Then return a list the existing files discovered.
+std::vector<std::string> GetExistingBaselineFileNames( const std::string &baselineFilename )
+{
+    // Generate all possible baseline file names
+
+    const std::string extension = itksys::SystemTools::GetFilenameLastExtension(baselineFilename);
+    const std::string name = itksys::SystemTools::GetFilenameWithoutLastExtension(baselineFilename);
+    const std::string path = itksys::SystemTools::GetFilenamePath(baselineFilename);
+    std::vector<std::string> baselineFilenames;
+    baselineFilenames.push_back(baselineFilename);
+
+    int x = 0;
+
+    while (++x) {
+        std::ostringstream filename_stream;
+        filename_stream << path << "/"
+                        << name << "." << x << extension;
+
+        const std::string filename(filename_stream.str());
+
+        if (!itksys::SystemTools::FileExists(filename, true)) {
+            break;
+        }
+        baselineFilenames.push_back(filename);
+    }
+
+    return baselineFilenames;
+}
+
 }
 
 
@@ -512,29 +542,7 @@ int main(int argc, char *argv[])
       imageCompare.setTolerance(tolerance);
 
       // Generate all possible baseline file names
-
-      const std::string extension = itksys::SystemTools::GetFilenameLastExtension( baselineFilename );
-      const std::string name = itksys::SystemTools::GetFilenameWithoutLastExtension( baselineFilename );
-      const std::string path = itksys::SystemTools::GetFilenamePath( baselineFilename );
-      std::vector<std::string> baselineFilenames;
-      baselineFilenames.push_back(baselineFilename);
-
-      int x = 0;
-
-      while ( ++x )
-        {
-        std::ostringstream filename_stream;
-        filename_stream <<  path << "/"
-                        <<  name  << "." << x << extension;
-
-        const std::string filename(filename_stream.str());
-
-        if (!itksys::SystemTools::FileExists ( filename, true ) )
-          {
-          break;
-          }
-        baselineFilenames.push_back(filename);
-        }
+      const std::vector<std::string> baselineFilenames = GetExistingBaselineFileNames( baselineFilename );
 
       std::vector<std::string>::const_iterator iterName;
       std::string bestBaselineName =  *baselineFilenames.begin();
