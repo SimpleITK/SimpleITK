@@ -391,9 +391,61 @@
       ],
       "measurements_results" : [
         {
+          "name" : "BoundingBox",
+          "dim_vec" : 1,
+          "value" : [
+            17,
+            12,
+            17,
+            31
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "Region",
+          "dim_vec" : 1,
+          "value" : [
+            17,
+            12,
+            17,
+            31
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "Centroid",
+          "dim_vec" : 1,
+          "value" : [
+            25,
+            27
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
           "name" : "Elongation",
           "value" : 1.8257418583505538,
           "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "EquivalentEllipsoidDiameter",
+          "dim_vec" : 1,
+          "value" : [
+            19.1708196,
+            35.0009678
+          ],
+          "tolerance" : 1e-06,
           "parameters" : [
             "50"
           ]
@@ -477,9 +529,79 @@
           ]
         },
         {
+          "name" : "PrincipalAxes",
+          "dim_vec" : 1,
+          "value" : [
+            1,
+            0,
+            0,
+            1
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "PrincipalMoments",
+          "dim_vec" : 1,
+          "value" : [
+            24,
+            80
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
           "name" : "Roundness",
           "value" : 0.905182442271278,
           "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "OrientedBoundingBoxSize",
+          "dim_vec" : 1,
+          "value" : [
+            17,
+            31
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "OrientedBoundingBoxDirection",
+          "dim_vec" : 1,
+          "value" : [
+            1,
+            0,
+            0,
+            1
+          ],
+          "tolerance" : 1e-23,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "OrientedBoundingBoxVertices",
+          "dim_vec" : 1,
+          "value" : [
+            16.5,
+            11.5,
+            16.5,
+            42.5,
+            33.5,
+            11.5,
+            33.5,
+            42.5
+          ],
+          "tolerance" : 1e-23,
           "parameters" : [
             "50"
           ]
