@@ -33,7 +33,7 @@
 namespace itk
 {
 
-// Forward decalaration for pointer
+// Forward declaration for pointer
 class DataObject;
 
 template<class T>

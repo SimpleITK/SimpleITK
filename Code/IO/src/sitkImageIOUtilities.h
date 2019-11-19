@@ -26,7 +26,7 @@
 namespace itk {
 
 
-// Forward decalaration for pointer
+// Forward declaration for pointer
 class ImageIOBase;
 
 
