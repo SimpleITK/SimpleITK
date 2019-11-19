@@ -6,7 +6,11 @@ set ( SimpleITKUnitTestBaseSource
 )
 
 add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestBaseSource} )
-target_link_libraries( SimpleITKUnitTestBase GTest::GTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+target_link_libraries( SimpleITKUnitTestBase
+        PUBLIC
+          GTest::GTest ${SimpleITK_LIBRARIES}
+        PRIVATE
+          ${ITK_LIBRARIES} )
 target_include_directories( SimpleITKUnitTestBase
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
