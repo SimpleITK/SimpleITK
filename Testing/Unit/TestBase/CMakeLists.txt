@@ -58,3 +58,12 @@ sitk_add_test(NAME CompareDriver2
     DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
     DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_-13x-17y.mha}
   )
+
+
+sitk_add_test(NAME CompareDriver3
+        COMMAND
+        $<TARGET_FILE:sitkCompareDriver>
+        --compare
+        DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.mha}
+        DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.mha}
+        )
