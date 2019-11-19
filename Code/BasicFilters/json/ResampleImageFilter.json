@@ -108,9 +108,9 @@
     {
       "name" : "UseNearestNeighborExtrapolator",
       "type" : "bool",
-      "default" : 0,
-        "custom_itk_cast" : "if (m_UseNearestNeighborExtrapolator) {filter->SetExtrapolator(itk::NearestNeighborExtrapolateImageFunction<InputImageType, double>::New());}",
-        "briefdescriptionSet" : "Enables the nearest neighbor extrapolator as opposed to the constant pixel value."
+      "default" : "false",
+      "custom_itk_cast" : "if (m_UseNearestNeighborExtrapolator) {filter->SetExtrapolator(itk::NearestNeighborExtrapolateImageFunction<InputImageType, double>::New());}",
+      "briefdescriptionSet" : "Enables the nearest neighbor extrapolator as opposed to the constant pixel value."
     }
   ],
   "custom_methods" : [
