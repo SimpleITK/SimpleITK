@@ -81,14 +81,14 @@
       "tag" : "default",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "6ab8967612e2637bec64dc5ef14023f1",
+      "md5hash" : "11c1fb2abfe5880e2dbc6e30a53bbe7d",
       "inputs" : [
         "Input/RA-Short.nrrd"
       ],
       "measurements_results" : [
         {
           "name" : "Threshold",
-          "value" : 27402
+          "value" : 27535
         }
       ]
     },
@@ -96,7 +96,7 @@
       "tag" : "cthead1_with_mask",
       "description" : "CT Head with mask",
       "settings" : [],
-      "md5hash" : "1264c8ec6e23856e5e752cb87712f886",
+      "md5hash" : "bc7e7cd90ce693de8e3be1a53f163710",
       "inputs" : [
         "Input/cthead1.png",
         "Input/cthead1-mask.png"
@@ -104,7 +104,7 @@
       "measurements_results" : [
         {
           "name" : "Threshold",
-          "value" : 182.0
+          "value" : 183.0
         }
       ]
     },
