@@ -26,8 +26,7 @@ TransformCompare::TransformCompare()
 }
 
 
-
-bool TransformCompare::Compare( const itk::simple::Transform &transform,
+float TransformCompare::Compare( const itk::simple::Transform &transform,
                                 const itk::simple::Transform &baselineTransform,
                                 const itk::simple::Image &fixedImage )
 {
@@ -42,38 +41,37 @@ bool TransformCompare::Compare( const itk::simple::Transform &transform,
 }
 
 
-bool TransformCompare::Compare( const itk::simple::Transform &transform,
-                                const itk::simple::Image &baselineDisplacement )
+float
+TransformCompare::Compare(const itk::simple::Transform & transform,
+                          const itk::simple::Image &     baselineDisplacement,
+                          bool                           reportErrors)
 {
   namespace sitk = itk::simple;
 
   sitk::TransformToDisplacementFieldFilter toDisplacementField;
-  toDisplacementField.SetOutputPixelType( baselineDisplacement.GetPixelID() );
-  toDisplacementField.SetReferenceImage( baselineDisplacement );
-  sitk::Image displacement = toDisplacementField.Execute( transform );
+  toDisplacementField.SetOutputPixelType(baselineDisplacement.GetPixelID());
+  toDisplacementField.SetReferenceImage(baselineDisplacement);
+  sitk::Image displacement = toDisplacementField.Execute(transform);
 
-  sitk::Image diff =  sitk::Subtract( displacement, baselineDisplacement );
+  sitk::Image magnitude = sitk::VectorMagnitude(sitk::Subtract(displacement, baselineDisplacement));
 
-  diff = sitk::VectorMagnitude(diff);
-  diff = sitk::Multiply(diff, diff);
+  sitk::Image diff_squared = sitk::Multiply(magnitude, magnitude);
 
   sitk::StatisticsImageFilter stats;
-  stats.Execute ( diff );
-  double rms = std::sqrt ( stats.GetMean() );
+  stats.Execute(diff_squared);
+  double rms = std::sqrt(stats.GetMean());
 
-  std::cout << "<DartMeasurement name=\"RMSDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
-
-  if ( rms > m_Tolerance )
-    {
+  if (reportErrors && rms > m_Tolerance)
+  {
     std::ostringstream msg;
-    msg << "TransformCompare: transformed image points Root Mean Square (RMS) difference was " << rms << " which exceeds the tolerance of " << m_Tolerance;
+    msg << "TransformCompare: transformed image points Root Mean Square (RMS) difference was " << rms
+        << " which exceeds the tolerance of " << m_Tolerance;
     msg << "\n";
     m_Message = msg.str();
 
-    std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << m_Tolerance << "</DartMeasurement>" << std::endl;
+    std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << m_Tolerance << "</DartMeasurement>"
+              << std::endl;
+  }
 
-    return false;
-    }
-
-  return true;
+  return rms;
 }

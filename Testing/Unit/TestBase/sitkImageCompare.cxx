@@ -143,7 +143,7 @@ float ImageCompare::testImages( const itk::simple::Image& testImage,
       {
       // The measurement errors should be reported for both success and errors
       // to facilitate setting tight tolerances of tests.
-      std::cout << "<DartMeasurement name=\"RMSeDifference " << shortFilename <<  "\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
+      std::cout << "<DartMeasurement name=\"RMSEDifference " << shortFilename <<  "\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
       }
     else
       {
@@ -152,7 +152,7 @@ float ImageCompare::testImages( const itk::simple::Image& testImage,
       msg << "\n";
       mMessage = msg.str();
 
-      std::cout << "<DartMeasurement name=\"RMSeDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
+      std::cout << "<DartMeasurement name=\"RMSEDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
       std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>" << std::endl;
 
       std::string volumeName = OutputDir + "/" + shortFilename + ".nrrd";

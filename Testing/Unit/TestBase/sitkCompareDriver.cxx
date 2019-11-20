@@ -26,7 +26,6 @@
 #include <iostream>
 
 
-
 namespace sitk = itk::simple;
 
 // declared in SimpleITKTestHarness
@@ -400,6 +399,36 @@ int ProcessArguments(int *ac, ArgumentStringType *av, ProcessedOutputType * proc
   return 0;
 }
 
+// For a baselineFilename of 'something.ext' search for existing files with names of the format 'something.#.ext'
+// starting at 1, until the filename does not exist. Then return a list the existing files discovered.
+std::vector<std::string> GetExistingBaselineFileNames( const std::string &baselineFilename )
+{
+    // Generate all possible baseline file names
+
+    const std::string extension = itksys::SystemTools::GetFilenameLastExtension(baselineFilename);
+    const std::string name = itksys::SystemTools::GetFilenameWithoutLastExtension(baselineFilename);
+    const std::string path = itksys::SystemTools::GetFilenamePath(baselineFilename);
+    std::vector<std::string> baselineFilenames;
+    baselineFilenames.push_back(baselineFilename);
+
+    int x = 0;
+
+    while (++x) {
+        std::ostringstream filename_stream;
+        filename_stream << path << "/"
+                        << name << "." << x << extension;
+
+        const std::string filename(filename_stream.str());
+
+        if (!itksys::SystemTools::FileExists(filename, true)) {
+            break;
+        }
+        baselineFilenames.push_back(filename);
+    }
+
+    return baselineFilenames;
+}
+
 }
 
 
@@ -477,26 +506,72 @@ int main(int argc, char *argv[])
         }
       }
 
-    // compare transforms
-    for (size_t i = 0; i < regressionTestParameters.transformTestList.size(); ++i )
+      // compare transforms
+      for (size_t i = 0; i < regressionTestParameters.transformTestList.size(); ++i)
       {
-      const char * transformFileName =  regressionTestParameters.transformTestList[i].transform;
-      const char * baselineFileName = regressionTestParameters.transformTestList[i].displacement;
-      const float tolerance = regressionTestParameters.transformTestList[i].tolerance;
+        const char * transformFileName = regressionTestParameters.transformTestList[i].transform;
+        const char * baselineFileName = regressionTestParameters.transformTestList[i].displacement;
+        const float  tolerance = regressionTestParameters.transformTestList[i].tolerance;
 
-      std::cout << "Reading test transform: \"" <<  transformFileName << "\"..." << std::endl;
-      sitk::Transform transform = sitk::ReadTransform(transformFileName);
 
-      std::cout << "Reading baseline displacement: \"" << baselineFileName << "\"..." << std::endl;
-      sitk::Image baseline = sitk::ReadImage(baselineFileName);
+        std::cout << "Reading test transform: \"" << transformFileName << "\"..." << std::endl;
+        sitk::Transform transform = sitk::ReadTransform(transformFileName);
 
-      TransformCompare compare;
-      compare.SetTolerance(tolerance);
-      if (!compare.Compare(transform, baseline))
+        // Generate all possible baseline file names
+        const std::vector<std::string> baselineFilenames = GetExistingBaselineFileNames(baselineFileName);
+
+        std::string bestBaselineName = *baselineFilenames.begin();
+        float       bestRMS = std::numeric_limits<float>::max();
+
+
+        std::vector<std::string>::const_iterator iterName;
+        for (iterName = baselineFilenames.begin(); iterName != baselineFilenames.end(); ++iterName)
         {
-        result += 1;
+          sitk::Image baseline(0, 0, sitk::sitkUInt8);
+          float       RMS = -1.0;
+
+          try
+          {
+
+            std::cout << "Reading baseline displacement: \"" << *iterName << "\"..." << std::endl;
+            baseline = sitk::ReadImage(*iterName);
+          }
+          catch (std::exception & e)
+          {
+            std::cerr << "Failed to load transform " + *iterName + " because: " + e.what();
+            continue;
+          }
+
+          TransformCompare compare;
+          compare.SetTolerance(tolerance);
+
+          RMS = compare.Compare(transform, baseline, false);
+          std::string shortFileName = itksys::SystemTools::GetFilenameName(*iterName);
+          std::cout << "<DartMeasurement name=\"RMSDifference " << shortFileName << "\" type=\"numeric/float\">" << RMS
+                    << "</DartMeasurement>" << std::endl;
+
+          if (RMS == -1.0)
+          {
+            std::cerr << compare.GetMessage() << std::endl;
+          }
+          else if (RMS >= 0.0 && RMS < bestRMS)
+          {
+            bestBaselineName = *iterName;
+            bestRMS = RMS;
+          }
         }
-      }
+
+        if ( bestRMS > fabs ( tolerance ) )
+        {
+            TransformCompare compare;
+            compare.SetTolerance(tolerance);
+
+            const sitk::Image baseline =  sitk::ReadImage( bestBaselineName );
+            compare.Compare( transform, baseline, true );
+
+            ++result;
+        }
+    }
 
     // compare images
     for (size_t i = 0; i < regressionTestParameters.compareList.size(); ++i )
@@ -512,29 +587,7 @@ int main(int argc, char *argv[])
       imageCompare.setTolerance(tolerance);
 
       // Generate all possible baseline file names
-
-      const std::string extension = itksys::SystemTools::GetFilenameLastExtension( baselineFilename );
-      const std::string name = itksys::SystemTools::GetFilenameWithoutLastExtension( baselineFilename );
-      const std::string path = itksys::SystemTools::GetFilenamePath( baselineFilename );
-      std::vector<std::string> baselineFilenames;
-      baselineFilenames.push_back(baselineFilename);
-
-      int x = 0;
-
-      while ( ++x )
-        {
-        std::ostringstream filename_stream;
-        filename_stream <<  path << "/"
-                        <<  name  << "." << x << extension;
-
-        const std::string filename(filename_stream.str());
-
-        if (!itksys::SystemTools::FileExists ( filename, true ) )
-          {
-          break;
-          }
-        baselineFilenames.push_back(filename);
-        }
+      const std::vector<std::string> baselineFilenames = GetExistingBaselineFileNames( baselineFilename );
 
       std::vector<std::string>::const_iterator iterName;
       std::string bestBaselineName =  *baselineFilenames.begin();
