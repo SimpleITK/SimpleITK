@@ -52,6 +52,7 @@
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 #include <sitkResampleImageFilter.h>
+#include <sitkSignedMaurerDistanceMapImageFilter.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -823,17 +824,23 @@ TEST(BasicFilters,Cast_Commands) {
 
 }
 
-TEST(BasicFilters,Statistics_Abort) {
-  // test Statistics filter with a bunch of commands
-
+TEST(BasicFilters,SignedMaurerDistanceMap_Abort) {
+  // test the abort functionality
+  // With ITKv5 the abort functionality does not work well with many basic image filters since they no longer report
+  // detailed progress. This filter is a composite filter
   namespace sitk = itk::simple;
   sitk::Image img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) );
   EXPECT_EQ ( "a963bd6a755b853103a2d195e01a50d3", sitk::Hash(img, sitk::HashImageFilter::MD5));
 
-  sitk::StatisticsImageFilter stats;
-  stats.SetNumberOfThreads(1);
+  sitk::SignedMaurerDistanceMapImageFilter stats;
+  stats.SetNumberOfThreads(16);
 
-  AbortAtCommand progressCmd(stats,.05);
+  float abortAtProgress = 0.35f;
+
+  AbortAtCommand abortAtCommand(stats,abortAtProgress);
+  stats.AddCommand(sitk::sitkProgressEvent, abortAtCommand);
+
+  ProgressUpdate progressCmd(stats);
   stats.AddCommand(sitk::sitkProgressEvent, progressCmd);
 
   CountCommand abortCmd(stats);
@@ -862,6 +869,7 @@ TEST(BasicFilters,Statistics_Abort) {
   EXPECT_EQ ( 0, iterCmd.m_Count );
   EXPECT_EQ ( 1, startCmd.m_Count );
   EXPECT_EQ ( 0, userCmd.m_Count );
+  EXPECT_LE( abortAtProgress, progressCmd.m_Progress );
 
 }
 
