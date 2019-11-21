@@ -84,32 +84,10 @@ if( DEFINED CMAKE_CXX_STANDARD
   endif()
 elseif(NOT HAS_CXX_STD_FLAG)
 
-#
-# Check if we need to enable C++11 with a compiler flag
-#
-
-  check_cxx_compiler_flag( "-std=c++11" CXX_HAS_stdcxx11)
-
-  if (CXX_HAS_stdcxx11)
-
-    message(STATUS "Checking if c++11 is required...")
-    try_compile(SITK_CXX11_NOT_REQUIRED
-      "${PROJECT_BINARY_DIR}"
-      "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11_required.cxx"
-      OUTPUT_VARIABLE OUTPUT)
-    if(SITK_CXX11_NOT_REQUIRED)
-      message(STATUS "Checking if c++11 is required... NO" )
-    else()
-      message(STATUS "Checking if c++11 is required... YES" )
-      file(APPEND ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/CMakeError.log
-        "Checking if C++11 required try_compile failed with the following output:\n"
-        "${OUTPUT}\n")
-      list(APPEND SimpleITK_PUBLIC_COMPILE_OPTIONS "-std=c++11")
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    endif()
-
-  endif()
-
+# Brute force set the standard for the whole project.
+# TODO: Use target_compile_features on each library.
+set(CMAKE_CXX_STANDARD 11)
+message(STATUS "Setting cxx standard to C++11")
 endif()
 
 list(REMOVE_DUPLICATES SimpleITK_PUBLIC_COMPILE_OPTIONS)
