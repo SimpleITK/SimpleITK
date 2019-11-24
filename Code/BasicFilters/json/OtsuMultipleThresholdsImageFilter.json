@@ -44,6 +44,11 @@
       "detaileddescriptionSet" : "Set/Get the use of valley emphasis. Default is false.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the use of valley emphasis. Default is false."
+    },
+    {
+      "name" : "ReturnBinMidpoint",
+      "type" : "bool",
+      "default" : "true"
     }
   ],
   "measurements" : [

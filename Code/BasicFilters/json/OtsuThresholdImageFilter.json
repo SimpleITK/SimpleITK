@@ -66,6 +66,11 @@
       "detaileddescriptionSet" : "The value in the mask image, if used, indicating voxels that should be included. Default is the max of pixel type, as in the MaskedImageToHistogramFilter",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "ReturnBinMidpoint",
+      "type" : "bool",
+      "default" : "true"
     }
   ],
   "measurements" : [

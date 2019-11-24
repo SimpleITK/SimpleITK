@@ -15,7 +15,7 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethodBSpline3
     ${SimpleITK_TEST_OUTPUT_DIR}/CXXImageRegistrationMethodBSpline3.hdf5
   TRANSFORM_COMPARE
     ${SimpleITK_TEST_OUTPUT_DIR}/CXXImageRegistrationMethodBSpline3.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline3.mha}
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline3.mha,:}
     0.02
   )
 
@@ -26,6 +26,6 @@ sitk_add_python_test(Example.ImageRegistrationMethodBSpline3
     ${SimpleITK_TEST_OUTPUT_DIR}/PythonImageRegistrationMethodBSpline3.hdf5
   TRANSFORM_COMPARE
     ${SimpleITK_TEST_OUTPUT_DIR}/PythonImageRegistrationMethodBSpline3.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline3.mha}
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline3.mha,:}
     0.02
   )

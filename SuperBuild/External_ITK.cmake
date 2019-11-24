@@ -52,7 +52,7 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/I
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-set(_DEFAULT_ITK_GIT_TAG "28fd1cb66a77441e0a7999128c16e97e1b7291ff") # after 4.13.2 along release-4.13
+set(_DEFAULT_ITK_GIT_TAG "v5.1b01")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
@@ -77,7 +77,8 @@ endif()
 if( ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG )
   # only remove legacy with the tested, and predefined version of ITK
   list( APPEND ep_itk_args
-    "-DITK_LEGACY_REMOVE:BOOL=ON"
+    "-DITK_LEGACY_REMOVE:BOOL=OFF"
+    "-DITKV4_COMPATIBILITY:BOOL=ON"
     )
 endif()
 
