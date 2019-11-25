@@ -82,12 +82,6 @@ if( DEFINED CMAKE_CXX_STANDARD
     message(SEND_ERROR "CMake CXX standard variables are not supported
       concurrently with CXX flag: \"-std=\"! Use only one to configure CXX standard.")
   endif()
-elseif(NOT HAS_CXX_STD_FLAG)
-
-# Brute force set the standard for the whole project.
-# TODO: Use target_compile_features on each library.
-set(CMAKE_CXX_STANDARD 11)
-message(STATUS "Setting cxx standard to C++11")
 endif()
 
 list(REMOVE_DUPLICATES SimpleITK_PUBLIC_COMPILE_OPTIONS)

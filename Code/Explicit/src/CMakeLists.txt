@@ -46,5 +46,6 @@ target_compile_options( SimpleITKExplicit
     ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+target_compile_features( SimpleITKExplicit PUBLIC cxx_std_11 )
 
 sitk_install_exported_target( SimpleITKExplicit )

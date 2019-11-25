@@ -25,6 +25,8 @@ function(sitkCXX11Test VARIABLE)
   if(NOT DEFINED ${VARIABLE})
     message(STATUS "Performing Test ${VARIABLE}")
 
+    set(CMAKE_CXX_STANDARD 11)
+
     if(NOT POLICY CMP0067)
       if(DEFINED CMAKE_CXX_STANDARD)
         set(cmake_flags "${cmake_flags} -DCMAKE_CXX_STANDARD:STRING:=${CMAKE_CXX_STANDARD}")
@@ -69,44 +71,3 @@ sitkCXX11Test(SITK_HAS_CXX11_UNORDERED_MAP)
 sitkCXX11Test(SITK_HAS_CXX11_NULLPTR)
 sitkCXX11Test(SITK_HAS_CXX11_UNIQUE_PTR)
 sitkCXX11Test(SITK_HAS_CXX11_ALIAS_TEMPLATE)
-
-
-
-# Microsoft Visual Studio 2008sp1,2010,2012 don't need tr1 as a path
-# prefix to tr1 headers, while libc++
-sitkCXX11Test(SITK_HAS_TR1_SUB_INCLUDE)
-
-if (SITK_HAS_TR1_SUB_INCLUDE)
-  list(APPEND CMAKE_REQUIRED_DEFINITIONS "-DHAS_TR1_SUB_INCLUDE")
-endif()
-
-#
-# Check for TR1 features
-#
-sitkCXX11Test(SITK_HAS_TR1_FUNCTIONAL)
-sitkCXX11Test(SITK_HAS_TR1_TYPE_TRAITS)
-sitkCXX11Test(SITK_HAS_TR1_UNORDERED_MAP)
-
-# restore variable
-cmake_pop_check_state()
-
-
-if ( (NOT SITK_HAS_TR1_FUNCTIONAL AND NOT SITK_HAS_CXX11_FUNCTIONAL)
-    OR
-    (NOT SITK_HAS_TR1_TYPE_TRAITS AND NOT SITK_HAS_CXX11_TYPE_TRAITS)
-    )
-  if (MSVC)
-    message( FATAL_ERROR
-      "SimpleITK requires usage of C++11 or C++ Technical Report 1 (TR1).\n"
-      "It may be available as an optional download for your compiler or difference CXX_FLAGS."
-      "Please see the FAQs for details."
-      "http://simpleitk.readthedocs.io/en/master/Documentation/docs/source/faq.html#do-i-need-to-download-an-option-package-for-tr1-support\n")
-  else()
-      message( FATAL_ERROR
-        "SimpleITK requires usage of C++11 or C++ Technical Report 1 "
-        "(TR1), but were neither able to detect TR1 nor automatically "
-        "enable C++11. Please review your configuration settings and "
-        "enable C++11.\n")
-
-  endif()
-endif ()
