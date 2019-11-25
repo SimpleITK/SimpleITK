@@ -35,6 +35,7 @@ target_compile_options( SimpleITKIO
     ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+target_compile_features( SimpleITKIO PUBLIC cxx_std_11 )
 
 
 sitk_install_exported_target( SimpleITKIO )

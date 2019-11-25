@@ -38,12 +38,6 @@
 #cmakedefine SITK_HAS_CXX11_UNIQUE_PTR
 #cmakedefine SITK_HAS_CXX11_ALIAS_TEMPLATE
 
-#cmakedefine SITK_HAS_TR1_SUB_INCLUDE
-
-#cmakedefine SITK_HAS_TR1_FUNCTIONAL
-#cmakedefine SITK_HAS_TR1_TYPE_TRAITS
-#cmakedefine SITK_HAS_TR1_UNORDERED_MAP
-
 // defined if compiler supports using template keyword to disambiguate
 // dependent names
 #cmakedefine SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME
