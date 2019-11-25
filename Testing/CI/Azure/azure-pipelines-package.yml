@@ -101,7 +101,7 @@ jobs:
           CTEST_CACHE: |
             CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
             CMAKE_C_FLAGS:STRING=-fvisibility=hidden
-            CMAKE_OSX_DEPLOYMENT_TARGET=10.6
+            CMAKE_OSX_DEPLOYMENT_TARGET=10.9
             BUILD_DOCUMENTS:BOOL=OFF
             BUILD_EXAMPLES:BOOL=OFF
             BUILD_SHARED_LIBS:BOOL=OFF
