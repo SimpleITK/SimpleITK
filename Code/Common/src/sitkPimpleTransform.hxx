@@ -147,7 +147,8 @@ public:
 
   virtual bool IsLinear() const
     {
-      return (this->GetTransformBase()->GetTransformCategory() == TransformBase::Linear);
+      typedef itk::TransformBaseTemplate<double>::TransformCategoryType TransformCategoryType;
+      return (this->GetTransformBase()->GetTransformCategory() == TransformCategoryType::Linear);
     }
 
 
