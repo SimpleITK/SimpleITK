@@ -102,7 +102,7 @@ jobs:
           CTEST_CACHE: |
             CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
             CMAKE_C_FLAGS:STRING=-fvisibility=hidden
-            CMAKE_OSX_DEPLOYMENT_TARGET=10.6
+            CMAKE_OSX_DEPLOYMENT_TARGET=10.9
             ITK_C_OPTIMIZATION_FLAGS:STRING=
             ITK_CXX_OPTIMIZATION_FLAGS:STRING=
             BUILD_DOCUMENTS:BOOL=OFF
