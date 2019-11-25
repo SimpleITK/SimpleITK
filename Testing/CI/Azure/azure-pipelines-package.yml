@@ -17,10 +17,10 @@ jobs:
       - checkout: none
       - bash: |
           echo "##vso[task.setvariable variable=BuildHash;isOutput=true]${CONFIGURE_BUILDHASH:-release}"
+          echo "##vso[task.setvariable variable=skip32];true"
         name: configure
   - job: Linux
     dependsOn: Configure
-    condition: ne( variables['configure.skiplinux'], 'true' )
     timeoutInMinutes: 200
     strategy:
       matrix:
@@ -32,6 +32,11 @@ jobs:
       vmImage: 'Ubuntu-16.04'
     variables:
       SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    condition: |
+      not( or(
+           eq( variables['configure.skiplinux'], 'true' ),
+           and( eq( variables['ARCH'], 'i686'),  eq( variables['configure.skip32'], 'true' ))
+         ))
     steps:
       - template: templates/git-download-steps.yml
       - bash: |
@@ -163,7 +168,6 @@ jobs:
 
   - job: VS2017
     dependsOn: Configure
-    condition: ne( variables['configure.skipwindows'], 'true' )
     timeoutInMinutes: 0
     strategy:
       matrix:
@@ -182,6 +186,11 @@ jobs:
       CTEST_CONFIGURATION_TYPE: Release
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    condition: |
+      not( or(
+           eq( variables['configure.skipwindows'], 'true' ),
+           and( eq( variables['CMAKE_PLATFORM'], 'Win32'),  eq( variables['configure.skip32'], 'true' ))
+         ))
     steps:
       - template: templates/git-download-steps.yml
       - bash: |
@@ -280,7 +289,6 @@ jobs:
 
   - job: VS2008
     dependsOn: Configure
-    condition: ne( variables['configure.skipwindows'], 'true' )
     timeoutInMinutes: 360
     strategy:
       matrix:
@@ -299,6 +307,11 @@ jobs:
       CTEST_CONFIGURATION_TYPE: MinSizeRel
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    condition: |
+      not( or(
+           eq( variables['configure.skipwindows'], 'true' ),
+           and( eq( variables['CMAKE_PLATFORM'], 'Win32'),  eq( variables['configure.skip32'], 'true' ))
+         ))
     steps:
       - template: templates/git-download-steps.yml
       - bash: |
