@@ -1,0 +1,46 @@
+parameters:
+   skip: false
+   skip32: true
+jobs:
+- ${{ if ne(parameters['skip'], 'true')}}:
+  - job: Linux
+    dependsOn: Configure
+    timeoutInMinutes: 200
+    strategy:
+      matrix:
+        ${{ if ne(parameters['skip32'], 'true')}}:
+          manylinux1_i686:
+            ARCH: i686
+          manylinux1_x86_64:
+            ARCH: x86_64
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    variables:
+      SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - bash: |
+          echo "configure.skiplinux = $(configure.skiplinux)"
+          echo "configure.skip32 = $(configure.skip32)"
+          env
+      - template: git-download-steps.yml
+      - bash: |
+          cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
+          docker build --pull=true --rm=true -t simpleitk_manylinux_${ARCH} -f Dockerfile-${ARCH} .
+        displayName: Build Docker Image
+      - bash: |
+          echo "Building SimpleITK tag \"${SIMPLEITK_GIT_TAG}\"..."
+          cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
+          ./run.sh
+        env:
+          ExternalData_OBJECT_STORES: "$(Build.SourcesDirectory)/.ExternalData/MD5"
+          SIMPLEITK_GIT_TAG: "$(SimpleITKBuildHash)"
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/wheelhouse'
+          contents: '*.whl'
+          targetFolder: $(Build.ArtifactStagingDirectory)/python
+          flattenFolders: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
