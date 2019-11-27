@@ -91,11 +91,8 @@ list(APPEND SimpleITK_PRIVATE_COMPILE_OPTIONS ${CXX_ADDITIONAL_WARNING_FLAGS})
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 
-set(SimpleITK_EXPLICIT_INSTATIATION_DEFAULT OFF)
-if(MSCV)
-  set(SimpleITK_EXPLICIT_INSTATIATION_DEFAULT ON)
-endif()
-option(SimpleITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ${SimpleITK_EXPLICIT_INSTATIATION_DEFAULT})
+
+option(SimpleITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ON)
 sitk_legacy_naming(SimpleITK_EXPLICIT_INSTANTIATION)
 
 if ( MSVC AND SITK_BUILD_SHARED_LIBS )
