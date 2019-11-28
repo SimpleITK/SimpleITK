@@ -27,10 +27,10 @@
 namespace itk {
 namespace simple {
 
-void WriteImage ( const Image& image, const std::string &inFileName, bool useCompression )
+void WriteImage ( const Image& image, const std::string &inFileName, bool useCompression, int compressionLevel )
 {
   ImageFileWriter writer;
-  writer.Execute ( image, inFileName, useCompression );
+  writer.Execute ( image, inFileName, useCompression, compressionLevel );
 }
 
 
@@ -42,6 +42,7 @@ ImageFileWriter::ImageFileWriter()
 {
   this->m_UseCompression = false;
   this->m_KeepOriginalImageUID = false;
+  this->m_CompressionLevel = -1;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -60,6 +61,14 @@ std::string ImageFileWriter::ToString() const
 
   out << "  UseCompression: ";
   this->ToStringHelper(out, this->m_UseCompression);
+  out << std::endl;
+
+  out << "  CompressionLevel: ";
+  this->ToStringHelper( out, this->m_CompressionLevel);
+  out << std::endl;
+
+  out << "  Compressor: ";
+  this->ToStringHelper( out, this->m_Compressor);
   out << std::endl;
 
   out << "  KeepOriginalImageUID: ";
@@ -98,6 +107,33 @@ bool ImageFileWriter::GetUseCompression( void ) const
   return this->m_UseCompression;
 }
 
+ImageFileWriter::Self &
+ImageFileWriter::SetCompressionLevel(int CompressionLevel)
+{
+  this->m_CompressionLevel = CompressionLevel;
+  return *this;
+}
+
+int
+ImageFileWriter::GetCompressionLevel(void) const
+{
+  return m_CompressionLevel;
+}
+
+ImageFileWriter::Self &
+ImageFileWriter::SetCompressor(const std::string &Compressor)
+{
+  this->m_Compressor = Compressor;
+  return *this;
+}
+
+std::string
+ImageFileWriter::GetCompressor(void)
+{
+  return m_Compressor;
+}
+
+
 ImageFileWriter::Self&
 ImageFileWriter::SetKeepOriginalImageUID( bool KeepOriginalImageUID )
 {
@@ -121,10 +157,11 @@ std::string ImageFileWriter::GetFileName() const
   return this->m_FileName;
 }
 
-ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const std::string &inFileName, bool useCompression )
+ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const std::string &inFileName, bool useCompression, int compressionLevel )
 {
   this->SetFileName( inFileName );
   this->SetUseCompression( useCompression );
+  this->SetCompressionLevel( compressionLevel );
   return this->Execute( image );
 }
 
@@ -192,10 +229,16 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
   typedef itk::ImageFileWriter<InputImageType> Writer;
   typename Writer::Pointer writer = Writer::New();
   writer->SetUseCompression( this->m_UseCompression );
+  writer->SetCompressionLevel( this->m_CompressionLevel );
   writer->SetFileName ( this->m_FileName.c_str() );
   writer->SetInput ( image );
 
   itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
+
+  if (this->m_Compressor != "")
+  {
+  imageio->SetCompressor(this->m_Compressor);
+  }
 
   sitkDebugMacro( "ImageIO: " << imageio->GetNameOfClass() );
 

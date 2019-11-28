@@ -95,6 +95,26 @@ class ImageIOBase;
       SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
+      /** \brief A hint for the amount of compression to be applied during writing.
+       *
+       *  After compression is enabled and if the itk::ImageIO support this option, then this value may be used. The range is
+       *  dependent upon the compression algorithm used. It is generally 0-100 for JPEG like lossy compression and 0-9
+       *  for lossless zip or LZW like compression algorithms.  Please see the specific itk::ImageIO for details.
+       * @{ */
+      SITK_RETURN_SELF_TYPE_HEADER SetCompressionLevel(int);
+      int GetCompressionLevel(void) const;
+      /** @} */
+
+      /** \brief A compression algorithm hint
+       *
+       * The default is an empty string which enables the default compression of the ImageIO if compression is enabled.
+       * If the string identifier is not known a warning is produced and the default compressor is used. Please see the
+       * itk::ImageIO for details.
+       * @{ */
+      SITK_RETURN_SELF_TYPE_HEADER SetCompressor(const std::string &);
+      std::string GetCompressor(void);
+      /** @} */
+
       /** The filenames to where the image slices are written.
         *
         * The number of filenames must match the number of slices in
@@ -106,7 +126,7 @@ class ImageIOBase;
 
 
       SITK_RETURN_SELF_TYPE_HEADER Execute( const Image& );
-      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<std::string> &inFileNames, bool useCompression );
+      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<std::string> &inFileNames, bool useCompression, int compressionLevel );
 
     protected:
 
@@ -123,14 +143,21 @@ class ImageIOBase;
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
-      bool                     m_UseCompression;
+      bool        m_UseCompression;
+      int         m_CompressionLevel;
+      std::string m_Compressor;
+
       std::vector<std::string> m_FileNames;
 
       std::string m_ImageIOName;
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool useCompression=false );
-  }
+    SITKIO_EXPORT void
+    WriteImage(const Image &                    image,
+               const std::vector<std::string> & fileNames,
+               bool                             useCompression = false,
+               int                              compressionLevel = -1);
+    }
 }
 
 #endif
