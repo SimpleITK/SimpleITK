@@ -481,7 +481,7 @@ TEST(IO, DicomSeriesReader) {
   for (unsigned int i = 0; i <  image.GetSize()[2]; ++i)
     {
       std::vector<std::string> keys = reader.GetMetaDataKeys(0);
-      EXPECT_EQ( 93u, keys.size() );
+      EXPECT_EQ( 95u, keys.size() );
 
       for(unsigned int j = 0; j < keys.size(); ++j )
         {
