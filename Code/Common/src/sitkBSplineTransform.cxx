@@ -49,7 +49,7 @@ unsigned int sitkGetOrder(void)
 
 
 template<typename TBSplineTransform>
-void SetCoefficientImages(TBSplineTransform* bspline, std::vector<Image> coefficientImages)
+void SetCoefficientImages(TBSplineTransform* bspline, const std::vector<Image> &coefficientImages)
 {
   unsigned char numberOfDimensions = TBSplineTransform::SpaceDimension;
 
@@ -63,7 +63,7 @@ void SetCoefficientImages(TBSplineTransform* bspline, std::vector<Image> coeffic
 
   for (unsigned int i = 0; i < numberOfDimensions; ++i)
     {
-    Image &sitkImage = coefficientImages[i];
+    const Image &sitkImage = coefficientImages[i];
 
     if (sitkImage.GetPixelID() != sitkFloat64)
       {
@@ -84,7 +84,7 @@ void SetCoefficientImages(TBSplineTransform* bspline, std::vector<Image> coeffic
     typedef typename TBSplineTransform::ImageType itkImageType;
 
 
-    itkImageType * itkImage = dynamic_cast <itkImageType*>(sitkImage.GetITKBase());
+    const itkImageType * itkImage = dynamic_cast <const itkImageType*>(sitkImage.GetITKBase());
 
     if ( itkImage == SITK_NULLPTR )
       {
@@ -92,7 +92,7 @@ void SetCoefficientImages(TBSplineTransform* bspline, std::vector<Image> coeffic
       }
     // The images are deep copied inside the BSpline transform, so no
     // additional copying is needed.
-    itkImages[i] = itkImage;
+    itkImages[i] = const_cast<itkImageType*>(itkImage);
     }
 
   bspline->SetCoefficientImages(itkImages);
@@ -113,7 +113,7 @@ BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned int order)
 }
 
 
-BSplineTransform::BSplineTransform(std::vector<Image> &coefficientImages, unsigned int order)
+BSplineTransform::BSplineTransform(const std::vector<Image> &coefficientImages, unsigned int order)
   : Transform( CreateBSplinePimpleTransform(coefficientImages.size(), order) )
 {
   Self::InternalInitialization(Self::GetITKBase());

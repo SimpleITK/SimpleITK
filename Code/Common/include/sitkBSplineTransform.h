@@ -52,7 +52,7 @@ public:
    * transform domain. The transform domain is reduced by the spline
    * order.
    */
-  explicit BSplineTransform( std::vector<Image> &coefficientImages, unsigned int order=3 );
+  explicit BSplineTransform( const std::vector<Image> &coefficientImages, unsigned int order=3 );
 
   BSplineTransform( const BSplineTransform & );
 
@@ -133,7 +133,7 @@ private:
   nsstd::function<std::vector<Image> ()> m_pfGetCoefficientImages;
   nsstd::function< unsigned int()> m_pfGetOrder;
 
-  nsstd::function<void (std::vector<Image> &)> m_pfSetCoefficientImages;
+  nsstd::function<void (const std::vector<Image> &)> m_pfSetCoefficientImages;
 
 };
 
