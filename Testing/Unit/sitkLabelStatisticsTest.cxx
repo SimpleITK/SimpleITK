@@ -194,12 +194,12 @@ TEST(LabelStatistics,Shape_OBB) {
   EXPECT_VECTOR_DOUBLE_NEAR( v4(0.713199, -0.700961, 0.700961, 0.713199), lssFilter.GetOrientedBoundingBoxDirection(100), 1e-6 );
   std::vector<double> verticesExpected = v9( -86.190355427717947,
                                              83.719933383265925,
-                                             -86.190355427717947,
-                                             377.31123819498737,
-                                             140.63830354316519,
-                                             83.719933383265925,
-                                             140.63830354316519,
-                                             377.31123819498737,
+                                             119.60574447063291,
+                                             293.10909147813277,
+                                             75.583720150438126,
+                                             -75.278145225760852,
+                                             281.37982004878904,
+                                             134.11101286910596,
                                              0.0);
   verticesExpected.pop_back();
   EXPECT_VECTOR_DOUBLE_NEAR( verticesExpected, lssFilter.GetOrientedBoundingBoxVertices(100), 1e-4);
