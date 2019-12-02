@@ -102,6 +102,8 @@ jobs:
             CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
             CMAKE_C_FLAGS:STRING=-fvisibility=hidden
             CMAKE_OSX_DEPLOYMENT_TARGET=10.6
+            ITK_C_OPTIMIZATION_FLAGS:STRING=
+            ITK_CXX_OPTIMIZATION_FLAGS:STRING=
             BUILD_DOCUMENTS:BOOL=OFF
             BUILD_EXAMPLES:BOOL=OFF
             BUILD_SHARED_LIBS:BOOL=OFF
@@ -208,6 +210,8 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
+            ITK_C_OPTIMIZATION_FLAGS:STRING=
+            ITK_CXX_OPTIMIZATION_FLAGS:STRING=
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
       - bash : |
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
