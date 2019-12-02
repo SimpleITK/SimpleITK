@@ -59,7 +59,7 @@ class TransformTests(unittest.TestCase):
 
     def tearDown(self):
 
-        # Delete the create temporary directory and files with  in. Perhaps if tests fail then the output should  stick
+        # Delete the temporary directory and files contained within. Perhaps if tests fail then the output should  stick
         # around to debug the problem
         shutil.rmtree(self.test_dir)
 

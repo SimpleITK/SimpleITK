@@ -19,6 +19,8 @@ from __future__ import print_function
 import sys
 import os
 import unittest
+import tempfile
+import shutil
 
 
 import SimpleITK as sitk
@@ -27,7 +29,27 @@ import SimpleITK as sitk
 class ImageReadWriteInt64(unittest.TestCase):
     """Test reading and writing to 64 bit integers"""
 
-    temp_directory = ""
+    def setUp(self):
+
+        # Create a temporary directory for output files
+        self.test_dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+
+        # Delete the temporary directory and files contained within. Perhaps if tests fail then the output should  stick
+        # around to debug the problem
+        shutil.rmtree(self.test_dir)
+
+    def setUp(self):
+
+        # Create a temporary directory for output files
+        self.test_dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+
+        # Delete the create temporary directory and files with  in. Perhaps if tests fail then the output should  stick
+        # around to debug the problem
+        shutil.rmtree(self.test_dir)
 
     def _create_img(self, img_type):
         """Method to create an image"""
@@ -60,13 +82,12 @@ class ImageReadWriteInt64(unittest.TestCase):
         """Generate additional test by adding a generated member function """
         def do_test(self):
             fname = "test64.{0}".format(img_extension)
-            if ImageReadWriteInt64.temp_directory:
-                fname = os.path.join(ImageReadWriteInt64.temp_directory, fname)
+            fname = os.path.join(self.test_dir, fname)
             img = self._create_img(img_type)
             self._read_write_test(img, fname)
 
         test_method = do_test
-        test_method.__name__ = "test_read_write_int64{0}{1}".format(img_extension,int(img_type));
+        test_method.__name__ = "test_read_write_int64{0}{1}".format(img_extension,int(img_type))
         setattr(ImageReadWriteInt64, test_method.__name__, test_method)
 
 
@@ -81,7 +102,4 @@ for p_ext_hash in [ ("mha", sitk.sitkUInt64),
 
 
 if __name__ == '__main__':
-    # hacky to get a temporary directory
-    if len(sys.argv) > 1:
-        ImageReadWriteInt64.temp_directory = sys.argv.pop()
     unittest.main()
