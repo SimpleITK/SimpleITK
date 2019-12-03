@@ -91,7 +91,7 @@ jobs:
           ninja --version
         displayName: 'XCode configuration'
       - bash: |
-          ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
+          ctest  -D "dashboard_track:STRING=Package" -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
         displayName: 'Build and test core'
         workingDirectory: $(Agent.BuildDirectory)
         env:
@@ -185,7 +185,7 @@ jobs:
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" $(VCVAR_OPTIONS) -vcvars_ver=14.0
           cmake --version
-          ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+          ctest -D "dashboard_track:STRING=Package" -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
           true
         displayName: Build and test
         workingDirectory: $(Agent.BuildDirectory)
