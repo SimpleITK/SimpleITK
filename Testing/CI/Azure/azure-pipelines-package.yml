@@ -113,13 +113,20 @@ jobs:
             SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
       - bash: |
           set -xe
-          Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build ${DASHBOARD_GIT_BRANCH}
+          if GIT_DIR=${BUILD_SOURCESDIRECTORY}/.git git rev-parse "${DASHBOARD_GIT_BRANCH}^{tag}" >/dev/null 2>&1
+          then
+            COMMIT=${DASHBOARD_GIT_BRANCH}
+          else
+            COMMIT=$(git rev-parse origin/${DASHBOARD_GIT_BRANCH})
+          fi
+          Utilities/Maintenance/SourceTarball.bash --tgz --txz --zip $(coreBinaryDirectory)/SimpleITK-build ${COMMIT}
           mkdir -p $(Build.ArtifactStagingDirectory)/archives
           ls -la
           shopt -s extglob
           mv SimpleITK@(Data|)-*@(zip|gz|xz) $(Build.ArtifactStagingDirectory)/archives
         workingDirectory: $(Build.SourcesDirectory)
         displayName: Generate Source and Data Archives
+        continueOnError: true
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
