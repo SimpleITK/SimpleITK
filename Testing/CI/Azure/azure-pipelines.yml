@@ -159,12 +159,13 @@ jobs:
           CXXFLAGS: /MP
           CFLAGS: /MP
           CTEST_CACHE: |
+            CMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE=x64
             BUILD_DOCUMENTS:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_CSHARP:BOOL=ON
+            WRAP_CSHARP:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
