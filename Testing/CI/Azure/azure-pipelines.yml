@@ -47,7 +47,7 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_R:BOOL=ON
+            WRAP_R:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
