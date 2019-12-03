@@ -22,15 +22,17 @@ import sys
 
 # this test is suppose to test the python interface to the IO classes
 
-if len ( sys.argv ) != 2:
-    print( "Usage: %s outputPath" % ( sys.argv[0] ) )
+if __name__ == '__main__':
 
-outputPath = sys.argv[1]
+    if len ( sys.argv ) != 2:
+        print( "Usage: %s outputPath" % ( sys.argv[0] ) )
 
-image = sitk.Image( 10, 10, sitk.sitkInt32 )
+    outputPath = sys.argv[1]
+
+    image = sitk.Image( 10, 10, sitk.sitkInt32 )
 
 
-try:
-    sitk.WriteImage( image, "this.isafilenamewithnoimageio" )
-except RuntimeError as e:
-    print( "Caught expected error" )
+    try:
+        sitk.WriteImage( image, "this.isafilenamewithnoimageio" )
+    except RuntimeError as e:
+        print( "Caught expected error" )
