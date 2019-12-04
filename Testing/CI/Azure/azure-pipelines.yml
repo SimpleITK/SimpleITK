@@ -51,7 +51,7 @@ jobs:
             WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
-          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
         condition: succeededOrFailed()
         displayName: 'Format CTest output in JUnit format'
       - task: PublishTestResults@2
@@ -108,7 +108,7 @@ jobs:
             WRAP_JAVA:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
-          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
         condition: succeededOrFailed()
         displayName: 'Format CTest output in JUnit format'
       - task: PublishTestResults@2
@@ -158,7 +158,7 @@ jobs:
             WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
-          ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
+          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
         condition: succeededOrFailed()
         displayName: 'Format CTest output in JUnit format'
       - task: PublishTestResults@2
