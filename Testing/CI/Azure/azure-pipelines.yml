@@ -144,6 +144,7 @@ jobs:
           CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+          CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: /MP
@@ -154,7 +155,7 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_CSHARP:BOOL=ON
+            WRAP_CSHARP:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
