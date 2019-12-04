@@ -1,0 +1,36 @@
+parameters:
+  ARCH: x86_64
+  PYTHON_VERSIONS: "cp34-cp34m cp35-cp35m cp36-cp36m cp37-cp37m cp38-cp38"
+
+jobs:
+  - job: Linux
+    dependsOn: Configure
+    condition: ne( variables['configure.skiplinux'], 'true' )
+    timeoutInMinutes: 300
+    variables:
+      SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+    steps:
+      - template: ./git-download-steps.yml
+      - bash: |
+          cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
+          docker build --pull=true --rm=true -t simpleitk_manylinux_${{ parameters.ARCH }} -f Dockerfile-${{ parameters.ARCH }} .
+        displayName: Build Docker Image
+      - bash: |
+          echo "Building SimpleITK tag \"${SIMPLEITK_GIT_TAG}\"..."
+          cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
+          ./run.sh
+        env:
+          ExternalData_OBJECT_STORES: "$(Build.SourcesDirectory)/.ExternalData/MD5"
+          SIMPLEITK_GIT_TAG: "$(SimpleITKBuildHash)"
+          PYTHON_VERSIONS: ${{ parameters.PYTHON_VERSIONS }}
+          ARCH: ${{ parameters.ARCH }}
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/wheelhouse'
+          contents: '*.whl'
+          targetFolder: $(Build.ArtifactStagingDirectory)/python
+          flattenFolders: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
