@@ -48,7 +48,7 @@
         "VALID"
       ],
       "default" : "itk::simple::FFTConvolutionImageFilter::SAME",
-      "itk_type" : "typename FilterType::OutputRegionModeType"
+      "itk_type" : "typename FilterType::OutputRegionModeEnum"
     }
   ],
   "tests" : [

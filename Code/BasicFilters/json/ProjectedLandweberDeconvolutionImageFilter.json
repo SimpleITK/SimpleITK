@@ -55,7 +55,7 @@
         "VALID"
       ],
       "default" : "itk::simple::ProjectedLandweberDeconvolutionImageFilter::SAME",
-      "itk_type" : "typename FilterType::OutputRegionModeType"
+      "itk_type" : "typename FilterType::OutputRegionModeEnum"
     }
   ],
   "tests" : [

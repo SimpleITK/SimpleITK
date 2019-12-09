@@ -31,7 +31,7 @@
         "Isotropic"
       ],
       "default" : "itk::simple::CoherenceEnhancingDiffusionImageFilter::CED",
-      "itk_type" : "typename FilterType::EnhancementType",
+      "itk_type" : "typename FilterType::EnhancementEnum",
       "briefdescriptionSet" : "Switch between CED, EED, and variants.",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",

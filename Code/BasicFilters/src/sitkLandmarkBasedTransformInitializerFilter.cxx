@@ -181,9 +181,9 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 
   filter->SetLandmarkWeight ( this->m_LandmarkWeight );
 
-  typedef typename FilterType::TransformType::TransformCategoryType TransformCategoryType;
+  typedef typename FilterType::TransformType::TransformCategoryEnum TransformCategoryEnum;
   // BSpline specific setup
-  if( itkTx->GetTransformCategory() == TransformCategoryType::BSpline )
+  if( itkTx->GetTransformCategory() == TransformCategoryEnum::BSpline )
     {
     if ( this->m_ReferenceImage.GetSize() == std::vector<unsigned int>(this->m_ReferenceImage.GetDimension(), 0u) )
       {

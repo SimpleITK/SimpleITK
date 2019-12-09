@@ -46,7 +46,7 @@
         "VALID"
       ],
       "default" : "itk::simple::InverseDeconvolutionImageFilter::SAME",
-      "itk_type" : "typename FilterType::OutputRegionModeType"
+      "itk_type" : "typename FilterType::OutputRegionModeEnum"
     }
   ],
   "tests" : [

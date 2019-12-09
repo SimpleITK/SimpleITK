@@ -156,38 +156,38 @@ TEST(BasicFilters,FastMarching_ENUMCHECK) {
 
 TEST(BasicFilters,InverseDeconvolution_ENUMCHECK) {
   typedef itk::InverseDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::SAME, (int) itk::simple::InverseDeconvolutionImageFilter::SAME );
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::VALID, (int) itk::simple::InverseDeconvolutionImageFilter::VALID );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::InverseDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::InverseDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,TikhonovDeconvolution_ENUMCHECK) {
   typedef itk::TikhonovDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::SAME, (int) itk::simple::TikhonovDeconvolutionImageFilter::SAME );
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::VALID, (int) itk::simple::TikhonovDeconvolutionImageFilter::VALID );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::TikhonovDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::TikhonovDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,WienerDeconvolution_ENUMCHECK) {
   typedef itk::WienerDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::SAME, (int) itk::simple::WienerDeconvolutionImageFilter::SAME );
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::VALID, (int) itk::simple::WienerDeconvolutionImageFilter::VALID );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::WienerDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::WienerDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,LandweberDeconvolution_ENUMCHECK) {
   typedef itk::LandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::SAME, (int) itk::simple::LandweberDeconvolutionImageFilter::SAME );
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::VALID, (int) itk::simple::LandweberDeconvolutionImageFilter::VALID );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::LandweberDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::LandweberDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,ProjectedLandweberDeconvolution_ENUMCHECK) {
   typedef itk::ProjectedLandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::SAME, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::SAME );
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::VALID, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::VALID );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,RichardsonLucyDeconvolution_ENUMCHECK) {
   typedef itk::RichardsonLucyDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::SAME, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME );
-  EXPECT_EQ( (int) ITKType::OutputRegionModeType::VALID, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::VALID );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,LabelMapContourOverlay_ENUMCHECK) {
