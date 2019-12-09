@@ -48,7 +48,7 @@
         "VALID"
       ],
       "default" : "itk::simple::ConvolutionImageFilter::SAME",
-      "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
+      "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeEnum( int( this->m_OutputRegionMode ) ) );"
     }
   ],
   "tests" : [

@@ -84,7 +84,7 @@ ImageReaderBase
   itk::ImageIOBase::Pointer iobase;
   if (this->m_ImageIOName == "")
     {
-    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeType::ReadMode);
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeEnum::ReadMode);
     }
   else
     {

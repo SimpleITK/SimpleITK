@@ -198,7 +198,7 @@ ImageFileWriter
   itk::ImageIOBase::Pointer iobase;
   if (this->m_ImageIOName == "")
     {
-    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeType::WriteMode);
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeEnum::WriteMode);
     }
   else
     {
