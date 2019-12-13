@@ -120,20 +120,22 @@ sub-directory. Installation instructions are available at `a visual
 guide to SimpleITK in
 Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_in_Java>`__.
 
-Nightly binaries
+Latest binaries
 ----------------
 
-The **latest binaries** for the current development version of SimpleITK
-are also generally available. Binary packages are built as part of the
-nightly regression testing system. The download links are available from
-the `CDash dashboard <https://open.cdash.org/index.php?project=SimpleITK>`__
-in the "Nightly Packages" section.
+If the latest SimpleITK bug fixes or features are required then
+pre-release binaries are needed. The pre-release binaries are build
+from the actively developed master branch. The SimpleITK packages are
+available on `Github releases
+<https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__ under
+the "latest" tag. The packages include Python, CSharp and Java. To
+install the latest pre-release Python binary package run:
 
-Each row on the dashboard is a SimpleITK build on a particular system,
-and if the build was successful there will be a **package icon**:
-https://open.cdash.org/img/package.png which links to the packages build
-by the system. A user may directly download the built package from such
-a link.
+
+.. code-block :: bash
+
+ pip install --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
+
 
 
 Recommended Software
