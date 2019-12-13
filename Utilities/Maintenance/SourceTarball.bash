@@ -110,7 +110,8 @@ download_object() {
   algo="$1" ; hash="$2" ; path="$3"
   mkdir -p $(dirname "$path") &&
   if curl "https://simpleitk.github.io/SimpleITKExternalData/$algo/$hash" --output "$path.tmp$$" 1>&2 ||
-     curl "https://www.itk.org/files/ExternalData/$algo/$hash" --output "$path.tmp$$" 1>&2; then
+     curl "https://www.itk.org/files/ExternalData/$algo/$hash" --output "$path.tmp$$" 1>&2 ||
+     curl "https://data.kitware.com/midas3/api/rest?method=midas.bitstream.download&checksum=${hash}&algorithm=${algo}" --output 1>&2; then
     mv "$path.tmp$$" "$path"
   else
     rm -f "$path.tmp$$"

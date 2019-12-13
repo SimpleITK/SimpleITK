@@ -1,0 +1,113 @@
+parameters:
+  PYTHON_ARCH: x64
+  CMAKE_PLATFORM: x64
+  VCVAR_OPTIONS: amd64
+jobs:
+  - job: VS2017
+    dependsOn: Configure
+    condition: ne( variables['configure.skipwindows'], 'true' )
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'vs2017-win2016'
+    variables:
+      coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
+      CTEST_CONFIGURATION_TYPE: Release
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
+      CMAKE_PLATFORM: ${{ parameters.CMAKE_PLATFORM }}
+    steps:
+      - template: ./git-download-steps.yml
+      - script: |
+          cmake --version
+          ctest -D "dashboard_track:STRING=Package" -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V
+        displayName: Build and test
+        workingDirectory: $(Agent.BuildDirectory)
+        continueOnError: true
+        env:
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+          CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CXXFLAGS: /MP
+          CFLAGS: /MP
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            ITK_C_OPTIMIZATION_FLAGS:STRING=
+            ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+      - bash : |
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
+        displayName: Cleanup build
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_java.sh
+        displayName: Build Java
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/java
+          artifactName: Java
+        continueOnError: true
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_csharp.sh
+        displayName: Build CSharp
+        continueOnError: true
+        env:
+          CSHARP_PLATFORM: '${{ parameters.PYTHON_ARCH }}'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/csharp
+          artifactName: CSharp
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.8'
+          architecture: '${{ parameters.PYTHON_ARCH }}'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 38
+        continueOnError: true
+
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.7'
+          architecture: '${{ parameters.PYTHON_ARCH }}'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 37
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.6'
+          architecture: '${{ parameters.PYTHON_ARCH }}'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 36
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.5'
+          architecture: '${{ parameters.PYTHON_ARCH }}'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+        displayName: Build Python 35
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
