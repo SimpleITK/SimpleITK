@@ -68,7 +68,7 @@ Alternatively, the wheels can be manually downloaded from `sourceforge
 
 
 Conda-based distributions (Anaconda, Miniconda)
------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 From the command line prompt, execute:
 
