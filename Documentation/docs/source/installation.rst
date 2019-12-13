@@ -62,8 +62,8 @@ filenames. You can update your version of pip using ``pip install -U pip``.
 Also your Python environment must be compatible with one of
 the pre-compiled binary wheels.
 
-Alternatively, the wheels can be manually downloaded from `sourceforge
-<http://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__ or
+Alternatively, the wheels can be manually downloaded from `GitHub releases
+<https://github.com/SimpleITK/SimpleITK/releases>`__ or
 `PyPI <https://pypi.python.org/pypi/SimpleITK>`__, and then installed with pip.
 
 
@@ -87,44 +87,37 @@ under the dev label:
 C# binary files
 ---------------
 
-**Binaries for select C# platforms** can be found on `SimpleITK's
-SourceForge
-page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__
-under the version directory then the CSharp sub-directory. Installing
-the library should only involve importing the unzipped files into you
-C# environment. The files have the following naming convention:
+**Binaries for select C# platforms** can be found on SimpleITK's
+`GitHub releases
+<https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__
+under the appropriate version. Installing the library should only
+involve importing the unzipped files into you C# environment. The
+files have the following naming convention:
 
 ``SimpleITK-version-CSharp-buildplatform-targetplatform.zip``
 
 eg.
 
-| ``SimpleITK-1.2.0-CSharp-win32-x86.zip``
 | ``SimpleITK-1.2.0-CSharp-win64-x64.zip``
 
 Details about how to set up a C# Visual Studio project with SimpleITK
-can be found in the `Visual Guide to SimpleITK with
-CSharp <https://itk.org/Wiki/SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_with_CSharp>`__.
+can be found in the :ref:`setup SimpleITK with CSharp <setup-csharp>`.
 
-More information about getting started with a sample C# program can be
-found in `A visual guide to building SimpleITK on
-Linux <https://itk.org/Wiki/SimpleITK/GettingStarted/Visual_guide_to_building_on_Linux#A_simple_C.23_program>`__
 
 Java binary files
 -----------------
 
-**Binaries for select Java platforms** can be found on `SimpleITK's
-SourceForge
-page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__
-under the version directory then the CSharp
-sub-directory. Installation instructions are available at `a visual
-guide to SimpleITK in
-Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_in_Java>`__.
+**Binaries for select Java platforms** can be found on SimpleITK's
+`GitHub releases page
+<https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__
+under the appropriate version. Installation instructions are available
+at :ref:`setup SimpleITK with Java <setup-java>`.
 
 Latest binaries
 ----------------
 
 If the latest SimpleITK bug fixes or features are required then
-pre-release binaries are needed. The pre-release binaries are build
+pre-release binaries are needed. The pre-release binaries are built
 from the actively developed master branch. The SimpleITK packages are
 available on `Github releases
 <https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__ under
