@@ -1,3 +1,4 @@
+
 trigger:
    tags:
      include:
@@ -6,6 +7,14 @@ trigger:
      exclude:
        - '*'
 pr: none
+schedules:
+- cron: "0 3 * * *" # 10 pm EST->UTC
+  displayName: Daily build
+  branches:
+    include:
+    - master
+  always: false
+
 variables:
   ExternalDataVersion: 1.2.0
 jobs:
