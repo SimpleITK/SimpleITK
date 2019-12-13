@@ -10,7 +10,6 @@ variables:
 jobs:
   - job: Linux
     timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
     pool:
       name: 'Default'
       demands:
@@ -63,7 +62,6 @@ jobs:
 
   - job: macOS
     timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
     variables:
       imageName: 'macos-10.14'
       xcodeVersion: 10.2
@@ -120,7 +118,6 @@ jobs:
 
   - job: Windows
     timeoutInMinutes: 0
-    cancelTimeoutInMinutes: 300
     pool:
       vmImage: 'vs2017-win2016'
     steps:
