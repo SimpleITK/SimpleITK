@@ -47,6 +47,8 @@ include(sitkPreventInBuildInstalls)
 include(VariableList)
 include(sitkExternalData)
 include( sitkSITKLegacyNaming )
+include(sitkUseCCache)
+include(sitkUseGoldLinker)
 
 
 
