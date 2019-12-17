@@ -1,13 +1,14 @@
-SimpleITK Sphinx Documentation
-==============================
+Welcome to SimpleITK 
+=====================
 
-SimpleITK is a simplified, open source, interface to the National Library
-of Medicine's Insight Segmentation and Registration Toolkit (ITK), a C++
-open source image analysis toolkit which is widely used in academia and
-industry. SimpleITK is available for eight programming languages including
-C++, Python, R, Java, C#, Lua, Ruby, and TCL. Binary distributions of
-SimpleITK are currently available for all three major operating systems
-(Linux, OS X, and Windows).
+SimpleITK is an image-analysis toolkit, providing a simplified programming interface to the algorithms and data structures of the Insight Segmentation and Registration Toolkit. It supports image operations on 2D, 3D and 4D multi-channel images. The toolkit is available in eight programming languages including Python, R, Java, C#, C++, Lua, Ruby, and TCL.
+
+SimpleITK includes several hundred classes providing a broad set of tools required for image analysis. The toolkit provides extensive support for image input and output, supporting more than 20 image file formats. A large number of filtering operations are also available, from basic image analysis operations such as edge detection, binary and grayscale morphological operations, and distance transformations to MRI bias field correction. Additionally, a variety of traditional operators used for image segmentation are available including region growing, connected component labelling, and the watershed transformation. Finally, the toolkit includes a robust registration framework, readily enabling one to align intra and inter modality images, supporting both rigid and non-rigid transformation models.
+
+SimpleITK is widely used by researchers from various domains requiring images analysis capabilities. Amongst others these include analysis of anatomical structures imaged with CT,MR, and PET, and analysis of cellular structures imaged using dual photon microscopy, focused ion beam scanning electron microscopy and focal plane array microscopy. Additionally, the toolkit has been used at a number of academic institutions as a tool for teaching medical image analysis.
+
+Binary distributions of SimpleITK are currently available for all three major operating systems
+(Linux, OS X, and Windows). The code is copyrighted by the Insight Software Consortium and is distributed under the Apache 2.0 License. 
 
 .. toctree::
    :maxdepth: 1
@@ -30,10 +31,11 @@ SimpleITK are currently available for all three major operating systems
 Relevant Resources
 ------------------
 
-* `Doxygen API Documentation <https://itk.org/SimpleITKDoxygen/html/>`_
-* `Jupyter Notebooks in Python and R <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
-* `ITK Forum for Discussions and Questions <https://discourse.itk.org/>`_
-
+* `Doxygen API documentation <https://itk.org/SimpleITKDoxygen/html/>`_.
+* :ref:`Concise examples <lbl_examples>`.
+* Long examples and image analysis workflows using `Jupyter Notebooks in Python and R <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_.
+* `ITK forum <https://discourse.itk.org/>`_ for discussions and questions.
+* `Issue tracker <https://github.com/SimpleITK/SimpleITK/issues>`_ for reporting bugs and feature requests.  
 
 How to Cite
 -----------
@@ -43,7 +45,7 @@ the relevant publication(s):
 
 R. Beare, B. C. Lowekamp, Z. Yaniv, "Image Segmentation, Registration and Characterization in R with SimpleITK", *J Stat Softw*, 86(8), https://doi.org/10.18637/jss.v086.i08, 2018.
 
-Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis Notebooks: a Collaborative Environment for Education and Reproducible Research", *J Digit Imaging.*, https://doi.org/10.1007/s10278-017-0037-8, 31(3): 290-303, 2018 (freely read `here <http://em.rdcu.be/wf/click?upn=KP7O1RED-2BlD0F9LDqGVeSIWDx8-2B-2B8r81HkSA5fUW53U-3D_kZYp45lAKoeuSXKlMMKnLRu-2FO1jcvtAwo2UFz30PH9bPLAejS1IjjDkfGx8EIWfnvmrgAH2RF3xvrb1fezqultdVNEEAM7Fc2RGY-2BOVhjR-2BAN-2B7Wi6qUoM6BYtn1ZWsTzFdNZQxBXXJ2Nf0BaU5NhQLQVs2hoM2TXsKZ7pnKQXZVJEAOyLbQSvZkJOvdc7Gk36rdNDa3pn5vH17-2FvszYj4mKlZlgROxTE-2Be2yQ-2FOLAYsoDHZNvVuG4vJr4xNpQnmAI16Nz8h3GJi-2F9GKnpBsAg-3D-3D.>`_).
+Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis Notebooks: a Collaborative Environment for Education and Reproducible Research", *J Digit Imaging.*, https://doi.org/10.1007/s10278-017-0037-8, 31(3): 290-303, 2018.
 
 B. C. Lowekamp, D. T. Chen, L. Ibáñez, D. Blezek, "The Design of SimpleITK", *Front. Neuroinform.*, 7:45. https://doi.org/10.3389/fninf.2013.00045, 2013.
 
