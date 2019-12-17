@@ -31,6 +31,10 @@ function(_sitk_gtest_use_gtest_source)
   set(CMAKE_CXX_VISIBILITY_PRESET)
   set(CMAKE_VISIBILITY_INLINES_HIDDEN)
 
+  set(CMAKE_CXX_STANDARD 11)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
   set(BUILD_GTEST                 ON )
   set(BUILD_GMOCK                 OFF)
 
@@ -69,6 +73,9 @@ if( DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
     set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
 
     _sitk_gtest_use_gtest_source()
+
+    target_compile_features(${GTEST_LIBRARIES} PUBLIC cxx_std_11)
+    target_compile_features(${GTEST_MAIN_LIBRARIES} PUBLIC cxx_std_11)
 
     add_library(GTest::GTest ALIAS ${GTEST_LIBRARIES})
     add_library(GTest::Main ALIAS ${GTEST_MAIN_LIBRARIES})
