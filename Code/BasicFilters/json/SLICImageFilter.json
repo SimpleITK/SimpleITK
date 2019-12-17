@@ -75,7 +75,7 @@
       "inputs" : [
         "Input/VM1111Shrink-RGB.png"
       ],
-      "md5hash" : "685aeafe583dd0b8a0471be4c005df02",
+      "tolerance" : 0.05,
       "measurements_results" : [
         {
           "name" : "AverageResidual",
