@@ -89,7 +89,7 @@ C# binary files
 
 **Binaries for select C# platforms** can be found on SimpleITK's
 `GitHub releases
-<https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__
+<https://github.com/SimpleITK/SimpleITK/releases>`__
 under the appropriate version. Installing the library should only
 involve importing the unzipped files into you C# environment. The
 files have the following naming convention:
@@ -109,7 +109,7 @@ Java binary files
 
 **Binaries for select Java platforms** can be found on SimpleITK's
 `GitHub releases page
-<https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__
+<https://github.com/SimpleITK/SimpleITK/releases>`__
 under the appropriate version. Installation instructions are available
 at :ref:`setup SimpleITK with Java <setup-java>`.
 
