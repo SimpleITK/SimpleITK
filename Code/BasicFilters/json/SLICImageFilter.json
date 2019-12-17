@@ -80,7 +80,7 @@
         {
           "name" : "AverageResidual",
           "value" : "0.10256",
-          "tolerance" : 0.0001
+          "tolerance" : 0.0005
         }
       ]
     },
