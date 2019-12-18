@@ -15,7 +15,7 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifdef _MFC_VER
+#ifdef _MSC_VER
 #pragma warning(disable:4996)
 #endif
 
