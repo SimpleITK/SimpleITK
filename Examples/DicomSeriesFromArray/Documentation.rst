@@ -21,12 +21,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: DicomSeriesFromArray.py
+    .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.py
        :language: python
        :lines: 19-
 
   .. tab:: R
 
-    .. literalinclude:: DicomSeriesFromArray.R
+    .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.R
        :language: R
        :lines: 18-

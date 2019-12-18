@@ -39,7 +39,7 @@ Matrices as Parameters
 Matrices are represented as a single dimensional vector with the entries in row major order. The vector :math:`[1, 2, 3, 4, 5, 6]` represents the matrix
 
 .. math::
-	
+
 	\begin{bmatrix} 1 & 2 & 3 \\
 		4 & 5 & 6
 	\end{bmatrix}

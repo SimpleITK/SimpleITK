@@ -12,61 +12,61 @@ Code
 Python
 ......
 
-.. literalinclude:: BoarderSegmentation.py
+.. literalinclude:: ../../Examples/Python/BoarderSegmentation.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: CannyEdge.py
+.. literalinclude:: ../../Examples/Python/CannyEdge.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: ConnectedThresholdImageFilter.py
+.. literalinclude:: ../../Examples/Python/ConnectedThresholdImageFilter.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: DicomModifyTags.py
+.. literalinclude:: ../../Examples/Python/DicomModifyTags.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: DicomSeriesReader2.py
+.. literalinclude:: ../../Examples/Python/DicomSeriesReader2.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: ExtractSlice.py
+.. literalinclude:: ../../Examples/Python/ExtractSlice.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: FFTConvolution.py
+.. literalinclude:: ../../Examples/Python/FFTConvolution.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: GeodesicActiceContourSegmentation.py
+.. literalinclude:: ../../Examples/Python/GeodesicActiceContourSegmentation.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: ImageCreateAndSet.py
+.. literalinclude:: ../../Examples/Python/ImageCreateAndSet.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: NeighborhoodConnectedImageFilter.py
+.. literalinclude:: ../../Examples/Python/NeighborhoodConnectedImageFilter.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: ReadAndShow.py
+.. literalinclude:: ../../Examples/Python/ReadAndShow.py
    :language: python
    :lines: 1,19-
 
 
-.. literalinclude:: SimpleGaussianProcedural.py
+.. literalinclude:: ../../Examples/Python/SimpleGaussianProcedural.py
    :language: python
    :lines: 1,19-

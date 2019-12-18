@@ -13,12 +13,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: ImageRegistrationMethodExhaustive.py
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.py
        :language: python
        :lines: 1,19-
 
   .. tab:: R
 
-    .. literalinclude:: ImageRegistrationMethodExhaustive.R
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.R
        :language: R
        :lines: 18-
