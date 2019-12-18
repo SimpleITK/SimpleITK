@@ -1,8 +1,6 @@
 Setting Up Eclipse and Visual Studio
 ************************************
 
-.. _setup-java:
-
 Java
 ====
 
@@ -97,9 +95,6 @@ SimpleITK Java Conventions
 --------------------------
 The SimpleITK Java bindings closely follow the C++ conventions, i.e. each class contains the public member functions. However, the functional interface is handled differently in Java. In particular, every static Java function must belong to a class, unlike C++. In SimpleITK, the functional interface is contained in a class called *org.itk.simple.SimpleITK*. This class contains the functional interfaces as static member functions, i.e. *org.itk.simple.SimpleITK.readImage* as shown in `GaussianExample`_. The naming conventions for all SimpleITK classes follows the C++ conventions, but member functions and the function interface follow the Java conventions of using *CamelCase* with the first letter lowercase. In Java, the C++ function *itk::simple::ReadImage* becomes *org.itk.simple.SimpleITK.readImage*.
 
-
-.. _setup-csharp:
-
 C#
 ==
 
@@ -164,7 +159,7 @@ Add Native Library
 
 Building an Example
 -------------------
-Now that we have configured the project, let up copy a basic SimpleITK example to compile and run. The :doc:`SimpleGaussian in C# <../../../Examples/SimpleGaussian/Documentation>` is a simple one to test our configuration. This can just be copied and pasted into the code editor.
+Now that we have configured the project, let up copy a basic SimpleITK example to compile and run. The :doc:`SimpleGaussian in C# <link_SimpleGaussian_docs>` is a simple one to test our configuration. This can just be copied and pasted into the code editor.
 
 Then click *Build -> Build Solution*. Assuming you have followed all of the steps thus far, you should have an executable you can run from the command line or from Visual Studio by adding command line arguments in *Project -> ConsoleApp1 Properties... -> Debug*.
 

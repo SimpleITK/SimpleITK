@@ -41,12 +41,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: ImageViewing.py
+    .. literalinclude:: ../../Examples/ImageViewing/ImageViewing.py
        :language: python
        :lines: 19-
 
   .. tab:: R
 
-    .. literalinclude:: ImageViewing.R
+    .. literalinclude:: ../../Examples/ImageViewing/ImageViewing.R
        :language: R
        :lines: 18-

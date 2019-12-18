@@ -1,5 +1,8 @@
+Developer 
+*********
+
 Image Filter Templates ReadMe
-*****************************
+=============================
 
 This document outlines the system used to generate SimpleITK files using
 json data files in conjunction with the template .h and .cxx files.

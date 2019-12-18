@@ -44,12 +44,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: N4BiasFieldCorrection.py
+    .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.py
        :language: python
        :lines: 1,19-
 
   .. tab:: R
 
-    .. literalinclude:: N4BiasFieldCorrection.R
+    .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.R
        :language: R
        :lines: 18-
