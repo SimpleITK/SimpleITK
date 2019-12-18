@@ -73,5 +73,5 @@ TransformCompare::Compare(const itk::simple::Transform & transform,
               << std::endl;
   }
 
-  return rms;
+  return float(rms);
 }
