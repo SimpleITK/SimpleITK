@@ -123,6 +123,7 @@ jobs:
       demands:
       - Agent.OS -equals Linux
     strategy:
+      maxParallel: 3
       matrix:
        default: {}
        ITK-master:
