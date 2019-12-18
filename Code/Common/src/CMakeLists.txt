@@ -41,11 +41,6 @@ target_include_directories ( SimpleITKCommon
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Common/include>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/Common/include>
     $<INSTALL_INTERFACE:${SimpleITK_INSTALL_INCLUDE_DIR}> )
-if(NOT SITK_HAS_STDINT_H AND MSVC)
-  target_include_directories ( SimpleITKCommon
-    PUBLIC
-      $<BUILD_INTERFACE:${SimpleITK_SOURCE_DIR}/Utilities/C99> )
-endif()
 target_compile_options( SimpleITKCommon
   PUBLIC
     ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
