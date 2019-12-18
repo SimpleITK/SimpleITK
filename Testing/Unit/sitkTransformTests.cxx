@@ -144,8 +144,12 @@ TEST(TransformTest, Copy) {
   tx1 = sitk::Transform();
   tx2 = tx1;
 
+
+  sitkClangDiagnosticPush();
+  sitkClangWarningIgnore("-Wself-assign-overloaded");
   // check self assignment
   tx3 = tx3;
+  sitkClangDiagnosticPop();
 
 }
 

@@ -82,9 +82,12 @@ TEST_F(sitkExceptionsTest, Test3) {
   e0 = e1;
   e0 = empty;
 
+
+  sitkClangDiagnosticPush();
+  sitkClangWarningIgnore("-Wself-assign-overloaded");
   // test self assignment too
   e0 = e0;
-
+  sitkClangDiagnosticPop();
 
   EXPECT_TRUE( e1 == e1 );
   EXPECT_TRUE( empty == empty );
