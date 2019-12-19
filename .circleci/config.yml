@@ -42,6 +42,7 @@ referenced:
       keys:
         - ccache-{{ arch }}-{{ .Branch }}
         - ccache-{{ arch }}-master
+        - ccache-{{ arch }}
   clone-dashboard-step: &clone-dashboard-step
      run:
        name: Cloning dashboard branch
