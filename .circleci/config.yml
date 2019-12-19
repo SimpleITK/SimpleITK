@@ -59,7 +59,6 @@ referenced:
        name: Formatting CTest for JUnit
        when: always
        command: |
-         env
          mkdir -p /tmp/test-results
          ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > /tmp/test-results/JUnit-${CIRCLE_NODE_INDEX}.xml
   junit-store-test-results: &junit-store-test-results
