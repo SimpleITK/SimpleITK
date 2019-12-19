@@ -31,10 +31,6 @@ function(_sitk_gtest_use_gtest_source)
   set(CMAKE_CXX_VISIBILITY_PRESET)
   set(CMAKE_VISIBILITY_INLINES_HIDDEN)
 
-  set(CMAKE_CXX_STANDARD 11)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-
   set(BUILD_GTEST                 ON )
   set(BUILD_GMOCK                 OFF)
 
