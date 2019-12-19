@@ -29,4 +29,4 @@ ExternalProject_Add(${proj}
 
 sitkSourceDownloadDependency(${proj})
 
-set(GTEST_ROOT ${GTEST_source_dir}/googletest)
+set(GTEST_ROOT ${GTEST_source_dir})
