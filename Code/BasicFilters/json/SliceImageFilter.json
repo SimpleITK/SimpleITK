@@ -5,7 +5,6 @@
   "number_of_inputs" : 1,
   "pixel_types" : "NonLabelPixelIDTypeList",
   "custom_register" : "#ifdef SITK_4D_IMAGES\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();\n  #endif\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
-
   "members" : [
     {
       "name" : "Start",
