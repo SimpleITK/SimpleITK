@@ -277,6 +277,32 @@ jobs:
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Java" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-fotmatting
       - *junit-store-test-results
+  sphinx-docs:
+    <<: *defaults
+    environment:
+      <<: *default_environment_keys
+      SPHINX_SOURCE_DIR: /home/circleci/SimpleITK/docs/source
+      SPHINX_BUILD_DIR: /tmp/docs
+      SPHINX_OPTS: -aE
+    steps:
+      - checkout:
+          path : ~/SimpleITK
+      - run:
+          name: Create Python Environment
+          command: |
+              python -m pip install --user --upgrade pip
+              python -m pip install --user "sphinx<2" "sphinx-rtd-theme<0.5"
+              python -m pip install --user --requirement /home/circleci/SimpleITK/docs/requirements.txt
+              cat /home/circleci/SimpleITK/docs/source/conf.py
+      - run:
+          name: Sphinx Build
+          command: |
+              sphinx-build -M html "${SPHINX_SOURCE_DIR}" "${SPHINX_BUILD_DIR}" "${SPHINX_OPTS}"
+      - store_artifacts:
+          path: /tmp/docs
+          destination: sphinx-docs
+
+
   docs:
     <<: *defaults
     environment:
@@ -318,6 +344,7 @@ workflows:
   version: 2
   build_and_test:
     jobs:
+      - sphinx-docs
       - build-and-test:
           filters:
             branches:
@@ -337,7 +364,6 @@ workflows:
       - java-and-test:
           requires:
             - build-and-test
-
   nightly:
     triggers:
       - schedule:
