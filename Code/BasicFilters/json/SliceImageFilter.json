@@ -5,7 +5,6 @@
   "number_of_inputs" : 1,
   "pixel_types" : "NonLabelPixelIDTypeList",
   "custom_register" : "#ifdef SITK_4D_IMAGES\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();\n  #endif\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
-
   "members" : [
     {
       "name" : "Start",
@@ -53,7 +52,8 @@
       ]
     }
   ],
-  "itk_module" : "ITKCommon",
+  "itk_module" : "ITKImageGrid",
   "detaileddescription" : "This class is designed to facilitate the implementation of extended sliced based indexing into images.\n\nThe input and output image must be of the same dimension.\n\nThe input parameters are a starting and stopping index as well as a stepping size. The starting index indicates the first pixels to be used and for each dimension the index is incremented by the step until the index is equal to or \"beyond\" the stopping index. If the step is negative then the image will be reversed in the dimension, and the stopping index is expected to be less then the starting index. If the stopping index is already beyond the starting index then an image of size zero will be returned.\n\nThe output image's starting index is always zero. The origin is the physical location of the starting index. The output directions cosine matrix is that of the input but with sign changes matching that of the step's sign.\n\n\\note In certain combinations such as with start=1, and step>1 while the physical location of the center of the pixel remains the same, the extent (edge to edge space) of the output image will be beyond the extent of the original image.",
-  "briefdescription" : "Slices an image based on a starting index and a stopping index, and a step size."
+  "briefdescription" : "Slices an image based on a starting index and a stopping index, and a step size.",
+  "itk_group" : "ImageGrid"
 }

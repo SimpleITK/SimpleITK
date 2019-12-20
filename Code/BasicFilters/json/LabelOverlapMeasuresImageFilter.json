@@ -18,16 +18,16 @@
     },
     {
       "name" : "FalseNegativeError",
-        "type" : "double",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "type" : "double",
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the false negative error over all labels."
     },
     {
@@ -40,15 +40,15 @@
     {
       "name" : "FalsePositiveError",
       "type" : "double",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the false positive error over all labels."
     },
     {
@@ -63,15 +63,15 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) over all labels."
     },
     {
@@ -86,15 +86,15 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the union overlap (Jaccard coefficient) over all labels."
     },
     {
@@ -109,15 +109,15 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the volume similarity over all labels."
     },
     {
@@ -132,15 +132,15 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the union overlap (Jaccard coefficient) over all labels."
     },
     {
@@ -155,15 +155,15 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-        "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "parameters" :[
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
         {
           "name" : "label",
           "type" : "int64_t"
         }
-        ],
+      ],
       "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) over all labels."
     }
   ],
@@ -305,7 +305,7 @@
         {
           "name" : "DiceCoefficient",
           "value" : 0.8842423479027586,
-            "tolerance" : 1e-05,
+          "tolerance" : 1e-05,
           "parameters" : [
             "1"
           ]

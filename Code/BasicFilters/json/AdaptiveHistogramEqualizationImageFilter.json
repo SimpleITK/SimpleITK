@@ -50,9 +50,9 @@
       "settings" : [
         {
           "parameter" : "Alpha",
-            "value" : 0.0,
-            "java_value" : "0.0f",
-            "csharp_value" : "0.0f"
+          "value" : 0.0,
+          "java_value" : "0.0f",
+          "csharp_value" : "0.0f"
         },
         {
           "parameter" : "Beta",
