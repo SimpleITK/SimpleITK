@@ -122,12 +122,12 @@ from the actively developed master branch. The SimpleITK packages are
 available on `Github releases
 <https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__ under
 the "latest" tag. The packages include Python, CSharp and Java. To
-install the latest pre-release Python binary package run:
+upgrade to the latest pre-release Python binary package run:
 
 
 .. code-block :: bash
 
- pip install --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
+ pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
 
 
 
