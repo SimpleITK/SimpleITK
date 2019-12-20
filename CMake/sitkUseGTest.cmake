@@ -31,8 +31,8 @@ function(_sitk_gtest_use_gtest_source)
   set(CMAKE_CXX_VISIBILITY_PRESET)
   set(CMAKE_VISIBILITY_INLINES_HIDDEN)
 
-  set(BUILD_GTEST                 ON )
-  set(BUILD_GMOCK                 OFF)
+  set(BUILD_GTEST ON CACHE INTERNAL "" FORCE )
+  set(BUILD_GMOCK OFF CACHE INTERNAL "" FORCE )
 
 
   # google test does not properly use pthreads on mingw
