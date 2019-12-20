@@ -3,7 +3,7 @@
 Image Registration Method BSpline 3
 ===================================
 
-.. include:: ../../Documentation/docs/source/registrationExamplePrefix.rst
+.. include:: registrationExamplePrefix.rst
 
 Overview
 --------
@@ -49,12 +49,12 @@ Code
 
   .. tab:: C++
 
-    .. literalinclude:: ImageRegistrationMethodBSpline3.cxx
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.cxx
        :language: c++
        :lines: 18-
 
   .. tab:: Python
 
-    .. literalinclude:: ImageRegistrationMethodBSpline3.py
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.py
        :language: python
        :lines: 1,19-

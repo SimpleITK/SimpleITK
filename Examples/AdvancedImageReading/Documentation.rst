@@ -28,12 +28,12 @@ always in a sub region of the image. If the specific image IO used for this oper
 supports streaming then this will indeed only read the sub-region, otherwise the whole
 image is read into memory and the sub-region is returned. The IOs that support
 streaming are:
-  1. TIFFImageIO (supports a subset of encodings)
-  2. MetaImageIO
-  3. NrrdImageIO
-  4. HDF5ImageIO (supports a subset of encodings)
-  5. MRCImageIO
-  6. VTKImageIO (supports a subset of encodings)
+1. TIFFImageIO (supports a subset of encodings)
+2. MetaImageIO
+3. NrrdImageIO
+4. HDF5ImageIO (supports a subset of encodings)
+5. MRCImageIO
+6. VTKImageIO (supports a subset of encodings)
 
 
 
@@ -44,12 +44,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: AdvancedImageReading.py
+    .. literalinclude:: ../../Examples/AdvancedImageReading/AdvancedImageReading.py
        :language: python
        :lines: 19-
 
   .. tab:: R
 
-    .. literalinclude:: AdvancedImageReading.R
+    .. literalinclude:: ../../Examples/AdvancedImageReading/AdvancedImageReading.R
        :language: R
        :lines: 22-

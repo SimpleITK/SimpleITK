@@ -23,12 +23,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: DicomImagePrintTags.py
+    .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.py
        :language: python
        :lines: 1,19-
 
   .. tab:: R
 
-    .. literalinclude:: DicomImagePrintTags.R
+    .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.R
        :language: r
        :lines: 18-

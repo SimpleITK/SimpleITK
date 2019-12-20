@@ -23,48 +23,48 @@ Code
 
   .. tab:: C#
 
-    .. literalinclude:: SimpleGaussian.cs
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.cs
        :language: c#
        :lines: 18-
 
   .. tab:: C++
 
-    .. literalinclude:: SimpleGaussian.cxx
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.cxx
        :language: c++
        :lines: 18-
 
   .. tab:: Java
 
-    .. literalinclude:: SimpleGaussian.java
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.java
        :language: java
        :lines: 18-
 
   .. tab:: Lua
 
-    .. literalinclude:: SimpleGaussian.lua
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.lua
        :language: lua
        :lines:  18-
 
   .. tab:: Python
 
-    .. literalinclude:: SimpleGaussian.py
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.py
        :language: python
        :lines: 1,19-
 
   .. tab:: R
 
-    .. literalinclude:: SimpleGaussian.R
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.R
        :language: r
        :lines:  18-
 
   .. tab:: Ruby
 
-    .. literalinclude:: SimpleGaussian.rb
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.rb
        :language: ruby
        :lines:  18-
 
   .. tab:: Tcl
 
-    .. literalinclude:: SimpleGaussian.tcl
+    .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.tcl
        :language: tcl
        :lines: 18-

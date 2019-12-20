@@ -28,12 +28,12 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: ImageIOSelection.py
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.py
        :language: python
        :lines: 19-
 
   .. tab:: R
 
-    .. literalinclude:: ImageIOSelection.R
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.R
        :language: R
        :lines: 22-

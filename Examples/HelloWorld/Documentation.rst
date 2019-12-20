@@ -16,48 +16,48 @@ Code
 .. tabs::
   .. tab:: C#
 
-    .. literalinclude:: HelloWorld.cs
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.cs
        :language: c#
        :lines: 18-
 
   .. tab:: C++
 
-    .. literalinclude:: HelloWorld.cxx
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.cxx
        :language: c++
        :lines: 18-
 
   .. tab:: Java
 
-    .. literalinclude:: HelloWorld.java
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.java
        :language: java
        :lines: 18-
 
   .. tab:: Lua
 
-    .. literalinclude:: HelloWorld.lua
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.lua
        :language: lua
        :lines:  18-
 
   .. tab:: Python
 
-    .. literalinclude:: HelloWorld.py
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.py
        :language: python
        :lines: 1,19-
 
   .. tab:: R
 
-    .. literalinclude:: HelloWorld.R
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.R
        :language: r
        :lines:  19-
 
   .. tab:: Ruby
 
-    .. literalinclude:: HelloWorld.rb
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.rb
        :language: ruby
        :lines:  18-
 
   .. tab:: Tcl
 
-    .. literalinclude:: HelloWorld.tcl
+    .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.tcl
        :language: tcl
        :lines: 18-
