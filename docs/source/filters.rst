@@ -137,7 +137,7 @@ SimpleITK Filters
    * - `CropImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1CropImageFilter.html>`_
      - Decrease the image size by cropping the image by an itk::Size at both the upper and lower bounds of the largest possible region.
    * - `CurvatureAnisotropicDiffusionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1CurvatureAnisotropicDiffusionImageFilter.html>`_
-     - 
+     -
    * - `CurvatureFlowImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1CurvatureFlowImageFilter.html>`_
      - Denoise an image using curvature driven flow.
    * - `CyclicShiftImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1CyclicShiftImageFilter.html>`_
@@ -209,7 +209,7 @@ SimpleITK Filters
    * - `GeodesicActiveContourLevelSetImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1GeodesicActiveContourLevelSetImageFilter.html>`_
      - Segments structures in images based on a user supplied edge potential map.
    * - `GradientAnisotropicDiffusionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1GradientAnisotropicDiffusionImageFilter.html>`_
-     - 
+     -
    * - `GradientImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1GradientImageFilter.html>`_
      - Computes the gradient of an image using directional derivatives.
    * - `GradientMagnitudeImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1GradientMagnitudeImageFilter.html>`_
@@ -327,7 +327,7 @@ SimpleITK Filters
    * - `LandweberDeconvolutionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1LandweberDeconvolutionImageFilter.html>`_
      - Deconvolve an image using the Landweber deconvolution algorithm.
    * - `LaplacianImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1LaplacianImageFilter.html>`_
-     - 
+     -
    * - `LaplacianRecursiveGaussianImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1LaplacianRecursiveGaussianImageFilter.html>`_
      - Computes the Laplacian of Gaussian (LoG) of an image.
    * - `LaplacianSegmentationLevelSetImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1LaplacianSegmentationLevelSetImageFilter.html>`_
@@ -495,7 +495,7 @@ SimpleITK Filters
    * - `SigmoidImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1SigmoidImageFilter.html>`_
      - Computes the sigmoid function pixel-wise.
    * - `SignedDanielssonDistanceMapImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1SignedDanielssonDistanceMapImageFilter.html>`_
-     - 
+     -
    * - `SignedMaurerDistanceMapImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1SignedMaurerDistanceMapImageFilter.html>`_
      - This filter calculates the Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
    * - `SimilarityIndexImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1SimilarityIndexImageFilter.html>`_

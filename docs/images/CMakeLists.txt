@@ -3,7 +3,7 @@ cmake_minimum_required ( VERSION 3.0 FATAL_ERROR )
 project( SimpleITKSphinx-Data LANGUAGES NONE )
 
 if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
-  set( SimpleITK_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../.." )
+  set( SimpleITK_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../.." )
   list(INSERT CMAKE_MODULE_PATH 0 "${SimpleITK_SOURCE_DIR}/CMake")
 endif()
 

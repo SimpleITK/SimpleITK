@@ -11,7 +11,7 @@ Support for a particular format is handled by a specific ITK
 `ImageIO <https://itk.org/Doxygen/html/classitk_1_1ImageIOBase.html>`_ class.
 By default, the ImageIO is automatically determined for a particular file.
 Advanced SimpleITK installations can configure or extend which file formats
-are supported by SimpleITK. A list of registered ImageIO's can be found using the 
+are supported by SimpleITK. A list of registered ImageIO's can be found using the
 ``GetRegisteredImageIOs()`` method, but is posted here:
 
     - `BMPImageIO <https://itk.org/Doxygen/html/classitk_1_1BMPImageIO.html>`_ ( \*.bmp, \*.BMP )
@@ -38,7 +38,7 @@ are supported by SimpleITK. A list of registered ImageIO's can be found using th
 Example read and write:
 
 .. code-block :: python
-        
+
         import SimpleITK as sitk
 
         reader = sitk.ImageFileReader()
