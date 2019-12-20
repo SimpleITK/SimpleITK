@@ -46,18 +46,18 @@ Code
 
   .. tab:: C#
 
-    .. literalinclude:: FastMarchingSegmentation.cs
+    .. literalinclude:: ../../Examples/FastMarchingSegmentation/FastMarchingSegmentation.cs
        :language: c#
        :lines: 18-
 
   .. tab:: C++
 
-    .. literalinclude:: FastMarchingSegmentation.cxx
+    .. literalinclude:: ../../Examples/FastMarchingSegmentation/FastMarchingSegmentation.cxx
        :language: C++
        :lines: 1,19-
 
   .. tab:: Python
 
-    .. literalinclude:: FastMarchingSegmentation.py
+    .. literalinclude:: ../../Examples/FastMarchingSegmentation/FastMarchingSegmentation.py
        :language: python
        :lines: 1,19-

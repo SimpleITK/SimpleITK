@@ -30,18 +30,18 @@ Code
 
   .. tab:: C++
 
-    .. literalinclude:: DemonsRegistration2.cxx
+    .. literalinclude:: ../../Examples/DemonsRegistration2/DemonsRegistration2.cxx
        :language: c++
        :lines: 18-
 
   .. tab:: Python
 
-    .. literalinclude:: DemonsRegistration2.py
+    .. literalinclude:: ../../Examples/DemonsRegistration2/DemonsRegistration2.py
        :language: python
        :lines: 1,19-
 
   .. tab:: R
 
-    .. literalinclude:: DemonsRegistration2.R
+    .. literalinclude:: ../../Examples/DemonsRegistration2/DemonsRegistration2.R
        :language: R
        :lines: 18-

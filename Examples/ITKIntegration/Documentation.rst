@@ -13,6 +13,6 @@ Code
 
   .. tab:: C++
 
-    .. literalinclude:: ITKIntegration.cxx
+    .. literalinclude:: ../../Examples/ITKIntegration/ITKIntegration.cxx
        :language: c++
        :lines: 18-
