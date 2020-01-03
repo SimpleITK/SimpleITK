@@ -494,6 +494,17 @@ ExternalProject_Add_Step(${proj} doc
 ExternalProject_Add_StepTargets(${proj} configure build test forcebuild doc)
 
 
+
+# Load the SimpleITK version variables, scope isolated in a function.
+function(_set_simpleitk_install_path outVar)
+  include(../Version.cmake)
+  ExternalProject_Get_Property(${proj} install_dir)
+  set(${outVar}
+     "${install_dir}/lib/cmake/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}"
+     PARENT_SCOPE)
+endfunction()
+_set_simpleitk_install_path(SIMPLEITK_DIR)
+
 #------------------------------------------------------------------------------
 # SimpleITKExamples
 #------------------------------------------------------------------------------
