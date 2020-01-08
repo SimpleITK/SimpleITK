@@ -69,14 +69,14 @@ target_compile_options( SimpleITKUnitTestDriver0
 # Glob for necessary template files up front, before the foreach loop over
 # the filters:
 #
-file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
-file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
-file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
-file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
-file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
-file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
-file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
-file ( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
+file ( GLOB CXX_TEMPLATE_FILES "sitk*Template.cxx.in" )
+file ( GLOB LUA_TEMPLATE_FILES "Lua*Template.lua.in" )
+file ( GLOB PYTHON_TEMPLATE_FILES "Python*Template.py.in" )
+file ( GLOB TCL_TEMPLATE_FILES "Tcl*Template.tcl.in" )
+file ( GLOB R_TEMPLATE_FILES "R*Template.R.in" )
+file ( GLOB RUBY_TEMPLATE_FILES "Ruby*Template.rb.in" )
+file ( GLOB JAVA_TEMPLATE_FILES "Java*Template.java.in" )
+file ( GLOB CSHARP_TEMPLATE_FILES "CSharp*Template.cs.in" )
 
 
 #
