@@ -461,6 +461,8 @@ TEST_F(Image, CopyInformation)
   EXPECT_EQ( img1.GetNumberOfPixels(), img2.GetNumberOfPixels() );
 }
 
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wself-assign-overloaded");
 TEST_F(Image, CopyOnWrite)
 {
   // test that a just constructed image only have 1 referecne
@@ -634,6 +636,7 @@ TEST_F(Image,Operators)
   v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( 0, v ) << "value check 8";
 }
+sitkClangDiagnosticPop();
 
 TEST_F(Image,SetPixel)
 {
