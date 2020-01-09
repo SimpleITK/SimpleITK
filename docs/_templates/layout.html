@@ -1,0 +1,7 @@
+{% extends "!layout.html" %}
+
+{% block extrabody %}
+This is where your header would go - there is an issue with the div "wy-grid-for-nav" overlapping.
+To prevent this I tried creating a div and adding clear:both, but this doesn't seem to work :-/
+{{ super() }}
+{% endblock %}
