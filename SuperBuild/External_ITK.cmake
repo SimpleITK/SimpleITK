@@ -52,8 +52,8 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/I
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-# post v5.1rco1
-set(_DEFAULT_ITK_GIT_TAG "764737d09eb107dc328e7d7bdc982c9f56e6c1f6")
+# post v5.1rc01
+set(_DEFAULT_ITK_GIT_TAG "e8aba69589860916dd4ca165145ca7471c749227")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
