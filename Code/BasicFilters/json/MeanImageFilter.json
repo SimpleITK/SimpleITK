@@ -4,8 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "BasicPixelIDTypeList",
-  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [
     {
       "name" : "Radius",
