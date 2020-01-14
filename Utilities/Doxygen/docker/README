@@ -1,0 +1,18 @@
+This dockerfile has been created to facilitate the creation of SimpleITK html
+doxygen documentation.
+
+Run the following commands:
+
+#docker build --build-arg TAG=v1.1.0 . -f Dockerfile -t simpleitk-doxygen
+docker build -f Dockerfile -t simpleitk-doxygen .
+
+  export TAG=v1.2.0
+  docker run --env TAG --name sitk-dox simpleitk-doxygen
+-or-
+  docker run \
+    --env TAG \
+    --mount type=bind,source=/home/blowekamp/src/SimpleITK,destination=/work/SimpleITK,readonly \
+    --name sitk-dox simpleitk-doxygen
+
+docker cp sitk-dox:/SimpleITKDoxygen.tar.gz SimpleITKDoxygen${TAG:+-${TAG}}.tar.gz
+docker rm sitk-dox
