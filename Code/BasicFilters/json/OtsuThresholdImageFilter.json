@@ -70,7 +70,7 @@
     {
       "name" : "ReturnBinMidpoint",
       "type" : "bool",
-      "default" : "true"
+      "default" : "false"
     }
   ],
   "measurements" : [
