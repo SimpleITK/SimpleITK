@@ -36,10 +36,12 @@
 #include "sitkResampleImageFilter.h"
 #include "sitkHashImageFilter.h"
 
+#include "sitkInvertDisplacementFieldImageFilter.h"
 #include "sitkBSplineTransformInitializerFilter.h"
 
 
 #include "itkMath.h"
+#include "itkVectorImage.h"
 
 namespace sitk = itk::simple;
 namespace nsstd = itk::simple::nsstd;
@@ -1117,6 +1119,33 @@ TEST(TransformTest,DisplacementFieldTransform_Points)
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.5) ), v2(0.5,0.5), 1e-15 );
 
 }
+
+TEST(BasicFilters, DisplacementField_GetDisplacementField)
+  {
+    // A test case where a double free was occurring, due to change in
+    // the pixel containers ownership.
+    namespace sitk = itk::simple;
+
+    sitk::Image sourceImage( std::vector<unsigned int>(2, 64), sitk::sitkVectorFloat64, 2);
+
+      sitk::DisplacementFieldTransform displacementField(sourceImage);
+
+    sitk::Image displacementImage = displacementField.GetDisplacementField();
+
+    typedef itk::VectorImage<double, 2> ImageBaseType;
+    ImageBaseType *imageBase = dynamic_cast<ImageBaseType*>(displacementImage.GetITKBase());
+    ASSERT_TRUE(imageBase != SITK_NULLPTR);
+    EXPECT_FALSE(imageBase->GetPixelContainer()->GetContainerManageMemory());
+
+    sitk::Image result = sitk::InvertDisplacementField(displacementImage);
+
+    EXPECT_FALSE(imageBase->GetPixelContainer()->GetContainerManageMemory());
+
+    imageBase = dynamic_cast<ImageBaseType*>(result.GetITKBase());
+    ASSERT_TRUE(imageBase != SITK_NULLPTR);
+    EXPECT_TRUE(imageBase->GetPixelContainer()->GetContainerManageMemory());
+  }
+
 
 TEST(TransformTest,Euler2DTransform)
 {

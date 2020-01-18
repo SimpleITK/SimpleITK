@@ -48,19 +48,25 @@ GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bo
   size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
   typename ImageType::PixelType* buffer = reinterpret_cast<typename ImageType::PixelType*>( img->GetPixelContainer()->GetBufferPointer() );
 
-  if (!img->GetPixelContainer()->GetContainerManageMemory())
-    {
-    transferOwnership=false;
-    }
 
   typename ImageType::Pointer out = ImageType::New();
 
+  if (!img->GetPixelContainer()->GetContainerManageMemory())
+    {
+    // Set the image's pixel container to import the pointer provided.
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    }
+  else
+    {
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
+    if (transferOwnership)
+      {
+      img->GetPixelContainer()->ContainerManageMemoryOff();
+      }
+    }
+
   out->CopyInformation( img );
   out->SetRegions( img->GetBufferedRegion() );
-
-  // Set the image's pixel container to import the pointer provided.
-  out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
-  img->GetPixelContainer()->SetContainerManageMemory(!transferOwnership);
 
   return out;
 
@@ -83,17 +89,22 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
   numberOfElements *= NImageDimension;
 
 
-  if (!img->GetPixelContainer()->GetContainerManageMemory())
-    {
-    transferOwnership=false;
-    }
-
-
   typename VectorImageType::Pointer out = VectorImageType::New();
 
-  // Set the image's pixel container to import the pointer provided.
-  out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
-  img->GetPixelContainer()->SetContainerManageMemory(!transferOwnership);
+  if (!img->GetPixelContainer()->GetContainerManageMemory())
+    {
+    // Set the image's pixel container to import the pointer provided.
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    }
+  else
+    {
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
+    if (transferOwnership)
+      {
+      img->GetPixelContainer()->ContainerManageMemoryOff();
+      }
+    }
+
   out->CopyInformation( img );
   out->SetRegions( img->GetBufferedRegion() );
 
