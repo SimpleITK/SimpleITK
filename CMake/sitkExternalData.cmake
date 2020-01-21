@@ -34,7 +34,7 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
   list(APPEND ExternalData_URL_TEMPLATES
 
     # Data mirrored from SimpleITKExternalData repository
-    "https://s3.amazonaws.com/simpleitk/public/%(algo)/%(hash)"
+    "https://simpleitk.s3.amazonaws.com/public/%(algo)/%(hash)"
 
     # Data published on GitHub Pages
     "https://simpleitk.github.io/SimpleITKExternalData/%(algo)/%(hash)"
