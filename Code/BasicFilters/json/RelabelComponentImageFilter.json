@@ -70,6 +70,15 @@
         {
           "name" : "OriginalNumberOfObjects",
           "value" : "2u"
+        },
+        {
+          "name" : "SizeOfObjectsInPhysicalUnits",
+          "dim_vec" : 1,
+          "value" : [
+            23061,
+            9085
+          ],
+          "tolerance" : 1e-23
         }
       ],
       "md5hash" : "58af064e929f08f9d5bacc8be44ed92e",
@@ -91,16 +100,66 @@
       "measurements_results" : [
         {
           "name" : "NumberOfObjects",
+          "value" : "3u"
+        },
+        {
+          "name" : "OriginalNumberOfObjects",
+          "value" : "3u"
+        },
+        {
+          "name" : "SizeOfObjectsInPhysicalUnits",
+          "dim_vec" : 1,
+          "value" : [
+            146,
+            126,
+            200
+          ],
+          "tolerance" : 1e-23
+        }
+      ],
+      "md5hash" : "0231da8387aa665ddff9c2645e71f213",
+      "inputs" : [
+        "Input/simple-label-d.png"
+      ]
+    },
+    {
+      "tag" : "no_sorting2",
+      "description" : "2D without size sorting",
+      "settings" : [
+        {
+          "parameter" : "SortByObjectSize",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        },
+        {
+          "parameter" : "MinimumObjectSize",
+          "type" : "uint64_t",
+          "value" : "140"
+        }
+      ],
+      "measurements_results" : [
+        {
+          "name" : "NumberOfObjects",
           "value" : "2u"
         },
         {
           "name" : "OriginalNumberOfObjects",
-          "value" : "2u"
+          "value" : "3u"
+        },
+        {
+          "name" : "SizeOfObjectsInPhysicalUnits",
+          "dim_vec" : 1,
+          "value" : [
+            146,
+            200
+          ],
+          "tolerance" : 1e-23
         }
       ],
-      "md5hash" : "58af064e929f08f9d5bacc8be44ed92e",
+      "md5hash" : "4c81464832a0270041334abd744b94b0",
       "inputs" : [
-        "Input/2th_cthead1.png"
+        "Input/simple-label-d.png"
       ]
     }
   ],
