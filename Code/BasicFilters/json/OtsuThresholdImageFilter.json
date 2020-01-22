@@ -86,21 +86,28 @@
       "tag" : "default",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "ddf5ed860d650763c54f36628bd9fa35",
+      "md5hash" : "5cad88b6933e76fe8d4e247df9aea78c",
       "inputs" : [
         "Input/RA-Short.nrrd"
       ],
       "measurements_results" : [
         {
           "name" : "Threshold",
-          "value" : 27602.0
+          "value" : 27735.0
         }
       ]
     },
     {
       "tag" : "cthead1_with_mask",
       "description" : "CT Head with mask",
-      "settings" : [],
+      "settings" : [
+        {
+          "parameter" : "ReturnBinMidpoint",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
       "md5hash" : "65b36b85ce17ca4458c30a51eada3d47",
       "inputs" : [
         "Input/cthead1.png",
@@ -122,6 +129,12 @@
           "value" : "false",
           "python_value" : "False",
           "R_value" : "FALSE"
+        },
+        {
+          "parameter" : "ReturnBinMidpoint",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
         }
       ],
       "md5hash" : "bfaba8593ac8ace80316c9e17f378f08",
@@ -140,15 +153,15 @@
       "tag" : "default_on_float",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "fcd8ca1be3f4d7561f81e06b3c570af0",
+      "md5hash" : "c7b19aed2d9af9ac82e19fc8756edf99",
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd"
       ],
       "measurements_results" : [
         {
           "name" : "Threshold",
-          "value" : 0.496117,
-          "tolerance" : 1e-05
+          "value" : 0.50002,
+          "tolerance" : 0.0001
         }
       ]
     }

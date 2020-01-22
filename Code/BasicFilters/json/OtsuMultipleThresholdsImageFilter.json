@@ -66,9 +66,19 @@
       "tag" : "default",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "94d62a813f969dadf22b7e3ae0b20178",
+      "md5hash" : "a9c3b0c0971c5cbda12b29db916451c6",
       "inputs" : [
         "Input/RA-Short.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Thresholds",
+          "dim_vec" : 1,
+          "value" : [
+            27735.29492
+          ],
+          "tolerance" : 0.0001
+        }
       ]
     },
     {
@@ -79,11 +89,28 @@
           "parameter" : "NumberOfThresholds",
           "value" : 2,
           "java_value" : "(short) 2"
+        },
+        {
+          "parameter" : "ReturnBinMidpoint",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
         }
       ],
       "md5hash" : "1ab20d3cd9a354b45ac07ec59c0413b3",
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Thresholds",
+          "dim_vec" : 1,
+          "value" : [
+            0.3242341,
+            0.6601876
+          ],
+          "tolerance" : 1e-06
+        }
       ]
     },
     {
@@ -99,6 +126,12 @@
           "parameter" : "NumberOfHistogramBins",
           "cxx_value" : "256u",
           "value" : "256"
+        },
+        {
+          "parameter" : "ReturnBinMidpoint",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
         }
       ],
       "md5hash" : "b61c3f4e063fcdd24dba76227129ae34",
@@ -120,11 +153,29 @@
           "value" : "true",
           "python_value" : "True",
           "R_value" : "TRUE"
+        },
+        {
+          "parameter" : "ReturnBinMidpoint",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
         }
       ],
       "md5hash" : "fb65e730472c8001185f355fb626ca3f",
       "inputs" : [
         "Input/cthead1.png"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Thresholds",
+          "dim_vec" : 1,
+          "value" : [
+            48.812408,
+            102.605674,
+            186.284088
+          ],
+          "tolerance" : 1e-05
+        }
       ]
     }
   ],
