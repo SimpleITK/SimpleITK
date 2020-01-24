@@ -32,61 +32,52 @@ After completing the local branch, push it to your fork, then create a GitHub pu
 
 ### How to contribute with the right workflow using github commands
 
+Commands that are going to be use only once for initial setup.
 ``` shell
 # Fork the repo
-
+https://github.com/SimpleITK/SimpleITK.git
 # clone to your laptop
 git clone https://github.com/<username>/SimpleITK.git
-
 # go to the folder
 cd SimpleITK
-
 # check the repo
 git remote -v
 origin  https://github.com/<username>/SimpleITK.git (fetch)
 origin  https://github.com/<username>/SimpleITK.git (push)
-
 # add the upstream
 git remote add upstream https://github.com/SimpleITK/SimpleITK.git
-
+```
+Commands that should be performed every time you want to contribute.
+```shell
 # check the repos again
 git remote -v
 origin  https://github.com/<username>/SimpleITK.git (fetch)
 origin  https://github.com/<username>/SimpleITK.git (push)
 upstream        https://github.com/SimpleITK/SimpleITK.git (fetch)
 upstream        https://github.com/SimpleITK/SimpleITK.git (push)
-
 # download the upstream repo in to your local
 git fetch upstream
-
 # you will see something like this:
  * [new branch]        dashboard  -> upstream/dashboard
  * [new branch]        master     -> upstream/master
  * [new branch]        release    -> upstream/release
- 
 # then create your new branch where "newdocumentation" is the name of the new branch. you can change the name
 git checkout -b newdocumentation upstream/master
 Branch 'newdocumentation' set up to track remote branch 'master' from 'upstream'.
 Switched to a new branch 'newdocumentation'
-
 # to check the branches to type this:
 git branch
-
 # the name with the * in front is the branch that you are.
   master
 * newdocumentation
-
-# work on the project and when you are done save the files and add, commit and push to origin 
+# work on the project and when you are done save the files and add, commit and push to origin
 git status
 git add .
 git commit -m"a new commit"
 git push origin HEAD
-
-# once you push it go to your fork repo 
+# once you push it go to your fork repo
 <username>/SimpleITK
-
 # click on the green button name "compare & pull request" and submit your pull request
-
 ```
 
 ## Branches
