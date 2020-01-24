@@ -30,6 +30,65 @@ SimpleITK uses a branchy workflow where each PR should be a new topic branch. Lo
 
 After completing the local branch, push it to your fork, then create a GitHub pull request in the SimpleITK upstream repository. The pull request is then required to have an approving *code review*, and the *continuous integration* testing pass before the topic is merged into the upstream repository.
 
+### How to contribute with the right workflow using github commands
+
+``` shell
+# Fork the repo
+
+# clone to your laptop
+git clone https://github.com/<username>/SimpleITK.git
+
+# go to the folder
+cd SimpleITK
+
+# check the repo
+git remote -v
+origin  https://github.com/<username>/SimpleITK.git (fetch)
+origin  https://github.com/<username>/SimpleITK.git (push)
+
+# add the upstream
+git remote add upstream https://github.com/SimpleITK/SimpleITK.git
+
+# check the repos again
+git remote -v
+origin  https://github.com/<username>/SimpleITK.git (fetch)
+origin  https://github.com/<username>/SimpleITK.git (push)
+upstream        https://github.com/SimpleITK/SimpleITK.git (fetch)
+upstream        https://github.com/SimpleITK/SimpleITK.git (push)
+
+# download the upstream repo in to your local
+git fetch upstream
+
+# you will see something like this:
+ * [new branch]        dashboard  -> upstream/dashboard
+ * [new branch]        master     -> upstream/master
+ * [new branch]        release    -> upstream/release
+ 
+# then create your new branch where "newdocumentation" is the name of the new branch. you can change the name
+git checkout -b newdocumentation upstream/master
+Branch 'newdocumentation' set up to track remote branch 'master' from 'upstream'.
+Switched to a new branch 'newdocumentation'
+
+# to check the branches to type this:
+git branch
+
+# the name with the * in front is the branch that you are.
+  master
+* newdocumentation
+
+# work on the project and when you are done save the files and add, commit and push to origin 
+git status
+git add .
+git commit -m"a new commit"
+git push origin HEAD
+
+# once you push it go to your fork repo 
+<username>/SimpleITK
+
+# click on the green button name "compare & pull request" and submit your pull request
+
+```
+
 ## Branches
 
 * **master** - Stable branch of the code which is expected to available to users when building SimpleITK. New features should be based on this branch.
