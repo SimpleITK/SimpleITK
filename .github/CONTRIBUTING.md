@@ -32,53 +32,89 @@ After completing the local branch, push it to your fork, then create a GitHub pu
 
 ### How to contribute with the right workflow using github commands
 
-Commands that are going to be use only once for initial setup.
-``` shell
-# Fork the repo
+1. Setup
+Fork the repo
 https://github.com/SimpleITK/SimpleITK.git
-# clone to your laptop
+
+clone to your laptop
+``` shell
 git clone https://github.com/<username>/SimpleITK.git
-# go to the folder
+```
+Go to the folder
+``` shell
 cd SimpleITK
-# check the repo
+```
+Check the repo
+```shell
 git remote -v
 origin  https://github.com/<username>/SimpleITK.git (fetch)
 origin  https://github.com/<username>/SimpleITK.git (push)
-# add the upstream
+```
+Add the upstream
+``` shell
 git remote add upstream https://github.com/SimpleITK/SimpleITK.git
 ```
-Commands that should be performed every time you want to contribute.
+Check the repos again
 ```shell
-# check the repos again
 git remote -v
 origin  https://github.com/<username>/SimpleITK.git (fetch)
 origin  https://github.com/<username>/SimpleITK.git (push)
 upstream        https://github.com/SimpleITK/SimpleITK.git (fetch)
 upstream        https://github.com/SimpleITK/SimpleITK.git (push)
-# download the upstream repo in to your local
+```
+Download the upstream repo in to your local
+``` shell
 git fetch upstream
-# you will see something like this:
+```
+You will see something like this:
+``` shell
  * [new branch]        dashboard  -> upstream/dashboard
  * [new branch]        master     -> upstream/master
  * [new branch]        release    -> upstream/release
-# then create your new branch where "newdocumentation" is the name of the new branch. you can change the name
+```
+2. Start a branch
+Create your new branch where "newdocumentation" is the name of the new branch. you can change the name
+``` shell
 git checkout -b newdocumentation upstream/master
 Branch 'newdocumentation' set up to track remote branch 'master' from 'upstream'.
 Switched to a new branch 'newdocumentation'
-# to check the branches to type this:
+```
+To check the branches to type this:
+``` shell
 git branch
-# the name with the * in front is the branch that you are.
+```
+The name with the * in front is the branch that you are.
+``` shell
   master
 * newdocumentation
-# work on the project and when you are done save the files and add, commit and push to origin
+```
+3. Create a Pull Request
+Work on the project and when you are done save the files and add, commit and push to origin
+``` shell
 git status
 git add .
 git commit -m"a new commit"
-git push origin HEAD
-# once you push it go to your fork repo
-<username>/SimpleITK
-# click on the green button name "compare & pull request" and submit your pull request
+git push origin
 ```
+Once you push it go to your fork repo
+``` shell
+<username>/SimpleITK
+```
+Click on the green button name "compare & pull request" and submit your pull request
+
+4. Update a Pull Request
+ When you update your Pull Request you save the files and add, commit and push to origin.
+ ``` shell
+git status
+git add .
+git commit -m"a new commit"
+git push origin
+```
+Once you push it go to your fork repo
+``` shell
+<username>/SimpleITK
+```
+You will not see again the green button name "compare & pull request". That mean that your request have been update it. You can now go to your pull request (PR) in the https://github.com/SimpleITK/SimpleITK.git and click in the pull request tab, then click on your PR and check the comments and more.
 
 ## Branches
 
