@@ -2,6 +2,8 @@
 
 set -ex
 
+export PATH=/usr/bin:${PATH}
+
 export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=2
 
 read -r -d '' CTEST_CACHE << EOM || true
