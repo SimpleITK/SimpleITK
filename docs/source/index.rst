@@ -22,6 +22,7 @@ SimpleITK are currently available for all three major operating systems
    filters
    building
    setUp
+   cmake_cplusplus
    tutorialsAndCourses
    faq
    FilterTemplates
