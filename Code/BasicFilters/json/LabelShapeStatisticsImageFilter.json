@@ -10,7 +10,8 @@
   "no_procedure" : true,
   "no_return_image" : true,
   "include_files" : [
-    "itkShapeLabelObject.h"
+    "itkShapeLabelObject.h",
+    "sitkLabelFunctorUtils.hxx"
   ],
   "members" : [
     {
@@ -374,6 +375,36 @@
       ],
       "custom_cast" : "sitkVectorOfITKVectorToSTL<double>(value)",
       "label_map" : true
+    },
+    {
+      "name" : "Indexes",
+      "itk_get" : "f->GetOutput()->GetLabelObject(label)",
+      "type" : "std::vector<unsigned int>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "GetIndexesFromLabelObject(*value)",
+      "detaileddescriptionGet" : "Get an array of indexes for pixels with the label value."
+    },
+    {
+      "name" : "RLEIndexes",
+      "itk_get" : "f->GetOutput()->GetLabelObject(label)",
+      "type" : "std::vector<unsigned int>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "GetRLEIndexesFromLabelObject(*value)",
+      "detaileddescriptionGet" : "Get an array of run-length encoding (RLE) indexes for pixels with the label value. The array is the index of a starting line, followed by the length repeated. The length of the array is divisible by the image's dimension + 1. For example for a 2D image the array [ 2, 3, 2] would encode the two indexes [2,3] and [3,3]."
     }
   ],
   "tests" : [
