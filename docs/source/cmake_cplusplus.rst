@@ -54,5 +54,5 @@ The 'config' parameter could also be set to Debug, RelWithDebInfo or MinSizeRel.
 Unix-type systems Release is the default.  On Windows the config must be specified explicitly.
 
 Of course you can use traditional methods to build your SimpleITK program (e.g. make on Unix, or
-Visual Studio on Windows), but it is convinient to be able to use the same build command on
+Visual Studio on Windows), but it is convenient to be able to use the same build command on
 all systems.
