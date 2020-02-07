@@ -43,6 +43,24 @@
 %CSharpTypemapHelper( float*, System.IntPtr )
 %CSharpTypemapHelper( double*, System.IntPtr )
 
+
+// CSharp does not hadle overloaded const methods. So they are
+// explicitly renamed to enable their explicit usage. These methods
+// assume that the buffer will not be modified, so MakeUnique is
+// not call.
+%rename("GetConstBufferAsInt8")   itk::simple::Image::GetBufferAsInt8( ) const;
+%rename("GetConstBufferAsUInt8")  itk::simple::Image::GetBufferAsUInt8( ) const;
+%rename("GetConstBufferAsInt16")  itk::simple::Image::GetBufferAsInt16( ) const;
+%rename("GetConstBufferAsUInt16") itk::simple::Image::GetBufferAsUInt16( ) const;
+%rename("GetConstBufferAsInt32")  itk::simple::Image::GetBufferAsInt32( ) const;
+%rename("GetConstBufferAsUInt32") itk::simple::Image::GetBufferAsUInt32( ) const;
+%rename("GetConstBufferAsInt64")  itk::simple::Image::GetBufferAsInt64( ) const;
+%rename("GetConstBufferAsUInt64") itk::simple::Image::GetBufferAsUInt64( ) const;
+%rename("GetConstBufferAsFloat")  itk::simple::Image::GetBufferAsFloat( ) const;
+%rename("GetConstBufferAsDouble") itk::simple::Image::GetBufferAsDouble( ) const;
+
+
+
 // Add override to ToString method
 %csmethodmodifiers ToString "public override";
 
@@ -263,6 +281,7 @@
   }
 
   #endregion
+
 %}
 
 #endif // End of C# specific sections

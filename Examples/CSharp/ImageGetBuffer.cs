@@ -44,6 +44,8 @@ namespace itk.simple.examples {
         len *= (int)size[dim];
       }
       IntPtr buffer = input.GetBufferAsFloat();
+      // Note: C# also has a GetConstBufferAs... methods which do not
+      // implicitly call MakeUnique.
 
       // There are two ways to access the buffer:
 
