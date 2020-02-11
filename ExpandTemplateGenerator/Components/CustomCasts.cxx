@@ -3,7 +3,7 @@
 //
 namespace {
 $(when measurements $(foreach measurements
-$(if active and ( custom_cast or label_map ) then
+$(if itk_get or ( active and ( custom_cast or label_map ) ) then
 OUT=[[
 template<typename FilterType>
 struct ${name}CustomCast
@@ -29,7 +29,9 @@ OUT=OUT..[[ )
 if custom_cast then
   OUT=OUT..[[${name}CustomCast::Helper(]]
 end
-if label_map then
+if itk_get then
+   OUT=OUT..[[${itk_get}]]
+elseif label_map then
   OUT=OUT..[[f->GetOutput()->GetLabelObject(label)->Get${name}()]]
 else
   OUT=OUT..[[f->Get${name}(${parameters[1].name})]]

@@ -46,6 +46,53 @@ SetLabelFunctorFromColormap( TLabelFunctorType &functor, const std::vector<unsig
     }
 }
 
+/** \brief Convert an itk::LabelObject into a vector of indexes */
+template <typename TLabelObject>
+std::vector<unsigned int>
+GetIndexesFromLabelObject( const TLabelObject &lo )
+{
+  size_t sz = lo.Size();
+  std::vector<unsigned int> idxs(sz*TLabelObject::ImageDimension);
+  auto iter = idxs.begin();
+  for(itk::SizeValueType pixelId = 0; pixelId < lo.Size(); pixelId++)
+    {
+    const auto & idx = lo.GetIndex(pixelId);
+    for(unsigned int d = 0; d < TLabelObject::ImageDimension; ++d)
+      {
+      *(iter++) = idx[d];
+      }
+    }
+  return idxs;
+}
+
+
+/** \brief Convert an itk::LabelObject into a RLE encoded vector of indexes.
+ *
+ * The return array in the n-d index followed by a length. The 0
+ * dimension of the index is incremented for the length to generate
+ * the indexes represented.
+ */
+template <typename TLabelObject>
+std::vector<unsigned int>
+GetRLEIndexesFromLabelObject( const TLabelObject &lo )
+{
+  size_t sz = lo.GetNumberOfLines()*(TLabelObject::ImageDimension+1);
+  std::vector<unsigned int> rle(sz);
+
+  auto iter = rle.begin();
+  for(SizeValueType lineId = 0; lineId < lo.GetNumberOfLines(); ++lineId)
+    {
+    const auto & line = lo.GetLine(lineId);
+    const auto & idx = line.GetIndex();
+    for(unsigned int d = 0; d < TLabelObject::ImageDimension; ++d)
+      {
+      *(iter++) = idx[d];
+      }
+    *(iter++) = line.GetLength();
+    }
+  return rle;
+}
+
 }
 }
 
