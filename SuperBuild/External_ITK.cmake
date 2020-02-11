@@ -78,8 +78,7 @@ endif()
 if( ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG )
   # only remove legacy with the tested, and predefined version of ITK
   list( APPEND ep_itk_args
-    "-DITK_LEGACY_REMOVE:BOOL=OFF"
-    "-DITKV4_COMPATIBILITY:BOOL=ON"
+    "-DITK_LEGACY_REMOVE:BOOL=ON"
     )
 endif()
 
