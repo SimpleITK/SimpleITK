@@ -48,6 +48,6 @@ endif()
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(PythonVirtualEnv
                                   REQUIRED_VARS PYTHON_VIRTUALENV_SCRIPT
-                                  VERSION_VAR PYTHON_VIRTUALENV_VERSION_STRING)
+                                  VERSION_VAR PYTHON_VIRTUALENV_VERSION)
 
 mark_as_advanced(PYTHON_VIRTUALENV_SCRIPT)
