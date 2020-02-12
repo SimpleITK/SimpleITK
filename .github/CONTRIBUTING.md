@@ -2,7 +2,7 @@
 
 We welcome contributions from the community!
 
-SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on [Github](https://github.com/SimpleITK/SimpleITK.git) and mirrored on [itk.org](https://itk.org/SimpleITK.git) and the [Insight Software Consortium](https://github.com/InsightSoftwareConsortium/SimpleITK). For pull requests and issue tracking  Github is also used.
+SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on [Github](https://github.com/SimpleITK/SimpleITK.git) and the [Insight Software Consortium](https://github.com/InsightSoftwareConsortium/SimpleITK). For pull requests and issue tracking  Github is also used.
 
 There are many ways to contribute to SimpleITK:
  - Report Bugs and Issues
