@@ -72,7 +72,7 @@ namespace itk
           {
           sitkExceptionMacro( << "The image has a LargestPossibleRegion of " << image->GetLargestPossibleRegion()
                               << " while the buffered region is " << image->GetBufferedRegion() << std::endl
-                              << "SimpleITK does not support streamming or unbuffered regions!" );
+                              << "SimpleITK does not support streaming or unbuffered regions!" );
           }
 
         const IndexType & idx = image->GetBufferedRegion().GetIndex();
