@@ -99,7 +99,7 @@ First obtain the SimpleITK source code:
 
 .. code-block :: bash
 
- git clone  https://itk.org/SimpleITK.git
+ git clone https://github.com/SimpleITK/SimpleITK.git
 
 
 Building using SuperBuild
