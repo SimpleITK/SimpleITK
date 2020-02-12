@@ -44,7 +44,7 @@ OUT=OUT..[[
   for ( unsigned int i = 0; i < numComps; ++i )
     {
     extractor->SetIndex( i );
-    extractor->Update();
+    extractor->UpdateLargestPossibleRegion();
 
     Image tmp = this->ExecuteInternal<InputImageType>( Image( extractor->GetOutput() ) );
 
