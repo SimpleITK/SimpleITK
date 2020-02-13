@@ -50,6 +50,6 @@ endif()
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LuaInterp
                                   REQUIRED_VARS LUA_EXECUTABLE
-                                  VERSION_VAR LUA_VERSION_STRING)
+                                  VERSION_VAR LUA_VERSION)
 
 mark_as_advanced(LUA_EXECUTABLE)
