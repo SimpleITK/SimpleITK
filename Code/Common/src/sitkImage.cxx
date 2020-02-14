@@ -23,7 +23,8 @@
 #include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.h"
 #include "sitkPixelIDTypeLists.h"
-#include "sitkConditional.h"
+
+#include <utility>
 
 
 namespace itk
@@ -44,17 +45,27 @@ namespace itk
   }
 
   Image::Image( const Image &img )
+  : m_PimpleImage( img.m_PimpleImage->ShallowCopy())
   {
-    this->m_PimpleImage = img.m_PimpleImage->ShallowCopy();
+  }
+
+  Image::Image( Image && img )
+  : m_PimpleImage( nullptr )
+  {
+    using std::swap;
+    swap(m_PimpleImage, img.m_PimpleImage);
   }
 
   Image& Image::operator=( const Image &img )
   {
-    // note: If img and this are this same, the following statement
-    // will still be safe. It is also exception safe.
-    std::unique_ptr<PimpleImageBase> temp( img.m_PimpleImage->ShallowCopy() );
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = temp.release();
+    // follow the Rule of Five
+    return *this = Image(img);
+  }
+
+  Image &Image::operator=(Image && img)
+  {
+    using std::swap;
+    swap(m_PimpleImage, img.m_PimpleImage);
     return *this;
   }
 
@@ -93,15 +104,27 @@ namespace itk
 
     itk::DataObject* Image::GetITKBase( void )
     {
-      assert( m_PimpleImage );
-      this->MakeUnique();
-      return m_PimpleImage->GetDataBase();
+      if ( m_PimpleImage )
+        {
+        this->MakeUnique();
+        return m_PimpleImage->GetDataBase();
+        }
+      else
+        {
+        return nullptr;
+        }
     }
 
     const itk::DataObject* Image::GetITKBase( void ) const
     {
-      assert( m_PimpleImage );
-      return m_PimpleImage->GetDataBase();
+      if ( m_PimpleImage )
+        {
+        return m_PimpleImage->GetDataBase();
+        }
+      else
+        {
+        return nullptr;
+        }
     }
 
     PixelIDValueType Image::GetPixelIDValue( void ) const

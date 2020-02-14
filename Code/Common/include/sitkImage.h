@@ -84,7 +84,19 @@ namespace simple
 
     // copy constructor
     Image( const Image &img );
+
     Image& operator=( const Image &img );
+
+
+    /** \brief Move constructor and assignment.
+     *
+     * @param img After the operation img is valid only for
+     * destructing and assignment; all other operations have undefined
+     * behavior.
+     */
+    Image( Image &&img );
+    Image& operator=( Image &&img );
+
 
     /** \brief Constructors for 2D, 3D an optionally 4D images where
      * pixel type and number of components can be specified.
@@ -150,6 +162,8 @@ namespace simple
      * the actual image type. The GetPixelIDValue() method should
      * return an PixelID which identifies the image type which the
      * DataObject points to.
+     *
+     * If this object has been moved, then nullptr is returned.
      *
      * @{
      */
