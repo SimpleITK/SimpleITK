@@ -164,12 +164,12 @@ void VersorTransform::InternalInitialization(TransformType *t)
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
 
   void  (TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
-  this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));
+  this->m_pfSetRotation1 = std::bind(pfSetRotation1,t,std::bind(&sitkSTLVectorToITKVersor<double, double>,std::placeholders::_1));
 
   void  (TransformType::*pfSetRotation2) (const typename TransformType::AxisType &, double) = &TransformType::SetRotation;
-  this->m_pfSetRotation2 = nsstd::bind(pfSetRotation2,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
+  this->m_pfSetRotation2 = std::bind(pfSetRotation2,t,std::bind(pfSTLVectorToITK,std::placeholders::_1),std::placeholders::_2);
 
-  this->m_pfGetVersor  = nsstd::bind(&sitkITKVersorToSTL<double, double>,nsstd::bind(&TransformType::GetVersor,t));
+  this->m_pfGetVersor  = std::bind(&sitkITKVersorToSTL<double, double>,std::bind(&TransformType::GetVersor,t));
 
 }
 

@@ -178,11 +178,11 @@ void Similarity2DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF_GetMatrix();
   SITK_TRANSFORM_SET_MPF_SetMatrix();
 
-  this->m_pfSetAngle = nsstd::bind(&TransformType::SetAngle,t,nsstd::placeholders::_1);
-  this->m_pfGetAngle = nsstd::bind(&TransformType::GetAngle,t);
+  this->m_pfSetAngle = std::bind(&TransformType::SetAngle,t,std::placeholders::_1);
+  this->m_pfGetAngle = std::bind(&TransformType::GetAngle,t);
 
-  this->m_pfSetScale = nsstd::bind(&TransformType::SetScale,t,nsstd::placeholders::_1);
-  this->m_pfGetScale = nsstd::bind(&TransformType::GetScale,t);
+  this->m_pfSetScale = std::bind(&TransformType::SetScale,t,std::placeholders::_1);
+  this->m_pfGetScale = std::bind(&TransformType::GetScale,t);
 }
 
 }

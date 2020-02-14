@@ -669,19 +669,19 @@ namespace simple
 
   private:
 
-    nsstd::function<unsigned int()> m_pfGetOptimizerIteration;
-    nsstd::function<std::vector<double>()> m_pfGetOptimizerPosition;
-    nsstd::function<double()> m_pfGetOptimizerLearningRate;
-    nsstd::function<double()> m_pfGetOptimizerConvergenceValue;
-    nsstd::function<double()> m_pfGetMetricValue;
-    nsstd::function<uint64_t()> m_pfGetMetricNumberOfValidPoints;
-    nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
-    nsstd::function<std::string()> m_pfGetOptimizerStopConditionDescription;
+    std::function<unsigned int()> m_pfGetOptimizerIteration;
+    std::function<std::vector<double>()> m_pfGetOptimizerPosition;
+    std::function<double()> m_pfGetOptimizerLearningRate;
+    std::function<double()> m_pfGetOptimizerConvergenceValue;
+    std::function<double()> m_pfGetMetricValue;
+    std::function<uint64_t()> m_pfGetMetricNumberOfValidPoints;
+    std::function<std::vector<double>()> m_pfGetOptimizerScales;
+    std::function<std::string()> m_pfGetOptimizerStopConditionDescription;
 
 
-    nsstd::function<unsigned int()> m_pfGetCurrentLevel;
+    std::function<unsigned int()> m_pfGetCurrentLevel;
 
-    nsstd::function<void (itk::TransformBase *outTransform)> m_pfUpdateWithBestValue;
+    std::function<void (itk::TransformBase *outTransform)> m_pfUpdateWithBestValue;
 
     template < class TMemberFunctionPointer >
       struct EvaluateMemberFunctionAddressor

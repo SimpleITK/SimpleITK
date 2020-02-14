@@ -283,27 +283,27 @@ void DisplacementFieldTransform::InternalInitialization(itk::TransformBase *tran
 template<class TransformType>
 void DisplacementFieldTransform::InternalInitialization(TransformType *t)
 {
-  this->m_pfSetDisplacementField = nsstd::bind(&InternalSetDisplacementField<TransformType>, t, nsstd::placeholders::_1);
-  this->m_pfGetDisplacementField = nsstd::bind(&DisplacementFieldTransform::InternalGetDisplacementField<TransformType>, t);
+  this->m_pfSetDisplacementField = std::bind(&InternalSetDisplacementField<TransformType>, t, std::placeholders::_1);
+  this->m_pfGetDisplacementField = std::bind(&DisplacementFieldTransform::InternalGetDisplacementField<TransformType>, t);
 
-  this->m_pfSetInverseDisplacementField = nsstd::bind(&InternalSetInverseDisplacementField<TransformType>, t, nsstd::placeholders::_1);
-  this->m_pfGetInverseDisplacementField = nsstd::bind(&DisplacementFieldTransform::InternalGetInverseDisplacementField<TransformType>, t);
+  this->m_pfSetInverseDisplacementField = std::bind(&InternalSetInverseDisplacementField<TransformType>, t, std::placeholders::_1);
+  this->m_pfGetInverseDisplacementField = std::bind(&DisplacementFieldTransform::InternalGetInverseDisplacementField<TransformType>, t);
 
-  this->m_pfSetInterpolator = nsstd::bind(&InternalSetInterpolator<TransformType>, t, nsstd::placeholders::_1);
+  this->m_pfSetInterpolator = std::bind(&InternalSetInterpolator<TransformType>, t, std::placeholders::_1);
 
-  m_pfSetSmoothingOff = nsstd::bind(&Self::InternalSetSmoothingOff<TransformType>, this, t);
-  m_pfSetSmoothingGaussianOnUpdate = nsstd::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>,
+  m_pfSetSmoothingOff = std::bind(&Self::InternalSetSmoothingOff<TransformType>, this, t);
+  m_pfSetSmoothingGaussianOnUpdate = std::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>,
                                                  this,
                                                  t,
-                                                 nsstd::placeholders::_1,
-                                                 nsstd::placeholders::_2 );
-  m_pfSetSmoothingBSplineOnUpdate = nsstd::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>,
+                                                 std::placeholders::_1,
+                                                 std::placeholders::_2 );
+  m_pfSetSmoothingBSplineOnUpdate = std::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>,
                                                 this,
                                                 t,
-                                                nsstd::placeholders::_1,
-                                                nsstd::placeholders::_2,
-                                                nsstd::placeholders::_3,
-                                                nsstd::placeholders::_4 );
+                                                std::placeholders::_1,
+                                                std::placeholders::_2,
+                                                std::placeholders::_3,
+                                                std::placeholders::_4 );
 }
 
 PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTransform(unsigned int dimension)

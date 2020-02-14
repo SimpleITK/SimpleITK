@@ -24,7 +24,7 @@ OUT=[[
       /* ${doc} */]]end)
 $(if active then
 OUT=[[
-      nsstd::function<${type}($(if parameters then
+      std::function<${type}($(if parameters then
 for inum=1,#parameters do
   if inum>1 then
     OUT = OUT .. ', '

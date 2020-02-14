@@ -93,11 +93,11 @@ private:
     void InternalInitialization(TransformType *transform);
 
 
-  nsstd::function<void(std::vector<double>)> m_pfSetCenter;
-  nsstd::function<std::vector<double>()> m_pfGetCenter;
-  nsstd::function<void(std::vector<double>)> m_pfSetScale;
-  nsstd::function<std::vector<double>()> m_pfGetScale;
-  nsstd::function<std::vector<double>()> m_pfGetMatrix;
+  std::function<void(std::vector<double>)> m_pfSetCenter;
+  std::function<std::vector<double>()> m_pfGetCenter;
+  std::function<void(std::vector<double>)> m_pfSetScale;
+  std::function<std::vector<double>()> m_pfGetScale;
+  std::function<std::vector<double>()> m_pfGetMatrix;
 
 
 };

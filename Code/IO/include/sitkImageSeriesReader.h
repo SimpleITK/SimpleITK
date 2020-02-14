@@ -160,9 +160,9 @@ namespace itk {
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
-      nsstd::function<std::vector<std::string>(int)> m_pfGetMetaDataKeys;
-      nsstd::function<bool(int, const std::string &)> m_pfHasMetaDataKey;
-      nsstd::function<std::string(int, const std::string &)> m_pfGetMetaData;
+      std::function<std::vector<std::string>(int)> m_pfGetMetaDataKeys;
+      std::function<bool(int, const std::string &)> m_pfHasMetaDataKey;
+      std::function<std::string(int, const std::string &)> m_pfGetMetaData;
 
       // Holder of process object for active measurements
       itk::ProcessObject *m_Filter;

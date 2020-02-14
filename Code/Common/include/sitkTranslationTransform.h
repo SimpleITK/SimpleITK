@@ -81,8 +81,8 @@ void InternalInitialization(itk::TransformBase *transform);
 template <typename TransformType>
 void InternalInitialization(TransformType *transform);
 
-nsstd::function<void(const std::vector<double> &)> m_pfSetOffset;
-nsstd::function<std::vector<double>()> m_pfGetOffset;
+std::function<void(const std::vector<double> &)> m_pfSetOffset;
+std::function<std::vector<double>()> m_pfGetOffset;
 
 };
 

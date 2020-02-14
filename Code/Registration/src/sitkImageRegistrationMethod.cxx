@@ -949,9 +949,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
                  << *registration->GetOptimizer()
                  << *registration->GetMetric());
 
-  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer.GetPointer());
+  m_pfGetOptimizerStopConditionDescription =  std::bind(&_OptimizerType::GetStopConditionDescription, optimizer.GetPointer());
 
-  m_pfGetCurrentLevel = nsstd::bind(&CurrentLevelCustomCast::CustomCast<RegistrationType>,registration.GetPointer());
+  m_pfGetCurrentLevel = std::bind(&CurrentLevelCustomCast::CustomCast<RegistrationType>,registration.GetPointer());
 
 
   try

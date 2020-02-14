@@ -209,9 +209,9 @@ namespace itk {
       {
       this->m_Filter = reader;
       this->m_Filter->Register();
-      this->m_pfGetMetaDataKeys = nsstd::bind(&GetMetaDataKeysCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1 );
-      this->m_pfHasMetaDataKey = nsstd::bind(&HasMetaDataKeyCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
-      this->m_pfGetMetaData = nsstd::bind(&GetMetaDataCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
+      this->m_pfGetMetaDataKeys = std::bind(&GetMetaDataKeysCustomCast<Reader>::CustomCast, reader.GetPointer(), std::placeholders::_1 );
+      this->m_pfHasMetaDataKey = std::bind(&HasMetaDataKeyCustomCast<Reader>::CustomCast, reader.GetPointer(), std::placeholders::_1, std::placeholders::_2 );
+      this->m_pfGetMetaData = std::bind(&GetMetaDataCustomCast<Reader>::CustomCast, reader.GetPointer(), std::placeholders::_1, std::placeholders::_2 );
       }
 
     reader->Update();

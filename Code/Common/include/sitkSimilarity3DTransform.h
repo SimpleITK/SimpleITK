@@ -96,18 +96,18 @@ void InternalInitialization(itk::TransformBase *transform);
 template <typename TransformType>
 void InternalInitialization(TransformType *transform);
 
-nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
-nsstd::function<std::vector<double>()> m_pfGetCenter;
-nsstd::function<void(const std::vector<double>&)> m_pfSetRotation1;
-nsstd::function<void(const std::vector<double>,double&)> m_pfSetRotation2;
-nsstd::function<std::vector<double>()> m_pfGetVersor;
-nsstd::function<void(double)> m_pfSetScale;
-nsstd::function<double()> m_pfGetScale;
-nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
-nsstd::function<std::vector<double>()> m_pfGetTranslation;
-nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
-nsstd::function<std::vector<double>()> m_pfGetMatrix;
-nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
+std::function<void(const std::vector<double>&)> m_pfSetCenter;
+std::function<std::vector<double>()> m_pfGetCenter;
+std::function<void(const std::vector<double>&)> m_pfSetRotation1;
+std::function<void(const std::vector<double>,double&)> m_pfSetRotation2;
+std::function<std::vector<double>()> m_pfGetVersor;
+std::function<void(double)> m_pfSetScale;
+std::function<double()> m_pfGetScale;
+std::function<void(const std::vector<double>&)> m_pfSetTranslation;
+std::function<std::vector<double>()> m_pfGetTranslation;
+std::function<void(const std::vector<double> &)> m_pfTranslate;
+std::function<std::vector<double>()> m_pfGetMatrix;
+std::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 };
 
 }

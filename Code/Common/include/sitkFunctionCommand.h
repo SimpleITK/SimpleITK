@@ -21,7 +21,7 @@
 
 #include "sitkCommand.h"
 
-#include "nsstd/functional.h"
+#include <functional>
 
 namespace itk {
 namespace simple {
@@ -50,7 +50,7 @@ public:
   template <class T>
     void SetCallbackFunction ( T *object, void(T::* pMemberFunction )() )
   {
-    m_Function = nsstd::bind(pMemberFunction, object);
+    m_Function = std::bind(pMemberFunction, object);
   }
 
   /** Set a C-Style function to be called in the Execute method */
@@ -65,7 +65,7 @@ public:
 
 private:
 
-  typedef nsstd::function<void()> FunctionObjectType;
+  typedef std::function<void()> FunctionObjectType;
   FunctionObjectType m_Function;
 
 };
