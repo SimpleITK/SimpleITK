@@ -129,7 +129,7 @@ namespace simple
     explicit Image( itk::SmartPointer<TImageType> image )
       : m_PimpleImage( SITK_NULLPTR )
       {
-        sitkStaticAssert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
+        static_assert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
         this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image.GetPointer() );
       }
@@ -137,7 +137,7 @@ namespace simple
     explicit Image( TImageType* image )
       : m_PimpleImage( SITK_NULLPTR )
       {
-        sitkStaticAssert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
+        static_assert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
         this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image );
       }

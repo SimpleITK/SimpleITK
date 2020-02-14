@@ -91,7 +91,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
   // this shouldn't occur, just may be useful for debugging
   assert( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
 
-  sitkStaticAssert( IsInstantiated<TImageType>::Value,
+  static_assert( IsInstantiated<TImageType>::Value,
                     "UnInstantiated ImageType or dimension");
 
   if ( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )

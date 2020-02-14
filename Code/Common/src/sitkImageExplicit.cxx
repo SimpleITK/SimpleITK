@@ -130,4 +130,4 @@ SITK_TEMPLATE_InternalInitialization( 28 );
 SITK_TEMPLATE_InternalInitialization( 29 );
 
 
-sitkStaticAssert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result < 30, "Number of explicitly instantiated pixel types is more then expected!" );
+static_assert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result < 30, "Number of explicitly instantiated pixel types is more then expected!" );
