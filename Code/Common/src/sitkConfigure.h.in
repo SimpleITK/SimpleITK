@@ -27,8 +27,6 @@
 #endif
 #cmakedefine SITK_SimpleITKExplit_STATIC
 
-#cmakedefine SITK_HAS_CXX11_TYPE_TRAITS
-
 // defined if compiler supports using template keyword to disambiguate
 // dependent names
 #cmakedefine SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME

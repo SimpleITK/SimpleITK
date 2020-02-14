@@ -357,7 +357,7 @@ void DisplacementFieldTransform::InternalSetSmoothingOff( TDisplacementFieldTran
   typedef itk::DisplacementFieldTransform<ScalarType,Dimension> NewTransformType;
 
   // already off don't need to create a new transform
-  if (!nsstd::is_same<TDisplacementFieldTransform, NewTransformType>::value)
+  if (!std::is_same<TDisplacementFieldTransform, NewTransformType>::value)
     {
     typename NewTransformType::Pointer itkNewDisplacement = NewTransformType::New();
 
@@ -384,7 +384,7 @@ void DisplacementFieldTransform::InternalSetSmoothingGaussianOnUpdate( TDisplace
   typename NewTransformType::Pointer itkNewDisplacement;
 
   // change the type of the current displace field for the correct update
-  if (!nsstd::is_same<TDisplacementFieldTransform, NewTransformType>::value)
+  if (!std::is_same<TDisplacementFieldTransform, NewTransformType>::value)
     {
     itkNewDisplacement = NewTransformType::New();
 
@@ -422,7 +422,7 @@ void DisplacementFieldTransform::InternalSetSmoothingBSplineOnUpdate( TDisplacem
   typename NewTransformType::Pointer itkNewDisplacement;
 
   // change the type of the current displace field for the correct update
-  if (!nsstd::is_same<TDisplacementFieldTransform, NewTransformType>::value)
+  if (!std::is_same<TDisplacementFieldTransform, NewTransformType>::value)
     {
     itkNewDisplacement = NewTransformType::New();
 
