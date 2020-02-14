@@ -85,14 +85,13 @@ public:
       }
   }
 
+  SimpleAdaptorCommand(const Self &) = delete;
+  void operator=(const Self &) = delete;
+
 protected:
   itk::simple::Command *                    m_That;
   SimpleAdaptorCommand():m_That(0) {}
   virtual ~SimpleAdaptorCommand() {}
-
-private:
-  SimpleAdaptorCommand(const Self &); //purposely not implemented
-  void operator=(const Self &);        //purposely not implemented
 };
 
 } // end anonymous namespace
