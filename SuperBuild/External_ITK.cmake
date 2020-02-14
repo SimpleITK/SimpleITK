@@ -53,7 +53,7 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 # post v5.1rc01
-set(_DEFAULT_ITK_GIT_TAG "ad99ff401d058a624866820180c904e57342ab16")
+set(_DEFAULT_ITK_GIT_TAG "9d0f5f7398287c24d5c926a214582d53b81f4596")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
@@ -76,10 +76,8 @@ endif()
 
 
 if( ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG )
-  # only remove legacy with the tested, and predefined version of ITK
-  list( APPEND ep_itk_args
-    "-DITK_LEGACY_REMOVE:BOOL=ON"
-    )
+  # Unable to use ITK_LEGACY_REMOVE due to change in the enum types.
+  # list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
 endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
