@@ -65,4 +65,3 @@ cmake_push_check_state(RESET)
 # Check for CXX11 Features
 #
 sitkCXX11Test(SITK_HAS_CXX11_TYPE_TRAITS)
-sitkCXX11Test(SITK_HAS_CXX11_UNORDERED_MAP)

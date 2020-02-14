@@ -27,26 +27,17 @@
 #include "Ancillary/TypeList.h"
 #include "Ancillary/FunctionTraits.h"
 
-#include <functional>
-
-#if defined SITK_HAS_UNORDERED_MAP
-#include "nsstd/unordered_map.h"
-#else
-#include <map>
-#endif
+#include <unordered_map>
 
 namespace itk
 {
 namespace simple
 {
 
-// this namespace is internal classes not part of the external simple ITK interface
+// this namespace is internal and not part of the external simple ITK interface
 namespace detail {
 
-
-#if defined SITK_HAS_UNORDERED_MAP
-
-template <typename T> struct hash : public nsstd::hash<T>{};
+template <typename T> struct hash : public std::hash<T>{};
 
 /** \brief A specialization of the hash function.
  */
@@ -54,11 +45,10 @@ template <>
 struct hash< std::pair<int, int> >
   : public std::unary_function<std::pair<int,int>, std::size_t> {
   std::size_t operator()( const std::pair<int, int > &p ) const
-    { return nsstd::hash<size_t>()( size_t(p.first) * prime + p.second ); }
+    { return std::hash<size_t>()( size_t(p.first) * prime + p.second ); }
 private:
   static const std::size_t prime = 16777619u;
 };
-#endif
 
 template< typename TMemberFunctionPointer,
           typename TKey,
@@ -84,11 +74,9 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif
     { }
 
 public:
@@ -116,15 +104,10 @@ protected:
     }
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_UNORDERED_MAP
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
-#else
-  std::map<TKey, FunctionObjectType> m_PFunction4;
-  std::map<TKey, FunctionObjectType> m_PFunction3;
-  std::map<TKey, FunctionObjectType> m_PFunction2;
-#endif
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+
 
 };
 
@@ -148,11 +131,9 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif
     { }
 
 public:
@@ -183,16 +164,9 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_UNORDERED_MAP
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
-#else
-  std::map<TKey, FunctionObjectType> m_PFunction4;
-  std::map<TKey, FunctionObjectType> m_PFunction3;
-  std::map<TKey, FunctionObjectType> m_PFunction2;
-#endif
-
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 
 };
 
@@ -211,11 +185,9 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif
     { }
 
 public:
@@ -247,16 +219,9 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_UNORDERED_MAP
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
-#else
-  std::map<TKey, FunctionObjectType> m_PFunction4;
-  std::map<TKey, FunctionObjectType> m_PFunction3;
-  std::map<TKey, FunctionObjectType> m_PFunction2;
-#endif
-
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 
 };
 
@@ -276,11 +241,9 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif
     { }
 
 public:
@@ -311,15 +274,9 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_UNORDERED_MAP
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
-#else
-  std::map<TKey, FunctionObjectType> m_PFunction4;
-  std::map<TKey, FunctionObjectType> m_PFunction3;
-  std::map<TKey, FunctionObjectType> m_PFunction2;
-#endif
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 
 };
 
@@ -340,11 +297,9 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif
     { }
 
 public:
@@ -375,15 +330,9 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_UNORDERED_MAP
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
-#else
-  std::map<TKey, FunctionObjectType> m_PFunction4;
-  std::map<TKey, FunctionObjectType> m_PFunction3;
-  std::map<TKey, FunctionObjectType> m_PFunction2;
-#endif
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 
 };
 
@@ -404,11 +353,9 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif
     { }
 
 public:
@@ -445,15 +392,9 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_UNORDERED_MAP
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
-#else
-  std::map<TKey, FunctionObjectType> m_PFunction4;
-  std::map<TKey, FunctionObjectType> m_PFunction3;
-  std::map<TKey, FunctionObjectType> m_PFunction2;
-#endif
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 
 };
 
