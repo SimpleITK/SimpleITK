@@ -98,7 +98,7 @@ Versorrepresenting rotation.
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       bool  m_ComputeRotation;

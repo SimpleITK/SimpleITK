@@ -67,21 +67,6 @@ return 0;
 
 //-------------------------------------
 
-#ifdef SITK_HAS_CXX11_UNIQUE_PTR
-
-#include <memory>
-
-int main(void) {
-  std::unique_ptr<int> p1(new int);
-  return 0;
-}
-
-#endif
-
-
-
-//-------------------------------------
-
 #ifdef SITK_HAS_TR1_FUNCTIONAL
 
 #ifdef HAS_TR1_SUB_INCLUDE

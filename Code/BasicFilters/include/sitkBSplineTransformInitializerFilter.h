@@ -103,7 +103,7 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       std::vector<uint32_t>  m_TransformDomainMeshSize;

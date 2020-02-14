@@ -51,7 +51,7 @@ namespace itk
   {
     // note: If img and this are this same, the following statement
     // will still be safe. It is also exception safe.
-    nsstd::auto_ptr<PimpleImageBase> temp( img.m_PimpleImage->ShallowCopy() );
+    std::unique_ptr<PimpleImageBase> temp( img.m_PimpleImage->ShallowCopy() );
     delete this->m_PimpleImage;
     this->m_PimpleImage = temp.release();
     return *this;
@@ -727,7 +727,7 @@ namespace itk
       if ( this->m_PimpleImage->GetReferenceCountOfImage() > 1 )
         {
         // note: care is take here to be exception safe with memory allocation
-        nsstd::auto_ptr<PimpleImageBase> temp( this->m_PimpleImage->DeepCopy() );
+        std::unique_ptr<PimpleImageBase> temp( this->m_PimpleImage->DeepCopy() );
         delete this->m_PimpleImage;
         this->m_PimpleImage = temp.release();
         }

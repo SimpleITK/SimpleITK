@@ -598,7 +598,7 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
   bool Transform::SetInverse()
   {
     assert( m_PimpleTransform );
-    nsstd::auto_ptr<PimpleTransformBase> temp;
+    std::unique_ptr<PimpleTransformBase> temp;
     {
     // See if a new pimple transform can be created
     PimpleTransformBase *p = SITK_NULLPTR;

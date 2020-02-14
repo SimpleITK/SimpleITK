@@ -27,15 +27,15 @@ namespace itk {
   namespace simple {
 
   /** Creates a boundary condition object from an enum. Uses an
-   * auto_ptr for dynamically allocated object, to enforce the user to
+   * unique_ptr for dynamically allocated object, to enforce the user to
    * take ownership of the object.
    *
    */
   template< class TFilter, class TInternalFilter >
-  nsstd::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >
+  std::unique_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >
   CreateNewBoundaryConditionInstance(typename TFilter::BoundaryConditionType bc)
   {
-    typedef nsstd::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > > PointerType;
+    typedef std::unique_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > > PointerType;
 
     switch ( bc )
       {

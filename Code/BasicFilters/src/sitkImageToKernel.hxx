@@ -34,12 +34,12 @@ namespace simple {
  *
  */
 template<typename TImageType>
-nsstd::auto_ptr< ImageKernelOperator< typename TImageType::PixelType, TImageType::ImageDimension > >
+std::unique_ptr< ImageKernelOperator< typename TImageType::PixelType, TImageType::ImageDimension > >
 CreateOperatorFromImage( const TImageType * image )
 {
 typedef typename TImageType::PixelType KernelImagePixelType;
 typedef ImageKernelOperator< KernelImagePixelType, TImageType::ImageDimension > KernelType;
-typedef nsstd::auto_ptr<KernelType> KernelPointerType;
+typedef std::unique_ptr<KernelType> KernelPointerType;
 
 typedef typename KernelType::SizeType KernelSizeType;
 
