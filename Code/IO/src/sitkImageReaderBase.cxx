@@ -214,7 +214,7 @@ ImageReaderBase
   if (numberOfComponents == 1 &&
       ( pixelType == itk::ImageIOBase::SCALAR || pixelType == itk::ImageIOBase::COMPLEX ) )
     {
-    outPixelType = this->ExecuteInternalReadScalar( componentType );
+    outPixelType = this->ExecuteInternalReadScalar( static_cast<int>(componentType) );
     return;
     }
   // we try to load anything else into a VectorImage
@@ -226,12 +226,12 @@ ImageReaderBase
             pixelType == itk::ImageIOBase::POINT ||
             pixelType == itk::ImageIOBase::OFFSET )
     {
-    outPixelType = this->ExecuteInternalReadVector( componentType );
+    outPixelType = this->ExecuteInternalReadVector( static_cast<int>(componentType) );
     return;
     }
   else if ( pixelType == itk::ImageIOBase::COMPLEX )
     {
-    outPixelType = this->ExecuteInternalReadComplex( componentType );
+    outPixelType = this->ExecuteInternalReadComplex( static_cast<int>(componentType) );
     return;
     }
   else
@@ -268,7 +268,7 @@ ImageReaderBase
 {
   const unsigned int UnusedDimension = 2;
 
-  switch(componentType)
+  switch(static_cast<ImageIOBase::IOComponentType>(componentType))
     {
     case itk::ImageIOBase::CHAR:
       return ImageTypeToPixelIDValue< itk::Image<int8_t, UnusedDimension> >::Result;
@@ -326,7 +326,7 @@ ImageReaderBase
 {
   const unsigned int UnusedDimension = 2;
 
-  switch(componentType)
+  switch(static_cast<ImageIOBase::IOComponentType>(componentType))
     {
     case itk::ImageIOBase::FLOAT:
       return ImageTypeToPixelIDValue< itk::Image<std::complex<float>, UnusedDimension> >::Result;
@@ -346,7 +346,7 @@ ImageReaderBase
 {
   const unsigned int UnusedDimension = 2;
 
-  switch(componentType)
+  switch(static_cast<ImageIOBase::IOComponentType>(componentType))
     {
     case itk::ImageIOBase::CHAR:
       return ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
