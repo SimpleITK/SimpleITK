@@ -141,14 +141,14 @@ public:
   void Execute(itk::Object*, const itk::EventObject&) {}
   void Execute(const itk::Object*, const itk::EventObject&) {}
 
+  void operator=(const HolderCommand&) = delete;
+  HolderCommand(const HolderCommand&) = delete;
+
 protected:
   HolderCommand() {};
   ~HolderCommand() {};
 
 private:
-  void operator=(const HolderCommand&); // not implemented
-  HolderCommand(const HolderCommand&); // not implemented
-
   ObjectType m_Object;
 
 };
