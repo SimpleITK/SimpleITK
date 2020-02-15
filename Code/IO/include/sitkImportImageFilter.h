@@ -106,7 +106,7 @@ namespace itk {
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
       unsigned int     m_NumberOfComponentsPerPixel;
       PixelIDValueType m_PixelIDValue;

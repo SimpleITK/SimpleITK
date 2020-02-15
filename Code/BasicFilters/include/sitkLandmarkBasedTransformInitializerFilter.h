@@ -166,7 +166,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       /*  */

@@ -201,7 +201,7 @@ namespace itk {
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       nsstd::function<std::vector<std::string>()> m_pfGetMetaDataKeys;
@@ -210,7 +210,7 @@ namespace itk {
 
       std::string m_FileName;
 
-      nsstd::auto_ptr<MetaDataDictionary> m_MetaDataDictionary;
+      std::unique_ptr<MetaDataDictionary> m_MetaDataDictionary;
 
       PixelIDValueEnum     m_PixelType;
       unsigned int         m_Dimension;
