@@ -22,7 +22,6 @@
 #include "sitkTemplateFunctions.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
-#include "sitkEnableIf.h"
 
 #include <vector>
 #include <memory>
@@ -461,15 +460,15 @@ namespace simple
      * @{
      */
     template<class TImageType>
-    typename EnableIf<IsBasic<TImageType>::Value>::Type
+    typename std::enable_if<IsBasic<TImageType>::Value>::type
     AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
 
     template<class TImageType>
-    typename EnableIf<IsVector<TImageType>::Value>::Type
+    typename std::enable_if<IsVector<TImageType>::Value>::type
     AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
 
     template<class TImageType>
-    typename EnableIf<IsLabel<TImageType>::Value>::Type
+    typename std::enable_if<IsLabel<TImageType>::Value>::type
     AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
     /**@}*/
 
@@ -497,11 +496,11 @@ namespace simple
      * @{
      */
     template<int VPixelIDValue, typename TImageType>
-    typename DisableIf<std::is_same<TImageType, void>::value>::Type
+      typename std::enable_if<!std::is_same<TImageType, void>::value>::type
     ConditionalInternalInitialization( TImageType *i);
 
     template<int VPixelIDValue, typename TImageType>
-    typename EnableIf<std::is_same<TImageType, void>::value>::Type
+    typename std::enable_if<std::is_same<TImageType, void>::value>::type
     ConditionalInternalInitialization( TImageType *) { assert( false ); }
      /**@}*/
 

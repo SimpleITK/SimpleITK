@@ -59,7 +59,7 @@ namespace itk
   }
 
   template<int VPixelIDValue, typename TImageType>
-  typename DisableIf<std::is_same<TImageType, void>::value>::Type
+  typename std::enable_if<!std::is_same<TImageType, void>::value>::type
   Image::ConditionalInternalInitialization( TImageType *image )
   {
     // no need to check if null
@@ -71,7 +71,7 @@ namespace itk
 
 
   template<class TImageType>
-  typename EnableIf<IsBasic<TImageType>::Value>::Type
+  typename std::enable_if<IsBasic<TImageType>::Value>::type
   Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1  && numberOfComponents != 0 )
@@ -115,7 +115,7 @@ namespace itk
   }
 
   template<class TImageType>
-  typename EnableIf<IsVector<TImageType>::Value>::Type
+  typename std::enable_if<IsVector<TImageType>::Value>::type
   Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
   {
     if ( numberOfComponents == 0 )
@@ -164,7 +164,7 @@ namespace itk
   }
 
   template<class TImageType>
-  typename EnableIf<IsLabel<TImageType>::Value>::Type
+  typename std::enable_if<IsLabel<TImageType>::Value>::type
   Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1 && numberOfComponents != 0 )
