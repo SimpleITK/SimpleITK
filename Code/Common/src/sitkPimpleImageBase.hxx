@@ -695,9 +695,9 @@ namespace itk
 
     template < typename TPixelIDType >
     typename std::enable_if<!std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
-                       typename Conditional< IsVector<TPixelIDType>::Value,
+                            typename std::conditional< IsVector<TPixelIDType>::Value,
                                              std::vector< typename itk::NumericTraits<typename PixelIDToImageType<TPixelIDType,ImageType::ImageDimension>::ImageType::PixelType >::ValueType >,
-                                             typename PixelIDToImageType<TPixelIDType,ImageType::ImageDimension>::ImageType::PixelType >::Type >::type
+                                             typename PixelIDToImageType<TPixelIDType,ImageType::ImageDimension>::ImageType::PixelType >::type >::type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
         Unused( idx );

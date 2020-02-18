@@ -18,23 +18,12 @@
 #ifndef sitkConditional_h
 #define sitkConditional_h
 
+#include <type_traits>
+
 namespace itk
 {
 namespace simple
 {
-
-/* \brief An object for selection of a type at compile-time.
- * *
- * If VCode is true, then the member Type will be TIfTrue, otherwise
- * the member typedef Type will be equivalent to TIfFalse.
- *
- */
-template <bool VCond, class TIfTrue, class TIfFalse> struct Conditional { typedef TIfTrue Type; };
-/** \cond SPECIALIZATION_IMPLEMENTATION */
-template<class TIfTrue, class TIfFalse>
-struct Conditional<false, TIfTrue, TIfFalse> { typedef TIfFalse Type; };
-
-/**\endcond*/
 
 /* \brief An object for selecting an integer value at compile-time.
  *
@@ -47,9 +36,9 @@ struct Conditional<false, TIfTrue, TIfFalse> { typedef TIfFalse Type; };
  */
 template <bool VCond, int TIfTrue, int TIfFalse>
 struct ConditionalValue
-  : public itk::simple::Conditional<VCond,
-                                    std::integral_constant<int, TIfTrue>,
-                                    std::integral_constant<int, TIfFalse> >::Type
+  : public std::conditional<VCond,
+                            std::integral_constant<int, TIfTrue>,
+                            std::integral_constant<int, TIfFalse> >::type
 {
 private:
   typedef ConditionalValue Self;

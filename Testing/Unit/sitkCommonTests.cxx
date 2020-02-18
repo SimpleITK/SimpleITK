@@ -50,20 +50,6 @@ TEST( VersionTest, VersoinTest)
   EXPECT_NE( std::find( itk_modules.begin(), itk_modules.end(), "ITKIOImageBase" ), itk_modules.end());
 }
 
-TEST( ConditionalTest, ConditionalTest1 ) {
-
-  // a quick check to make sure the conditional works
-  typedef itk::simple::Conditional<true, int, float>::Type IntType;
-  typedef itk::simple::Conditional<false, int, float>::Type FloatType;
-
-
-  EXPECT_EQ ( typeid( IntType ).name(), typeid( int ).name() );
-  EXPECT_EQ ( typeid( FloatType ).name(), typeid( float ).name() );
-
-  return;
-
-}
-
 
 TEST( ProcessObject, GlobalTolerance ) {
   // basic coverage test of setting and getting
