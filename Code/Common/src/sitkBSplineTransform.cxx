@@ -86,7 +86,7 @@ void SetCoefficientImages(TBSplineTransform* bspline, const std::vector<Image> &
 
     const itkImageType * itkImage = dynamic_cast <const itkImageType*>(sitkImage.GetITKBase());
 
-    if ( itkImage == SITK_NULLPTR )
+    if ( itkImage == nullptr )
       {
       sitkExceptionMacro( "Unexpected casting error!");
       }
@@ -234,21 +234,21 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
-  this->m_pfGetTransformDomainDirection = SITK_NULLPTR;
-  this->m_pfSetTransformDomainDirection = SITK_NULLPTR;
-  this->m_pfGetTransformDomainMeshSize = SITK_NULLPTR;
-  this->m_pfSetTransformDomainMeshSize = SITK_NULLPTR;
-  this->m_pfGetTransformDomainOrigin = SITK_NULLPTR;
-  this->m_pfSetTransformDomainOrigin = SITK_NULLPTR;
-  this->m_pfGetTransformDomainPhysicalDimensions = SITK_NULLPTR;
-  this->m_pfSetTransformDomainPhysicalDimensions = SITK_NULLPTR;
-  this->m_pfGetCoefficientImages = SITK_NULLPTR;
-  this->m_pfSetCoefficientImages = SITK_NULLPTR;
-  this->m_pfGetOrder = SITK_NULLPTR;
+  this->m_pfGetTransformDomainDirection = nullptr;
+  this->m_pfSetTransformDomainDirection = nullptr;
+  this->m_pfGetTransformDomainMeshSize = nullptr;
+  this->m_pfSetTransformDomainMeshSize = nullptr;
+  this->m_pfGetTransformDomainOrigin = nullptr;
+  this->m_pfSetTransformDomainOrigin = nullptr;
+  this->m_pfGetTransformDomainPhysicalDimensions = nullptr;
+  this->m_pfSetTransformDomainPhysicalDimensions = nullptr;
+  this->m_pfGetCoefficientImages = nullptr;
+  this->m_pfSetCoefficientImages = nullptr;
+  this->m_pfGetOrder = nullptr;
 
   callInternalInitialization(visitor);
 
-  if ( this->m_pfGetOrder == SITK_NULLPTR )
+  if ( this->m_pfGetOrder == nullptr )
     {
     sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
     }

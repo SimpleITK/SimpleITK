@@ -307,7 +307,7 @@ TEST( ProcessObject, DeleteCommandActiveProcess )
         if ( m_Process.GetProgress() >= m_AbortAt )
           {
           delete m_Cmd;
-          m_Cmd = SITK_NULLPTR;
+          m_Cmd = nullptr;
           }
       }
 

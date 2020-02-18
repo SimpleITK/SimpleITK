@@ -131,7 +131,7 @@ int TestDriverInvokeProcess(  const ArgumentsList & args )
     }
 
   std::cout << std::endl;
-  argv[args.size()] = SITK_NULLPTR;
+  argv[args.size()] = nullptr;
 
 #ifdef DEBUG
   std::cout << "Invoke Process: ";
@@ -148,7 +148,7 @@ int TestDriverInvokeProcess(  const ArgumentsList & args )
   itksysProcess_SetPipeShared(process, itksysProcess_Pipe_STDOUT, true);
   itksysProcess_SetPipeShared(process, itksysProcess_Pipe_STDERR, true);
   itksysProcess_Execute(process);
-  itksysProcess_WaitForExit(process, SITK_NULLPTR);
+  itksysProcess_WaitForExit(process, nullptr);
 
   delete[] argv;
 
@@ -218,7 +218,7 @@ return retCode;
 
 
 
-int ProcessArguments(int *ac, ArgumentStringType *av, ProcessedOutputType * processedOutput = SITK_NULLPTR )
+int ProcessArguments(int *ac, ArgumentStringType *av, ProcessedOutputType * processedOutput = nullptr )
 {
 
   regressionTestParameters.intensityTolerance  = 2.0;

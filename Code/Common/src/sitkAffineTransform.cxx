@@ -159,21 +159,21 @@ void AffineTransform::InternalInitialization(itk::TransformBase *transform)
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
-  this->m_pfSetCenter = SITK_NULLPTR;
-  this->m_pfGetCenter = SITK_NULLPTR;
-  this->m_pfSetTranslation = SITK_NULLPTR;
-  this->m_pfGetTranslation = SITK_NULLPTR;
-  this->m_pfSetMatrix = SITK_NULLPTR;
-  this->m_pfGetMatrix = SITK_NULLPTR;
-  this->m_pfScale1 = SITK_NULLPTR;
-  this->m_pfScale2 = SITK_NULLPTR;
-  this->m_pfShear = SITK_NULLPTR;
-  this->m_pfTranslate = SITK_NULLPTR;
-  this->m_pfRotate = SITK_NULLPTR;
+  this->m_pfSetCenter = nullptr;
+  this->m_pfGetCenter = nullptr;
+  this->m_pfSetTranslation = nullptr;
+  this->m_pfGetTranslation = nullptr;
+  this->m_pfSetMatrix = nullptr;
+  this->m_pfGetMatrix = nullptr;
+  this->m_pfScale1 = nullptr;
+  this->m_pfScale2 = nullptr;
+  this->m_pfShear = nullptr;
+  this->m_pfTranslate = nullptr;
+  this->m_pfRotate = nullptr;
 
   callInternalInitialization(visitor);
 
-  if ( this->m_pfSetCenter == SITK_NULLPTR )
+  if ( this->m_pfSetCenter == nullptr )
     {
     sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
     }

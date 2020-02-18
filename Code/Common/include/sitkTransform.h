@@ -96,10 +96,10 @@ public:
    */
   template<unsigned int NDimension>
   explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
-    : m_PimpleTransform( SITK_NULLPTR )
+    : m_PimpleTransform( nullptr )
     {
       static_assert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
-      if ( compositeTransform == SITK_NULLPTR )
+      if ( compositeTransform == nullptr )
         {
         sitkExceptionMacro( "Unable to construct a null transform!" );
         }
@@ -271,7 +271,7 @@ protected:
 private:
 
   template< unsigned int VDimension>
-  void InternalInitialization( TransformEnum type, itk::TransformBase *base = SITK_NULLPTR );
+  void InternalInitialization( TransformEnum type, itk::TransformBase *base = nullptr );
 
   struct TransformTryCastVisitor
   {

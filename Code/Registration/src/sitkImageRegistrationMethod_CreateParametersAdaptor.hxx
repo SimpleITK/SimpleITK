@@ -45,7 +45,7 @@ CreateTransformParametersAdaptorBSpline(TTransformType *bsplineTransform,
 
   if ( scaleFactor < 1 )
     {
-    return SITK_NULLPTR;
+    return nullptr;
     }
 
   typedef TTransformType BSplineTransformType;
@@ -113,7 +113,7 @@ CreateTransformParametersAdaptorDisplacementField(TTransformBase *transform,
   DisplacementFieldTransformType *displacementFieldTransform = dynamic_cast<DisplacementFieldTransformType*>(transform);
   if (!displacementFieldTransform)
     {
-    return SITK_NULLPTR;
+    return nullptr;
     }
 
   const DisplacementFieldType * displacementField = displacementFieldTransform->GetDisplacementField();
@@ -177,22 +177,22 @@ ImageRegistrationMethod::CreateTransformParametersAdaptor(TRegistrationMethod* m
       bsplineScaleFactor = m_TransformBSplineScaleFactors[level];
       }
 
-    TransformParametersAdaptorTypePointer adaptor = SITK_NULLPTR;
-    if (displacementField != SITK_NULLPTR)
+    TransformParametersAdaptorTypePointer adaptor = nullptr;
+    if (displacementField != nullptr)
       {
       adaptor = CreateTransformParametersAdaptorDisplacementField<TransformType>( displacementField,
                                                                                   shrinkFactors,
                                                                                   fixedImage,
                                                                                   level );
       }
-    else if (bsplineO3 != SITK_NULLPTR)
+    else if (bsplineO3 != nullptr)
       {
       adaptor = CreateTransformParametersAdaptorBSpline<TransformType>( bsplineO3,
                                                                         shrinkFactors,
                                                                         fixedImage,
                                                                         bsplineScaleFactor );
       }
-    else if (bsplineO2 != SITK_NULLPTR)
+    else if (bsplineO2 != nullptr)
       {
       adaptor = CreateTransformParametersAdaptorBSpline<TransformType>( bsplineO2,
                                                                         shrinkFactors,

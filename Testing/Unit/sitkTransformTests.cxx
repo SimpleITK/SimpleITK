@@ -1134,7 +1134,7 @@ TEST(BasicFilters, DisplacementField_GetDisplacementField)
 
     typedef itk::VectorImage<double, 2> ImageBaseType;
     ImageBaseType *imageBase = dynamic_cast<ImageBaseType*>(displacementImage.GetITKBase());
-    ASSERT_TRUE(imageBase != SITK_NULLPTR);
+    ASSERT_TRUE(imageBase != nullptr);
     EXPECT_FALSE(imageBase->GetPixelContainer()->GetContainerManageMemory());
 
     sitk::Image result = sitk::InvertDisplacementField(displacementImage);
@@ -1142,7 +1142,7 @@ TEST(BasicFilters, DisplacementField_GetDisplacementField)
     EXPECT_FALSE(imageBase->GetPixelContainer()->GetContainerManageMemory());
 
     imageBase = dynamic_cast<ImageBaseType*>(result.GetITKBase());
-    ASSERT_TRUE(imageBase != SITK_NULLPTR);
+    ASSERT_TRUE(imageBase != nullptr);
     EXPECT_TRUE(imageBase->GetPixelContainer()->GetContainerManageMemory());
   }
 
