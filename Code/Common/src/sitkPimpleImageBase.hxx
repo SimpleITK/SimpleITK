@@ -467,6 +467,10 @@ namespace itk
           }
         return this->InternalGetBuffer< BasicPixelID<double> >( );
       }
+    virtual void *GetBufferAsVoid( )
+      {
+        return this->InternalGetBuffer< typename ImageTypeToPixelID<ImageType>::PixelIDType >( );
+      }
 
     virtual const int8_t  *GetBufferAsInt8() const
       {
@@ -534,6 +538,11 @@ namespace itk
           }
         return const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<double> >( );
       }
+    virtual const void *GetBufferAsVoid( ) const
+      {
+        return const_cast<Self*>(this)->InternalGetBuffer< typename ImageTypeToPixelID<ImageType>::PixelIDType >( );
+      }
+
 
     virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )
       {

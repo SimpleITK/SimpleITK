@@ -420,6 +420,7 @@ namespace simple
     uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
+    void     *GetBufferAsVoid();
 
     const int8_t   *GetBufferAsInt8( ) const;
     const uint8_t  *GetBufferAsUInt8( ) const;
@@ -431,6 +432,7 @@ namespace simple
     const uint64_t *GetBufferAsUInt64( ) const;
     const float    *GetBufferAsFloat( ) const;
     const double   *GetBufferAsDouble( ) const;
+    const void     *GetBufferAsVoid() const;
     /** @} */
 
 

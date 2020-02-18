@@ -58,6 +58,7 @@
 %rename("GetConstBufferAsUInt64") itk::simple::Image::GetBufferAsUInt64( ) const;
 %rename("GetConstBufferAsFloat")  itk::simple::Image::GetBufferAsFloat( ) const;
 %rename("GetConstBufferAsDouble") itk::simple::Image::GetBufferAsDouble( ) const;
+%rename("GetConstBufferAsVoid") itk::simple::Image::GetBufferAsVoid( ) const;
 
 
 

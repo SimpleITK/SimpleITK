@@ -69,6 +69,7 @@
 %ignore itk::simple::Image::GetBufferAsUInt64;
 %ignore itk::simple::Image::GetBufferAsFloat;
 %ignore itk::simple::Image::GetBufferAsDouble;
+%ignore itk::simple::Image::GetBufferAsVoid;
 #endif
 
 
