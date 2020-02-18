@@ -43,7 +43,6 @@ const double adir[] = {0.0, 0.0, 1.0,
                        0.0, -1.0, 0.0};
 
 using  itk::simple::InstantiatedPixelIDTypeList;
-namespace nsstd = itk::simple::nsstd;
 
 
 

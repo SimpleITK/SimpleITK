@@ -27,7 +27,6 @@
 #include <sitkVersionConfig.h>
 #include <itkConfigure.h>
 
-namespace nsstd = itk::simple::nsstd;
 
 TEST( VersionTest, VersoinTest)
 {
