@@ -155,18 +155,18 @@ private:
 
   static PimpleTransformBase *CreateDisplacementFieldPimpleTransform(unsigned int dimension);
 
-  nsstd::function<void (Image &)> m_pfSetDisplacementField;
-  nsstd::function<Image ()> m_pfGetDisplacementField;
+  std::function<void (Image &)> m_pfSetDisplacementField;
+  std::function<Image ()> m_pfGetDisplacementField;
 
-  nsstd::function<void (Image &)> m_pfSetInverseDisplacementField;
-  nsstd::function<Image ()> m_pfGetInverseDisplacementField;
+  std::function<void (Image &)> m_pfSetInverseDisplacementField;
+  std::function<Image ()> m_pfGetInverseDisplacementField;
 
-  nsstd::function<void (InterpolatorEnum &)> m_pfSetInterpolator;
-  nsstd::function<InterpolatorEnum ()> m_pfGetInterpolator;
+  std::function<void (InterpolatorEnum &)> m_pfSetInterpolator;
+  std::function<InterpolatorEnum ()> m_pfGetInterpolator;
 
-  nsstd::function<void ()> m_pfSetSmoothingOff;
-  nsstd::function<void (double, double)> m_pfSetSmoothingGaussianOnUpdate;
-  nsstd::function<void (const std::vector<unsigned int> &,const std::vector<unsigned int>&, bool, unsigned int)> m_pfSetSmoothingBSplineOnUpdate;
+  std::function<void ()> m_pfSetSmoothingOff;
+  std::function<void (double, double)> m_pfSetSmoothingGaussianOnUpdate;
+  std::function<void (const std::vector<unsigned int> &,const std::vector<unsigned int>&, bool, unsigned int)> m_pfSetSmoothingBSplineOnUpdate;
 
 };
 

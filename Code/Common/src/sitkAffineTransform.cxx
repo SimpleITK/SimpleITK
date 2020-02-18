@@ -187,19 +187,19 @@ void AffineTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
 
   typename TransformType::MatrixType (*pfSTLToITKDirection)(const std::vector<double> &) = &sitkSTLToITKDirection<typename TransformType::MatrixType>;
-  this->m_pfSetMatrix = nsstd::bind(&TransformType::SetMatrix, t, nsstd::bind(pfSTLToITKDirection, nsstd::placeholders::_1));
+  this->m_pfSetMatrix = std::bind(&TransformType::SetMatrix, t, std::bind(pfSTLToITKDirection, std::placeholders::_1));
 
   SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
   void  (TransformType::*pfScale1) (const typename TransformType::OutputVectorType &, bool) = &TransformType::Scale;
-  this->m_pfScale1 = nsstd::bind(pfScale1,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
+  this->m_pfScale1 = std::bind(pfScale1,t,std::bind(pfSTLVectorToITK,std::placeholders::_1),std::placeholders::_2);
 
   void  (TransformType::*pfScale2) (const double &, bool) = &TransformType::Scale;
-  this->m_pfScale2 = nsstd::bind(pfScale2,t,nsstd::placeholders::_1,nsstd::placeholders::_2);
-  this->m_pfShear = nsstd::bind(&TransformType::Shear,t,nsstd::placeholders::_1,nsstd::placeholders::_2,nsstd::placeholders::_3,nsstd::placeholders::_4);
-  this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
-  this->m_pfRotate = nsstd::bind(&TransformType::Rotate,t,nsstd::placeholders::_1,nsstd::placeholders::_2,nsstd::placeholders::_3,nsstd::placeholders::_4);
+  this->m_pfScale2 = std::bind(pfScale2,t,std::placeholders::_1,std::placeholders::_2);
+  this->m_pfShear = std::bind(&TransformType::Shear,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
+  this->m_pfTranslate = std::bind(&TransformType::Translate,t,std::bind(pfSTLVectorToITK,std::placeholders::_1),std::placeholders::_2);
+  this->m_pfRotate = std::bind(&TransformType::Rotate,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
 }
 
 }

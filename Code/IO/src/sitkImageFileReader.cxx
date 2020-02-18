@@ -171,9 +171,9 @@ namespace itk {
       swap(spacing, m_Spacing);
       swap(size, m_Size);
 
-      this->m_pfGetMetaDataKeys = nsstd::bind(&MetaDataDictionary::GetKeys, this->m_MetaDataDictionary.get());
-      this->m_pfHasMetaDataKey = nsstd::bind(&MetaDataDictionary::HasKey, this->m_MetaDataDictionary.get(), nsstd::placeholders::_1);
-      this->m_pfGetMetaData = nsstd::bind(&GetMetaDataDictionaryCustomCast::CustomCast, this->m_MetaDataDictionary.get(), nsstd::placeholders::_1);
+      this->m_pfGetMetaDataKeys = std::bind(&MetaDataDictionary::GetKeys, this->m_MetaDataDictionary.get());
+      this->m_pfHasMetaDataKey = std::bind(&MetaDataDictionary::HasKey, this->m_MetaDataDictionary.get(), std::placeholders::_1);
+      this->m_pfGetMetaData = std::bind(&GetMetaDataDictionaryCustomCast::CustomCast, this->m_MetaDataDictionary.get(), std::placeholders::_1);
     }
 
     PixelIDValueEnum

@@ -121,19 +121,19 @@ private:
   template <unsigned int ND>
     static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned int order);
 
-  nsstd::function<std::vector<double> ()> m_pfGetTransformDomainDirection;
-  nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainDirection;
-  nsstd::function<std::vector<unsigned int> ()> m_pfGetTransformDomainMeshSize;
-  nsstd::function<void (const std::vector<unsigned int>&)> m_pfSetTransformDomainMeshSize;
-  nsstd::function<std::vector<double> ()> m_pfGetTransformDomainOrigin;
-  nsstd::function<void (const std::vector<double>&)> m_pfSetTransformDomainOrigin;
-  nsstd::function<std::vector<double> ()> m_pfGetTransformDomainPhysicalDimensions;
-  nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainPhysicalDimensions;
+  std::function<std::vector<double> ()> m_pfGetTransformDomainDirection;
+  std::function<void (const std::vector<double> &)> m_pfSetTransformDomainDirection;
+  std::function<std::vector<unsigned int> ()> m_pfGetTransformDomainMeshSize;
+  std::function<void (const std::vector<unsigned int>&)> m_pfSetTransformDomainMeshSize;
+  std::function<std::vector<double> ()> m_pfGetTransformDomainOrigin;
+  std::function<void (const std::vector<double>&)> m_pfSetTransformDomainOrigin;
+  std::function<std::vector<double> ()> m_pfGetTransformDomainPhysicalDimensions;
+  std::function<void (const std::vector<double> &)> m_pfSetTransformDomainPhysicalDimensions;
 
-  nsstd::function<std::vector<Image> ()> m_pfGetCoefficientImages;
-  nsstd::function< unsigned int()> m_pfGetOrder;
+  std::function<std::vector<Image> ()> m_pfGetCoefficientImages;
+  std::function< unsigned int()> m_pfGetOrder;
 
-  nsstd::function<void (const std::vector<Image> &)> m_pfSetCoefficientImages;
+  std::function<void (const std::vector<Image> &)> m_pfSetCoefficientImages;
 
 };
 

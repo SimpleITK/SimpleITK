@@ -26,8 +26,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstring>
-
-#include "nsstd/functional.h"
+#include <functional>
 
 namespace itk {
 namespace simple {

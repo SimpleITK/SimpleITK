@@ -19,9 +19,6 @@
 #define sitkMemberFunctionFactoryBase_h
 
 #include "sitkConfigure.h"
-
-#include "nsstd/functional.h"
-
 #include "sitkPixelIDTypes.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkMacro.h"
@@ -29,6 +26,8 @@
 
 #include "Ancillary/TypeList.h"
 #include "Ancillary/FunctionTraits.h"
+
+#include <functional>
 
 #if defined SITK_HAS_UNORDERED_MAP
 #include "nsstd/unordered_map.h"
@@ -96,7 +95,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef nsstd::function< MemberFunctionResultType ( ) > FunctionObjectType;
+  typedef std::function< MemberFunctionResultType ( ) > FunctionObjectType;
 
 
 protected:
@@ -113,7 +112,7 @@ protected:
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return nsstd::bind( pfunc,objectPointer );
+      return std::bind( pfunc,objectPointer );
     }
 
   // maps of Keys to pointers to member functions
@@ -160,7 +159,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef nsstd::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
+  typedef std::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
 
 
 protected:
@@ -174,12 +173,12 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace nsstd::placeholders;
+      using namespace std::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return nsstd::bind( pfunc,objectPointer, _1 );
+      return std::bind( pfunc,objectPointer, _1 );
     }
 
 
@@ -224,7 +223,7 @@ public:
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object
    */
-  typedef nsstd::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) > FunctionObjectType;
+  typedef std::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) > FunctionObjectType;
 
 
 protected:
@@ -238,12 +237,12 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace nsstd::placeholders;
+      using namespace std::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return nsstd::bind( pfunc, objectPointer, _1, _2 );
+      return std::bind( pfunc, objectPointer, _1, _2 );
     }
 
 
@@ -288,7 +287,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef nsstd::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument2Type) > FunctionObjectType;
+  typedef std::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument2Type) > FunctionObjectType;
 
 
 protected:
@@ -302,12 +301,12 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace nsstd::placeholders;
+      using namespace std::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return nsstd::bind( pfunc, objectPointer, _1, _2, _3 );
+      return std::bind( pfunc, objectPointer, _1, _2, _3 );
     }
 
 
@@ -352,7 +351,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef nsstd::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) > FunctionObjectType;
+  typedef std::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) > FunctionObjectType;
 
 
 protected:
@@ -366,12 +365,12 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace nsstd::placeholders;
+      using namespace std::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return nsstd::bind( pfunc, objectPointer, _1, _2, _3, _4 );
+      return std::bind( pfunc, objectPointer, _1, _2, _3, _4 );
     }
 
 
@@ -416,7 +415,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef nsstd::function< MemberFunctionResultType (
+  typedef std::function< MemberFunctionResultType (
     MemberFunctionArgument0Type,
     MemberFunctionArgument1Type,
     MemberFunctionArgument2Type,
@@ -436,12 +435,12 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace nsstd::placeholders;
+      using namespace std::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return nsstd::bind( pfunc, objectPointer, _1, _2, _3, _4, _5 );
+      return std::bind( pfunc, objectPointer, _1, _2, _3, _4, _5 );
     }
 
 

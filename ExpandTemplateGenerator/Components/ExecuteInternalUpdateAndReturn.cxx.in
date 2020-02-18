@@ -36,7 +36,7 @@ end
 $(if measurements then
 for i = 1,#measurements do
   if measurements[i].active then
-    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = nsstd::bind('
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = std::bind('
     if measurements[i].custom_cast or measurements[i].label_map then
       OUT=OUT..'&'..measurements[i].name..'CustomCast<FilterType>::CustomCast'
     else
@@ -45,7 +45,7 @@ for i = 1,#measurements do
     OUT=OUT..', filter.GetPointer()'
     if measurements[i].parameters then
       for inum=1,#measurements[i].parameters do
-        OUT=OUT..", nsstd::placeholders::_"..inum
+        OUT=OUT..", std::placeholders::_"..inum
       end
     end
     OUT=OUT..' );\

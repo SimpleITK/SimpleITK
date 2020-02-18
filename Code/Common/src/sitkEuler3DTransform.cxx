@@ -189,12 +189,12 @@ void Euler3DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF_GetMatrix();
   SITK_TRANSFORM_SET_MPF_SetMatrix();
 
-  this->m_pfSetRotation = nsstd::bind(&TransformType::SetRotation,t,nsstd::placeholders::_1,nsstd::placeholders::_2,nsstd::placeholders::_3);
-  this->m_pfGetAngleX = nsstd::bind(&TransformType::GetAngleX,t);
-  this->m_pfGetAngleY = nsstd::bind(&TransformType::GetAngleY,t);
-  this->m_pfGetAngleZ = nsstd::bind(&TransformType::GetAngleZ,t);
-  this->m_pfSetComputeZYX = nsstd::bind(&TransformType::SetComputeZYX,t,nsstd::placeholders::_1);
-  this->m_pfGetComputeZYX = nsstd::bind(&TransformType::GetComputeZYX,t);
+  this->m_pfSetRotation = std::bind(&TransformType::SetRotation,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3);
+  this->m_pfGetAngleX = std::bind(&TransformType::GetAngleX,t);
+  this->m_pfGetAngleY = std::bind(&TransformType::GetAngleY,t);
+  this->m_pfGetAngleZ = std::bind(&TransformType::GetAngleZ,t);
+  this->m_pfSetComputeZYX = std::bind(&TransformType::SetComputeZYX,t,std::placeholders::_1);
+  this->m_pfGetComputeZYX = std::bind(&TransformType::GetComputeZYX,t);
 
 }
 

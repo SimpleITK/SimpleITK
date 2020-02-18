@@ -34,24 +34,6 @@ int main(void)
 
 //-------------------------------------
 
-#ifdef SITK_HAS_CXX11_FUNCTIONAL
-
-#include <functional>
-
-void f(int,int) {}
-
-int main(void)
-{
-std::function<void(int,int)> g(f);
-using namespace std::placeholders;
-std::function<void(int)> h = std::bind(g,0,_1);
-return 0;
-}
-
-#endif
-
-//-------------------------------------
-
 #ifdef SITK_HAS_CXX11_ALIAS_TEMPLATE
 
 template<class T>

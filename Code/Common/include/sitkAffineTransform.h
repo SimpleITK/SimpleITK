@@ -107,18 +107,18 @@ private:
     void InternalInitialization(TransformType *transform);
 
 
-  nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
-  nsstd::function<std::vector<double>()> m_pfGetCenter;
-  nsstd::function<void(const std::vector<double>&)> m_pfSetMatrix;
-  nsstd::function<std::vector<double>()> m_pfGetMatrix;
-  nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
-  nsstd::function<std::vector<double>()> m_pfGetTranslation;
+  std::function<void(const std::vector<double>&)> m_pfSetCenter;
+  std::function<std::vector<double>()> m_pfGetCenter;
+  std::function<void(const std::vector<double>&)> m_pfSetMatrix;
+  std::function<std::vector<double>()> m_pfGetMatrix;
+  std::function<void(const std::vector<double>&)> m_pfSetTranslation;
+  std::function<std::vector<double>()> m_pfGetTranslation;
 
-  nsstd::function<void(const std::vector<double> &, bool)> m_pfScale1;
-  nsstd::function<void(double, bool)> m_pfScale2;
-  nsstd::function<void(int, int, double, bool)> m_pfShear;
-  nsstd::function<void(const std::vector<double> &, bool)> m_pfTranslate;
-  nsstd::function<void(int, int, double, bool)> m_pfRotate;
+  std::function<void(const std::vector<double> &, bool)> m_pfScale1;
+  std::function<void(double, bool)> m_pfScale2;
+  std::function<void(int, int, double, bool)> m_pfShear;
+  std::function<void(const std::vector<double> &, bool)> m_pfTranslate;
+  std::function<void(int, int, double, bool)> m_pfRotate;
 
 };
 

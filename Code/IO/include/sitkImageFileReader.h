@@ -204,9 +204,9 @@ namespace itk {
       std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
-      nsstd::function<std::vector<std::string>()> m_pfGetMetaDataKeys;
-      nsstd::function<bool(const std::string &)> m_pfHasMetaDataKey;
-      nsstd::function<std::string(const std::string &)> m_pfGetMetaData;
+      std::function<std::vector<std::string>()> m_pfGetMetaDataKeys;
+      std::function<bool(const std::string &)> m_pfHasMetaDataKey;
+      std::function<std::string(const std::string &)> m_pfGetMetaData;
 
       std::string m_FileName;
 
