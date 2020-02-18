@@ -28,6 +28,7 @@
 #include "Ancillary/FunctionTraits.h"
 
 #include <unordered_map>
+#include <functional>
 
 namespace itk
 {
