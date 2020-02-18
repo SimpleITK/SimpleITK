@@ -55,7 +55,7 @@ TEST_F(sitkExceptionsTest, Test1) {
 TEST_F(sitkExceptionsTest, Test2) {
 
   // this can only be tested when true, if it was false the file won't compile
-  sitkStaticAssert( true, "this is just a test" );
+  static_assert( true, "this is just a test" );
 
   SUCCEED();
 }

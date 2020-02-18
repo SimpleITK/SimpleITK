@@ -98,7 +98,7 @@ public:
   explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
     : m_PimpleTransform( SITK_NULLPTR )
     {
-      sitkStaticAssert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
+      static_assert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
       if ( compositeTransform == SITK_NULLPTR )
         {
         sitkExceptionMacro( "Unable to construct a null transform!" );
