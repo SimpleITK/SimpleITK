@@ -21,21 +21,6 @@ int main(void)
 
 //-------------------------------------
 
-#ifdef SITK_HAS_CXX11_ALIAS_TEMPLATE
-
-template<class T>
-using ptr = T*;
-
-int main(void)
-{
-ptr<int> x;
-return 0;
-}
-
-#endif
-
-//-------------------------------------
-
 #ifdef SITK_HAS_TR1_FUNCTIONAL
 
 #ifdef HAS_TR1_SUB_INCLUDE
