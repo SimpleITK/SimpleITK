@@ -43,7 +43,7 @@ TEST(LabelStatistics,Simple) {
 
   try {
     lsFilter.Execute ( intensityImage, labelImage );
-  } catch ( itk::ExceptionObject e ) {
+  } catch ( itk::ExceptionObject &e ) {
     std::cout << "LabelStatistics failed: " << e.what() << std::endl;
   }
 
