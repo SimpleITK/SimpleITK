@@ -36,18 +36,19 @@ namespace simple
  */
 template <bool VCond, int TIfTrue, int TIfFalse>
 struct ConditionalValue
-  : public std::conditional<VCond,
-                            std::integral_constant<int, TIfTrue>,
-                            std::integral_constant<int, TIfFalse> >::type
 {
 private:
   typedef ConditionalValue Self;
+  typedef typename std::conditional<VCond,
+                                    std::integral_constant<int, TIfTrue>,
+                                    std::integral_constant<int, TIfFalse> >::type ConditionalType;
 public:
-  typedef typename Self::value_type ValueType;
-  typedef typename Self::type       Type;
+  typedef typename ConditionalType::type       Type;
+  typedef typename ConditionalType::value_type ValueType;
 
-  static const ValueType Value = Self::value;
+  static const ValueType Value = ConditionalType::value;
 };
+
 
 }
 }
