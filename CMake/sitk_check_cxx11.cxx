@@ -61,24 +61,6 @@ int main(void)
 
 //-------------------------------------
 
-#ifdef SITK_HAS_CXX11_UNORDERED_MAP
-
-#include <unordered_map>
-
-int main(void)
-{
-  // On OSX with gcc 4.0, there is an internal const correctness issue
-  // in the following.
-  std::unordered_map<int,int> s;
-  const std::unordered_map<int, int> &c_ref = s;
-  c_ref.find(1); // Problem is here.
-  return 0;
-}
-
-#endif
-
-//-------------------------------------
-
 #ifdef SITK_HAS_TR1_UNORDERED_MAP
 
 

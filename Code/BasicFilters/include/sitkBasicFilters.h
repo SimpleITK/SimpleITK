@@ -25,6 +25,7 @@
 
 // todo this should be moved to a more local place
 #include "sitkTransform.h"
+#include <map>
 
 #if defined( SITKDLL )
   #ifdef SimpleITKBasicFilters0_EXPORTS

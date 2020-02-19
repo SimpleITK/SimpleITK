@@ -28,7 +28,6 @@
 #cmakedefine SITK_SimpleITKExplit_STATIC
 
 #cmakedefine SITK_HAS_CXX11_TYPE_TRAITS
-#cmakedefine SITK_HAS_CXX11_UNORDERED_MAP
 
 // defined if compiler supports using template keyword to disambiguate
 // dependent names
