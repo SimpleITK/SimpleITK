@@ -30,7 +30,7 @@ namespace simple
 {
 
 GenericException::GenericException() SITK_NOEXCEPT
-  : m_PimpleException( SITK_NULLPTR )
+  : m_PimpleException( nullptr )
 {}
 
 GenericException::GenericException( const GenericException &e ) SITK_NOEXCEPT
@@ -39,14 +39,14 @@ GenericException::GenericException( const GenericException &e ) SITK_NOEXCEPT
 {
   try
     {
-    if ( e.m_PimpleException != SITK_NULLPTR )
+    if ( e.m_PimpleException != nullptr )
       {
       m_PimpleException =  new itk::ExceptionObject( *e.m_PimpleException );
       }
     }
   catch(...) // prevent exception from leaving constructor
     {
-    this->m_PimpleException = SITK_NULLPTR;
+    this->m_PimpleException = nullptr;
     }
 }
 
@@ -58,7 +58,7 @@ GenericException::GenericException(const char *file, unsigned int lineNumber) SI
     }
   catch(...) // prevent exception from leaving constructor
     {
-    this->m_PimpleException = SITK_NULLPTR;
+    this->m_PimpleException = nullptr;
     }
 }
 
@@ -71,7 +71,7 @@ GenericException::GenericException(const std::string & file, unsigned int lineNu
     }
   catch(...) // prevent exception from leaving constructor
     {
-    this->m_PimpleException = SITK_NULLPTR;
+    this->m_PimpleException = nullptr;
     }
 }
 
@@ -86,7 +86,7 @@ GenericException::GenericException(const std::string & file,
     }
   catch(...) // prevent exception from leaving constructor
     {
-    this->m_PimpleException = SITK_NULLPTR;
+    this->m_PimpleException = nullptr;
     }
 }
 
@@ -109,8 +109,8 @@ bool GenericException::operator==(const GenericException & orig) const
     {
     return this->m_PimpleException == orig.m_PimpleException;
     }
-  else if (  this->m_PimpleException == SITK_NULLPTR &&
-             orig.m_PimpleException == SITK_NULLPTR )
+  else if (  this->m_PimpleException == nullptr &&
+             orig.m_PimpleException == nullptr )
     {
     return true;
     }

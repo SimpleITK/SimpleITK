@@ -108,15 +108,15 @@ void ScaleTransform::InternalInitialization(itk::TransformBase *transform)
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
-  this->m_pfSetCenter = SITK_NULLPTR;
-  this->m_pfGetCenter = SITK_NULLPTR;
-  this->m_pfSetScale = SITK_NULLPTR;
-  this->m_pfGetScale = SITK_NULLPTR;
-  this->m_pfGetMatrix = SITK_NULLPTR;
+  this->m_pfSetCenter = nullptr;
+  this->m_pfGetCenter = nullptr;
+  this->m_pfSetScale = nullptr;
+  this->m_pfGetScale = nullptr;
+  this->m_pfGetMatrix = nullptr;
 
   callInternalInitialization(visitor);
 
-  if ( this->m_pfSetCenter == SITK_NULLPTR )
+  if ( this->m_pfSetCenter == nullptr )
     {
     sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
     }

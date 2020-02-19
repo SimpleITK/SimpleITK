@@ -27,11 +27,8 @@
 #endif
 #cmakedefine SITK_SimpleITKExplit_STATIC
 
-// defined if the compiler has C++11 "nullptr" keyword
-#cmakedefine SITK_HAS_CXX11_NULLPTR
 #cmakedefine SITK_HAS_CXX11_TYPE_TRAITS
 #cmakedefine SITK_HAS_CXX11_UNORDERED_MAP
-#cmakedefine SITK_HAS_CXX11_ALIAS_TEMPLATE
 
 // defined if compiler supports using template keyword to disambiguate
 // dependent names

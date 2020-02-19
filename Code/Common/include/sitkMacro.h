@@ -104,13 +104,6 @@ class GenericException;
       }                                                                 \
   }
 
-#if defined(SITK_HAS_CXX11_NULLPTR)
-#define SITK_NULLPTR nullptr
-#else
-#define SITK_NULLPTR NULL
-#endif
-
-
 #define sitkMacroJoin( X, Y ) sitkDoMacroJoin( X, Y )
 #define sitkDoMacroJoin( X, Y ) sitkDoMacroJoin2(X,Y)
 #define sitkDoMacroJoin2( X, Y ) X##Y

@@ -261,19 +261,19 @@ void DisplacementFieldTransform::InternalInitialization(itk::TransformBase *tran
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
-  m_pfSetDisplacementField = SITK_NULLPTR;
-  m_pfGetDisplacementField = SITK_NULLPTR;
-  m_pfSetInverseDisplacementField = SITK_NULLPTR;
-  m_pfGetInverseDisplacementField = SITK_NULLPTR;
-  m_pfSetInterpolator = SITK_NULLPTR;
-  m_pfGetInterpolator = SITK_NULLPTR;
-  m_pfSetSmoothingOff = SITK_NULLPTR;
-  m_pfSetSmoothingGaussianOnUpdate = SITK_NULLPTR;
-  m_pfSetSmoothingBSplineOnUpdate = SITK_NULLPTR;
+  m_pfSetDisplacementField = nullptr;
+  m_pfGetDisplacementField = nullptr;
+  m_pfSetInverseDisplacementField = nullptr;
+  m_pfGetInverseDisplacementField = nullptr;
+  m_pfSetInterpolator = nullptr;
+  m_pfGetInterpolator = nullptr;
+  m_pfSetSmoothingOff = nullptr;
+  m_pfSetSmoothingGaussianOnUpdate = nullptr;
+  m_pfSetSmoothingBSplineOnUpdate = nullptr;
 
   callInternalInitialization(visitor);
 
-  if ( this->m_pfSetDisplacementField == SITK_NULLPTR )
+  if ( this->m_pfSetDisplacementField == nullptr )
     {
     sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
     }
@@ -327,7 +327,7 @@ Image DisplacementFieldTransform::InternalGetDisplacementField( const TDisplacem
   // field, but it does not have the correct reference count.
   typedef typename TDisplacementFieldTransform::DisplacementFieldType DisplacementFieldType;
   DisplacementFieldType *itkDisplacement = const_cast<DisplacementFieldType*>(itkDisplacementTx->GetDisplacementField());
-  if (itkDisplacement != SITK_NULLPTR)
+  if (itkDisplacement != nullptr)
     {
     return Image(GetVectorImageFromImage(itkDisplacement));
     }
@@ -339,7 +339,7 @@ Image DisplacementFieldTransform::InternalGetInverseDisplacementField( const TDi
 {
   typedef typename TDisplacementFieldTransform::DisplacementFieldType DisplacementFieldType;
   DisplacementFieldType *itkDisplacement = const_cast<DisplacementFieldType*>(itkDisplacementTx->GetInverseDisplacementField());
-  if (itkDisplacement != SITK_NULLPTR)
+  if (itkDisplacement != nullptr)
     {
     return Image(GetVectorImageFromImage(itkDisplacement));
     }

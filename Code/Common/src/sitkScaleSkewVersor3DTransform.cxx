@@ -182,15 +182,15 @@ void ScaleSkewVersor3DTransform::InternalInitialization(itk::TransformBase *tran
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
   // explicitly remove all function pointer with reference to prior transform
-  this->m_pfSetCenter = SITK_NULLPTR;
-  this->m_pfGetCenter = SITK_NULLPTR;
-  this->m_pfSetTranslation = SITK_NULLPTR;
-  this->m_pfGetTranslation = SITK_NULLPTR;
-  this->m_pfSetRotation1 = SITK_NULLPTR;
-  this->m_pfSetRotation2 = SITK_NULLPTR;
-  this->m_pfGetVersor = SITK_NULLPTR;
-  this->m_pfTranslate = SITK_NULLPTR;
-  this->m_pfGetMatrix = SITK_NULLPTR;
+  this->m_pfSetCenter = nullptr;
+  this->m_pfGetCenter = nullptr;
+  this->m_pfSetTranslation = nullptr;
+  this->m_pfGetTranslation = nullptr;
+  this->m_pfSetRotation1 = nullptr;
+  this->m_pfSetRotation2 = nullptr;
+  this->m_pfGetVersor = nullptr;
+  this->m_pfTranslate = nullptr;
+  this->m_pfGetMatrix = nullptr;
 
   if (t && (typeid(*t) == typeid(TransformType)))
     {

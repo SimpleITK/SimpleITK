@@ -73,7 +73,7 @@ namespace itk {
 
   ImageSeriesReader::ImageSeriesReader()
     :
-    m_Filter(SITK_NULLPTR),
+    m_Filter(nullptr),
     m_MetaDataDictionaryArrayUpdate(false)
     {
 
@@ -88,7 +88,7 @@ namespace itk {
 
   ImageSeriesReader::~ImageSeriesReader()
   {
-  if (this->m_Filter != SITK_NULLPTR)
+  if (this->m_Filter != nullptr)
     {
       m_Filter->UnRegister();
     }
@@ -185,7 +185,7 @@ namespace itk {
     // if the IsInstantiated is correctly implemented this should
     // not occur
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
-    assert( imageio != SITK_NULLPTR );
+    assert( imageio != nullptr );
     typename Reader::Pointer reader = Reader::New();
     reader->SetImageIO( imageio );
     reader->SetFileNames( this->m_FileNames );
@@ -193,13 +193,13 @@ namespace itk {
     reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
     // release the old filter ( and output data )
-    if ( this->m_Filter != SITK_NULLPTR)
+    if ( this->m_Filter != nullptr)
       {
-      this->m_pfGetMetaDataKeys = SITK_NULLPTR;
-      this->m_pfHasMetaDataKey = SITK_NULLPTR;
-      this->m_pfGetMetaData =  SITK_NULLPTR;
+      this->m_pfGetMetaDataKeys = nullptr;
+      this->m_pfHasMetaDataKey = nullptr;
+      this->m_pfGetMetaData =  nullptr;
       this->m_Filter->UnRegister();
-      this->m_Filter = SITK_NULLPTR;
+      this->m_Filter = nullptr;
       }
 
 

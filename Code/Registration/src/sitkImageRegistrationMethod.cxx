@@ -1207,20 +1207,20 @@ void ImageRegistrationMethod::OnActiveProcessDelete( ) SITK_NOEXCEPT
   Superclass::OnActiveProcessDelete( );
 
   // clean up all pointer functions here
-  this->m_pfGetOptimizerIteration = SITK_NULLPTR;
-  this->m_pfGetOptimizerPosition = SITK_NULLPTR;
-  this->m_pfGetOptimizerLearningRate = SITK_NULLPTR;
-  this->m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
-  this->m_pfGetMetricValue = SITK_NULLPTR;
-  this->m_pfGetMetricNumberOfValidPoints = SITK_NULLPTR;
-  this->m_pfGetOptimizerScales = SITK_NULLPTR;
-  this->m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
+  this->m_pfGetOptimizerIteration = nullptr;
+  this->m_pfGetOptimizerPosition = nullptr;
+  this->m_pfGetOptimizerLearningRate = nullptr;
+  this->m_pfGetOptimizerConvergenceValue = nullptr;
+  this->m_pfGetMetricValue = nullptr;
+  this->m_pfGetMetricNumberOfValidPoints = nullptr;
+  this->m_pfGetOptimizerScales = nullptr;
+  this->m_pfGetOptimizerStopConditionDescription = nullptr;
 
-  this->m_pfUpdateWithBestValue = SITK_NULLPTR;
+  this->m_pfUpdateWithBestValue = nullptr;
 
-  this->m_pfGetCurrentLevel = SITK_NULLPTR;
+  this->m_pfGetCurrentLevel = nullptr;
 
-  this->m_ActiveOptimizer = SITK_NULLPTR;
+  this->m_ActiveOptimizer = nullptr;
 }
 
 

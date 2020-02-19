@@ -147,16 +147,16 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
   // explicitly remove all function pointer with reference to prior transform
-  this->m_pfSetCenter = SITK_NULLPTR;
-  this->m_pfGetCenter = SITK_NULLPTR;
-  this->m_pfSetTranslation = SITK_NULLPTR;
-  this->m_pfGetTranslation = SITK_NULLPTR;
-  this->m_pfSetAngle = SITK_NULLPTR;
-  this->m_pfGetAngle = SITK_NULLPTR;
-  this->m_pfSetScale = SITK_NULLPTR;
-  this->m_pfGetScale = SITK_NULLPTR;
-  this->m_pfGetMatrix = SITK_NULLPTR;
-  this->m_pfSetMatrix = SITK_NULLPTR;
+  this->m_pfSetCenter = nullptr;
+  this->m_pfGetCenter = nullptr;
+  this->m_pfSetTranslation = nullptr;
+  this->m_pfGetTranslation = nullptr;
+  this->m_pfSetAngle = nullptr;
+  this->m_pfGetAngle = nullptr;
+  this->m_pfSetScale = nullptr;
+  this->m_pfGetScale = nullptr;
+  this->m_pfGetMatrix = nullptr;
+  this->m_pfSetMatrix = nullptr;
 
   if (t && (typeid(*t) == typeid(TransformType)))
     {

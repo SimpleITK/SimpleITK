@@ -35,7 +35,7 @@ namespace itk {
       template< class TImageType>
       static void FixNonZeroIndex( TImageType * img )
       {
-        assert( img != SITK_NULLPTR );
+        assert( img != nullptr );
 
         typename TImageType::RegionType r = img->GetLargestPossibleRegion();
         typename TImageType::IndexType idx = r.GetIndex();
@@ -153,9 +153,9 @@ namespace itk {
       // release functions bound to old meta data dictionary
       if (m_MetaDataDictionary.get())
         {
-        this->m_pfGetMetaDataKeys = SITK_NULLPTR;
-        this->m_pfHasMetaDataKey = SITK_NULLPTR;
-        this->m_pfGetMetaData =  SITK_NULLPTR;
+        this->m_pfGetMetaDataKeys = nullptr;
+        this->m_pfHasMetaDataKey = nullptr;
+        this->m_pfGetMetaData =  nullptr;
         }
 
       this->m_MetaDataDictionary.reset(new MetaDataDictionary(iobase->GetMetaDataDictionary()));
@@ -351,7 +351,7 @@ namespace itk {
     // if the InstantiatedToken is correctly implemented this should
     // not occur
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
-    assert( imageio != SITK_NULLPTR );
+    assert( imageio != nullptr );
 
 
     if ( m_ExtractSize.empty() || m_ExtractSize.size() == ImageType::ImageDimension)
@@ -442,7 +442,7 @@ namespace itk {
                           << itkImage->GetLargestPossibleRegion() );
       }
 
-    assert(itkImage->GetSource() != SITK_NULLPTR);
+    assert(itkImage->GetSource() != nullptr);
     this->PreUpdate( itkImage->GetSource().GetPointer() );
 
     extractor->Update();

@@ -126,7 +126,7 @@ TEST(IO, ReadWriteInt64){
   const char *extension_list[] = {"mha",
                                   "nii",
                                   "nrrd",
-                                  SITK_NULLPTR};
+                                  nullptr};
 
   for (unsigned int i = 0; extension_list[i]; ++i)
     {

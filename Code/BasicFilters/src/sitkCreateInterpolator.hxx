@@ -177,7 +177,7 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
     return RType( p );
     }
     default:
-      return SITK_NULLPTR;
+      return nullptr;
     }
 
 }

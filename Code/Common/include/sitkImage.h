@@ -127,7 +127,7 @@ namespace simple
      */
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
-      : m_PimpleImage( SITK_NULLPTR )
+      : m_PimpleImage( nullptr )
       {
         static_assert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
@@ -135,7 +135,7 @@ namespace simple
       }
     template <typename TImageType>
     explicit Image( TImageType* image )
-      : m_PimpleImage( SITK_NULLPTR )
+      : m_PimpleImage( nullptr )
       {
         static_assert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );

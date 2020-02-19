@@ -289,7 +289,7 @@ end)
 
       // Check that the input buffer is different that the output
       // buffer, this does not check complex or label map pixel types.
-      if (GetBufferAsVoid(output) != SITK_NULLPTR && GetBufferAsVoid(inputs[0]) != SITK_NULLPTR)
+      if (GetBufferAsVoid(output) != nullptr && GetBufferAsVoid(inputs[0]) != nullptr)
         {
         EXPECT_NE(GetBufferAsVoid(output), GetBufferAsVoid(inputs[0]) ) << "Input buffer was copyied to output!";
         }

@@ -15,7 +15,7 @@ OUT=OUT..[[
 ]]
 for i = 1,#measurements do
   if measurements[i].active then
-    OUT=OUT..'      this->m_pfGet'..measurements[i].name..' = SITK_NULLPTR;\
+    OUT=OUT..'      this->m_pfGet'..measurements[i].name..' = nullptr;\
 '
   end
 end
