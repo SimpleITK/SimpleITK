@@ -66,6 +66,9 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Warning from RH5 gcc 4.1.2
   "tr1/mu_iterate.h.* warning: unused parameter '__tuple'"
+
+  # Warning on CircleCI
+  "Warning: Permanently added.*to the list of known hosts"
 )
 
 SET(CTEST_CUSTOM_ERROR_EXCEPTION
