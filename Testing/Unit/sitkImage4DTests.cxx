@@ -41,8 +41,6 @@
 #include "itkVectorImage.h"
 #include "itkMetaDataObject.h"
 
-namespace nsstd = itk::simple::nsstd;
-
 const double adir[] = { 0.0,  0.0,  0.0, 1.0,
                        -1.0,  0.0,  0.0, 0.0,
                         0.0, -1.0,  0.0, 0.0,

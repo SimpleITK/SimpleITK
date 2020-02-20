@@ -54,8 +54,6 @@
 
 #include <memory>
 
-#include "nsstd/type_traits.h"
-
 namespace itk
 {
 namespace simple

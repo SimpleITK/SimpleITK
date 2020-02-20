@@ -20,16 +20,16 @@
 
 #include "sitkConfigure.h"
 #include "sitkPixelIDValues.h"
-#include "nsstd/type_traits.h"
 
+#include <type_traits>
 
 namespace itk
 {
 namespace simple
 {
 
-typedef nsstd::true_type  TrueType;
-typedef nsstd::false_type FalseType;
+typedef std::true_type  TrueType;
+typedef std::false_type FalseType;
 
 template <typename TPixelIDType>
 struct IsBasic
@@ -100,8 +100,8 @@ struct IsInstantiated
           || (VImageDimension == 4)
 #endif
       );
-  typedef typename nsstd::integral_constant<bool, Value>::value_type ValueType;
-  typedef typename nsstd::integral_constant<bool, Value>::type       Type;
+  typedef typename std::integral_constant<bool, Value>::value_type ValueType;
+  typedef typename std::integral_constant<bool, Value>::type       Type;
 };
           template <typename TPixelType, unsigned int VImageDimension >
 struct IsInstantiated< itk::Image< TPixelType, VImageDimension>, 0 >

@@ -27,7 +27,6 @@
 #include <sitkVersionConfig.h>
 #include <itkConfigure.h>
 
-namespace nsstd = itk::simple::nsstd;
 
 TEST( VersionTest, VersoinTest)
 {
@@ -49,20 +48,6 @@ TEST( VersionTest, VersoinTest)
   std::vector<std::string> itk_modules = Version::ITKModulesEnabled();
   EXPECT_NE( std::find( itk_modules.begin(), itk_modules.end(), "ITKCommon" ), itk_modules.end());
   EXPECT_NE( std::find( itk_modules.begin(), itk_modules.end(), "ITKIOImageBase" ), itk_modules.end());
-}
-
-TEST( ConditionalTest, ConditionalTest1 ) {
-
-  // a quick check to make sure the conditional works
-  typedef itk::simple::Conditional<true, int, float>::Type IntType;
-  typedef itk::simple::Conditional<false, int, float>::Type FloatType;
-
-
-  EXPECT_EQ ( typeid( IntType ).name(), typeid( int ).name() );
-  EXPECT_EQ ( typeid( FloatType ).name(), typeid( float ).name() );
-
-  return;
-
 }
 
 

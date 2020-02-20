@@ -533,7 +533,7 @@ Image ImportImageFilter::ExecuteInternal( )
 }
 
 template <class TFilterType>
-typename EnableIf<IsVector<TFilterType>::Value>::Type
+typename std::enable_if<IsVector<TFilterType>::Value>::type
 ImportImageFilter::SetNumberOfComponentsOnImage ( TFilterType*image )
 {
   image->SetNumberOfComponentsPerPixel( m_NumberOfComponentsPerPixel );

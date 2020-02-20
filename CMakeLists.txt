@@ -255,9 +255,6 @@ endif()
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here
 
-include(sitkCheckCXX11)
-
-
 include(CheckIncludeFileCXX)
 
 
@@ -459,7 +456,6 @@ install(FILES ${__files}
 install(
   DIRECTORY
     ${CMAKE_SOURCE_DIR}/Code/Common/include/Ancillary
-    ${CMAKE_SOURCE_DIR}/Code/Common/include/nsstd
   DESTINATION
     ${SimpleITK_INSTALL_INCLUDE_DIR}/
   COMPONENT Development

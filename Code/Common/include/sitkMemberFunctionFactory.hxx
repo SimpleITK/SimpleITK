@@ -23,7 +23,6 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
-#include "sitkEnableIf.h"
 #include "sitkExceptionObject.h"
 
 namespace itk
@@ -48,7 +47,7 @@ struct MemberFunctionInstantiater
     {}
 
   template <class TPixelIDType>
-  typename EnableIf< IsInstantiated<TPixelIDType, VImageDimension >::Value >::Type
+  typename std::enable_if< IsInstantiated<TPixelIDType, VImageDimension >::Value >::type
   operator()( TPixelIDType*id=nullptr ) const
     {
       Unused( id );
@@ -62,7 +61,7 @@ struct MemberFunctionInstantiater
 
   // this methods is conditionally enabled when the PixelID is not instantiated
   template <class TPixelIDType>
-  typename DisableIf< IsInstantiated<TPixelIDType, VImageDimension>::Value >::Type
+  typename std::enable_if< !IsInstantiated<TPixelIDType, VImageDimension>::Value >::type
   operator()( TPixelIDType*id=nullptr ) const
   {
     Unused( id );
