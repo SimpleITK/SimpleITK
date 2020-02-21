@@ -23,6 +23,7 @@
 #include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.h"
 #include "sitkPixelIDTypeLists.h"
+#include "sitkConditional.h"
 
 
 namespace itk
@@ -507,6 +508,13 @@ namespace itk
       return this->m_PimpleImage->GetBufferAsDouble( );
     }
 
+    void *Image::GetBufferAsVoid( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUnique();
+      return this->m_PimpleImage->GetBufferAsVoid( );
+    }
+
     const int8_t *Image::GetBufferAsInt8( ) const
     {
       assert( m_PimpleImage );
@@ -565,6 +573,12 @@ namespace itk
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetBufferAsDouble( );
+    }
+
+    const void *Image::GetBufferAsVoid ( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsVoid( );
     }
 
     void Image::SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )

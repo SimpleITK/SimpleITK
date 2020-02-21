@@ -139,6 +139,7 @@ namespace itk
     virtual uint64_t *GetBufferAsUInt64( ) = 0;
     virtual float    *GetBufferAsFloat( ) = 0;
     virtual double   *GetBufferAsDouble( ) = 0;
+    virtual void     *GetBufferAsVoid( ) = 0;
 
     virtual const int8_t   *GetBufferAsInt8( ) const = 0;
     virtual const uint8_t  *GetBufferAsUInt8( ) const = 0;
@@ -150,6 +151,7 @@ namespace itk
     virtual const uint64_t *GetBufferAsUInt64( ) const = 0;
     virtual const float    *GetBufferAsFloat( ) const = 0;
     virtual const double   *GetBufferAsDouble( ) const = 0;
+    virtual const void     *GetBufferAsVoid( ) const = 0;
   };
 
   } // end namespace simple
