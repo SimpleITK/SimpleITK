@@ -188,17 +188,22 @@ void VersorRigid3DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF_GetMatrix();
   SITK_TRANSFORM_SET_MPF_SetMatrix();
 
-  void  (TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
-  this->m_pfSetRotation1 = std::bind(pfSetRotation1,t,std::bind(&sitkSTLVectorToITKVersor<double, double>,std::placeholders::_1));
+  this->m_pfSetRotation1 = [t](const std::vector<double> &v) {
+    t->SetRotation(sitkSTLVectorToITKVersor<double>(v));
+  };
 
-  typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  void  (TransformType::*pfSetRotation2) (const typename TransformType::AxisType &, double) = &TransformType::SetRotation;
-  this->m_pfSetRotation2 = std::bind(pfSetRotation2,t,std::bind(pfSTLVectorToITK,std::placeholders::_1),std::placeholders::_2);
+  this->m_pfSetRotation2 = [t](const std::vector<double> &v, double d) {
+    t->SetRotation(sitkSTLVectorToITK<typename TransformType::AxisType>(v),d);
+  };
 
-  this->m_pfGetVersor  = std::bind(&sitkITKVersorToSTL<double, double>,std::bind(&TransformType::GetVersor,t));
+  this->m_pfGetVersor = [t] () {
+    return sitkITKVersorToSTL<double>(t->GetVersor());
+  };
 
   // pre argument has no effect
-  this->m_pfTranslate = std::bind(&TransformType::Translate,t,std::bind(pfSTLVectorToITK,std::placeholders::_1), false);
+  this->m_pfTranslate = [t] (const std::vector<double> &v) {
+    t->Translate( sitkSTLVectorToITK<typename TransformType::OutputVectorType>(v), false );
+  };
 }
 
 }

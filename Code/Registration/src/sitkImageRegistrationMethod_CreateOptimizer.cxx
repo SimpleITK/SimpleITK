@@ -106,7 +106,10 @@ namespace simple
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = std::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = std::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -128,7 +131,10 @@ namespace simple
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = std::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = std::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -154,7 +160,11 @@ namespace simple
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = std::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = std::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -179,7 +189,11 @@ namespace simple
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = std::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = std::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       return optimizer.GetPointer();
       }
@@ -227,7 +241,11 @@ namespace simple
       this->m_pfGetMetricValue = std::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
       this->m_pfGetOptimizerIteration = std::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       return optimizer.GetPointer();
       }
@@ -250,7 +268,11 @@ namespace simple
       this->m_pfGetMetricValue = std::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
       this->m_pfGetOptimizerIteration = std::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       return optimizer.GetPointer();
       }
@@ -265,8 +287,11 @@ namespace simple
       this->m_pfGetMetricValue = std::bind(&_OptimizerType::GetCurrentValue,optimizer);
       this->m_pfGetOptimizerIteration = std::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
 
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
       this->m_pfUpdateWithBestValue = std::bind(&UpdateWithBestValueExhaustive<double>,
                                                   optimizer,
@@ -295,7 +320,11 @@ namespace simple
       this->m_pfGetMetricValue = std::bind(&_OptimizerType::GetValue,optimizer);
       this->m_pfGetOptimizerIteration = std::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -314,7 +343,11 @@ namespace simple
       this->m_pfGetMetricValue = std::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
       this->m_pfGetOptimizerIteration = std::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -349,7 +382,11 @@ namespace simple
       this->m_pfGetOptimizerIteration = std::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = std::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = std::bind(&_OptimizerType::GetFrobeniusNorm,optimizer.GetPointer());
-      this->m_pfGetOptimizerScales = std::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, std::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+      auto x = optimizer.GetPointer();
+      this->m_pfGetOptimizerScales = [x]() {
+        return PositionOptimizerCustomCast::Helper(x->GetScales());
+      };
+
 
       optimizer->Register();
       return optimizer.GetPointer();

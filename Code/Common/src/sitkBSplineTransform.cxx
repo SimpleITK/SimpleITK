@@ -258,13 +258,12 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
 template<class TransformType>
 void BSplineTransform::InternalInitialization(TransformType *t)
 {
-  { // TransformDomainDirection
-  typename TransformType::DirectionType (*pfSTLToITKDirection)(const std::vector<double> &) = &sitkSTLToITKDirection<typename TransformType::DirectionType>;
-  this->m_pfSetTransformDomainDirection = std::bind(&TransformType::SetTransformDomainDirection,t,std::bind(pfSTLToITKDirection,std::placeholders::_1));
-
-  std::vector<double> (*pfITKDirectionToSTL)( const typename TransformType::DirectionType &) = &sitkITKDirectionToSTL<typename TransformType::DirectionType>;
-  this->m_pfGetTransformDomainDirection = std::bind(pfITKDirectionToSTL,std::bind(&TransformType::GetTransformDomainDirection,t));
-  }
+  this->m_pfSetTransformDomainDirection = [t](const std::vector<double> &v) {
+    t->SetTransformDomainDirection(sitkSTLToITKDirection< typename TransformType::DirectionType>(v));
+  };
+  this->m_pfGetTransformDomainDirection = [t]() {
+    return sitkITKDirectionToSTL(t->GetTransformDomainDirection());
+  };
 
    // TransformDomainMeshSize
   SITK_TRANSFORM_SET_MPF( TransformDomainMeshSize, typename TransformType::MeshSizeType, unsigned int );
@@ -273,9 +272,9 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   // TransformDomainPhysicalDimensions
   SITK_TRANSFORM_SET_MPF( TransformDomainPhysicalDimensions, typename TransformType::PhysicalDimensionsType, double );
 
-
-  std::vector<Image> (*pfImageArrayConvert)(const typename TransformType::CoefficientImageArray &) = &sitkImageArrayConvert<typename TransformType::CoefficientImageArray>;
-  this->m_pfGetCoefficientImages = std::bind(pfImageArrayConvert, std::bind(&TransformType::GetCoefficientImages,t) );
+  this->m_pfGetCoefficientImages = [t] () {
+    return sitkImageArrayConvert(t->GetCoefficientImages());
+  };
   this->m_pfSetCoefficientImages = std::bind(SetCoefficientImages<TransformType>, t, std::placeholders::_1);
 
   this->m_pfGetOrder =  &sitkGetOrder<TransformType>;

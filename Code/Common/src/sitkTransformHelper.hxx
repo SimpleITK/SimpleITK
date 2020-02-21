@@ -19,27 +19,20 @@
 #define sitkTransformHelper_hxx
 
 
-#define SITK_TRANSFORM_SET_MPF(NAME,ITK_TYPENAME, COMPONENT)                      \
+#define SITK_TRANSFORM_SET_MPF(NAME, ITK_TYPENAME, COMPONENT)                      \
   {                                                                     \
-  typedef ITK_TYPENAME itkType;                                         \
-  itkType (*pfSTLToITK)(const std::vector<COMPONENT> &) = &sitkSTLVectorToITK<itkType, COMPONENT>; \
-  this->m_pfSet##NAME = std::bind(&TransformType::Set##NAME,t,std::bind(pfSTLToITK,std::placeholders::_1)); \
-                                                                        \
-  std::vector<COMPONENT> (*pfITKToSTL)( const itkType &) = &sitkITKVectorToSTL<COMPONENT,itkType>; \
-  this->m_pfGet##NAME = std::bind(pfITKToSTL,std::bind(&TransformType::Get##NAME,t)); \
+  this->m_pfSet##NAME = [t](const std::vector<COMPONENT> &arg){ t->Set##NAME(sitkSTLVectorToITK<ITK_TYPENAME>(arg));};\
+  this->m_pfGet##NAME = [t](){ return sitkITKVectorToSTL<COMPONENT>(t->Get##NAME());}; \
   }
 
 #define SITK_TRANSFORM_SET_MPF_GetMatrix()                              \
   {                                                                     \
-  std::vector<double>  (*pfITKDirectionToSTL)(const typename TransformType::MatrixType &) = &sitkITKDirectionToSTL<typename TransformType::MatrixType>; \
-  this->m_pfGetMatrix = std::bind(pfITKDirectionToSTL,std::bind(&TransformType::GetMatrix,t)); \
+  this->m_pfGetMatrix =[t](){ return sitkITKDirectionToSTL<typename TransformType::MatrixType>(t->GetMatrix());}; \
   }
 
 #define SITK_TRANSFORM_SET_MPF_SetMatrix()                              \
   {                                                                     \
-  void (TransformType::*pfSetMatrix) (const typename TransformType::MatrixType &, double) = &TransformType::SetMatrix; \
-  typename TransformType::MatrixType (*pfSTLToITKDirection)(const std::vector<double> &) = &sitkSTLToITKDirection<typename TransformType::MatrixType>; \
-  this->m_pfSetMatrix = std::bind(pfSetMatrix, t, std::bind(pfSTLToITKDirection, std::placeholders::_1), std::placeholders::_2); \
+    this->m_pfSetMatrix = [t](const std::vector<double> &arg, double tolerance){t->SetMatrix(sitkSTLToITKDirection<typename TransformType::MatrixType>(arg), tolerance);}; \
   }
 
 
