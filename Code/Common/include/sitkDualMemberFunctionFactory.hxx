@@ -143,7 +143,7 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
 template <typename TMemberFunctionPointer>
 bool
 DualMemberFunctionFactory< TMemberFunctionPointer >
-::HasMemberFunction( PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int imageDimension  ) const SITK_NOEXCEPT
+::HasMemberFunction( PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int imageDimension  ) const noexcept
 {
   try
     {
