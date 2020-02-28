@@ -51,16 +51,6 @@
   #endif
 #endif
 
-
-#if __cplusplus >= 201103L
-// In c++11 the override keyword allows you to explicitly define that a function
-// is intended to override the base-class version.  This makes the code more
-// manageable and fixes a set of common hard-to-find bugs.
-#define SITK_OVERRIDE override
-#else
-#define SITK_OVERRIDE
-#endif
-
 #if defined(SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME)
 #define CLANG_TEMPLATE template
 #else
