@@ -37,6 +37,7 @@
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkMetaDataObject.h"
+#include <type_traits>
 
 const double adir[] = {0.0, 0.0, 1.0,
                        -1.0, 0.0, 0.0,
@@ -130,7 +131,7 @@ public:
 
 
 TEST_F(Image,Create) {
-  ASSERT_TRUE ( shortImage->GetITKBase() != NULL );
+  ASSERT_TRUE ( shortImage->GetITKBase() != nullptr );
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
@@ -1634,6 +1635,57 @@ TEST_F(Image,MetaDataDictionary)
   EXPECT_EQ( 0u, img.GetMetaDataKeys().size() );
 
   EXPECT_FALSE( img.EraseMetaData("k1") );
+
+}
+
+TEST_F(Image, MoveOperations)
+{
+  sitk::Image img;
+
+  static_assert(std::is_move_constructible<sitk::Image>::value, "Verify method availability");
+  static_assert(std::is_move_assignable<sitk::Image>::value, "Verify method availability");
+
+  img = sitk::Image(10,10,  sitk::sitkUInt8);
+
+  EXPECT_EQ(img.GetSize()[0], 10);
+
+  sitk::Image img2(5, 6, sitk::sitkUInt8);
+
+  // The details of when an image has a nullptr for the ITKBase are
+  // not specified, so that part of the tests are to verify the
+  // internal implementation details
+  auto itkBasePtr = img2.GetITKBase();
+
+  img = std::move(img2);
+
+  EXPECT_EQ(img.GetSize()[1], 6);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
+
+  sitk::Image img3(std::move(img));
+
+  EXPECT_EQ(img3.GetSize()[0], 5);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img3).GetITKBase(), itkBasePtr);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), nullptr);
+
+  img = std::move(img3);
+
+  EXPECT_EQ(img.GetSize()[0], 5);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img3).GetITKBase(), nullptr);
+
+  img2 = img;
+
+
+  EXPECT_EQ(img2.GetSize()[0], 5);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img2).GetITKBase(), itkBasePtr);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
+
+  const sitk::Image img4(std::move(img2));
+
+  EXPECT_EQ(img4.GetSize()[0], 5);
+  EXPECT_EQ(img4.GetITKBase(), itkBasePtr);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
+  EXPECT_EQ(static_cast<const sitk::Image&>(img2).GetITKBase(), nullptr);
 
 }
 
