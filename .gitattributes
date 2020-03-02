@@ -29,3 +29,6 @@
 *.rb             whitespace=tab-in-indent,no-lf-at-eof
 *.R              whitespace=tab-in-indent,no-lf-at-eof
 *.tcl            whitespace=tab-in-indent,no-lf-at-eof
+
+Wrapping/Java/JavaDoc.i              hooks-max-size=2097152
+Wrapping/Python/PythonDocstrings.i   hooks-max-size=2097152
