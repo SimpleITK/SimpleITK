@@ -87,7 +87,7 @@ namespace simple
 
     Image& operator=( const Image &img );
 
-
+#ifndef SWIG
     /** \brief Move constructor and assignment.
      *
      * @param img After the operation img is valid only for
@@ -96,6 +96,7 @@ namespace simple
      */
     Image( Image &&img );
     Image& operator=( Image &&img );
+#endif
 
 
     /** \brief Constructors for 2D, 3D an optionally 4D images where
