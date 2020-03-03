@@ -1202,7 +1202,7 @@ void ImageRegistrationMethod::RemoveITKObserver( EventCommand &e )
   return Superclass::RemoveITKObserver(e);
 }
 
-void ImageRegistrationMethod::OnActiveProcessDelete( ) SITK_NOEXCEPT
+void ImageRegistrationMethod::OnActiveProcessDelete( ) noexcept
 {
   Superclass::OnActiveProcessDelete( );
 

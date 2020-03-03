@@ -29,11 +29,11 @@ namespace itk
 namespace simple
 {
 
-GenericException::GenericException() SITK_NOEXCEPT
+GenericException::GenericException() noexcept
   : m_PimpleException( nullptr )
 {}
 
-GenericException::GenericException( const GenericException &e ) SITK_NOEXCEPT
+GenericException::GenericException( const GenericException &e ) noexcept
 
   : std::exception( e )
 {
@@ -50,7 +50,7 @@ GenericException::GenericException( const GenericException &e ) SITK_NOEXCEPT
     }
 }
 
-GenericException::GenericException(const char *file, unsigned int lineNumber) SITK_NOEXCEPT
+GenericException::GenericException(const char *file, unsigned int lineNumber) noexcept
 {
   try
     {
@@ -63,7 +63,7 @@ GenericException::GenericException(const char *file, unsigned int lineNumber) SI
 }
 
 /** Constructor. Needed to ensure the exception object can be copied. */
-GenericException::GenericException(const std::string & file, unsigned int lineNumber) SITK_NOEXCEPT
+GenericException::GenericException(const std::string & file, unsigned int lineNumber) noexcept
 {
   try
     {
@@ -78,7 +78,7 @@ GenericException::GenericException(const std::string & file, unsigned int lineNu
 /** Constructor. Needed to ensure the exception object can be copied. */
 GenericException::GenericException(const std::string & file,
                                    unsigned int lineNumber,
-                                   const std::string & desc) SITK_NOEXCEPT
+                                   const std::string & desc) noexcept
 {
   try
     {
@@ -90,7 +90,7 @@ GenericException::GenericException(const std::string & file,
     }
 }
 
-GenericException::~GenericException() SITK_NOEXCEPT
+GenericException::~GenericException() noexcept
 {
   delete this->m_PimpleException;
 }
@@ -130,7 +130,7 @@ std::string GenericException::ToString() const
   return std::string("No pimple exception");
 }
 
-const char * GenericException::what() const SITK_NOEXCEPT
+const char * GenericException::what() const noexcept
 {
   if ( this->m_PimpleException )
     return this->m_PimpleException->what();

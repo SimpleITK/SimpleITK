@@ -170,8 +170,8 @@ public:
   ObjectType *Get() {return this->m_Object;}
   const ObjectType *Get() const {return this->m_Object;}
 
-  void Execute(itk::Object*, const itk::EventObject&) SITK_OVERRIDE {}
-  void Execute(const itk::Object*, const itk::EventObject&) SITK_OVERRIDE {}
+  void Execute(itk::Object*, const itk::EventObject&) override {}
+  void Execute(const itk::Object*, const itk::EventObject&) override {}
 
 protected:
   HolderCommand() : m_Object(nullptr) {};

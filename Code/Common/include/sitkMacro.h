@@ -51,23 +51,6 @@
   #endif
 #endif
 
-
-#if __cplusplus >= 201103L
-// In c++11 the override keyword allows you to explicitly define that a function
-// is intended to override the base-class version.  This makes the code more
-// manageable and fixes a set of common hard-to-find bugs.
-#define SITK_OVERRIDE override
-// In C++11 the throw-list specification has been deprecated,
-// replaced with the noexcept specifier. Using this function
-// specification adds the run-time check that the method does not
-// throw. If it does throw then std::terminate will be called.
-// Use cautiously.
-#define SITK_NOEXCEPT noexcept
-#else
-#define SITK_OVERRIDE
-#define SITK_NOEXCEPT throw()
-#endif
-
 #if defined(SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME)
 #define CLANG_TEMPLATE template
 #else

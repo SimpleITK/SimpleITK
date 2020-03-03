@@ -116,7 +116,7 @@ namespace itk
     virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
 
 
-    PixelIDValueEnum GetPixelID(void) const SITK_NOEXCEPT
+    PixelIDValueEnum GetPixelID(void) const noexcept
       {
         // The constructor ensures that we have a valid image
         // this maps the Image's pixel type to the array index

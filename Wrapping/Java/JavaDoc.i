@@ -14410,7 +14410,7 @@ C++ includes: sitkExceptionObject.h
 */"
 
 %javamethodmodifiers  itk::simple::GenericException::GenericException "/**
-itk::simple::GenericException::GenericException() SITK_NOEXCEPT
+itk::simple::GenericException::GenericException() noexcept
 
 Default constructor. Needed to ensure the exception object can be
 copied.
@@ -14419,12 +14419,12 @@ copied.
 public ";
 
 %javamethodmodifiers  itk::simple::GenericException::GenericException "/**
-itk::simple::GenericException::GenericException(const GenericException &e) SITK_NOEXCEPT
+itk::simple::GenericException::GenericException(const GenericException &e) noexcept
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GenericException::GenericException "/**
-itk::simple::GenericException::GenericException(const char *file, unsigned int lineNumber) SITK_NOEXCEPT
+itk::simple::GenericException::GenericException(const char *file, unsigned int lineNumber) noexcept
 
 Constructor. Needed to ensure the exception object can be copied.
 
@@ -14432,7 +14432,7 @@ Constructor. Needed to ensure the exception object can be copied.
 public ";
 
 %javamethodmodifiers  itk::simple::GenericException::GenericException "/**
-itk::simple::GenericException::GenericException(const std::string &file, unsigned int lineNumber) SITK_NOEXCEPT
+itk::simple::GenericException::GenericException(const std::string &file, unsigned int lineNumber) noexcept
 
 Constructor. Needed to ensure the exception object can be copied.
 
@@ -14441,7 +14441,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::GenericException::GenericException "/**
 itk::simple::GenericException::GenericException(const std::string &file, unsigned int lineNumber, const std::string
-&desc) SITK_NOEXCEPT
+&desc) noexcept
 
 Constructor. Needed to ensure the exception object can be copied.
 
@@ -14488,15 +14488,15 @@ Return a description of the error
 public ";
 
 %javamethodmodifiers  itk::simple::GenericException::what "/**
-const char* itk::simple::GenericException::what() const SITK_NOEXCEPT
+const char* itk::simple::GenericException::what() const noexcept
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GenericException::~GenericException "/**
-virtual itk::simple::GenericException::~GenericException() SITK_NOEXCEPT
+virtual itk::simple::GenericException::~GenericException() noexcept
 
 Virtual destructor needed for subclasses. Has to have empty
-SITK_NOEXCEPT.
+noexcept.
 
 */
 public ";
@@ -45941,7 +45941,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::DualMemberFunctionFactory::HasMemberFunction "/**
 bool itk::simple::DualMemberFunctionFactory< TMemberFunctionPointer >::HasMemberFunction(PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int
-imageDimension) const SITK_NOEXCEPT
+imageDimension) const noexcept
 
 Query to determine if an member function has been registered for
 pixelID1, pixelID2 and imageDimension.
@@ -46008,7 +46008,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::MemberFunctionFactory::HasMemberFunction "/**
 bool itk::simple::MemberFunctionFactory< TMemberFunctionPointer >::HasMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension) const
-SITK_NOEXCEPT
+noexcept
 
 Query to determine if an member function has been registered for
 pixelID and imageDimension.

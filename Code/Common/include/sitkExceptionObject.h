@@ -47,22 +47,22 @@ class SITKCommon_EXPORT GenericException :
 public:
   /** Default constructor.  Needed to ensure the exception object can be
    * copied. */
-  GenericException()  SITK_NOEXCEPT;
-  GenericException( const GenericException &e )  SITK_NOEXCEPT;
+  GenericException()  noexcept;
+  GenericException( const GenericException &e )  noexcept;
 
   /** Constructor. Needed to ensure the exception object can be copied. */
-  GenericException(const char *file, unsigned int lineNumber) SITK_NOEXCEPT;
+  GenericException(const char *file, unsigned int lineNumber) noexcept;
 
   /** Constructor. Needed to ensure the exception object can be copied. */
-  GenericException(const std::string & file, unsigned int lineNumber) SITK_NOEXCEPT;
+  GenericException(const std::string & file, unsigned int lineNumber) noexcept;
 
   /** Constructor. Needed to ensure the exception object can be copied. */
   GenericException(const std::string & file,
                    unsigned int lineNumber,
-                   const std::string & desc) SITK_NOEXCEPT;
+                   const std::string & desc) noexcept;
 
-  /** Virtual destructor needed for subclasses. Has to have empty SITK_NOEXCEPT. */
-  virtual ~GenericException() SITK_NOEXCEPT;
+  /** Virtual destructor needed for subclasses. Has to have empty noexcept. */
+  virtual ~GenericException() noexcept;
 
   /** Assignment operator. */
   GenericException & operator=(const GenericException & orig);
@@ -74,7 +74,7 @@ public:
   /** Return a description of the error */
   std::string ToString() const;
 
-  const char * what() const SITK_NOEXCEPT;
+  const char * what() const noexcept;
 
   virtual const char * GetNameOfClass() const;
 

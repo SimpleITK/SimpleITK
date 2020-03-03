@@ -67,7 +67,7 @@ public:
     }
 
   /**  Invoke the member function. */
-  virtual void Execute(Object *, const EventObject & ) SITK_OVERRIDE
+  virtual void Execute(Object *, const EventObject & ) override
   {
     if (m_That)
       {
@@ -76,7 +76,7 @@ public:
   }
 
   /**  Invoke the member function with a const object */
-  virtual void Execute(const Object *, const EventObject & ) SITK_OVERRIDE
+  virtual void Execute(const Object *, const EventObject & ) override
   {
     if ( m_That )
       {
@@ -498,7 +498,7 @@ void ProcessObject::OnActiveProcessDelete( )
 }
 
 
-void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) SITK_NOEXCEPT
+void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) noexcept
 {
   // remove command from m_Command book keeping list, and remove it
   // from the  ITK ProcessObject
