@@ -63,6 +63,9 @@ public:
     */
   void SetCallbackFunction( void(* pFunction )(void *), void *clientData );
 
+  /** Set as a C++ function, which is compatible with lambdas. */
+  void SetCallbackFunction( const std::function<void()> &);
+
 private:
 
   typedef std::function<void()> FunctionObjectType;
