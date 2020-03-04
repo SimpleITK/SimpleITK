@@ -79,12 +79,19 @@ languages support deriving classes from the Command class:
 Command Functions and Lambdas for Wrapped Languages
 ---------------------------------------------------
 
-Not all scripting languages are naturally object oriented, and it is
+Not all languages are naturally object oriented, and it is
 often easier to simply define a callback inline with a lambda
 function. The following language supports inline function definitions
 for functions for the ProcessObject::AddCommand method:
 
 .. tabs::
+
+  .. group-tab:: C++
+
+    .. literalinclude:: ../../Examples/FilterProgressReporting/FilterProgressReporting.cxx
+       :language: c++
+       :start-after: [cpp lambda command]
+       :end-before: [cpp lambda command]
 
   .. group-tab:: Python
 

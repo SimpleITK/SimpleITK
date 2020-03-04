@@ -92,6 +92,12 @@ int main ( int argc, char* argv[] ) {
   // write the image
   sitk::ImageFileWriter writer;
   writer.SetFileName ( std::string ( argv[3] ) );
+
+  //! [cpp lambda command]
+  writer.AddCommand(sitk::sitkStartEvent, [] {std::cout << "Writting..." << std::flush;});
+  writer.AddCommand(sitk::sitkEndEvent, [] {std::cout << "done" << std::endl;});
+  //! [cpp lambda command]
+
   writer.Execute ( outputImage );
 
   return 0;
