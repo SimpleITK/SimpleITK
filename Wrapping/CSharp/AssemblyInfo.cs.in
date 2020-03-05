@@ -1,4 +1,4 @@
-#region Copyright Insight Software Consortium
+#region Copyright NumFOCUS
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("@SimpleITK_VERSION_CSHARP_AssemblyVersion@")]
 [assembly: AssemblyTitle("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_VERSION@")]
-[assembly: AssemblyCopyright("Copyright Insight Software Consortium, Apache License, Version 2.0")]
+[assembly: AssemblyCopyright("Copyright NumFOCUS, Apache License, Version 2.0")]
 [assembly: AssemblyDescription("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_VERSION@, compiled with @CSHARP_TYPE@ @CSHARP_VERSION@, using ITK @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
 [assembly: AssemblyCompany("Insight Software Consortium")]
 [assembly: AssemblyFileVersion("@SimpleITK_VERSION@")]
