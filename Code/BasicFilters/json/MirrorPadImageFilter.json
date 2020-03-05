@@ -21,6 +21,15 @@
       "doc" : "\todo what does this itk_type attribute do?",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType"
+    },
+    {
+      "name" : "DecayBase",
+      "type" : "double",
+      "default" : "1.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get/Set the base for exponential decay in mirrored region.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get/Set the base for exponential decay in mirrored region."
     }
   ],
   "tests" : [
@@ -61,6 +70,34 @@
       ],
       "inputs" : [
         "Input/Ramp-Down-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "decay",
+      "description" : "Test with decay parameter",
+      "settings" : [
+        {
+          "parameter" : "PadLowerBound",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : [
+            10,
+            11
+          ]
+        },
+        {
+          "parameter" : "PadUpperBound",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : [
+            12,
+            13
+          ]
+        }
+      ],
+      "tolerance" : 1e-08,
+      "inputs" : [
+        "Input/BrainProtonDensitySlice.png"
       ]
     }
   ],
