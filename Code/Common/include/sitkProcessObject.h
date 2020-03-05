@@ -178,6 +178,15 @@ namespace itk {
        */
       virtual int AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);
 
+      #ifndef SWIG
+      /** \brief Directly add a callback to observe an event.
+       *
+       * This overloaded method can take a C++ lambda function as a
+       * second argument.
+       */
+      virtual int AddCommand(itk::simple::EventEnum event, const std::function<void()> &func);
+      #endif
+
       /** \brief Remove all registered commands.
        *
        * Calling when this object is invoking anther command will

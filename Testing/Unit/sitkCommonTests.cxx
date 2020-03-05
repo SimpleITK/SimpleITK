@@ -271,6 +271,70 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_TRUE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
 }
 
+
+
+TEST( ProcessObject, Command_Add_lambda ) {
+  // Add command for events and verifies the state
+
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter po1;
+
+  // check initial state
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkAbortEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkDeleteEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkEndEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkIterationEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkProgressEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkStartEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
+
+  po1.AddCommand(sitk::sitkAnyEvent, []{std::cout << "command\n";});
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkAbortEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkDeleteEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkEndEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkIterationEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkProgressEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkStartEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
+
+  po1.RemoveAllCommands();
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkAbortEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkDeleteEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkEndEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkIterationEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkProgressEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkStartEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
+
+  po1.AddCommand(sitk::sitkAnyEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkAbortEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkDeleteEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkEndEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkIterationEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkProgressEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkStartEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkUserEvent, []{std::cout << "command\n";});
+  po1.AddCommand(sitk::sitkMultiResolutionIterationEvent, []{std::cout << "command\n";});
+
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkAbortEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkDeleteEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkEndEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkIterationEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkProgressEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkStartEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
+}
+
+
 TEST( ProcessObject, DeleteCommandActiveProcess )
 {
   // Test the case of deleting the command while the process is active.

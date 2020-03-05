@@ -20,6 +20,7 @@
 
 #include "itkProcessObject.h"
 #include "itkCommand.h"
+#include "sitkFunctionCommand.h"
 #include "itkImageToImageFilter.h"
 #include "itkTextOutput.h"
 
@@ -316,6 +317,17 @@ int ProcessObject::AddCommand(EventEnum event, Command &cmd)
     }
 
   return 0;
+}
+
+int ProcessObject::AddCommand(itk::simple::EventEnum event, const std::function<void()> &func)
+{
+  std::unique_ptr<FunctionCommand> cmd(new FunctionCommand());
+  cmd->SetCallbackFunction(func);
+
+  int id = this->AddCommand(event, *cmd.get());
+  cmd->OwnedByProcessObjectsOn();
+  cmd.release();
+  return id;
 }
 
 

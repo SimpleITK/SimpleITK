@@ -50,6 +50,10 @@ void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *cli
   m_Function = std::bind(pFunction, clientData);
 }
 
+void FunctionCommand::SetCallbackFunction(const std::function<void()> &func)
+{
+  m_Function = func;
+}
 
 } // end namespace simple
 } // end namespace itk
