@@ -56,7 +56,7 @@ add_custom_command( TARGET dist.CSharp
   #    COMMENT "Copying $<TARGET_FILE:${SimpleITKCSharpManaged}> to CSharp stage..."
 
   SimpleITKCSharpManaged
-  COMMAND ${CMAKE_COMMAND} -E tar cf "${CSHARP_PACKAGE_STAGE_DIR}.zip" "${CSHARP_PACKAGE_STAGE_DIR}"
+  COMMAND ${CMAKE_COMMAND} -E tar cf "${CSHARP_PACKAGE_STAGE_DIR}.zip" --format=zip "${CSHARP_PACKAGE_STAGE_DIR}"
   COMMENT "Packaging CSHARP distribution..."
   )
 
