@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #==========================================================================
 #
-#   Copyright Insight Software Consortium
+#   Copyright NumFOCUS
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
 
 header_c='/*=========================================================================\
  *\
- *  Copyright Insight Software Consortium\
+ *  Copyright NumFOCUS\
  *\
  *  Licensed under the Apache License, Version 2.0 (the "License");\
  *  you may not use this file except in compliance with the License.\
@@ -45,7 +45,7 @@ header_c='/*====================================================================
 '
 header_pound='#=========================================================================\
  #\
- #  Copyright Insight Software Consortium\
+ #  Copyright NumFOCUS\
  #\
  #  Licensed under the Apache License, Version 2.0 (the "License");\
  #  you may not use this file except in compliance with the License.\
@@ -63,7 +63,7 @@ header_pound='#=================================================================
 '
 header_lua='--=========================================================================\
  --\
- --  Copyright Insight Software Consortium\
+ --  Copyright NumFOCUS\
  --\
  --  Licensed under the Apache License, Version 2.0 (the "License");\
  --  you may not use this file except in compliance with the License.\
@@ -121,7 +121,7 @@ while (( "$#" )); do
         header="${header_pound}"
     fi
 
-    grep -q 'Copyright Insight Software Consortium' "$1" || (
+    grep -q 'Copyright NumFOCUS' "$1" || (
     sed '1 i\
 '"$header" $1 > $1.tmp && mv $1.tmp $1 )
     shift

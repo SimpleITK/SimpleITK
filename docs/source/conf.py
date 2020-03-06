@@ -23,7 +23,7 @@ import os.path
 # -- Project information -----------------------------------------------------
 
 project = u'SimpleITK'
-copyright = u'2019, Insight Software Consortium'
+copyright = u'2020, NumFOCUS'
 author = u'Insight Software Consortium'
 
 # The short X.Y version

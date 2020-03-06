@@ -22,7 +22,7 @@ Wrapping of the C++ code is accomplished through [SWIG](http://www.swig.org), in
 
 Unlike ITK's support of n-dimensional spatio-temporal images, SimpleITK supports 2D, 3D and 4D images. The dimensionality refers to spatio-temporal dimensions, the voxels can be n-dimensional vectors.
 
-SimpleITK is licensed under the [Apache License](http://www.opensource.org/licenses/apache2.0.php) in the [same way as ITK](https://www.itk.org/Wiki/ITK_Release_4/Licensing).
+SimpleITK is licensed under the [Apache License](http://www.opensource.org/licenses/apache2.0.php).
 
 Acknowledgments
 --------------
