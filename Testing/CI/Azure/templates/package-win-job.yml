@@ -46,7 +46,7 @@ jobs:
         displayName: Cleanup build
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_java.sh
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_java.sh
         displayName: Build Java
         continueOnError: true
       - task: PublishBuildArtifacts@1
@@ -56,7 +56,7 @@ jobs:
         continueOnError: true
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_csharp.sh
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_csharp.sh
         displayName: Build CSharp
         continueOnError: true
         env:
@@ -73,7 +73,7 @@ jobs:
           architecture: '${{ parameters.PYTHON_ARCH }}'
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 38
         continueOnError: true
 
@@ -84,7 +84,7 @@ jobs:
           architecture: '${{ parameters.PYTHON_ARCH }}'
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 37
         continueOnError: true
       - task: UsePythonVersion@0
@@ -94,7 +94,7 @@ jobs:
           architecture: '${{ parameters.PYTHON_ARCH }}'
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 36
         continueOnError: true
       - task: UsePythonVersion@0
@@ -104,7 +104,7 @@ jobs:
           architecture: '${{ parameters.PYTHON_ARCH }}'
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }} -vcvars_ver=14.0
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/win_build_python.sh
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 35
         continueOnError: true
       - task: PublishBuildArtifacts@1

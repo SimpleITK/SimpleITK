@@ -73,7 +73,7 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
           artifactName: Archives
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 38
         continueOnError: true
       - task: UsePythonVersion@0
@@ -81,7 +81,7 @@ jobs:
         inputs:
           versionSpec: '3.8'
           architecture: 'x64'
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 38
         continueOnError: true
       - task: UsePythonVersion@0
@@ -89,7 +89,7 @@ jobs:
         inputs:
           versionSpec: '3.7'
           architecture: 'x64'
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 37
         continueOnError: true
       - task: UsePythonVersion@0
@@ -97,7 +97,7 @@ jobs:
         inputs:
           versionSpec: '3.5'
           architecture: 'x64'
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 35
         continueOnError: true
       - task: PublishBuildArtifacts@1
