@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # JSONGenerateSphinxFiltersDoc.py
 #
@@ -15,8 +15,10 @@ try:
 except ImportError:
     import ordereddict as OrderedDict
 
-f = open("Documentation/docs/source/filters.rst", "w+")
-f.write('''SimpleITK Filters
+f = open("docs/source/filters.rst", "w+")
+f.write('''.. _lbl_filter:
+
+SimpleITK Filters
 =================
 
 .. list-table::
