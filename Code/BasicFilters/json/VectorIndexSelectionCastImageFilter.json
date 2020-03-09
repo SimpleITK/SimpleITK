@@ -17,7 +17,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Get/Set methods for the index",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Get/Set methods for the index"
     },
     {
       "name" : "OutputPixelType",

@@ -57,8 +57,8 @@
       ]
     }
   ],
-  "briefdescription" : "Enhance pixels associated with a dark object (identified by a seed pixel) where the dark object is surrounded by a brigher object.",
-  "detaileddescription" : "GrayscaleConnectedClosingImagefilter is useful for enhancing dark objects that are surrounded by bright borders. This filter makes it easier to threshold the image and extract just the object of interest.\n\nGeodesic morphology and the connected closing algorithm are described in Chapter 6 of Pierre Soille's book \"Morphological Image\nAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\see GrayscaleGeodesicDilateImageFilter \n\n\\see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter",
+  "briefdescription" : "Enhance pixels associated with a dark object (identified by a seed pixel) where the dark object is surrounded by a brighter object.",
+  "detaileddescription" : "GrayscaleConnectedClosingImagefilter is useful for enhancing dark objects that are surrounded by bright borders. This filter makes it easier to threshold the image and extract just the object of interest.\n\nGeodesic morphology and the connected closing algorithm are described in Chapter 6 of Pierre Soille's book \"Morphological Image\nAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\see GrayscaleGeodesicDilateImageFilter \n\n\n\\see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter",
   "itk_module" : "ITKMathematicalMorphology",
   "itk_group" : "MathematicalMorphology"
 }

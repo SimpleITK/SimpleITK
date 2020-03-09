@@ -59,7 +59,7 @@
     }
   ],
   "briefdescription" : "Fills in holes and cavities by applying a voting operation on each pixel.",
-  "detaileddescription" : "\\see Image \n\n\\see VotingBinaryImageFilter \n\n\\see VotingBinaryIterativeHoleFillingImageFilter \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
+  "detaileddescription" : "\\see Image \n\n\n\\see VotingBinaryImageFilter \n\n\n\\see VotingBinaryIterativeHoleFillingImageFilter \n\n\n\\see Neighborhood \n\n\n\\see NeighborhoodOperator \n\n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKLabelVoting",
   "itk_group" : "LabelVoting"
 }

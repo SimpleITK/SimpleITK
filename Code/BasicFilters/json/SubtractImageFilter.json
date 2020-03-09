@@ -40,7 +40,7 @@
     }
   ],
   "briefdescription" : "Pixel-wise subtraction of two images.",
-  "detaileddescription" : "Subtract each pixel from image2 from its corresponding pixel in image1:\n\n\\code\nOutput = Input1 - Input2.\n\n\\endcode\n\nThis is done using\n\n\\code\nSetInput1( image1 );\n\nSetInput2( image2 );\n\n\\endcode\n\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nAdditionally, a constant can be subtracted from every pixel in an image using:\n\n\\code\nSetInput1( image1 );\n\nSetConstant2( constant );\n\n\\endcode\n\n\\note The result of AddImageFilter with a negative constant is not necessarily the same as SubtractImageFilter . This would be the case when the PixelType defines an operator-() that is not the inverse of operator+()",
+  "detaileddescription" : "Subtract each pixel from image2 from its corresponding pixel in image1:\n\n\\code\nOutput = Input1 - Input2.\n\n\\endcode\n\n\nThis is done using\n\n\\code\nSetInput1( image1 );\n\nSetInput2( image2 );\n\n\\endcode\n\n\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nAdditionally, a constant can be subtracted from every pixel in an image using:\n\n\\code\nSetInput1( image1 );\n\nSetConstant2( constant );\n\n\\endcode\n\n\n\\note The result of AddImageFilter with a negative constant is not necessarily the same as SubtractImageFilter . This would be the case when the PixelType defines an operator-() that is not the inverse of operator+()",
   "itk_module" : "ITKImageIntensity",
   "itk_group" : "ImageIntensity"
 }

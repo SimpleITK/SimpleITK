@@ -88,7 +88,7 @@
     }
   ],
   "briefdescription" : "Computes an image of contours which will be the contour of the first image.",
-  "detaileddescription" : "A pixel of the source image is considered to belong to the contour if its pixel value is equal to the input foreground value and it has in its neighborhood at least one pixel which its pixel value is equal to the input background value. The output image will have pixels which will be set to the output foreground value if they belong to the contour, otherwise they will be set to the output background value.\n\nThe neighborhood \"radius\" is set thanks to the radius params.\n\n\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
+  "detaileddescription" : "A pixel of the source image is considered to belong to the contour if its pixel value is equal to the input foreground value and it has in its neighborhood at least one pixel which its pixel value is equal to the input background value. The output image will have pixels which will be set to the output foreground value if they belong to the contour, otherwise they will be set to the output background value.\n\nThe neighborhood \"radius\" is set thanks to the radius params. \\see Image \n\n\n\\see Neighborhood \n\n\n\\see NeighborhoodOperator \n\n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKImageFeature",
   "itk_group" : "ImageFeature"
 }

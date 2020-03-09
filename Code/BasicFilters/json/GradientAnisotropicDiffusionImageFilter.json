@@ -86,7 +86,7 @@
     }
   ],
   "briefdescription" : "",
-  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Image using the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Image of any dimensionality. The output image will be a diffused copy of the input.\n\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\n\\see AnisotropicDiffusionImageFilter \n\n\\see AnisotropicDiffusionFunction \n\n\\see GradientAnisotropicDiffusionFunction",
+  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Image using the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Image of any dimensionality. The output image will be a diffused copy of the input.\n\n\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\n\n\\see AnisotropicDiffusionImageFilter \n\n\n\\see AnisotropicDiffusionFunction \n\n\n\\see GradientAnisotropicDiffusionFunction",
   "itk_module" : "ITKAnisotropicSmoothing",
   "itk_group" : "AnisotropicSmoothing"
 }
