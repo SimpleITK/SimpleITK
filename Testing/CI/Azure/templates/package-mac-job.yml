@@ -73,6 +73,15 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
           artifactName: Archives
+      - script: |
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/mac_build_java.sh
+        displayName: Build Java
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/java
+          artifactName: Java
+        continueOnError: true
       - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 38
         continueOnError: true
