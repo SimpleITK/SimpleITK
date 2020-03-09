@@ -89,7 +89,7 @@
     }
   ],
   "briefdescription" : "Applies a voting operation in a neighborhood of each pixel.",
-  "detaileddescription" : "\\note Pixels which are not Foreground or Background will remain unchanged.\n\n\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
+  "detaileddescription" : "\\note Pixels which are not Foreground or Background will remain unchanged.\n\n\n\\see Image \n\n\n\\see Neighborhood \n\n\n\\see NeighborhoodOperator \n\n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKLabelVoting",
   "itk_group" : "LabelVoting"
 }

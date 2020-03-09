@@ -58,7 +58,7 @@
     }
   ],
   "briefdescription" : "Enhance pixels associated with a bright object (identified by a seed pixel) where the bright object is surrounded by a darker object.",
-  "detaileddescription" : "GrayscaleConnectedOpeningImagefilter is useful for enhancing bright objects that are surrounded by dark borders. This filter makes it easier to threshold the image and extract just the object of interest.\n\nGeodesic morphology and the connected opening algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image\nAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\see GrayscaleGeodesicDilateImageFilter \n\n\\see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter",
+  "detaileddescription" : "GrayscaleConnectedOpeningImagefilter is useful for enhancing bright objects that are surrounded by dark borders. This filter makes it easier to threshold the image and extract just the object of interest.\n\nGeodesic morphology and the connected opening algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image\nAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\see GrayscaleGeodesicDilateImageFilter \n\n\n\\see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter",
   "itk_module" : "ITKMathematicalMorphology",
   "itk_group" : "MathematicalMorphology"
 }

@@ -45,7 +45,7 @@
     }
   ],
   "briefdescription" : "Make sure that the objects are not overlapping.",
-  "detaileddescription" : "AttributeUniqueLabelMapFilter search the overlapping zones in the overlapping objects and keeps only a single object on all the pixels of the image. The object to keep is selected according to their label.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see AttributeLabelObject",
+  "detaileddescription" : "AttributeUniqueLabelMapFilter search the overlapping zones in the overlapping objects and keeps only a single object on all the pixels of the image. The object to keep is selected according to their label.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see AttributeLabelObject",
   "itk_module" : "ITKLabelMap",
   "itk_group" : "LabelMap"
 }

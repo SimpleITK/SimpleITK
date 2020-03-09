@@ -13,14 +13,22 @@
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 100)",
       "dim_vec" : 1,
-      "itk_type" : "typename FilterType::LayoutArrayType"
+      "itk_type" : "typename FilterType::LayoutArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the layout of the tiles. If the last Layout value is 0, the filter will compute a value that will accommodate all of the images.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the layout of the tiles. If the last Layout value is 0, the filter will compute a value that will accommodate all of the images."
     },
     {
       "name" : "DefaultPixelValue",
       "type" : "double",
       "default" : "0.0",
       "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, filter->GetInput()->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_DefaultPixelValue, v );  filter->SetDefaultPixelValue( v );",
-      "pixeltype" : "Output"
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the pixel value for locations that are not covered by an input image. The default default pixel value is Zero.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the pixel value for locations that are not covered by an input image."
     }
   ],
   "tests" : [
