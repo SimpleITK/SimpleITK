@@ -10,7 +10,7 @@ jobs:
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
     pool:
-      vmImage: 'macos-10.13'
+      vmImage: 'macos-10.14'
     steps:
       - template: ./git-download-steps.yml
       - task: UsePythonVersion@0
@@ -73,7 +73,16 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/archives
           artifactName: Archives
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - script: |
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/mac_build_java.sh
+        displayName: Build Java
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/java
+          artifactName: Java
+        continueOnError: true
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 38
         continueOnError: true
       - task: UsePythonVersion@0
@@ -81,7 +90,7 @@ jobs:
         inputs:
           versionSpec: '3.8'
           architecture: 'x64'
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 38
         continueOnError: true
       - task: UsePythonVersion@0
@@ -89,7 +98,7 @@ jobs:
         inputs:
           versionSpec: '3.7'
           architecture: 'x64'
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 37
         continueOnError: true
       - task: UsePythonVersion@0
@@ -97,7 +106,7 @@ jobs:
         inputs:
           versionSpec: '3.5'
           architecture: 'x64'
-      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/mac_build_python.sh
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 35
         continueOnError: true
       - task: PublishBuildArtifacts@1
