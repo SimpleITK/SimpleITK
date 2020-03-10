@@ -47,9 +47,9 @@ SimpleITK Filters
    * - `BinaryContourImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryContourImageFilter.html>`_
      - Labels the pixels on the border of the objects in a binary image.
    * - `BinaryDilateImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryDilateImageFilter.html>`_
-     - Fast binary dilation.
+     - Fast binary dilation of a single intensity value in the image.
    * - `BinaryErodeImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryErodeImageFilter.html>`_
-     - Fast binary erosion.
+     - Fast binary erosion of a single intensity value in the image.
    * - `BinaryFillholeImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryFillholeImageFilter.html>`_
      - Remove holes not connected to the boundary of the image.
    * - `BinaryGrindPeakImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryGrindPeakImageFilter.html>`_
@@ -72,6 +72,8 @@ SimpleITK Filters
      - binary morphological closing of an image.
    * - `BinaryProjectionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryProjectionImageFilter.html>`_
      - Binary projection.
+   * - `BinaryPruningImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryPruningImageFilter.html>`_
+     - This filter removes "spurs" of less than a certain length in the input image.
    * - `BinaryReconstructionByDilationImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryReconstructionByDilationImageFilter.html>`_
      - binary reconstruction by dilation of an image
    * - `BinaryReconstructionByErosionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BinaryReconstructionByErosionImageFilter.html>`_
@@ -257,7 +259,7 @@ SimpleITK Filters
    * - `HausdorffDistanceImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1HausdorffDistanceImageFilter.html>`_
      - Computes the Hausdorff distance between the set of non-zero pixels of two images.
    * - `HistogramMatchingImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1HistogramMatchingImageFilter.html>`_
-     - Normalize the grayscale values between two images by histogram matching.
+     - Normalize the grayscale values for a source image by matching the shape of the source image histogram to a reference histogram.
    * - `HuangThresholdImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1HuangThresholdImageFilter.html>`_
      - Threshold an image using the Huang Threshold.
    * - `IntensityWindowingImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1IntensityWindowingImageFilter.html>`_
@@ -521,7 +523,7 @@ SimpleITK Filters
    * - `StandardDeviationProjectionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1StandardDeviationProjectionImageFilter.html>`_
      - Mean projection.
    * - `StatisticsImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1StatisticsImageFilter.html>`_
-     - Compute min. max, variance and mean of an Image .
+     - Compute min, max, variance and mean of an Image .
    * - `StochasticFractalDimensionImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1StochasticFractalDimensionImageFilter.html>`_
      - This filter computes the stochastic fractal dimension of the input image.
    * - `SubtractImageFilter <https://www.itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1SubtractImageFilter.html>`_
