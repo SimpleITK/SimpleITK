@@ -47,5 +47,6 @@
   "briefdescription" : "This filter relabels the LabelObjects; the new labels are arranged consecutively with consideration for the background value.",
   "detaileddescription" : "This filter takes the LabelObjects from the input and reassigns them to the output by calling the PushLabelObject method, which by default, attempts to reorganize the labels consecutively. The user can assign an arbitrary value to the background; the filter will assign the labels consecutively by skipping the background value.\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\n\\see ShapeLabelObject , RelabelComponentImageFilter",
   "itk_module" : "ITKLabelMap",
-  "itk_group" : "LabelMap"
+  "itk_group" : "LabelMap",
+  "in_place" : true
 }

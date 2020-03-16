@@ -97,5 +97,6 @@
   "briefdescription" : "Generate an n-dimensional image of a Gaussian.",
   "detaileddescription" : "GaussianImageSource generates an image of a Gaussian. m_Normalized determines whether or not the Gaussian is normalized (whether or not the sum over infinite space is 1.0) When creating an image, it is preferable to not normalize the Gaussian m_Scale scales the output of the Gaussian to span a range larger than 0->1, and is typically set to the maximum value of the output data type (for instance, 255 for uchars)\n\nThe output image may be of any dimension.",
   "itk_module" : "ITKImageSources",
-  "itk_group" : "ImageSources"
+  "itk_group" : "ImageSources",
+  "in_place" : false
 }

@@ -34,5 +34,6 @@
   "briefdescription" : "Compute the pixel-wise squared magnitude of three images.",
   "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.",
   "itk_module" : "ITKImageIntensity",
-  "itk_group" : "ImageIntensity"
+  "itk_group" : "ImageIntensity",
+  "in_place" : true
 }

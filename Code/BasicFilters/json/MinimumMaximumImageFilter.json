@@ -75,5 +75,6 @@
   "briefdescription" : "Computes the minimum and the maximum intensity values of an image.",
   "detaileddescription" : "It is templated over input image type only.\n\nThis filter is automatically multi-threaded and can stream its input when NumberOfStreamDivisions is set to more than\n\\li The extrema are independently computed for each streamed and threaded region then merged.\n\n\n\n\n\\see StatisticsImageFilter",
   "itk_module" : "ITKImageStatistics",
-  "itk_group" : "ImageStatistics"
+  "itk_group" : "ImageStatistics",
+  "in_place" : false
 }

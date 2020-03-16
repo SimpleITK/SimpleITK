@@ -78,5 +78,6 @@
   "briefdescription" : "Remove the objects not connected to the boundary of the image.",
   "detaileddescription" : "BinaryGrindPeakImageFilter ginds peaks in a grayscale image.\n\nGeodesic morphology and the grind peak algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\n Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see GrayscaleGrindPeakImageFilter",
   "itk_module" : "ITKLabelMap",
-  "itk_group" : "LabelMap"
+  "itk_group" : "LabelMap",
+  "in_place" : false
 }

@@ -22,5 +22,6 @@
   "briefdescription" : "Converts a LabelMap to a labeled image.",
   "detaileddescription" : "LabelMapToBinaryImageFilter to a label image.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see LabelMapToBinaryImageFilter , LabelMapMaskImageFilter",
   "itk_module" : "ITKLabelMap",
-  "itk_group" : "LabelMap"
+  "itk_group" : "LabelMap",
+  "in_place" : false
 }

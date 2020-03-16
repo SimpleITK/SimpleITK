@@ -21,5 +21,6 @@
   "briefdescription" : "Computes the inverse cosine of each pixel.",
   "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\n\nThe filter walks over all the pixels in the input image, and for each pixel does do the following:\n\n\n\n\\li cast the pixel value to double , \n\n\n\\li apply the std::acos() function to the double value \n\n\n\\li cast the double value resulting from std::acos() to the pixel type of the output image \n\n\n\\li store the casted value into the output image.\n\n\n\nThe filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND).",
   "itk_module" : "ITKImageIntensity",
-  "itk_group" : "ImageIntensity"
+  "itk_group" : "ImageIntensity",
+  "in_place" : true
 }

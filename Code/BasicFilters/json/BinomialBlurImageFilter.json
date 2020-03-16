@@ -32,5 +32,6 @@
   "briefdescription" : "Performs a separable blur on each dimension of an image.",
   "detaileddescription" : "The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convolution with a gaussian.",
   "itk_module" : "ITKSmoothing",
-  "itk_group" : "Smoothing"
+  "itk_group" : "Smoothing",
+  "in_place" : false
 }

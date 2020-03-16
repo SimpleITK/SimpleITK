@@ -21,5 +21,6 @@
   "briefdescription" : "Computes the log10 of each pixel.",
   "detaileddescription" : "The computation is performed using std::log10(x).",
   "itk_module" : "ITKImageIntensity",
-  "itk_group" : "ImageIntensity"
+  "itk_group" : "ImageIntensity",
+  "in_place" : true
 }

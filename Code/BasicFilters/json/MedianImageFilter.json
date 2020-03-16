@@ -50,5 +50,6 @@
   "briefdescription" : "Applies a median filter to an image.",
   "detaileddescription" : "Computes an image where a given pixel is the median value of the the pixels in a neighborhood about the corresponding input pixel.\n\nA median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.\n\nThis filter requires that the input pixel type provides an operator<() (LessThan Comparable).\n\n\\see Image \n\n\n\\see Neighborhood \n\n\n\\see NeighborhoodOperator \n\n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKSmoothing",
-  "itk_group" : "Smoothing"
+  "itk_group" : "Smoothing",
+  "in_place" : false
 }

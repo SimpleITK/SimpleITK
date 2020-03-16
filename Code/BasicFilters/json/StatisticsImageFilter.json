@@ -101,5 +101,6 @@
   "briefdescription" : "Compute min, max, variance and mean of an Image .",
   "detaileddescription" : "StatisticsImageFilter computes the minimum, maximum, sum, sum of squares, mean, variance sigma of an image. The filter needs all of its input image. It behaves as a filter with an input and output. Thus it can be inserted in a pipline with other filters and the statistics will only be recomputed if a downstream filter changes.\n\nThis filter is automatically multi-threaded and can stream its input when NumberOfStreamDivisions is set to more than one. Statistics are independently computed for each streamed and threaded region then merged.\n\nInternally a compensated summation algorithm is used for the accumulation of intensities to improve accuracy for large images.",
   "itk_module" : "ITKImageStatistics",
-  "itk_group" : "ImageStatistics"
+  "itk_group" : "ImageStatistics",
+  "in_place" : false
 }

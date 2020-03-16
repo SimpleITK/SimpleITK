@@ -96,5 +96,6 @@
   "briefdescription" : "Alter an image with additive Gaussian white noise.",
   "detaileddescription" : "Additive Gaussian white noise can be modeled as:\n\n\\par \n\\f$ I = I_0 + N \\f$ \n\n\n\\par \nwhere \\f$ I \\f$ is the observed image, \\f$ I_0 \\f$ is the noise-free image and \\f$ N \\f$ is a normally distributed random variable of mean \\f$ \\mu \\f$ and variance \\f$ \\sigma^2 \\f$ :\n\n\n\\par \n\\f$ N \\sim \\mathcal{N}(\\mu, \\sigma^2) \\f$ \n\n\nThe noise is independent of the pixel intensities.\n\n\\author Gaetan Lehmann\n\n\nThis code was contributed in the Insight Journal paper \"Noise\n Simulation\". https://hdl.handle.net/10380/3158",
   "itk_module" : "ITKImageNoise",
-  "itk_group" : "ImageNoise"
+  "itk_group" : "ImageNoise",
+  "in_place" : true
 }

@@ -117,5 +117,6 @@
   "briefdescription" : "Binarize an input image using double thresholding.",
   "detaileddescription" : "Double threshold addresses the difficulty in selecting a threshold that will select the objects of interest without selecting extraneous objects. Double threshold considers two threshold ranges: a narrow range and a wide range (where the wide range encompasses the narrow range). If the wide range was used for a traditional threshold (where values inside the range map to the foreground and values outside the range map to the background), many extraneous pixels may survive the threshold operation. If the narrow range was used for a traditional threshold, then too few pixels may survive the threshold.\n\nDouble threshold uses the narrow threshold image as a marker image and the wide threshold image as a mask image in the geodesic dilation. Essentially, the marker image (narrow threshold) is dilated but constrained to lie within the mask image (wide threshold). Thus, only the objects of interest (those pixels that survived the narrow threshold) are extracted but the those objects appear in the final image as they would have if the wide threshold was used.\n\n\\see GrayscaleGeodesicDilateImageFilter \n\n\n\\see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter",
   "itk_module" : "ITKMathematicalMorphology",
-  "itk_group" : "MathematicalMorphology"
+  "itk_group" : "MathematicalMorphology",
+  "in_place" : false
 }

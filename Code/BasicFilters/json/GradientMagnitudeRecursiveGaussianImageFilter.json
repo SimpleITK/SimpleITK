@@ -42,5 +42,6 @@
   "briefdescription" : "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.",
   "detaileddescription" : "This filter is implemented using the recursive gaussian filters",
   "itk_module" : "ITKImageGradient",
-  "itk_group" : "ImageGradient"
+  "itk_group" : "ImageGradient",
+  "in_place" : true
 }

@@ -66,5 +66,6 @@
   "briefdescription" : "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.",
   "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\n\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.",
   "itk_module" : "ITKSmoothing",
-  "itk_group" : "Smoothing"
+  "itk_group" : "Smoothing",
+  "in_place" : true
 }

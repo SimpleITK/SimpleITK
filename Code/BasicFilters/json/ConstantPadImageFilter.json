@@ -78,5 +78,6 @@
   "briefdescription" : "Increase the image size by padding with a constant value.",
   "detaileddescription" : "ConstantPadImageFilter changes the output image region. If the output image region is larger than the input image region, the extra pixels are filled in by a constant value. The output image region must be specified.\n\nVisual explanation of padding regions.\n\n\nThis filter is implemented as a multithreaded filter. It provides a DynamicThreadedGenerateData() method for its implementation.\n\n\\see WrapPadImageFilter , MirrorPadImageFilter",
   "itk_module" : "ITKImageGrid",
-  "itk_group" : "ImageGrid"
+  "itk_group" : "ImageGrid",
+  "in_place" : false
 }

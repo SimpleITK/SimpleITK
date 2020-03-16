@@ -137,5 +137,6 @@
   "briefdescription" : "Casts input pixels to output pixel type and clamps the output pixel values to a specified range.",
   "detaileddescription" : "Default range corresponds to the range supported by the pixel type of the output image.\n\nThis filter is templated over the input image type and the output image type.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\n\\see UnaryFunctorImageFilter \n\n\n\\see CastImageFilter",
   "itk_module" : "ITKImageIntensity",
-  "itk_group" : "ImageIntensity"
+  "itk_group" : "ImageIntensity",
+  "in_place" : true
 }
