@@ -101,12 +101,18 @@ list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKCommon
   sitkCastImageFilter-3l.cxx
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
-  sitkHashImageFilter.cxx )
+  sitkHashImageFilter.cxx)
 set(SimpleITKBasicFiltersGeneratedSource_ITKCommon ${SimpleITKBasicFiltersGeneratedSource_ITKCommon} CACHE INTERNAL "")
 
 list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKTransform
   sitkBSplineTransformInitializerFilter.cxx )
-set(SimpleITKBasicFiltersGeneratedSource_ITKTransform ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL "")
+set(SimpleITKBasicFiltersGeneratedSource_ITKTransform
+  ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL
+  "")
+
+list(APPEND SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters
+  sitkDICOMOrientImageFilter_Support.cxx )
+set(SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters ${SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters} CACHE INTERNAL "")
 
 list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon
   sitkCenteredTransformInitializerFilter.cxx
