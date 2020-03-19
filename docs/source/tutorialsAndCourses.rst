@@ -36,6 +36,10 @@ SimpleITK tutorials and courses have been given in the following venues:
 Upcoming
 ++++++++
 
+.. admonition:: Cancelled by ISBI organizers due to COVID-19
+
+  * International Symposium on Biomedical Imaging (ISBI)2020 Tutorial, Iowa City IA, USA: `SimpleITK: image analysis for all levels of programming expertise <https://simpleitk.github.io/ISBI2020_TUTORIAL/>`__ [`git repository <https://github.com/SimpleITK/ISBI2020_TUTORIAL>`__].
+
 
 Past
 ++++
