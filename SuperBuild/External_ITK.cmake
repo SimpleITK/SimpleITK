@@ -24,6 +24,8 @@ if(NOT DEFINED Module_SimpleITKFilters)
 endif()
 
 
+set(Module_SimpleITKFilters_GIT_TAG "a0b9ecab4c3a9e356a96b2e24b140e80eac27be5")
+
 get_cmake_property( _varNames VARIABLES )
 
 foreach (_varName ${_varNames})
@@ -53,7 +55,7 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/I
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-set(_DEFAULT_ITK_GIT_TAG "v5.1rc02")
+set(_DEFAULT_ITK_GIT_TAG "1e708db2f586997e408cfdc2cea5114ae5575892")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
