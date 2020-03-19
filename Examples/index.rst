@@ -33,3 +33,4 @@ Examples
   link_ImageViewing_docs
   link_AdvancedImageReading_docs
   link_ImageIOSelection_docs
+  link_RawImageReading_docs

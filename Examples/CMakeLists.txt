@@ -52,6 +52,7 @@ add_subdirectory(DicomSeriesReadModifyWrite)
 add_subdirectory(FilterProgressReporting)
 add_subdirectory(DemonsRegistration1)
 add_subdirectory(DemonsRegistration2)
+add_subdirectory(RawImageReading)
 
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)
