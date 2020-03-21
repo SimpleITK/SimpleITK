@@ -1,0 +1,7 @@
+$(for inum=1,number_of_inputs do
+ if inum>1 then
+       OUT=OUT.. ', const Image& image' .. inum
+ else
+       OUT=OUT.. 'Image&& image' .. inum
+ end
+ end )

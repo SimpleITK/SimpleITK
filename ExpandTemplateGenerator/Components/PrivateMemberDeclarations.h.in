@@ -51,3 +51,8 @@ OUT=[[
 ]]
 end
 end)
+$(if in_place then
+OUT=[[
+      bool m_InPlace{false};
+]]
+end)
