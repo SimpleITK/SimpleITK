@@ -36,6 +36,9 @@ $(include ClassNameAndPrint.h.in)
 $(include ExecuteMethodNoParameters.h.in)$(include CustomMethods.h.in)
       /** Execute the filter with an image and a constant */
       Image Execute ( const Image& image1, ${constant_type} constant );
+#ifndef SWIG
+      Image Execute ( Image&& image1, ${constant_type} constant );
+#endif
       Image Execute ( ${constant_type} constant, const Image& image2 );
 $(if members and #members > 0 then
 OUT=[[

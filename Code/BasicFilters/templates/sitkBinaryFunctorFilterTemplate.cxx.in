@@ -113,6 +113,20 @@ Image ${name}::Execute ( const Image& image1, ${constant_type} constant )
   return this->m_MemberFactory2->GetMemberFunction( type, dimension )( image1, constant );
 }
 
+
+Image ${name}::Execute ( Image&& image1, ${constant_type} constant )
+{
+  const Image temp(std::move(image1));
+  auto autoResetInPlace = make_scope_exit([this]{this->m_InPlace=false;});
+  if (temp.IsUnique())
+    {
+    m_InPlace = true;
+    }
+  return this->Execute( temp, constant );
+
+}
+
+
 //-----------------------------------------------------------------------------
 
 $(include CustomCasts.cxx)
