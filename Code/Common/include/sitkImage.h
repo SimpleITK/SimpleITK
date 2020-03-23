@@ -457,7 +457,11 @@ namespace simple
      * assignment. This method make sure that coping actually happens
      * to the itk::Image pointed to is only pointed to by this object.
      */
-    void MakeUnique( void );
+    void MakeUnique( );
+
+    /** \brief Returns true if no other SimpleITK Image object
+     * refers to the same internal data structure. */
+    bool IsUnique( ) const;
 
   protected:
 
