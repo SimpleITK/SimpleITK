@@ -42,56 +42,73 @@ namespace simple {
 * @{
 */
 inline Image operator+( const Image &img1, const Image &img2 ) { return Add(img1, img2 ); }
+inline Image operator+( Image &&img1, const Image &img2 ) { return Add(std::move(img1), img2 ); }
 inline Image operator+( const Image &img, double s ) { return  Add(img, s ); }
+inline Image operator+( Image &&img, double s ) { return  Add(std::move(img), s ); }
 inline Image operator+( double s,  const Image &img ) { return  Add(s, img ); }
 inline Image operator-( const Image &img1, const Image &img2 ) { return Subtract(img1, img2 ); }
+inline Image operator-( Image &&img1, const Image &img2 ) { return Subtract(std::move(img1), img2 ); }
 inline Image operator-( const Image &img, double s ) { return  Subtract(img, s ); }
-inline Image operator-(double s, const Image &img ) { return  Subtract(s, img ); }
+inline Image operator-( Image &&img, double s ) { return  Subtract(std::move(img), s ); }
+inline Image operator-( double s, const Image &img ) { return  Subtract(s, img ); }
 inline Image operator*( const Image &img1, const Image &img2 ) { return Multiply(img1, img2 ); }
+inline Image operator*( Image &&img1, const Image &img2 ) { return Multiply(std::move(img1), img2 ); }
 inline Image operator*( const Image &img, double s  ) { return Multiply(img, s ); }
+inline Image operator*( Image &&img, double s  ) { return Multiply(std::move(img), s ); }
 inline Image operator*( double s,  const Image &img ) { return Multiply(s, img ); }
 inline Image operator/( const Image &img1, const Image &img2 ) { return Divide(img1, img2 ); }
+inline Image operator/( Image &&img1, const Image &img2 ) { return Divide(std::move(img1), img2 ); }
 inline Image operator/( const Image &img, double s  ) { return Divide(img, s ); }
+inline Image operator/( Image &&img, double s  ) { return Divide(std::move(img), s ); }
 inline Image operator/( double s,  const Image &img  ) { return Divide(s, img ); }
 inline Image operator%( const Image &img1, const Image &img2 ) { return Modulus(img1, img2 ); }
+inline Image operator%( Image &&img1, const Image &img2 ) { return Modulus(std::move(img1), img2 ); }
 inline Image operator%( const Image &img, uint32_t s  ) { return Modulus(img, s ); }
+inline Image operator%( Image &&img, uint32_t s  ) { return Modulus(std::move(img), s ); }
 inline Image operator%( uint32_t s,  const Image &img  ) { return Modulus(s, img ); }
 
-
-// Modoulo does not appear to be defined?
-// Image operator%( Image &img1, Image &img2 )
-// Image &operator%=( Image &img1, double s )
-
 inline Image operator-( const Image &img ) { return UnaryMinus( img ); }
+inline Image operator-( Image &&img ) { return UnaryMinus( std::move(img) ); }
+
 
 inline Image operator~( const Image &img ) { return BitwiseNot( img ); }
+inline Image operator~( Image &&img ) { return BitwiseNot( std::move(img) ); }
+
 inline Image operator&( const Image &img1, const Image &img2 ) { return And(img1, img2 ); }
+inline Image operator&( Image &&img1, const Image &img2 ) { return And(std::move(img1), img2 ); }
 inline Image operator&( const Image &img,  int s ) { return And(img, s ); }
+inline Image operator&( Image &&img,  int s ) { return And(std::move(img), s ); }
 inline Image operator&( int s, const Image &img ) { return And(s, img ); }
+
 inline Image operator|( const Image &img1, const Image &img2 ) { return Or(img1, img2 ); }
+inline Image operator|( Image &&img1, const Image &img2 ) { return Or(std::move(img1), img2 ); }
 inline Image operator|( const Image &img, int s ) { return Or(img, s ); }
+inline Image operator|( Image &&img, int s ) { return Or(std::move(img), s ); }
 inline Image operator|( int s, const Image &img ) { return Or(s, img ); }
+
 inline Image operator^( const Image &img1, const Image &img2 ) { return Xor(img1, img2 ); }
+inline Image operator^( Image &&img1, const Image &img2 ) { return Xor(std::move(img1), img2 ); }
 inline Image operator^( const Image &img, int s ) { return Xor(img, s ); }
+inline Image operator^( Image &&img, int s ) { return Xor(std::move(img), s ); }
 inline Image operator^( int s, const Image &img ) { return Xor(s, img ); }
 
-/** \todo these operators should some how be done "in-place" */
-inline Image operator+=( Image &img1, const Image &img2 ) { return img1 = Add(img1, img2 ); }
-inline Image operator+=( Image &img1, double s ) { return img1 = Add(img1, s ); }
-inline Image operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(img1, img2 ); }
-inline Image operator-=( Image &img1, double s ) { return img1 = Subtract(img1, s ); }
-inline Image operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(img1, img2 ); }
-inline Image operator*=( Image &img1, double s ) { return img1 = Multiply(img1, s ); }
-inline Image operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
-inline Image operator/=( Image &img1, double s ) { return img1 = Divide(img1, s ); }
-inline Image operator%=( Image &img1, const Image &img2 ) { return img1 = Modulus(img1, img2 ); }
-inline Image operator%=( Image &img1, uint32_t s ) { return img1 = Modulus(img1, s ); }
-inline Image operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
-inline Image operator&=( Image &img1, int s ) { return img1 = And(img1, s ); }
-inline Image operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
-inline Image operator|=( Image &img1, int s ) { return img1 = Or(img1, s ); }
-inline Image operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
-inline Image operator^=( Image &img1, int s ) { return img1 = Xor(img1, s ); }
+
+inline Image operator+=( Image &img1, const Image &img2 ) { return img1 = Add(std::move(img1), img2 ); }
+inline Image operator+=( Image &img1, double s ) { return img1 = Add(std::move(img1), s ); }
+inline Image operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(std::move(img1), img2 ); }
+inline Image operator-=( Image &img1, double s ) { return img1 = Subtract(std::move(img1), s ); }
+inline Image operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(std::move(img1), img2 ); }
+inline Image operator*=( Image &img1, double s ) { return img1 = Multiply(std::move(img1), s ); }
+inline Image operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(std::move(img1), img2 ); }
+inline Image operator/=( Image &img1, double s ) { return img1 = Divide(std::move(img1), s ); }
+inline Image operator%=( Image &img1, const Image &img2 ) { return img1 = Modulus(std::move(img1), img2 ); }
+inline Image operator%=( Image &img1, uint32_t s ) { return img1 = Modulus(std::move(img1), s ); }
+inline Image operator&=( Image &img1, const Image &img2 ) { return img1 = And(std::move(img1), img2 ); }
+inline Image operator&=( Image &img1, int s ) { return img1 = And(std::move(img1), s ); }
+inline Image operator|=( Image &img1, const Image &img2 ) { return img1 = Or(std::move(img1), img2 ); }
+inline Image operator|=( Image &img1, int s ) { return img1 = Or(std::move(img1), s ); }
+inline Image operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(std::move(img1), img2 ); }
+inline Image operator^=( Image &img1, int s ) { return img1 = Xor(std::move(img1), s ); }
 /**@} */
 }
 }
