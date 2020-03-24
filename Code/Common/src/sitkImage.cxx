@@ -50,10 +50,9 @@ namespace itk
   }
 
   Image::Image( Image && img )
-  : m_PimpleImage( nullptr )
+  : m_PimpleImage( img.m_PimpleImage )
   {
-    using std::swap;
-    swap(m_PimpleImage, img.m_PimpleImage);
+    img.m_PimpleImage = nullptr;
   }
 
   Image& Image::operator=( const Image &img )
