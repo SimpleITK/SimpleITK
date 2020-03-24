@@ -17,18 +17,12 @@
 #=========================================================================
 # Run with:
 #
-# Rscript --vanilla DicomSeriesFromArray.R output_directory
+# Rscript --vanilla DicomSeriesFromArray.R output_directory int
 #
 
 library(SimpleITK)
 
-args <- commandArgs( TRUE )
-
-if (length(args) < 1) {
-   stop("1 argument expected - output_directory")
-}
-
-writeSlices <- function(series_tag_values, new_img, i) {
+writeSlices <- function(series_tag_values, new_img, out_dir, i) {
     image_slice <- new_img[1:new_img$GetWidth(), 1:new_img$GetHeight(), i]
 
     # Tags shared by the series.
@@ -47,12 +41,27 @@ writeSlices <- function(series_tag_values, new_img, i) {
     image_slice$SetMetaData("0020,0013", i-1) # Instance Number
 
     # Write to the output directory and add the extension dcm, to force writing in DICOM format.
-    writer$SetFileName(file.path(args[[1]], paste(i-1, '.dcm', sep="")))
+    writer$SetFileName(file.path(out_dir, paste(i-1, '.dcm', sep="")))
     writer$Execute(image_slice)
 }
 
+
+args <- commandArgs( TRUE )
+if (length(args) < 2) {
+   stop("Two arguments expected - output_directory pixel_type [int, float]")
+}
+
 # Create a new series from an array
-new_arr <- array(sample(-10:10, 60, replace=T), dim=c(5, 4, 3))
+image_dim = c(5,4,3)
+
+if( args[[2]] == "int" ) {
+  new_arr = array(as.integer(runif(60, min=-10, max=10)), dim=image_dim)
+} else if( args[[2]] == "float" ) {
+    new_arr = array(runif(60, min=-10, max=10), dim=image_dim)
+} else {
+  stop("Unexpected pixel type, valid values are [int, float].")
+}
+
 new_img <- as.image(new_arr)
 new_img$SetSpacing(c(2.5,3.5,4.5))
 
@@ -79,16 +88,33 @@ modification_date <- format(Sys.time(), "%Y%m%d")
 # with zero, and separated by a '.' We create a unique series ID using the date and time.
 # tags of interest:
 direction <- new_img$GetDirection()
-series_tag_values = matrix(c("0008|0031",modification_time, # Series Time
-                  "0008|0021",modification_date, # Series Date
-                  "0008|0008","DERIVED\\SECONDARY", # Image Type
-                  "0020|000e", paste("1.2.826.0.1.3680043.2.1125.",modification_date,".1",modification_time, sep=''), # Series Instance UID
-                  "0020|0037", paste(direction[[1]], direction[[4]], direction[[7]],# Image Orientation (Patient)
-                                      direction[[2]],direction[[5]],direction[[8]], sep='\\'),
-                  "0008|103e", "Created-SimpleITK"), nrow=6, ncol=2, byrow=TRUE) # Series Description
+
+series_tag_values <- c("0008|0031",modification_time, # Series Time
+                       "0008|0021",modification_date, # Series Date
+                       "0008|0008","DERIVED\\SECONDARY", # Image Type
+                       "0020|000e", paste("1.2.826.0.1.3680043.2.1125.",modification_date,".1",modification_time, sep=''), # Series Instance UID
+                       "0020|0037", paste(direction[[1]], direction[[4]], direction[[7]],# Image Orientation (Patient)
+                                          direction[[2]],direction[[5]],direction[[8]], sep='\\'),
+                       "0008|103e", "Created-SimpleITK")
+
+if(args[[2]] == "float") {
+    # If we want to write floating point values, we need to use the rescale slope, "0028|1053", to select the
+    # number of digits we want to keep. We also need to specify additional pixel storage and representation
+    # information.
+    rescale_slope <- 0.001 #keep three digits after the decimal point
+    series_tag_values <- c(series_tag_values,
+                           c("0028|1053", paste(rescale_slope), #rescale slope
+                             "0028|1052","0",   #rescale intercept
+                             "0028|0100", "16", #bits allocated
+                             "0028|0101", "16", #bits stored
+                             "0028|0102", "15", #high bit
+                             "0028|0103", "1")) #pixel representation
+}
+
+series_tag_values <- matrix(series_tag_values, nrow=length(series_tag_values)/2, ncol=2, byrow=TRUE) # Series Description
 
 # Write slices to output directory
-invisible(lapply(1:(new_img$GetDepth()), function(i){writeSlices(series_tag_values, new_img, i)}))
+invisible(lapply(1:(new_img$GetDepth()), function(i){writeSlices(series_tag_values, new_img, args[[1]], i)}))
 
 # Re-read the series
 # Read the original series. First obtain the series file names using the
