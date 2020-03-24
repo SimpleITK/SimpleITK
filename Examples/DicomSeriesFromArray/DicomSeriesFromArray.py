@@ -16,18 +16,16 @@
 #
 #=========================================================================
 
-from __future__ import print_function
-
 import SimpleITK as sitk
 
 import sys, time, os
 import numpy as np
 
-if len( sys.argv ) < 2:
-    print( "Usage: python " + __file__ + "<output_directory>" )
-    sys.exit ( 1 )
+pixel_dtypes = {"int16" : np.int16,
+                "float64" : np.float64}
 
-def writeSlices(series_tag_values, new_img, i):
+
+def writeSlices(series_tag_values, new_img, out_dir, i):
     image_slice = new_img[:,:,i]
 
     # Tags shared by the series.
@@ -45,11 +43,21 @@ def writeSlices(series_tag_values, new_img, i):
     image_slice.SetMetaData("0020,0013", str(i)) # Instance Number
 
     # Write to the output directory and add the extension dcm, to force writing in DICOM format.
-    writer.SetFileName(os.path.join(sys.argv[1],str(i)+'.dcm'))
+    writer.SetFileName(os.path.join(out_dir, str(i)+'.dcm'))
     writer.Execute(image_slice)
 
+
+if len( sys.argv ) < 3:
+    print( "Usage: python " + __file__ + " <output_directory> [" + ", ".join(pixel_dtypes) + "]" )
+    sys.exit ( 1 )
+
 # Create a new series from a numpy array
-new_arr = np.random.uniform(-10, 10, size = (3,4,5)).astype(np.int16)
+try:
+    pixel_dtype = pixel_dtypes[sys.argv[2]]
+except KeyError:
+    pixel_dtype = pixel_dtypes["int16"]
+
+new_arr = np.random.uniform(-10, 10, size = (3,4,5)).astype(pixel_dtype)
 new_img = sitk.GetImageFromArray(new_arr)
 new_img.SetSpacing([2.5,3.5,4.5])
 
@@ -84,8 +92,21 @@ series_tag_values = [("0008|0031",modification_time), # Series Time
                                                     direction[1],direction[4],direction[7])))),
                   ("0008|103e", "Created-SimpleITK")] # Series Description
 
+if pixel_dtype == np.float64:
+    # If we want to write floating point values, we need to use the rescale slope, "0028|1053", to select the
+    # number of digits we want to keep. We also need to specify additional pixel storage and representation
+    # information.
+    rescale_slope = 0.001 #keep three digits after the decimal point
+    series_tag_values = series_tag_values + \
+                        [('0028|1053', str(rescale_slope)), #rescale slope
+                         ('0028|1052','0'),   #rescale intercept
+                         ('0028|0100', '16'), #bits allocated
+                         ('0028|0101', '16'), #bits stored
+                         ('0028|0102', '15'), #high bit
+                         ('0028|0103','1')] #pixel representation
+
 # Write slices to output directory
-list(map(lambda i: writeSlices(series_tag_values, new_img, i), range(new_img.GetDepth())))
+list(map(lambda i: writeSlices(series_tag_values, new_img, sys.argv[1], i), range(new_img.GetDepth())))
     
 # Re-read the series
 # Read the original series. First obtain the series file names using the
