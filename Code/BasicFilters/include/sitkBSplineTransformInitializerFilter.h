@@ -86,11 +86,6 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
       /** Execute the filter on the input image */
       BSplineTransform Execute ( const Image& image1 );
 
-
-      /** Execute the filter on the input image with the given parameters */
-      BSplineTransform Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize, unsigned int order );
-
-
     private:
 
       /** Setup for member function dispatching */

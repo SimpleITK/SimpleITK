@@ -104,7 +104,8 @@ Image CastImageFilter::Execute ( const Image& image )
 
 Image Cast ( const Image& image, PixelIDValueEnum pixelID ) {
   CastImageFilter filter;
-  return filter.SetOutputPixelType ( pixelID ).Execute ( image );
+  filter.SetOutputPixelType( pixelID );
+  return filter.Execute ( image );
 }
 
 

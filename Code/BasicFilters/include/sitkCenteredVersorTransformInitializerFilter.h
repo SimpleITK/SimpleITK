@@ -84,10 +84,6 @@ Versorrepresenting rotation.
       Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform );
 
 
-      /** Execute the filter on the input image with the given parameters */
-      Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform, bool computeRotation );
-
-
     private:
 
       /** Setup for member function dispatching */

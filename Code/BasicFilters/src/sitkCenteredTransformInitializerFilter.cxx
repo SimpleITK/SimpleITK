@@ -78,18 +78,6 @@ std::string CenteredTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-
-Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage,
-                                                        const Image & movingImage,
-                                                        const Transform & transform,
-                                                        CenteredTransformInitializerFilter::OperationModeType operationMode )
-{
-  this->SetOperationMode ( operationMode );
-
-  return this->Execute ( fixedImage, movingImage, transform );
-}
-
-
 Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform )
 {
   PixelIDValueEnum type = fixedImage.GetPixelID();
@@ -169,7 +157,8 @@ Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * in
 Transform CenteredTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializerFilter::OperationModeType operationMode )
 {
   CenteredTransformInitializerFilter filter;
-  return filter.Execute( fixedImage, movingImage, transform, operationMode );
+  filter.SetOperationMode(operationMode);
+  return filter.Execute( fixedImage, movingImage, transform );
 }
 
 } // end namespace simple

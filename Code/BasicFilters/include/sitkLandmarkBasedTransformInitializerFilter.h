@@ -147,15 +147,6 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       Transform Execute ( const Transform & transform );
 
 
-      /** Execute the filter on the input image with the given parameters */
-      Transform Execute ( const Transform & transform,
-                          const std::vector<double> & fixedLandmarks,
-                          const std::vector<double> & movingLandmarks,
-                          const std::vector<double> & landmarkWeight,
-                          const Image & referenceImage,
-                          unsigned int numberOfControlPoints );
-
-
     private:
 
       /** Setup for member function dispatching */

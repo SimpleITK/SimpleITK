@@ -132,7 +132,9 @@ namespace itk {
 
     std::string Hash ( const Image& image, HashImageFilter::HashFunction function )
     {
-      return HashImageFilter().SetHashFunction ( function ).Execute ( image );
+      HashImageFilter filter;
+      filter.SetHashFunction( function );
+      return filter.Execute ( image );
     }
   }
 }
