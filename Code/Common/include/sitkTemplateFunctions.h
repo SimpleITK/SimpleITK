@@ -229,6 +229,32 @@ std::vector<TType> SITKCommon_HIDDEN  sitkITKVersorToSTL( const itk::Versor<T> &
   return out;
 }
 
+// Based on p0052r8 : Generic Scope Guard and RAII Wrapper for the
+// Standard Library
+// by Peter Sommerlad and Andrew L. Sandoval
+template <typename F>
+struct scope_exit {
+  F f_;
+  bool run_;
+  explicit scope_exit(F f) noexcept : f_(std::move(f)), run_(true) {}
+  scope_exit(scope_exit&& rhs) noexcept : f_((rhs.run_ = false, std::move(rhs.f_))), run_(true) {}
+  ~scope_exit()
+  {
+    if (run_)
+      f_();
+  }
+
+  scope_exit& operator=(scope_exit&& rhs) = delete;
+  scope_exit(scope_exit const&) = delete;
+  scope_exit& operator=(scope_exit const&) = delete;
+};
+
+template <typename F>
+scope_exit<F> make_scope_exit(F&& f) noexcept
+{
+  return scope_exit<F>{ std::forward<F>(f) };
+}
+
 
 }
 }
