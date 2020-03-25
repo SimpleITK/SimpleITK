@@ -103,7 +103,7 @@ KernelEnum ${name}::GetKernelType() const
 
 //
 // Execute
-//$(include ExecuteWithParameters.cxx.in)
+//
 $(include ExecuteNoParameters.cxx.in)
 
 //-----------------------------------------------------------------------------
@@ -151,7 +151,13 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA
                  $(when members $(foreach members , ${type} in${name})) )
 {
   ${name} filter;
-  return filter.SetKernelRadius( inRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+$(for i = 1,#members do
+  OUT=OUT .. [[  filter.Set]] ..members[i].name..[[( ]] .. 'in' .. members[i].name .. [[ );
+]]
+end)
+  filter.SetKernelRadius( inRadius );
+  filter.SetKernelType( inKernel );
+  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end) );
 }
 
 
@@ -163,7 +169,13 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA
                  $(when members $(foreach members , ${type} in${name})) )
 {
   ${name} filter;
-  return filter.SetKernelRadius( inVectorRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+$(for i = 1,#members do
+  OUT=OUT .. [[  filter.Set]] ..members[i].name..[[( ]] .. 'in' .. members[i].name .. [[ );
+]]
+end)
+  filter.SetKernelRadius( inVectorRadius );
+  filter.SetKernelType( inKernel );
+  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end) );
 }
 
 } // end namespace simple

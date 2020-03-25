@@ -67,12 +67,7 @@ $(include MemberGetSetDeclarations.h.in)
 
 $(include ClassNameAndPrint.h.in)
 
-$(include ExecuteMethodNoParameters.h.in)$(if members and #members > 0 then
-OUT=[[
-
-
-      /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
-      Image Execute ( $(include ImageParameters.in), const std::vector< std::vector<unsigned int> > &seedList$(include MemberParameters.in) );]]end)$(include CustomMethods.h.in)
+$(include ExecuteMethodNoParameters.h.in)$(include CustomMethods.h.in)
 
 $(include ExecuteInternalMethod.h.in)
 

@@ -60,12 +60,12 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
                                          bool useNearestNeighborExtrapolator = false);
 
 SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
-                                         std::vector<uint32_t> size,
+                                         const std::vector<uint32_t> &size,
                                          Transform transform = itk::simple::Transform(),
                                          InterpolatorEnum interpolator = itk::simple::sitkLinear,
-                                         std::vector<double> outputOrigin = std::vector<double>(3, 0.0),
-                                         std::vector<double> outputSpacing = std::vector<double>(3, 1.0),
-                                         std::vector<double> outputDirection = std::vector<double>(),
+                                         const std::vector<double> &outputOrigin = std::vector<double>(3, 0.0),
+                                         const std::vector<double> &outputSpacing = std::vector<double>(3, 1.0),
+                                         const std::vector<double> &outputDirection = std::vector<double>(),
                                          double defaultPixelValue = 0.0,
                                          PixelIDValueEnum outputPixelType = sitkUnknown,
                                          bool useNearestNeighborExtrapolator = false);

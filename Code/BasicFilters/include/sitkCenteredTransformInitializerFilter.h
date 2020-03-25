@@ -96,11 +96,6 @@ assumption will probably not hold in multi-modality registration.
       /** Execute the filter on the input image */
       Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform );
 
-
-      /** Execute the filter on the input image with the given parameters */
-      Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform,  CenteredTransformInitializerFilter::OperationModeType operationMode );
-
-
       /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
       SITK_RETURN_SELF_TYPE_HEADER MomentsOn( ) { this->SetOperationMode( MOMENTS ); return *this; }
 

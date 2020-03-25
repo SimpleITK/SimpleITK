@@ -79,14 +79,6 @@ std::string CenteredVersorTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-Transform CenteredVersorTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform,  bool computeRotation )
-{
-  this->SetComputeRotation ( computeRotation );
-
-  return this->Execute ( fixedImage, movingImage, transform );
-}
-
-
 Transform CenteredVersorTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform )
 {
   PixelIDValueEnum type = fixedImage.GetPixelID();
@@ -157,7 +149,8 @@ Transform CenteredVersorTransformInitializerFilter::ExecuteInternal ( const Imag
 Transform CenteredVersorTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, bool computeRotation )
 {
   CenteredVersorTransformInitializerFilter filter;
-  return filter.Execute( fixedImage, movingImage, transform, computeRotation );
+  filter.SetComputeRotation( computeRotation );
+  return filter.Execute( fixedImage, movingImage, transform  );
 }
 
 } // end namespace simple

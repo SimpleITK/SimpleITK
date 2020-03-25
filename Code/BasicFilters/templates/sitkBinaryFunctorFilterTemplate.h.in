@@ -33,7 +33,7 @@ $(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)
 $(include ClassNameAndPrint.h.in)
 
-$(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
+$(include ExecuteMethodNoParameters.h.in)$(include CustomMethods.h.in)
       /** Execute the filter with an image and a constant */
       Image Execute ( const Image& image1, ${constant_type} constant );
       Image Execute ( ${constant_type} constant, const Image& image2 );

@@ -67,18 +67,27 @@ Image Resample ( const Image& image1,
 
 
 SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
-                                         std::vector<uint32_t> size,
+                                         const std::vector<uint32_t> &size,
                                          Transform transform,
                                          InterpolatorEnum interpolator,
-                                         std::vector<double> outputOrigin,
-                                         std::vector<double> outputSpacing,
-                                         std::vector<double> outputDirection,
+                                         const std::vector<double> &outputOrigin,
+                                         const std::vector<double> &outputSpacing,
+                                         const std::vector<double> &outputDirection,
                                          double defaultPixelValue,
                                          PixelIDValueEnum outputPixelType,
                                          bool useNearestNeighborExtrapolator)
 {
   ResampleImageFilter filter;
-  return filter.Execute ( image1, size, transform, interpolator, outputOrigin, outputSpacing, outputDirection, defaultPixelValue, outputPixelType, useNearestNeighborExtrapolator);
+  filter.SetSize(size);
+  filter.SetTransform(transform);
+  filter.SetInterpolator(interpolator);
+  filter.SetOutputOrigin(outputOrigin);
+  filter.SetOutputSpacing(outputSpacing);
+  filter.SetOutputDirection(outputDirection);
+  filter.SetDefaultPixelValue(defaultPixelValue);
+  filter.SetOutputPixelType(outputPixelType);
+  filter.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator);
+  return filter.Execute ( image1 );
 }
 
 SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,

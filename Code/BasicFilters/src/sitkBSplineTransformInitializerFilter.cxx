@@ -84,15 +84,6 @@ std::string BSplineTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-BSplineTransform BSplineTransformInitializerFilter::Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize, unsigned int order )
-{
-  this->SetTransformDomainMeshSize ( transformDomainMeshSize );
-  this->SetOrder(order);
-
-  return this->Execute ( image1 );
-}
-
-
 BSplineTransform BSplineTransformInitializerFilter::Execute ( const Image& image1 )
 {
   PixelIDValueEnum type = image1.GetPixelID();
@@ -183,7 +174,9 @@ BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternalWithOrder ( 
 BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize, unsigned int order )
 {
   BSplineTransformInitializerFilter filter;
-  return filter.Execute ( image1, transformDomainMeshSize, order );
+  filter.SetTransformDomainMeshSize( transformDomainMeshSize );
+  filter.SetOrder( order );
+  return filter.Execute ( image1 );
 }
 
 

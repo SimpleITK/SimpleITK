@@ -95,23 +95,6 @@ std::string LandmarkBasedTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform,
-                                                             const std::vector<double> & fixedLandmarks,
-                                                             const std::vector<double> & movingLandmarks,
-                                                             const std::vector<double> & landmarkWeight,
-                                                             const Image & referenceImage,
-                                                             unsigned int numberOfControlPoints )
-{
-  this->SetFixedLandmarks ( fixedLandmarks );
-  this->SetMovingLandmarks ( movingLandmarks );
-  this->SetLandmarkWeight ( landmarkWeight );
-  this->SetReferenceImage ( referenceImage );
-  this->SetBSplineNumberOfControlPoints ( numberOfControlPoints );
-
-  return this->Execute ( transform );
-}
-
-
 Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform )
 {
   unsigned int dimension = transform.GetDimension();
@@ -226,7 +209,12 @@ Transform LandmarkBasedTransformInitializer ( const Transform & transform,
                                               unsigned int numberOfControlPoints )
 {
   LandmarkBasedTransformInitializerFilter filter;
-  return filter.Execute ( transform, fixedLandmarks, movingLandmarks, landmarkWeight, referenceImage, numberOfControlPoints );
+  filter.SetFixedLandmarks(fixedLandmarks);
+  filter.SetMovingLandmarks(movingLandmarks);
+  filter.SetLandmarkWeight(landmarkWeight);
+  filter.SetReferenceImage(referenceImage);
+  filter.SetBSplineNumberOfControlPoints(numberOfControlPoints);
+  return filter.Execute ( transform );
 }
 
 
