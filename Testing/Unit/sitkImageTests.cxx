@@ -465,41 +465,51 @@ sitkClangDiagnosticPush();
 sitkClangWarningIgnore("-Wself-assign-overloaded");
 TEST_F(Image, CopyOnWrite)
 {
-  // test that a just constructed image only have 1 referecne
+  // test that a just constructed image only have 1 reference
   sitk::Image img( 10, 10, sitk::sitkInt16 );
   EXPECT_EQ(static_cast<const sitk::Image *>(&img)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for just constructed Image";
+  EXPECT_TRUE(img.IsUnique());
 
   // use the image from the fixture to test some copy constructor
   EXPECT_EQ(static_cast<const sitk::Image *>(shortImage.get())->GetITKBase()->GetReferenceCount(), 2 )
     << " Reference Count for shared shortImage initial";
+  EXPECT_FALSE(shortImage->IsUnique());
   sitk::Image img0 = *shortImage;
   EXPECT_EQ(static_cast<const sitk::Image *>(shortImage.get())->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared shortImage copy";
+  EXPECT_FALSE(shortImage->IsUnique());
   sitk::Image imgCopy = img0;
   EXPECT_EQ(static_cast<const sitk::Image *>(shortImage.get())->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for shared shortImage second copy";
+  EXPECT_FALSE(shortImage->IsUnique());
 
   // check set origin for copy on write
   imgCopy.SetOrigin( std::vector<double>( 3, 2.123 ) );
   EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for copy after set origin";
+  EXPECT_TRUE(imgCopy.IsUnique());
   EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set origin";
+  EXPECT_FALSE(img0.IsUnique());
 
   // check shallow copy on assignment
   imgCopy = img0;
   EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for copy after assigment";
+  EXPECT_FALSE(imgCopy.IsUnique());
   EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for shared after assignment";
+  EXPECT_FALSE(img0.IsUnique());
 
   // check copy on write with set spacing
   imgCopy.SetSpacing( std::vector<double>( 3, 3.45 ) );
   EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for copy after set spacing";
+  EXPECT_TRUE(imgCopy.IsUnique());
   EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set spacing";
+  EXPECT_FALSE(img0.IsUnique());
   EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
 }
 
