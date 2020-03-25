@@ -207,6 +207,18 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1
                             end) );
 }
 
+
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( Image&& image1, ${constant_type} constant$(include MemberParameters.in) )
+{
+  ${name} filter;
+  return filter.Execute ( std::move(image1), constant$(for i = 1,#members do
+                            if (number_of_inputs > 0 or i > 1) then
+                              OUT = OUT .. ", "
+                            end
+                            OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
+                            end) );
+}
+
 Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
 {
   ${name} filter;
@@ -217,6 +229,6 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} co
                             OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                             end) );
 }
-
+$(if not #members==0 then OUT=[[#error BinaryFunctorTemplate does not support members, yet]]end)
 } // end namespace simple
 } // end namespace itk
