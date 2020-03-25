@@ -50,10 +50,9 @@ namespace itk
   }
 
   Image::Image( Image && img )
-  : m_PimpleImage( nullptr )
+  : m_PimpleImage( img.m_PimpleImage )
   {
-    using std::swap;
-    swap(m_PimpleImage, img.m_PimpleImage);
+    img.m_PimpleImage = nullptr;
   }
 
   Image& Image::operator=( const Image &img )
@@ -759,8 +758,9 @@ namespace itk
     }
 
 
-    void Image::MakeUnique( void )
+    void Image::MakeUnique( )
     {
+      assert( m_PimpleImage );
       if ( this->m_PimpleImage->GetReferenceCountOfImage() > 1 )
         {
         // note: care is take here to be exception safe with memory allocation
@@ -769,6 +769,12 @@ namespace itk
         this->m_PimpleImage = temp.release();
         }
 
+    }
+
+    bool Image::IsUnique( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetReferenceCountOfImage() == 1;
     }
   } // end namespace simple
 } // end namespace itk
