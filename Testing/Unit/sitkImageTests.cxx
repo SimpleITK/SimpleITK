@@ -511,6 +511,17 @@ TEST_F(Image, CopyOnWrite)
     << " Reference Count for shared after set spacing";
   EXPECT_FALSE(img0.IsUnique());
   EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
+
+  sitk::Image labelImage1(10, 10, sitk::sitkLabelUInt8);
+  EXPECT_TRUE(labelImage1.IsUnique());
+  sitk::Image labelImage2(labelImage1);
+  EXPECT_FALSE(labelImage1.IsUnique());
+  EXPECT_FALSE(labelImage2.IsUnique());
+
+  // copy on write
+  labelImage2.SetSpacing( std::vector<double>( {1.2, 3.4} ));
+  EXPECT_TRUE(labelImage1.IsUnique());
+  EXPECT_TRUE(labelImage2.IsUnique());
 }
 
 TEST_F(Image,Operators)
