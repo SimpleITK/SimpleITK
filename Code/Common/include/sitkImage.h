@@ -94,8 +94,8 @@ namespace simple
      * destructing and assignment; all other operations have undefined
      * behavior.
      */
-    Image( Image &&img );
-    Image& operator=( Image &&img );
+    Image( Image &&img ) noexcept;
+    Image& operator=( Image &&img ) noexcept;
 #endif
 
 
