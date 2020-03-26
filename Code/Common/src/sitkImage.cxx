@@ -49,7 +49,7 @@ namespace itk
   {
   }
 
-  Image::Image( Image && img )
+  Image::Image( Image && img ) noexcept
   : m_PimpleImage( img.m_PimpleImage )
   {
     img.m_PimpleImage = nullptr;
@@ -57,11 +57,10 @@ namespace itk
 
   Image& Image::operator=( const Image &img )
   {
-    // follow the Rule of Five
     return *this = Image(img);
   }
 
-  Image &Image::operator=(Image && img)
+  Image &Image::operator=(Image && img) noexcept
   {
     using std::swap;
     swap(m_PimpleImage, img.m_PimpleImage);
