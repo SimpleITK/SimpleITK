@@ -26,6 +26,7 @@
 #include "itkVectorImage.h"
 #include "itkLabelMap.h"
 #include "itkImageDuplicator.h"
+#include "itkConvertLabelMapFilter.h"
 
 
 #include <type_traits>
@@ -108,8 +109,13 @@ namespace itk
     typename std::enable_if<IsLabel<UImageType>::Value, PimpleImageBase*>::type
     DeepCopy( void ) const
       {
-        sitkExceptionMacro( "This method is not implemented yet" );
-        return new Self( this->m_Image.GetPointer() );
+        typedef itk::ConvertLabelMapFilter<UImageType, UImageType> FilterType;
+        typename FilterType::Pointer filter = FilterType::New();
+        filter->SetInput ( this->m_Image );
+        filter->UpdateLargestPossibleRegion();
+        ImagePointer output = filter->GetOutput();
+
+        return new Self( output.GetPointer() );
       }
 
     virtual itk::DataObject* GetDataBase( void ) { return this->m_Image.GetPointer(); }
