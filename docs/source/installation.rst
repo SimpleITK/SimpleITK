@@ -96,7 +96,7 @@ files have the following naming convention:
 
 ``SimpleITK-version-CSharp-buildplatform-targetplatform.zip``
 
-eg.
+e.g.
 
 | ``SimpleITK-1.2.0-CSharp-win64-x64.zip``
 
@@ -113,6 +113,23 @@ Java binary files
 under the appropriate version. Installation instructions are available
 at :ref:`setup SimpleITK with Java <setup-java>`.
 
+
+R binary files
+--------------
+
+Only available for Linux and Mac.
+
+Install using a devtools based installer (`GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__). Strictly speaking, this is not a binary distribution, but this is a convenient way of automatically compiling and installing on your system.
+
+Requires `R devtools <https://github.com/r-lib/devtools>`__, `CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__ and a compiler in the path.
+
+From the R prompt:
+
+.. code-block :: bash
+
+  devtools::install_github("SimpleITK/SimpleITKRInstaller")
+
+
 Latest binaries
 ----------------
 
@@ -128,7 +145,6 @@ upgrade to the latest pre-release Python binary package run:
 .. code-block :: bash
 
  pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
-
 
 
 Recommended Software
