@@ -18,6 +18,8 @@
 #ifndef sitkImageConvert_h
 #define sitkImageConvert_h
 
+#include "sitkImage.h"
+#include "itkHolderCommand.h"
 
 namespace itk
 {
@@ -51,18 +53,19 @@ GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bo
 
   typename ImageType::Pointer out = ImageType::New();
 
-  if (!img->GetPixelContainer()->GetContainerManageMemory())
+  if (img->GetPixelContainer()->GetContainerManageMemory() && transferOwnership )
     {
-    // Set the image's pixel container to import the pointer provided.
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
+    img->GetPixelContainer()->ContainerManageMemoryOff();
     }
   else
     {
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
-    if (transferOwnership)
-      {
-      img->GetPixelContainer()->ContainerManageMemoryOff();
-      }
+    auto holder = itk::HolderCommand<typename VectorImageType::PixelContainer::Pointer>::New();
+    holder->Set( img->GetPixelContainer() );
+
+    // Set the image's pixel container to import the pointer provided.
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    out->AddObserver( itk::DeleteEvent(), holder);
     }
 
   out->CopyInformation( img );
@@ -79,6 +82,7 @@ typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false )
 {
   typedef itk::VectorImage< TPixelType, NImageDimension > VectorImageType;
+  typedef itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> ImageType;
 
   size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
   typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
@@ -91,19 +95,22 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
 
   typename VectorImageType::Pointer out = VectorImageType::New();
 
-  if (!img->GetPixelContainer()->GetContainerManageMemory())
+  if (img->GetPixelContainer()->GetContainerManageMemory() && transferOwnership)
     {
-    // Set the image's pixel container to import the pointer provided.
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
+    img->GetPixelContainer()->ContainerManageMemoryOff();
     }
   else
     {
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
-    if (transferOwnership)
-      {
-      img->GetPixelContainer()->ContainerManageMemoryOff();
-      }
+    auto holder = itk::HolderCommand<typename ImageType::PixelContainer::Pointer>::New();
+    holder->Set( typename ImageType::PixelContainer::Pointer(img->GetPixelContainer()) );
+
+    // Set the image's pixel container to import the pointer provided.
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    out->AddObserver( itk::DeleteEvent(), holder);
+
     }
+
 
   out->CopyInformation( img );
   out->SetRegions( img->GetBufferedRegion() );
