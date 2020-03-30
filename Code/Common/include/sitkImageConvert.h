@@ -36,89 +36,18 @@ namespace simple
 template< typename TPixelType, unsigned int ImageDimension >
 SITKCommon_HIDDEN
 typename itk::Image< itk::Vector< TPixelType, ImageDimension >, ImageDimension>::Pointer
-GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bool transferOwnership = false )
-{
-  typedef itk::Image< itk::Vector< TPixelType, ImageDimension >, ImageDimension> ImageType;
-  typedef itk::VectorImage< TPixelType, ImageDimension > VectorImageType;
-
-  // check number of element compatibility
-  if ( img->GetNumberOfComponentsPerPixel() != VectorImageType::ImageDimension )
-    {
-    sitkExceptionMacro("Expected number of elements in vector image to be the same as the dimension!");
-    }
-
-  size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
-  typename ImageType::PixelType* buffer = reinterpret_cast<typename ImageType::PixelType*>( img->GetPixelContainer()->GetBufferPointer() );
-
-
-  typename ImageType::Pointer out = ImageType::New();
-
-  if (img->GetPixelContainer()->GetContainerManageMemory() && transferOwnership )
-    {
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
-    img->GetPixelContainer()->ContainerManageMemoryOff();
-    }
-  else
-    {
-    auto holder = itk::HolderCommand<typename VectorImageType::PixelContainer::Pointer>::New();
-    holder->Set( img->GetPixelContainer() );
-
-    // Set the image's pixel container to import the pointer provided.
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
-    out->AddObserver( itk::DeleteEvent(), holder);
-    }
-
-  out->CopyInformation( img );
-  out->SetRegions( img->GetBufferedRegion() );
-
-  return out;
-
-}
+GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bool transferOwnership = false );
 
 
 template< class TPixelType, unsigned int NImageDimension, unsigned int NLength >
 SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
-GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false )
-{
-  typedef itk::VectorImage< TPixelType, NImageDimension > VectorImageType;
-  typedef itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> ImageType;
+GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false );
 
-  size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
-  typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
-
-  // Unlike an image of Vectors a VectorImage's container is a
-  // container of TPixelType, whos size is the image's number of
-  // pixels * number of pixels per component
-  numberOfElements *= NImageDimension;
-
-
-  typename VectorImageType::Pointer out = VectorImageType::New();
-
-  if (img->GetPixelContainer()->GetContainerManageMemory() && transferOwnership)
-    {
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
-    img->GetPixelContainer()->ContainerManageMemoryOff();
-    }
-  else
-    {
-    auto holder = itk::HolderCommand<typename ImageType::PixelContainer::Pointer>::New();
-    holder->Set( typename ImageType::PixelContainer::Pointer(img->GetPixelContainer()) );
-
-    // Set the image's pixel container to import the pointer provided.
-    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
-    out->AddObserver( itk::DeleteEvent(), holder);
-
-    }
-
-
-  out->CopyInformation( img );
-  out->SetRegions( img->GetBufferedRegion() );
-
-  return out;
-}
 
 }
 }
+
+#include "sitkImageConvert.hxx"
 
 #endif // sitkImageConvert_h
