@@ -32,7 +32,7 @@
 
 #include "sitkDisplacementFieldTransform.h"
 #include "sitkPimpleTransform.hxx"
-#include "sitkImageConvert.h"
+#include "sitkImageConvert.hxx"
 
 #include "itkDisplacementFieldTransform.h"
 #include "itkBSplineSmoothingOnUpdateDisplacementFieldTransform.h"

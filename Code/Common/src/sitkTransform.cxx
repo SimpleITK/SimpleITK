@@ -22,7 +22,7 @@
 #include "sitkTransform.h"
 #include "sitkTemplateFunctions.h"
 #include "sitkMemberFunctionFactory.h"
-#include "sitkImageConvert.h"
+#include "sitkImageConvert.hxx"
 
 #include "itkTransformBase.h"
 #include "itkTransformFactory.h"

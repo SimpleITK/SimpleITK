@@ -8,7 +8,7 @@
   "custom_set_input" : "filter->SetInput( GetImageFromVectorImage(const_cast< InputImageType * >(image1.GetPointer())) );",
   "include_files" : [
     "itkVector.h",
-    "sitkImageConvert.h"
+    "sitkImageConvert.hxx"
   ],
   "members" : [
     {

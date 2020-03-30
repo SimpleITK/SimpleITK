@@ -23,6 +23,7 @@
 #include "sitkTemplateFunctions.h"
 #include "sitkEvent.h"
 #include "sitkImage.h"
+#include "sitkImageConvert.h"
 
 #include <iostream>
 #include <list>
@@ -304,23 +305,9 @@ namespace itk {
                 template<typename, unsigned int> class TVector >
         static Image CastITKToImage( itk::Image< TVector< TPixelType, VLength >, VImageDimension> *img )
       {
-        typedef itk::VectorImage< TPixelType, VImageDimension > VectorImageType;
-
-        size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
-        typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
-
-        // Unlike an image of Vectors a VectorImage's container is a
-        // container of TPixelType, whos size is the image's number of
-        // pixels * number of pixels per component
-        numberOfElements *= VImageDimension;
-
-        typename VectorImageType::Pointer out = VectorImageType::New();
-
-        // Set the image's pixel container to import the pointer provided.
-        out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
-        img->GetPixelContainer()->ContainerManageMemoryOff();
-        out->CopyInformation( img );
-        out->SetRegions( img->GetBufferedRegion() );
+        // The implementation defined int sitkImageConvert.hxx needs
+        // to be manually included when this method is used.
+        auto out = GetVectorImageFromImage(img, true);
 
         return Image(out.GetPointer());
       }

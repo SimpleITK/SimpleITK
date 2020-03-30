@@ -19,12 +19,12 @@
 #define sitkImageConvert_h
 
 #include "sitkImage.h"
-#include "itkHolderCommand.h"
 
 namespace itk
 {
 
 template< typename T, unsigned int NVectorDimension > class Vector;
+template< typename T, unsigned int NVectorDimension > class CovariantVector;
 
 namespace simple
 {
@@ -44,10 +44,13 @@ SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false );
 
+template< class TPixelType, unsigned int NImageDimension, unsigned int NLength >
+SITKCommon_HIDDEN
+typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
+GetVectorImageFromImage( itk::Image< itk::CovariantVector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false );
+
 
 }
 }
-
-#include "sitkImageConvert.hxx"
 
 #endif // sitkImageConvert_h
