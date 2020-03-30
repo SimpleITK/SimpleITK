@@ -118,15 +118,6 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
   return out;
 }
 
-
-template< class TPixelType, unsigned int NImageDimension >
-SITKCommon_HIDDEN
-typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
-GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NImageDimension >, NImageDimension> *img, bool transferOwnership = false )
-{
-  return GetVectorImageFromImage<TPixelType,NImageDimension,NImageDimension>(img, transferOwnership);
-}
-
 }
 }
 
