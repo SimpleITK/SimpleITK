@@ -285,7 +285,8 @@ end)
   ASSERT_NO_THROW ( $(if not no_return_image then OUT=[[output =]] end) filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
   if ( !inputs.empty() )
-      {
+    {
+
       // Check that the input is not modified
       // This will fail if the filter is being run in-place
       EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputs[0] ) ) << "Input was modified by filter.";
@@ -296,7 +297,35 @@ end)
         {
         EXPECT_NE(output.GetBufferAsVoid(), inputs[0].GetBufferAsVoid() ) << "Input buffer was copyied to output!";
         }
+    }
+
+$(if in_place then
+    OUT=OUT..[=[
+  ASSERT_LE(1, inputs.size());
+  itk::simple::Image inPlaceOutput;
+  itk::simple::Image temp = inputs[0];
+  temp.MakeUnique();
+  ASSERT_NO_THROW ( $(if not no_return_image then OUT=[[inPlaceOutput =]] end) filter.Execute ( $(if #inputs > 0 then OUT=[[std::move(temp)]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
+
+  ASSERT_NE(nullptr, inPlaceOutput.GetITKBase());
+  EXPECT_EQ(itk::simple::Hash(output), itk::simple::Hash(inPlaceOutput)) << "InPlace value does not match!";
+
+  for( auto iter = ++(inputs.begin()); iter != inputs.end(); ++iter)
+    {
+    ASSERT_NE(nullptr, iter->GetITKBase());
+    if (!isLabelType(*iter))
+      {
+      EXPECT_NE(nullptr, iter->GetBufferAsVoid()) << "An input is missing it's buffer!";
+
+      if (!isLabelType(inPlaceOutput))
+        {
+        EXPECT_NE(inPlaceOutput.GetBufferAsVoid(), iter->GetBufferAsVoid()) << "An input and output buffer matches.";
+        }
       }
+    }
+]=]
+end)
+
 
   $(if md5hash then
   OUT = [[
