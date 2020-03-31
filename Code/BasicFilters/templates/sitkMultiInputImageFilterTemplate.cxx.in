@@ -86,13 +86,12 @@ Image ${name}::Execute ( const std::vector<Image> &images )
   PixelIDValueEnum type = images.front().GetPixelID();
   unsigned int dimension = images.front().GetDimension();
 
+  unsigned int inputIndex = 1;
   for( std::vector<Image>::const_iterator i = images.begin(); i != images.end(); ++i )
     {
-    if ( type != i->GetPixelIDValue() ||
-         dimension != i->GetDimension() )
-      {
-      sitkExceptionMacro ( "An image for ${name} doesn\'t match type or dimension!" );
-      }
+    CheckImageMatchingDimension(images.front(), *i, "image" + std::to_string(inputIndex));
+    CheckImageMatchingPixelType(images.front(), *i, "image" + std::to_string(inputIndex));
+    ++inputIndex;
     }
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( images );
