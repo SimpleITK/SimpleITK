@@ -177,18 +177,13 @@ void * GetBufferAsVoid( itk::simple::Image &sitkImage)
      break;
     case sitk::ConditionalValue< sitk::sitkVectorFloat32 != sitk::sitkUnknown, sitk::sitkVectorFloat32, -22 >::Value:
     case sitk::ConditionalValue< sitk::sitkFloat32 != sitk::sitkUnknown, sitk::sitkFloat32, -10 >::Value:
+    case sitk::ConditionalValue< sitk::sitkComplexFloat32 != sitk::sitkUnknown, sitk::sitkComplexFloat32, -12 >::Value:
       sitkBufferPtr = (void *)sitkImage.GetBufferAsFloat();
       break;
     case sitk::ConditionalValue< sitk::sitkVectorFloat64 != sitk::sitkUnknown, sitk::sitkVectorFloat64, -23 >::Value:
     case sitk::ConditionalValue< sitk::sitkFloat64 != sitk::sitkUnknown, sitk::sitkFloat64, -11 >::Value:
-      sitkBufferPtr = (void *)sitkImage.GetBufferAsDouble();
-      break;
-    case sitk::ConditionalValue< sitk::sitkComplexFloat32 != sitk::sitkUnknown, sitk::sitkComplexFloat32, -12 >::Value:
-      //sitkBufferPtr = (void *)sitkImage.GetBufferAsComplexFloat32();
-      break;
     case sitk::ConditionalValue< sitk::sitkComplexFloat64 != sitk::sitkUnknown, sitk::sitkComplexFloat64, -13 >::Value:
-      //sitkBufferPtr = (void *)sitkImage.GetBufferAsComplexFloat64();
-      break;
+      sitkBufferPtr = (void *)sitkImage.GetBufferAsDouble();
       break;
   default:
     ;
