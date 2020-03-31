@@ -31,6 +31,18 @@
 #include <sitkConditional.h>
 #include <sitkVersion.h>
 
+#include <array>
+
+static bool isLabelType( const itk::simple::Image &img)
+{
+  static const std::array<itk::simple::PixelIDValueEnum, 4> labelIDs{
+      itk::simple::sitkLabelUInt8,
+      itk::simple::sitkLabelUInt16,
+      itk::simple::sitkLabelUInt32,
+      itk::simple::sitkLabelUInt64};
+
+  return std::find(labelIDs.begin(), labelIDs.end(), img.GetPixelID()) != labelIDs.end();
+}
 
 TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
@@ -289,9 +301,9 @@ end)
 
       // Check that the input buffer is different that the output
       // buffer, this does not check complex or label map pixel types.
-      if (GetBufferAsVoid(output) != nullptr && GetBufferAsVoid(inputs[0]) != nullptr)
+      if(!isLabelType(output) && !isLabelType(inputs[0]))
         {
-        EXPECT_NE(GetBufferAsVoid(output), GetBufferAsVoid(inputs[0]) ) << "Input buffer was copyied to output!";
+        EXPECT_NE(output.GetBufferAsVoid(), inputs[0].GetBufferAsVoid() ) << "Input buffer was copyied to output!";
         }
       }
 
