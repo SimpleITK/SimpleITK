@@ -83,8 +83,8 @@ if not (number_of_inputs >  0) and (#inputs > 0) then
   inputName1 = inputs[1].name:sub(1,1):lower() .. inputs[1].name:sub(2,-1)
 end
 OUT=[[
-  PixelIDValueEnum type1 = ]]..inputName1..[[.GetPixelID();
-  unsigned int dimension = ]]..inputName1..[[.GetDimension();
+  const PixelIDValueEnum type1 = ]]..inputName1..[[.GetPixelID();
+  const unsigned int dimension = ]]..inputName1..[[.GetDimension();
 ]]
 end
 local inputName2 = "image2"
@@ -95,18 +95,16 @@ if not (number_of_inputs >  1) and (inputs and (#inputs > 1)) then
 end
 if number_of_inputs >= 2 or (inputs and (#inputs >= 2)) then
   OUT=OUT..[[
-  PixelIDValueType type2 = ]]..inputName2..[[.GetPixelIDValue();
+  const PixelIDValueType type2 = ]]..inputName2..[[.GetPixelIDValue();]]
+  OUT=OUT..[[
 
-  // todo need better error handling and potential type conversion
-  if ( ]]..inputName1..[[.GetDimension() != ]]..inputName2..[[.GetDimension()]]
-     if input2_size_check then
-       OUT=OUT..[[ ||
-           ]]..inputName1..[[.GetSize() != ]]..inputName2..[[.GetSize()]]
-      end
-        OUT=OUT..[[ )
-    {
-      sitkExceptionMacro ( "Both images for ${name} do not match dimension or size!" );
-    }]]
+  CheckImageMatchingDimension( ]]..inputName1 .. [[, ]] .. inputName2 .. [[, "]] .. inputName2 .. [[" );
+]]
+  if input2_size_check then
+       OUT=OUT..[[
+  CheckImageMatchingSize( ]]..inputName1 .. [[, ]] .. inputName2 .. [[, "]] .. inputName2 .. [[" );
+]]
+  end
 else
 OUT=OUT..[[
   ${custom_type2}]]
