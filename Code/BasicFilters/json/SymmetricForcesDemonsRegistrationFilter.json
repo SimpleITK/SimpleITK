@@ -8,7 +8,7 @@
   "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::SymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
   "include_files" : [
-    "sitkImageConvert.h"
+    "sitkImageConvert.hxx"
   ],
   "inputs" : [
     {

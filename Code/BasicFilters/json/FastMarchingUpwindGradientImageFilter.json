@@ -7,6 +7,9 @@
   "filter_type" : "itk::FastMarchingUpwindGradientImageFilter<OutputImageType,InputImageType>",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
+  "include_files" : [
+    "sitkImageConvert.hxx"
+   ],
   "members" : [
     {
       "name" : "TrialPoints",

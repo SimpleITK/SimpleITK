@@ -8,7 +8,7 @@
   "custom_set_input" : "filter->SetDisplacementField( GetImageFromVectorImage(const_cast< InputImageType * >(image1.GetPointer())) );",
   "include_files" : [
     "itkVector.h",
-    "sitkImageConvert.h"
+    "sitkImageConvert.hxx"
   ],
   "members" : [
     {

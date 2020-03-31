@@ -22,7 +22,7 @@
 #include "sitkTransform.h"
 #include "sitkTemplateFunctions.h"
 #include "sitkMemberFunctionFactory.h"
-#include "sitkImageConvert.h"
+#include "sitkImageConvert.hxx"
 
 #include "itkTransformBase.h"
 #include "itkTransformFactory.h"
@@ -51,6 +51,8 @@
 
 #include "itkVectorImage.h"
 #include "itkCommand.h"
+
+#include "itkHolderCommand.h"
 
 #include <memory>
 
@@ -106,84 +108,6 @@ bool RegisterMoreTransforms(void)
 
 bool initialized = RegisterMoreTransforms<2>() && RegisterMoreTransforms<3>();
 
-
-/** \class HolderCommand
- *  \brief An ITK Command class to hold a object until destruction
- *
- * This command is to add resource management, by utilizing
- * the lifetime of a Command added to an object is about the same as
- * that managed object. So this command holds onto a resource or object for
- * lifetime of itself. By adding as a command to an ITK object it will
- * be released on destruction of the ITK object ( subject to the
- * reference counting on the Command ).
- */
-template< class T >
-class HolderCommand
-  : public itk::Command
-{
-public:
-  typedef T ObjectType;
-
-  typedef  HolderCommand Self;
-  typedef  itk::Command  Superclass;
-
-  typedef itk::SmartPointer<Self>        Pointer;
-  typedef itk::SmartPointer<const Self>  ConstPointer;
-
-  itkNewMacro( HolderCommand );
-
-  void Set(const ObjectType object) { this->m_Object = object; }
-  ObjectType &Get() {return this->m_Object;}
-  const ObjectType &Get() const {return this->m_Object;}
-
-  void Execute(itk::Object*, const itk::EventObject&) {}
-  void Execute(const itk::Object*, const itk::EventObject&) {}
-
-  void operator=(const HolderCommand&) = delete;
-  HolderCommand(const HolderCommand&) = delete;
-
-protected:
-  HolderCommand() {};
-  ~HolderCommand() {};
-
-private:
-  ObjectType m_Object;
-
-};
-
-template< class T >
-class HolderCommand<T*>
-  : public itk::Command
-{
-public:
-  typedef T ObjectType;
-
-  typedef  HolderCommand Self;
-  typedef  itk::Command  Superclass;
-
-  typedef itk::SmartPointer<Self>        Pointer;
-  typedef itk::SmartPointer<const Self>  ConstPointer;
-
-  itkNewMacro( HolderCommand );
-
-  void Set(ObjectType *object) { this->m_Object = object; }
-  ObjectType *Get() {return this->m_Object;}
-  const ObjectType *Get() const {return this->m_Object;}
-
-  void Execute(itk::Object*, const itk::EventObject&) override {}
-  void Execute(const itk::Object*, const itk::EventObject&) override {}
-
-protected:
-  HolderCommand() : m_Object(nullptr) {};
-  ~HolderCommand() { delete m_Object;}
-
-private:
-  void operator=(const HolderCommand&); // not implemented
-  HolderCommand(const HolderCommand&); // not implemented
-
-  ObjectType* m_Object;
-
-};
 
 }
 
