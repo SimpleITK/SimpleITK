@@ -71,8 +71,9 @@ OUT=[[
 ]]
 else
 OUT=[[
-  typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
-  this->FixNonZeroIndex( itkOutImage );
-  return Image( this->CastITKToImage(itkOutImage) );
+  typename FilterType::OutputImageType::Pointer itkOutImage{ filter->GetOutput()};
+  filter = nullptr;
+  this->FixNonZeroIndex( itkOutImage.GetPointer() );
+  return Image{ this->CastITKToImage( itkOutImage.GetPointer() ) };
 ]]
 end)

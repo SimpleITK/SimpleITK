@@ -78,6 +78,8 @@ namespace itk
                               << "SimpleITK does not support streaming or unbuffered regions!" );
           }
 
+        InternalCheckBuffer(image);
+
         const IndexType & idx = image->GetBufferedRegion().GetIndex();
         for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
           {
@@ -720,6 +722,38 @@ namespace itk
                             << " but the GetPixel access method requires type: "
                             << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
                             << "!" );
+      }
+
+    template< typename TPixelType, unsigned int NDimension >
+    bool
+    InternalCheckBuffer(const itk::Image<TPixelType, NDimension> *image)
+      {
+        auto container = image->GetPixelContainer();
+        if (container->GetReferenceCount() != 1)
+          {
+          sitkExceptionMacro( << "The image pixel container is shared by other resources and presents aliasing issue.");
+          }
+        return true;
+      }
+
+    template< typename TPixelType, unsigned int NDimension >
+    bool
+    InternalCheckBuffer(const itk::VectorImage<TPixelType, NDimension> *image)
+      {
+        auto container = image->GetPixelContainer();
+        if (container->GetReferenceCount() != 1)
+          {
+          sitkExceptionMacro( << "The vector image pixel container is shared by other resources and presents aliasing issues.");
+          }
+        return true;
+      }
+
+
+    template< typename TLabelObject >
+    bool
+    InternalCheckBuffer(const itk::LabelMap<TLabelObject> *)
+      {
+        return true;
       }
 
     template < typename TPixelIDType >
