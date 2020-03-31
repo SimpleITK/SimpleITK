@@ -88,7 +88,7 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
   // Unlike an image of Vectors a VectorImage's container is a
   // container of TPixelType, whos size is the image's number of
   // pixels * number of pixels per component
-  numberOfElements *= NImageDimension;
+  numberOfElements *= NLength;
 
 
   typename VectorImageType::Pointer out = VectorImageType::New();
@@ -112,6 +112,8 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
 
   out->CopyInformation( img );
   out->SetRegions( img->GetBufferedRegion() );
+
+  assert(out->GetNumberOfComponentsPerPixel() == NLength);
 
   return out;
 }
@@ -155,6 +157,8 @@ GetVectorImageFromImage( itk::Image< itk::CovariantVector< TPixelType, NLength>,
 
   out->CopyInformation( img );
   out->SetRegions( img->GetBufferedRegion() );
+
+  assert(out->GetNumberOfComponentsPerPixel() == NLength);
 
   return out;
 }
