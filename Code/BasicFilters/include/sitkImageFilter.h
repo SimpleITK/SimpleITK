@@ -92,9 +92,21 @@ namespace itk {
 
       }
 
-    };
+      /** Verify the dimension of image1 matches the dimension of
+       * image2, and if not then an exception is thrown.
+       */
+      void CheckImageMatchingDimension(const Image &image1, const Image& image2, const std::string &image2Name );
 
+      /** Verify the pixel type of image1 matches the pixel type of
+       * image2, and if different then an exception is thrown.
+       */
+      void CheckImageMatchingPixelType(const Image &image1, const Image& image2, const std::string &image2Name );
 
+      /** Verify the size in pixel of image1 matches the size of
+       * image2, and if different then an exception is thrown.
+       */
+      void CheckImageMatchingSize(const Image &image1, const Image& image2, const std::string &image2Name );
+  };
   }
 }
 #endif

@@ -24,22 +24,80 @@
 
 namespace itk {
 namespace simple {
+
+namespace
+{
+
+      void CheckImageMatchingDimension(const Image &image1, const Image& image2,
+                                       const std::string &image2Name, const std::string &filterName  )
+      {
+        if ( image1.GetDimension() != image2.GetDimension() )
+          {
+          sitkExceptionMacro ( << "Input \"" << image2Name << "\" for \"" << filterName << "\" has dimension of "
+                               << image2.GetDimension() << " which does not match the primary input's dimension of "
+                               << image1.GetDimension() << "!" );
+          }
+
+      }
+
+      void CheckImageMatchingPixelType(const Image &image1, const Image& image2,
+                                       const std::string &image2Name,const std::string &filterName  )
+      {
+        if ( image1.GetPixelID() != image2.GetPixelIDValue() )
+          {
+          sitkExceptionMacro ( << "Input \"" << image2Name << "\" for \"" << filterName << "\" has pixel type of \""
+                               << image2.GetPixelIDTypeAsString() << " which does not match the primary input's pixel type of \""
+                               << image1.GetPixelIDTypeAsString() << "!\n"
+                               << "The \"" << image2Name << "\" input may need casting to the \""
+                               << image1.GetPixelIDTypeAsString() << "\" pixel type." );
+          }
+      }
+
+      void CheckImageMatchingSize(const Image &image1, const Image& image2,
+                                  const std::string &image2Name, const std::string &filterName  )
+      {
+        if ( image1.GetSize() != image2.GetSize() )
+          {
+          sitkExceptionMacro ( << "Input \"" << image2Name << "\" for \"" << filterName << "\" has size of "
+                               << image2.GetSize() << " which does not match the primary input's size of "
+                               << image1.GetSize() << "!" );
+          }
+      }
+
+}
+
+
 //----------------------------------------------------------------------------
 
 //
 // Default constructor that initializes parameters
 //
 template< unsigned int N >
-ImageFilter< N >::ImageFilter ()
-{
-}
-
+ImageFilter< N >::ImageFilter () = default;
 //
 // Default destructor
 //
 template< unsigned int N >
-ImageFilter< N >::~ImageFilter ()
+ImageFilter< N >::~ImageFilter () = default;
+
+
+
+template< unsigned int N >
+void ImageFilter< N >::CheckImageMatchingDimension(const Image &image1, const Image& image2, const std::string &image2Name)
 {
+  return itk::simple::CheckImageMatchingDimension(image1, image2, image2Name, this->GetName());
+}
+
+template< unsigned int N >
+void ImageFilter< N >::CheckImageMatchingPixelType(const Image &image1, const Image& image2, const std::string &image2Name)
+{
+  return itk::simple::CheckImageMatchingPixelType(image1, image2, image2Name, this->GetName());
+}
+
+template< unsigned int N >
+void ImageFilter< N >::CheckImageMatchingSize(const Image &image1, const Image& image2, const std::string &image2Name)
+{
+  return itk::simple::CheckImageMatchingSize(image1, image2, image2Name, this->GetName());
 }
 
 template class ImageFilter<0>;
