@@ -90,11 +90,6 @@ $(if template_type and template_type == "RegionGrowing" then OUT=[[
   EXPECT_EQ ( filter.GetSeedList().size(), (unsigned int)0 ) << "Testing empty seed list as default";]]
 end)
 
-$(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=[[
-  // Test size of default TrialPoints
-  EXPECT_EQ ( filter.GetTrialPoints().size(), (unsigned int)0 ) << "Testing empty trial points as default";]]
-end)
-
 $(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
@@ -212,10 +207,6 @@ for inum=1,#inputs-1 do
   count = count + 1
 end
 if template_type and template_type == "RegionGrowing" then
-  OUT=OUT..", std::vector< std::vector<unsigned int> >()"
-  count = count + 1
-end
-if template_code_filename and template_code_filename == "FastMarchingImageFilter" then
   OUT=OUT..", std::vector< std::vector<unsigned int> >()"
   count = count + 1
 end
