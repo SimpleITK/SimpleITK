@@ -35,11 +35,11 @@
 
 static bool isLabelType( const itk::simple::Image &img)
 {
-  static const std::array<itk::simple::PixelIDValueEnum, 4> labelIDs{
+  static const std::array<itk::simple::PixelIDValueEnum, 4> labelIDs{{
       itk::simple::sitkLabelUInt8,
       itk::simple::sitkLabelUInt16,
       itk::simple::sitkLabelUInt32,
-      itk::simple::sitkLabelUInt64};
+      itk::simple::sitkLabelUInt64}};
 
   return std::find(labelIDs.begin(), labelIDs.end(), img.GetPixelID()) != labelIDs.end();
 }
