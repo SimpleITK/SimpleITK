@@ -5,7 +5,7 @@ export MAKEFLAGS="-j ${NPROC}"
 OPENSSL_ROOT=openssl-1.0.2u
 # Hash from https://www.openssl.org/source/openssl-1.0.2u.tar.gz.sha256
 OPENSSL_HASH=ecd0c6ffb493dd06707d38b14bb4d8c2288bb7033735606569d8f90f89669d16
-CMAKE_ROOT=cmake-3.11.4
+CMAKE_ROOT=cmake-3.13.5
 
 
 function check_var {
