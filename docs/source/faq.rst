@@ -9,6 +9,18 @@ answers.
         :local:
         :backlinks: none
 
+General
+=======
+
+Does SimpleITK offer all the functionality as the C++ ITK?
+----------------------------------------------------------
+
+SimpleITK supports most ITK image filters (:ref:`see list <lbl_filter>`) and the
+IO and registration frameworks. It exposes fewer settings than ITK, hence the
+Simple in the name. The main ITK
+elements ommited from SimpleITK are the pipeline architecture,
+spatial objects framework, point sets, and the mesh framework.
+
 
 Installation
 ============
@@ -88,6 +100,8 @@ sample.mhd:
         DimSize = 256 256 64
         ElementType = MET_USHORT
         ElementDataFile = image.raw    (this tag must be last in a MetaImageHeader)
+
+An example implementing this approach is available here :ref:`here <lbl_raw_image_reading>`.
 
 .. _lbl_imageJ_not_found:
 
