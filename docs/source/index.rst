@@ -14,7 +14,7 @@ SimpleITK are currently available for all three major operating systems
    :hidden:
 
    about
-   installation
+   gettingStarted
    fundamentalConcepts
    registrationOverview
    conventions
