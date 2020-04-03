@@ -1,17 +1,19 @@
-Installation
-************
+Getting Started
+++++++++++++++++
+
+Welcome to SimpleITK!
 
 SimpleITK provides a simplified interface to ITK in a variety of
 languages. You can either download binaries, if they are available for
 your platform and preferred language, or you can :ref:`build SimpleITK <building_simpleitk>`
 yourself from the source code.
 
-Additionally, there are several recommended third-party software
-packages.
+In the following sections we describe how to install SimpleITK and additional auxiliary programs
+you will find useful.
 
-After you have installed SimpleITK, please look to the
-`Tutorial <http://simpleitk.github.io/ISBI2018_TUTORIAL/>`__
-or the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
+After you have installed SimpleITK, we recommend going over the
+:ref:`latest tutorial <lbl_tutorials_courses>` and skimming
+the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
 more information.
 
 ..
