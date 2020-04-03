@@ -1,11 +1,38 @@
 {
   "name" : "WhiteTopHatImageFilter",
-  "template_code_filename" : "KernelImageFilter",
+  "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::WhiteTopHatImageFilter<InputImageType, OutputImageType, itk::FlatStructuringElement< InputImageType::ImageDimension > >",
+  "include_files" : [
+    "sitkCreateKernel.h"
+  ],
   "members" : [
+    {
+      "name" : "KernelRadius",
+      "type" : "unsigned int",
+      "default" : "std::vector<uint32_t>(3, 1)",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "doc" : "",
+      "custom_itk_cast" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the radius of the kernel structuring element.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the radius of the kernel structuring element."
+    },
+    {
+      "name" : "KernelType",
+      "type" : "KernelEnum",
+      "default" : "itk::simple::sitkBall",
+      "custom_itk_cast" : "auto kernel = CreateKernel<InputImageType::ImageDimension>( m_KernelType, m_KernelRadius );\n  filter->SetKernel( kernel );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the kernel or structuring element used for the morphology.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the kernel or structuring element used for the morphology."
+    },
     {
       "name" : "SafeBorder",
       "type" : "bool",
