@@ -88,6 +88,95 @@
 
 %extend itk::simple::Image {
 
+        Image __iadd__ ( const Image &i )
+        {
+          return (*$self) += i;
+        }
+        Image __iadd__ ( double c )
+        {
+          return (*$self) += c;
+        }
+        Image __isub__ ( const Image &i )
+        {
+          return (*$self) -= i;
+        }
+        Image __isub__ ( double c )
+        {
+          return (*$self) -= c;
+        }
+        Image __imul__ ( const Image &i )
+        {
+          return (*$self) *=  i;
+        }
+        Image __imul__ ( double c )
+        {
+          return (*$self) *=  c;
+        }
+        Image __imod__ ( const Image &i )
+        {
+          return (*$self) %=  i;
+        }
+        Image __imod__ ( int c )
+        {
+          return (*$self) %=  c;
+        }
+
+
+
+        Image __ifloordiv__ ( const Image &i )
+        {
+          return ((*$self) = DivideFloor(std::move(*$self), i));
+        }
+        Image __ifloordiv__ ( double c )
+        {
+          return ((*$self) = DivideFloor(std::move(*$self), c));
+        }
+        Image __itruediv__ ( const Image &i )
+        {
+          return ((*$self) = DivideReal(std::move(*$self), i));
+        }
+        Image __itruediv__ ( double c )
+        {
+          return ((*$self) = DivideReal(std::move(*$self), c));
+        }
+
+
+        Image __ipow__ ( const Image &i )
+        {
+          return ((*$self) = Pow(std::move(*$self), i));
+        }
+        Image __ipow__ ( double c)
+        {
+          return ((*$self) = Pow(std::move(*$self), c));
+        }
+
+
+        Image __ior__ ( const Image &i )
+        {
+          return (*$self) |=  i;
+        }Image __ior__ ( int c )
+        {
+          return (*$self) |=  c;
+        }
+        Image __ixor__ ( const Image &i )
+        {
+          return (*$self) ^=  i;
+        }
+        Image __ixor__ ( int c )
+        {
+          return (*$self) ^=  c;
+        }
+        Image __iand__ ( const Image &i )
+        {
+          return (*$self) &=  i;
+        }
+        Image __iand__ ( int c )
+        {
+          return (*$self) &=  c;
+        }
+
+
+
         %pythoncode %{
 
         def __copy__(self):
@@ -228,15 +317,6 @@
                return NotImplemented
 
 
-
-         # NOTE: the __i*__ methods are not implemented because there
-         # currently in no way to make the underlying filters run
-         # inplace. But python will implement a default version based
-         # on the standard method
-        def __iadd__ ( self, other ):
-            self = Add( self, other )
-            return self;
-
         # logic operators
 
         def __and__( self, other ):
@@ -337,8 +417,15 @@
                return Pow( float(other), self )
             except ValueError:
                return NotImplemented
-        def __mod__( self, other ): return Modulus( self, other )
-        def __abs__( self ): return Abs( self )
+        def __mod__( self, other ):
+            if isinstance( other, Image ):
+               return Modulus( self, other )
+            try:
+               return Modulus( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __abs__( self ):
+            return Abs( self )
 
         # iterator and container methods
 

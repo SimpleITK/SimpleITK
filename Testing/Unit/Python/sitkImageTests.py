@@ -25,6 +25,7 @@ import tempfile
 import os.path
 import shutil
 
+
 class ImageTests(unittest.TestCase):
     """Tests for the Python interface for the Image class"""
 
@@ -35,7 +36,6 @@ class ImageTests(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(self.test_dir)
-
 
     def assertImageEqual(self, img1, img2, msg=None):
         """ utility to compare two images"""
@@ -172,9 +172,95 @@ class ImageTests(unittest.TestCase):
 
         self.assertEqual(len( image ), 100)
 
+    def test_inplace_operators(self):
+        """ Test in place operators with images """
+
+        image1 = sitk.Image([2, 2], sitk.sitkFloat64)
+        image2 = image1 + 1.0
+
+        self.assertEqual(image1[1, 1], 0.0)
+        self.assertEqual(image2[1, 1], 1.0)
+
+        image1 += image2
+        self.assertEqual(image1[1, 1], 1.0)
+
+        image1 *= image2+5.5
+        self.assertEqual(image1[0, 0], 6.5)
+
+        image1 -= image2
+        self.assertEqual(image1[0, 0], 5.5)
+
+        image1 /= image2*2.0
+        self.assertEqual(image1[0, 0], 2.75)
+
+        image1 //= image2*2.0
+        self.assertEqual(image1[0, 0], 1.0)
+
+        image1 **= image2
+        self.assertEqual(image1[0, 0], 1.0)
+
+        image1 = sitk.Image([3, 3], sitk.sitkUInt32)
+        image2 = sitk.Image([3,3], sitk.sitkUInt32)
+
+        image1 += (image2 + 0b10001110101)
+        self.assertEqual(image1[1, 1], 1141)
+
+        image1 &= (image2 + 0b11111111011)
+        self.assertEqual(image1[1, 1], 1137)
+
+        image1 |= (image2 + 0b00000000111)
+        self.assertEqual(image1[1, 1], 1143)
+
+        image1 ^= (image2 + 0b00000001101)
+        self.assertEqual(image1[1, 1], 1146)
+
+        image1 %= (image2 + 4)
+        self.assertEqual(image1[1, 1], 2)
+
+    def test_inplace_operators_constants(self):
+        """ Test in place operators with numeric constants"""
+
+        image = sitk.Image([2, 2], sitk.sitkFloat64)
+
+        self.assertEqual(image[0, 0], 0.0)
+
+        image += 3.125
+        self.assertEqual(image[0, 0], 3.125)
+
+        image *= 2.0
+        self.assertEqual(image[0, 0], 6.25)
+
+        image -= 4.0
+        self.assertEqual(image[0, 0], 2.25)
+
+        image /= 0.25
+        self.assertEqual(image[0, 0], 9.0)
+
+        image //= 2.2
+        self.assertEqual(image[0, 0], 4.0)
+
+        image **= 2.0
+        self.assertEqual(image[0, 0], 16.0)
+
+        image = sitk.Image([3, 3], sitk.sitkUInt32)
+
+        image += 0b10001110101
+        self.assertEqual(image[1, 1], 1141)
+
+        image &= 0b11111111011
+        self.assertEqual(image[1, 1], 1137)
+
+        image |= 0b00000000111
+        self.assertEqual(image[1, 1], 1143)
+
+        image ^= 0b00000001101
+        self.assertEqual(image[1, 1], 1146)
+
+        image %= 4
+        self.assertEqual(image[1, 1], 2)
 
     def test_legacy(self):
-        """ This is old testing cruft before tehe unittest enlightenment """
+        """ This is old testing cruft before unittest"""
 
         image = sitk.Image( 10, 10, sitk.sitkInt32 )
 
@@ -200,10 +286,10 @@ class ImageTests(unittest.TestCase):
 
         image += image
         image -= image
-        self.assertEqual(image.GetPixel(1,1), 0 )
+        self.assertEqual(image.GetPixel(1, 1), 0)
 
         image *= image
-        self.assertEqual(image.GetPixel(1,1), 0 )
+        self.assertEqual(image.GetPixel(1, 1), 0)
 
 
         # True division will results in "nan" while
