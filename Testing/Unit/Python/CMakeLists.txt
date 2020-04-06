@@ -5,6 +5,9 @@
 sitk_add_python_test( Test.ImageTests
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageTests.py" )
 
+sitk_add_python_test( Test.BasicFiltersTests
+  "${CMAKE_CURRENT_SOURCE_DIR}/sitkBasicFilterTests.py")
+
 sitk_add_python_test( Test.TransformTests
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkTransformTests.py" )
 
