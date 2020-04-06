@@ -40,7 +40,7 @@ image = sitk.ReadImage( inputFileName )
 # Threshold the value [0,2), results in values inside the range 1, 0 otherwise
 boundary = sitk.BinaryThreshold( image, 0, upperThreshold, 1, 0 )
 
-boundary = sitk.BinaryMorphologicalClosing( boundary, 1 )
+boundary = sitk.BinaryMorphologicalClosing( boundary, [1]*image.GetDimension() )
 
 # Remove any label pixel not connected to the boarder
 boundary = sitk.BinaryGrindPeak( boundary )

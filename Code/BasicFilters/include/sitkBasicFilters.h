@@ -22,6 +22,7 @@
 
 #include "sitkInterpolator.h"
 #include "sitkRandomSeed.h"
+#include "sitkKernel.h"
 
 // todo this should be moved to a more local place
 #include "sitkTransform.h"
