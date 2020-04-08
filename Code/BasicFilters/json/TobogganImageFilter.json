@@ -21,5 +21,6 @@
   "itk_module" : "ITKWatersheds",
   "itk_group" : "Watersheds",
   "detaileddescription" : "The output is a 4 connected labeled map of the image.",
-  "briefdescription" : "toboggan image segmentation The Toboggan segmentation takes a gradient magnitude image as input and produces an (over-)segmentation of the image based on connecting each pixel to a local minimum of gradient. It is roughly equivalent to a watershed segmentation of the lowest level."
+  "briefdescription" : "toboggan image segmentation The Toboggan segmentation takes a gradient magnitude image as input and produces an (over-)segmentation of the image based on connecting each pixel to a local minimum of gradient. It is roughly equivalent to a watershed segmentation of the lowest level.",
+  "in_place" : false
 }

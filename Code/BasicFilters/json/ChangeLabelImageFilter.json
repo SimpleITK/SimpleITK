@@ -30,5 +30,6 @@
   "briefdescription" : "Change Sets of Labels.",
   "detaileddescription" : "This filter produces an output image whose pixels are either copied from the input if they are not being changed or are rewritten based on the change parameters\n\nThis filter is templated over the input image type and the output image type.\n\nThe filter expect both images to have the same number of dimensions.\n\n\\author Tim Kelliher. GE Research, Niskayuna, NY. \n\n\n\\note This work was supported by a grant from DARPA, executed by the U.S. Army Medical Research and Materiel Command/TATRC Assistance Agreement, Contract::W81XWH-05-2-0059.",
   "itk_module" : "ITKImageLabel",
-  "itk_group" : "ImageLabel"
+  "itk_group" : "ImageLabel",
+  "in_place" : true
 }

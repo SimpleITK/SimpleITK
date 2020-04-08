@@ -61,5 +61,6 @@
   "itk_module" : "ITKReview",
   "itk_group" : "Review",
   "detaileddescription" : "The methodology is based on Madelbrot's fractal theory and the concept of fractional Brownian motion and yields images which have been used for classification and edge enhancement.\n\nThis class which is templated over the input and output images as well as a mask image type. The input is a scalar image, an optional neighborhood radius (default = 2), and an optional mask. The mask can be specified to decrease computation time since, as the authors point out, calculation is time-consuming.\n\nThis filter was contributed by Nick Tustison and James Gee from the PICSL lab, at the University of Pennsylvania as an paper to the Insight Journal:\n\n\"Stochastic Fractal Dimension Image\" https://hdl.handle.net/1926/1525 http://www.insight-journal.org/browse/publication/318 \n\n\\author Nick Tustison",
-  "briefdescription" : "This filter computes the stochastic fractal dimension of the input image."
+  "briefdescription" : "This filter computes the stochastic fractal dimension of the input image.",
+  "in_place" : false
 }

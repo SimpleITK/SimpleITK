@@ -747,5 +747,6 @@
   "briefdescription" : "a convenient class to convert a label image to a label map and valuate the statistics attributes at once",
   "detaileddescription" : "\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see StatisticsLabelObject , LabelStatisticsOpeningImageFilter , LabelStatisticsOpeningImageFilter",
   "itk_module" : "ITKLabelMap",
-  "itk_group" : "LabelMap"
+  "itk_group" : "LabelMap",
+  "in_place" : false
 }

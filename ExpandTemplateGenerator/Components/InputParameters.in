@@ -1,7 +1,7 @@
 $(if inputs then
 local count=1
 for i = 1,#inputs do
-  if  not (inputs[i].optional and no_optional) then
+  if  not (inputs[i].optional and no_optional == 1) then
     if (number_of_inputs > 0 or count > 1) then
       OUT = OUT .. ", "
     end

@@ -1,0 +1,29 @@
+$(if no_return_image then OUT=[[void]] else OUT=[[Image]] end) ${name}::Execute ( $(include ImageRValueReferenceParameters.in)$(include InputRValueReferenceParameters.in) )
+{
+  Image &temp = $(if number_of_inputs >= 1 then
+  OUT=[[image1]]
+else
+  OUT=inputs[1].name:sub(1,1):lower() .. inputs[1].name:sub(2,-1)
+end);
+  auto autoResetInPlace = make_scope_exit([this, &temp]{this->m_InPlace=false; Image moved(std::move(temp));});
+  if (temp.IsUnique())
+    {
+    m_InPlace = true;
+    }
+  return this->Execute( $(for inum=1,number_of_inputs do
+  if inum>1 then
+    OUT=OUT .. ', '
+  end
+  OUT= OUT .. 'image' .. inum
+  end
+  if inputs then
+    for inum=1,#inputs do
+      if  not( inputs[inum].optional and no_optional ) then
+        if number_of_inputs>0 or inum>1 then
+          OUT = OUT .. ", "
+        end
+        OUT=OUT..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
+      end
+    end
+  end) );
+}

@@ -53,5 +53,6 @@
   "briefdescription" : "Implements pixel-wise generic operation on one image.",
   "detaileddescription" : "This class is parameterized over the type of the input image and the type of the output image. It is also parameterized by the operation to be applied, using a Functor style.\n\nUnaryFunctorImageFilter allows the output dimension of the filter to be larger than the input dimension. Thus subclasses of the UnaryFunctorImageFilter (like the CastImageFilter ) can be used to promote a 2D image to a 3D image, etc.\n\n\\see UnaryGeneratorImageFilter \n\n\n\\see BinaryFunctorImageFilter TernaryFunctorImageFilter",
   "itk_module" : "ITKCommon",
-  "itk_group" : "Common"
+  "itk_group" : "Common",
+  "in_place" : true
 }

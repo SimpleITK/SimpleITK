@@ -97,5 +97,6 @@
   "briefdescription" : "Label the connected components in a binary image and produce a collection of label objects.",
   "detaileddescription" : "BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is assigned a unique label. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label.\n\nThe GetOutput() function of this class returns an itk::LabelMap .\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\n\\see ConnectedComponentImageFilter , LabelImageToLabelMapFilter , LabelMap , LabelObject",
   "itk_module" : "ITKLabelMap",
-  "itk_group" : "LabelMap"
+  "itk_group" : "LabelMap",
+  "in_place" : false
 }

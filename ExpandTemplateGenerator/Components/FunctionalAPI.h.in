@@ -10,6 +10,19 @@ end)
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
+$(if in_place then
+  OUT=[[
+#ifndef SWIG
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageRValueReferenceParameters.in)$(include InputRValueReferenceParameters.in)$(include MemberParametersWithDefaults.in) );]]
+end)$(if in_place and has_optional_inputs then
+    no_optional=1
+    OUT=OUT..[[
+
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageRValueReferenceParameters.in)$(include InputRValueReferenceParameters.in)$(include MemberParametersWithDefaults.in) );]]
+end)$(if in_place then
+  OUT=OUT..[[
+
+#endif]]end)$(if inputs then no_optional=nil end)
      SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParametersWithDefaults.in) );
 $(if has_optional_inputs then
   no_optional=1

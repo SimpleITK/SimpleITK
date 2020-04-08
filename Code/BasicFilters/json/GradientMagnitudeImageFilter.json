@@ -31,5 +31,6 @@
   "briefdescription" : "Computes the gradient magnitude of an image region at each pixel.",
   "detaileddescription" : "\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKImageGradient",
-  "itk_group" : "ImageGradient"
+  "itk_group" : "ImageGradient",
+  "in_place" : false
 }

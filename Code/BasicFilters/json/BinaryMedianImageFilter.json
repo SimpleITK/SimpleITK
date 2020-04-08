@@ -64,5 +64,6 @@
   "briefdescription" : "Applies a version of the median filter optimized for binary images.",
   "detaileddescription" : "This filter was contributed by Bjorn Hanch Sollie after identifying that the generic Median filter performed unnecessary operations when the input image is binary.\n\nThis filter computes an image where a given pixel is the median value of the pixels in a neighborhood about the corresponding input pixel. For the case of binary images the median can be obtained by simply counting the neighbors that are foreground.\n\nA median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.\n\n\\see Image \n\n\n\\see Neighborhood \n\n\n\\see NeighborhoodOperator \n\n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKLabelVoting",
-  "itk_group" : "LabelVoting"
+  "itk_group" : "LabelVoting",
+  "in_place" : false
 }

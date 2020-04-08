@@ -1,0 +1,23 @@
+$(if inputs then
+local count=1
+for i = 1,#inputs do
+  if  not (inputs[i].optional and no_optional == 1) then
+    if (number_of_inputs > 0 or count > 1) then
+      OUT = OUT .. ", "
+    end
+    count = count + 1
+    if not inputs[i].type and inputs[i].enum then
+      OUT = OUT .. name .. '::' .. inputs[i].name .. 'Type'
+    elseif inputs[i].dim_vec and (inputs[i].dim_vec == 1) then
+      OUT = OUT..'const std::vector<'..inputs[i].type..'> &'
+    elseif inputs[i].point_vec and (inputs[i].point_vec == 1) then
+      OUT = OUT..'const std::vector< std::vector<'..inputs[i].type..'> > &'
+    elseif count == 2 and inputs[i].type == "Image" then
+      OUT = OUT .. inputs[i].type .. ' &&'
+    else
+      OUT = OUT .. 'const ' .. inputs[i].type .. ' &'
+    end
+    OUT = OUT .. ' ' .. inputs[i].name:sub(1,1):lower() .. inputs[i].name:sub(2,-1)
+  end
+end
+end)

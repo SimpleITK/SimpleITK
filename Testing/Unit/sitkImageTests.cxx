@@ -781,6 +781,36 @@ TEST_F(Image,SetPixel)
 }
 
 
+TEST_F(Image,Operators_InPlace)
+{
+  sitk::Image img(10, 10, sitk::sitkUInt16);
+
+  img += img;
+  img -= img;
+  img *= img;
+
+  img += 1;
+  img /= img;
+  img %= img;
+  img &= img;
+  img |= img;
+  img ^= img;
+
+  img += 2.0;
+  img -= 2.0;
+  img *= 1.0;
+
+  img /= 1.0;
+  img %= 2;
+  img &= 1;
+  img |= 1;
+  img ^= 0;
+
+  img = ( img *= 0 ) + 5;
+  EXPECT_EQ( img.GetPixelAsUInt16({1,1}), 5);
+}
+
+
 TEST_F(Image,GetPixel)
 {
 

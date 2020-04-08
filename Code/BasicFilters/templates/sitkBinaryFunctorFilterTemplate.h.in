@@ -36,6 +36,9 @@ $(include ClassNameAndPrint.h.in)
 $(include ExecuteMethodNoParameters.h.in)$(include CustomMethods.h.in)
       /** Execute the filter with an image and a constant */
       Image Execute ( const Image& image1, ${constant_type} constant );
+#ifndef SWIG
+      Image Execute ( Image&& image1, ${constant_type} constant );
+#endif
       Image Execute ( ${constant_type} constant, const Image& image2 );
 $(if members and #members > 0 then
 OUT=[[
@@ -60,8 +63,13 @@ $(include MemberFunctionDispatch.h.in)
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 $(include FunctionalAPI.h.in)
-    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
-    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} constant, const Image& image2$(include MemberParametersWithDefaults.in) );
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
+$(if in_place then
+  OUT=[[
+#ifndef  SWIG
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( Image&& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
+#endif]]end)
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} constant, const Image& image2$(include MemberParametersWithDefaults.in) );
   }
 }
 #endif

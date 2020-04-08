@@ -22,5 +22,6 @@
   "briefdescription" : "Pixel-wise multiplication of two images.",
   "detaileddescription" : "This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.",
   "itk_module" : "ITKImageIntensity",
-  "itk_group" : "ImageIntensity"
+  "itk_group" : "ImageIntensity",
+  "in_place" : true
 }

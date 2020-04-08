@@ -92,5 +92,6 @@
   "briefdescription" : "Set image values to a user-specified value if they are below, above, or between simple threshold values.",
   "detaileddescription" : "ThresholdImageFilter sets image values to a user-specified \"outside\" value (by default, \"black\") if the image values are below, above, or between simple threshold values.\n\nThe available methods are:\n\nThresholdAbove() : The values greater than the threshold value are set to OutsideValue\n\nThresholdBelow() : The values less than the threshold value are set to OutsideValue\n\nThresholdOutside() : The values outside the threshold range (less than lower or greater than upper) are set to OutsideValue\n\nNote that these definitions indicate that pixels equal to the threshold value are not set to OutsideValue in any of these methods\n\nThe pixels must support the operators >= and <=.",
   "itk_module" : "ITKThresholding",
-  "itk_group" : "Thresholding"
+  "itk_group" : "Thresholding",
+  "in_place" : true
 }

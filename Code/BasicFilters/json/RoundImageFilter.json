@@ -20,5 +20,6 @@
   "briefdescription" : "Rounds the value of each pixel.",
   "detaileddescription" : "The computations are performed using itk::Math::Round(x).",
   "itk_module" : "ITKImageIntensity",
-  "itk_group" : "ImageIntensity"
+  "itk_group" : "ImageIntensity",
+  "in_place" : true
 }
