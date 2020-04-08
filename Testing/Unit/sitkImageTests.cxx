@@ -781,6 +781,8 @@ TEST_F(Image,SetPixel)
 }
 
 
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wself-assign-overloaded");
 TEST_F(Image,Operators_InPlace)
 {
   sitk::Image img(10, 10, sitk::sitkUInt16);
@@ -809,6 +811,7 @@ TEST_F(Image,Operators_InPlace)
   img = ( img *= 0 ) + 5;
   EXPECT_EQ( img.GetPixelAsUInt16({1,1}), 5);
 }
+sitkClangDiagnosticPop();
 
 
 TEST_F(Image,GetPixel)
