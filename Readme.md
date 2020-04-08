@@ -34,6 +34,13 @@ SimpleITK development has been supported by:
 
 * The Insight Software Consortium and the ITK user and developer communities.
 
+
+License and Copyright
+---------------------
+
+The SimpleITK project  is part of the [Insight Software Consortium](https://www.insightsoftwareconsortium.org/)(ISC) a non-profit educational consortium dedicated to promoting and maintaining open-source, freely available software for bio-medical image analysis. The copyright is held by [NumFOCUS](https://numfocus.org/). The SimpleITK software is distributed under the [Apache License 2.0](https://github.com/SimpleITK/SimpleITK/blob/master/LICENSE).
+
+
 How to Cite
 --------
 
