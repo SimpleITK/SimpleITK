@@ -32,13 +32,19 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
       if not type and enum then
         OUT=OUT..' ${name}Type'
       elseif dim_vec and (dim_vec == 1) then
-        OUT=OUT..' const std::vector<${type}> &'
+        OUT=OUT..' std::vector<${type}>'
       elseif point_vec and (point_vec == 1) then
-        OUT=OUT..' const std::vector< std::vector<${type}> >&'
+        OUT=OUT..' std::vector< std::vector<${type}> >'
       else
         OUT=OUT..' ${type}'
       end
-      OUT=OUT..' ${name} ) { this->m_${name} = ${name}; return *this; }'
+      OUT=OUT..' ${name} ) '
+      if (dim_vec and (dim_vec == 1)) or
+         (point_vec and (point_vec == 1)) then
+        OUT = OUT..'{ this->m_${name} = std::move(${name}); return *this; }'
+      else
+        OUT=OUT..'{ this->m_${name} = ${name}; return *this; }'
+      end
   if dim_vec and ( set_as_scalar == 1 ) then
     OUT = OUT .. '\
 \

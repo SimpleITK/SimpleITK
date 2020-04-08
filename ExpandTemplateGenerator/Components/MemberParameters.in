@@ -9,9 +9,9 @@ $(for i = 1,#members do
   if not members[i].type and members[i].enum then
     OUT = OUT .. name .. '::' .. members[i].name .. 'Type'
   elseif members[i].dim_vec and (members[i].dim_vec == 1) then
-    OUT = OUT..'const std::vector<'..members[i].type..'> &'
+    OUT = OUT..'std::vector<'..members[i].type..'>'
   elseif members[i].point_vec and (members[i].point_vec == 1) then
-    OUT = OUT..'const std::vector< std::vector<'..members[i].type..'> > &'
+    OUT = OUT..'std::vector< std::vector<'..members[i].type..'> >'
   else
     OUT = OUT .. members[i].type
   end
