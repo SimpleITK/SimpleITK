@@ -41,7 +41,7 @@ public:
       using itk::simple::operator<<;
 
       // stash the stream state
-      std::ios  state(NULL);
+      std::ios  state(nullptr);
       state.copyfmt(std::cout);
 
       if ( m_Method.GetOptimizerIteration() == 0 )

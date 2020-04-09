@@ -296,7 +296,7 @@ Transform::Transform( PimpleTransformBase *pimpleTransform )
   {
     if ( pimpleTransform == nullptr )
       {
-      sitkExceptionMacro("Invalid NULL PimpleTransform!");
+      sitkExceptionMacro("Invalid nullptr PimpleTransform!");
       }
   }
 

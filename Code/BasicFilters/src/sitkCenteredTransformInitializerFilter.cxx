@@ -117,12 +117,12 @@ Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * in
   typename FilterType::Pointer filter = FilterType::New();
 
 
-  assert( inFixedImage != NULL );
+  assert( inFixedImage );
   filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );
-  assert( inMovingImage != NULL );
+  assert( inMovingImage );
   typename FilterType::MovingImageType::ConstPointer image2 = this->CastImageToITK<typename FilterType::MovingImageType>( *inMovingImage );
   filter->SetMovingImage( image2 );
-  assert( inTransform != NULL );
+  assert( inTransform );
 
   // This initializers modifies the input, we copy the transform to
   // prevent this change

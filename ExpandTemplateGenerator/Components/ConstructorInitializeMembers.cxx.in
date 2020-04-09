@@ -11,7 +11,7 @@ OUT=OUT..'\
 end
 if temp then
 OUT=OUT..[[
-    this->m_Filter = NULL;]]
+    this->m_Filter = nullptr;]]
 end
 end)
 $(foreach members

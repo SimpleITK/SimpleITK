@@ -45,7 +45,7 @@ template<typename TInterpolatorType>
 TInterpolatorType*
 ConditionalCreateInterpolator( const FalseType & )
 {
-  return NULL;
+  return nullptr;
 }
 
 template< typename TImageType >

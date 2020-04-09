@@ -10,7 +10,7 @@ if temp then
 OUT=OUT..[[
 
   // release the old filter ( and output data )
-  if ( this->m_Filter != NULL)
+  if ( this->m_Filter != nullptr)
     {
 ]]
 for i = 1,#measurements do
@@ -22,7 +22,7 @@ end
 
 OUT=OUT..[[
       this->m_Filter->UnRegister();
-      this->m_Filter = NULL;
+      this->m_Filter = nullptr;
     }
 
   this->m_Filter = filter;

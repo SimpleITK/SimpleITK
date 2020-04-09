@@ -68,7 +68,7 @@ namespace itk
 
         if ( image == nullptr )
           {
-          sitkExceptionMacro( << "Unable to initialize an image with NULL" );
+          sitkExceptionMacro( << "Unable to initialize an image with nullptr" );
           }
 
         if ( image->GetLargestPossibleRegion() != image->GetBufferedRegion() )

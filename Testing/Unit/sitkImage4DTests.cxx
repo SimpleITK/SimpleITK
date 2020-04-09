@@ -125,7 +125,7 @@ public:
 };
 
 TEST_F(Image4D,Create) {
-  ASSERT_TRUE ( shortImage->GetITKBase() != NULL );
+  ASSERT_NE ( shortImage->GetITKBase(), nullptr );
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";

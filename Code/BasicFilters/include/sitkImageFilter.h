@@ -65,7 +65,7 @@ namespace itk {
       template< class TImageType>
       static void FixNonZeroIndex( TImageType * img )
       {
-        assert( img != NULL );
+        assert( img );
 
         typename TImageType::RegionType r = img->GetLargestPossibleRegion();
         typename TImageType::IndexType idx = r.GetIndex();

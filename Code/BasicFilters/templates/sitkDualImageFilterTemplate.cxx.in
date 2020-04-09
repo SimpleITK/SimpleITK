@@ -123,7 +123,7 @@ if inputs then
       OUT = OUT .. ", "
     end
     if  inputs[inum].optional and no_optional then
-      OUT=OUT.."NULL"
+      OUT=OUT.."nullptr"
     else
       OUT=OUT.."&"..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
     end

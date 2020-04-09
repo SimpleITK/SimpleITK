@@ -181,7 +181,7 @@ $(if inputA_cast then
       ASSERT_NO_THROW( inputs[i] = itk::simple::Cast( inputs[i], itk::simple::${inputB_cast } ) ) << "Failed to cast inputB to ${inputB_cast}";
       }
 ]] end)
-    ASSERT_TRUE ( inputs[i].GetITKBase() != NULL ) << "Could not read " << inputFileNames[i];
+    ASSERT_NE ( inputs[i].GetITKBase(), nullptr ) << "Could not read " << inputFileNames[i];
     }
 
     if ( !inputs.empty() )
