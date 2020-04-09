@@ -12,7 +12,7 @@ for i = 1,#measurements do
 end
 if temp then
 OUT=[[
-  if (this->m_Filter != NULL)
+  if (this->m_Filter != nullptr)
     {
       m_Filter->UnRegister();
     }
