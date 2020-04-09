@@ -31,6 +31,9 @@
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
+%ignore itk::simple::Resample;
+
+
 // Make __str__ transparent by renaming ToString to __str__
 %rename(__str__) ToString;
 
@@ -980,7 +983,76 @@ def GetImageFromArray( arr, isVector=None):
     return img
 %}
 
+%pythoncode %{
+  def Resample( image1, *args, **kwargs):
+    """
+     Resample ( Image image1, Transform transform = itk::simple::Transform(), InterpolatorEnum interpolator = itk::simple::sitkLinear, double defaultPixelValue = 0.0, PixelIDValueEnum outputPixelType = itk::simple::sitkUnknown, bool useNearestNeighborExtrapolator = false);
 
+     Resample ( Image image1, Image referenceImage, Transform transform = itk::simple::Transform(), InterpolatorEnum interpolator = itk::simple::sitkLinear, double defaultPixelValue = 0.0, PixelIDValueEnum outputPixelType = sitkUnknown, bool useNearestNeighborExtrapolator = false);
+
+     Resample ( const Image& image1, VectorUInt32 size, Transform transform = itk::simple::Transform(), InterpolatorEnum interpolator = itk::simple::sitkLinear, VectorDouble outputOrigin = std::vector<double>(3, 0.0), VectorDouble outputSpacing = std::vector<double>(3, 1.0), VectorDouble outputDirection = std::vector<double>(), double defaultPixelValue = 0.0, PixelIDValueEnum outputPixelType = sitkUnknown, bool useNearestNeighborExtrapolator = false);
+
+     itk::simple::ResampleImageFilter procedural interface.
+
+     This is a custom overloaded python method, which fully supports the 3 signatures with positional and keyword arguemnts. The second positional parameters without a default value are used to determine which overloaded procedure signature to envoke.
+
+    """
+    def _r_image( referenceImage,
+                  transform = Transform(),
+                  interpolator = sitkLinear,
+                  defaultPixelValue = 0.0,
+                  outputPixelType = sitkUnknown,
+                  useNearestNeighborExtrapolator = False):
+       filter = ResampleImageFilter()
+       filter.SetReferenceImage(referenceImage)
+       filter.SetTransform(transform)
+       filter.SetInterpolator(interpolator)
+       filter.SetDefaultPixelValue(defaultPixelValue)
+       filter.SetOutputPixelType(outputPixelType)
+       filter.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator)
+       return filter.Execute(image1)
+
+
+    def _r( size,
+            transform = Transform(),
+            interpolator = sitkLinear,
+            outputOrigin = (0.0, 0.0, 0.0),
+            outputSpacing = (1.0, 1.0, 1.0),
+            outputDirection = (),
+            defaultPixelValue = 0.0,
+            outputPixelType = sitkUnknown,
+            useNearestNeighborExtrapolator = False):
+        filter = ResampleImageFilter()
+        filter.SetSize(size)
+        filter.SetTransform(transform)
+        filter.SetInterpolator(interpolator)
+        filter.SetOutputOrigin(outputOrigin)
+        filter.SetOutputSpacing(outputSpacing)
+        filter.SetOutputDirection(outputDirection)
+        filter.SetDefaultPixelValue(defaultPixelValue)
+        filter.SetOutputPixelType(outputPixelType)
+        filter.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator)
+        filter.DebugOn()
+        return filter.Execute(image1)
+
+    if args:
+      if isinstance(args[0], Image):
+        return _r_image( *args, **kwargs)
+      if not isinstance(args[0], Transform):
+        try:
+          iter(args[0])
+          return _r( *args, **kwargs)
+        except TypeError as e:
+          pass
+
+    if "referenceImage" in kwargs:
+      return _r_image( *args, **kwargs)
+    if "size" in kwargs:
+      return _r( *args, **kwargs)
+
+    return _r_image( image1, *args, **kwargs)
+
+%}
 
 // Enable Python classes derived from Command Execute method to be
 // called from C++

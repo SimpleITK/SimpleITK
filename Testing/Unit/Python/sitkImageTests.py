@@ -47,7 +47,7 @@ class ImageTests(unittest.TestCase):
         self.assertEqual(img1.GetMetaDataKeys(), img2.GetMetaDataKeys())
 
         for k in img1.GetMetaDataKeys():
-            aself.assertEqual(img1.GetMetaData(k), img2.GetMetaData(k))
+            self.assertEqual(img1.GetMetaData(k), img2.GetMetaData(k))
 
         self.assertEqual(sitk.Hash(img1), sitk.Hash(img2))
 
