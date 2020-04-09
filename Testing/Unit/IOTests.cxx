@@ -46,7 +46,7 @@ TEST(IO,ImageFileReader) {
     reader.SetFileName ( dataFinder.GetFile ( it->first ) );
     EXPECT_EQ ( reader.GetFileName(), dataFinder.GetFile ( it->first ) );
     itk::simple::Image image = reader.Execute();
-    ASSERT_TRUE ( image.GetITKBase() != NULL );
+    ASSERT_NE ( image.GetITKBase(), nullptr );
     hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
     EXPECT_EQ ( it->second, hasher.Execute ( image ) ) << " reading " << it->first;
     // Try the functional interface
@@ -66,7 +66,7 @@ TEST(IO,ReadWrite) {
 
 
   itk::simple::Image image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
-  ASSERT_TRUE ( image.GetITKBase() != NULL );
+  ASSERT_NE ( image.GetITKBase(), nullptr );
   hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
   hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
@@ -78,7 +78,7 @@ TEST(IO,ReadWrite) {
   ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
 
   image = reader.SetFileName ( filename ).Execute();
-  ASSERT_TRUE ( image.GetITKBase() != NULL );
+  ASSERT_NE ( image.GetITKBase(), nullptr );
 
   // Make sure we wrote and read the file correctly
   hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
@@ -92,7 +92,7 @@ TEST(IO,ReadWrite) {
   ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
 
   image = reader.SetFileName ( filename ).Execute();
-  ASSERT_TRUE ( image.GetITKBase() != NULL );
+  ASSERT_NE ( image.GetITKBase(), nullptr );
 
   // Make sure we wrote and read the file correctly
   hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
@@ -108,7 +108,7 @@ TEST(IO,2DFormats) {
   itk::simple::ImageFileReader reader;
 
   itk::simple::Image image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Slice-Short.png" ) ).Execute();
-  ASSERT_TRUE ( image.GetITKBase() != NULL );
+  ASSERT_NE ( image.GetITKBase(), nullptr );
   hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
   EXPECT_EQ ( "bf0f7bae60b0322222e224941c31f37a981901aa", hasher.Execute ( image ) );
   ASSERT_EQ ( 2u, image.GetDimension() );

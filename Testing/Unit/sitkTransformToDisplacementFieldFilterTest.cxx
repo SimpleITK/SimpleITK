@@ -83,7 +83,7 @@ TEST(BasicFilters,TransformToDisplacementFieldFilter_defaults)
 
   input = itk::simple::ReadTransform( dataFinder.GetFile( "Input/xforms/affine_i_3.txt" ) );
 
-  ASSERT_TRUE ( input.GetITKBase() != NULL ) << "Could not read.";
+  ASSERT_NE ( input.GetITKBase(), nullptr ) << "Could not read.";
 
   // Do we get the same image back, if we use the functional interface?
   itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
@@ -111,7 +111,7 @@ TEST(BasicFilters,TransformToDisplacementFieldFilter_32)
 
   input = itk::simple::ReadTransform( dataFinder.GetFile( "Input/xforms/affine_i_3.txt" ) );
 
-  ASSERT_TRUE ( input.GetITKBase() != NULL ) << "Could not read.";
+  ASSERT_NE ( input.GetITKBase(), nullptr ) << "Could not read.";
 
   // Do we get the same image back, if we use the functional interface?
   itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
