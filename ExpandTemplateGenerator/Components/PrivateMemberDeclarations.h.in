@@ -14,7 +14,8 @@ elseif members[i].point_vec and (members[i].point_vec == 1) then
 else
   OUT=OUT..members[i].type
 end
-OUT=OUT..'  m_'..members[i].name..';'
+OUT=OUT..[[  m_]]..members[i].name..[[{]]..members[i].default..[[};
+]]
 
 end)$(when measurements
 
@@ -34,7 +35,7 @@ end end))> m_pfGet${name};
 ]]
     else
 OUT=[[
-      ${type} m_${name};
+      ${type} m_${name}{${default}};
 ]]
 end)))
 $(if measurements then
@@ -47,7 +48,7 @@ end
 if temp then
 OUT=[[
       // Holder of process object for active measurements
-      itk::ProcessObject *m_Filter;
+      itk::ProcessObject *m_Filter{nullptr};
 ]]
 end
 end)

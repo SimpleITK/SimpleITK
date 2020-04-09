@@ -30,7 +30,6 @@ namespace simple {
 //
 $(include ConstructorSignature.cxx.in)
 {
-$(include ConstructorInitializeMembers.cxx.in)
 $(include ConstructorMemberFunctionSetup.cxx.in)
 
 $(include ConstructorVectorPixels.cxx.in)

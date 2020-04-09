@@ -30,8 +30,6 @@ namespace simple {
 //
 $(include ConstructorSignature.cxx.in)
 {
-  this->m_SeedList = std::vector< std::vector<unsigned int> >();
-$(include ConstructorInitializeMembers.cxx.in)
 $(include ConstructorMemberFunctionSetup.cxx.in)
 
 $(include ConstructorVectorPixels.cxx.in)
