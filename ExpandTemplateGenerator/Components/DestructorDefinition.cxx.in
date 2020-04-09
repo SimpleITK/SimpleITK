@@ -1,22 +1,25 @@
 //
 // Destructor
 //
-${name}::~${name} ()
+${name}::~${name}()$(if measurements then
+  temp=false
+  for i = 1,#measurements do
+    if measurements[i].active then
+      temp=true
+     end
+   end
+   if temp then
+    OUT=[[
 {
-$(if measurements then
-temp=false
-for i = 1,#measurements do
-  if measurements[i].active then
-    temp=true
-  end
-end
-if temp then
-OUT=[[
   if (this->m_Filter != nullptr)
     {
       m_Filter->UnRegister();
     }
-]]
-end
-end)
 }
+]]
+   else
+     OUT=OUT..[[ = default;]]
+   end
+else
+  OUT=OUT..[[ = default;]]
+end)
