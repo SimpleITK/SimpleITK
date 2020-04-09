@@ -13,6 +13,11 @@ PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[0-6][^ ]\+ \
 NPROC=$(grep -c processor /proc/cpuinfo)
 export MAKEFLAGS="-j ${NPROC}"
 
+# if ExternalData_OBJECT_STORES is not set by the driver script then
+# set it here to enable  reuse of downloaded files between python
+# builds.
+export ExternalData_OBJECT_STORES=${ExternalData_OBJECT_STORES:-/tmp/.ExternalData}
+mkdir -p ${ExternalData_OBJECT_STORES}
 
 function build_simpleitk {
 
