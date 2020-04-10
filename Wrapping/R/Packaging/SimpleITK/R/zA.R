@@ -1,21 +1,5 @@
-redefineEnumeration <- function(enumerationName, the.function)
-{
-    current.enum <- get(paste(".__E__", enumerationName, sep = ""))
-    the.names <- names(current.enum)
-    values <- sapply(the.names, the.function)
-
-    if (any(values== -99))
-    {
-        warning("Some enumeration names are not recognised\n")
-    }
-    names(values) <- the.names
-    defineEnumeration(enumerationName, values)
-}
-
 .onLoad <- function(lib,pkg) {
   library.dynam("SimpleITK",pkg,lib)
-  redefineEnumeration('_itk__simple__PixelIDValueEnum', GetPixelIDValueFromString)
-
   createPixLookup()
 }
 
