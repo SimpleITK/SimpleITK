@@ -75,7 +75,7 @@ $(include MemberFunctionDispatch.h.in)
 
 $(include PrivateMemberDeclarations.h.in)
       /** List of interor seed points used to initialize the region growing segmentation */
-      std::vector< std::vector<unsigned int> > m_SeedList;
+      std::vector< std::vector<unsigned int> > m_SeedList{};
 
 $(include ClassEnd.h.in)
 

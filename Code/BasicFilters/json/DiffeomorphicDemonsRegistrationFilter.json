@@ -68,7 +68,7 @@
     {
       "name" : "UseFirstOrderExp",
       "type" : "bool",
-      "default" : false,
+      "default" : "false",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Use a first-order approximation of the exponential. This amounts to using an update rule of the type s <- s o (Id + u) instead of s <- s o exp(u)",
       "briefdescriptionGet" : "",
@@ -86,14 +86,14 @@
     {
       "name" : "SmoothDisplacementField",
       "type" : "bool",
-      "default" : true,
+      "default" : "true",
       "detaileddescriptionSet" : "Set/Get whether the displacement field is smoothed (regularized). Smoothing the displacement yields a solution elastic in nature. If SmoothDisplacementField is on, then the displacement field is smoothed with a Gaussian whose standard deviations are specified with SetStandardDeviations()",
       "detaileddescriptionGet" : "Set/Get whether the displacement field is smoothed (regularized). Smoothing the displacement yields a solution elastic in nature. If SmoothDisplacementField is on, then the displacement field is smoothed with a Gaussian whose standard deviations are specified with SetStandardDeviations()"
     },
     {
       "name" : "SmoothUpdateField",
       "type" : "bool",
-      "default" : false,
+      "default" : "false",
       "detaileddescriptionSet" : "Set/Get whether the update field is smoothed (regularized). Smoothing the update field yields a solution viscous in nature. If SmoothUpdateField is on, then the update field is smoothed with a Gaussian whose standard deviations are specified with SetUpdateFieldStandardDeviations()",
       "detaileddescriptionGet" : "Set/Get whether the update field is smoothed (regularized). Smoothing the update field yields a solution viscous in nature. If SmoothUpdateField is on, then the update field is smoothed with a Gaussian whose standard deviations are specified with SetUpdateFieldStandardDeviations()"
     },
@@ -133,7 +133,7 @@
     {
       "name" : "UseImageSpacing",
       "type" : "bool",
-      "default" : true
+      "default" : "true"
     }
   ],
   "measurements" : [
