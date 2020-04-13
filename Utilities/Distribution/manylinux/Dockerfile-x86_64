@@ -10,4 +10,4 @@ COPY ./imagefiles/install.sh ./
 RUN bash -v install.sh && rm -rf /tmp/*
 
 # User is expected to mount directory to "/work"
-ENTRYPOINT ["bash", "-c", "groupadd -o -g $_GROUPID $_USER && useradd -m -o -g $_GROUPID $_USER -u $_USERID && su $_USER /work/io/imagefiles/cmd.sh" ]
+ENTRYPOINT ["bash", "-c", "/work/io/imagefiles/cmd.sh" ]
