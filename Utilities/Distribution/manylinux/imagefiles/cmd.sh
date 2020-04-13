@@ -19,6 +19,10 @@ export MAKEFLAGS="-j ${NPROC}"
 export ExternalData_OBJECT_STORES=${ExternalData_OBJECT_STORES:-/tmp/.ExternalData}
 mkdir -p ${ExternalData_OBJECT_STORES}
 
+
+export PYTHONUSERBASE=${PYTHONUSERBASE:-/tmp/.pylocal}
+mkdir -p ${PYTHONUSERBASE}
+
 function build_simpleitk {
 
     echo "SIMPLEITK_GIT_TAG: ${SIMPLEITK_GIT_TAG}"
@@ -56,7 +60,7 @@ function build_simpleitk_python {
     echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
     echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
 
-    ${PYTHON_EXECUTABLE} -m pip install --user numpy --progress-bar off
+    ${PYTHON_EXECUTABLE} -m pip install --no-cache-dir --user numpy --progress-bar off
     rm -rf ${BLD_DIR}-${PYTHON} &&
     mkdir -p ${BLD_DIR}-${PYTHON} &&
     cd ${BLD_DIR}-${PYTHON} &&
