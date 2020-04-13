@@ -24,8 +24,8 @@ referenced:
       command: |
         sudo apt-get install -y rsync lua5.3 ccache
         sudo python -m pip install --upgrade pip
-        sudo python -m pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
-        sudo python -m pip install cmake==3.13.3
+        sudo python -m pip install scikit-ci-addons lxml # Provides "ctest_junit_formatter" add-on
+        sudo python -m pip install cmake==3.15.*
   generate-hash-step: &generate-hash-step
     run:
       name: Generate external data hash
