@@ -143,6 +143,7 @@ OUT=[[
     caster = Simpleitk::LabelMapToLabelImageFilter.new
     output = caster.execute( output )
   end
+  writer.use_compression_on()
   writer.set_file_name( ARGV[ARGV.length-1] )
   writer.execute( output )
 ]]

@@ -110,6 +110,7 @@ OUT=[[
     if output.GetPixelIDValue() in labelIDs:
        output = SimpleITK.LabelMapToLabel(output)
 
+    writer.UseCompressionOn()
     writer.SetFileName ( sys.argv[-1] )
     writer.Execute ( output )
 ]]

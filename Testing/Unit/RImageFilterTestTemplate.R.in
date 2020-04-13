@@ -115,6 +115,7 @@ OUT=[[
   output <- LabelMapToLabel(output)
   }
 
+  writer$$UseCompressionOn()
   writer$$SetFileName( lastargument )
   writer$$Execute( output )
 ]]
