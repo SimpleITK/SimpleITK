@@ -1,17 +1,18 @@
 $(if (number_of_inputs) > 0 or (inputs and #inputs > 0 ) then
 OUT=[[
   // Define the input and output image types
-  typedef TImageType     InputImageType;
-        ]] end)
+  using InputImageType = TImageType;
+]] end)
 $(for nimg=2,number_of_inputs do
-OUT=OUT .. '  typedef TImageType     InputImageType' .. nimg .. ';\n'
+OUT=OUT .. [[  using InputImageType]] .. nimg .. [[ = TImageType;
+]]
   end)
   $(if output_image_type then
   OUT=[[//Define output image type
-  typedef ${output_image_type} OutputImageType;]]
+  using OutputImageType = ${output_image_type};]]
   elseif output_pixel_type then
   OUT=[[// Define output image type
-  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+  using OutputImageType = itk::Image< ${output_pixel_type}, InputImageType::ImageDimension >;]]
   else
-  OUT=[[typedef InputImageType OutputImageType;]]
+  OUT=[[using OutputImageType = InputImageType;]]
   end)

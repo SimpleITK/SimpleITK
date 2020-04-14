@@ -17,7 +17,7 @@ end)
      */
     class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
     public:
-      typedef ${name} Self;
+      using Self = ${name};
 
       /** Destructor */
       virtual ~${name}();
@@ -27,4 +27,4 @@ end)
       ${name}();
 
       /** Define the pixels types supported by this filter */
-      typedef ${pixel_types}  PixelIDTypeList;
+      using PixelIDTypeList = ${pixel_types};

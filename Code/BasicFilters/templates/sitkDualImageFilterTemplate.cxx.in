@@ -31,7 +31,7 @@ namespace simple {
 $(include ConstructorSignature.cxx.in)
 {
 
-  typedef ${pixel_types2}  PixelIDTypeList2;
+  using PixelIDTypeList2 = ${pixel_types2};
 
 
   this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
@@ -40,17 +40,17 @@ $(include ConstructorSignature.cxx.in)
   this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 > ();
 
 $(if vector_pixel_types_by_component then
-  OUT=[[  typedef ${vector_pixel_types_by_component} VectorByComponentsPixelIDTypeList;
+  OUT=[[  using VectorByComponentsPixelIDTypeList = ${vector_pixel_types_by_component};
 ]]
   if vector_pixel_types_by_component2 then
-  OUT = OUT..[[  typedef ${vector_pixel_types_by_component2} VectorByComponentsPixelIDTypeList2;
+  OUT = OUT..[[  using VectorByComponentsPixelIDTypeList2 = ${vector_pixel_types_by_component2};
 ]]
   else
-  OUT = OUT..[[  typedef PixelIDTypeList2 VectorByComponentsPixelIDTypeList2;
+  OUT = OUT..[[  using VectorByComponentsPixelIDTypeList2 = PixelIDTypeList2;
 ]]
   end
   OUT = OUT..[[
-  typedef detail::DualExecuteInternalVectorAddressor<MemberFunctionType> VectorAddressorType;
+  using VectorAddressorType = detail::DualExecuteInternalVectorAddressor<MemberFunctionType>;
   this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 3, VectorAddressorType> ();
   this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 2, VectorAddressorType> ();]]
 end)
@@ -163,17 +163,17 @@ if inputs then
 end ) )
 {
   // Define the input and output image types
-  typedef TImageType     InputImageType;
-  typedef TImageType2    InputImageType2;
+  using InputImageType = TImageType;
+  using InputImageType2 = TImageType2;
 
   $(if output_image_type then
   OUT=[[//Define output image type
-  typedef ${output_image_type} OutputImageType;]]
+  using OutputImageType = ${output_image_type};]]
   elseif output_pixel_type then
   OUT=[[// Define output image type
-  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+  using OutputImageType =  itk::Image< ${output_pixel_type}, InputImageType::ImageDimension >;]]
   else
-  OUT=[[typedef InputImageType OutputImageType;]]
+  OUT=[[using OutputImageType = InputImageType;]]
   end)
 
 $(include ExecuteInternalGetImagePointers.cxx.in)
@@ -205,34 +205,34 @@ if inputs then
   end
 end ) )
 {
-  typedef TImageType                                                               VectorInputImageType;
-  typedef typename VectorInputImageType::InternalPixelType                         ComponentType;
-  typedef typename itk::Image<ComponentType, VectorInputImageType::ImageDimension> ComponentImageType;
+  using VectorInputImageType =  TImageType;
+  using ComponentType = typename VectorInputImageType::InternalPixelType;
+  using ComponentImageType = typename itk::Image<ComponentType, VectorInputImageType::ImageDimension>;
   // we must define the input and output image types
   // they should be the same as the scalar execute internal method
-  typedef ComponentImageType   InputImageType;
+  using InputImageType = ComponentImageType;
 ]]
 if vector_pixel_types_by_component2 then OUT = OUT..[[
-  typedef TImageType2                                                                VectorInputImageType2;
-  typedef typename VectorInputImageType2::InternalPixelType                          ComponentType2;
-  typedef typename itk::Image<ComponentType2, VectorInputImageType2::ImageDimension> ComponentImageType2;
-  typedef ComponentImageType2  InputImageType2;]]
+  using VectorInputImageType2 = TImageType2;
+  using ComponentType2 = typename VectorInputImageType2::InternalPixelType;
+  using ComponentImageType2 = typename itk::Image<ComponentType2, VectorInputImageType2::ImageDimension>;
+  using InputImageType2 = ComponentImageType2;]]
 else
    OUT= OUT..[[
-  typedef TImageType2  InputImageType2;]]
+  using InputImageType2 = TImageType2;]]
 end
 if output_image_type then
 OUT=OUT..[[
   //Define output image type
-  typedef ${output_image_type} OutputImageType;]]
+  using OutputImageType = ${output_image_type};]]
 elseif output_pixel_type then
 OUT=OUT..[[
   // Define output image type
-  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+  using OutputImageType = itk::Image< ${output_pixel_type}, InputImageType::ImageDimension >;]]
 else
   OUT=OUT..[[
   // Define output image type
-  typedef InputImageType OutputImageType;]]
+  using OutputImageType = InputImageType;]]
 end
 
 OUT=OUT..[[
@@ -249,11 +249,11 @@ end
 
 OUT=OUT..[[ );
 
-  typedef itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType > ComponentExtratorType;
-  typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
+  using ComponentExtractorType = itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType >;
+  typename ComponentExtractorType::Pointer extractor = ComponentExtractorType::New();
   extractor->SetInput( image1 );
 
-  typedef itk::ComposeImageFilter<OutputImageType> ToVectorFilterType;
+  using ToVectorFilterType = itk::ComposeImageFilter<OutputImageType>;
   typename ToVectorFilterType::Pointer toVector = ToVectorFilterType::New();
 
   unsigned int numComps = image1->GetNumberOfComponentsPerPixel();
