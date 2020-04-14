@@ -51,6 +51,7 @@ jobs:
       - bash: |
           docker run \
                  --mount type=bind,source=${BUILD_SOURCESDIRECTORY},destination=/work/SimpleITK,readonly \
+                 --env SIMPLEITK_GIT_TAG
                  --name sitk-dox simpleitk-doxygen
           mkdir -p $(Build.ArtifactStagingDirectory)/Doxygen
           docker cp sitk-dox:/SimpleITKDoxygen.tar.gz $(Build.ArtifactStagingDirectory)/Doxygen/SimpleITKDoxygen-${SIMPLEITK_GIT_TAG}.tar.gz
