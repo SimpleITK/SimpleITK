@@ -5,14 +5,11 @@ if [ -n "$ExternalData_OBJECT_STORES" -a -d "$ExternalData_OBJECT_STORES" ] ; th
 fi
 
 ARCHS=${ARCH:-"i686 x86_64"}
-
 for ARCH in ${ARCHS}; do
     docker build --pull=true --rm=true -t simpleitk_manylinux_${ARCH} -f Dockerfile-${ARCH} .
 
     docker run --rm \
-           --env _USER=$(id -un) \
-           --env "_USERID=$(id -u)" \
-           --env "_GROUPID=$(id -g)" \
+           --user "$(id -u):$(id -g)" \
            ${extra_args} \
            ${SIMPLEITK_GIT_TAG:+--env SIMPLEITK_GIT_TAG="${SIMPLEITK_GIT_TAG}"} \
            ${PYTHON_VERSIONS:+--env PYTHON_VERSIONS="${PYTHON_VERSIONS}"} \
