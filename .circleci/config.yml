@@ -24,8 +24,8 @@ referenced:
       command: |
         sudo apt-get install -y rsync lua5.3 ccache
         sudo python -m pip install --upgrade pip
-        sudo python -m pip install scikit-ci-addons # Provides "ctest_junit_formatter" add-on
-        sudo python -m pip install cmake==3.13.3
+        sudo python -m pip install scikit-ci-addons lxml # Provides "ctest_junit_formatter" add-on
+        sudo python -m pip install cmake==3.15.*
   generate-hash-step: &generate-hash-step
     run:
       name: Generate external data hash
@@ -159,10 +159,10 @@ jobs:
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-fotmatting
       - *junit-store-test-results
-  python3.7-and-test:
+  python3.8-and-test:
     <<: *defaults
     docker:
-     - image: circleci/python:3.7-stretch
+     - image: circleci/python:3.8-buster
     environment:
       <<: *default_environment_keys
       CTEST_BUILD_FLAGS: "-j 2"
@@ -328,7 +328,7 @@ workflows:
       - python3.5-and-test:
           requires:
             - build-and-test
-      - python3.7-and-test:
+      - python3.8-and-test:
           requires:
             - build-and-test
       - r-and-test:
