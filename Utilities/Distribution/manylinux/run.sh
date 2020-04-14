@@ -1,7 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+
 
 if [ -n "$ExternalData_OBJECT_STORES" -a -d "$ExternalData_OBJECT_STORES" ] ; then
     extra_args="-v ${ExternalData_OBJECT_STORES}:/var/io/.ExternalData --env ExternalData_OBJECT_STORES=/var/io/.ExternalData"
+fi
+
+# By default use the source SimpleITK directory of this file
+if [ -n "${SIMPLEITK_GIT_TAG}" ]; then
+    extra_args="$extra_args --env SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG}"
+else
+    SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    SRC_DIR="${SRC_DIR}/../../../"
+    extra_args="$extra_args --mount type=bind,source=${SRC_DIR},destination=/tmp/SimpleITK,readonly"
 fi
 
 ARCHS=${ARCH:-"i686 x86_64"}
@@ -11,7 +22,6 @@ for ARCH in ${ARCHS}; do
     docker run --rm \
            --user "$(id -u):$(id -g)" \
            ${extra_args} \
-           ${SIMPLEITK_GIT_TAG:+--env SIMPLEITK_GIT_TAG="${SIMPLEITK_GIT_TAG}"} \
            ${PYTHON_VERSIONS:+--env PYTHON_VERSIONS="${PYTHON_VERSIONS}"} \
            -v "$(pwd):/work/io" \
            -t simpleitk_manylinux_${ARCH}

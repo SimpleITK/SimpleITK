@@ -25,10 +25,14 @@ mkdir -p ${PYTHONUSERBASE}
 
 function build_simpleitk {
 
-    echo "SIMPLEITK_GIT_TAG: ${SIMPLEITK_GIT_TAG}"
 
-    git clone https://github.com/SimpleITK/SimpleITK.git ${SRC_DIR} &&
-    (cd ${SRC_DIR}  && git checkout ${SIMPLEITK_GIT_TAG}  ) &&
+    if [ ! -d ${SRC_DIR} ]; then
+        ( git clone https://github.com/SimpleITK/SimpleITK.git ${SRC_DIR} &&
+              cd ${SRC_DIR} &&
+              git checkout ${SIMPLEITK_GIT_TAG}
+        )
+    fi
+
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
     cmake \
