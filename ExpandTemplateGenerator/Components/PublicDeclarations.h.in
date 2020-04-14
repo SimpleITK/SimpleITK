@@ -1,5 +1,6 @@
 $(if public_declarations then
       OUT=[[
+
       /** Custom public declarations */
       ${public_declarations}
 ]]end)

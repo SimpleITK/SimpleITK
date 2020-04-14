@@ -14,10 +14,10 @@ $(if enum then
     else
       OUT=OUT..'} ${name}Type;'
     end
-end)
-$(if (not no_set_method) or (no_set_method == 0) then
-      OUT = '\
-      /**'
+end)$(if (not no_set_method) or (no_set_method == 0) then
+      OUT = [[\
+
+      /**]]
       if briefdescriptionSet and (briefdescriptionSet:len() > 0) then
          OUT=OUT .. '\
        * \\brief ${briefdescriptionSet}'
@@ -43,8 +43,7 @@ $(if (not no_set_method) or (no_set_method == 0) then
     OUT = OUT .. '\
 \
       /** Set the values of the ${name} vector all to value */\
-      SITK_RETURN_SELF_TYPE_HEADER Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value); return *this; }\
-'
+      SITK_RETURN_SELF_TYPE_HEADER Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value); return *this; }'
   end
   if type == "bool" and ( not dim_vec or not dim_vec == 1 ) then
       OUT = OUT .. '\
@@ -67,15 +66,15 @@ $(if (not no_get_method) or (no_get_method == 0) then
       end
       OUT= OUT .. '\
        */\
-       '
+      '
       if not type and enum then
-        OUT=OUT..' ${name}Type'
+        OUT=OUT..'${name}Type'
       elseif dim_vec and (dim_vec == 1) then
-        OUT=OUT..' std::vector<${type}>'
+        OUT=OUT..'std::vector<${type}>'
       elseif point_vec and (point_vec == 1) then
-        OUT=OUT..' std::vector< std::vector< ${type} > >'
+        OUT=OUT..'std::vector< std::vector< ${type} > >'
       else
-        OUT=OUT..' ${type}'
+        OUT=OUT..'${type}'
       end
       OUT=OUT..' Get${name}() const { return this->m_${name}; }'
 end)$(if point_vec and (point_vec == 1) then
