@@ -56,7 +56,7 @@ end)
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 $(if (not no_procedure) or (no_procedure == 1) then
-OUT=[[$(include FunctionalAPI.h.in)]]
+OUT=[[$(include ProceduralAPI.h.in)]]
 end)
   }
 }

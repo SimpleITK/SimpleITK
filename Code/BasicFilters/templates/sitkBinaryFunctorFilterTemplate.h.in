@@ -62,7 +62,7 @@ $(include MemberFunctionDispatch.h.in)
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
-$(include FunctionalAPI.h.in)
+$(include ProceduralAPI.h.in)
      SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
 $(if in_place then
   OUT=[[

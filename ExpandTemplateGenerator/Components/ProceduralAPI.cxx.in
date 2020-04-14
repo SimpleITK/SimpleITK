@@ -27,7 +27,7 @@ end)
                             end) );
 }
 $(if in_place then
-      OUT=OUT..[[$(include FunctionalAPIRValueReference.cxx.in)]]
+      OUT=OUT..[[$(include ProceduralAPIRValueReference.cxx.in)]]
 end)$(if inputs and ((not no_procedure) or (no_procedure == 1))then
     local has_optional_inputs = false
     for i =1,#inputs do
@@ -39,6 +39,6 @@ end)$(if inputs and ((not no_procedure) or (no_procedure == 1))then
       no_optional=1
 -- we recusively include this same template file but with the no_optional variable defined
       OUT=[[
-$(include FunctionalAPI.cxx.in)]]
+$(include ProceduralAPI.cxx.in)]]
     end
 end)$(if inputs then no_optional=nil end)

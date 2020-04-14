@@ -298,7 +298,7 @@ sitkClangDiagnosticPop();
 //-----------------------------------------------------------------------------
 
 $(if (not no_procedure) or (no_procedure == 1) then
-OUT=[[$(include FunctionalAPI.cxx.in)]]
+OUT=[[$(include ProceduralAPI.cxx.in)]]
 end)
 
 } // end namespace simple
