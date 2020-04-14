@@ -181,6 +181,7 @@ OUT=[[
 
                 // Write output
                 ImageFileWriter writer = new ImageFileWriter();
+                writer.UseCompressionOn()
                 writer.SetFileName( args[args.Length-1] );
                 writer.Execute( output );
 ]]

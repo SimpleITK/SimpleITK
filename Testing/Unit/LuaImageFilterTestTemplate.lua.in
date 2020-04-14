@@ -148,6 +148,7 @@ OUT=[[
         end
     end
 
+    writer:UseCompressionOn ()
     writer:SetFileName ( arg[#arg] )
     writer:Execute ( output )
 ]]

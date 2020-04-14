@@ -225,6 +225,7 @@ OUT=[[
         }
 
       // Write output
+      writer.useCompressionOn();
       writer.setFileName( argv[argv.length - 1] );
       writer.execute( output );
 ]]
