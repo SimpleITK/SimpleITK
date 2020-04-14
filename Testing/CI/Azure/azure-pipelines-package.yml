@@ -7,13 +7,8 @@ trigger:
      exclude:
        - '*'
 pr: none
-schedules:
-- cron: "0 3 * * *" # 10 pm EST->UTC
-  displayName: Daily build
-  branches:
-    include:
-    - master
-  always: false
+
+# Scheduled builds on master to build the "latest" are configure through the AZP GUI.
 
 variables:
   ExternalDataVersion: 1.2.0
