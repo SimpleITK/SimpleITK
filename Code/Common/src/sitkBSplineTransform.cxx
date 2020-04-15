@@ -42,7 +42,7 @@ std::vector<Image> sitkImageArrayConvert(const TImageArrayType &a)
 
 
 template<typename TBSplineTransform>
-unsigned int sitkGetOrder(void)
+unsigned int sitkGetOrder()
 {
   return TBSplineTransform::SplineOrder;
 }

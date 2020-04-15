@@ -126,11 +126,11 @@ public:
              typename TPixelIDTypeList2,
              unsigned int VImageDimension,
              typename TAddressor >
-  void RegisterMemberFunctions( void );
+  void RegisterMemberFunctions( );
   template < typename TPixelIDTypeList1,
              typename TPixelIDTypeList2,
              unsigned int VImageDimension >
-  void RegisterMemberFunctions( void )
+  void RegisterMemberFunctions( )
   {
     typedef detail::DualExecuteInternalAddressor<MemberFunctionType> AddressorType;
     this->RegisterMemberFunctions< TPixelIDTypeList1, TPixelIDTypeList2, VImageDimension, AddressorType>();

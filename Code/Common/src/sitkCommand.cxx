@@ -41,7 +41,7 @@ Command::~Command( )
 }
 
 
-void Command::Execute(void)
+void Command::Execute()
 {
 }
 

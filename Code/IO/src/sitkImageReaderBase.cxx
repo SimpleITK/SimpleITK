@@ -132,7 +132,7 @@ ImageReaderBase
 
 PixelIDValueEnum
 ImageReaderBase
-::GetOutputPixelType( void ) const
+::GetOutputPixelType( ) const
 {
   return this->m_OutputPixelType;
 }
@@ -178,7 +178,7 @@ ImageReaderBase
 
 std::string
 ImageReaderBase
-::GetImageIO(void) const
+::GetImageIO() const
 {
   return this->m_ImageIOName;
 }

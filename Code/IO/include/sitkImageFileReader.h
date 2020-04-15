@@ -90,7 +90,7 @@ namespace itk {
        * certain dimension or type, the meta-information can still be
        * read.
        */
-      void ReadImageInformation(void);
+      void ReadImageInformation();
 
       /** \brief Image information methods updated via ReadImageInformation
        *
@@ -106,14 +106,14 @@ namespace itk {
        * as a SimpleITK Image.
        * @{
        */
-      PixelIDValueEnum GetPixelID( void ) const;
-      PixelIDValueType GetPixelIDValue( void ) const;
-      unsigned int GetDimension( void ) const;
-      unsigned int GetNumberOfComponents( void ) const;
-      const std::vector<double> &GetOrigin( void ) const;
-      const std::vector<double> &GetSpacing( void ) const;
+      PixelIDValueEnum GetPixelID( ) const;
+      PixelIDValueType GetPixelIDValue( ) const;
+      unsigned int GetDimension( ) const;
+      unsigned int GetNumberOfComponents( ) const;
+      const std::vector<double> &GetOrigin( ) const;
+      const std::vector<double> &GetSpacing( ) const;
       const std::vector<double> &GetDirection() const;
-      const std::vector<uint64_t> &GetSize( void ) const;
+      const std::vector<uint64_t> &GetSize( ) const;
       /* @} */
 
       /** \brief Get the meta-data dictionary keys
@@ -125,7 +125,7 @@ namespace itk {
        * file's meta-data dictionary. Iterate through with these keys
        * to get the values.
        **/
-      std::vector<std::string> GetMetaDataKeys( void ) const;
+      std::vector<std::string> GetMetaDataKeys( ) const;
 
       /** \brief Query a meta-data dictionary for the existence of a key.
        **/

@@ -119,7 +119,7 @@ private:
     itk::TransformBase *transform;
     DisplacementFieldTransform *that;
     template< typename TransformType >
-    void operator() ( void ) const
+    void operator() ( ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
         if (t && (typeid(*t) == typeid(TransformType)))

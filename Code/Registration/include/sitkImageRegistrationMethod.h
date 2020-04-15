@@ -689,7 +689,7 @@ namespace simple
       typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
       template< typename TImageType >
-      TMemberFunctionPointer operator() ( void ) const
+      TMemberFunctionPointer operator() ( ) const
         {
           return &ObjectType::template EvaluateInternal< TImageType >;
         }

@@ -74,7 +74,7 @@ protected:
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
 
 
-  MemberFunctionFactoryBase( void )
+  MemberFunctionFactoryBase( )
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
@@ -131,7 +131,7 @@ protected:
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgumentType;
 
 
-  MemberFunctionFactoryBase( void )
+  MemberFunctionFactoryBase( )
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
@@ -185,7 +185,7 @@ protected:
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
 
 
-  MemberFunctionFactoryBase( void )
+  MemberFunctionFactoryBase( )
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
@@ -241,7 +241,7 @@ protected:
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
 
 
-  MemberFunctionFactoryBase( void )
+  MemberFunctionFactoryBase( )
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
@@ -297,7 +297,7 @@ protected:
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
 
 
-  MemberFunctionFactoryBase( void )
+  MemberFunctionFactoryBase( )
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
@@ -353,7 +353,7 @@ protected:
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
 
 
-  MemberFunctionFactoryBase( void )
+  MemberFunctionFactoryBase( )
     :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )

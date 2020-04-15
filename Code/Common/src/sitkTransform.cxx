@@ -90,7 +90,7 @@ public:
 };
 
 template<unsigned int Dimension>
-bool RegisterMoreTransforms(void)
+bool RegisterMoreTransforms()
 {
   typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
   itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
@@ -282,7 +282,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
     Self::SetPimpleTransform( new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer()) );
   }
 
-void Transform::MakeUnique( void )
+void Transform::MakeUnique( )
 {
   if ( this->m_PimpleTransform->GetReferenceCount() > 1 )
     {
@@ -420,19 +420,19 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   template void SITKCommon_EXPORT Transform::InternalInitialization<2>( TransformEnum, itk::TransformBase * );
   template void SITKCommon_EXPORT Transform::InternalInitialization<3>( TransformEnum, itk::TransformBase * );
 
-  itk::TransformBase* Transform::GetITKBase ( void )
+  itk::TransformBase* Transform::GetITKBase ( )
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetTransformBase();
   }
 
-  const itk::TransformBase* Transform::GetITKBase ( void ) const
+  const itk::TransformBase* Transform::GetITKBase ( ) const
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetTransformBase();
   }
 
-  unsigned int  Transform::GetDimension( void ) const
+  unsigned int  Transform::GetDimension( ) const
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetInputDimension();
@@ -445,13 +445,13 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     this->m_PimpleTransform->SetParameters( parameters );
   }
 
-  std::vector<double> Transform::GetParameters( void ) const
+  std::vector<double> Transform::GetParameters( ) const
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetParameters();
   }
 
-  unsigned int Transform::GetNumberOfParameters( void ) const
+  unsigned int Transform::GetNumberOfParameters( ) const
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetNumberOfParameters();
@@ -464,13 +464,13 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     this->m_PimpleTransform->SetFixedParameters( parameters );
   }
 
-  std::vector<double> Transform::GetFixedParameters( void ) const
+  std::vector<double> Transform::GetFixedParameters( ) const
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetFixedParameters();
   }
 
-  unsigned int Transform::GetNumberOfFixedParameters( void ) const
+  unsigned int Transform::GetNumberOfFixedParameters( ) const
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->GetNumberOfFixedParameters();
@@ -555,7 +555,7 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
   }
 
 
-  std::string Transform::ToString( void ) const
+  std::string Transform::ToString( ) const
   {
     assert( m_PimpleTransform );
 
@@ -565,7 +565,7 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
     return std::string("itk::simple::")+this->GetName() + '\n'+this->m_PimpleTransform->ToString();
   }
 
-  std::string Transform::GetName( void ) const
+  std::string Transform::GetName( ) const
   {
     return "Transform";
   }

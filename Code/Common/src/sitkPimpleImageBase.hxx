@@ -91,8 +91,8 @@ namespace itk
           }
       }
 
-    virtual PimpleImageBase *ShallowCopy( void ) const { return new Self(this->m_Image.GetPointer()); }
-    virtual PimpleImageBase *DeepCopy( void ) const { return this->DeepCopy<TImageType>(); }
+    virtual PimpleImageBase *ShallowCopy( ) const { return new Self(this->m_Image.GetPointer()); }
+    virtual PimpleImageBase *DeepCopy( ) const { return this->DeepCopy<TImageType>(); }
 
     template <typename UImageType>
     typename std::enable_if<!IsLabel<UImageType>::Value, PimpleImageBase*>::type
@@ -120,24 +120,24 @@ namespace itk
         return new Self( output.GetPointer() );
       }
 
-    virtual itk::DataObject* GetDataBase( void ) { return this->m_Image.GetPointer(); }
-    virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
+    virtual itk::DataObject* GetDataBase( ) { return this->m_Image.GetPointer(); }
+    virtual const itk::DataObject* GetDataBase( ) const { return this->m_Image.GetPointer(); }
 
 
-    PixelIDValueEnum GetPixelID(void) const noexcept
+    PixelIDValueEnum GetPixelID() const noexcept
       {
         // The constructor ensures that we have a valid image
         // this maps the Image's pixel type to the array index
         return static_cast<PixelIDValueEnum>(ImageTypeToPixelIDValue<ImageType>::Result);
       }
 
-    virtual unsigned int GetDimension( void ) const
+    virtual unsigned int GetDimension( ) const
       {
         return ImageType::ImageDimension;
       }
 
 
-    virtual unsigned int GetNumberOfComponentsPerPixel( void ) const { return this->GetNumberOfComponentsPerPixel<TImageType>(); }
+    virtual unsigned int GetNumberOfComponentsPerPixel( ) const { return this->GetNumberOfComponentsPerPixel<TImageType>(); }
 
     template <typename UImageType>
     typename std::enable_if<!IsVector<UImageType>::Value, unsigned int>::type
@@ -156,7 +156,7 @@ namespace itk
 
 
     // Get Origin
-    virtual std::vector<double> GetOrigin( void ) const
+    virtual std::vector<double> GetOrigin( ) const
       {
         return sitkITKVectorToSTL<double>( this->m_Image->GetOrigin() );
       }
@@ -168,7 +168,7 @@ namespace itk
       }
 
     // Get Spacing
-    virtual std::vector<double> GetSpacing( void ) const
+    virtual std::vector<double> GetSpacing( ) const
       {
         return sitkITKVectorToSTL<double>( this->m_Image->GetSpacing() );
       }
@@ -181,7 +181,7 @@ namespace itk
 
 
     // Get Direction
-    virtual std::vector< double > GetDirection( void ) const
+    virtual std::vector< double > GetDirection( ) const
       {
       return sitkITKDirectionToSTL( this->m_Image->GetDirection() );
       }
@@ -275,7 +275,7 @@ namespace itk
         return largestRegion.GetSize(dimension);
       }
 
-    virtual std::vector<unsigned int> GetSize( void ) const
+    virtual std::vector<unsigned int> GetSize( ) const
       {
         typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
         std::vector<unsigned int> size( ImageType::ImageDimension );
@@ -283,12 +283,12 @@ namespace itk
         return sitkITKVectorToSTL<unsigned int>( largestRegion.GetSize() );
       }
 
-    virtual uint64_t GetNumberOfPixels( void ) const
+    virtual uint64_t GetNumberOfPixels( ) const
       {
         return this->m_Image->GetLargestPossibleRegion().GetNumberOfPixels();
       }
 
-    std::string ToString( void ) const
+    std::string ToString( ) const
       {
         std::ostringstream out;
         this->m_Image->Print ( out );

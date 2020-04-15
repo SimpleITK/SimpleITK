@@ -100,7 +100,7 @@ namespace itk
         }
     }
 
-    itk::DataObject* Image::GetITKBase( void )
+    itk::DataObject* Image::GetITKBase( )
     {
       if ( m_PimpleImage )
         {
@@ -113,7 +113,7 @@ namespace itk
         }
     }
 
-    const itk::DataObject* Image::GetITKBase( void ) const
+    const itk::DataObject* Image::GetITKBase( ) const
     {
       if ( m_PimpleImage )
         {
@@ -125,72 +125,72 @@ namespace itk
         }
     }
 
-    PixelIDValueType Image::GetPixelIDValue( void ) const
+    PixelIDValueType Image::GetPixelIDValue( ) const
     {
       return this->GetPixelID();
     }
 
-    PixelIDValueEnum Image::GetPixelID( void ) const
+    PixelIDValueEnum Image::GetPixelID( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelID();
     }
 
-    unsigned int Image::GetDimension( void ) const
+    unsigned int Image::GetDimension( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDimension();
     }
 
-    unsigned int Image::GetNumberOfComponentsPerPixel( void ) const
+    unsigned int Image::GetNumberOfComponentsPerPixel( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetNumberOfComponentsPerPixel();
     }
 
-    uint64_t Image::GetNumberOfPixels( void ) const
+    uint64_t Image::GetNumberOfPixels( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetNumberOfPixels();
     }
 
-    std::string Image::GetPixelIDTypeAsString( void ) const
+    std::string Image::GetPixelIDTypeAsString( ) const
     {
       return std::string( GetPixelIDValueAsString( this->GetPixelIDValue() ) );
     }
 
-    std::string Image::ToString( void ) const
+    std::string Image::ToString( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->ToString();
     }
 
-    std::vector< unsigned int > Image::GetSize( void ) const
+    std::vector< unsigned int > Image::GetSize( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetSize();
     }
 
-    unsigned int Image::GetWidth( void ) const
+    unsigned int Image::GetWidth( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetWidth();
     }
 
-    unsigned int Image::GetHeight( void ) const
+    unsigned int Image::GetHeight( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetHeight();
     }
 
-    unsigned int Image::GetDepth( void ) const
+    unsigned int Image::GetDepth( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();
     }
 
     // Get Origin
-    std::vector< double > Image::GetOrigin( void ) const
+    std::vector< double > Image::GetOrigin( ) const
     {
        assert( m_PimpleImage );
       return this->m_PimpleImage->GetOrigin();
@@ -205,7 +205,7 @@ namespace itk
     }
 
     // Get Spacing
-    std::vector< double > Image::GetSpacing( void ) const
+    std::vector< double > Image::GetSpacing( ) const
     {
        assert( m_PimpleImage );
       return this->m_PimpleImage->GetSpacing();
@@ -220,7 +220,7 @@ namespace itk
     }
 
     // Get Direction
-    std::vector< double > Image::GetDirection( void ) const
+    std::vector< double > Image::GetDirection( ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDirection();
@@ -255,7 +255,7 @@ namespace itk
       this->SetDirection( srcImage.GetDirection() );
     }
 
-    std::vector<std::string> Image::GetMetaDataKeys( void ) const
+    std::vector<std::string> Image::GetMetaDataKeys( ) const
     {
       assert( m_PimpleImage );
       const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();

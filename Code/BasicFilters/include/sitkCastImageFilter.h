@@ -46,7 +46,7 @@ public:
 
   /** Set/Get the output pixel type */
   SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
-  PixelIDValueEnum GetOutputPixelType( void ) const;
+  PixelIDValueEnum GetOutputPixelType( ) const;
 
   virtual ~CastImageFilter();
 
@@ -103,7 +103,7 @@ private:
     typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
     template< typename TImageType1, typename TImageType2 >
-    TMemberFunctionPointer operator() ( void ) const
+    TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template ExecuteInternalCast< TImageType1, TImageType2 >;
     }
@@ -118,7 +118,7 @@ private:
     typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
     template< typename TImageType1, typename TImageType2 >
-    TMemberFunctionPointer operator() ( void ) const
+    TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template ExecuteInternalToVector< TImageType1, TImageType2 >;
     }
@@ -133,7 +133,7 @@ private:
     typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
     template< typename TImageType1, typename TImageType2 >
-    TMemberFunctionPointer operator() ( void ) const
+    TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template ExecuteInternalToLabel< TImageType1, TImageType2 >;
     }
@@ -148,7 +148,7 @@ private:
     typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
     template< typename TImageType1, typename TImageType2 >
-    TMemberFunctionPointer operator() ( void ) const
+    TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template ExecuteInternalLabelToImage< TImageType1, TImageType2 >;
     }

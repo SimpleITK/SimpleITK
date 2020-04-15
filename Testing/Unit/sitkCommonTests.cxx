@@ -622,7 +622,7 @@ struct MemberFunctionCommandTest
 };
 
 int gValue = 0;
-void functionCommand(void)
+void functionCommand()
 {
   gValue = 98;
 }

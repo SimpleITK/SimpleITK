@@ -25,28 +25,28 @@ public:
   TypeListTest() {};
   struct CountPredicate
   {
-    CountPredicate( void ) : count(0) {}
+    CountPredicate( ) : count(0) {}
 
     template<class TType>
-    void operator()( void )
+    void operator()( )
       {
         ++count;
       }
 
     template<class TType1, class TType2>
-    void operator()( void )
+    void operator()( )
       {
         ++count;
       }
 
     template<class TType>
-    void operator()( void ) const
+    void operator()( ) const
       {
         ++count;
       }
 
     template<class TType1, class TType2>
-    void operator()( void ) const
+    void operator()( ) const
       {
         ++count;
         std::cout << typeid(TType1).name() << " " << typeid( TType2 ).name() << std::endl;

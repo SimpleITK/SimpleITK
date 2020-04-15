@@ -115,9 +115,9 @@ public:
   template < typename TPixelIDTypeList,
              unsigned int VImageDimension,
              typename TAddressor >
-  void RegisterMemberFunctions( void );
+  void RegisterMemberFunctions( );
   template < typename TPixelIDTypeList, unsigned int VImageDimension >
-  void RegisterMemberFunctions( void )
+  void RegisterMemberFunctions( )
   {
     typedef detail::MemberFunctionAddressor< TMemberFunctionPointer > AddressorType;
     this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType >();

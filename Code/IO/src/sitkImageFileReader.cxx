@@ -178,42 +178,42 @@ namespace itk {
 
     PixelIDValueEnum
     ImageFileReader
-    ::GetPixelID( void ) const
+    ::GetPixelID( ) const
     {
       return this->m_PixelType;
     }
 
     PixelIDValueType
     ImageFileReader
-    ::GetPixelIDValue( void ) const
+    ::GetPixelIDValue( ) const
     {
       return this->m_PixelType;
     }
 
     unsigned int
     ImageFileReader
-    ::GetDimension( void ) const
+    ::GetDimension( ) const
     {
       return this->m_Dimension;
     }
 
     unsigned int
     ImageFileReader
-    ::GetNumberOfComponents( void ) const
+    ::GetNumberOfComponents( ) const
     {
       return this->m_NumberOfComponents;
     }
 
     const std::vector<double> &
     ImageFileReader
-    ::GetOrigin( void ) const
+    ::GetOrigin( ) const
     {
       return this->m_Origin;
     }
 
     const std::vector<double> &
     ImageFileReader
-    ::GetSpacing( void ) const
+    ::GetSpacing( ) const
     {
       return this->m_Spacing;
     }
@@ -227,14 +227,14 @@ namespace itk {
 
     const std::vector<uint64_t> &
     ImageFileReader
-    ::GetSize( void ) const
+    ::GetSize( ) const
     {
       return this->m_Size;
     }
 
     void
     ImageFileReader
-    ::ReadImageInformation( void )
+    ::ReadImageInformation( )
     {
       itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
       this->UpdateImageInformationFromImageIO(imageio);
@@ -244,7 +244,7 @@ namespace itk {
 
     std::vector<std::string>
     ImageFileReader
-    ::GetMetaDataKeys( void ) const
+    ::GetMetaDataKeys( ) const
     {
       return this->m_pfGetMetaDataKeys();
     }

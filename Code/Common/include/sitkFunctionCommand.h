@@ -42,7 +42,7 @@ public:
 
   FunctionCommand();
 
-  virtual void Execute(void);
+  virtual void Execute();
 
   /** Generic method to set a class's member function to be called in
    *  the Execute method.

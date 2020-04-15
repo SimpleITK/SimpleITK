@@ -130,7 +130,7 @@ template <typename TMemberFunctionPointer>
 template < typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension, typename TAddressor >
 void
 DualMemberFunctionFactory< TMemberFunctionPointer >
-::RegisterMemberFunctions( void )
+::RegisterMemberFunctions( )
 {
   typedef DualMemberFunctionInstantiater< Self, VImageDimension, TAddressor > InstantiaterType;
 

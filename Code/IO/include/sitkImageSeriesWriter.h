@@ -76,7 +76,7 @@ class ImageIOBase;
        * @{
        */
       virtual SITK_RETURN_SELF_TYPE_HEADER SetImageIO(const std::string &imageio);
-      virtual std::string GetImageIO( void ) const;
+      virtual std::string GetImageIO( ) const;
       /* @} */
 
       /** return user readable name of the filter */
@@ -89,10 +89,10 @@ class ImageIOBase;
        * only a request as not all file formatts support compression.
        * @{ */
       SITK_RETURN_SELF_TYPE_HEADER SetUseCompression( bool UseCompression );
-      bool GetUseCompression( void ) const;
+      bool GetUseCompression( ) const;
 
-      SITK_RETURN_SELF_TYPE_HEADER UseCompressionOn( void ) { return this->SetUseCompression(true); }
-      SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( void ) { return this->SetUseCompression(false); }
+      SITK_RETURN_SELF_TYPE_HEADER UseCompressionOn( ) { return this->SetUseCompression(true); }
+      SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( ) { return this->SetUseCompression(false); }
       /** @} */
 
       /** \brief A hint for the amount of compression to be applied during writing.
@@ -102,7 +102,7 @@ class ImageIOBase;
        *  for lossless zip or LZW like compression algorithms.  Please see the specific itk::ImageIO for details.
        * @{ */
       SITK_RETURN_SELF_TYPE_HEADER SetCompressionLevel(int);
-      int GetCompressionLevel(void) const;
+      int GetCompressionLevel() const;
       /** @} */
 
       /** \brief A compression algorithm hint
@@ -112,7 +112,7 @@ class ImageIOBase;
        * itk::ImageIO for details.
        * @{ */
       SITK_RETURN_SELF_TYPE_HEADER SetCompressor(const std::string &);
-      std::string GetCompressor(void);
+      std::string GetCompressor();
       /** @} */
 
       /** The filenames to where the image slices are written.
