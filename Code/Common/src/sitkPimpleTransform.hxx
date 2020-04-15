@@ -58,7 +58,8 @@ namespace simple
 class SITKCommon_HIDDEN PimpleTransformBase
 {
 public:
-  virtual ~PimpleTransformBase( ) {};
+
+  virtual ~PimpleTransformBase( ) = default;;
 
   // Get Access to the internal ITK transform class
   virtual TransformBase * GetTransformBase( ) = 0;

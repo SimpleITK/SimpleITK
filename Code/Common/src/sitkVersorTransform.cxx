@@ -25,9 +25,7 @@ namespace itk
 namespace simple
 {
 
-VersorTransform::~VersorTransform()
-{
-}
+VersorTransform::~VersorTransform() = default;
 
 // construct identity
 VersorTransform::VersorTransform()

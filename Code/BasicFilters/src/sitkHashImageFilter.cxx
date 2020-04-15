@@ -30,8 +30,7 @@ namespace itk {
   namespace simple {
 
     HashImageFilter::~HashImageFilter ()
-    {
-    }
+    = default;
 
     HashImageFilter::HashImageFilter () {
       this->m_HashFunction = SHA1;

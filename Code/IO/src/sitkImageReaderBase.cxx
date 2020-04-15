@@ -40,9 +40,7 @@ namespace itk {
 namespace simple {
 
 ImageReaderBase
-::~ImageReaderBase()
-{
-}
+::~ImageReaderBase() = default;
 
 ImageReaderBase
 ::ImageReaderBase()

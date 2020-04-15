@@ -26,9 +26,7 @@ namespace itk
 namespace simple
 {
 
-ScaleVersor3DTransform::~ScaleVersor3DTransform()
-{
-}
+ScaleVersor3DTransform::~ScaleVersor3DTransform() = default;
 
 // construct identity
 ScaleVersor3DTransform::ScaleVersor3DTransform()

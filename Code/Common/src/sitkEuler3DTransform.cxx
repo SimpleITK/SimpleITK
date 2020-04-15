@@ -25,9 +25,7 @@ namespace itk
 namespace simple
 {
 
-Euler3DTransform::~Euler3DTransform()
-{
-}
+Euler3DTransform::~Euler3DTransform() = default;
 
 // construct identity
 Euler3DTransform::Euler3DTransform()

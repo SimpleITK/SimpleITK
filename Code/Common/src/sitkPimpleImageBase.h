@@ -40,7 +40,8 @@ namespace itk
   class SITKCommon_HIDDEN PimpleImageBase
   {
   public:
-    virtual ~PimpleImageBase( ) { };
+
+    virtual ~PimpleImageBase( ) = default;
 
     virtual PixelIDValueEnum GetPixelID() const = 0;
     virtual unsigned int GetDimension( ) const  = 0;

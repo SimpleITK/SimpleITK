@@ -39,8 +39,7 @@ namespace itk {
   }
 
   ImageSeriesWriter::~ImageSeriesWriter()
-  {
-  }
+  = default;
 
   ImageSeriesWriter::ImageSeriesWriter()
   {

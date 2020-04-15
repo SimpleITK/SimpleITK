@@ -25,9 +25,7 @@ namespace itk
 namespace simple
 {
 
-AffineTransform::~AffineTransform()
-{
-}
+AffineTransform::~AffineTransform() = default;
 
 // construct identity
 AffineTransform::AffineTransform(unsigned int dimensions)

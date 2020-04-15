@@ -22,7 +22,7 @@ class TypeListTest
   : public ::testing::Test
 {
 public:
-  TypeListTest() {};
+  TypeListTest() = default;;
   struct CountPredicate
   {
     CountPredicate( ) : count(0) {}
