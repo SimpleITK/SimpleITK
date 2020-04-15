@@ -321,7 +321,7 @@ int ProcessArguments(int *ac, ArgumentStringType *av, ProcessedOutputType * proc
          std::cout << " " << hashVector[j];
          }
        std::cout << std::endl;
-       regressionTestParameters.hashTestList.push_back( HashPairType( filename, hashVector )  );
+       regressionTestParameters.hashTestList.emplace_back( filename, hashVector  );
 
       }
     else if ( !skip && strcmp((*av)[i], "--") == 0 )

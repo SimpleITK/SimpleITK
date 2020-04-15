@@ -73,7 +73,7 @@ std::vector<std::string> GetRegisteredImageIOs()
     if(io)
       {
 
-      out.push_back( io->GetNameOfClass() );
+      out.emplace_back(io->GetNameOfClass() );
 
       }
     }

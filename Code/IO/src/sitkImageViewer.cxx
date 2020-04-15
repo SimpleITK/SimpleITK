@@ -184,15 +184,15 @@ void ImageViewer::initializeDefaults()
 #else
 
   // linux and other systems
-  m_GlobalDefaultSearchPath.push_back( "./" );
+  m_GlobalDefaultSearchPath.emplace_back("./" );
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
     m_GlobalDefaultSearchPath.push_back( homedir + "/bin/" );
     }
 
-  m_GlobalDefaultSearchPath.push_back( "/opt/" );
-  m_GlobalDefaultSearchPath.push_back( "/usr/local/" );
+  m_GlobalDefaultSearchPath.emplace_back("/opt/" );
+  m_GlobalDefaultSearchPath.emplace_back("/usr/local/" );
 
 #endif
 
@@ -208,8 +208,8 @@ void ImageViewer::initializeDefaults()
   m_GlobalDefaultExecutableNames.push_back( "Fiji.app" );
 #else
   // Linux
-  m_GlobalDefaultExecutableNames.push_back( "Fiji.app/ImageJ-linux64" );
-  m_GlobalDefaultExecutableNames.push_back( "Fiji.app/ImageJ-linux32" );
+  m_GlobalDefaultExecutableNames.emplace_back("Fiji.app/ImageJ-linux64" );
+  m_GlobalDefaultExecutableNames.emplace_back("Fiji.app/ImageJ-linux32" );
 #endif
 
 #ifdef _WIN32

@@ -302,7 +302,7 @@ unsigned int ProcessObject::GetNumberOfThreads() const
 int ProcessObject::AddCommand(EventEnum event, Command &cmd)
 {
   // add to our list of event, command pairs
-  m_Commands.push_back(EventCommand(event,&cmd));
+  m_Commands.emplace_back(event,&cmd);
 
   // register ourselves with the command
   cmd.AddProcessObject(this);
