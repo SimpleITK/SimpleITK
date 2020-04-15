@@ -82,7 +82,7 @@ $(include ExecuteInternalSetITKFilterInputs.cxx.in)
   filter->ClearSeeds();
   for (unsigned int i = 0; i < m_SeedList.size(); ++i)
     {
-    typedef typename InputImageType::IndexType IndexType;
+    using IndexType = typename InputImageType::IndexType;
 
     IndexType idx = sitkSTLVectorToITK< IndexType  >( m_SeedList[i] );
     filter->AddSeed(idx);

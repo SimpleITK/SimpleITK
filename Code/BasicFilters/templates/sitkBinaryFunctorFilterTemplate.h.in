@@ -50,19 +50,19 @@ end)
 $(include ExecuteInternalMethod.h.in)
 
 $(include MemberFunctionDispatch.h.in)
-      typedef Image (Self::*MemberFunction1Type)( ${constant_type} constant, const Image& image2 );
+      using MemberFunction1Type = Image (Self::*)( ${constant_type} constant, const Image& image2 );
       template <class TImageType> Image ExecuteInternal ( ${constant_type} constant, const Image& image2 );
       friend struct detail::MemberFunctionAddressor<MemberFunction1Type>;
       std::unique_ptr<detail::MemberFunctionFactory<MemberFunction1Type> > m_MemberFactory1;
 
-      typedef Image (Self::*MemberFunction2Type)( const Image& image1, ${constant_type} constant );
+      using MemberFunction2Type = Image (Self::*)( const Image& image1, ${constant_type} constant );
       template <class TImageType> Image ExecuteInternal ( const Image& image1, ${constant_type} constant );
       friend struct detail::MemberFunctionAddressor<MemberFunction2Type>;
       std::unique_ptr<detail::MemberFunctionFactory<MemberFunction2Type> > m_MemberFactory2;
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
-$(include FunctionalAPI.h.in)
+$(include ProceduralAPI.h.in)
      SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
 $(if in_place then
   OUT=[[

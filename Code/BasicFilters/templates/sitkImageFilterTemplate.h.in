@@ -28,8 +28,7 @@ $(include DoNotEditWarning.h.in)
 namespace itk {
   namespace simple {
 
-$(include ClassDeclaration.h.in)
-$(include PublicDeclarations.h.in)
+$(include ClassDeclaration.h.in)$(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)
 $(include ClassNameAndPrint.h.in)
 
@@ -41,7 +40,7 @@ $(include MemberFunctionDispatch.h.in)
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 $(if (not no_procedure) or (no_procedure == 1) then
-OUT=[[$(include FunctionalAPI.h.in)]]
+OUT=[[$(include ProceduralAPI.h.in)]]
 end)
   }
 }
