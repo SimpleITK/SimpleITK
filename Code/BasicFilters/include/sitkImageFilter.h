@@ -33,7 +33,6 @@ namespace itk {
    * All SimpleITK filters which take one input image should inherit from this
    * class
    */
-  template < unsigned int N>
   class SITKBasicFilters0_EXPORT ImageFilter:
       public ProcessObject
   {

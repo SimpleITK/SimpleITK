@@ -37,7 +37,7 @@ $(if detaileddescription and (detaileddescription:len() >0) then OUT=[[${detaile
 \sa itk::simple::${name:gsub("ImageFilter$", "")} for the procedural interface
    */
     class SITKBasicFilters_EXPORT ${name}
-      : public ImageFilter<3>
+      : public ImageFilter
     {
     public:
       using Self = ${name};

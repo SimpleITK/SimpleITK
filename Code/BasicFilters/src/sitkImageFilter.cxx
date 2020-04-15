@@ -69,43 +69,26 @@ namespace
 
 //----------------------------------------------------------------------------
 
-//
-// Default constructor that initializes parameters
-//
-template< unsigned int N >
-ImageFilter< N >::ImageFilter () = default;
-//
-// Default destructor
-//
-template< unsigned int N >
-ImageFilter< N >::~ImageFilter () = default;
+ImageFilter::ImageFilter () = default;
+
+ImageFilter::~ImageFilter () = default;
 
 
 
-template< unsigned int N >
-void ImageFilter< N >::CheckImageMatchingDimension(const Image &image1, const Image& image2, const std::string &image2Name)
+void ImageFilter::CheckImageMatchingDimension(const Image &image1, const Image& image2, const std::string &image2Name)
 {
   return itk::simple::CheckImageMatchingDimension(image1, image2, image2Name, this->GetName());
 }
 
-template< unsigned int N >
-void ImageFilter< N >::CheckImageMatchingPixelType(const Image &image1, const Image& image2, const std::string &image2Name)
+void ImageFilter::CheckImageMatchingPixelType(const Image &image1, const Image& image2, const std::string &image2Name)
 {
   return itk::simple::CheckImageMatchingPixelType(image1, image2, image2Name, this->GetName());
 }
 
-template< unsigned int N >
-void ImageFilter< N >::CheckImageMatchingSize(const Image &image1, const Image& image2, const std::string &image2Name)
+void ImageFilter::CheckImageMatchingSize(const Image &image1, const Image& image2, const std::string &image2Name)
 {
   return itk::simple::CheckImageMatchingSize(image1, image2, image2Name, this->GetName());
 }
-
-template class ImageFilter<0>;
-template class ImageFilter<1>;
-template class ImageFilter<2>;
-template class ImageFilter<3>;
-template class ImageFilter<4>;
-template class ImageFilter<5>;
 
 } // end namespace simple
 } // end namespace itk

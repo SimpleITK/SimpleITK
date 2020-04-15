@@ -15,7 +15,7 @@ $(if true then
 OUT=OUT..[[ for the Doxygen on the original ITK class.]]
 end)
      */
-    class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
+    class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter]] else OUT=[[ImageFilter<1>]] end) {
     public:
       using Self = ${name};
 
