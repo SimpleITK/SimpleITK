@@ -58,15 +58,15 @@ namespace simple
 class SITKCommon_HIDDEN PimpleTransformBase
 {
 public:
-  virtual ~PimpleTransformBase( void ) {};
+  virtual ~PimpleTransformBase( ) {};
 
   // Get Access to the internal ITK transform class
-  virtual TransformBase * GetTransformBase( void ) = 0;
-  virtual const TransformBase * GetTransformBase( void ) const = 0;
+  virtual TransformBase * GetTransformBase( ) = 0;
+  virtual const TransformBase * GetTransformBase( ) const = 0;
 
   // general methods to get information about the internal class
-  virtual unsigned int GetInputDimension( void ) const = 0;
-  virtual unsigned int GetOutputDimension( void ) const = 0;
+  virtual unsigned int GetInputDimension( ) const = 0;
+  virtual unsigned int GetOutputDimension( ) const = 0;
 
   // Set the fixed parameter for the transform, converting from the
   // simpleITK std::vector to the ITK's array.
@@ -90,18 +90,18 @@ public:
     }
 
   // Get the fixed parameters form the transform
-  std::vector< double >  GetFixedParameters( void ) const
+  std::vector< double >  GetFixedParameters( ) const
     {
       const itk::TransformBase::ParametersType &p = this->GetTransformBase()->GetFixedParameters();
       return std::vector< double >( p.begin(), p.end() );
     }
 
-  unsigned int GetNumberOfFixedParameters( void ) const
+  unsigned int GetNumberOfFixedParameters( ) const
   {
     return this->GetTransformBase()->GetFixedParameters().GetSize();
   }
 
-  unsigned int GetNumberOfParameters( void ) const
+  unsigned int GetNumberOfParameters( ) const
   {
     return this->GetTransformBase()->GetNumberOfParameters();
   }
@@ -125,15 +125,15 @@ public:
       p.SetData( const_cast<double*>(&inParams[0]), numberOfParameters, false );
       this->GetTransformBase()->SetParameters( p );
     }
-  std::vector< double > GetParameters( void ) const
+  std::vector< double > GetParameters( ) const
     {
       const itk::TransformBase::ParametersType &p = this->GetTransformBase()->GetParameters();
       return std::vector< double >( p.begin(), p.end() );
     }
 
 
-  virtual PimpleTransformBase *ShallowCopy( void ) const = 0;
-  virtual PimpleTransformBase *DeepCopy( void ) const = 0;
+  virtual PimpleTransformBase *ShallowCopy( ) const = 0;
+  virtual PimpleTransformBase *DeepCopy( ) const = 0;
 
   virtual int GetReferenceCount( ) const = 0;
 
@@ -154,7 +154,7 @@ public:
     }
 
 
-  std::string ToString( void ) const
+  std::string ToString( ) const
     {
       std::ostringstream out;
       this->GetTransformBase()->Print ( out, 1 );
@@ -216,19 +216,19 @@ public:
       m_Transform = s.m_Transform;
     }
 
-  virtual TransformBase * GetTransformBase( void ) { return this->m_Transform.GetPointer(); }
-  virtual const TransformBase * GetTransformBase( void ) const { return this->m_Transform.GetPointer(); }
+  virtual TransformBase * GetTransformBase( ) { return this->m_Transform.GetPointer(); }
+  virtual const TransformBase * GetTransformBase( ) const { return this->m_Transform.GetPointer(); }
 
-  virtual unsigned int GetInputDimension( void ) const { return InputDimension; }
-  virtual unsigned int GetOutputDimension( void ) const { return OutputDimension; }
+  virtual unsigned int GetInputDimension( ) const { return InputDimension; }
+  virtual unsigned int GetOutputDimension( ) const { return OutputDimension; }
 
 
-  virtual PimpleTransformBase *ShallowCopy( void ) const
+  virtual PimpleTransformBase *ShallowCopy( ) const
     {
       return new Self( this->m_Transform.GetPointer() );
     }
 
-  virtual PimpleTransformBase *DeepCopy( void ) const
+  virtual PimpleTransformBase *DeepCopy( ) const
     {
       PimpleTransformBase *copy( new Self( this->m_Transform->Clone() ) );
       return copy;

@@ -72,7 +72,7 @@ CastImageFilter::Self& CastImageFilter::SetOutputPixelType( PixelIDValueEnum pix
   return *this;
 }
 
-PixelIDValueEnum CastImageFilter::GetOutputPixelType( void ) const
+PixelIDValueEnum CastImageFilter::GetOutputPixelType( ) const
 {
   return this->m_OutputPixelType;
 }

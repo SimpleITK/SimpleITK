@@ -117,7 +117,7 @@ template <typename TPixelIDTypeList,
           unsigned int VImageDimension,
           typename TAddressor>
 void MemberFunctionFactory<TMemberFunctionPointer>
-::RegisterMemberFunctions( void )
+::RegisterMemberFunctions( )
 {
   typedef MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension,TAddressor > InstantiaterType;
 

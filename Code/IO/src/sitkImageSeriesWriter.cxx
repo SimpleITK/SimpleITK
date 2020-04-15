@@ -111,7 +111,7 @@ namespace itk {
 
   std::string
   ImageSeriesWriter
-  ::GetImageIO(void) const
+  ::GetImageIO() const
   {
     return this->m_ImageIOName;
   }
@@ -146,7 +146,7 @@ namespace itk {
     return *this;
   }
 
-  bool ImageSeriesWriter::GetUseCompression( void ) const
+  bool ImageSeriesWriter::GetUseCompression( ) const
   {
     return this->m_UseCompression;
   }
@@ -159,7 +159,7 @@ namespace itk {
   }
 
   int
-  ImageSeriesWriter::GetCompressionLevel(void) const
+  ImageSeriesWriter::GetCompressionLevel() const
   {
     return m_CompressionLevel;
   }
@@ -172,7 +172,7 @@ namespace itk {
   }
 
   std::string
-  ImageSeriesWriter::GetCompressor(void)
+  ImageSeriesWriter::GetCompressor()
   {
     return m_Compressor;
   }

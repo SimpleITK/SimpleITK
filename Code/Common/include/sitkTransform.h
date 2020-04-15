@@ -88,7 +88,7 @@ public:
 
   /** \brief By default a 3-d identity transform is constructed
    */
-  Transform( void );
+  Transform( );
 
   /** \brief Construct a SimpleITK Transform from a pointer to an ITK
    * composite transform.
@@ -128,7 +128,7 @@ public:
    */
   Transform( Image &displacement, TransformEnum type = sitkDisplacementField );
 
-  virtual ~Transform( void );
+  virtual ~Transform( );
 
   /** \brief Copy constructor and assignment operator
    *
@@ -151,13 +151,13 @@ public:
    *
    * @{
    */
-  itk::TransformBase* GetITKBase( void );
-  const itk::TransformBase* GetITKBase( void ) const;
+  itk::TransformBase* GetITKBase( );
+  const itk::TransformBase* GetITKBase( ) const;
   /**@}*/
 
   /** Return the dimension of the Transform ( 2D or 3D )
    */
-  unsigned int GetDimension( void ) const;
+  unsigned int GetDimension( ) const;
 
   // todo get transform type
 
@@ -165,21 +165,21 @@ public:
    * @{
    */
   void SetParameters ( const std::vector<double>& parameters );
-  std::vector<double> GetParameters( void ) const;
+  std::vector<double> GetParameters( ) const;
   /**@}*/
 
   /** Return the number of optimizable parameters */
-  unsigned int GetNumberOfParameters( void ) const;
+  unsigned int GetNumberOfParameters( ) const;
 
   /** Set/Get Fixed Transform Parameter
    * @{
    */
   void SetFixedParameters ( const std::vector<double>& parameters );
-  std::vector<double> GetFixedParameters( void ) const;
+  std::vector<double> GetFixedParameters( ) const;
   /**@}*/
 
   /** Get the number of fixed parameters */
-  unsigned int GetNumberOfFixedParameters( void ) const;
+  unsigned int GetNumberOfFixedParameters( ) const;
 
   // Make composition
   SITK_RETURN_SELF_TYPE_HEADER AddTransform( Transform t );
@@ -243,7 +243,7 @@ public:
    */
   Transform GetInverse() const;
 
-  std::string ToString( void ) const;
+  std::string ToString( ) const;
 
 
   /** return user readable name for the SimpleITK transform */
@@ -256,7 +256,7 @@ public:
    * to the itk::Transform pointed to is only pointed to by this
    * object.
    */
-  void MakeUnique( void );
+  void MakeUnique( );
 
 protected:
 
@@ -278,7 +278,7 @@ private:
     itk::TransformBase *transform;
     Transform *that;
     template< typename TransformType >
-    void operator() ( void ) const
+    void operator() ( ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
         if (t)
@@ -306,7 +306,7 @@ private:
     typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
     template< typename TImageType >
-    TMemberFunctionPointer operator() ( void ) const
+    TMemberFunctionPointer operator() ( ) const
       {
         return &ObjectType::template InternalDisplacementInitialization< TImageType >;
       }

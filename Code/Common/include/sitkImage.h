@@ -80,7 +80,7 @@ namespace simple
     virtual ~Image( );
 
     /** \brief Default constructor, creates an image of size 0 */
-    Image( void );
+    Image( );
 
     // copy constructor
     Image( const Image &img );
@@ -168,8 +168,8 @@ namespace simple
      *
      * @{
      */
-    itk::DataObject* GetITKBase( void );
-    const itk::DataObject* GetITKBase( void ) const;
+    itk::DataObject* GetITKBase( );
+    const itk::DataObject* GetITKBase( ) const;
     /**@}*/
 
     /** Get the pixel type
@@ -178,11 +178,11 @@ namespace simple
      * manually changed, unless by assignment. The value may be -1 or
      * "Unknown".
      */
-    PixelIDValueEnum GetPixelID( void ) const;
-    PixelIDValueType GetPixelIDValue( void ) const;
+    PixelIDValueEnum GetPixelID( ) const;
+    PixelIDValueType GetPixelIDValue( ) const;
 
     /** Return the pixel type as a human readable string value. */
-    std::string GetPixelIDTypeAsString( void ) const;
+    std::string GetPixelIDTypeAsString( ) const;
 
     /** Get the number of physical dimensions.
      *
@@ -191,14 +191,14 @@ namespace simple
      * applicable to. This does not include the pixels' vector index
      * as a dimension.
      */
-    unsigned int GetDimension( void ) const;
+    unsigned int GetDimension( ) const;
 
     /** \brief Get the number of components for each pixel
      *
      * For scalar images this methods returns 1. For vector images the
      * number of components for each pixel is returned.
      */
-    unsigned int GetNumberOfComponentsPerPixel( void ) const;
+    unsigned int GetNumberOfComponentsPerPixel( ) const;
 
     /** \brief Get the number of pixels in the image
      *
@@ -208,12 +208,12 @@ namespace simple
      * component images.
      *
      */
-    uint64_t GetNumberOfPixels( void ) const;
+    uint64_t GetNumberOfPixels( ) const;
 
     /** Get/Set the Origin in physical space
      * @{
      */
-    std::vector< double > GetOrigin( void ) const;
+    std::vector< double > GetOrigin( ) const;
     void SetOrigin( const std::vector< double > &origin );
     /** @} */
 
@@ -223,7 +223,7 @@ namespace simple
      * length of the vector is equal to the dimension of the Image.
      * @{
      */
-    std::vector< double > GetSpacing( void ) const;
+    std::vector< double > GetSpacing( ) const;
     void SetSpacing( const std::vector< double > &spacing );
     /** @} */
 
@@ -253,17 +253,17 @@ namespace simple
     /** Get the number of pixels the Image is in each dimension as a
       * std::vector. The size of the vector is equal to the number of dimensions
       * for the image. */
-    std::vector< unsigned int > GetSize( void ) const;
+    std::vector< unsigned int > GetSize( ) const;
 
     /** Get the number of pixels the Image is in the first dimension */
-    unsigned int GetWidth( void ) const;
+    unsigned int GetWidth( ) const;
 
     /** Get the number of pixels the Image is in the second dimension */
-    unsigned int GetHeight( void ) const;
+    unsigned int GetHeight( ) const;
 
     /** Get the number of pixels the Image is in the third dimension
       * or 0 if the Image is only 2D */
-    unsigned int GetDepth( void ) const;
+    unsigned int GetDepth( ) const;
 
 
     /** \brief Copy common meta-data from an image to this one.
@@ -284,7 +284,7 @@ namespace simple
      * image's meta-data dictionary. Iterate through with these keys
      * to get the values.
      */
-    std::vector<std::string> GetMetaDataKeys( void ) const;
+    std::vector<std::string> GetMetaDataKeys( ) const;
 
     /** \brief Query the meta-data dictionary for the existence of a key.
      */
@@ -313,7 +313,7 @@ namespace simple
      */
     bool EraseMetaData( const std::string &key );
 
-    std::string ToString( void ) const;
+    std::string ToString( ) const;
 
     /** \brief Get the value of a pixel
      *
@@ -534,7 +534,7 @@ namespace simple
       typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
       template< typename TImageType >
-      TMemberFunctionPointer operator() ( void ) const
+      TMemberFunctionPointer operator() ( ) const
       {
         return &ObjectType::template AllocateInternal< TImageType >;
       }

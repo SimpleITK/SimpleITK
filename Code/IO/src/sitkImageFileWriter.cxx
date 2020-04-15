@@ -102,7 +102,7 @@ ImageFileWriter::SetUseCompression( bool UseCompression )
   return *this;
 }
 
-bool ImageFileWriter::GetUseCompression( void ) const
+bool ImageFileWriter::GetUseCompression( ) const
 {
   return this->m_UseCompression;
 }
@@ -115,7 +115,7 @@ ImageFileWriter::SetCompressionLevel(int CompressionLevel)
 }
 
 int
-ImageFileWriter::GetCompressionLevel(void) const
+ImageFileWriter::GetCompressionLevel() const
 {
   return m_CompressionLevel;
 }
@@ -128,7 +128,7 @@ ImageFileWriter::SetCompressor(const std::string &Compressor)
 }
 
 std::string
-ImageFileWriter::GetCompressor(void)
+ImageFileWriter::GetCompressor()
 {
   return m_Compressor;
 }
@@ -141,7 +141,7 @@ ImageFileWriter::SetKeepOriginalImageUID( bool KeepOriginalImageUID )
   return *this;
 }
 
-bool ImageFileWriter::GetKeepOriginalImageUID( void ) const
+bool ImageFileWriter::GetKeepOriginalImageUID( ) const
 {
   return this->m_KeepOriginalImageUID;
 }
@@ -185,7 +185,7 @@ ImageFileWriter
 
 std::string
 ImageFileWriter
-::GetImageIO(void) const
+::GetImageIO() const
 {
   return this->m_ImageIOName;
 }

@@ -34,7 +34,7 @@ struct MemberFunctionAddressor
   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
   template< typename TImageType >
-  TMemberFunctionPointer operator() ( void ) const
+  TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template ExecuteInternal< TImageType >;
     }
@@ -46,7 +46,7 @@ struct DualExecuteInternalAddressor
   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
   template< typename TImageType1, typename TImageType2 >
-  TMemberFunctionPointer operator() ( void ) const
+  TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template DualExecuteInternal< TImageType1, TImageType2 >;
     }
@@ -61,7 +61,7 @@ struct ExecuteInternalVectorImageAddressor
   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
   template< typename TImageType >
-  TMemberFunctionPointer operator() ( void ) const
+  TMemberFunctionPointer operator() ( ) const
   {
     return &ObjectType::template ExecuteInternalVectorImage< TImageType >;
   }
@@ -77,7 +77,7 @@ struct DualExecuteInternalVectorAddressor
   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
   template< typename TImageType1, typename TImageType2 >
-  TMemberFunctionPointer operator() ( void ) const
+  TMemberFunctionPointer operator() ( ) const
     {
       return &ObjectType::template DualExecuteInternalVector< TImageType1, TImageType2 >;
     }
@@ -92,7 +92,7 @@ struct ExecuteInternalLabelImageAddressor
   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
   template< typename TImageType >
-  TMemberFunctionPointer operator() ( void ) const
+  TMemberFunctionPointer operator() ( ) const
   {
     return &ObjectType::template ExecuteInternalLabelImage< TImageType >;
   }

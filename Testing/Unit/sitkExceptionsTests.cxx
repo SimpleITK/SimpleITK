@@ -26,7 +26,7 @@ class sitkExceptionsTest
 {
 public:
 
-  void ThrowsitkException( void )
+  void ThrowsitkException( )
   {
     sitkExceptionMacro( << DESCRIPTION );
   }

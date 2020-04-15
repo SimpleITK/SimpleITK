@@ -56,7 +56,7 @@ class SmartPointer;
        * @{
        */
       SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
-      PixelIDValueEnum GetOutputPixelType( void ) const;
+      PixelIDValueEnum GetOutputPixelType( ) const;
       /* @} */
 
       virtual Image Execute() = 0;
@@ -93,7 +93,7 @@ class SmartPointer;
        * @{
        */
       virtual SITK_RETURN_SELF_TYPE_HEADER SetImageIO(const std::string &imageio);
-      virtual std::string GetImageIO( void ) const;
+      virtual std::string GetImageIO( ) const;
       /* @} */
 
 
