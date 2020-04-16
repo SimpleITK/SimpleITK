@@ -230,7 +230,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
   std::string tag = inTag;
   std::string testName = ::testing::UnitTest::GetInstance()->current_test_info()->name();
 
-  if ( testCase == "" )
+  if ( testCase.empty() )
     {
     testCase = ::testing::UnitTest::GetInstance()->current_test_info()->test_case_name();
     }
@@ -243,7 +243,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     .append( "_" )
     .append(testName);
 
-  if ( tag != "" )
+  if ( !tag.empty() )
     {
     name.append("_").append ( tag );
     }

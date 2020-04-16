@@ -178,7 +178,7 @@ TDirectionType SITKCommon_HIDDEN  sitkSTLToITKDirection( const std::vector<doubl
 {
   TDirectionType itkDirection;
 
-  if ( direction.size() == 0 )
+  if ( direction.empty() )
     {
     itkDirection.SetIdentity();
     }

@@ -192,7 +192,7 @@ namespace itk
   static std::vector<std::string> ConvertCommand(std::string command, std::string app, std::string filename, std::string title="")
     {
 
-    if (title == "")
+    if (title.empty())
       {
       title = filename;
       }
@@ -213,7 +213,7 @@ namespace itk
         case '\'':
         case '\"':
           word.push_back(new_command[i]);
-          if (quoteStack.size())
+          if (!quoteStack.empty())
             {
             if (new_command[i] == quoteStack[quoteStack.size()-1])
               {
@@ -234,7 +234,7 @@ namespace itk
           break;
 
         case ' ':
-          if (quoteStack.size())
+          if (!quoteStack.empty())
             {
             // the space occurs inside a quote, so tack it onto the current word.
             word.push_back(new_command[i]);
@@ -297,7 +297,7 @@ namespace itk
 
   std::ostringstream tmp;
 
-  if ( name != "" )
+  if ( !name.empty() )
     {
     // remove whitespace
     name.erase(std::remove_if(name.begin(), name.end(), &::isspace), name.end());

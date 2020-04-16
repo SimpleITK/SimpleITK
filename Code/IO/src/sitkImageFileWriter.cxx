@@ -194,7 +194,7 @@ ImageFileWriter
 ::GetImageIOBase(const std::string &fileName)
 {
   itk::ImageIOBase::Pointer iobase;
-  if (this->m_ImageIOName == "")
+  if (this->m_ImageIOName.empty())
     {
     iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeEnum::WriteMode);
     }
@@ -233,7 +233,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
 
   itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
 
-  if (this->m_Compressor != "")
+  if (!this->m_Compressor.empty())
   {
   imageio->SetCompressor(this->m_Compressor);
   }

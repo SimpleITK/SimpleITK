@@ -694,7 +694,7 @@ std::vector<std::string> ConvertCommand( const std::string & command, const std:
   {
 
   std::string t;
-  if (title == "")
+  if (title.empty())
     {
     t = filename;
     }
@@ -719,7 +719,7 @@ std::vector<std::string> ConvertCommand( const std::string & command, const std:
       case '\'':
       case '\"':
         word.push_back(new_command[i]);
-        if (quoteStack.size())
+        if (!quoteStack.empty())
           {
           if (new_command[i] == quoteStack[quoteStack.size()-1])
             {
@@ -740,7 +740,7 @@ std::vector<std::string> ConvertCommand( const std::string & command, const std:
         break;
 
       case ' ':
-        if (quoteStack.size())
+        if (!quoteStack.empty())
           {
           // the space occurs inside a quote, so tack it onto the current word.
           word.push_back(new_command[i]);
@@ -791,7 +791,7 @@ std::string FormatFileName ( const std::string & TempDirectory, const std::strin
 
   std::ostringstream tmp;
 
-  if ( name != "" )
+  if ( !name.empty() )
     {
     std::string n = name;
     // remove whitespace

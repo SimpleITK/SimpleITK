@@ -46,7 +46,7 @@ void PrintRegisteredImageIOs(std::ostream &out)
 
       const itk::ImageIOBase::ArrayOfExtensionsType &ioExtensions = io->GetSupportedReadExtensions();
       // print the extensions if they are listed
-      if ( ioExtensions.size() )
+      if ( !ioExtensions.empty() )
         {
         out << " (";
         for (itk::ImageIOBase::ArrayOfExtensionsType::const_iterator j = ioExtensions.begin(); j != ioExtensions.end(); ++j)

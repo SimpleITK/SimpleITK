@@ -500,7 +500,7 @@ Image ImportImageFilter::ExecuteInternal( )
   // Direction, if m_Direction is not set, use ITK's default which is
   // an identity.
   //
-  if (this->m_Direction.size() != 0 )
+  if (!this->m_Direction.empty() )
     {
     image->SetDirection(  sitkSTLToITKDirection<typename ImageType::DirectionType>( this->m_Direction ) );
     }

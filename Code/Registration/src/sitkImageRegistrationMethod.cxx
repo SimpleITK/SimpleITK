@@ -921,7 +921,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   registration->SetOptimizer( optimizer );
 
-  if ( m_OptimizerWeights.size( ) )
+  if ( !m_OptimizerWeights.empty() )
     {
     itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType weights(m_OptimizerWeights.size());
     std::copy( m_OptimizerWeights.begin(), m_OptimizerWeights.end(), weights.begin() );
@@ -936,7 +936,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     scalesEstimator->SetTransformForward( true );
     optimizer->SetScalesEstimator( scalesEstimator );
     }
-  else if ( m_OptimizerScales.size() )
+  else if ( !m_OptimizerScales.empty() )
     {
     itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType scales(m_OptimizerScales.size());
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
@@ -1125,7 +1125,7 @@ ImageRegistrationMethod::SetupMetric(
   metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
   metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );
 
-  if ( this->m_VirtualDomainSize.size() != 0 )
+  if ( !this->m_VirtualDomainSize.empty() )
     {
     typename FixedImageType::SpacingType itkSpacing = sitkSTLVectorToITK<typename FixedImageType::SpacingType>(this->m_VirtualDomainSpacing);
     typename FixedImageType::PointType itkOrigin = sitkSTLVectorToITK<typename FixedImageType::PointType>(this->m_VirtualDomainOrigin);
