@@ -39,7 +39,7 @@ public:
   typedef VersorTransform Self;
   typedef Transform       Superclass;
 
-  ~VersorTransform();
+  ~VersorTransform() override;
 
   // construct identity
   VersorTransform();
@@ -75,7 +75,7 @@ public:
 
 protected:
 
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

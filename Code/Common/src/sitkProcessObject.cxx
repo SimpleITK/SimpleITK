@@ -68,7 +68,7 @@ public:
     }
 
   /**  Invoke the member function. */
-  virtual void Execute(Object *, const EventObject & ) override
+  void Execute(Object *, const EventObject & ) override
   {
     if (m_That)
       {
@@ -77,7 +77,7 @@ public:
   }
 
   /**  Invoke the member function with a const object */
-  virtual void Execute(const Object *, const EventObject & ) override
+  void Execute(const Object *, const EventObject & ) override
   {
     if ( m_That )
       {
@@ -91,7 +91,7 @@ public:
 protected:
   itk::simple::Command *                    m_That;
   SimpleAdaptorCommand():m_That(0) {}
-  virtual ~SimpleAdaptorCommand() = default;
+  ~SimpleAdaptorCommand() override = default;
 };
 
 } // end anonymous namespace

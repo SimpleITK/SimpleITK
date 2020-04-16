@@ -113,7 +113,7 @@ class ProgressUpdate
 public:
   ProgressUpdate(itk::simple::ProcessObject &po);
 
-  virtual void Execute( );
+  void Execute( ) override;
 
   float m_Progress;
 };
@@ -127,7 +127,7 @@ class AbortAtCommand
 public:
   AbortAtCommand(itk::simple::ProcessObject &po, float abortAt);
 
-  virtual void Execute( );
+  void Execute( ) override;
 
   float m_AbortAt;
 };
@@ -141,7 +141,7 @@ class CountCommand
 public:
   CountCommand(itk::simple::ProcessObject &po);
 
-  virtual void Execute( );
+  void Execute( ) override;
 
   int m_Count;
 };

@@ -94,11 +94,11 @@ namespace simple
     typedef ImageRegistrationMethod Self;
     typedef ProcessObject Superclass;
 
-    virtual ~ImageRegistrationMethod();
+    ~ImageRegistrationMethod() override;
 
     ImageRegistrationMethod();
 
-    std::string GetName() const { return std::string("ImageRegistrationMethod"); }
+    std::string GetName() const override { return std::string("ImageRegistrationMethod"); }
 
     /** \brief Print the information about the object to a string.
      *
@@ -106,7 +106,7 @@ namespace simple
      * callback ), the ITK Optimizer and Transform objects will
      * be printed.
      */
-    std::string ToString() const;
+    std::string ToString() const override;
 
     /** \brief Set and get the interpolator to use.
      *
@@ -662,10 +662,10 @@ namespace simple
       CreateTransformParametersAdaptor(
         TRegistrationMethod* method);
 
-    virtual void PreUpdate( itk::ProcessObject *p );
-    virtual void OnActiveProcessDelete( ) noexcept;
-    virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
-    virtual void RemoveITKObserver( EventCommand &e );
+    void PreUpdate( itk::ProcessObject *p ) override;
+    void OnActiveProcessDelete( ) noexcept override;
+    unsigned long AddITKObserver(const itk::EventObject &, itk::Command *) override;
+    void RemoveITKObserver( EventCommand &e ) override;
 
   private:
 

@@ -39,7 +39,7 @@ public:
 typedef Euler3DTransform Self;
 typedef Transform        Superclass;
 
-virtual ~Euler3DTransform();
+~Euler3DTransform() override;
 
 // construct identity
 Euler3DTransform();
@@ -57,7 +57,7 @@ explicit Euler3DTransform( const Transform & );
 Euler3DTransform &operator=( const Euler3DTransform & );
 
 /** Name of this class */
-std::string GetName() const { return std::string ("Euler3DTransform"); }
+std::string GetName() const override { return std::string ("Euler3DTransform"); }
 
 /** fixed parameter */
 SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
@@ -85,7 +85,7 @@ SITK_RETURN_SELF_TYPE_HEADER ComputeZYXOff () {return this->SetComputeZYX(false)
 
 protected:
 
-virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

@@ -62,7 +62,7 @@ Runtime information support.
 public ";
 
 %javamethodmodifiers  itk::HashImageFilter::MakeOutput "/**
-virtual DataObjectPointer itk::HashImageFilter< TImageType >::MakeOutput(DataObjectPointerArraySizeType idx) ITK_OVERRIDE
+virtual DataObjectPointer itk::HashImageFilter< TImageType >::MakeOutput(DataObjectPointerArraySizeType idx) override
 */
 public ";
 

@@ -41,7 +41,7 @@ public:
     : m_Process(po)
     {}
 
-  virtual void Execute( )
+  void Execute( ) override
     {
       // stash the stream state
       std::ios  state(NULL);

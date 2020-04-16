@@ -40,7 +40,7 @@ public:
   typedef DisplacementFieldTransform Self;
   typedef Transform                  Superclass;
 
-  virtual ~DisplacementFieldTransform();
+  ~DisplacementFieldTransform() override;
 
   explicit DisplacementFieldTransform( unsigned int dimensions );
 
@@ -63,7 +63,7 @@ public:
   DisplacementFieldTransform &operator=( const DisplacementFieldTransform & );
 
   /** Name of this class */
-  std::string GetName() const { return std::string ("DisplacementFieldTransform"); }
+  std::string GetName() const override { return std::string ("DisplacementFieldTransform"); }
 
   /** parameters */
 
@@ -108,7 +108,7 @@ public:
 
 protected:
 
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

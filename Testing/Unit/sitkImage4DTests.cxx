@@ -52,7 +52,7 @@ class Image4D : public ::testing::Test {
 public:
   typedef std::unique_ptr<itk::simple::Image> sitkAutoImagePointer;
 
-  virtual void SetUp() {
+  void SetUp() override {
     itk::ImageBase<4>::IndexType index;
     itk::ImageBase<4>::SizeType size;
     itk::ImageBase<4>::RegionType region;

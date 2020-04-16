@@ -62,7 +62,7 @@ public:
                    const std::string & desc) noexcept;
 
   /** Virtual destructor needed for subclasses. Has to have empty noexcept. */
-  virtual ~GenericException() noexcept;
+  ~GenericException() noexcept override;
 
   /** Assignment operator. */
   GenericException & operator=(const GenericException & orig);
@@ -74,7 +74,7 @@ public:
   /** Return a description of the error */
   std::string ToString() const;
 
-  const char * what() const noexcept;
+  const char * what() const noexcept override;
 
   virtual const char * GetNameOfClass() const;
 

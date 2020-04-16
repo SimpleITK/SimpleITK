@@ -41,7 +41,7 @@ public:
   typedef ScaleVersor3DTransform Self;
   typedef Transform              Superclass;
 
-  virtual ~ScaleVersor3DTransform();
+  ~ScaleVersor3DTransform() override;
 
 // construct identity
   ScaleVersor3DTransform();
@@ -63,7 +63,7 @@ public:
   ScaleVersor3DTransform &operator=( const ScaleVersor3DTransform & );
 
   /** Name of this class */
-  std::string GetName() const { return std::string ("ScaleVersor3DTransform"); }
+  std::string GetName() const override { return std::string ("ScaleVersor3DTransform"); }
 
 /** fixed parameter */
   SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
@@ -87,7 +87,7 @@ public:
 
 protected:
 
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

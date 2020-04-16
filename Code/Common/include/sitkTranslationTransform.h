@@ -39,7 +39,7 @@ public:
 typedef TranslationTransform Self;
 typedef Transform            Superclass;
 
-virtual ~TranslationTransform();
+~TranslationTransform() override;
 
 explicit TranslationTransform(unsigned int dimensions,
                               const std::vector<double> &offset = std::vector<double>(3,0.0) );
@@ -55,7 +55,7 @@ std::vector<double> GetOffset( ) const;
 
 protected:
 
-virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

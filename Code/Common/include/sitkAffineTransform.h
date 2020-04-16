@@ -39,7 +39,7 @@ public:
   typedef AffineTransform Self;
   typedef Transform       Superclass;
 
-  virtual ~AffineTransform();
+  ~AffineTransform() override;
 
   explicit AffineTransform(unsigned int dimensions);
 
@@ -55,7 +55,7 @@ public:
   AffineTransform &operator=( const AffineTransform & );
 
   /** Name of this class */
-  std::string GetName() const { return std::string ("AffineTransform"); }
+  std::string GetName() const override { return std::string ("AffineTransform"); }
 
   /** parameters */
   std::vector<double> GetTranslation( ) const;
@@ -80,7 +80,7 @@ public:
 
 protected:
 
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

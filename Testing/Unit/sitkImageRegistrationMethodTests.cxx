@@ -35,7 +35,7 @@ public:
   std::vector<double> scales;
   std::string toString;
 
-  virtual void Execute( )
+  void Execute( ) override
     {
       // use sitk's output operator for std::vector etc..
       using itk::simple::operator<<;
@@ -85,7 +85,7 @@ public:
     :m_tx(tx), m_Method(m)
     {}
 
-  virtual void Execute( )
+  void Execute( ) override
     {
       // use sitk's output operator for std::vector etc..
       using itk::simple::operator<<;
@@ -183,7 +183,7 @@ public:
     }
 
 protected:
-  virtual void SetUp()
+  void SetUp() override
   {
     fixedBlobs = MakeDualGaussianBlobs(v2(64,64), v2(192,192), std::vector<unsigned int>(2,256));
     movingBlobs = MakeDualGaussianBlobs(v2(54,74), v2(192,192), std::vector<unsigned int>(2,256));

@@ -50,7 +50,7 @@ Versorrepresenting rotation.
       typedef CenteredVersorTransformInitializerFilter Self;
 
       /** Destructor */
-      virtual ~CenteredVersorTransformInitializerFilter();
+      ~CenteredVersorTransformInitializerFilter() override;
 
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
@@ -74,10 +74,10 @@ Versorrepresenting rotation.
        */
         bool GetComputeRotation() const { return this->m_ComputeRotation; }
       /** Name of this class */
-      std::string GetName() const { return std::string ("CenteredVersorTransformInitializerFilter"); }
+      std::string GetName() const override { return std::string ("CenteredVersorTransformInitializerFilter"); }
 
       /** Print ourselves out */
-      std::string ToString() const;
+      std::string ToString() const override;
 
 
       /** Execute the filter on the input image */

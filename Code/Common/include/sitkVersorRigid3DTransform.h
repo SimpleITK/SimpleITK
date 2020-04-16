@@ -40,7 +40,7 @@ public:
   typedef VersorRigid3DTransform Self;
   typedef Transform              Superclass;
 
-  virtual ~VersorRigid3DTransform();
+  ~VersorRigid3DTransform() override;
 
   // construct identity
   VersorRigid3DTransform();
@@ -79,7 +79,7 @@ public:
 
 protected:
 
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

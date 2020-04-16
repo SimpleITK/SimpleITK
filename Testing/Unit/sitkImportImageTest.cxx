@@ -23,7 +23,7 @@
 class Import
   : public ::testing::Test {
 public:
-  virtual void SetUp() {
+  void SetUp() override {
     spacing1 = std::vector<double>( 3, 1.0 );
     spacing2.push_back( 1.1 );
     spacing2.push_back( 1.2 );
