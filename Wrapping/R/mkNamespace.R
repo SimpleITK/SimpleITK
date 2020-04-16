@@ -66,11 +66,8 @@ manualexclusions <- c("DoubleDoubleMap", "RCommand", "VectorBool", "VectorDouble
                       "VectorInt16", "VectorInt32", "VectorInt64",
                       "VectorInt8", "VectorOfImage", "VectorString",
                       "VectorUInt16", "VectorUInt32", "VectorUInt64",
-                      "VectorUInt8", "VectorUIntList", "ImageFilter_0",
-                      "ImageFilter_1", "ImageFilter_2", "ImageFilter_3",
-                      "ImageFilter_4", "ImageFilter_5", "ImageFilter_6",
-                      "ImageFilter_7", "ImageFilter_8", "ImageFilter_9",
-                      "ProcessObject", "ImageReaderBase")
+                      "VectorUInt8", "VectorUIntList", "ProcessObject",
+                      "ImageFilter", "ImageReaderBase")
 
 
 newNAMESPACE <- function(oldnamespace, targetnamespace) {
