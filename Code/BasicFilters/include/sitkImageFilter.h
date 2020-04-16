@@ -57,7 +57,7 @@ namespace itk {
       /**
        * Default Destructor
        */
-      ~ImageFilter() override = 0;
+      virtual ~ImageFilter() = 0;
 
     protected:
 
