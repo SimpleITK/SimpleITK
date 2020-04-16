@@ -25,9 +25,7 @@ namespace itk
 namespace simple
 {
 
-TranslationTransform::~TranslationTransform()
-{
-}
+TranslationTransform::~TranslationTransform() = default;
 
 TranslationTransform::TranslationTransform(unsigned int dimensions,
                                            const std::vector<double> &offset)

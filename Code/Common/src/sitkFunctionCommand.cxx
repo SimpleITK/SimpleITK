@@ -23,9 +23,7 @@ namespace itk
 namespace simple
 {
 
-FunctionCommand::~FunctionCommand( )
-{
-}
+FunctionCommand::~FunctionCommand( ) = default;
 
 FunctionCommand::FunctionCommand( )
 {

@@ -25,9 +25,7 @@ namespace itk
 namespace simple
 {
 
-VersorRigid3DTransform::~VersorRigid3DTransform()
-{
-}
+VersorRigid3DTransform::~VersorRigid3DTransform() = default;
 
 // construct identity
 VersorRigid3DTransform::VersorRigid3DTransform()

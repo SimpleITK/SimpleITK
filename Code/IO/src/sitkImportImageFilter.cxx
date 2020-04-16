@@ -207,9 +207,7 @@ Image ImportAsDouble(
     return import.Execute();
 }
 
-ImportImageFilter::~ImportImageFilter()
-{
-}
+ImportImageFilter::~ImportImageFilter() = default;
 
 ImportImageFilter::ImportImageFilter()
 {

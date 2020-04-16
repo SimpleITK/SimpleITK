@@ -96,9 +96,7 @@ ImageRegistrationMethod::ImageRegistrationMethod()
 }
 
 
-ImageRegistrationMethod::~ImageRegistrationMethod()
-{
-}
+ImageRegistrationMethod::~ImageRegistrationMethod() = default;
 
 std::string  ImageRegistrationMethod::ToString() const
 {

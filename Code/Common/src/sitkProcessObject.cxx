@@ -91,7 +91,7 @@ public:
 protected:
   itk::simple::Command *                    m_That;
   SimpleAdaptorCommand():m_That(0) {}
-  virtual ~SimpleAdaptorCommand() {}
+  virtual ~SimpleAdaptorCommand() = default;
 };
 
 } // end anonymous namespace

@@ -101,9 +101,7 @@ void SetCoefficientImages(TBSplineTransform* bspline, const std::vector<Image> &
 }
 
 
-BSplineTransform::~BSplineTransform()
-{
-}
+BSplineTransform::~BSplineTransform() = default;
 
 // construct identity
 BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned int order)

@@ -25,9 +25,7 @@ namespace itk
 namespace simple
 {
 
-Similarity2DTransform::~Similarity2DTransform()
-{
-}
+Similarity2DTransform::~Similarity2DTransform() = default;
 
 // construct identity
 Similarity2DTransform::Similarity2DTransform()

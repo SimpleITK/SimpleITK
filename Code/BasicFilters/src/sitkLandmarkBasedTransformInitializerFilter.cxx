@@ -59,10 +59,7 @@ LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter
 //
 // Destructor
 //
-LandmarkBasedTransformInitializerFilter::~LandmarkBasedTransformInitializerFilter ()
-{
-
-}
+LandmarkBasedTransformInitializerFilter::~LandmarkBasedTransformInitializerFilter () = default;
 
 
 //

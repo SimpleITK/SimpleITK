@@ -55,10 +55,7 @@ CenteredTransformInitializerFilter::CenteredTransformInitializerFilter ()
 //
 // Destructor
 //
-CenteredTransformInitializerFilter::~CenteredTransformInitializerFilter ()
-{
-
-}
+CenteredTransformInitializerFilter::~CenteredTransformInitializerFilter () = default;
 
 //
 // ToString

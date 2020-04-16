@@ -55,10 +55,7 @@ CenteredVersorTransformInitializerFilter::CenteredVersorTransformInitializerFilt
 //
 // Destructor
 //
-CenteredVersorTransformInitializerFilter::~CenteredVersorTransformInitializerFilter ()
-{
-
-}
+CenteredVersorTransformInitializerFilter::~CenteredVersorTransformInitializerFilter () = default;
 
 
 //

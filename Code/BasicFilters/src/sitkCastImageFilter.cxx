@@ -27,9 +27,7 @@ namespace simple
 //----------------------------------------------------------------------------
 
 
-CastImageFilter::~CastImageFilter()
-{
-}
+CastImageFilter::~CastImageFilter() = default;
 
 //
 // Default constructor that initializes parameters

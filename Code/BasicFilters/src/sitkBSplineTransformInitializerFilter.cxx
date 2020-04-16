@@ -58,10 +58,7 @@ BSplineTransformInitializerFilter::BSplineTransformInitializerFilter ()
 //
 // Destructor
 //
-BSplineTransformInitializerFilter::~BSplineTransformInitializerFilter ()
-{
-
-}
+BSplineTransformInitializerFilter::~BSplineTransformInitializerFilter () = default;
 
 
 //

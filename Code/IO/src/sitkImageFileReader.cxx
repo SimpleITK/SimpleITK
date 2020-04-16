@@ -75,8 +75,7 @@ namespace itk {
 
 
   ImageFileReader::~ImageFileReader()
-  {
-  }
+  = default;
 
   ImageFileReader::ImageFileReader() :
     m_PixelType(sitkUnknown),

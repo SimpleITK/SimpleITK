@@ -134,9 +134,7 @@ void InternalSetInterpolator( TDisplacementFieldTransform *itkDisplacementTx, In
 
 }
 
-DisplacementFieldTransform::~DisplacementFieldTransform()
-{
-}
+DisplacementFieldTransform::~DisplacementFieldTransform() = default;
 
 // construct identity
 DisplacementFieldTransform::DisplacementFieldTransform(unsigned int dimensions)
