@@ -37,8 +37,8 @@ class SITKCommon_EXPORT VersorRigid3DTransform
   : public Transform
 {
 public:
-  typedef VersorRigid3DTransform Self;
-  typedef Transform              Superclass;
+  using Self = VersorRigid3DTransform;
+  using Superclass = Transform;
 
   virtual ~VersorRigid3DTransform();
 

@@ -55,8 +55,8 @@ class SimpleAdaptorCommand
 {
 public:
 
-  typedef SimpleAdaptorCommand Self;
-  typedef SmartPointer< Self > Pointer;
+  using Self = SimpleAdaptorCommand;
+  using Pointer = SmartPointer< Self >;
 
   itkNewMacro(Self);
 

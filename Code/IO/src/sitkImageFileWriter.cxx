@@ -224,7 +224,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
   typename InputImageType::ConstPointer image =
     dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
 
-  typedef itk::ImageFileWriter<InputImageType> Writer;
+  using Writer = itk::ImageFileWriter<InputImageType>;
   typename Writer::Pointer writer = Writer::New();
   writer->SetUseCompression( this->m_UseCompression );
   writer->SetCompressionLevel( this->m_CompressionLevel );

@@ -30,12 +30,12 @@ public:
   void CheckImageHashMD5( const std::string &fname, const std::string &expectedHash )
   {
 
-    typedef itk::ImageFileReader<itk::Image<TPixelType, IDimension > > ReaderType;
+    using ReaderType = itk::ImageFileReader<itk::Image<TPixelType, IDimension > >;
     typename ReaderType::Pointer reader = ReaderType::New();
     reader->SetFileName( dataFinder.GetFile ( fname ) );
     reader->Update();
 
-    typedef itk::HashImageFilter< itk::Image<TPixelType, IDimension> > HasherType;
+    using HasherType = itk::HashImageFilter< itk::Image<TPixelType, IDimension> >;
     typename HasherType::Pointer  hasher = HasherType::New();
     hasher->SetHashFunction( HasherType::MD5 );
     hasher->SetInput( reader->GetOutput() );
@@ -49,12 +49,12 @@ public:
   void CheckImageHashSHA1( const std::string &fname, const std::string &expectedHash )
   {
 
-    typedef itk::ImageFileReader<itk::Image<TPixelType, IDimension > > ReaderType;
+    using ReaderType = itk::ImageFileReader<itk::Image<TPixelType, IDimension > >;
     typename ReaderType::Pointer reader = ReaderType::New();
     reader->SetFileName( dataFinder.GetFile ( fname ) );
     reader->Update();
 
-    typedef itk::HashImageFilter< itk::Image<TPixelType, IDimension> > HasherType;
+    using HasherType = itk::HashImageFilter< itk::Image<TPixelType, IDimension> >;
     typename HasherType::Pointer  hasher = HasherType::New();
     hasher->SetHashFunction( HasherType::SHA1 );
     hasher->SetInput( reader->GetOutput() );
@@ -67,29 +67,29 @@ public:
 
 TEST_F(HashImageFilterTest, InstantiateTest) {
 
-  typedef itk::HashImageFilter< itk::Image< unsigned char, 1> > UCHAR1HasherType;
+  using UCHAR1HasherType = itk::HashImageFilter< itk::Image< unsigned char, 1> >;
   EXPECT_TRUE( UCHAR1HasherType::New().IsNotNull() );
 
-  typedef itk::HashImageFilter< itk::Image< unsigned char, 2> > UCHAR2HasherType;
+  using UCHAR2HasherType = itk::HashImageFilter< itk::Image< unsigned char, 2> >;
   EXPECT_TRUE( UCHAR2HasherType::New().IsNotNull() );
 
-  typedef itk::HashImageFilter< itk::Image< unsigned char, 3> > UCHAR3HasherType;
+  using UCHAR3HasherType = itk::HashImageFilter< itk::Image< unsigned char, 3> >;
   EXPECT_TRUE( UCHAR3HasherType::New().IsNotNull() );
 
-  typedef itk::HashImageFilter< itk::Image< unsigned int, 3> > UINT23HasherType;
+  using UINT23HasherType = itk::HashImageFilter< itk::Image< unsigned int, 3> >;
   EXPECT_TRUE( UINT23HasherType::New().IsNotNull() );
 
-  typedef itk::HashImageFilter< itk::Image<int, 3> > INT23HasherType;
+  using INT23HasherType = itk::HashImageFilter< itk::Image<int, 3> >;
   EXPECT_TRUE( INT23HasherType::New().IsNotNull() );
 
-  typedef itk::HashImageFilter< itk::Image<float, 3> > FLOATHasherType;
+  using FLOATHasherType = itk::HashImageFilter< itk::Image<float, 3> >;
   EXPECT_TRUE( FLOATHasherType::New().IsNotNull() );
 
-  typedef itk::HashImageFilter< itk::Image<double, 3> > DOUBLEHasherType;
+  using DOUBLEHasherType = itk::HashImageFilter< itk::Image<double, 3> >;
   EXPECT_TRUE( DOUBLEHasherType::New().IsNotNull() );
 
 #ifdef SITK_4D_IMAGES
-  typedef itk::HashImageFilter< itk::Image<double, 4> > DOUBLE4DHasherType;
+  using DOUBLE4DHasherType = itk::HashImageFilter< itk::Image<double, 4> >;
   EXPECT_TRUE( DOUBLE4DHasherType::New().IsNotNull() );
 #endif
 };
@@ -130,14 +130,14 @@ TEST_F(HashImageFilterTest, VectorImages ) {
 
   // test image of vectors
   {
-  typedef itk::Image<itk::Vector<float, 1>, 3 > VectorImageType;
+  using VectorImageType = itk::Image<itk::Vector<float, 1>, 3 >;
 
-  typedef itk::ImageFileReader<VectorImageType > ReaderType;
+  using ReaderType = itk::ImageFileReader<VectorImageType >;
   ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   reader->Update();
 
-  typedef itk::HashImageFilter< VectorImageType > HasherType;
+  using HasherType = itk::HashImageFilter< VectorImageType >;
   HasherType::Pointer  hasher = HasherType::New();
   hasher->SetHashFunction( HasherType::MD5 );
   hasher->SetInput( reader->GetOutput() );
@@ -148,14 +148,14 @@ TEST_F(HashImageFilterTest, VectorImages ) {
 
   // test vector image
   {
-  typedef itk::VectorImage<float, 3> VectorImageType;
+  using VectorImageType = itk::VectorImage<float, 3>;
 
-  typedef itk::ImageFileReader<VectorImageType > ReaderType;
+  using ReaderType = itk::ImageFileReader<VectorImageType >;
   ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   reader->Update();
 
-  typedef itk::HashImageFilter< VectorImageType > HasherType;
+  using HasherType = itk::HashImageFilter< VectorImageType >;
   HasherType::Pointer  hasher = HasherType::New();
   hasher->SetHashFunction( HasherType::MD5 );
   hasher->SetInput( reader->GetOutput() );
@@ -182,7 +182,7 @@ TEST_F(HashImageFilterTest, LabelMap ) {
 
 TEST_F(HashImageFilterTest, Coverage ) {
 
- typedef itk::HashImageFilter< itk::Image< unsigned char, 2> > UCHAR2HasherType;
+ using UCHAR2HasherType = itk::HashImageFilter< itk::Image< unsigned char, 2> >;
  UCHAR2HasherType::Pointer hasher = UCHAR2HasherType::New();
 
  // PrintSelf

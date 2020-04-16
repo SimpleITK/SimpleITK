@@ -29,7 +29,7 @@ namespace itk
 namespace simple
 {
 
-typedef int PixelIDValueType;
+using PixelIDValueType = int;
 
 template < typename TPixelID >
 struct PixelIDToPixelIDValue

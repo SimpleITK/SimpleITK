@@ -109,7 +109,7 @@ template <class TImageType>
 Transform CenteredVersorTransformInitializerFilter::ExecuteInternal ( const Image * inFixedImage, const Image * inMovingImage, const Transform * inTransform )
 {
 
-  typedef itk::CenteredVersorTransformInitializer< TImageType, TImageType> FilterType;
+  using FilterType = itk::CenteredVersorTransformInitializer< TImageType, TImageType>;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 

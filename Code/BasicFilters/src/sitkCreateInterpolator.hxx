@@ -52,11 +52,11 @@ template< typename TImageType >
 typename itk::InterpolateImageFunction< TImageType, double >::Pointer
 CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
 {
-  typedef typename itk::InterpolateImageFunction< TImageType, double >::Pointer RType;
-  typedef typename itk::ZeroFluxNeumannBoundaryCondition<TImageType,TImageType> BoundaryCondition;
-  //typedef typename itk::ConstantBoundaryCondition<TImageType> BoundaryCondition;
+  using RType = typename itk::InterpolateImageFunction< TImageType, double >::Pointer;
+  using BoundaryCondition = typename itk::ZeroFluxNeumannBoundaryCondition<TImageType,TImageType>;
+  //using BoundaryCondition = typename itk::ConstantBoundaryCondition<TImageType>;
 
-  typedef typename TImageType::SpacingType SpacingType;
+  using SpacingType = typename TImageType::SpacingType;
 
   static const unsigned int WindowingRadius = 5;
 
@@ -66,22 +66,22 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
     {
     case sitkNearestNeighbor:
     {
-      typedef itk::NearestNeighborInterpolateImageFunction<TImageType, double> InterpolatorType;
+      using InterpolatorType = itk::NearestNeighborInterpolateImageFunction<TImageType, double>;
       return RType( InterpolatorType::New() );
     }
     case sitkLinear:
     {
-      typedef itk::LinearInterpolateImageFunction<TImageType, double> InterpolatorType;
+      using InterpolatorType = itk::LinearInterpolateImageFunction<TImageType, double>;
       return RType( InterpolatorType::New() );
     }
     case sitkBSpline:
     {
-      typedef itk::BSplineInterpolateImageFunction<TImageType, double> InterpolatorType;
+      using InterpolatorType = itk::BSplineInterpolateImageFunction<TImageType, double>;
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     case sitkGaussian:
     {
-    typedef itk::GaussianInterpolateImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = itk::GaussianInterpolateImageFunction<TImageType, double>;
 
     typename InterpolatorType::ArrayType sigma;
 
@@ -96,7 +96,7 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
     }
     case sitkLabelGaussian:
     {
-    typedef itk::LabelImageGaussianInterpolateImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = itk::LabelImageGaussianInterpolateImageFunction<TImageType, double>;
 
     typename InterpolatorType::ArrayType sigma;
 
@@ -112,44 +112,44 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
     case sitkHammingWindowedSinc:
     {
 
-      typedef typename itk::Function::HammingWindowFunction<WindowingRadius, double, double > WindowFunction;
-      typedef itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition> InterpolatorType;
+      using WindowFunction = typename itk::Function::HammingWindowFunction<WindowingRadius, double, double >;
+      using InterpolatorType = itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition>;
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     case sitkCosineWindowedSinc:
     {
-      typedef typename itk::Function::CosineWindowFunction<WindowingRadius, double, double > WindowFunction;
-      typedef itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition> InterpolatorType;
+      using WindowFunction = typename itk::Function::CosineWindowFunction<WindowingRadius, double, double >;
+      using InterpolatorType = itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition>;
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     case sitkWelchWindowedSinc:
     {
-      typedef typename itk::Function::WelchWindowFunction<WindowingRadius, double, double > WindowFunction;
-      typedef itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition> InterpolatorType;
+      using WindowFunction = typename itk::Function::WelchWindowFunction<WindowingRadius, double, double >;
+      using InterpolatorType = itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition>;
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     case sitkLanczosWindowedSinc:
     {
-      typedef typename itk::Function::LanczosWindowFunction<WindowingRadius, double, double > WindowFunction;
-      typedef itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition> InterpolatorType;
+      using WindowFunction = typename itk::Function::LanczosWindowFunction<WindowingRadius, double, double >;
+      using InterpolatorType = itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition>;
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     case sitkBlackmanWindowedSinc:
     {
-      typedef typename itk::Function::BlackmanWindowFunction<WindowingRadius, double, double > WindowFunction;
-      typedef itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition> InterpolatorType;
+      using WindowFunction = typename itk::Function::BlackmanWindowFunction<WindowingRadius, double, double >;
+      using InterpolatorType = itk::WindowedSincInterpolateImageFunction<TImageType, WindowingRadius, WindowFunction, BoundaryCondition>;
       return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
     }
     case sitkBSplineResamplerOrder1:
     {
-    typedef typename itk::BSplineResampleImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = typename itk::BSplineResampleImageFunction<TImageType, double>;
     typename InterpolatorType::Pointer p = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
     p->SetSplineOrder(1);
     return RType( p );
     }
     case sitkBSplineResamplerOrder2:
     {
-    typedef typename itk::BSplineResampleImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = typename itk::BSplineResampleImageFunction<TImageType, double>;
     typename InterpolatorType::Pointer p = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
     p->SetSplineOrder(2);
     return RType( p );
@@ -157,21 +157,21 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
     case  sitkBSplineResamplerOrder3:
       // sitkBSplineResampler
     {
-    typedef typename itk::BSplineResampleImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = typename itk::BSplineResampleImageFunction<TImageType, double>;
     typename InterpolatorType::Pointer p = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
     p->SetSplineOrder(3);
     return RType( p );
     }
     case sitkBSplineResamplerOrder4:
     {
-    typedef typename itk::BSplineResampleImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = typename itk::BSplineResampleImageFunction<TImageType, double>;
     typename InterpolatorType::Pointer p = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
     p->SetSplineOrder(4);
     return RType( p );
     }
     case sitkBSplineResamplerOrder5 :
     {
-    typedef typename itk::BSplineResampleImageFunction<TImageType, double> InterpolatorType;
+    using InterpolatorType = typename itk::BSplineResampleImageFunction<TImageType, double>;
     typename InterpolatorType::Pointer p = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
     p->SetSplineOrder(5);
     return RType( p );

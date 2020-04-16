@@ -50,7 +50,7 @@ using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image4D : public ::testing::Test {
 public:
-  typedef std::unique_ptr<itk::simple::Image> sitkAutoImagePointer;
+  using sitkAutoImagePointer = std::unique_ptr<itk::simple::Image>;
 
   virtual void SetUp() {
     itk::ImageBase<4>::IndexType index;
@@ -106,14 +106,14 @@ public:
 
   itk::ImageBase< 4 >::Pointer itkShortImage;
 
-  typedef itk::Image< short, 4 > ShortImageType;
+  using ShortImageType = itk::Image< short, 4 >;
   sitkAutoImagePointer shortImage;
 
-  typedef itk::Image< float, 4 > FloatImageType;
+  using FloatImageType = itk::Image< float, 4 >;
   sitkAutoImagePointer floatImage;
   FloatImageType::Pointer itkFloatImage;
 
-  typedef itk::VectorImage<float, 4 > FloatVectorImageType;
+  using FloatVectorImageType = itk::VectorImage<float, 4 >;
   sitkAutoImagePointer floatVectorImage;
   FloatVectorImageType::Pointer itkFloatVectorImage;
 
@@ -379,7 +379,7 @@ TEST_F(Image4D,Properties) {
   // SetDirection
   std::vector<double> vdir( adir, adir+16 );
   shortImage->SetDirection( vdir );
-  for( unsigned int i = 0 ; i < 16; ++i )
+  for( unsigned int i = 0; i < 16; ++i )
   {
     EXPECT_EQ ( shortImage->GetDirection()[i], vdir[i] ) << " Checking Direction matrix at index " << i;
    }

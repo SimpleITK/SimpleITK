@@ -108,8 +108,8 @@ template <class TImageType>
 Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * inFixedImage, const Image * inMovingImage, const Transform * inTransform )
 {
 
-  typedef itk::MatrixOffsetTransformBase< double, TImageType::ImageDimension, TImageType::ImageDimension > TransformType;
-  typedef itk::CenteredTransformInitializer< TransformType, TImageType, TImageType> FilterType;
+  using TransformType = itk::MatrixOffsetTransformBase< double, TImageType::ImageDimension, TImageType::ImageDimension >;
+  using FilterType = itk::CenteredTransformInitializer< TransformType, TImageType, TImageType>;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 

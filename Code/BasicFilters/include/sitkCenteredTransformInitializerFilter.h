@@ -64,7 +64,7 @@ assumption will probably not hold in multi-modality registration.
      */
     class SITKBasicFilters_EXPORT  CenteredTransformInitializerFilter : public ProcessObject {
     public:
-      typedef  CenteredTransformInitializerFilter Self;
+      using Self = CenteredTransformInitializerFilter;
 
       /** Destructor */
       virtual ~CenteredTransformInitializerFilter();
@@ -74,8 +74,7 @@ assumption will probably not hold in multi-modality registration.
        CenteredTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef BasicPixelIDTypeList  PixelIDTypeList;
-
+      using PixelIDTypeList = BasicPixelIDTypeList;
 
       typedef enum {GEOMETRY,MOMENTS} OperationModeType;
 

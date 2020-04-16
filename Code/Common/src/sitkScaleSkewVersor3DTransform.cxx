@@ -176,7 +176,7 @@ void ScaleSkewVersor3DTransform::SetPimpleTransform( PimpleTransformBase *pimple
 void ScaleSkewVersor3DTransform::InternalInitialization(itk::TransformBase *transform)
 {
 
-  typedef itk::ScaleSkewVersor3DTransform<double> TransformType;
+  using TransformType = itk::ScaleSkewVersor3DTransform<double>;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
   // explicitly remove all function pointer with reference to prior transform

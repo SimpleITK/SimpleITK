@@ -83,7 +83,7 @@ namespace simple
   itk::ObjectToObjectOptimizerBaseTemplate<double>*
   ImageRegistrationMethod::CreateOptimizer( unsigned int numberOfTransformParameters )
   {
-    typedef double InternalComputationValueType;
+    using InternalComputationValueType = double;
 
     if ( m_OptimizerType == ConjugateGradientLineSearch )
       {
@@ -362,7 +362,7 @@ namespace simple
                              this->m_OptimizerGrowthFactor,
                              this->m_OptimizerShrinkFactor);
 
-      typedef itk::Statistics::NormalVariateGenerator  GeneratorType;
+      using GeneratorType = itk::Statistics::NormalVariateGenerator;
       GeneratorType::Pointer generator = GeneratorType::New();
       if ( this->m_OptimizerSeed == sitkWallClock )
         {

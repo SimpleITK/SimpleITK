@@ -50,7 +50,7 @@ class ImageIOBase;
       : public ProcessObject
     {
     public:
-      typedef ImageSeriesWriter Self;
+      using Self = ImageSeriesWriter;
 
       virtual ~ImageSeriesWriter();
 

@@ -218,7 +218,7 @@ ImportImageFilter::ImportImageFilter()
   this->m_Buffer = NULL;
 
   // list of pixel types supported
-  typedef NonLabelPixelIDTypeList PixelIDTypeList;
+  using PixelIDTypeList = NonLabelPixelIDTypeList;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -465,7 +465,7 @@ template <class TImageType>
 Image ImportImageFilter::ExecuteInternal( )
 {
 
-  typedef TImageType                            ImageType;
+  using ImageType = TImageType;
   const unsigned int Dimension = ImageType::ImageDimension;
 
   // if the InstantiatedToken is correctly implemented this should

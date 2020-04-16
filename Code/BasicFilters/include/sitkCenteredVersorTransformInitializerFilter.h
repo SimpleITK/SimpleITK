@@ -47,7 +47,7 @@ Versorrepresenting rotation.
      */
     class SITKBasicFilters_EXPORT CenteredVersorTransformInitializerFilter : public ProcessObject {
     public:
-      typedef CenteredVersorTransformInitializerFilter Self;
+      using Self = CenteredVersorTransformInitializerFilter;
 
       /** Destructor */
       virtual ~CenteredVersorTransformInitializerFilter();
@@ -57,7 +57,7 @@ Versorrepresenting rotation.
       CenteredVersorTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef BasicPixelIDTypeList  PixelIDTypeList;
+      using PixelIDTypeList = BasicPixelIDTypeList;
 
 
       /**

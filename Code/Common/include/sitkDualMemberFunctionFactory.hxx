@@ -53,9 +53,9 @@ struct DualMemberFunctionInstantiater
     {
       (void)t1;
       (void)t2;
-      typedef typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType ImageType1;
-      typedef typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType ImageType2;
-      typedef TAddressor                                                             AddressorType;
+      using ImageType1 = typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType;
+      using ImageType2 = typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType;
+      using AddressorType = TAddressor;
 
       AddressorType addressor;
       m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(), (ImageType1*)(nullptr), (ImageType2*)(nullptr) );
@@ -132,7 +132,7 @@ void
 DualMemberFunctionFactory< TMemberFunctionPointer >
 ::RegisterMemberFunctions( )
 {
-  typedef DualMemberFunctionInstantiater< Self, VImageDimension, TAddressor > InstantiaterType;
+  using InstantiaterType = DualMemberFunctionInstantiater< Self, VImageDimension, TAddressor >;
 
   // initialize function array with pointer
   typelist::DualVisit<TPixelIDTypeList1, TPixelIDTypeList2> visitEachComboInLists;

@@ -129,13 +129,13 @@ template <unsigned int NDimension, unsigned int NOrder>
 BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternalWithOrder ( const Image& inImage1 )
 {
   // Define the input and output image types
-  typedef itk::ImageBase<NDimension> InputImageType;
+  using InputImageType = itk::ImageBase<NDimension>;
 
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
 
 
-  typedef itk::BSplineTransformInitializer< itk::BSplineTransform< double, NDimension, NOrder >, InputImageType> FilterType;
+  using FilterType = itk::BSplineTransformInitializer< itk::BSplineTransform< double, NDimension, NOrder >, InputImageType>;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 

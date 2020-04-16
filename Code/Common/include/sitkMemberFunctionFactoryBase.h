@@ -69,9 +69,9 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 0> :
 {
 protected:
 
-  typedef TMemberFunctionPointer                                               MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
+  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
 
 
   MemberFunctionFactoryBase( )
@@ -84,12 +84,12 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::function< MemberFunctionResultType ( ) > FunctionObjectType;
+  using FunctionObjectType = std::function< MemberFunctionResultType ( ) >;
 
 
 protected:
 
-  typedef TKey KeyType;
+  using KeyType = TKey;
 
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
@@ -125,10 +125,10 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 1> :
 {
 protected:
 
-  typedef TMemberFunctionPointer                                               MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgumentType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
+  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
+  using MemberFunctionArgumentType = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
 
 
   MemberFunctionFactoryBase( )
@@ -141,12 +141,12 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
+  using FunctionObjectType = std::function< MemberFunctionResultType ( MemberFunctionArgumentType ) >;
 
 
 protected:
 
-  typedef TKey KeyType;
+  using KeyType = TKey;
 
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
@@ -178,11 +178,11 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 2> :
 {
 protected:
 
-  typedef TMemberFunctionPointer                                               MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
+  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
+  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
 
 
   MemberFunctionFactoryBase( )
@@ -196,12 +196,12 @@ public:
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object
    */
-  typedef std::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) > FunctionObjectType;
+  using FunctionObjectType = std::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) >;
 
 
 protected:
 
-  typedef TKey KeyType;
+  using KeyType = TKey;
 
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
@@ -233,12 +233,12 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 3> :
 {
 protected:
 
-  typedef TMemberFunctionPointer                                               MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type MemberFunctionArgument2Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
+  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
+  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
+  using MemberFunctionArgument2Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
 
 
   MemberFunctionFactoryBase( )
@@ -251,12 +251,12 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument2Type) > FunctionObjectType;
+  using FunctionObjectType = std::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument2Type) >;
 
 
 protected:
 
-  typedef TKey KeyType;
+  using KeyType = TKey;
 
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
@@ -288,13 +288,13 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 4> :
 {
 protected:
 
-  typedef TMemberFunctionPointer                                               MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type MemberFunctionArgument2Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type MemberFunctionArgument3Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
+  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
+  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
+  using MemberFunctionArgument2Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type;
+  using MemberFunctionArgument3Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
 
 
   MemberFunctionFactoryBase( )
@@ -307,12 +307,12 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) > FunctionObjectType;
+  using FunctionObjectType = std::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) >;
 
 
 protected:
 
-  typedef TKey KeyType;
+  using KeyType = TKey;
 
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
@@ -343,14 +343,14 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 5> :
 {
 protected:
 
-  typedef TMemberFunctionPointer                                               MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type MemberFunctionArgument2Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type MemberFunctionArgument3Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument4Type MemberFunctionArgument4Type;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
+  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
+  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
+  using MemberFunctionArgument2Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type;
+  using MemberFunctionArgument3Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type;
+  using MemberFunctionArgument4Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument4Type;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
 
 
   MemberFunctionFactoryBase( )
@@ -374,7 +374,7 @@ public:
 
 protected:
 
-  typedef TKey KeyType;
+  using KeyType = TKey;
 
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function

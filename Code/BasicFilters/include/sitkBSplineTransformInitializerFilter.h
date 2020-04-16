@@ -47,7 +47,7 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
      */
     class SITKBasicFilters_EXPORT BSplineTransformInitializerFilter : public ProcessObject {
     public:
-      typedef BSplineTransformInitializerFilter Self;
+      using Self = BSplineTransformInitializerFilter;
 
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
@@ -57,7 +57,7 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
       virtual ~BSplineTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef AllPixelIDTypeList  PixelIDTypeList;
+      using PixelIDTypeList = AllPixelIDTypeList;
 
 
       /**

@@ -83,7 +83,7 @@ namespace itk {
     m_NumberOfComponents(0)
   {
     // list of pixel types supported
-    typedef NonLabelPixelIDTypeList PixelIDTypeList;
+    using PixelIDTypeList = NonLabelPixelIDTypeList;
 
     this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -341,11 +341,11 @@ namespace itk {
   {
 
     const unsigned int MAX_DIMENSION = 5;
-    typedef TImageType                      ImageType;
-    typedef itk::ImageFileReader<ImageType> Reader;
+    using ImageType = TImageType;
+    using Reader = itk::ImageFileReader<ImageType>;
 
-    typedef typename ImageType::template Rebind<typename ImageType::PixelType, MAX_DIMENSION>::Type InternalImageType;
-    typedef itk::ImageFileReader<InternalImageType> InternalReader;
+    using InternalImageType = typename ImageType::template Rebind<typename ImageType::PixelType, MAX_DIMENSION>::Type;
+    using InternalReader = itk::ImageFileReader<InternalImageType>;
 
     // if the InstantiatedToken is correctly implemented this should
     // not occur
@@ -388,10 +388,10 @@ namespace itk {
   Image
   ImageFileReader::ExecuteExtract( TInternalImageType * itkImage )
   {
-    typedef TInternalImageType InternalImageType;
-    typedef TImageType         ImageType;
+    using InternalImageType = TInternalImageType;
+    using ImageType = TImageType;
 
-    typedef itk::ExtractImageFilter<InternalImageType, ImageType> ExtractType;
+    using ExtractType = itk::ExtractImageFilter<InternalImageType, ImageType>;
     typename ExtractType::Pointer extractor = ExtractType::New();
 
     extractor->InPlaceOn();

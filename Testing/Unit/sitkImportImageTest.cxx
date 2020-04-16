@@ -69,7 +69,7 @@ TEST_F(Import,Required) {
   // methods, and to imporve coverage
 
   // Check has Self
-  typedef itk::simple::ImportImageFilter::Self ImportFilterType;
+  using ImportFilterType = itk::simple::ImportImageFilter::Self;
 
   // default constructable
   ImportFilterType  importer;

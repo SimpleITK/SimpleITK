@@ -85,9 +85,9 @@
 #include "sitkScaleVersor3DTransform.h"
 
 TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
-  typedef itk::Image<float,3> ImageType;
-  typedef itk::Image<itk::Vector<float,3>,3> DisplacementType;
-  typedef itk::FastSymmetricForcesDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType ITKType;
+  using ImageType = itk::Image<float,3>;
+  using DisplacementType = itk::Image<itk::Vector<float,3>,3>;
+  using ITKType = itk::FastSymmetricForcesDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType;
 
   EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Symmetric);
   EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Fixed);
@@ -97,9 +97,9 @@ TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
 
 
 TEST(BasicFilter,DiffeomorphicDemonsRegistrationFilter_ENUMCHECK) {
-  typedef itk::Image<float,3> ImageType;
-  typedef itk::Image<itk::Vector<float,3>,3> DisplacementType;
-  typedef itk::DiffeomorphicDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType ITKType;
+  using ImageType = itk::Image<float,3>;
+  using DisplacementType = itk::Image<itk::Vector<float,3>,3>;
+  using ITKType = itk::DiffeomorphicDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType;
 
   EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Symmetric);
   EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Fixed);
@@ -108,7 +108,7 @@ TEST(BasicFilter,DiffeomorphicDemonsRegistrationFilter_ENUMCHECK) {
 }
 
 TEST(BasicFilters,MergeLabelMap_ENUMCHECK) {
-  typedef itk::MergeLabelMapFilter< itk::LabelMap< itk::LabelObject<int, 3> > >  ITKType;
+  using ITKType = itk::MergeLabelMapFilter< itk::LabelMap< itk::LabelObject<int, 3> > >;
   EXPECT_EQ( (int)ITKType::MethodChoice::KEEP, (int)itk::simple::MergeLabelMapFilter::Keep);
   EXPECT_EQ( (int)ITKType::MethodChoice::AGGREGATE, (int)itk::simple::MergeLabelMapFilter::Aggregate);
   EXPECT_EQ( (int)ITKType::MethodChoice::PACK, (int)itk::simple::MergeLabelMapFilter::Pack);
@@ -116,7 +116,7 @@ TEST(BasicFilters,MergeLabelMap_ENUMCHECK) {
 }
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
-  typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
+  using ITKType = itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> >;
   EXPECT_EQ( (int)ITKType::ColormapEnumType::Red, (int)itk::simple::ScalarToRGBColormapImageFilter::Red);
   EXPECT_EQ( (int)ITKType::ColormapEnumType::Green, (int)itk::simple::ScalarToRGBColormapImageFilter::Green);
   EXPECT_EQ( (int)ITKType::ColormapEnumType::Blue, (int)itk::simple::ScalarToRGBColormapImageFilter::Blue);
@@ -134,14 +134,14 @@ TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
 }
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
-  typedef itk::RecursiveGaussianImageFilter< itk::Image<float,3> > ITKRecursiveGausianType;
+  using ITKRecursiveGausianType = itk::RecursiveGaussianImageFilter< itk::Image<float,3> >;
   EXPECT_EQ( (int)ITKRecursiveGausianType::OrderEnumType::ZeroOrder, (int)itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
   EXPECT_EQ( (int)ITKRecursiveGausianType::OrderEnumType::FirstOrder, (int)itk::simple::RecursiveGaussianImageFilter::FirstOrder );
   EXPECT_EQ( (int)ITKRecursiveGausianType::OrderEnumType::SecondOrder, (int)itk::simple::RecursiveGaussianImageFilter::SecondOrder );
 }
 
 TEST(BasicFilters,Extract_ENUMCHECK) {
-  typedef itk::ExtractImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKExtractType;
+  using ITKExtractType = itk::ExtractImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int)ITKExtractType::DirectionCollapseStrategyEnum::DIRECTIONCOLLAPSETOUNKOWN, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOUNKOWN );
   EXPECT_EQ( (int)ITKExtractType::DirectionCollapseStrategyEnum::DIRECTIONCOLLAPSETOIDENTITY, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY );
   EXPECT_EQ( (int)ITKExtractType::DirectionCollapseStrategyEnum::DIRECTIONCOLLAPSETOSUBMATRIX, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX );
@@ -149,50 +149,50 @@ TEST(BasicFilters,Extract_ENUMCHECK) {
 }
 
 TEST(BasicFilters,FastMarching_ENUMCHECK) {
-  typedef itk::FastMarchingImageFilterBase< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::FastMarchingImageFilterBase< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::Nothing, (int) itk::simple::FastMarchingBaseImageFilter::Nothing );
   EXPECT_EQ( (int) ITKType::NoHandles, (int) itk::simple::FastMarchingBaseImageFilter::NoHandles );
   EXPECT_EQ( (int) ITKType::Strict, (int) itk::simple::FastMarchingBaseImageFilter::Strict );
 }
 
 TEST(BasicFilters,InverseDeconvolution_ENUMCHECK) {
-  typedef itk::InverseDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::InverseDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::InverseDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::InverseDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,TikhonovDeconvolution_ENUMCHECK) {
-  typedef itk::TikhonovDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::TikhonovDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::TikhonovDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::TikhonovDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,WienerDeconvolution_ENUMCHECK) {
-  typedef itk::WienerDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::WienerDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::WienerDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::WienerDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,LandweberDeconvolution_ENUMCHECK) {
-  typedef itk::LandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::LandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::LandweberDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::LandweberDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,ProjectedLandweberDeconvolution_ENUMCHECK) {
-  typedef itk::ProjectedLandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::ProjectedLandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,RichardsonLucyDeconvolution_ENUMCHECK) {
-  typedef itk::RichardsonLucyDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::RichardsonLucyDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::SAME, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::OutputRegionModeEnum::VALID, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,LabelMapContourOverlay_ENUMCHECK) {
-  typedef itk::LabelMapContourOverlayImageFilter< itk::LabelMap<itk::LabelObject<int,3> >, itk::Image<float,3>, itk::VectorImage<int,3> > ITKType;
+  using ITKType = itk::LabelMapContourOverlayImageFilter< itk::LabelMap<itk::LabelObject<int,3> >, itk::Image<float,3>, itk::VectorImage<int,3> >;
   EXPECT_EQ( (int) ITKType::PLAIN, (int)         itk::simple::LabelMapContourOverlayImageFilter::PLAIN );
   EXPECT_EQ( (int) ITKType::CONTOUR, (int)       itk::simple::LabelMapContourOverlayImageFilter::CONTOUR );
   EXPECT_EQ( (int) ITKType::SLICE_CONTOUR, (int) itk::simple::LabelMapContourOverlayImageFilter::SLICE_CONTOUR );
@@ -204,7 +204,7 @@ TEST(BasicFilters,LabelMapContourOverlay_ENUMCHECK) {
 }
 
 TEST(BasicFilters,PatchBasedBaseDenoising_ENUMCHECK) {
-  typedef itk::PatchBasedDenoisingImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::PatchBasedDenoisingImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::NOMODEL, (int) itk::simple::PatchBasedDenoisingImageFilter::NOMODEL );
   EXPECT_EQ( (int) ITKType::GAUSSIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::GAUSSIAN );
   EXPECT_EQ( (int) ITKType::RICIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::RICIAN );
@@ -213,7 +213,7 @@ TEST(BasicFilters,PatchBasedBaseDenoising_ENUMCHECK) {
 
 
 TEST(BasicFilters,ConnectedThreshold_ENUMCHECK) {
-  typedef itk::ConnectedThresholdImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  using ITKType = itk::ConnectedThresholdImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
   EXPECT_EQ( (int) ITKType::FaceConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FaceConnectivity );
   EXPECT_EQ( (int) ITKType::FullConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FullConnectivity );
 }
@@ -375,7 +375,7 @@ TEST(BasicFilters,Cast) {
   EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkFloat32 );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "32-bit float" );
 
-  typedef std::map<std::string,itk::simple::PixelIDValueEnum> MapType;
+  using MapType = std::map<std::string,itk::simple::PixelIDValueEnum>;
   MapType mapping;
   mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkUInt8;
   mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkInt8;

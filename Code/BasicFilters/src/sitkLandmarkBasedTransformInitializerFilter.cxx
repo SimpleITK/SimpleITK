@@ -127,11 +127,11 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 {
 
   // Define the input and output image types
-  typedef itk::ImageBase<TImageType::ImageDimension>  InputImageType;
+  using InputImageType = itk::ImageBase<TImageType::ImageDimension>;
   const unsigned int Dimension = InputImageType::ImageDimension;
 
 
-  typedef itk::LandmarkBasedTransformInitializer< itk::Transform< double, Dimension, Dimension >, InputImageType, InputImageType> FilterType;
+  using FilterType = itk::LandmarkBasedTransformInitializer< itk::Transform< double, Dimension, Dimension >, InputImageType, InputImageType>;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
@@ -150,7 +150,7 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
   else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }
 
 
-  typedef typename FilterType::LandmarkPointContainer PointContainer;
+  using PointContainer = typename FilterType::LandmarkPointContainer;
   PointContainer fixedITKPoints;
   fixedITKPoints = sitkSTLVectorToITKPointVector<PointContainer,double>(m_FixedLandmarks);
   filter->SetFixedLandmarks(fixedITKPoints);
@@ -161,7 +161,7 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 
   filter->SetLandmarkWeight ( this->m_LandmarkWeight );
 
-  typedef typename FilterType::TransformType::TransformCategoryEnum TransformCategoryEnum;
+  using TransformCategoryEnum = typename FilterType::TransformType::TransformCategoryEnum;
   // BSpline specific setup
   if( itkTx->GetTransformCategory() == TransformCategoryEnum::BSpline )
     {

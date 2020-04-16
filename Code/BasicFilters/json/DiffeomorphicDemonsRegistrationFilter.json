@@ -24,7 +24,7 @@
       "name" : "InitialDisplacementField",
       "type" : "Image",
       "optional" : true,
-      "custom_itk_cast" : "  typedef itk::VectorImage<double, FilterType::DisplacementFieldType::ImageDimension> VectorImageType;\n      filter->SetInitialDisplacementField( GetImageFromVectorImage(const_cast<VectorImageType*>(CastImageToITK<VectorImageType>(*inInitialDisplacementField).GetPointer()) ) );"
+      "custom_itk_cast" : "  using VectorImageType = itk::VectorImage<double, FilterType::DisplacementFieldType::ImageDimension>;\n      filter->SetInitialDisplacementField( GetImageFromVectorImage(const_cast<VectorImageType*>(CastImageToITK<VectorImageType>(*inInitialDisplacementField).GetPointer()) ) );"
     }
   ],
   "members" : [

@@ -38,7 +38,7 @@ namespace itk {
       public ProcessObject
   {
     public:
-      typedef ImageFilter Self;
+      using Self = ImageFilter;
 
       //
       // Type List Setup

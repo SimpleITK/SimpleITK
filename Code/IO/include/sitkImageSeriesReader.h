@@ -46,7 +46,7 @@ namespace itk {
       : public ImageReaderBase
     {
     public:
-      typedef ImageSeriesReader Self;
+      using Self = ImageSeriesReader;
 
       virtual ~ImageSeriesReader();
 

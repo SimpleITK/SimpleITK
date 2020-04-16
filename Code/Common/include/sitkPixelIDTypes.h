@@ -102,19 +102,19 @@ template <typename TPixelIDType, unsigned int VImageDimension> struct PixelIDToI
 template <typename TPixelType, unsigned int VImageDimension>
 struct PixelIDToImageType< BasicPixelID<TPixelType> , VImageDimension >
 {
-  typedef itk::Image< TPixelType, VImageDimension > ImageType;
+  using ImageType = itk::Image< TPixelType, VImageDimension >;
 };
 
 template <typename TVectorPixelType, unsigned int VImageDimension>
 struct PixelIDToImageType< VectorPixelID< TVectorPixelType >, VImageDimension >
 {
-  typedef itk::VectorImage< TVectorPixelType, VImageDimension > ImageType;
+  using ImageType = itk::VectorImage< TVectorPixelType, VImageDimension >;
 };
 
 template <typename TLabelType, unsigned int VImageDimension>
 struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
 {
-  typedef itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > ImageType;
+  using ImageType = itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > >;
 };
 /** @} */
 
@@ -137,19 +137,19 @@ template <typename TImageType> struct ImageTypeToPixelID;
 template <typename TPixelType, unsigned int VImageDimension>
 struct ImageTypeToPixelID< itk::Image< TPixelType, VImageDimension> >
 {
-  typedef BasicPixelID<TPixelType > PixelIDType;
+  using PixelIDType = BasicPixelID<TPixelType >;
 };
 
 template <typename TPixelType, unsigned int VImageDimension>
 struct ImageTypeToPixelID< itk::VectorImage< TPixelType, VImageDimension> >
 {
-  typedef VectorPixelID< TPixelType > PixelIDType;
+  using PixelIDType = VectorPixelID< TPixelType >;
 };
 
 template <typename TLabelType, unsigned int VImageDimension>
 struct ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >
 {
-  typedef  LabelPixelID< TLabelType > PixelIDType;
+  using PixelIDType = LabelPixelID< TLabelType >;
 };
 /** @} */
 

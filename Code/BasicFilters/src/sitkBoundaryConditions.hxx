@@ -35,7 +35,7 @@ namespace itk {
   std::unique_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >
   CreateNewBoundaryConditionInstance(typename TFilter::BoundaryConditionType bc)
   {
-    typedef std::unique_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > > PointerType;
+    using PointerType = std::unique_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >;
 
     switch ( bc )
       {

@@ -36,8 +36,8 @@ class SITKCommon_EXPORT BSplineTransform
   : public Transform
 {
 public:
-  typedef BSplineTransform Self;
-  typedef Transform        Superclass;
+  using Self = BSplineTransform;
+  using Superclass = Transform;
 
   virtual ~BSplineTransform();
 

@@ -40,7 +40,7 @@ namespace detail
  *
  *  Example member function and pointer:
  *  \code
- *  typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+ *  type alias Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
  *
  *  template<typename TImageType1, TImageType2>
  *  Image::Pointer ExecuteInternal( Image::Pointer );
@@ -68,12 +68,12 @@ class DualMemberFunctionFactory
 
 public:
 
-  typedef MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<int, int> > Superclass;
-  typedef DualMemberFunctionFactory                                               Self;
+  using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<int, int> >;
+  using Self = DualMemberFunctionFactory;
 
-  typedef TMemberFunctionPointer                                           MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType ObjectType;
-  typedef typename Superclass::FunctionObjectType                          FunctionObjectType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
+  using FunctionObjectType = typename Superclass::FunctionObjectType;
 
   /** \brief Constructor which permanently binds the constructed
    * object to pObject */
@@ -106,7 +106,7 @@ public:
    * template < class TMemberFunctionPointer >
    *    struct MyCustomAddressor
    *    {
-   *      typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+   *      using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
    *
    *      template< typename TImageType1, typename TImageType2 >
    *      TMemberFunctionPointer operator() ( void ) const
@@ -132,7 +132,7 @@ public:
              unsigned int VImageDimension >
   void RegisterMemberFunctions( )
   {
-    typedef detail::DualExecuteInternalAddressor<MemberFunctionType> AddressorType;
+    using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
     this->RegisterMemberFunctions< TPixelIDTypeList1, TPixelIDTypeList2, VImageDimension, AddressorType>();
   }
   /** @} */

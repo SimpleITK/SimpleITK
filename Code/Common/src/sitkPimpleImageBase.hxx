@@ -52,11 +52,11 @@ namespace itk
     : public PimpleImageBase
   {
   public:
-    typedef PimpleImage                   Self;
-    typedef TImageType                    ImageType;
-    typedef typename ImageType::Pointer   ImagePointer;
-    typedef typename ImageType::IndexType IndexType;
-    typedef typename ImageType::PixelType PixelType;
+    using Self = PimpleImage;
+    using ImageType = TImageType;
+    using ImagePointer = typename ImageType::Pointer;
+    using IndexType = typename ImageType::IndexType;
+    using PixelType = typename ImageType::PixelType;
 
     PimpleImage ( ImageType* image )
       : m_Image( image )
@@ -98,7 +98,7 @@ namespace itk
     typename std::enable_if<!IsLabel<UImageType>::Value, PimpleImageBase*>::type
     DeepCopy( void ) const
       {
-        typedef itk::ImageDuplicator< ImageType > ImageDuplicatorType;
+        using ImageDuplicatorType = itk::ImageDuplicator< ImageType >;
         typename ImageDuplicatorType::Pointer dup = ImageDuplicatorType::New();
 
         dup->SetInputImage( this->m_Image );
@@ -111,7 +111,7 @@ namespace itk
     typename std::enable_if<IsLabel<UImageType>::Value, PimpleImageBase*>::type
     DeepCopy( void ) const
       {
-        typedef itk::ConvertLabelMapFilter<UImageType, UImageType> FilterType;
+        using FilterType = itk::ConvertLabelMapFilter<UImageType, UImageType>;
         typename FilterType::Pointer filter = FilterType::New();
         filter->SetInput ( this->m_Image );
         filter->UpdateLargestPossibleRegion();

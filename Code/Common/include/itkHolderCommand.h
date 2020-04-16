@@ -37,13 +37,13 @@ class HolderCommand
   : public itk::Command
 {
 public:
-  typedef T ObjectType;
+  using ObjectType = T;
 
-  typedef  HolderCommand Self;
-  typedef  itk::Command  Superclass;
+  using Self = HolderCommand;
+  using Superclass = itk::Command;
 
-  typedef itk::SmartPointer<Self>        Pointer;
-  typedef itk::SmartPointer<const Self>  ConstPointer;
+  using Pointer = itk::SmartPointer<Self>;
+  using ConstPointer = itk::SmartPointer<const Self>;
 
   itkNewMacro( HolderCommand );
 
@@ -71,13 +71,13 @@ class HolderCommand<T*>
   : public itk::Command
 {
 public:
-  typedef T ObjectType;
+  using ObjectType = T;
 
-  typedef  HolderCommand Self;
-  typedef  itk::Command  Superclass;
+  using Self = HolderCommand;
+  using Superclass = itk::Command;
 
-  typedef itk::SmartPointer<Self>        Pointer;
-  typedef itk::SmartPointer<const Self>  ConstPointer;
+  using Pointer = itk::SmartPointer<Self>;
+  using ConstPointer = itk::SmartPointer<const Self>;
 
   itkNewMacro( HolderCommand );
 

@@ -40,7 +40,7 @@ class SmartPointer;
       public ProcessObject
     {
     public:
-      typedef ImageReaderBase Self;
+      using Self = ImageReaderBase;
 
       virtual ~ImageReaderBase();
 

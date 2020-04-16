@@ -28,8 +28,8 @@ template<typename R,
          typename C>
 struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(void)> {
   static const unsigned int arity = 0;
-  typedef C ClassType;
-  typedef R ResultType;
+  using ClassType = C;
+  using ResultType = R;
 };
 
 
@@ -38,9 +38,9 @@ template<typename R,
          typename A0>
 struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0)> {
   static const unsigned int arity = 1;
-  typedef C ClassType;
-  typedef R ResultType;
-  typedef A0 Argument0Type;
+  using ClassType = C;
+  using ResultType = R;
+  using Argument0Type = A0;
 };
 
 
@@ -50,10 +50,10 @@ template<typename R,
          typename A1>
 struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1)> {
   static const unsigned int arity = 2;
-  typedef C ClassType;
-  typedef R ResultType;
-  typedef A0 Argument0Type;
-  typedef A1 Argument1Type;
+  using ClassType = C;
+  using ResultType = R;
+  using Argument0Type = A0;
+  using Argument1Type = A1;
 };
 
 
@@ -64,11 +64,11 @@ template<typename R,
          typename A2>
 struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1, A2)> {
   static const unsigned int arity = 3;
-  typedef C ClassType;
-  typedef R ResultType;
-  typedef A0 Argument0Type;
-  typedef A1 Argument1Type;
-  typedef A2 Argument2Type;
+  using ClassType = C;
+  using ResultType = R;
+  using Argument0Type = A0;
+  using Argument1Type = A1;
+  using Argument2Type = A2;
 };
 
 template<typename R,
@@ -79,12 +79,12 @@ template<typename R,
          typename A3>
 struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1, A2, A3)> {
   static const unsigned int arity = 4;
-  typedef C ClassType;
-  typedef R ResultType;
-  typedef A0 Argument0Type;
-  typedef A1 Argument1Type;
-  typedef A2 Argument2Type;
-  typedef A3 Argument3Type;
+  using ClassType = C;
+  using ResultType = R;
+  using Argument0Type = A0;
+  using Argument1Type = A1;
+  using Argument2Type = A2;
+  using Argument3Type = A3;
 };
 
 template<typename R,
@@ -96,13 +96,13 @@ template<typename R,
          typename A4>
 struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1, A2, A3, A4)> {
   static const unsigned int arity = 5;
-  typedef C ClassType;
-  typedef R ResultType;
-  typedef A0 Argument0Type;
-  typedef A1 Argument1Type;
-  typedef A2 Argument2Type;
-  typedef A3 Argument3Type;
-  typedef A4 Argument4Type;
+  using ClassType = C;
+  using ResultType = R;
+  using Argument0Type = A0;
+  using Argument1Type = A1;
+  using Argument2Type = A2;
+  using Argument3Type = A3;
+  using Argument4Type = A4;
 };
 
 }

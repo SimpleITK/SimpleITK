@@ -36,7 +36,7 @@ namespace itk {
     class SITKBasicFilters_EXPORT HashImageFilter
       : public ProcessObject {
     public:
-      typedef HashImageFilter Self;
+      using Self = HashImageFilter;
 
       // function pointer type
       typedef std::string (Self::*MemberFunctionType)( const Image& );

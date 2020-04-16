@@ -81,7 +81,7 @@ void SetCoefficientImages(TBSplineTransform* bspline, const std::vector<Image> &
       sitkExceptionMacro( "Expected all coefficient images to be the same size " << coefficientImages[0].GetSize() );
       }
 
-    typedef typename TBSplineTransform::ImageType itkImageType;
+    using itkImageType = typename TBSplineTransform::ImageType;
 
 
     const itkImageType * itkImage = dynamic_cast <const itkImageType*>(sitkImage.GetITKBase());

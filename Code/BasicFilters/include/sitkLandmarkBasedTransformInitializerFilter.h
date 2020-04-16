@@ -74,7 +74,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
      */
     class SITKBasicFilters_EXPORT LandmarkBasedTransformInitializerFilter : public ImageFilter<0> {
     public:
-      typedef LandmarkBasedTransformInitializerFilter Self;
+      using Self = LandmarkBasedTransformInitializerFilter;
 
       /** Destructor */
       virtual ~LandmarkBasedTransformInitializerFilter();
@@ -85,7 +85,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       LandmarkBasedTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef typelist::MakeTypeList<BasicPixelID<float> >::Type PixelIDTypeList;
+      using PixelIDTypeList = typelist::MakeTypeList<BasicPixelID<float> >::Type;
 
 
       /**

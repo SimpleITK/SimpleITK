@@ -36,8 +36,8 @@ class SITKCommon_EXPORT Euler3DTransform
   : public Transform
 {
 public:
-typedef Euler3DTransform Self;
-typedef Transform        Superclass;
+using Self = Euler3DTransform;
+using Superclass = Transform;
 
 virtual ~Euler3DTransform();
 

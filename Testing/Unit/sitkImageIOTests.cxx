@@ -47,7 +47,7 @@ TEST(IO,ImageFileReader) {
   reader.SetLoadPrivateTags(false);
   EXPECT_EQ( reader.GetLoadPrivateTags(), false );
 
-  typedef std::map<std::string,std::string> MapType;
+  using MapType = std::map<std::string,std::string>;
   MapType mapping;
 
   // Configure the mapping between filename and MD5 hash

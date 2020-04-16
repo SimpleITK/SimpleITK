@@ -36,8 +36,8 @@ class SITKCommon_EXPORT VersorTransform
   : public Transform
 {
 public:
-  typedef VersorTransform Self;
-  typedef Transform       Superclass;
+  using Self = VersorTransform;
+  using Superclass = Transform;
 
   ~VersorTransform();
 

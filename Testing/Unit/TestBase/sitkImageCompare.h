@@ -22,7 +22,7 @@
 
 class ImageCompare {
 public:
-  typedef ImageCompare Self;
+  using Self = ImageCompare;
   ImageCompare();
 
   // Compare the image to the named baseline image slice by slice, display the difference in the center slice

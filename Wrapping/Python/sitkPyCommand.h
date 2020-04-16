@@ -25,7 +25,7 @@
 
 #ifndef PyObject_HEAD
 struct _object;
-typedef _object PyObject;
+using PyObject = _object;
 #endif
 
 namespace itk
@@ -47,7 +47,7 @@ class PyCommand
   : public itk::simple::Command
 {
 public:
-  typedef Command   Super;
+  using Super = Command;
 
   PyCommand();
   ~PyCommand();

@@ -38,7 +38,7 @@ template <typename TImageType>
 bool CheckValueIsPhysicalPoint( const TImageType *img )
 {
 
-  typedef itk::ImageRegionConstIterator<TImageType> IteratorType;
+  using IteratorType = itk::ImageRegionConstIterator<TImageType>;
   IteratorType it(img, img->GetBufferedRegion() );
 
   bool match = true;
@@ -66,7 +66,7 @@ typename TImageType::Pointer RunFilter( const TImageType *img,
                                         int step[TImageType::ImageDimension]
   )
 {
-  typedef itk::SliceImageFilter<TImageType, TImageType> FilterType;
+  using FilterType = itk::SliceImageFilter<TImageType, TImageType>;
   typename FilterType::Pointer sliceFilter = FilterType::New();
 
   sliceFilter->SetInput( img );
@@ -84,10 +84,10 @@ typename TImageType::Pointer RunFilter( const TImageType *img,
 TEST(SliceImageFilterTests, PhysicalPoint1)
 {
   const unsigned int ImageDimension = 2;
-  typedef itk::Point<double, ImageDimension> PixelType;
-  typedef itk::Image<PixelType, ImageDimension> ImageType;
+  using PixelType = itk::Point<double, ImageDimension>;
+  using ImageType = itk::Image<PixelType, ImageDimension>;
 
-  typedef itk::PhysicalPointImageSource<ImageType> SourceType;
+  using SourceType = itk::PhysicalPointImageSource<ImageType>;
   SourceType::Pointer source = SourceType::New();
 
 
@@ -123,10 +123,10 @@ TEST(SliceImageFilterTests, PhysicalPoint1)
 TEST(SliceImageFilterTests, PhysicalPoint2)
 {
   const unsigned int ImageDimension = 2;
-  typedef itk::Point<double, ImageDimension> PixelType;
-  typedef itk::Image<PixelType, ImageDimension> ImageType;
+  using PixelType = itk::Point<double, ImageDimension>;
+  using ImageType = itk::Image<PixelType, ImageDimension>;
 
-  typedef itk::PhysicalPointImageSource<ImageType> SourceType;
+  using SourceType = itk::PhysicalPointImageSource<ImageType>;
   SourceType::Pointer source = SourceType::New();
 
 
@@ -165,10 +165,10 @@ TEST(SliceImageFilterTests, PhysicalPoint2)
 TEST(SliceImageFilterTests, PhysicalPoint3)
 {
   const unsigned int ImageDimension = 2;
-  typedef itk::Point<double, ImageDimension> PixelType;
-  typedef itk::Image<PixelType, ImageDimension> ImageType;
+  using PixelType = itk::Point<double, ImageDimension>;
+  using ImageType = itk::Image<PixelType, ImageDimension>;
 
-  typedef itk::PhysicalPointImageSource<ImageType> SourceType;
+  using SourceType = itk::PhysicalPointImageSource<ImageType>;
   SourceType::Pointer source = SourceType::New();
 
 
@@ -202,10 +202,10 @@ TEST(SliceImageFilterTests, PhysicalPoint3)
 TEST(SliceImageFilterTests,Empty)
 {
   const unsigned int ImageDimension = 2;
-  typedef itk::Point<double, ImageDimension> PixelType;
-  typedef itk::Image<PixelType, ImageDimension> ImageType;
+  using PixelType = itk::Point<double, ImageDimension>;
+  using ImageType = itk::Image<PixelType, ImageDimension>;
 
-  typedef itk::PhysicalPointImageSource<ImageType> SourceType;
+  using SourceType = itk::PhysicalPointImageSource<ImageType>;
   SourceType::Pointer source = SourceType::New();
 
 
@@ -245,9 +245,9 @@ TEST(SliceImageFilterTests,Empty)
 TEST(SliceImageFilterTests,Coverage)
 {
   const unsigned int ImageDimension = 3;
-  typedef itk::Image<float, ImageDimension> ImageType;
+  using ImageType = itk::Image<float, ImageDimension>;
 
-  typedef itk::SliceImageFilter<ImageType, ImageType> FilterType;
+  using FilterType = itk::SliceImageFilter<ImageType, ImageType>;
 
   FilterType::Pointer filter = FilterType::New();
   std::cout << filter;
@@ -283,16 +283,16 @@ TEST(SliceImageFilterTests,Coverage)
 TEST(SliceImageFilterTests,Sizes)
 {
   const unsigned int ImageDimension = 3;
-  typedef itk::Image<float, ImageDimension> ImageType;
+  using ImageType = itk::Image<float, ImageDimension>;
 
-  typedef itk::GaussianImageSource<ImageType> SourceType;
+  using SourceType = itk::GaussianImageSource<ImageType>;
   SourceType::Pointer source = SourceType::New();
 
   SourceType::SizeType size = {{64,64,64}};
   source->SetSize(size);
   source->ReleaseDataFlagOn();
 
-  typedef itk::SliceImageFilter<ImageType, ImageType> FilterType;
+  using FilterType = itk::SliceImageFilter<ImageType, ImageType>;
 
   FilterType::Pointer filter = FilterType::New();
   filter->SetInput( source->GetOutput() );
@@ -317,13 +317,13 @@ TEST(SliceImageFilterTests,Sizes)
 TEST(SliceImageFilterTests,ExceptionalCases)
 {
   const unsigned int ImageDimension = 3;
-  typedef itk::Image<float, ImageDimension> ImageType;
+  using ImageType = itk::Image<float, ImageDimension>;
 
-  typedef itk::GaussianImageSource<ImageType> SourceType;
+  using SourceType = itk::GaussianImageSource<ImageType>;
   SourceType::Pointer source = SourceType::New();
 
 
-  typedef itk::SliceImageFilter<ImageType, ImageType> FilterType;
+  using FilterType = itk::SliceImageFilter<ImageType, ImageType>;
 
   FilterType::Pointer filter = FilterType::New();
   filter->SetInput( source->GetOutput() );
@@ -346,7 +346,7 @@ TEST(SliceImageFilterTests,ExceptionalCases)
   filter->SetInput( source->GetOutput() );
   filter->SetStart(12);
   filter->SetStop(10);
-  EXPECT_NO_THROW( filter->Update() ) << "Check stop is clamped" ;
+  EXPECT_NO_THROW( filter->Update() ) << "Check stop is clamped";
   EXPECT_EQ( 0u, filter->GetOutput()->GetLargestPossibleRegion().GetNumberOfPixels() );
 
 
@@ -354,7 +354,7 @@ TEST(SliceImageFilterTests,ExceptionalCases)
   filter->SetInput( source->GetOutput() );
   filter->SetStart(-12);
   filter->SetStop(-10);
-  EXPECT_NO_THROW( filter->Update() ) << "Check undersized start and stop" ;
+  EXPECT_NO_THROW( filter->Update() ) << "Check undersized start and stop";
   EXPECT_EQ( 0u, filter->GetOutput()->GetLargestPossibleRegion().GetNumberOfPixels() );
 
   filter = FilterType::New();
@@ -362,7 +362,7 @@ TEST(SliceImageFilterTests,ExceptionalCases)
   filter->SetStart(-12);
   filter->SetStop(-10);
   filter->SetStep(-1);
-  EXPECT_NO_THROW( filter->Update() ) << "Check undersized start and stop" ;
+  EXPECT_NO_THROW( filter->Update() ) << "Check undersized start and stop";
   EXPECT_EQ( 0u, filter->GetOutput()->GetLargestPossibleRegion().GetNumberOfPixels() );
 
 }

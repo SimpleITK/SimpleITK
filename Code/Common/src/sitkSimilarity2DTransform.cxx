@@ -141,7 +141,7 @@ void Similarity2DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTrans
 void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform)
 {
 
-  typedef itk::Similarity2DTransform<double> TransformType;
+  using TransformType = itk::Similarity2DTransform<double>;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
   // explicitly remove all function pointer with reference to prior transform

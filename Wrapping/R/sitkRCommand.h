@@ -49,8 +49,8 @@ class RCommand
 {
 public:
   // Standard "Self" typedef.
-  typedef RCommand Self;
-  typedef Command   Super;
+  using Self = RCommand;
+  using Super = Command;
 
   RCommand();
   ~RCommand();

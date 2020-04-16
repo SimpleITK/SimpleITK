@@ -77,12 +77,12 @@ int main( int argc, char *argv[])
   //////
 
   //
-  // First, define the typedefs that correspond to the types of the input
+  // First, define the type alias that correspond to the types of the input
   // image. This requires foreknowlege of the data type of the input image.
   //
   const unsigned int                                 Dimension = 2;
-  typedef float                                      InternalPixelType;
-  typedef itk::Image< InternalPixelType, Dimension > InternalImageType;
+  using InternalPixelType = float;
+  using InternalImageType = itk::Image< InternalPixelType, Dimension >;
 
   //
   // We must check the image dimension and the pixel type of the
@@ -120,8 +120,7 @@ int main( int argc, char *argv[])
   //
   // Set up the blur filter and attach it to the pipeline.
   //
-  typedef itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType >
-                                                     BlurFilterType;
+  using BlurFilterType = itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType >;
   BlurFilterType::Pointer blurFilter = BlurFilterType::New();
   blurFilter->SetInput( itkImage );
   blurFilter->SetNumberOfIterations( 5 );

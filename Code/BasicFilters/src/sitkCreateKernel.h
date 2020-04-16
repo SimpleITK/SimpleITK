@@ -35,7 +35,7 @@ template< unsigned int VImageDimension >
 itk::FlatStructuringElement< VImageDimension >
 CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
 {
-  typedef typename itk::FlatStructuringElement< VImageDimension > ITKKernelType;
+  using ITKKernelType = typename itk::FlatStructuringElement< VImageDimension >;
 
   typename ITKKernelType::SizeType radius = sitkSTLVectorToITK<typename ITKKernelType::SizeType>( size );
 

@@ -56,7 +56,7 @@ typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
  *
  * \sa BasicPixelID
  */
-typedef BasicPixelIDTypeList ScalarPixelIDTypeList;
+using ScalarPixelIDTypeList = BasicPixelIDTypeList;
 
 
 /** List of pixel ids which are integer types for the itk::Image class.
@@ -164,7 +164,7 @@ typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
 #endif
                                >::Type LabelPixelIDTypeList;
 
-typedef UnsignedIntegerPixelIDTypeList IntegerLabelPixelIDTypeList;
+using IntegerLabelPixelIDTypeList = UnsignedIntegerPixelIDTypeList;
 
 /** List of all pixel ids available, but itk::LabelMap this include image of itk::Image,
  * itk::VectorImage
@@ -204,7 +204,7 @@ typedef typelist::Append<
  * \sa VectorPixelID
  * \sa LabelPixelID
  */
-typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
+using InstantiatedPixelIDTypeList = AllPixelIDTypeList;
 
 }
 }

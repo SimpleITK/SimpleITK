@@ -51,8 +51,8 @@ struct MemberFunctionInstantiater
   operator()( TPixelIDType*id=nullptr ) const
     {
       Unused( id );
-      typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
-      typedef TAddressor                                                            AddressorType;
+      using ImageType = typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType;
+      using AddressorType = TAddressor;
 
       AddressorType addressor;
       m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType>(), (ImageType*)(nullptr));
@@ -119,7 +119,7 @@ template <typename TPixelIDTypeList,
 void MemberFunctionFactory<TMemberFunctionPointer>
 ::RegisterMemberFunctions( )
 {
-  typedef MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension,TAddressor > InstantiaterType;
+  using InstantiaterType = MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension,TAddressor >;
 
   // visit each type in the list, and register if instantiated
   typelist::Visit<TPixelIDTypeList> visitEachType;

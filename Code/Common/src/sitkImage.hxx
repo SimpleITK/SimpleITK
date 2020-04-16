@@ -43,7 +43,7 @@ namespace itk
   template <unsigned int VImageDimension>
   struct PixelIDToImageType< typelist::NullType , VImageDimension >
   {
-    typedef void ImageType;
+    using ImageType = void;
   };
 
   // This method is explicitly instantiated, and in-turn implicitly

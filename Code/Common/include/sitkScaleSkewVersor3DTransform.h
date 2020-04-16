@@ -37,8 +37,8 @@ class SITKCommon_EXPORT ScaleSkewVersor3DTransform
   : public Transform
 {
 public:
-  typedef ScaleSkewVersor3DTransform Self;
-  typedef Transform                  Superclass;
+  using Self = ScaleSkewVersor3DTransform;
+  using Superclass = Transform;
 
   virtual ~ScaleSkewVersor3DTransform();
 

@@ -35,7 +35,7 @@ class SITKCommon_EXPORT FunctionCommand:
 {
 public:
 
-  typedef FunctionCommand Self;
+  using Self = FunctionCommand;
 
 
   virtual ~FunctionCommand();
@@ -68,7 +68,7 @@ public:
 
 private:
 
-  typedef std::function<void()> FunctionObjectType;
+  using FunctionObjectType = std::function<void()>;
   FunctionObjectType m_Function;
 
 };
