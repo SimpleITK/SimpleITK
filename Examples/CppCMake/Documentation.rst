@@ -7,12 +7,12 @@ configure the build process.  CMake can generate project buildsystems for Unix M
 
 Here is a basic **CMakeLists.txt** configuration file for building a SimpleITK C++ example program.
 
-.. literalinclude:: CMakeLists.txt
+.. literalinclude:: ../../Examples/CppCMake/Source/CMakeLists.txt
 
 
 Here is our SimpleITK C++ example file **sitk_example.cxx**.
 
-.. literalinclude:: sitk_example.cxx
+.. literalinclude:: ../../Examples/CppCMake/Source/sitk_example.cxx
 
 
 Invoking **cmake** as below in the same directory as these files will create the project buildsystem::
