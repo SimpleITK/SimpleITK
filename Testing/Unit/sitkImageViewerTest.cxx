@@ -85,8 +85,8 @@ TEST(ImageViewerTest,GlobalDefaults)
   itk::simple::ImageViewer iv;
 
   std::vector<std::string> words;
-  words.push_back( std::string("alpha") );
-  words.push_back( std::string("beta") );
+  words.emplace_back("alpha" );
+  words.emplace_back("beta" );
 
   std::vector<std::string> path;
   iv.SetGlobalDefaultSearchPath( words );

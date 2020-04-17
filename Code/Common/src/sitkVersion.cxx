@@ -107,7 +107,7 @@ namespace itk
       {
       const char *tokenMod = std::find(strMods, strModsEnd, ';');
 
-      modules_vector.push_back(std::string(strMods, tokenMod));
+      modules_vector.emplace_back(strMods, tokenMod);
 
       strMods = tokenMod+1;
       }
