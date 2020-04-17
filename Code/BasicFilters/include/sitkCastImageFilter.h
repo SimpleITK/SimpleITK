@@ -39,7 +39,7 @@ namespace simple
  * \sa itk::simple::Cast for the procedural interface
  */
 class SITKBasicFilters_EXPORT CastImageFilter
-  : public ImageFilter<1>
+  : public ImageFilter
 {
 public:
   typedef CastImageFilter      Self;

@@ -72,7 +72,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 \sa itk::simple::LandmarkBasedTransformInitializerFilter for the procedural interface
 \sa itk::LandmarkBasedTransformInitializer for the Doxygen on the original ITK class.
      */
-    class SITKBasicFilters_EXPORT LandmarkBasedTransformInitializerFilter : public ImageFilter<0> {
+    class SITKBasicFilters_EXPORT LandmarkBasedTransformInitializerFilter : public ImageFilter {
     public:
       typedef LandmarkBasedTransformInitializerFilter Self;
 

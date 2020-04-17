@@ -299,7 +299,7 @@ TEST(BasicFilters,ImageFilter) {
   namespace sitk = itk::simple;
 
   sitk::CastImageFilter caster;
-  sitk::ImageFilter<1> &filter = caster;
+  sitk::ImageFilter &filter = caster;
 
   filter.DebugOn();
 }
