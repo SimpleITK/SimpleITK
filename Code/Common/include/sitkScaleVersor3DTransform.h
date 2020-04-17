@@ -38,8 +38,8 @@ class SITKCommon_EXPORT ScaleVersor3DTransform
   : public Transform
 {
 public:
-  typedef ScaleVersor3DTransform Self;
-  typedef Transform              Superclass;
+  using Self = ScaleVersor3DTransform;
+  using Superclass = Transform;
 
   ~ScaleVersor3DTransform() override;
 

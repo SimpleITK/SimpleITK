@@ -42,7 +42,7 @@ class SITKBasicFilters_EXPORT CastImageFilter
   : public ImageFilter
 {
 public:
-  typedef CastImageFilter      Self;
+  using Self = CastImageFilter;
 
   /** Set/Get the output pixel type */
   SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
@@ -100,7 +100,7 @@ private:
   template < class TMemberFunctionPointer >
   struct CastAddressor
   {
-    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+    using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template< typename TImageType1, typename TImageType2 >
     TMemberFunctionPointer operator() ( ) const
@@ -115,7 +115,7 @@ private:
   template < class TMemberFunctionPointer >
   struct ToVectorAddressor
   {
-    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+    using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template< typename TImageType1, typename TImageType2 >
     TMemberFunctionPointer operator() ( ) const
@@ -130,7 +130,7 @@ private:
   template < class TMemberFunctionPointer >
   struct ToLabelAddressor
   {
-    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+    using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template< typename TImageType1, typename TImageType2 >
     TMemberFunctionPointer operator() ( ) const
@@ -145,7 +145,7 @@ private:
   template < class TMemberFunctionPointer >
   struct LabelToAddressor
   {
-    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+    using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template< typename TImageType1, typename TImageType2 >
     TMemberFunctionPointer operator() ( ) const

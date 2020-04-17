@@ -30,7 +30,7 @@
 
 TEST( VersionTest, VersoinTest)
 {
-  typedef itk::simple::Version Version;
+  using Version = itk::simple::Version;
 
   EXPECT_EQ(Version::MajorVersion(), SimpleITK_VERSION_MAJOR);
   EXPECT_EQ(Version::MinorVersion(), SimpleITK_VERSION_MINOR);

@@ -61,7 +61,7 @@ namespace itk {
       : public ImageReaderBase
     {
     public:
-      typedef ImageFileReader Self;
+      using Self = ImageFileReader;
 
       ~ImageFileReader() override;
 

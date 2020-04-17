@@ -53,8 +53,8 @@ itk::ImageToImageMetricv4<TImageType,
                           >*
 ImageRegistrationMethod::CreateMetric( )
 {
-  typedef TImageType     FixedImageType;
-  typedef TImageType     MovingImageType;
+  using FixedImageType = TImageType;
+  using MovingImageType = TImageType;
 
 
   switch (m_MetricType)

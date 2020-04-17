@@ -36,8 +36,8 @@ class SITKCommon_EXPORT Similarity2DTransform
   : public Transform
 {
 public:
-  typedef Similarity2DTransform Self;
-  typedef Transform             Superclass;
+  using Self = Similarity2DTransform;
+  using Superclass = Transform;
 
   ~Similarity2DTransform() override;
 

@@ -86,9 +86,9 @@ namespace itk {
     template <class TLabelImageType>
     std::string HashImageFilter::ExecuteInternalLabelImage( const Image &inImage )
     {
-      typedef TLabelImageType LabelImageType;
+      using LabelImageType = TLabelImageType;
 
-      typedef itk::Image< typename LabelImageType::PixelType, LabelImageType::ImageDimension > ScalarImageType;
+      using ScalarImageType = itk::Image< typename LabelImageType::PixelType, LabelImageType::ImageDimension >;
 
       // The image id for a scalar image of the label map image
       PixelIDValueEnum scalarID = static_cast<PixelIDValueEnum>(PixelIDToPixelIDValue< typename ImageTypeToPixelID<ScalarImageType>::PixelIDType >::Result);
@@ -102,12 +102,12 @@ namespace itk {
     template <class TImageType>
     std::string HashImageFilter::ExecuteInternal ( const Image& inImage )
     {
-      typedef TImageType                                   InputImageType;
+      using InputImageType = TImageType;
 
       typename InputImageType::ConstPointer image =
         dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
 
-      typedef itk::HashImageFilter<InputImageType> HashFilterType;
+      using HashFilterType = itk::HashImageFilter<InputImageType>;
       typename HashFilterType::Pointer hasher = HashFilterType::New();
       hasher->SetInput( image );
       hasher->InPlaceOff(); // pointless copy of data needed

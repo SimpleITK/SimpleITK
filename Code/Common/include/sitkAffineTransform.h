@@ -36,8 +36,8 @@ class SITKCommon_EXPORT AffineTransform
   : public Transform
 {
 public:
-  typedef AffineTransform Self;
-  typedef Transform       Superclass;
+  using Self = AffineTransform;
+  using Superclass = Transform;
 
   ~AffineTransform() override;
 

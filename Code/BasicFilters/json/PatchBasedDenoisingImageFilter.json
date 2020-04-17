@@ -9,7 +9,7 @@
   "include_files" : [
     "itkGaussianRandomSpatialNeighborSubsampler.h"
   ],
-  "custom_set_input" : "filter->SetInput( image1 );\n  typedef itk::Statistics::GaussianRandomSpatialNeighborSubsampler< typename FilterType::PatchSampleType, typename InputImageType::RegionType> SamplerType;\n  typename SamplerType::Pointer sampler = SamplerType::New();\n  sampler->SetVariance(m_SampleVariance);\n  sampler->SetRadius(itk::Math::Floor<unsigned int>(std::sqrt(m_SampleVariance)*2.5));\n  sampler->SetNumberOfResultsRequested(m_NumberOfSamplePatches);\n  filter->SetSampler(sampler);",
+  "custom_set_input" : "filter->SetInput( image1 );\n  using SamplerType = itk::Statistics::GaussianRandomSpatialNeighborSubsampler< typename FilterType::PatchSampleType, typename InputImageType::RegionType>;\n  typename SamplerType::Pointer sampler = SamplerType::New();\n  sampler->SetVariance(m_SampleVariance);\n  sampler->SetRadius(itk::Math::Floor<unsigned int>(std::sqrt(m_SampleVariance)*2.5));\n  sampler->SetNumberOfResultsRequested(m_NumberOfSamplePatches);\n  filter->SetSampler(sampler);",
   "members" : [
     {
       "name" : "KernelBandwidthSigma",
@@ -150,7 +150,7 @@
     }
   ],
   "briefdescription" : "Derived class implementing a specific patch-based denoising algorithm, as detailed below.",
-  "detaileddescription" : "This class is derived from the base class PatchBasedDenoisingBaseImageFilter ; please refer to the documentation of the base class first. This class implements a denoising filter that uses iterative non-local, or semi-local, weighted averaging of image patches for image denoising. The intensity at each pixel 'p' gets updated as a weighted average of intensities of a chosen subset of pixels from the image.\n\nThis class implements the denoising algorithm using a Gaussian kernel function for nonparametric density estimation. The class implements a scheme to automatically estimated the kernel bandwidth parameter (namely, sigma) using leave-one-out cross validation. It implements schemes for random sampling of patches non-locally (from the entire image) as well as semi-locally (from the spatial proximity of the pixel being denoised at the specific point in time). It implements a specific scheme for defining patch weights (mask) as described in Awate and Whitaker 2005 IEEE CVPR and 2006 IEEE TPAMI.\n\n\\see PatchBasedDenoisingBaseImageFilter",
+  "detaileddescription" : "This class is derived from the base class PatchBasedDenoisingBaseImageFilter; please refer to the documentation of the base class first. This class implements a denoising filter that uses iterative non-local, or semi-local, weighted averaging of image patches for image denoising. The intensity at each pixel 'p' gets updated as a weighted average of intensities of a chosen subset of pixels from the image.\n\nThis class implements the denoising algorithm using a Gaussian kernel function for nonparametric density estimation. The class implements a scheme to automatically estimated the kernel bandwidth parameter (namely, sigma) using leave-one-out cross validation. It implements schemes for random sampling of patches non-locally (from the entire image) as well as semi-locally (from the spatial proximity of the pixel being denoised at the specific point in time). It implements a specific scheme for defining patch weights (mask) as described in Awate and Whitaker 2005 IEEE CVPR and 2006 IEEE TPAMI.\n\n\\see PatchBasedDenoisingBaseImageFilter",
   "itk_module" : "ITKDenoising",
   "itk_group" : "Denoising",
   "in_place" : false

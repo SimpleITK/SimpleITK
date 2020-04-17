@@ -65,7 +65,7 @@ template< typename TITKPointVector, typename TType>
 TITKPointVector SITKCommon_HIDDEN sitkSTLVectorToITKPointVector( const std::vector< TType > & in )
 {
 
-  typedef TITKPointVector itkPointVectorType;
+  using itkPointVectorType = TITKPointVector;
   itkPointVectorType out;
 
   unsigned int Dimension = itkPointVectorType::value_type::GetPointDimension();
@@ -88,7 +88,7 @@ TITKPointVector SITKCommon_HIDDEN sitkSTLVectorToITKPointVector( const std::vect
 template< typename TITKVector, typename TType>
 TITKVector SITKCommon_HIDDEN sitkSTLVectorToITK( const std::vector< TType > & in )
 {
-  typedef TITKVector itkVectorType;
+  using itkVectorType = TITKVector;
   if ( in.size() < itkVectorType::Dimension )
     {
     sitkExceptionMacro(<<"Unable to convert vector to ITK type\n"
@@ -123,7 +123,7 @@ std::vector<TType> SITKCommon_HIDDEN sitkITKVectorToSTL( const TITKVector & in )
 template<typename TType,  typename TVectorOfITKVector>
 std::vector<TType> SITKCommon_HIDDEN sitkVectorOfITKVectorToSTL( const TVectorOfITKVector & in )
 {
-  typedef typename TVectorOfITKVector::ValueType ITKVectorType;
+  using ITKVectorType = typename TVectorOfITKVector::ValueType;
   std::vector<TType> out;
   out.reserve( in.Size()*ITKVectorType::Dimension );
   for( unsigned int i = 0; i < in.Size(); ++i )
@@ -178,7 +178,7 @@ TDirectionType SITKCommon_HIDDEN  sitkSTLToITKDirection( const std::vector<doubl
 {
   TDirectionType itkDirection;
 
-  if ( direction.size() == 0 )
+  if ( direction.empty() )
     {
     itkDirection.SetIdentity();
     }
@@ -205,7 +205,7 @@ std::vector<double> SITKCommon_HIDDEN  sitkITKDirectionToSTL( const TDirectionTy
 template< typename T, typename TType>
 itk::Versor<T> SITKCommon_HIDDEN  sitkSTLVectorToITKVersor( const std::vector< TType > & in )
 {
-  typedef itk::Versor<T> itkVectorType;
+  using itkVectorType = itk::Versor<T>;
   if ( in.size() != 4 )
     {
     sitkExceptionMacro(<<"Unable to convert vector to ITK Versor type\n"

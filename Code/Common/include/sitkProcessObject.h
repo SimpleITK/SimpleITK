@@ -52,7 +52,7 @@ namespace itk {
       protected NonCopyable
   {
     public:
-      typedef ProcessObject Self;
+      using Self = ProcessObject;
 
       /**
        * Default Constructor that takes no arguments and initializes

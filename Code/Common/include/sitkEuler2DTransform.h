@@ -36,8 +36,8 @@ class SITKCommon_EXPORT Euler2DTransform
   : public Transform
 {
 public:
-  typedef Euler2DTransform Self;
-  typedef Transform        Superclass;
+  using Self = Euler2DTransform;
+  using Superclass = Transform;
 
   ~Euler2DTransform() override;
 

@@ -42,11 +42,11 @@ namespace itk
       // initialize member function factory for allocating images
 
       // The pixel IDs supported
-      typedef AllPixelIDTypeList              PixelIDTypeList;
+      using PixelIDTypeList = AllPixelIDTypeList;
 
       typedef void ( Self::*MemberFunctionType )( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
 
-      typedef AllocateMemberFunctionAddressor< MemberFunctionType > AllocateAddressor;
+      using AllocateAddressor = AllocateMemberFunctionAddressor< MemberFunctionType >;
 
       detail::MemberFunctionFactory< MemberFunctionType > allocateMemberFactory( this );
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, AllocateAddressor > ();

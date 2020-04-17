@@ -41,13 +41,13 @@ class HashImageFilter:
     public CastImageFilter< TImageType, TImageType >
 {
 public:
-  /** Standard Self typedef */
-  typedef HashImageFilter                           Self;
-  typedef CastImageFilter< TImageType, TImageType > Superclass;
-  typedef SmartPointer< Self >                      Pointer;
-  typedef SmartPointer< const Self >                ConstPointer;
+  /** Standard Self type alias */
+  using Self = HashImageFilter;
+  using Superclass = CastImageFilter< TImageType, TImageType >;
+  using Pointer = SmartPointer< Self >;
+  using ConstPointer = SmartPointer< const Self >;
 
-  typedef typename TImageType::RegionType RegionType;
+  using RegionType = typename TImageType::RegionType;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
@@ -56,10 +56,10 @@ public:
   itkTypeMacro(HashImageFilter, CastImageFilter);
 
   /** Smart Pointer type to a DataObject. */
-  typedef typename DataObject::Pointer DataObjectPointer;
+  using DataObjectPointer = typename DataObject::Pointer;
 
   /** Type of DataObjects used for scalar outputs */
-  typedef SimpleDataObjectDecorator< std::string >  HashObjectType;
+  using HashObjectType = SimpleDataObjectDecorator< std::string >;
 
   /** Get the computed Hash values */
   std::string GetHash() const
@@ -77,7 +77,7 @@ public:
 
 /** Make a DataObject of the correct type to be used as the specified
    * output. */
-  typedef ProcessObject::DataObjectPointerArraySizeType DataObjectPointerArraySizeType;
+  using DataObjectPointerArraySizeType = ProcessObject::DataObjectPointerArraySizeType;
   using Superclass::MakeOutput;
   DataObjectPointer MakeOutput(DataObjectPointerArraySizeType idx) override;
 

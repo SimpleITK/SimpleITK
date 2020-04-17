@@ -193,9 +193,9 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     PyErr_Clear();
 
 #ifdef PY_SSIZE_T_CLEAN
-    typedef Py_ssize_t bufSizeType;
+    using bufSizeType = Py_ssize_t;
 #else
-    typedef int bufSizeType;
+    using bufSizeType = int;
 #endif
 
     bufSizeType _len;

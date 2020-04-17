@@ -62,7 +62,7 @@ public:
 
 TEST_F(TypeListTest, Visit) {
 
-  typedef typelist::MakeTypeList<int, char, void>::Type MyTypeList;
+  using MyTypeList = typelist::MakeTypeList<int, char, void>::Type;
 
   typelist::Visit<MyTypeList> ListVisitor;
   ListVisitor( pred );
@@ -75,7 +75,7 @@ TEST_F(TypeListTest, Visit) {
 
 TEST_F(TypeListTest, DualVisit) {
 
-  typedef typelist::MakeTypeList<int, char, short>::Type MyTypeList;
+  using MyTypeList = typelist::MakeTypeList<int, char, short>::Type;
 
   typelist::DualVisit<MyTypeList,MyTypeList> ListVisitor;
   ListVisitor( pred );

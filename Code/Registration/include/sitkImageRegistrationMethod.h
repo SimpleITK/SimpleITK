@@ -91,8 +91,8 @@ namespace simple
   {
   public:
 
-    typedef ImageRegistrationMethod Self;
-    typedef ProcessObject Superclass;
+    using Self = ImageRegistrationMethod;
+    using Superclass = ProcessObject;
 
     ~ImageRegistrationMethod() override;
 
@@ -686,7 +686,7 @@ namespace simple
     template < class TMemberFunctionPointer >
       struct EvaluateMemberFunctionAddressor
     {
-      typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+      using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
       template< typename TImageType >
       TMemberFunctionPointer operator() ( ) const

@@ -36,8 +36,8 @@ SITKCommon_HIDDEN
 typename itk::Image< itk::Vector< TPixelType, ImageDimension >, ImageDimension>::Pointer
 GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bool transferOwnership )
 {
-  typedef itk::Image< itk::Vector< TPixelType, ImageDimension >, ImageDimension> ImageType;
-  typedef itk::VectorImage< TPixelType, ImageDimension > VectorImageType;
+  using ImageType = itk::Image< itk::Vector< TPixelType, ImageDimension >, ImageDimension>;
+  using VectorImageType = itk::VectorImage< TPixelType, ImageDimension >;
 
   // check number of element compatibility
   if ( img->GetNumberOfComponentsPerPixel() != VectorImageType::ImageDimension )
@@ -79,8 +79,8 @@ SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership )
 {
-  typedef itk::VectorImage< TPixelType, NImageDimension > VectorImageType;
-  typedef itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> ImageType;
+  using VectorImageType = itk::VectorImage< TPixelType, NImageDimension >;
+  using ImageType = itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension>;
 
   size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
   typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
@@ -124,8 +124,8 @@ SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::CovariantVector< TPixelType, NLength>, NImageDimension> *img, bool transferOwnership )
 {
-  typedef itk::VectorImage< TPixelType, NImageDimension > VectorImageType;
-  typedef itk::Image< itk::CovariantVector< TPixelType, NLength >, NImageDimension> ImageType;
+  using VectorImageType = itk::VectorImage< TPixelType, NImageDimension >;
+  using ImageType = itk::Image< itk::CovariantVector< TPixelType, NLength >, NImageDimension>;
 
   size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
   typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );

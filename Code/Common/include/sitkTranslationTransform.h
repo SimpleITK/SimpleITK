@@ -36,8 +36,8 @@ class SITKCommon_EXPORT TranslationTransform
   : public Transform
 {
 public:
-typedef TranslationTransform Self;
-typedef Transform            Superclass;
+using Self = TranslationTransform;
+using Superclass = Transform;
 
 ~TranslationTransform() override;
 

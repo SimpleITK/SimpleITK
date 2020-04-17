@@ -31,7 +31,7 @@ namespace detail {
 template < class TMemberFunctionPointer >
 struct MemberFunctionAddressor
 {
-  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+  using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template< typename TImageType >
   TMemberFunctionPointer operator() ( ) const
@@ -43,7 +43,7 @@ struct MemberFunctionAddressor
 template < class TMemberFunctionPointer >
 struct DualExecuteInternalAddressor
 {
-  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+  using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template< typename TImageType1, typename TImageType2 >
   TMemberFunctionPointer operator() ( ) const
@@ -58,7 +58,7 @@ struct DualExecuteInternalAddressor
 template < class TMemberFunctionPointer >
 struct ExecuteInternalVectorImageAddressor
 {
-  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+  using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template< typename TImageType >
   TMemberFunctionPointer operator() ( ) const
@@ -74,7 +74,7 @@ struct ExecuteInternalVectorImageAddressor
 template < class TMemberFunctionPointer >
 struct DualExecuteInternalVectorAddressor
 {
-  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+  using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template< typename TImageType1, typename TImageType2 >
   TMemberFunctionPointer operator() ( ) const
@@ -89,7 +89,7 @@ struct DualExecuteInternalVectorAddressor
 template < class TMemberFunctionPointer >
 struct ExecuteInternalLabelImageAddressor
 {
-  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+  using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template< typename TImageType >
   TMemberFunctionPointer operator() ( ) const

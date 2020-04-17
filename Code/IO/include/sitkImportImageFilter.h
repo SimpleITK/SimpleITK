@@ -47,7 +47,7 @@ namespace itk {
     class SITKIO_EXPORT ImportImageFilter
       : public ImageReaderBase {
     public:
-      typedef ImportImageFilter Self;
+      using Self = ImportImageFilter;
 
       ~ImportImageFilter() override;
 

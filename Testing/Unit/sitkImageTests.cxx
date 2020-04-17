@@ -49,7 +49,7 @@ using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image : public ::testing::Test {
 public:
-  typedef std::unique_ptr<itk::simple::Image> sitkAutoImagePointer;
+  using sitkAutoImagePointer = std::unique_ptr<itk::simple::Image>;
 
   void SetUp() override {
     itk::ImageBase<3>::IndexType index;
@@ -105,18 +105,18 @@ public:
 
   itk::ImageBase<3>::Pointer itkShortImage;
 
-  typedef itk::Image<short,3> ShortImageType;
+  using ShortImageType = itk::Image<short,3>;
   sitkAutoImagePointer shortImage;
 
-  typedef itk::Image<float,3> FloatImageType;
+  using FloatImageType = itk::Image<float,3>;
   sitkAutoImagePointer floatImage;
   FloatImageType::Pointer itkFloatImage;
 
-  typedef itk::VectorImage<float,3> FloatVectorImageType;
+  using FloatVectorImageType = itk::VectorImage<float,3>;
   sitkAutoImagePointer floatVectorImage;
   FloatVectorImageType::Pointer itkFloatVectorImage;
 
-  typedef itk::VectorImage<float,2> FloatVector2DImageType;
+  using FloatVector2DImageType = itk::VectorImage<float,2>;
   sitkAutoImagePointer floatVector2DImage;
   FloatVector2DImageType::Pointer itkFloatVector2DImage;
 
@@ -420,7 +420,7 @@ TEST_F(Image,Properties) {
   // SetDirection
   std::vector<double> vdir( adir, adir+9);
   shortImage->SetDirection( vdir );
-  for( unsigned int i = 0 ; i < 9; ++i )
+  for( unsigned int i = 0; i < 9; ++i )
     {
     EXPECT_EQ ( shortImage->GetDirection()[i], vdir[i] ) << " Checking Direction matrix at index " << i;
     }

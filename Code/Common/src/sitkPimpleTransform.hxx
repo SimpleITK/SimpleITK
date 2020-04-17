@@ -150,7 +150,7 @@ public:
 
   virtual bool IsLinear() const
     {
-      typedef itk::TransformBaseTemplate<double>::TransformCategoryEnum TransformCategoryEnum;
+      using TransformCategoryEnum = itk::TransformBaseTemplate<double>::TransformCategoryEnum;
       return (this->GetTransformBase()->GetTransformCategory() == TransformCategoryEnum::Linear);
     }
 
@@ -181,11 +181,11 @@ class SITKCommon_HIDDEN PimpleTransform
   : public PimpleTransformBase
 {
 public:
-  typedef PimpleTransform                  Self;
-  typedef TTransformType                   TransformType;
-  typedef typename TransformType::Pointer  TransformPointer;
+  using Self = PimpleTransform;
+  using TransformType = TTransformType;
+  using TransformPointer = typename TransformType::Pointer;
 
-  typedef itk::CompositeTransform<double, TransformType::InputSpaceDimension> CompositeTransformType;
+  using CompositeTransformType = itk::CompositeTransform<double, TransformType::InputSpaceDimension>;
 
   static const unsigned int InputDimension = TTransformType::InputSpaceDimension;
   static const unsigned int OutputDimension = TTransformType::OutputSpaceDimension;
@@ -261,7 +261,7 @@ public:
   template <typename UScalar, unsigned int UDimension>
   void SetIdentity( itk::DisplacementFieldTransform<UScalar, UDimension> *self)
       {
-        typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
+        using DFTType = itk::DisplacementFieldTransform<UScalar, UDimension>;
         typename DFTType::DisplacementFieldType *displacementField;
 
         displacementField = self->GetModifiableDisplacementField();
@@ -279,7 +279,7 @@ public:
   template <typename UScalar, unsigned int UDimension>
   void SetIdentity( itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<UScalar, UDimension> *self)
       {
-        typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
+        using DFTType = itk::DisplacementFieldTransform<UScalar, UDimension>;
         typename DFTType::DisplacementFieldType *displacementField;
 
         displacementField = self->GetModifiableDisplacementField();
@@ -297,7 +297,7 @@ public:
   template <typename UScalar, unsigned int UDimension>
   void SetIdentity( itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<UScalar, UDimension> *self)
       {
-        typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
+        using DFTType = itk::DisplacementFieldTransform<UScalar, UDimension>;
         typename DFTType::DisplacementFieldType *displacementField;
 
         displacementField = self->GetModifiableDisplacementField();

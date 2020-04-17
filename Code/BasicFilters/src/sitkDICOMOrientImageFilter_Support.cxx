@@ -29,7 +29,7 @@ namespace itk {
 
   std::string DICOMOrientImageFilter::GetOrientationFromDirectionCosines( const std::vector<double> &direction )
   {
-    typedef typename itk::ImageBase<3>::DirectionType DirectionType;
+    using DirectionType = typename itk::ImageBase<3>::DirectionType;
     const DirectionType itkDirection = sitkSTLToITKDirection<DirectionType>(direction);
 
     const DICOMOrientation orientation(itkDirection);

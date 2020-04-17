@@ -38,13 +38,13 @@ template <bool VCond, int TIfTrue, int TIfFalse>
 struct ConditionalValue
 {
 private:
-  typedef ConditionalValue Self;
+  using Self = ConditionalValue;
   typedef typename std::conditional<VCond,
                                     std::integral_constant<int, TIfTrue>,
                                     std::integral_constant<int, TIfFalse> >::type ConditionalType;
 public:
-  typedef typename ConditionalType::type       Type;
-  typedef typename ConditionalType::value_type ValueType;
+  using Type = typename ConditionalType::type;
+  using ValueType = typename ConditionalType::value_type;
 
   static const ValueType Value = ConditionalType::value;
 };

@@ -37,8 +37,8 @@ class SITKCommon_EXPORT DisplacementFieldTransform
   : public Transform
 {
 public:
-  typedef DisplacementFieldTransform Self;
-  typedef Transform                  Superclass;
+  using Self = DisplacementFieldTransform;
+  using Superclass = Transform;
 
   ~DisplacementFieldTransform() override;
 

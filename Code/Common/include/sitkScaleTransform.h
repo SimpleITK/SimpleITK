@@ -36,8 +36,8 @@ class SITKCommon_EXPORT ScaleTransform
   : public Transform
 {
 public:
-  typedef ScaleTransform Self;
-  typedef Transform      Superclass;
+  using Self = ScaleTransform;
+  using Superclass = Transform;
 
   ~ScaleTransform() override;
 

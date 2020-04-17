@@ -75,7 +75,7 @@ namespace simple
   class SITKCommon_EXPORT Image
   {
   public:
-    typedef Image              Self;
+    using Self = Image;
 
     virtual ~Image( );
 
@@ -531,7 +531,7 @@ namespace simple
     template < class TMemberFunctionPointer >
     struct AllocateMemberFunctionAddressor
     {
-      typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+      using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
       template< typename TImageType >
       TMemberFunctionPointer operator() ( ) const

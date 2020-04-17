@@ -49,10 +49,10 @@ class SmartPointer;
       public ProcessObject
     {
     public:
-      typedef ImageFileWriter Self;
+      using Self = ImageFileWriter;
 
       // list of pixel types supported
-      typedef NonLabelPixelIDTypeList PixelIDTypeList;
+      using PixelIDTypeList = NonLabelPixelIDTypeList;
 
       ~ImageFileWriter() override;
 

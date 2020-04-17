@@ -38,7 +38,7 @@ namespace detail {
  *
  *  Example member function pointer:
  *  \code
- *  typedef Self& (Self::*MemberFunctionType)( Image* );
+ *  type alias Self& (Self::*MemberFunctionType)( Image* );
  *  \endcode
  *
  *  The RegisterMemberFunctions instantiate the templeted member
@@ -58,12 +58,12 @@ class MemberFunctionFactory
 
 public:
 
-  typedef MemberFunctionFactoryBase<TMemberFunctionPointer, int> Superclass;
-  typedef MemberFunctionFactory                                  Self;
+  using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, int>;
+  using Self = MemberFunctionFactory;
 
-  typedef TMemberFunctionPointer                                           MemberFunctionType;
-  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType ObjectType;
-  typedef typename Superclass::FunctionObjectType                          FunctionObjectType;
+  using MemberFunctionType = TMemberFunctionPointer;
+  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
+  using FunctionObjectType = typename Superclass::FunctionObjectType;
 
   /** \brief Constructor which permanently binds the constructed
   * object to pObject */
@@ -90,7 +90,7 @@ public:
    * template < class TMemberFunctionPointer >
    * struct AllocateAddressor
    * {
-   *   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+   *   using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
    *
    *   template< typename TImageType >
    *   TMemberFunctionPointer operator() ( void ) const
@@ -119,7 +119,7 @@ public:
   template < typename TPixelIDTypeList, unsigned int VImageDimension >
   void RegisterMemberFunctions( )
   {
-    typedef detail::MemberFunctionAddressor< TMemberFunctionPointer > AddressorType;
+    using AddressorType = detail::MemberFunctionAddressor< TMemberFunctionPointer >;
     this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType >();
   }
   /** @} */

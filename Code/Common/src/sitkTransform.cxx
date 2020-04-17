@@ -77,30 +77,30 @@ template<class T>
 class TransformTraits<T,2>
 {
 public:
-  typedef itk::Euler2DTransform<T>       EulerTransformType;
-  typedef itk::Similarity2DTransform<T>  SimilarityTransformType;
+  using EulerTransformType = itk::Euler2DTransform<T>;
+  using SimilarityTransformType = itk::Similarity2DTransform<T>;
 };
 
 template<class T>
 class TransformTraits<T,3>
 {
 public:
-  typedef itk::Euler3DTransform<T>       EulerTransformType;
-  typedef itk::Similarity3DTransform<T>  SimilarityTransformType;
+  using EulerTransformType = itk::Euler3DTransform<T>;
+  using SimilarityTransformType = itk::Similarity3DTransform<T>;
 };
 
 template<unsigned int Dimension>
 bool RegisterMoreTransforms()
 {
-  typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
+  using MatrixOffsetTransformType = itk::MatrixOffsetTransformBase<double, Dimension, Dimension>;
   itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
 
   // Only BSpline transforms of order 3 are registered in ITK
-  typedef itk::BSplineTransform<double, Dimension, 0> BSplineTransformO0Type;
+  using BSplineTransformO0Type = itk::BSplineTransform<double, Dimension, 0>;
   itk::TransformFactory<BSplineTransformO0Type>::RegisterTransform();
-  typedef itk::BSplineTransform<double, Dimension, 1> BSplineTransformO1Type;
+  using BSplineTransformO1Type = itk::BSplineTransform<double, Dimension, 1>;
   itk::TransformFactory<BSplineTransformO1Type>::RegisterTransform();
-  typedef itk::BSplineTransform<double, Dimension, 2> BSplineTransformO2Type;
+  using BSplineTransformO2Type = itk::BSplineTransform<double, Dimension, 2>;
   itk::TransformFactory<BSplineTransformO2Type>::RegisterTransform();
 
   return true;
@@ -178,11 +178,11 @@ Transform::Transform( Image &image, TransformEnum txType )
       const unsigned int dimension = image.GetDimension();
 
       // The pixel IDs supported
-      typedef typelist::MakeTypeList<VectorPixelID<double> >::Type PixelIDTypeList;
+      using PixelIDTypeList = typelist::MakeTypeList<VectorPixelID<double> >::Type;
 
       typedef void (Self::*MemberFunctionType)( Image & );
 
-      typedef DisplacementInitializationMemberFunctionAddressor<MemberFunctionType> Addressor;
+      using Addressor = DisplacementInitializationMemberFunctionAddressor<MemberFunctionType>;
 
       detail::MemberFunctionFactory<MemberFunctionType> initializationMemberFactory(this);
       initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  Addressor > ();
@@ -218,7 +218,7 @@ Transform::Transform( Image &image, TransformEnum txType )
 template< unsigned int ImageDimension>
 void Transform::InternalBSplineInitialization( Image & inImage )
 {
-  typedef itk::ImageBase<ImageDimension> ImageType;
+  using ImageType = itk::ImageBase<ImageDimension>;
   typename ImageType::Pointer image = dynamic_cast<ImageType *>( inImage.GetITKBase() );
 
   if ( !image )
@@ -226,7 +226,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
     sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
-  typedef itk::BSplineTransform<double,ImageDimension,3> BSplineTransformType;
+  using BSplineTransformType = itk::BSplineTransform<double,ImageDimension,3>;
   typename BSplineTransformType::Pointer itkBSpline = BSplineTransformType::New();
 
   itkBSpline->SetTransformDomainOrigin( image->GetOrigin() );
@@ -245,7 +245,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
   itkBSpline->SetTransformDomainPhysicalDimensions( fixedPhysicalDimensions );
 
 
-  typedef typename BSplineTransformType::ParametersType ParametersType;
+  using ParametersType = typename BSplineTransformType::ParametersType;
 
   typename HolderCommand<ParametersType *>::Pointer holder = HolderCommand<ParametersType *>::New();
   itkBSpline->AddObserver( itk::DeleteEvent(), holder);
@@ -261,13 +261,13 @@ void Transform::InternalBSplineInitialization( Image & inImage )
   template< typename TDisplacementType >
   void Transform::InternalDisplacementInitialization( Image & inImage )
   {
-    typedef TDisplacementType VectorImageType;
+    using VectorImageType = TDisplacementType;
 
-    typedef typename VectorImageType::InternalPixelType ComponentType;
+    using ComponentType = typename VectorImageType::InternalPixelType;
     const unsigned int ImageDimension = VectorImageType::ImageDimension;
 
-    typedef itk::Image< itk::Vector<ComponentType, ImageDimension>, ImageDimension > ITKDisplacementType;
-    typedef itk::DisplacementFieldTransform< ComponentType, ImageDimension > DisplacementTransformType;
+    using ITKDisplacementType = itk::Image< itk::Vector<ComponentType, ImageDimension>, ImageDimension >;
+    using DisplacementTransformType = itk::DisplacementFieldTransform< ComponentType, ImageDimension >;
 
     typename VectorImageType::Pointer image = dynamic_cast < VectorImageType* > ( inImage.GetITKBase() );
 
@@ -379,7 +379,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
           // base argument was non-composite place into composite
           if ( base )
             {
-            typedef itk::Transform<double,  VDimension,  VDimension> TransformType;
+            using TransformType = itk::Transform<double,  VDimension,  VDimension>;
             TransformType* itktx = dynamic_cast<TransformType*>(base);
 
             compositeTransform->ClearTransformQueue();
@@ -392,7 +392,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
           {
 
           // Load an identity transform in case no transforms are loaded.
-          typedef itk::IdentityTransform<double, VDimension> IdentityTransformType;
+          using IdentityTransformType = itk::IdentityTransform<double, VDimension>;
           typename IdentityTransformType::Pointer identityTransform = IdentityTransformType::New();
 
           compositeTransform->AddTransform( identityTransform );
@@ -682,7 +682,7 @@ void Transform::InternalInitialization(TransformType *t)
     if( list->front()->GetInputSpaceDimension() == 3
         && list->front()->GetOutputSpaceDimension() == 3 )
       {
-      typedef itk::Transform<double, 3, 3> TransformType3D;
+      using TransformType3D = itk::Transform<double, 3, 3>;
       TransformType3D* itktx3d = dynamic_cast<TransformType3D*>(list->front().GetPointer());
       if (!itktx3d)
         {
@@ -697,7 +697,7 @@ void Transform::InternalInitialization(TransformType *t)
         && list->front()->GetOutputSpaceDimension() == 2)
       {
 
-      typedef itk::Transform<double, 2, 2> TransformType2D;
+      using TransformType2D = itk::Transform<double, 2, 2>;
       TransformType2D* itktx2d = dynamic_cast<TransformType2D*>(list->front().GetPointer());
       if (!itktx2d)
         {

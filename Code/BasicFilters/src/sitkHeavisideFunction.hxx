@@ -26,17 +26,17 @@ namespace itk {
 namespace simple {
 
   if (m_HeavisideStepFunction == AtanRegularizedHeaviside) {
-    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;
+    using DomainFunctionType = itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >;
     typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();
     domainFunction->SetLambda(m_Lambda);
     filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );
   } else if ( m_HeavisideStepFunction == SinRegularizedHeaviside ) {
-    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;
+    using DomainFunctionType = itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >;
     typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();
     domainFunction->SetLambda(m_Lambda);
     filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );
   } else {
-    typedef itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;
+    using DomainFunctionType = itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >;
     typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();
     filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );
   }

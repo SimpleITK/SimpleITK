@@ -35,7 +35,7 @@ namespace itk
 class TransformBase;
 #else
 template< typename TScalar > class TransformBaseTemplate;
-typedef TransformBaseTemplate<double> TransformBase;
+using TransformBase = TransformBaseTemplate<double>;
 #endif
 
 template< typename TScalar, unsigned int NDimension> class CompositeTransform;
@@ -84,7 +84,7 @@ enum TransformEnum { sitkIdentity,
 class SITKCommon_EXPORT Transform
 {
 public:
-  typedef Transform Self;
+  using Self = Transform;
 
   /** \brief By default a 3-d identity transform is constructed
    */
@@ -303,7 +303,7 @@ private:
   template < class TMemberFunctionPointer >
     struct DisplacementInitializationMemberFunctionAddressor
   {
-    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+    using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template< typename TImageType >
     TMemberFunctionPointer operator() ( ) const

@@ -87,7 +87,7 @@ ImageRegistrationMethod::ImageRegistrationMethod()
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3 > ();
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2 > ();
 
-  typedef EvaluateMemberFunctionAddressor<EvaluateMemberFunctionType> EvaluateMemberFunctionAddressorType;
+  using EvaluateMemberFunctionAddressorType = EvaluateMemberFunctionAddressor<EvaluateMemberFunctionType>;
   m_EvaluateMemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3, EvaluateMemberFunctionAddressorType > ();
   m_EvaluateMemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2, EvaluateMemberFunctionAddressorType > ();
 
@@ -694,7 +694,7 @@ ImageRegistrationMethod::CreateScalesEstimator()
     {
     case Jacobian:
     {
-      typedef RegistrationParameterScalesFromJacobian<TMetric> ScalesEstimatorType;
+      using ScalesEstimatorType = RegistrationParameterScalesFromJacobian<TMetric>;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
       scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
       scalesEstimator->Register();
@@ -702,7 +702,7 @@ ImageRegistrationMethod::CreateScalesEstimator()
     }
     case IndexShift:
     {
-      typedef RegistrationParameterScalesFromIndexShift<TMetric> ScalesEstimatorType;
+      using ScalesEstimatorType = RegistrationParameterScalesFromIndexShift<TMetric>;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
       scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
       scalesEstimator->SetSmallParameterVariation(this->m_OptimizerScalesSmallParameterVariation);
@@ -711,7 +711,7 @@ ImageRegistrationMethod::CreateScalesEstimator()
     }
     case PhysicalShift:
     {
-      typedef RegistrationParameterScalesFromPhysicalShift<TMetric> ScalesEstimatorType;
+      using ScalesEstimatorType = RegistrationParameterScalesFromPhysicalShift<TMetric>;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
       scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
       scalesEstimator->SetSmallParameterVariation(this->m_OptimizerScalesSmallParameterVariation);
@@ -746,10 +746,10 @@ ImageRegistrationMethod::CreateSpatialObjectMask(const Image &imageMask)
     }
 
   // ick assuming uint8 == uchar
-  typedef itk::Image<unsigned char, VDimension> ITKImageType;
+  using ITKImageType = itk::Image<unsigned char, VDimension>;
   typename ITKImageType::ConstPointer itkImage = this->CastImageToITK<ITKImageType>(mask);
 
-  typedef itk::ImageMaskSpatialObject<VDimension> SpatialObjectMaskType;
+  using SpatialObjectMaskType = itk::ImageMaskSpatialObject<VDimension>;
   typename SpatialObjectMaskType::Pointer spatialMask = SpatialObjectMaskType::New();
   spatialMask->SetImage(itkImage);
   spatialMask->Register();
@@ -785,13 +785,13 @@ Transform ImageRegistrationMethod::Execute ( const Image &fixed, const Image & m
 template<class TImageType>
 Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const Image &inMoving )
 {
-  typedef TImageType     FixedImageType;
-  typedef TImageType     MovingImageType;
+  using FixedImageType = TImageType;
+  using MovingImageType = TImageType;
   const unsigned int ImageDimension = FixedImageType::ImageDimension;
-  //typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+  //using SpatialObjectMaskType = itk::SpatialObject<ImageDimension>;
 
 
-  typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
+  using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>;
   typename RegistrationType::Pointer   registration  = RegistrationType::New();
 
   // this variable will hold the initial moving then fixed, then the
@@ -921,7 +921,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   registration->SetOptimizer( optimizer );
 
-  if ( m_OptimizerWeights.size( ) )
+  if ( !m_OptimizerWeights.empty() )
     {
     itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType weights(m_OptimizerWeights.size());
     std::copy( m_OptimizerWeights.begin(), m_OptimizerWeights.end(), weights.begin() );
@@ -936,7 +936,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     scalesEstimator->SetTransformForward( true );
     optimizer->SetScalesEstimator( scalesEstimator );
     }
-  else if ( m_OptimizerScales.size() )
+  else if ( !m_OptimizerScales.empty() )
     {
     itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType scales(m_OptimizerScales.size());
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
@@ -991,7 +991,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     // which accepts an arbitrary ITK transform.
     typename RegistrationType::OutputTransformType* itkOutTx = registration->GetModifiableTransform();
 
-    typedef itk::CompositeTransform<double, ImageDimension> CompositeTransformType;
+    using CompositeTransformType = itk::CompositeTransform<double, ImageDimension>;
 
     typename CompositeTransformType::Pointer comp = CompositeTransformType::New();
     comp->ClearTransformQueue();
@@ -1037,12 +1037,12 @@ double ImageRegistrationMethod::MetricEvaluate ( const Image &fixed, const Image
 template<class TImageType>
 double ImageRegistrationMethod::EvaluateInternal ( const Image &inFixed, const Image &inMoving )
 {
-  typedef TImageType     FixedImageType;
-  typedef TImageType     MovingImageType;
+  using FixedImageType = TImageType;
+  using MovingImageType = TImageType;
   const unsigned int ImageDimension = FixedImageType::ImageDimension;
-  //typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+  //using SpatialObjectMaskType = itk::SpatialObject<ImageDimension>;
 
- typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
+ using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>;
 
   // this variable will hold the initial moving then fixed, then the
   // initial to optimize.
@@ -1061,7 +1061,7 @@ double ImageRegistrationMethod::EvaluateInternal ( const Image &inFixed, const I
   metric->SetFixedImage(fixed);
   metric->SetMovingImage(moving);
 
-  typedef itk::CompositeTransform<double, ImageDimension> CompositeTransformType;
+  using CompositeTransformType = itk::CompositeTransform<double, ImageDimension>;
   typename CompositeTransformType::Pointer movingInitialCompositeTransform = CompositeTransformType::New();
   // Set initial moving transform
   if ( strIdentityTransform != this->m_MovingInitialTransform.GetITKBase()->GetNameOfClass())
@@ -1110,10 +1110,10 @@ ImageRegistrationMethod::SetupMetric(
   >*metric, const TImageType *fixed, const TImageType *moving)
 {
 
-  typedef TImageType     FixedImageType;
-  typedef TImageType     MovingImageType;
+  using FixedImageType = TImageType;
+  using MovingImageType = TImageType;
   const unsigned int ImageDimension = FixedImageType::ImageDimension;
-  typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+  using SpatialObjectMaskType = itk::SpatialObject<ImageDimension>;
 
   #if ITK_VERSION_MAJOR < 5
   metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
@@ -1125,7 +1125,7 @@ ImageRegistrationMethod::SetupMetric(
   metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
   metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );
 
-  if ( this->m_VirtualDomainSize.size() != 0 )
+  if ( !this->m_VirtualDomainSize.empty() )
     {
     typename FixedImageType::SpacingType itkSpacing = sitkSTLVectorToITK<typename FixedImageType::SpacingType>(this->m_VirtualDomainSpacing);
     typename FixedImageType::PointType itkOrigin = sitkSTLVectorToITK<typename FixedImageType::PointType>(this->m_VirtualDomainOrigin);
@@ -1137,11 +1137,11 @@ ImageRegistrationMethod::SetupMetric(
     metric->SetVirtualDomain( itkSpacing, itkOrigin, itkDirection, itkRegion );
     }
 
-  typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
+  using FixedInterpolatorType = itk::InterpolateImageFunction< FixedImageType, double >;
   typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed, m_Interpolator);
   metric->SetFixedInterpolator( fixedInterpolator );
 
-  typedef itk::InterpolateImageFunction< MovingImageType, double > MovingInterpolatorType;
+  using MovingInterpolatorType = itk::InterpolateImageFunction< MovingImageType, double >;
   typename MovingInterpolatorType::Pointer   movingInterpolator  = CreateInterpolator(moving, m_Interpolator);
   metric->SetMovingInterpolator( movingInterpolator );
 

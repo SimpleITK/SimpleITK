@@ -78,7 +78,7 @@ namespace itk {
     {
 
     // list of pixel types supported
-    typedef NonLabelPixelIDTypeList PixelIDTypeList;
+    using PixelIDTypeList = NonLabelPixelIDTypeList;
 
     this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -179,8 +179,8 @@ namespace itk {
   ImageSeriesReader::ExecuteInternal( itk::ImageIOBase* imageio )
     {
 
-    typedef TImageType                        ImageType;
-    typedef itk::ImageSeriesReader<ImageType> Reader;
+    using ImageType = TImageType;
+    using Reader = itk::ImageSeriesReader<ImageType>;
 
     // if the IsInstantiated is correctly implemented this should
     // not occur
