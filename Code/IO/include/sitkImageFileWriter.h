@@ -54,15 +54,15 @@ class SmartPointer;
       // list of pixel types supported
       typedef NonLabelPixelIDTypeList PixelIDTypeList;
 
-      virtual ~ImageFileWriter();
+      ~ImageFileWriter() override;
 
       ImageFileWriter();
 
       /** Print ourselves to string */
-      virtual std::string ToString() const;
+      std::string ToString() const override;
 
       /** return user readable name of the filter */
-      virtual std::string GetName() const { return std::string("ImageFileWriter"); }
+      std::string GetName() const override { return std::string("ImageFileWriter"); }
 
       /** \brief Get a vector of the names of registered itk ImageIOs
        */

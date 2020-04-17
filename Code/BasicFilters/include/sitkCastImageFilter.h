@@ -48,7 +48,7 @@ public:
   SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
   PixelIDValueEnum GetOutputPixelType( ) const;
 
-  virtual ~CastImageFilter();
+  ~CastImageFilter() override;
 
   /**
    * Default Constructor that takes no arguments and initializes
@@ -57,10 +57,10 @@ public:
   CastImageFilter();
 
   /** Name of this class */
-  std::string GetName() const { return std::string ("CastImageFilter"); }
+  std::string GetName() const override { return std::string ("CastImageFilter"); }
 
   // See super class for doxygen
-  std::string ToString() const;
+  std::string ToString() const override;
 
   // See super class for doxygen
   Image Execute ( const Image & );

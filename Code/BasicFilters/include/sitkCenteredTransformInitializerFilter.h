@@ -67,7 +67,7 @@ assumption will probably not hold in multi-modality registration.
       typedef  CenteredTransformInitializerFilter Self;
 
       /** Destructor */
-      virtual ~CenteredTransformInitializerFilter();
+      ~CenteredTransformInitializerFilter() override;
 
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
@@ -87,10 +87,10 @@ assumption will probably not hold in multi-modality registration.
        */
         OperationModeType GetOperationMode() const { return this->m_OperationMode; }
       /** Name of this class */
-      std::string GetName() const { return std::string ("CenteredTransformInitializerFilter"); }
+      std::string GetName() const override { return std::string ("CenteredTransformInitializerFilter"); }
 
       /** Print ourselves out */
-      std::string ToString() const;
+      std::string ToString() const override;
 
 
       /** Execute the filter on the input image */

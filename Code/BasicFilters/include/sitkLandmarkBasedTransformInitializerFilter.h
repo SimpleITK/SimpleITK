@@ -77,7 +77,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       typedef LandmarkBasedTransformInitializerFilter Self;
 
       /** Destructor */
-      virtual ~LandmarkBasedTransformInitializerFilter();
+      ~LandmarkBasedTransformInitializerFilter() override;
 
 
       /** Default Constructor that takes no arguments and initializes
@@ -137,10 +137,10 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
        */
         unsigned int GetBSplineNumberOfControlPoints() const { return this->m_BSplineNumberOfControlPoints; }
       /** Name of this class */
-      std::string GetName() const { return std::string ("LandmarkBasedTransformInitializerFilter"); }
+      std::string GetName() const override { return std::string ("LandmarkBasedTransformInitializerFilter"); }
 
       /** Print ourselves out */
-      std::string ToString() const;
+      std::string ToString() const override;
 
 
       /** Execute the filter on the input image */

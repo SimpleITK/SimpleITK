@@ -35,7 +35,7 @@ public:
     : m_Filter(m)
     {}
 
-  virtual void Execute( )
+  void Execute( ) override
     {
       // use sitk's output operator for std::vector etc..
       using sitk::operator<<;

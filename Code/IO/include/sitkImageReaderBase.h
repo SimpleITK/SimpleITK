@@ -42,7 +42,7 @@ class SmartPointer;
     public:
       typedef ImageReaderBase Self;
 
-      virtual ~ImageReaderBase();
+      ~ImageReaderBase() override;
 
       ImageReaderBase();
 
@@ -61,7 +61,7 @@ class SmartPointer;
 
       virtual Image Execute() = 0;
 
-      virtual std::string ToString() const;
+      std::string ToString() const override;
 
       /** \brief Get a vector of the names of registered itk ImageIOs
        */

@@ -59,7 +59,7 @@ public:
 
 protected:
   HolderCommand() = default;
-  ~HolderCommand() = default;
+  ~HolderCommand() override = default;
 
 private:
   ObjectType m_Object;
@@ -93,7 +93,7 @@ public:
 
 protected:
   HolderCommand() : m_Object(nullptr) {};
-  ~HolderCommand() { delete m_Object;}
+  ~HolderCommand() override { delete m_Object;}
 
 private:
 

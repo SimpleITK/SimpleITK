@@ -39,7 +39,7 @@ public:
     {}
 
   // Override method from parent which is called at for the requested event
-  virtual void Execute( )
+  void Execute( ) override
     {
       if (m_Method.GetOptimizerIteration() == 0)
         {
@@ -74,7 +74,7 @@ public:
     {}
 
   // Override method from parent which is called at for the requested event
-  virtual void Execute( )
+  void Execute( ) override
     {
       // The sitkMultiResolutionIterationEvent occurs before the
       // resolution of the transform. This event is used here to print

@@ -63,20 +63,20 @@ namespace itk {
     public:
       typedef ImageFileReader Self;
 
-      virtual ~ImageFileReader();
+      ~ImageFileReader() override;
 
       ImageFileReader();
 
       /** Print ourselves to string */
-      virtual std::string ToString() const;
+      std::string ToString() const override;
 
       /** return user readable name of the filter */
-      virtual std::string GetName() const { return std::string("ImageFileReader"); }
+      std::string GetName() const override { return std::string("ImageFileReader"); }
 
       SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const std::string &fn );
       std::string GetFileName() const;
 
-      Image Execute();
+      Image Execute() override;
 
       // Interface methods to access image file's meta-data and image
       // information after calling Execute or after calling

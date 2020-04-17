@@ -39,7 +39,7 @@ public:
   typedef Euler2DTransform Self;
   typedef Transform        Superclass;
 
-  virtual ~Euler2DTransform();
+  ~Euler2DTransform() override;
 
   // construct identity
   Euler2DTransform();
@@ -55,7 +55,7 @@ public:
   Euler2DTransform &operator=( const Euler2DTransform & );
 
   /** Name of this class */
-  std::string GetName() const { return std::string ("Euler2DTransform"); }
+  std::string GetName() const override { return std::string ("Euler2DTransform"); }
 
 /** fixed parameter */
   SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
@@ -74,7 +74,7 @@ public:
 
 protected:
 
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 

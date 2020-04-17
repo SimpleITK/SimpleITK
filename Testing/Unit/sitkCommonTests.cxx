@@ -351,7 +351,7 @@ TEST( ProcessObject, DeleteCommandActiveProcess )
       {
       }
 
-    virtual void Execute( )
+    void Execute( ) override
       {
         if ( m_Process.GetProgress() >= m_AbortAt )
           {
@@ -395,7 +395,7 @@ TEST( ProcessObject, RemoveAllCommandsActiveProcess )
       {
       }
 
-    virtual void Execute( )
+    void Execute( ) override
       {
         if ( m_Process.GetProgress() >= m_AbortAt )
           {
@@ -492,8 +492,8 @@ TEST( ProcessObject, Command_Ownership ) {
   {
   public:
     HeapCommand() : v(false) {};
-    ~HeapCommand() {++destroyedCount;}
-    virtual void Execute() {v=true;}
+    ~HeapCommand() override {++destroyedCount;}
+    void Execute() override {v=true;}
     using Command::SetOwnedByProcessObjects;
     using Command::GetOwnedByProcessObjects;
     using Command::OwnedByProcessObjectsOn;

@@ -48,15 +48,15 @@ namespace itk {
     public:
       typedef ImageSeriesReader Self;
 
-      virtual ~ImageSeriesReader();
+      ~ImageSeriesReader() override;
 
       ImageSeriesReader();
 
       /** Print ourselves to string */
-      virtual std::string ToString() const;
+      std::string ToString() const override;
 
       /** return user readable name of the filter */
-      virtual std::string GetName() const { return std::string("ImageSeriesReader"); }
+      std::string GetName() const override { return std::string("ImageSeriesReader"); }
 
 
       /**
@@ -113,7 +113,7 @@ namespace itk {
       SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<std::string> &fileNames );
       const std::vector<std::string> &GetFileNames() const;
 
-      Image Execute();
+      Image Execute() override;
 
       /** \brief Get the meta-data dictionary keys for a slice
        *

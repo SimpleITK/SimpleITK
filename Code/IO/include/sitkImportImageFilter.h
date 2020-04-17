@@ -49,15 +49,15 @@ namespace itk {
     public:
       typedef ImportImageFilter Self;
 
-      virtual ~ImportImageFilter();
+      ~ImportImageFilter() override;
 
       ImportImageFilter();
 
       /** Print ourselves to string */
-      virtual std::string ToString() const;
+      std::string ToString() const override;
 
       /** return user readable name of the filter */
-      virtual std::string GetName() const { return std::string("ImportImageFilter"); }
+      std::string GetName() const override { return std::string("ImportImageFilter"); }
 
       SITK_RETURN_SELF_TYPE_HEADER SetSize( const std::vector< unsigned int > &size );
       const std::vector< unsigned int > &GetSize( ) const;
@@ -82,7 +82,7 @@ namespace itk {
       SITK_RETURN_SELF_TYPE_HEADER SetBufferAsFloat( float * buffer, unsigned int numberOfComponents = 1 );
       SITK_RETURN_SELF_TYPE_HEADER SetBufferAsDouble( double * buffer, unsigned int numberOfComponents = 1 );
 
-      Image Execute();
+      Image Execute() override;
 
     protected:
 

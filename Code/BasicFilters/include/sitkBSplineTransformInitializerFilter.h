@@ -54,7 +54,7 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
       BSplineTransformInitializerFilter();
 
       /** Destructor */
-      virtual ~BSplineTransformInitializerFilter();
+      ~BSplineTransformInitializerFilter() override;
 
       /** Define the pixels types supported by this filter */
       typedef AllPixelIDTypeList  PixelIDTypeList;
@@ -77,10 +77,10 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
       unsigned int GetOrder() const {return this->m_Order;}
 
       /** Name of this class */
-      std::string GetName() const { return std::string ("BSplineTransformInitializerFilter"); }
+      std::string GetName() const override { return std::string ("BSplineTransformInitializerFilter"); }
 
       /** Print ourselves out */
-      std::string ToString() const;
+      std::string ToString() const override;
 
 
       /** Execute the filter on the input image */

@@ -217,30 +217,30 @@ public:
       m_Transform = s.m_Transform;
     }
 
-  virtual TransformBase * GetTransformBase( ) { return this->m_Transform.GetPointer(); }
-  virtual const TransformBase * GetTransformBase( ) const { return this->m_Transform.GetPointer(); }
+  TransformBase * GetTransformBase( ) override { return this->m_Transform.GetPointer(); }
+  const TransformBase * GetTransformBase( ) const override { return this->m_Transform.GetPointer(); }
 
-  virtual unsigned int GetInputDimension( ) const { return InputDimension; }
-  virtual unsigned int GetOutputDimension( ) const { return OutputDimension; }
+  unsigned int GetInputDimension( ) const override { return InputDimension; }
+  unsigned int GetOutputDimension( ) const override { return OutputDimension; }
 
 
-  virtual PimpleTransformBase *ShallowCopy( ) const
+  PimpleTransformBase *ShallowCopy( ) const override
     {
       return new Self( this->m_Transform.GetPointer() );
     }
 
-  virtual PimpleTransformBase *DeepCopy( ) const
+  PimpleTransformBase *DeepCopy( ) const override
     {
       PimpleTransformBase *copy( new Self( this->m_Transform->Clone() ) );
       return copy;
     }
 
-  virtual int GetReferenceCount( ) const
+  int GetReferenceCount( ) const override
     {
       return this->m_Transform->GetReferenceCount();
     }
 
-  virtual void SetIdentity()
+  void SetIdentity() override
     {
       this->SetIdentity(this->m_Transform.GetPointer());
     }
@@ -316,7 +316,7 @@ public:
 #endif
 
 
-  virtual void FlattenTransform()
+  void FlattenTransform() override
     {
       this->FlattenTransform(this->m_Transform.GetPointer());
     }
@@ -336,7 +336,7 @@ public:
       // composite transform.
     }
 
-  virtual bool GetInverse(PimpleTransformBase * &outputTransform) const
+  bool GetInverse(PimpleTransformBase * &outputTransform) const override
     {
       typename itk::LightObject::Pointer light = this->m_Transform->CreateAnother();
       typename TransformType::Pointer another = dynamic_cast<TransformType*>(light.GetPointer());
@@ -354,7 +354,7 @@ public:
     }
 
 
-  virtual PimpleTransformBase* AddTransform( Transform &t )
+  PimpleTransformBase* AddTransform( Transform &t ) override
     {
       if ( t.GetDimension() != TransformType::InputSpaceDimension )
         {
@@ -394,7 +394,7 @@ public:
     }
 
 
-  virtual std::vector< double > TransformPoint( const std::vector< double > &pt ) const
+  std::vector< double > TransformPoint( const std::vector< double > &pt ) const override
     {
       if (pt.size() != this->GetInputDimension() )
         {
@@ -408,7 +408,7 @@ public:
     }
 
 
-  virtual std::vector< double > TransformVector( const std::vector< double > &vec, const std::vector< double > &pt ) const
+  std::vector< double > TransformVector( const std::vector< double > &vec, const std::vector< double > &pt ) const override
     {
       if (vec.size() != this->GetInputDimension() )
         {

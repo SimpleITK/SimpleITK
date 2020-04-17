@@ -38,11 +38,11 @@ public:
   typedef FunctionCommand Self;
 
 
-  virtual ~FunctionCommand();
+  ~FunctionCommand() override;
 
   FunctionCommand();
 
-  virtual void Execute();
+  void Execute() override;
 
   /** Generic method to set a class's member function to be called in
    *  the Execute method.

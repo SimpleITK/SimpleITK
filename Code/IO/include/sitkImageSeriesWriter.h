@@ -52,12 +52,12 @@ class ImageIOBase;
     public:
       typedef ImageSeriesWriter Self;
 
-      virtual ~ImageSeriesWriter();
+      ~ImageSeriesWriter() override;
 
       ImageSeriesWriter();
 
       /** Print ourselves to string */
-      virtual std::string ToString() const;
+      std::string ToString() const override;
 
       /** \brief Get a vector of the names of registered itk ImageIOs
        */
@@ -80,7 +80,7 @@ class ImageIOBase;
       /* @} */
 
       /** return user readable name of the filter */
-      virtual std::string GetName() const { return std::string("ImageSeriesWriter"); }
+      std::string GetName() const override { return std::string("ImageSeriesWriter"); }
 
       /** \brief Enable compression if available for file type.
        *
