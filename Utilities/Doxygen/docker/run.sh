@@ -3,7 +3,7 @@
 
 
 SRC_DIR="/work/SimpleITK"
-BLD_DIR="/work/SimpleITK-build"
+BLD_DIR="/work/SimpleITK-super"
 
 # If the SRC_DIR is not mounted, then this tag will be checked out
 SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-"master"}
@@ -26,5 +26,5 @@ mkdir -p ${BLD_DIR} && \
           -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON\
           ${SRC_DIR}/SuperBuild/ && \
     cmake --build . --target SimpleITK-doc && \
-    cd ${BLD_DIR}/Documentation/ && \
+    cd ${BLD_DIR}/SimpleITK-build/Documentation/ && \
     tar --exclude=\*.md5 --exclude=\*.map -zcvf /SimpleITKDoxygen.tar.gz ./html
