@@ -9,7 +9,7 @@ endif ()
 
 if ( NOT SimpleITK_TESTING_NOSHOW )
 
-    sitk_add_test( NAME CXX.Example.sitk_example
+  sitk_add_test( NAME CXX.Example.sitk_example
     COMMAND $<TARGET_FILE:sitk_example>
     )
 
