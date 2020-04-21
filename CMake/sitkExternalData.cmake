@@ -37,7 +37,7 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
     "https://simpleitk.s3.amazonaws.com/public/%(algo)/%(hash)"
 
     # Data published on GitHub Pages
-    "https://simpleitk.github.io/SimpleITKExternalData/%(algo)/%(hash)"
+    "https://simpleitk.org/SimpleITKExternalData/%(algo)/%(hash)"
 
     # Data published on Girder
     "https://data.kitware.com:443/api/v1/file/hashsum/%(algo)/%(hash)/download"

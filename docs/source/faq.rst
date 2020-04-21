@@ -452,7 +452,7 @@ When compiling SimpleITK you may get and error like the following:
 
  Object MD5=2e115fe26e435e33b0d5c022e4490567 not found at:
   https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5 ("Unsupported protocol")
-  https://simpleitk.github.io/SimpleITKExternalData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
+  https://simpleitk.org/SimpleITKExternalData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
   https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5 ("Unsupported protocol")
   https://insightsoftwareconsortium.github.io/ITKTestingData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
   https://itk.org/files/ExternalData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
