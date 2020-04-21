@@ -2,7 +2,6 @@ trigger:
   - master
   - release
 variables:
-  ExternalDataVersion: 1.2.0
   ctest.cache_extra: ''
 pr: none
 jobs:
