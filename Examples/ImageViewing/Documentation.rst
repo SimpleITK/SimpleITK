@@ -24,9 +24,9 @@ location and then launches the viewer. Potential issues with this approach:
 
 To control viewing you have two options:
 
-  1. Procedural approach. Use the `Show <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`_
+  1. Procedural approach. Use the `Show <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`_
      function, with control primarily done via environment variable settings.
-  2. Object oriented approach. Use the `ImageViewer <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ImageViewer.html>`_
+  2. Object oriented approach. Use the `ImageViewer <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageViewer.html>`_
      class, with control via the object's interface.
 
 One can either set the viewing application, if you just want to change the

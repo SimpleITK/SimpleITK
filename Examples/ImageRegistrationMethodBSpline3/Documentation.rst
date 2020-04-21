@@ -11,7 +11,7 @@ Overview
 This example performs registration of multi-modality images with a multi-resolution BSpline approach.
 
 A `BSplineTransform
-<https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BSplineTransform.html>`_
+<https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BSplineTransform.html>`_
 usually has a large number of parameters which increases the
 complexity and duration of optimizing the deformation. The
 multi-resolution BSpline approach initially performs the registration
@@ -19,7 +19,7 @@ at a lower resolution with fewer parameters at the first level and
 then adapts or resamples the BSpline control points to a higher
 resolution at subsequent levels. This transformation adaption is done
 concurrently with the `ImageRegistrationMethod's
-<https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ImageRegistrationMethod.html>`_
+<https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html>`_
 multi-level feature. This enables the setting of the shrink factor,
 smoothing sigmas, sampling percentage and BSpline resolution to vary
 per level to efficiently solve a diverse set of registration

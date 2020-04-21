@@ -254,7 +254,7 @@ Testing.
 Beware of images from saved workspaces. External references, which is how images are represented, are not preserved when objects are saved to disk. Thus, attempting to use images from a saved workspace will result in ungraceful crashes.
 
 \section{Building and Installing}
-Fetch SimpleITK from the git repository. Visit \url{https://www.itk.org/SimpleITKDoxygen/html/Wrapping.html} for the latest instructions on building and installing.
+Fetch SimpleITK from the git repository. Visit \url{https://www.simpleitk.org/doxygen/latest/html/Wrapping.html} for the latest instructions on building and installing.
 \section{Development}
 
 \end{document}

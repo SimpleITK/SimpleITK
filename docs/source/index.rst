@@ -32,7 +32,7 @@ SimpleITK are currently available for all three major operating systems
 Relevant Resources
 ------------------
 
-* `Doxygen API Documentation <https://itk.org/SimpleITKDoxygen/html/>`_
+* `Doxygen API Documentation <https://simpleitk.org/doxygen/latest/html/>`_
 * `Jupyter Notebooks in Python and R <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
 * `ITK Forum for Discussions and Questions <https://discourse.itk.org/>`_
 

@@ -67,7 +67,7 @@ There are nearly **300 ITK image filters** wrapped
 in SimpleITK. We have a
 :ref:`list of filters <lbl_filter>` accompanied by a brief
 description. Additionally the
-`Doxygen <https://www.itk.org/SimpleITKDoxygen/html/classes.html>`__ can
+`Doxygen <https://www.simpleitk.org/doxygen/latest/html/classes.html>`__ can
 be examined to determine the availability of a filter.
 
 What image file formats can SimpleITK read?
@@ -137,7 +137,7 @@ Can I use another image file viewer beside ImageJ?
 --------------------------------------------------
 
 By default when the `Show
-function <https://www.itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#a7bacfc4685cff93e46d7401865f9579e>`__
+function <https://www.simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a7bacfc4685cff93e46d7401865f9579e>`__
 is called, SimpleITK writes out a temporary image in Nifti format then
 launches `ImageJ <http://rsbweb.nih.gov/ij/index.html>`__. The user can
 override the file format of the temporary file and/or the application
@@ -174,7 +174,7 @@ images, there are the **SITK\_SHOW\_COLOR\_COMMAND** and
 
 More details on the Show function, including use of the "%a" and "%f"
 tokens, is at the `Show function Doxygen
-page <https://www.itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#a7bacfc4685cff93e46d7401865f9579e>`__.
+page <https://www.simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a7bacfc4685cff93e46d7401865f9579e>`__.
 
 How can I use 3D Slicer to view my images?
 ------------------------------------------

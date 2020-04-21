@@ -163,7 +163,7 @@ result in a significant waste of memory and computation time. Always become fami
 Additional Resources
 =====================
 1. The API for the SimpleITK
-   `Image class <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Image.html>`_
+   `Image class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Image.html>`_
    in Doxygen format.
 2. To really understand the structure of SimpleITK images and how to work with them,
    we recommend some hands-on interaction using the
@@ -230,19 +230,19 @@ Additional Resources
 
 1. The API for the SimpleITK transformation classes is available in Doxygen format:
 
-   * `2D or 3D translation <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1TranslationTransform.html>`_.
-   * `VersorTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1VersorTransform.html>`_.
-   * `Euler2DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Euler2DTransform.html>`_
-     and `Euler3DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Euler3DTransform.html>`_.
-   * `Similarity2DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Similarity2DTransform.html>`_
-     and `Similarity3DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Similarity3DTransform.html>`_.
-   * `2D or 3D ScaleTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ScaleTransform.html>`_.
-   * `ScaleVersor3DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ScaleVersor3DTransform.html>`_.
-   * `ScaleSkewVersor3DTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ScaleSkewVersor3DTransform.html>`_.
-   * `2D or 3D AffineTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1AffineTransform.html>`_.
-   * `2D or 3D BSplineTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1BSplineTransform.html>`_.
-   * `2D or 3D DisplacementFieldTransform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1DisplacementFieldTransform.html>`_.
-   * `Transform <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Transform.html>`_.
+   * `2D or 3D translation <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1TranslationTransform.html>`_.
+   * `VersorTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1VersorTransform.html>`_.
+   * `Euler2DTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Euler2DTransform.html>`_
+     and `Euler3DTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Euler3DTransform.html>`_.
+   * `Similarity2DTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Similarity2DTransform.html>`_
+     and `Similarity3DTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Similarity3DTransform.html>`_.
+   * `2D or 3D ScaleTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScaleTransform.html>`_.
+   * `ScaleVersor3DTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScaleVersor3DTransform.html>`_.
+   * `ScaleSkewVersor3DTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScaleSkewVersor3DTransform.html>`_.
+   * `2D or 3D AffineTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1AffineTransform.html>`_.
+   * `2D or 3D BSplineTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BSplineTransform.html>`_.
+   * `2D or 3D DisplacementFieldTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DisplacementFieldTransform.html>`_.
+   * `Transform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Transform.html>`_.
 
 2. To really understand the structure of SimpleITK transforms and how to work with them,
    we recommend some hands-on interaction using the
@@ -297,7 +297,7 @@ Additional Resources
 =====================
 
 1. The API for the SimpleITK
-   `ResampleImageFilter class <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ResampleImageFilter.html>`_
+   `ResampleImageFilter class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ResampleImageFilter.html>`_
    in Doxygen format. The procedural interface for this class supports the three variations for specifying the
    resampling grid described above.
 2. To really understand the structure of SimpleITK images and how to work with them
