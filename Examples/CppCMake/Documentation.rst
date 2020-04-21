@@ -13,6 +13,8 @@ Here is a basic **CMakeLists.txt** configuration file for building a SimpleITK C
 Here is our SimpleITK C++ example file **sitk_example.cxx**.
 
 .. literalinclude:: ../../Examples/CppCMake/Source/sitk_example.cxx
+   :language: c++
+   :lines: 18-
 
 
 Invoking **cmake** as below in the same directory as these files will create the project buildsystem::
