@@ -8,7 +8,7 @@ Overview
 --------
 
 This example illustrates how to use the `classic Demons registration algorithm
-<https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1DemonsRegistrationFilter.html>`_.
+<https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DemonsRegistrationFilter.html>`_.
 The user supplied parameters for the algorithm are the number of iterations and
 the standard deviations for the Gaussian smoothing of the total displacement
 field. Additional methods which control regularization, total field smoothing

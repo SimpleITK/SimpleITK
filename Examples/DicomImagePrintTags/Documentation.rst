@@ -6,7 +6,7 @@ Read Image Meta-Data Dictionary and Print
 Overview
 --------
 
-This example illustrates how to read only an image's information and meta-data dictionary without loading the pixel content via the `ImageFileReader <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ImageFileReader.html>`_.
+This example illustrates how to read only an image's information and meta-data dictionary without loading the pixel content via the `ImageFileReader <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageFileReader.html>`_.
 
 Reading an entire image potentially is memory and time intensive operation when the image is large or many files must be read. The image information and meta-data dictionary can be read without the bulk data by using the ImageFilerReader's object oriented interface, with use of the ImageFileReader::ReadImageInformation method.
 

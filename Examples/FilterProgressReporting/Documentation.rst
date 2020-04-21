@@ -18,7 +18,7 @@ Events
 ------
 
 Events are a simple enumerated type in SimpleITK, represented by
-the `EventEnum type <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#aa7399868984d99493c5a307cce373ace>`_.
+the `EventEnum type <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#aa7399868984d99493c5a307cce373ace>`_.
 More information about each event type can be found in the documentation
 for the enum. All SimpleITK filters, including the reading
 and writing ones, are derived from the ProcessObject class which has

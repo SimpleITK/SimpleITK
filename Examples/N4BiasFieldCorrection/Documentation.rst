@@ -14,7 +14,7 @@ classification.
 
 This example demonstrates how to use the SimpleITK
 `N4BiasFieldCorrectionImageFilter
-<https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1N4BiasFieldCorrectionImageFilter.html>`_
+<https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1N4BiasFieldCorrectionImageFilter.html>`_
 class. This filter has one required input image which is affected by a
 bias field we wish to correct. The primary input is required to have a
 "real" pixel type of either `sitkFloat32` or

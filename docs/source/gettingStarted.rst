@@ -13,7 +13,7 @@ you will find useful.
 
 After you have installed SimpleITK, we recommend going over the
 :ref:`latest tutorial <lbl_tutorials_courses>` and skimming
-the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
+the `Doxygen <http://www.simpleitk.org/doxygen/latest/html/>`__ pages for
 more information.
 
 ..
@@ -156,7 +156,7 @@ Fiji (Fiji is Just ImageJ)
 --------------------------
 
 SimpleITK has a built in function
-`itk::simple::Show() <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__
+`itk::simple::Show() <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__
 which can be used for viewing images in an interactive session.
 By default this Show function searches for an installed
 `Fiji <https://fiji.sc>`__ to display images.  If Fiji is not found,

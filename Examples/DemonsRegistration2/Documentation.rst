@@ -8,7 +8,7 @@ Overview
 --------
 
 This example illustrates how to use the `fast symmetric forces Demons algorithm
-<https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1FastSymmetricForcesDemonsRegistrationFilter.html>`_.
+<https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastSymmetricForcesDemonsRegistrationFilter.html>`_.
 As the name implies, unlike the classical algorithm, the forces are symmetric.
 
 The underlying assumption of the demons framework is that the intensities of

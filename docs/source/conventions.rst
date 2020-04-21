@@ -15,7 +15,7 @@ The SimpleITK image class can contain 2 or 3 dimensional images. In ITK proper, 
 Image Access
 ............
 
-`Image <http://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1Image.html>`_ access is in x,y,z order, ``GetPixel(x,y,z)`` or ``image[x,y,z]``, with zero based indexing.
+`Image <http://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Image.html>`_ access is in x,y,z order, ``GetPixel(x,y,z)`` or ``image[x,y,z]``, with zero based indexing.
 
 .. _lbl_conventions_mask_image:
 
@@ -58,6 +58,6 @@ Images As Parameters
 
 The dimensionality (2D or 3D) and pixel type (``sitkUInt8``, ``sitkFloat64``...) of images is required to be the same for most methods that receive multiple images as input.
 
-The `ImageRegistrationMethod <http://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ImageRegistrationMethod.html>`_ only supports images with ``sitkFloat32`` and ``sitkFloat64`` pixel types.
+The `ImageRegistrationMethod <http://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html>`_ only supports images with ``sitkFloat32`` and ``sitkFloat64`` pixel types.
 
-Casting an image's pixel type into another is done with the SimpleITK `Cast() <http://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#af8c9d7cc96a299a05890e9c3db911885>`_ function.
+Casting an image's pixel type into another is done with the SimpleITK `Cast() <http://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#af8c9d7cc96a299a05890e9c3db911885>`_ function.
