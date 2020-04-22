@@ -126,8 +126,8 @@ index_data_objects() {
     # Find the object file on disk
     if test -f "$path"; then
       file="$path" # available in place
-    elif test -f ~/"$path" ; then
-      file=~/"$path" # available in home dir
+    elif test -n "$ExternalData_OBJECT_STORES" -a -f "$ExternalData_OBJECT_STORES/$algo/$hash" ; then
+      file=$ExternalData_OBJECT_STORES/$algo/$hash # available from env path
     else
       download_object "$algo" "$hash" "$path" &&
       file="$path"

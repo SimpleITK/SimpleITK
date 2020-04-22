@@ -6,8 +6,6 @@ trigger:
     - "*"
 pr: none
 
-variables:
-  ExternalDataVersion: 1.2.0
 jobs:
   - job: LinuxCoverage
     timeoutInMinutes: 0

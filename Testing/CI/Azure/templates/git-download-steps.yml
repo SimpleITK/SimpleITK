@@ -1,5 +1,6 @@
 parameters:
   downloadData: True  # defaults for any parameters that aren't specified
+  externalDataVersion: 2.0rc1
 
 steps:
      - checkout: self
@@ -26,8 +27,8 @@ steps:
          displayName: 'Download dashboard script'
      - ${{ if parameters.downloadData }}:
        - script: |
-           curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v$(ExternalDataVersion)/SimpleITKData-$(ExternalDataVersion).tar.gz
-           cmake -E tar xfz SimpleITKData-$(ExternalDataVersion).tar.gz
-           cmake -E rename "SimpleITK-$(ExternalDataVersion)/.ExternalData/MD5" "$(Build.SourcesDirectory)/.ExternalData/MD5"
+           curl -L -O https://github.com/SimpleITK/SimpleITK/releases/download/v${{parameters.externalDataVersion}}/SimpleITKData-${{parameters.externalDataVersion}}.tar.gz
+           cmake -E tar xfz SimpleITKData-${{parameters.externalDataVersion}}.tar.gz
+           cmake -E rename "SimpleITK-${{parameters.externalDataVersion}}/.ExternalData/SHA512" "$(Build.SourcesDirectory)/.ExternalData/SHA512"
          workingDirectory: $(Agent.BuildDirectory)
          displayName: 'Download test data'

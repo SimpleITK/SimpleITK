@@ -10,8 +10,6 @@ pr: none
 
 # Scheduled builds on master to build the "latest" are configure through the AZP GUI.
 
-variables:
-  ExternalDataVersion: 1.2.0
 jobs:
   - job: Configure
     displayName: Configure Variables
