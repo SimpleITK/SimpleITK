@@ -2,9 +2,21 @@
   "name" : "BinaryReconstructionByErosionImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::BinaryReconstructionByErosionImageFilter<InputImageType>",
+  "inputs" : [
+    {
+      "name" : "MarkerImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMarkerImage( this->CastImageToITK<typename FilterType::InputImageType>(*inMarkerImage) );"
+    },
+    {
+      "name" : "MaskImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::InputImageType>(*inMaskImage) );"
+    }
+  ],
   "members" : [
     {
       "name" : "BackgroundValue",
