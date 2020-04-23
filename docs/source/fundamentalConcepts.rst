@@ -36,7 +36,6 @@ is visually illustrated in :ref:`this figure <lbl_image_metadata>`.
 
 .. _lbl_image_metadata:
 .. figure:: ../images/ImageOriginAndSpacing.svg
-   :scale: 50 %
    :alt: Image meta-data.
 
    An image in SimpleITK occupies a region in physical space which is defined by
@@ -76,7 +75,6 @@ treat images as an array will display a distorted image as shown in
 
 .. _lbl_isotropy:
 .. figure:: ../images/nonisotropicVsIsotropic.svg
-   :scale: 50 %
    :alt: nonisotropic vs. isotropic pixels.
 
    The same image displayed with a viewer that is not aware of spatial meta-data
@@ -91,7 +89,6 @@ the intensity values and pixel spacing are the same.
 
 .. _lbl_spatial_location:
 .. figure:: ../images/spatialRelationship.svg
-   :scale: 50 %
    :alt: images are spatial objects
 
    Two images with exactly the same pixel data, positioned in the world coordinate
