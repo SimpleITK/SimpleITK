@@ -5,7 +5,15 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageRVal
 {
   ${name} filter;
 $(for i = 1,#members do
-  OUT=OUT .. [[  filter.Set]] ..members[i].name..[[( ]] .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. [[ );]]
+  OUT=OUT .. [[  filter.Set]] ..members[i].name..[[( ]]
+  member_name = members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
+  if (members[i].dim_vec and (members[i].dim_vec == 1)) or
+     (members[i].point_vec and (members[i].point_vec == 1)) then
+    OUT = OUT..'std::move('..member_name..')'
+  else
+    OUT = OUT..member_name
+  end
+  OUT=OUT.. [[ );]]
 end)
   return filter.Execute ( $(for inum=1,number_of_inputs do
                               if inum==1 then
