@@ -47,6 +47,7 @@
         {
           "parameter" : "TrialPoints",
           "dim" : 2,
+          "point_vec": 1,
           "value" : [
             "{70,70}",
             "{200,180}"
