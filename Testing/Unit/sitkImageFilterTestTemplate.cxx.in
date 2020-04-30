@@ -85,11 +85,6 @@ $(foreach members
 end)
 )
 
-$(if template_type and template_type == "RegionGrowing" then OUT=[[
-  // Test size of default SeedList
-  EXPECT_EQ ( filter.GetSeedList().size(), (unsigned int)0 ) << "Testing empty seed list as default";]]
-end)
-
 $(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
@@ -206,10 +201,6 @@ for inum=1,#inputs-1 do
   OUT=OUT..", inputs["..inum.."]"
   count = count + 1
 end
-if template_type and template_type == "RegionGrowing" then
-  OUT=OUT..", std::vector< std::vector<unsigned int> >()"
-  count = count + 1
-end
 if template_code_filename and template_code_filename == "KernelImageFilter" then
   OUT=OUT..[[, 1, itk::simple::sitkBall]]
   count = count + 1
@@ -230,13 +221,10 @@ end)) ) << "Functional interface to ${name}";
 $(if settings then
 OUT=[[
 $(foreach settings
-  $(if parameter == "SeedList" then
-  OUT='filter.ClearSeeds();\
-  $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputs[0].GetDimension()) );}" end);'
-  elseif point_vec and point_vec == 1 then
-    OUT="filter.Clear${parameter}();\n"
+  $(if point_vec and point_vec == 1 then
+    OUT="filter.Clear${parameter:gsub('List','s')}();\n"
     for i=1,#value do
-      OUT=OUT.."filter.Add${parameter:gsub('s(%d?)$','%1')}("..value[i].." );\n"
+      OUT=OUT.."  filter.Add${parameter:gsub('List',''):gsub('s(%d?)$','%1')}("..value[i].." );\n"
      end
   elseif dim_vec and dim_vec == 1 then
   OUT='{\
