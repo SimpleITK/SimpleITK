@@ -87,9 +87,9 @@ end)$(if point_vec and (point_vec == 1) then
       OUT=[[
 
       /** \brief Add ${name} point */
-      SITK_RETURN_SELF_TYPE_HEADER Add${name:gsub("s([0-9]?)$","%1")}( const std::vector< ${type} > &point ) { this->m_${name}.push_back(point); return *this;}
+      SITK_RETURN_SELF_TYPE_HEADER Add${name:gsub("List", ""):gsub("s(%d?)$","%1")}( std::vector< ${type} > point ) { this->m_${name}.push_back(std::move(point)); return *this;}
       /** \brief Remove all ${name} points */
-      SITK_RETURN_SELF_TYPE_HEADER Clear${name}( ) { this->m_${name}.clear(); return *this;}
+      SITK_RETURN_SELF_TYPE_HEADER Clear${name:gsub("List", "s")}( ) { this->m_${name}.clear(); return *this;}
 ]]
 end))$(when measurements $(foreach measurements
 

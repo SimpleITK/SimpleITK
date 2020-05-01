@@ -1,13 +1,23 @@
 {
   "name" : "VectorConfidenceConnectedImageFilter",
-  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "template_type" : "RegionGrowing",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "VectorPixelIDTypeList",
   "output_pixel_type" : "uint8_t",
   "members" : [
+    {
+      "name" : "SeedList",
+      "type" : "unsigned int",
+      "point_vec" : 1,
+      "default" : "std::vector< std::vector<unsigned int > >()",
+      "custom_itk_cast" : "filter->ClearSeeds();\n  for(auto &&seed : m_SeedList)\n    {\n    using IndexType = typename InputImageType::IndexType;\n    filter->AddSeed(sitkSTLVectorToITK< IndexType >( seed ));\n    }\n",
+      "briefdescriptionSet" : "Set list of image indexes for seeds.",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "Get list of seeds",
+      "detaileddescriptionGet" : ""
+    },
     {
       "name" : "NumberOfIterations",
       "type" : "unsigned int",
@@ -71,7 +81,7 @@
       "settings" : [
         {
           "parameter" : "SeedList",
-          "dim" : 2,
+          "point_vec" : 1,
           "value" : [
             "{10,10}"
           ],
