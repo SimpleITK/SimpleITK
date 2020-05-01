@@ -37,14 +37,14 @@ namespace itk
 {
   namespace simple
   {
-    void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
+    void Image::Allocate ( const std::vector<unsigned int> &_size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
     {
       // initialize member function factory for allocating images
 
       // The pixel IDs supported
       using PixelIDTypeList = AllPixelIDTypeList;
 
-      typedef void ( Self::*MemberFunctionType )( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
+      typedef void ( Self::*MemberFunctionType )( const std::vector<unsigned int> &, unsigned int );
 
       using AllocateAddressor = AllocateMemberFunctionAddressor< MemberFunctionType >;
 
@@ -58,18 +58,12 @@ namespace itk
         sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
         }
 
-      if ( Depth == 0 )
+      if (_size.size() < 2 || _size.size() >= 4)
         {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, dim4, numberOfComponents );
+        sitkExceptionMacro("Unsupported number of dimesions specified by size: " << _size << "!");
         }
-      else if ( dim4 == 0 )
-        {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, dim4, numberOfComponents );
-        }
-      else
-        {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 4 )( Width, Height, Depth, dim4, numberOfComponents );
-        }
+
+      allocateMemberFactory.GetMemberFunction( ValueEnum, _size.size() )( _size, numberOfComponents );
     }
   }
 }

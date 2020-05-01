@@ -72,7 +72,7 @@ namespace itk
 
   template<class TImageType>
   typename std::enable_if<IsBasic<TImageType>::Value>::type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
+  Image::AllocateInternal ( const std::vector<unsigned int > &_size, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1  && numberOfComponents != 0 )
       {
@@ -80,29 +80,12 @@ namespace itk
                           << " but did not specify pixelID as a vector type!" );
       }
 
-    typename TImageType::IndexType  index;
-    typename TImageType::SizeType   size;
-    typename TImageType::RegionType region;
-
+    typename TImageType::IndexType index;
     index.Fill ( 0 );
-    size.Fill(1);
-    size[0] = Width;
-    size[1] = Height;
 
-    if ( TImageType::ImageDimension > 2 )
-      {
-      assert( Depth != 0 );
-      size[2] = Depth;
-      }
+    typename TImageType::SizeType size = sitkSTLVectorToITK<typename TImageType::SizeType>(_size);
 
-    if ( TImageType::ImageDimension > 3 )
-      {
-      assert(  dim4 != 0 );
-      size[3] =  dim4;
-      }
-
-    region.SetSize ( size );
-    region.SetIndex ( index );
+    typename TImageType::RegionType region{index, size};
 
     typename TImageType::Pointer image = TImageType::New();
     image->SetRegions ( region );
@@ -116,7 +99,7 @@ namespace itk
 
   template<class TImageType>
   typename std::enable_if<IsVector<TImageType>::Value>::type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
+  Image::AllocateInternal ( const std::vector<unsigned int > &_size, unsigned int numberOfComponents )
   {
     if ( numberOfComponents == 0 )
       {
@@ -124,29 +107,12 @@ namespace itk
       }
 
     typename TImageType::IndexType  index;
-    typename TImageType::SizeType   size;
-    typename TImageType::RegionType region;
-    typename TImageType::PixelType  zero;
-
     index.Fill ( 0 );
-    size.Fill(1);
-    size[0] = Width;
-    size[1] = Height;
 
-    if ( TImageType::ImageDimension > 2 )
-      {
-      assert( Depth != 0 );
-      size[2] = Depth;
-      }
+    typename TImageType::SizeType   size = sitkSTLVectorToITK<typename TImageType::SizeType>(_size);
 
-    if ( TImageType::ImageDimension > 3 )
-      {
-      assert(  dim4 != 0 );
-      size[3] =  dim4;
-      }
-
-    region.SetSize ( size );
-    region.SetIndex ( index );
+    typename TImageType::RegionType region{index, size};
+    typename TImageType::PixelType  zero;
 
     zero.SetSize( numberOfComponents );
     zero.Fill ( itk::NumericTraits<typename TImageType::PixelType::ValueType>::Zero );
@@ -165,7 +131,7 @@ namespace itk
 
   template<class TImageType>
   typename std::enable_if<IsLabel<TImageType>::Value>::type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
+  Image::AllocateInternal ( const std::vector<unsigned int > &_size, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1 && numberOfComponents != 0 )
       {
@@ -173,29 +139,12 @@ namespace itk
                           << " but did not specify pixelID as a vector type!" );
       }
 
-    typename TImageType::IndexType  index;
-    typename TImageType::SizeType   size;
-    typename TImageType::RegionType region;
-
+    typename TImageType::IndexType index;
     index.Fill ( 0 );
-    size.Fill(1);
-    size[0] = Width;
-    size[1] = Height;
 
-    if ( TImageType::ImageDimension > 2 )
-      {
-      assert( Depth != 0 );
-      size[2] = Depth;
-      }
+    typename TImageType::SizeType size = sitkSTLVectorToITK<typename TImageType::SizeType>(_size);
 
-    if ( TImageType::ImageDimension > 3 )
-      {
-      assert(  dim4 != 0 );
-      size[3] =  dim4;
-      }
-
-    region.SetSize ( size );
-    region.SetIndex ( index );
+    typename TImageType::RegionType region{index, size};
 
     typename TImageType::Pointer image = TImageType::New();
     image->SetRegions ( region );
