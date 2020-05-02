@@ -27,12 +27,13 @@
 #endif
 #cmakedefine SITK_SimpleITKExplit_STATIC
 
+#define SITK_MAX_DIMENSION @SimpleITK_MAX_DIMENSION@
+
 // defined if compiler supports using template keyword to disambiguate
 // dependent names
 #cmakedefine SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME
 
 #cmakedefine SITK_INT64_PIXELIDS
-#cmakedefine SITK_4D_IMAGES
 
 #cmakedefine SITK_EXPLICIT_INSTANTIATION
 

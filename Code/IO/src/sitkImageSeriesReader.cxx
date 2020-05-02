@@ -82,8 +82,7 @@ namespace itk {
 
     this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
-    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
     }
 
   ImageSeriesReader::~ImageSeriesReader()
@@ -158,7 +157,7 @@ namespace itk {
         }
       }
 
-    if ( dimension != 2 && dimension != 3 )
+    if ( dimension < 2 || dimension > SITK_MAX_DIMENSION )
       {
       sitkExceptionMacro( "The file in the series have unsupported " << dimension - 1 << " dimensions." );
       }

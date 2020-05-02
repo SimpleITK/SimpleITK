@@ -32,7 +32,7 @@ set ( SimpleITKUnitTestSource
   sitkImageViewerTest.cxx
   )
 
-if ( SimpleITK_4D_IMAGES )
+if ( SimpleITK_MAX_DIMENSION GREATER_EQUAL 4 )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 

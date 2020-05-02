@@ -49,16 +49,14 @@ namespace itk
       using AllocateAddressor = AllocateMemberFunctionAddressor< MemberFunctionType >;
 
       detail::MemberFunctionFactory< MemberFunctionType > allocateMemberFactory( this );
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, AllocateAddressor > ();
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3, AllocateAddressor > ();
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 4, AllocateAddressor > ();
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION, AllocateAddressor > ();
 
       if ( ValueEnum == sitkUnknown )
         {
         sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
         }
 
-      if (_size.size() < 2 || _size.size() >= 4)
+      if (_size.size() < 2 || _size.size() > SITK_MAX_DIMENSION)
         {
         sitkExceptionMacro("Unsupported number of dimesions specified by size: " << _size << "!");
         }
@@ -84,7 +82,9 @@ namespace itk
                                                                            _D>::ImageType *i ); \
   } }
 
-#ifdef SITK_4D_IMAGES
+#if SITK_MAX_DIMENSION == 5
+#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 ) SITK_TEMPLATE_InternalInitialization_D( _I, 4 ) SITK_TEMPLATE_InternalInitialization_D( _I, 5 )
+#elif SITK_MAX_DIMENSION == 4
 #define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 ) SITK_TEMPLATE_InternalInitialization_D( _I, 4 )
 #else
 #define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 )

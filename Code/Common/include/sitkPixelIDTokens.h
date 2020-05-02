@@ -95,11 +95,8 @@ template <typename TPixelIDType, unsigned int VImageDimension =0>
 struct IsInstantiated
 {
   static const bool Value = ((int)PixelIDToPixelIDValue<TPixelIDType>::Result != (int)sitkUnknown)
-    &&  ( (VImageDimension == 0)||(VImageDimension == 2) || (VImageDimension == 3)
-#ifdef SITK_4D_IMAGES
-          || (VImageDimension == 4)
-#endif
-      );
+    &&  ( (VImageDimension == 0) ||
+          (VImageDimension >= 2 && VImageDimension <= SITK_MAX_DIMENSION));
   using ValueType = typename std::integral_constant<bool, Value>::value_type;
   using Type = typename std::integral_constant<bool, Value>::type;
 };
