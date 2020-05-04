@@ -58,7 +58,8 @@ namespace itk
 
       if (_size.size() < 2 || _size.size() > SITK_MAX_DIMENSION)
         {
-        sitkExceptionMacro("Unsupported number of dimesions specified by size: " << _size << "!");
+        sitkExceptionMacro("Unsupported number of dimesions specified by size: " << _size << "!\n"
+                           << "The maximum supported Image dimension is " << SITK_MAX_DIMENSION << "." );
         }
 
       allocateMemberFactory.GetMemberFunction( ValueEnum, _size.size() )( _size, numberOfComponents );
@@ -75,20 +76,31 @@ namespace itk
 // explicitly instantiate for the expected image types.
 //
 
-#define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
+#define SITK_TEMPLATE_InternalInitialization_D( I, D )                \
   namespace itk { namespace simple {                                    \
-  template SITKCommon_EXPORT void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
-                                                                                            _I>::Result, \
-                                                                           _D>::ImageType *i ); \
+  template SITKCommon_EXPORT void \
+  Image::InternalInitialization<I,D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
+                                       I>::Result,                      \
+                                       D>::ImageType *i );              \
   } }
 
-#if SITK_MAX_DIMENSION == 5
-#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 ) SITK_TEMPLATE_InternalInitialization_D( _I, 4 ) SITK_TEMPLATE_InternalInitialization_D( _I, 5 )
-#elif SITK_MAX_DIMENSION == 4
-#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 ) SITK_TEMPLATE_InternalInitialization_D( _I, 4 )
-#else
-#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 )
+#if SITK_MAX_DIMENSION < 2 || SITK_MAX_DIMENSION > 9
+#error "Unsupported SITK_MAX_DIMENSION value".
 #endif
+
+#define SITK_TEMPLATE_InternalInitialization_2( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 )
+#define SITK_TEMPLATE_InternalInitialization_3( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 ) SITK_TEMPLATE_InternalInitialization_2( _I )
+#define SITK_TEMPLATE_InternalInitialization_4( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 4 ) SITK_TEMPLATE_InternalInitialization_3( _I )
+#define SITK_TEMPLATE_InternalInitialization_5( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 5 ) SITK_TEMPLATE_InternalInitialization_4( _I )
+#define SITK_TEMPLATE_InternalInitialization_6( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 6 ) SITK_TEMPLATE_InternalInitialization_5( _I )
+#define SITK_TEMPLATE_InternalInitialization_7( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 7 ) SITK_TEMPLATE_InternalInitialization_6( _I )
+#define SITK_TEMPLATE_InternalInitialization_8( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 8 ) SITK_TEMPLATE_InternalInitialization_7( _I )
+#define SITK_TEMPLATE_InternalInitialization_9( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 9 ) SITK_TEMPLATE_InternalInitialization_8( _I )
+
+
+#define SITK_TEMPLATE_InternalInitialization_CONCAT( I ) sitkMacroJoin( SITK_TEMPLATE_InternalInitialization_, SITK_MAX_DIMENSION ) ( I )
+
+#define SITK_TEMPLATE_InternalInitialization( I ) SITK_TEMPLATE_InternalInitialization_CONCAT ( I )
 
 
 // Instantiate for all types in the lists
