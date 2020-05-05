@@ -41,7 +41,7 @@ namespace itk
   Image::Image( )
     : m_PimpleImage( nullptr )
   {
-    Allocate ( 0, 0, 0, 0, sitkUInt8, 1 );
+    Allocate ( {0, 0}, sitkUInt8, 1 );
   }
 
   Image::Image( const Image &img )
@@ -70,34 +70,19 @@ namespace itk
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( nullptr )
     {
-      Allocate ( Width, Height, 0, 0, ValueEnum, 0 );
+      Allocate ( {Width, Height}, ValueEnum, 0 );
     }
 
     Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( nullptr )
     {
-      Allocate ( Width, Height, Depth, 0, ValueEnum, 0 );
+      Allocate ( {Width, Height, Depth}, ValueEnum, 0 );
     }
 
     Image::Image( const std::vector< unsigned int > &size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
       : m_PimpleImage( nullptr )
     {
-      if ( size.size() == 2 )
-        {
-        Allocate ( size[0], size[1], 0, 0, ValueEnum, numberOfComponents );
-        }
-      else if ( size.size() == 3 )
-        {
-        Allocate ( size[0], size[1], size[2], 0, ValueEnum, numberOfComponents );
-        }
-      else if ( size.size() == 4 )
-        {
-        Allocate ( size[0], size[1], size[2], size[3], ValueEnum, numberOfComponents );
-        }
-      else
-        {
-        sitkExceptionMacro("Unsupported number of dimesions specified by size: " << size << "!");
-        }
+      Allocate( size, ValueEnum, numberOfComponents );
     }
 
     itk::DataObject* Image::GetITKBase( )

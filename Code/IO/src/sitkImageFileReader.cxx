@@ -29,6 +29,7 @@
 namespace itk {
   namespace simple {
 
+  constexpr unsigned int SITK_IO_INPUT_MAX_DIMENSION = 5 > SITK_MAX_DIMENSION ? 5 : SITK_MAX_DIMENSION;
   namespace {
 
       // Simple ITK must use a zero based index
@@ -87,9 +88,7 @@ namespace itk {
 
     this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
-    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
-    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
   }
 
     std::string ImageFileReader::ToString() const {
@@ -298,6 +297,13 @@ namespace itk {
 
 
       unsigned int dimension = this->GetDimension();
+
+      if ( dimension < 2 || dimension > SITK_IO_INPUT_MAX_DIMENSION )
+        {
+        sitkExceptionMacro( "The file has unsupported image dimension of " << dimension << ".\n"
+                            << "The maximum supported IO dimension is " << SITK_IO_INPUT_MAX_DIMENSION << "." );
+        }
+
       if (!m_ExtractSize.empty())
         {
         dimension = 0;
@@ -308,21 +314,20 @@ namespace itk {
             ++dimension;
             }
           }
+        if ( dimension < 2 || dimension > SITK_MAX_DIMENSION )
+          {
+          sitkExceptionMacro( "The extraction region has unsupported output dimension of " << dimension << "."
+                              << "The maximum supported output Image dimension is " << SITK_MAX_DIMENSION << "." );
+          }
         }
+
+
 
       if (type == sitkUnknown)
         {
         type = this->GetPixelIDValue();
         }
 
-#ifdef SITK_4D_IMAGES
-      if ( dimension != 2 && dimension != 3  && dimension != 4 )
-#else
-      if ( dimension != 2 && dimension != 3 )
-#endif
-        {
-        sitkExceptionMacro( "The file has unsupported " << dimension << " dimensions." );
-        }
 
       if ( !this->m_MemberFactory->HasMemberFunction( type, dimension ) )
         {
@@ -340,11 +345,10 @@ namespace itk {
   ImageFileReader::ExecuteInternal( itk::ImageIOBase *imageio )
   {
 
-    const unsigned int MAX_DIMENSION = 5;
     using ImageType = TImageType;
     using Reader = itk::ImageFileReader<ImageType>;
 
-    using InternalImageType = typename ImageType::template Rebind<typename ImageType::PixelType, MAX_DIMENSION>::Type;
+    using InternalImageType = typename ImageType::template Rebind<typename ImageType::PixelType, SITK_IO_INPUT_MAX_DIMENSION>::Type;
     using InternalReader = itk::ImageFileReader<InternalImageType>;
 
     // if the InstantiatedToken is correctly implemented this should

@@ -471,7 +471,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
+    void Allocate ( const std::vector<unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
 
     /** \brief Dispatched methods for allocating images
      *
@@ -482,15 +482,15 @@ namespace simple
      */
     template<class TImageType>
     typename std::enable_if<IsBasic<TImageType>::Value>::type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
+    AllocateInternal ( const std::vector<unsigned int > &size, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename std::enable_if<IsVector<TImageType>::Value>::type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
+    AllocateInternal ( const std::vector<unsigned int > &size, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename std::enable_if<IsLabel<TImageType>::Value>::type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
+    AllocateInternal ( const std::vector<unsigned int > &size, unsigned int numberOfComponents );
     /**@}*/
 
 

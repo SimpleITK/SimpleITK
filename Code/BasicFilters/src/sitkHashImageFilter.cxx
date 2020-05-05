@@ -37,13 +37,8 @@ namespace itk {
 
       this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
-      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
-      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-
-      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 4, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
-      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 3, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
-      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 2, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
+      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 2, SITK_MAX_DIMENSION, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
     }
 
     std::string HashImageFilter::ToString() const {

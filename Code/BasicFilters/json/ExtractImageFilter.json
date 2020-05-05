@@ -6,12 +6,12 @@
   "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image and a 3D image from a 4D image. If the same dimension output is required then the RegionOfInterestFilter should be used.",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "filter_type" : "itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind<typename InputImageType::PixelType, (InputImageType::ImageDimension-1<2?2:InputImageType::ImageDimension-1)>::Type >",
-  "custom_register" : " this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
+  "custom_register" : " this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();",
   "members" : [
     {
       "name" : "Size",
       "type" : "unsigned int",
-      "default" : "std::vector<unsigned int>(4, 1)",
+      "default" : "std::vector<unsigned int>(SITK_MAX_DIMENSION, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
       "briefdescriptionSet" : "",

@@ -144,14 +144,26 @@ option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does n
 # as this option does not robustly work across platforms it will be marked as advanced
 mark_as_advanced( FORCE BUILD_SHARED_LIBS )
 
-set(SimpleITK_4D_IMAGES_DEFAULT ON)
+set(SimpleITK_MAX_DIMENSION_DEFAULT 4)
 # 1900 = VS 14.0 (Visual Studio 2015)
 if(MSVC AND MSVC_VERSION VERSION_LESS 1900)
-  set( SimpleITK_4D_IMAGES_DEFAULT OFF )
+  set( SimpleITK_MAX_DIMENSION_DEFAULT 3 )
 endif()
-option( SimpleITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." ${SimpleITK_4D_IMAGES_DEFAULT} )
-mark_as_advanced( SimpleITK_4D_IMAGES )
-unset(SimpleITK_4D_IMAGES_DEFAULT)
+
+if (DEFINED SimpleITK_4D_Image)
+  message(WARNING "SimpleITK variable \"SimpleITK_4D_Image\" is deprecated set \"SimpleITK_MAX_DIMENSION\" instead." )
+  if (NOT SimpleITK_4D_Image)
+    set( SimpleITK_MAX_DIMENSION_DEFAULT 3 )
+  endif()
+  unset( SimpleITK_4D_Image CACHE )
+endif()
+set( "SimpleITK_MAX_DIMENSION" "${SimpleITK_MAX_DIMENSION_DEFAULT}"
+  CACHE STRING "Add Image and I/O support up to max dimension (integer)." )
+mark_as_advanced( SimpleITK_MAX_DIMENSION )
+unset(SimpleITK_MAX_DIMENSION_DEFAULT)
+
+
+
 
 #-----------------------------------------------------------------------------
 # Setup build type

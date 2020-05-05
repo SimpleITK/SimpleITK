@@ -110,6 +110,11 @@ public:
    * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
    * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
    * \endcode
+   *
+   * A range can also be used:
+   * \code
+   * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, 3 > ();
+   * \endcode
    * @{
    */
   template < typename TPixelIDTypeList,
@@ -121,6 +126,34 @@ public:
   {
     using AddressorType = detail::MemberFunctionAddressor< TMemberFunctionPointer >;
     this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType >();
+  }
+
+  template < typename TPixelIDTypeList, unsigned int VImageDimension, unsigned int VImageDimensionStop >
+  void
+   RegisterMemberFunctions( )
+  {
+    using AddressorType = detail::MemberFunctionAddressor< TMemberFunctionPointer >;
+    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, VImageDimensionStop, AddressorType >();
+  }
+  template < typename TPixelIDTypeList,
+             unsigned int VImageDimension,
+             unsigned int VImageDimensionStop,
+             typename TAddressor
+               >
+    typename std::enable_if<(VImageDimensionStop > VImageDimension)>::type
+   RegisterMemberFunctions( )
+  {
+    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimensionStop, TAddressor >();
+    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, VImageDimensionStop - 1, TAddressor >();
+  }
+  template < typename TPixelIDTypeList,
+             unsigned int VImageDimension,
+             unsigned int VImageDimensionStop,
+             typename TAddressor  >
+  typename std::enable_if<(VImageDimensionStop == VImageDimension)>::type
+   RegisterMemberFunctions( )
+  {
+    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimensionStop, TAddressor >();
   }
   /** @} */
 
