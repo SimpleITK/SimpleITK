@@ -118,25 +118,7 @@ option( SimpleITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including u
   ${SimpleITK_INT64_PIXELIDS_DEFAULT} )
 sitk_legacy_naming(SimpleITK_INT64_PIXELIDS)
 
-
-
-set(SimpleITK_MAX_DIMENSION_DEFAULT 4)
-# 1900 = VS 14.0 (Visual Studio 2015)
-if(MSVC AND MSVC_VERSION VERSION_LESS 1900)
-  set( SimpleITK_MAX_DIMENSION_DEFAULT 3 )
-endif()
-if (DEFINED SimpleITK_4D_Image)
-  message(WARNING "SimpleITK variable \"SimpleITK_4D_Image\" is \
-                   deprecated set \"SimpleITK_MAX_DIMENSION\" instead." )
-  if (NOT SimpleITK_4D_Image)
-    set( SimpleITK_MAX_DIMENSION_DEFAULT 3 )
-  endif()
-endif()
-set( "SimpleITK_MAX_DIMENSION" "${SimpleITK_MAX_DIMENSION_DEFAULT}"
-  CACHE STRING "Add Image and I/O support up to max dimension (integer)." )
-mark_as_advanced( SimpleITK_MAX_DIMENSION )
-
-
+include(sitkMaxDimensionOption)
 
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
