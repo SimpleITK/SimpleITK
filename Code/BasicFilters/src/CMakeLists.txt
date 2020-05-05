@@ -101,6 +101,7 @@ list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKCommon
   sitkCastImageFilter-3l.cxx
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
+  sitkExtractImageFilter.cxx
   sitkHashImageFilter.cxx )
 set(SimpleITKBasicFiltersGeneratedSource_ITKCommon ${SimpleITKBasicFiltersGeneratedSource_ITKCommon} CACHE INTERNAL "")
 
