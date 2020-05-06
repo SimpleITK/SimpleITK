@@ -950,8 +950,18 @@ TEST(IO, ImageFileReader_5DExtract )
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), direction_i5, 1e-8);
   EXPECT_VECTOR_NEAR(reader.GetSize(), v5(5.0, 5.0, 5.0, 5.0, 5.0), 1e-10);
 
-
-  EXPECT_ANY_THROW(reader.Execute());
+  if ( SITK_MAX_DIMENSION < 5 )
+    {
+    EXPECT_ANY_THROW(reader.Execute());
+    }
+  else
+    {
+    sitk::Image output;
+    EXPECT_NO_THROW(output = reader.Execute());
+    EXPECT_VECTOR_DOUBLE_NEAR(output.GetOrigin(), reader.GetOrigin(), 1e-10);
+    EXPECT_VECTOR_DOUBLE_NEAR(output.GetSpacing(), reader.GetSpacing(), 1e-10);
+    EXPECT_VECTOR_DOUBLE_NEAR(output.GetDirection(), reader.GetDirection(), 1e-8);
+    }
 
   std::vector<unsigned int> extractSize(5);
   std::vector<int> extractIndex(5, 0);

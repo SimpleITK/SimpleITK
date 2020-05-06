@@ -98,8 +98,10 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
   assert( pixelID1 >= 0 && pixelID1 < typelist::Length< InstantiatedPixelIDTypeList >::Result );
   assert( pixelID2 >= 0 && pixelID2 < typelist::Length< InstantiatedPixelIDTypeList >::Result );
 
-  static_assert( TImageType1::ImageDimension == 2 || TImageType1::ImageDimension == 3,
-                    "Image Dimension out of range" );
+  static_assert( TImageType1::ImageDimension >= 2 && TImageType1::ImageDimension <= SITK_MAX_DIMENSION,
+                    "Image1 Dimension out of range" );
+  static_assert( TImageType2::ImageDimension >= 2 && TImageType2::ImageDimension <= SITK_MAX_DIMENSION,
+                    "Image2 Dimension out of range" );
   static_assert( int(TImageType1::ImageDimension) == int(TImageType2::ImageDimension),
                     "Image Dimensions do not match" );
   static_assert( IsInstantiated<TImageType1>::Value,
@@ -107,23 +109,11 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
   static_assert( IsInstantiated<TImageType2>::Value,
                     "invalid pixel type for argument two");
 
-  if ( pixelID1 >= 0 && pixelID1 < typelist::Length< InstantiatedPixelIDTypeList >::Result &&
-       pixelID2 >= 0 && pixelID2 < typelist::Length< InstantiatedPixelIDTypeList >::Result )
-    {
-    typename Superclass::KeyType key(pixelID1, pixelID2);
+  typename Superclass::KeyType key(TImageType1::ImageDimension, pixelID1,
+                                   TImageType2::ImageDimension, pixelID2);
 
-    switch( int(TImageType1::ImageDimension) )
-      {
-      case 3:
-        Superclass::m_PFunction3[ key ] = Superclass::BindObject( pfunc, m_ObjectPointer );
-        break;
-      case 2:
-        Superclass::m_PFunction2[ key ] = Superclass::BindObject( pfunc, m_ObjectPointer );
-        break;
-      default:
-        break;
-      }
-    }
+  Superclass::m_PFunction[ key ] = Superclass::BindObject( pfunc, m_ObjectPointer );
+
 }
 
 template <typename TMemberFunctionPointer>
@@ -145,28 +135,17 @@ bool
 DualMemberFunctionFactory< TMemberFunctionPointer >
 ::HasMemberFunction( PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int imageDimension  ) const noexcept
 {
+  typename Superclass::KeyType key(imageDimension, pixelID1, imageDimension, pixelID2);
   try
     {
-
-    typename Superclass::KeyType key(pixelID1, pixelID2);
-
-    switch ( imageDimension )
-      {
-      case 3:
-        // check if tr1::function has been set in map
-        return Superclass::m_PFunction3.find( key ) != Superclass::m_PFunction3.end();
-      case 2:
-        // check if tr1::function has been set in map
-        return Superclass::m_PFunction2.find( key ) != Superclass::m_PFunction2.end();
-      default:
-        return false;
-      }
+    // check if tr1::function has been set in map
+    return Superclass::m_PFunction.find( key ) != Superclass::m_PFunction.end();
     }
   // we do not throw exceptions
   catch(...)
     {
-    return false;
     }
+  return false;
 }
 
 template <typename TMemberFunctionPointer>
@@ -184,40 +163,20 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
     sitkExceptionMacro ( << "unexpected error pixelID2 is out of range " << pixelID2 << " "  << typeid(ObjectType).name() );
     }
 
-  typename Superclass::KeyType key(pixelID1, pixelID2);
+  typename Superclass::KeyType key(imageDimension, pixelID1, imageDimension, pixelID2);
 
-  switch ( imageDimension )
+  // check if tr1::function has been set
+  auto ret_pair = Superclass::m_PFunction.find( key ) ;
+  if ( ret_pair != Superclass::m_PFunction.end() )
     {
-    case 3:
-      // check if tr1::function has been set
-      if ( Superclass::m_PFunction3.find( key ) != Superclass::m_PFunction3.end() )
-        {
-        return Superclass::m_PFunction3[ key ];
-        }
-
-      // todo updated exceptions here
-      sitkExceptionMacro ( << "Pixel type: "
-                           << GetPixelIDValueAsString(pixelID1)
-                           << " is not supported in 3D by"
-                           << typeid(ObjectType).name() );
-
-      break;
-    case 2:
-      // check if tr1::function has been set
-      if ( Superclass::m_PFunction2.find( key ) != Superclass::m_PFunction2.end() )
-        {
-        return Superclass::m_PFunction2[ key ];
-        }
-
-      sitkExceptionMacro ( << "Pixel type: "
-                           << GetPixelIDValueAsString(pixelID1)
-                           << " is not supported in 2D by"
-                           << typeid(ObjectType).name() );
-
-      break;
-    default:
-      sitkExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );
+    return ret_pair->second;
     }
+  // todo updated exceptions here
+  sitkExceptionMacro ( << "Pixel type: "
+                       << GetPixelIDValueAsString(pixelID1)
+                       << " is not supported in " << imageDimension << "D by"
+                       << typeid(ObjectType).name() );
+
 }
 
 

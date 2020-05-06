@@ -53,12 +53,12 @@ namespace detail {
  */
 template <typename TMemberFunctionPointer>
 class MemberFunctionFactory
-  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, int>
+  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<unsigned int, int> >
 {
 
 public:
 
-  using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, int>;
+  using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<unsigned int, int>>;
   using Self = MemberFunctionFactory;
 
   using MemberFunctionType = TMemberFunctionPointer;

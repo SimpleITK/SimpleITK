@@ -92,24 +92,11 @@ void MemberFunctionFactory<TMemberFunctionPointer>
 
   static_assert( IsInstantiated<TImageType>::Value,
                     "UnInstantiated ImageType or dimension");
+  static_assert( TImageType::ImageDimension <= SITK_MAX_DIMENSION, "Invalid ImageDimensions" );
 
-  if ( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
-    {
-    switch( int(TImageType::ImageDimension) )
-      {
-      case 4:
-        Superclass::m_PFunction4[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
-        break;
-      case 3:
-        Superclass::m_PFunction3[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
-        break;
-      case 2:
-        Superclass::m_PFunction2[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
-        break;
-      default:
-        break;
-      }
-    }
+  auto key = std::pair<unsigned int, int>(TImageType::ImageDimension, pixelID);
+
+  Superclass::m_PFunction[key] = Superclass::BindObject( pfunc, m_ObjectPointer );
 }
 
 template <typename TMemberFunctionPointer>
@@ -132,29 +119,17 @@ bool
 MemberFunctionFactory< TMemberFunctionPointer >
 ::HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const noexcept
 {
-
+  auto key = typename Superclass::KeyType( imageDimension, pixelID);
   try
     {
-    switch ( imageDimension )
-      {
-      case 4:
-        // check if tr1::function has been set in map
-        return Superclass::m_PFunction4.find( pixelID ) != Superclass::m_PFunction4.end();
-      case 3:
-        // check if tr1::function has been set in map
-        return Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end();
-      case 2:
-        // check if tr1::function has been set in map
-        return Superclass::m_PFunction2.find( pixelID ) != Superclass::m_PFunction2.end();
-      default:
-        return false;
-      }
+    // check if tr1::function has been set in map
+    return Superclass::m_PFunction.find( key ) != Superclass::m_PFunction.end();
     }
   // we do not throw exceptions
   catch(...)
     {
-    return false;
     }
+  return false;
 }
 
 
@@ -168,50 +143,19 @@ MemberFunctionFactory<TMemberFunctionPointer>
     sitkExceptionMacro ( << "unexpected error pixelID is out of range " << pixelID << " "  << typeid(ObjectType).name() );
     }
 
-  switch ( imageDimension )
+  auto key = typename Superclass::KeyType(imageDimension, pixelID);
+
+  // check if tr1::function has been set
+  auto ret_pair = Superclass::m_PFunction.find( key ) ;
+  if ( ret_pair != Superclass::m_PFunction.end() )
     {
-    case 4:
-      // check if tr1::function has been set
-      if ( Superclass::m_PFunction4.find( pixelID ) != Superclass::m_PFunction4.end() )
-        {
-        return Superclass::m_PFunction4[ pixelID ];
-        }
-
-      sitkExceptionMacro ( << "Pixel type: "
-                           << GetPixelIDValueAsString(pixelID)
-                           << " is not supported in 4D by "
-                           << typeid(ObjectType).name()
-                           << " or SimpleITK compiled with SimpleITK_4D_IMAGES set to OFF." );
-    case 3:
-      // check if tr1::function has been set
-      if ( Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
-        {
-        return Superclass::m_PFunction3[ pixelID ];
-        }
-
-      sitkExceptionMacro ( << "Pixel type: "
-                           << GetPixelIDValueAsString(pixelID)
-                           << " is not supported in 3D by"
-                           << typeid(ObjectType).name() );
-
-      break;
-    case 2:
-      // check if tr1::function has been set
-      if (  Superclass::m_PFunction2.find( pixelID ) != Superclass::m_PFunction2.end() )
-        {
-        return Superclass::m_PFunction2[ pixelID ];
-        }
-
-        sitkExceptionMacro ( << "Pixel type: "
-                             << GetPixelIDValueAsString(pixelID)
-                             << " is not supported in 2D by"
-                             << typeid(ObjectType).name() );
-
-      break;
-    default:
-      sitkExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );
-      throw;
+    return ret_pair->second;
     }
+
+  sitkExceptionMacro ( << "Pixel type: "
+                       << GetPixelIDValueAsString(pixelID)
+                       << " is not supported in " << imageDimension << "D by "
+                       << typeid(ObjectType).name() << "." );
 }
 
 

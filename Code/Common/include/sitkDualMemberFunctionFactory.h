@@ -63,12 +63,12 @@ namespace detail
  */
 template <typename TMemberFunctionPointer>
 class DualMemberFunctionFactory
-  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<int, int> >
+  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, std::tuple<unsigned int, int, unsigned int, int> >
 {
 
 public:
 
-  using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<int, int> >;
+  using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, std::tuple<unsigned int, int, unsigned int, int> >;
   using Self = DualMemberFunctionFactory;
 
   using MemberFunctionType = TMemberFunctionPointer;
