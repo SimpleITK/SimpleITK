@@ -282,7 +282,7 @@ TEST_F(Image,Constructors) {
 
   // check for error when incorrect number of dimensions are requested
   std::vector<unsigned int> s1d(1, 100);
-  std::vector<unsigned int> s5d(5, 100);
+  std::vector<unsigned int> s5d(SITK_MAX_DIMENSION+1, 100);
   ASSERT_ANY_THROW( itk::simple::Image( s1d, itk::simple::sitkVectorFloat64 ) );
   ASSERT_ANY_THROW( itk::simple::Image( s5d, itk::simple::sitkVectorFloat64 ) );
 
