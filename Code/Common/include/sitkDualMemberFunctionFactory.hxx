@@ -109,8 +109,8 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
   static_assert( IsInstantiated<TImageType2>::Value,
                     "invalid pixel type for argument two");
 
-  typename Superclass::KeyType key(TImageType1::ImageDimension, pixelID1,
-                                   TImageType2::ImageDimension, pixelID2);
+  typename Superclass::KeyType key(TImageType1::GetImageDimension(), pixelID1,
+                                   TImageType2::GetImageDimension(), pixelID2);
 
   Superclass::m_PFunction[ key ] = Superclass::BindObject( pfunc, m_ObjectPointer );
 

@@ -94,7 +94,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
                     "UnInstantiated ImageType or dimension");
   static_assert( TImageType::ImageDimension <= SITK_MAX_DIMENSION, "Invalid ImageDimensions" );
 
-  auto key = std::pair<unsigned int, int>(TImageType::ImageDimension, pixelID);
+  auto key = std::pair<unsigned int, int>(TImageType::GetImageDimension(), pixelID);
 
   Superclass::m_PFunction[key] = Superclass::BindObject( pfunc, m_ObjectPointer );
 }
