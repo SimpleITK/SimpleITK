@@ -29,6 +29,7 @@
 
 #include <unordered_map>
 #include <functional>
+#include <tuple>
 
 namespace itk
 {
@@ -38,18 +39,62 @@ namespace simple
 // this namespace is internal and not part of the external simple ITK interface
 namespace detail {
 
+// make hash function available in current name space to take priority
+
 template <typename T> struct hash : public std::hash<T>{};
 
-/** \brief A specialization of the hash function.
- */
-template <>
-struct hash< std::pair<int, int> >
-  : public std::unary_function<std::pair<int,int>, std::size_t> {
-  std::size_t operator()( const std::pair<int, int > &p ) const
-    { return std::hash<size_t>()( size_t(p.first) * prime + p.second ); }
-private:
-  static const std::size_t prime = 16777619u;
+/** A utility function to chain hashes */
+template<typename T>
+inline void hash_combine(std::size_t& seed, const T& val)
+{
+  // Code from boost
+  // Reciprocal of the golden ratio helps spread entropy
+  //     and handles duplicates.
+  std::hash<T> hasher;
+  seed ^= hasher(val) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+}
+
+template<typename S, typename T>
+struct hash<std::pair<S, T>>
+{
+  inline size_t operator()(const std::pair<S, T>& val) const
+    {
+      size_t seed = 0;
+      hash_combine(seed, val.first);
+      hash_combine(seed, val.second);
+      return seed;
+    }
 };
+
+template<class... TupleArgs>
+struct hash<std::tuple<TupleArgs...>>
+{
+private:
+  // recursive hashing of std::tuple from Sarang Baheti's blog
+  // https://www.variadic.xyz/2018/01/15/hashing-stdpair-and-stdtuple/
+  template<size_t Idx, typename... TupleTypes>
+  inline typename std::enable_if<Idx == sizeof...(TupleTypes), void>::type
+  hash_combine_tup(size_t&, const std::tuple<TupleTypes...>&) const {}
+
+  template<size_t Idx, typename... TupleTypes>
+  inline typename std::enable_if<Idx < sizeof...(TupleTypes), void>::type
+  hash_combine_tup(size_t& seed, const std::tuple<TupleTypes...>& tup) const
+    {
+      hash_combine(seed, std::get<Idx>(tup));
+
+      //  on to next element
+      hash_combine_tup<Idx+1>(seed, tup);
+    }
+
+public:
+  size_t operator()(std::tuple<TupleArgs...> tupleValue) const
+    {
+      size_t seed = 0;
+      hash_combine_tup<0>(seed, tupleValue);
+      return seed;
+    }
+};
+
 
 template< typename TMemberFunctionPointer,
           typename TKey,
@@ -75,9 +120,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3*typelist::Length<InstantiatedPixelIDTypeList>::Result )
     { }
 
 public:
@@ -104,10 +147,10 @@ protected:
       return std::bind( pfunc,objectPointer );
     }
 
+  using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
+
   // maps of Keys to pointers to member functions
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  FunctionMapType m_PFunction;
 
 
 };
@@ -132,9 +175,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
     { }
 
 public:
@@ -164,10 +205,10 @@ protected:
     }
 
 
+  using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
+
   // maps of Keys to pointers to member functions
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  FunctionMapType m_PFunction;
 
 };
 
@@ -186,9 +227,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
     { }
 
 public:
@@ -218,11 +257,10 @@ protected:
       return std::bind( pfunc, objectPointer, _1, _2 );
     }
 
+  using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
 
   // maps of Keys to pointers to member functions
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  FunctionMapType m_PFunction;
 
 };
 
@@ -242,9 +280,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
     { }
 
 public:
@@ -273,11 +309,10 @@ protected:
       return std::bind( pfunc, objectPointer, _1, _2, _3 );
     }
 
+  using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
 
   // maps of Keys to pointers to member functions
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  FunctionMapType m_PFunction;
 
 };
 
@@ -298,9 +333,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
     { }
 
 public:
@@ -329,11 +362,10 @@ protected:
       return std::bind( pfunc, objectPointer, _1, _2, _3, _4 );
     }
 
+  using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
 
   // maps of Keys to pointers to member functions
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  FunctionMapType m_PFunction;
 
 };
 
@@ -354,9 +386,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
-       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
     { }
 
 public:
@@ -392,10 +422,11 @@ protected:
     }
 
 
+  using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
+
   // maps of Keys to pointers to member functions
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  FunctionMapType m_PFunction;
+
 
 };
 

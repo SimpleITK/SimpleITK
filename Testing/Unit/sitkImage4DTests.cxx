@@ -247,7 +247,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ ( 10u, image.GetNumberOfComponentsPerPixel() );
 
   // check for error when incorrect number of dimensions are requested
-  std::vector<unsigned int> s5d(5, 100);
+  std::vector<unsigned int> s5d(SITK_MAX_DIMENSION+1, 100);
   ASSERT_ANY_THROW( itk::simple::Image( s5d, itk::simple::sitkVectorFloat64 ) );
 
   // check for error with bad pixelID
