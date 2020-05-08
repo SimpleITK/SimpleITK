@@ -404,6 +404,8 @@ foreach (_varName ${_varNames})
         NOT _varName MATCHES "^SimpleITK_USE_SYSTEM"
           AND
         NOT _varName MATCHES "^SimpleITK_.*_COMPILE_OPTIONS"
+           AND
+        NOT _varName MATCHES "^SimpleITK_.*_DEFAULT"
           AND
         NOT _varName MATCHES "^SITK_UNDEFINED_SYMBOLS_ALLOWED")
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
