@@ -194,6 +194,7 @@ namespace std
 %include "sitkCenteredVersorTransformInitializerFilter.h"
 %include "sitkLandmarkBasedTransformInitializerFilter.h"
 %include "sitkCastImageFilter.h"
+%include "sitkExtractImageFilter.h"
 %include "sitkAdditionalProcedures.h"
 
 // Registration

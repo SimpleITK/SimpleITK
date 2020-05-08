@@ -956,3 +956,257 @@ TEST(BasicFilters, DICOMOrientImageFilter_Direction)
   EXPECT_EQ("RAS",sitk::DICOMOrientImageFilter::GetOrientationFromDirectionCosines(directionRAS));
 
 }
+
+
+TEST(BasicFilters, ExtractImageFilter_2D)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image input( {10, 10}, sitk::sitkUInt8);
+  sitk::Image output;
+
+  sitk::ExtractImageFilter extractor;
+
+  extractor.SetIndex({0,0});
+  extractor.SetSize({10,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_EQ(sitk::Hash(input), sitk::Hash(output));
+  EXPECT_EQ(input.GetSize(), output.GetSize());
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,10,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_EQ(sitk::Hash(input), sitk::Hash(output));
+  EXPECT_VECTOR_NEAR(input.GetSize(), output.GetSize(), 1e-20);
+
+  extractor.SetIndex({0});
+  extractor.SetSize({10,10,10});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({0,0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10, 0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({0, 10});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+}
+
+
+TEST(BasicFilters, ExtractImageFilter_3D)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image input( {10, 10, 10}, sitk::sitkUInt8);
+  input.SetOrigin( {1.0, 2.0, 3.0});
+  sitk::Image output;
+
+  sitk::ExtractImageFilter extractor;
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,10,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_EQ(sitk::Hash(input), sitk::Hash(output));
+  EXPECT_EQ(input.GetSize(), output.GetSize());
+  EXPECT_VECTOR_NEAR(input.GetSize(), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(input.GetOrigin(), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({10,10,10,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_EQ(sitk::Hash(input), sitk::Hash(output));
+  EXPECT_VECTOR_NEAR(input.GetSize(), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(input.GetOrigin(), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({0,10,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR( v2(10,10), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(2.0, 3.0), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({0,10,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(10,10), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(2.0, 3.0), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,0,10});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(10,10), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(1.0, 3.0), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,10,0});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(10,10), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(1.0, 2.0), output.GetOrigin(), 1e-20);
+
+
+  extractor.SetIndex({0,0});
+  extractor.SetSize({10,10,10});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,10});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,0,0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetSize({0,10,0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+}
+
+
+#if SITK_MAX_DIMENSION >= 4
+TEST(BasicFilters, ExtractImageFilter_4D)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image input( {10, 11, 12, 13}, sitk::sitkUInt8);
+  input.SetOrigin( {1.0, 2.0, 3.0, 4.0});
+  sitk::Image output;
+
+  sitk::ExtractImageFilter extractor;
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({10,11,12,13});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_EQ(sitk::Hash(input), sitk::Hash(output));
+  EXPECT_EQ(input.GetSize(), output.GetSize());
+  EXPECT_VECTOR_NEAR(input.GetSize(), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(input.GetOrigin(), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({0,11,12,13});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v3(11,12,13), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v3(2,3,4), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({0,11,12,0});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(11,12), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(2,3), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({10,0,0,13});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(10,13), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(1,4), output.GetOrigin(), 1e-20);
+
+
+  extractor.SetIndex({0,0,0});
+  extractor.SetSize({10,11,12,13});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({10,11,12});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({0, 0, 0, 13});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({0, 0, 12, 0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({0, 11, 0, 0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({10, 0, 0, 0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+}
+#endif
+
+#if SITK_MAX_DIMENSION >= 5
+TEST(BasicFilters, ExtractImageFilter_5D)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image input( {10, 11, 12, 13, 14}, sitk::sitkUInt8);
+  input.SetOrigin( {1.0, 2.0, 3.0, 4.0, 5.0});
+  sitk::Image output;
+
+  sitk::ExtractImageFilter extractor;
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({10,11,12,13,14});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_EQ(sitk::Hash(input), sitk::Hash(output));
+  EXPECT_EQ(input.GetSize(), output.GetSize());
+  EXPECT_VECTOR_NEAR(input.GetSize(), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(input.GetOrigin(), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({0,11,12,13,14});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v4(11,12,13,14), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v4(2,3,4,5), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({0,11,12,0,14});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v3(11,12,14), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v3(2,3,5), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({10,0,0,13,14});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v3(10,13,14), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v3(1,4,5), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({0,0,12,0,14});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(12,14), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(3,5), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({10,0,0,13,0});
+  ASSERT_NO_THROW(output = extractor.Execute(input));
+  EXPECT_VECTOR_NEAR(v2(10,13), output.GetSize(), 1e-20);
+  EXPECT_VECTOR_NEAR(v2(1,4), output.GetOrigin(), 1e-20);
+
+  extractor.SetIndex({0,0,0,0});
+  extractor.SetSize({10,11,12,13,14});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({10,11,12,13});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({0, 0, 0, 0, 14});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({0, 0, 12, 0, 0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({0, 11, 0, 0,0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+  extractor.SetIndex({0,0,0,0,0});
+  extractor.SetSize({10, 0, 0, 0,0});
+  ASSERT_ANY_THROW(output = extractor.Execute(input));
+
+}
+#endif
