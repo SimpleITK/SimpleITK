@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
   R.MetricUseFixedImageGradientFilterOff();
 
   {
-  std::vector<unsigned int> shrinkFactors { 3, 2, 1 };
+  std::vector<unsigned int> shrinkFactors = { 3, 2, 1 };
 
   std::vector<double> smoothingSigmas = { 2.0, 1.0, 1.0 };
 
