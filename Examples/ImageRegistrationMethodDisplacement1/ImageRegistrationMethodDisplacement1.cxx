@@ -110,15 +110,9 @@ int main(int argc, char *argv[])
   sitk::ImageRegistrationMethod R;
 
   {
-  std::vector<unsigned int> shrinkFactors;
-  shrinkFactors.push_back(3);
-  shrinkFactors.push_back(2);
-  shrinkFactors.push_back(1);
+  std::vector<unsigned int> shrinkFactors = { 3, 2, 1 };
 
-  std::vector<double> smoothingSigmas;
-  smoothingSigmas.push_back(2.0);
-  smoothingSigmas.push_back(1.0);
-  smoothingSigmas.push_back(1.0);
+  std::vector<double> smoothingSigmas = { 2.0, 1.0, 1.0 };
 
   R.SetShrinkFactorsPerLevel(shrinkFactors);
   R.SetSmoothingSigmasPerLevel(smoothingSigmas);
@@ -129,8 +123,8 @@ int main(int argc, char *argv[])
   R.MetricUseFixedImageGradientFilterOff();
 
   {
-  double learningRate=1.0;
-  unsigned int numberOfIterations=100;
+  double learningRate = 1.0;
+  unsigned int numberOfIterations = 100;
   double convergenceMinimumValue = 1e-6;
   unsigned int convergenceWindowSize = 10;
   sitk::ImageRegistrationMethod::EstimateLearningRateType estimateLearningRate = R.EachIteration;
@@ -165,8 +159,8 @@ int main(int argc, char *argv[])
   sitk::Image displacementField = sitk::Image(fixed.GetSize(), sitk::sitkVectorFloat64);
   displacementField.CopyInformation(fixed);
   sitk::DisplacementFieldTransform displacementTx(displacementField);
-  const double varianceForUpdateField=0.0;
-  const double varianceForTotalField=1.5;
+  const double varianceForUpdateField = 0.0;
+  const double varianceForTotalField = 1.5;
   displacementTx.SetSmoothingGaussianOnUpdate(varianceForUpdateField,
                                               varianceForTotalField);
 
@@ -180,15 +174,9 @@ int main(int argc, char *argv[])
   R.MetricUseFixedImageGradientFilterOff();
 
   {
-  std::vector<unsigned int> shrinkFactors;
-  shrinkFactors.push_back(3);
-  shrinkFactors.push_back(2);
-  shrinkFactors.push_back(1);
+  std::vector<unsigned int> shrinkFactors = { 3, 2, 1 };
 
-  std::vector<double> smoothingSigmas;
-  smoothingSigmas.push_back(2.0);
-  smoothingSigmas.push_back(1.0);
-  smoothingSigmas.push_back(1.0);
+  std::vector<double> smoothingSigmas = { 2.0, 1.0, 1.0 };
 
   R.SetShrinkFactorsPerLevel(shrinkFactors);
   R.SetSmoothingSigmasPerLevel(smoothingSigmas);
@@ -197,8 +185,8 @@ int main(int argc, char *argv[])
   R.SetOptimizerScalesFromPhysicalShift();
 
   {
-  double learningRate=1.0;
-  unsigned int numberOfIterations=300;
+  double learningRate = 1.0;
+  unsigned int numberOfIterations = 300;
   double convergenceMinimumValue = 1e-6;
   unsigned int convergenceWindowSize = 10;
   sitk::ImageRegistrationMethod::EstimateLearningRateType estimateLearningRate = R.EachIteration;

@@ -131,26 +131,16 @@ int main(int argc, char *argv[])
 
   R.SetInterpolator(sitk::sitkLinear);
 
-  const unsigned int numberOfLevels = 3;
-  std::vector<unsigned int> scaleFactors(numberOfLevels);
-  scaleFactors[0] = 1;
-  scaleFactors[1] = 2;
-  scaleFactors[2] = 5;
+  std::vector<unsigned int> scaleFactors = { 1, 2, 5 };
   const bool inPlace = true;
   R.SetInitialTransformAsBSpline(tx,
                                  inPlace,
                                  scaleFactors);
 
-  std::vector<unsigned int> shrinkFactors( numberOfLevels );
-  shrinkFactors[0] = 4;
-  shrinkFactors[1] = 2;
-  shrinkFactors[2] = 1;
+  std::vector<unsigned int> shrinkFactors = { 4, 2, 1 };
   R.SetShrinkFactorsPerLevel( shrinkFactors );
 
-  std::vector<double> smoothingSigmas( numberOfLevels );
-  smoothingSigmas[0] = 4.0;
-  smoothingSigmas[1] = 2.0;
-  smoothingSigmas[2] = 1.0;
+  std::vector<double> smoothingSigmas = { 4.0, 2.0, 1.0 };
   R.SetSmoothingSigmasPerLevel( smoothingSigmas );
 
   IterationUpdate cmd1(R, tx);
