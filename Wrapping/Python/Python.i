@@ -482,8 +482,10 @@
             of the image it will be padded with the defaults slice
             ":".
 
-            A 2D image can be extracted from a 3D image by providing
-            one argument being an integer instead of a slice."""
+            When an index element is an integer, that dimension is
+            collapsed extracting an image with reduced dimensionality.
+            The minimum dimension of an image which can be extracted
+            is 2D."""
 
             if sys.version_info[0] < 3:
               def isint( i ):
@@ -512,37 +514,33 @@
               # if any of the arguments are negative integers subract them for the size
               idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
 
-              for i  s in range(len(idx)):
-                if idx[i] < 0 or idx[i] >= size[d]:
-                  raise IndexError("index {0} is outside the extent for dimension {1} with size {3}".format( idx[i], d, size[d])
+              for i in range(len(idx)):
+                if idx[i] < 0 or idx[i] >= size[i]:
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {3}".format( idx[i], i, size[i]))
 
               return self.GetPixel(*tuple(idx))
 
 
-            # If we have a 3D image, we can extract 2D image if one index is an int and the reset are slices
-            slice_dim = -1
-            if ( dim > 2 ):
-              # find only a single dimension which has an integer index
-              for i in range(len(idx)):
-                if type(idx[i]) is slice:
-                  continue
-                elif isint(idx[i]):
-                  if(slice_dim == -1):
-                    slice_dim = abs(i)
-                  else:
-                    slice_dim = -1
-                    break
+            # If an index is an integer then we are extracting to a small dimension
+            slice_dims = []
+            for i in range(len(idx)):
+              if type(idx[i]) is slice:
+                continue
+              elif isint(idx[i]):
+                slice_dims.append(i)
 
-            if slice_dim != -1:
-              # replace int slice_dim with a slice
-              s = idx[slice_dim]
-              if s < 0:
-                s += size[slice_dim]
+                s = idx[i]
+                if s < 0:
+                  s += size[i]
+                if s < 0 or s >= size[i]:
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {3}".format( idx[i], i, size[i]))
 
-              if s < 0 or s >= size[slice_dim]:
-                 raise IndexError("index  out of bounds")
 
-              idx = tuple(idx[:slice_dim]) + (slice(s, s+1),)+ tuple(idx[slice_dim+1:])
+                idx = tuple(idx[:i]) + (slice(s, s+1),)+ tuple(idx[i+1:])
+
+            if dim - len(slice_dims) < 2:
+              raise IndexError("invalid slice extraction to 1 dimension")
+
 
             # Use the slice filter when all the elements are slices ( or have been processed to be )
             if all( type(i) is slice for i in idx ):
@@ -556,18 +554,14 @@
               # run the slice filter
               img = Slice(self, start=start, stop=stop, step=step)
 
-              if (slice_dim != -1):
-
-                # the stop is on the wrong side of step
-                if any( (s[1]-s[0])//s[2] <= 0 for s in sidx ):
-                  raise IndexError("invalid range")
-
+              if slice_dims:
                 size = img.GetSize();
 
                 # set the slice dimension size to 0
-                size = size[:slice_dim]+(0,)+size[slice_dim+1:]
+                for i in slice_dims:
+                  size = tuple(size[:i]) + (0,) + tuple(size[i+1:])
 
-                # reduce the 3D image to a 2D
+                # Reduce the dimension of the image
                 img = Extract( img, size )
 
               return img
