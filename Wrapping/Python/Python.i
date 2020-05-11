@@ -505,15 +505,16 @@
               idx = (idx,) + (slice(None),)*(dim-1)
 
             if (len(idx) > dim):
-               raise IndexError("invalid index")
+               raise IndexError("too many indices for image")
 
             # All the indices are integers just return GetPixel value
             if all( isint(i) for i in idx ):
               # if any of the arguments are negative integers subract them for the size
               idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
 
-              if any( idx[i] < 0 or idx[i] >= size[i] for i in range(len(idx))):
-                raise IndexError("index out of bounds")
+              for i  s in range(len(idx)):
+                if idx[i] < 0 or idx[i] >= size[d]:
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {3}".format( idx[i], d, size[d])
 
               return self.GetPixel(*tuple(idx))
 
