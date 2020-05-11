@@ -171,7 +171,7 @@ namespace itk {
 
       std::vector<unsigned int>  m_Size{std::vector<unsigned int>(SITK_MAX_DIMENSION, 1)};
 
-      std::vector<int>  m_Index{std::vector<int>(4, 0)};
+      std::vector<int>  m_Index{std::vector<int>(SITK_MAX_DIMENSION, 0)};
 
       DirectionCollapseToStrategyType  m_DirectionCollapseToStrategy{itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS};
 
@@ -189,9 +189,9 @@ namespace itk {
      * @{
      */
 #ifndef SWIG
-     SITKBasicFilters_EXPORT Image Extract ( Image&& image1, std::vector<unsigned int> size = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> index = std::vector<int>(4, 0), ExtractImageFilter::DirectionCollapseToStrategyType directionCollapseToStrategy = itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
+     SITKBasicFilters_EXPORT Image Extract ( Image&& image1, std::vector<unsigned int> size = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> index = std::vector<int>(SITK_MAX_DIMENSION, 0), ExtractImageFilter::DirectionCollapseToStrategyType directionCollapseToStrategy = itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
 #endif
-     SITKBasicFilters_EXPORT Image Extract ( const Image& image1, std::vector<unsigned int> size = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> index = std::vector<int>(4, 0), ExtractImageFilter::DirectionCollapseToStrategyType directionCollapseToStrategy = itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
+     SITKBasicFilters_EXPORT Image Extract ( const Image& image1, std::vector<unsigned int> size = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> index = std::vector<int>(SITK_MAX_DIMENSION, 0), ExtractImageFilter::DirectionCollapseToStrategyType directionCollapseToStrategy = itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
 
      /** @} */
   }
