@@ -174,7 +174,7 @@ class TestImageIndexingInterface(unittest.TestCase):
 
 
     def test_4d_extract(self):
-         """testing __getitem__ for extracting 3D slices from 4D image"""
+         """testing __getitem__ for extracting slices from 4D image"""
 
 
          # Check if we have 4D Image support
@@ -187,9 +187,9 @@ class TestImageIndexingInterface(unittest.TestCase):
 
          img = sitk.GetImageFromArray( nda, isVector=False )
 
-         # check some exceptions
-         self.assertRaises(IndexError, lambda : img[0,3] )
-         self.assertRaises(IndexError, lambda : img[0,3,:,:] )
+
+         self.assertRaises(IndexError, lambda : img[5,0] )
+         self.assertRaises(IndexError, lambda : img[0,5,:,:] )
          self.assertRaises(IndexError, lambda : img[0, 1, 2,:] )
          self.assertRaises(IndexError, lambda : img[:,0,3] )
          self.assertRaises(IndexError, lambda : img[:,0,3,:,:] )
@@ -197,11 +197,21 @@ class TestImageIndexingInterface(unittest.TestCase):
          self.assertRaises(IndexError, lambda : img[2,0,3,4,:] )
          self.assertRaises(IndexError, lambda : img[:,1:1,3,:] )
          self.assertRaises(IndexError, lambda : img[:,:,1:0,3] )
+         self.assertRaises(IndexError, lambda : img[0,1,2,:] )
 
          self.assertImageNDArrayEquals(img[1], nda[:,:,:,1])
          self.assertImageNDArrayEquals(img[-1], nda[:,:,:,-1])
          self.assertImageNDArrayEquals(img[:,-2], nda[:,:,-2])
          self.assertImageNDArrayEquals(img[:,:,2,:], nda[:,2])
+         self.assertImageNDArrayEquals(img[:,:,:,1], nda[1])
+
+
+         # check 4D to 2D cases
+         self.assertImageNDArrayEquals(img[0,3], nda[:,:,3,0] )
+         self.assertImageNDArrayEquals(img[-1,0], nda[:,:,0,-1] )
+         self.assertImageNDArrayEquals(img[-3,:,:,1], nda[1,:,:,-3] )
+         self.assertImageNDArrayEquals(img[::-1,3,2,1:2], nda[1:2,2,3,::-1] )
+
 
          self.assertImageNDArrayEquals(img[::-1,:,-2,:], nda[:,-2,:,::-1])
          self.assertImageNDArrayEquals(img[::-1,0,:,0:-1], nda[0:-1,:,0,::-1])
@@ -246,6 +256,42 @@ class TestImageIndexingInterface(unittest.TestCase):
          self.assertImageNDArrayEquals(img[::-1,::-1,::-1,::-1], nda[::-1,::-1,::-1,::-1])
          self.assertImageNDArrayEquals(img[:,::-2,::-1,::-3], nda[::-3,::-1,::-2,:])
          self.assertImageNDArrayEquals(img[-1:-4:-1,:,:,:], nda[:,:,:,-1:-4:-1])
+
+
+    def test_5d(self):
+         """testing __getitem__ for 5D image"""
+
+         # Check if we have 5D Image support
+         try:
+             sitk.Image([2]*5, sitk.sitkFloat32)
+         except RuntimeError:
+             return # exit and don't run the test
+
+         nda = np.linspace(0, 719, 720 ).reshape(2,3,4,5,6)
+
+         img = sitk.GetImageFromArray( nda, isVector=False )
+
+         # check some exceptions
+         self.assertRaises(IndexError, lambda : img[0,1,0,0,0,0] )
+         self.assertRaises(IndexError, lambda : img[0,0,4,0,0] )
+         self.assertRaises(IndexError, lambda : img[0,0,0,0,2] )
+         self.assertRaises(IndexError, lambda : img[-7,0,0,0,0] )
+         self.assertRaises(IndexError, lambda : img[0,0,0,0,-3] )
+
+         self.assertEqual( img[0,0,0,0,0], 0.0 )
+         self.assertEqual( img[(1,0,0,0,0)], 1.0 )
+         self.assertEqual( img[[2,0,0,0,0]], 2.0 )
+         self.assertEqual( img[3,2,1,0,0], 45.0 )
+         self.assertEqual( img[-5,-4,-3,-2,-1], 517.0 )
+         self.assertEqual( img[-5,-4,-3,-2,-1], nda[-1,-2,-3,-4,-5] )
+
+         self.assertImageNDArrayEquals(img[::-1,::-1,::-1,::-1,::-1], nda[::-1,::-1,::-1,::-1,::-1])
+         self.assertImageNDArrayEquals(img[::-1,::1,::-1,::1,::-1], nda[::-1,::1,::-1,::1,::-1])
+         self.assertImageNDArrayEquals(img[::2,::-1,::3,::-2,:], nda[:,::-2,::3,::-1,::2])
+
+         self.assertImageNDArrayEquals(img[1:4,4,0:2,:,:], nda[:,:,0:2,4,1:4])
+         self.assertImageNDArrayEquals(img[1:3,3:0:-1,0,:,1], nda[1,:,0,3:0:-1,1:3])
+         self.assertImageNDArrayEquals(img[2,::2,3,::-1,0], nda[0,::-1,3,::2,2])
 
 
     def test_compare(self):
