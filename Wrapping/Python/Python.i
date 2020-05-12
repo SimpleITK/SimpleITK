@@ -516,7 +516,7 @@
 
               for i in range(len(idx)):
                 if idx[i] < 0 or idx[i] >= size[i]:
-                  raise IndexError("index {0} is outside the extent for dimension {1} with size {3}".format( idx[i], i, size[i]))
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {2}".format( idx[i], i, size[i]))
 
               return self.GetPixel(*tuple(idx))
 
@@ -533,7 +533,7 @@
                 if s < 0:
                   s += size[i]
                 if s < 0 or s >= size[i]:
-                  raise IndexError("index {0} is outside the extent for dimension {1} with size {3}".format( idx[i], i, size[i]))
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {2}".format( idx[i], i, size[i]))
 
 
                 idx = tuple(idx[:i]) + (slice(s, s+1),)+ tuple(idx[i+1:])
