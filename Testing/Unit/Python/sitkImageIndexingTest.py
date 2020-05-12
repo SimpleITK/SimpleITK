@@ -42,6 +42,8 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertEqual( numpyType, a.dtype )
         self.assertEqual( (10, 9), a.shape )
 
+    def doImageAssign(self, img, idx, value):
+        img[idx] = value
 
     def test_2d(self):
         """testing __getitem__ for 2D image"""
@@ -110,6 +112,21 @@ class TestImageIndexingInterface(unittest.TestCase):
 
         # check empty image
         self.assertImageNDArrayEquals(img[-1:0,-1:0], nda[-1:0,-1:0])
+
+    def test_setitem(self):
+        """ testing __setitem__ with pasting to roi"""
+
+        nda = np.linspace(0, 59, 60 ).reshape(3,4,5)
+
+        img = sitk.GetImageFromArray( nda )
+
+        img[1:3, 2:4, 0:2] = sitk.Image([2,2,2], sitk.sitkFloat64)
+
+        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(1,3), slice(2,4)), sitk.Image([2,2,2], sitk.sitkFloat64)))
+        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([2,2], sitk.sitkFloat64)))
+        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([2,2,1], sitk.sitkFloat64)))
+        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([2,1,2], sitk.sitkFloat64)))
+        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([1,2,2], sitk.sitkFloat64)))
 
 
     def test_3d_extract(self):
