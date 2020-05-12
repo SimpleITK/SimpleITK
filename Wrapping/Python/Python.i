@@ -157,7 +157,8 @@
         Image __ior__ ( const Image &i )
         {
           return (*$self) |=  i;
-        }Image __ior__ ( int c )
+        }
+        Image __ior__ ( int c )
         {
           return (*$self) |=  c;
         }
@@ -177,7 +178,14 @@
         {
           return (*$self) &=  c;
         }
-
+        // A wrapper for performing the paste operation in place
+        Image __ipaste(const Image & sourceImage,
+                   std::vector< unsigned int > sourceSize,
+                   std::vector< int > sourceIndex,
+                   std::vector< int > destinationIndex)
+        {
+          return (*$self) = itk::simple::Paste(std::move(*$self), sourceImage, sourceSize, sourceIndex, destinationIndex);
+        }
 
 
         %pythoncode %{
@@ -576,10 +584,18 @@
             raise IndexError("invalid index")
 
 
-        def __setitem__( self, idx, value ):
-            """Sets the pixel value at index idx to value.
+        def __setitem__( self, idx, rvalue ):
+            """Sets this image's pixel value(s) to rvalue.
 
-            The dimension of idx should match that of the image."""
+            The dimension of idx must match that of the image.
+
+            If all indices are integers then rvalue should be a pixel value
+            ( scalar or sequence for vector pixels). Value is assigned pixel.
+
+            If all indices are slice indices then, rvalue should be an image
+            of matching size, dimension and type as the image and region. This
+            image's pixel are then assigned the rvalue image with the paste filter.
+            """
 
             if sys.version_info[0] < 3:
               def isint( i ):
@@ -592,20 +608,39 @@
             size = self.GetSize()
 
             if (len(idx) > dim):
-               raise IndexError("invalid index")
+              raise IndexError("too many indices for image")
+            elif len(idx) != dim:
+              raise IndexError("only {0} indices, not {1} as expected".format(len(idx), dim))
 
-            # All the indices are integers just return SetPixel value
+            # All the indices are integers use SetPixel
             if all( isint(i) for i in idx ):
               # if any of the arguments are negative integers subract them for the size
               idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
 
-              if any( idx[i] < 0 or idx[i] >= size[i] for i in range(len(idx))):
-                raise IndexError("index out of bounds")
+              for i in range(len(idx)):
+                if idx[i] < 0 or idx[i] >= size[i]:
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {2}".format( idx[i], i, size[i]))
 
-              return self.SetPixel(*(tuple(idx)+(value,)))
+              return self.SetPixel(*(tuple(idx)+(rvalue,)))
+
+            if all( type(i) is slice for i in idx ):
+              sidx = [ idx[i].indices(size[i]) for i in range(len(idx ))]
+
+              (start, stop, step) = zip(*sidx)
+              size = [ e-b for b, e in zip(start, stop) ]
+              sourceSize = rvalue.GetSize()
+
+              for i in range(dim):
+                if step[i] != 1:
+                  raise IndexError("step {0} is not 1 for dimension {1}".format(step[i], i))
+
+              if not all( [ size[i] == sourceSize[i] for i in range(dim)] ):
+                raise IndexError("can not paste source with size {0} into destination with size {1}".format(size, sourceSize))
+
+              return self.__ipaste( rvalue, sourceSize=size, sourceIndex=[0]*dim, destinationIndex=start)
 
             # the index parameter was an invalid set of objects
-            raise IndexError("invalid index")
+            raise IndexError("invalid index with types: {0}".format([type(i) for i in idx]))
 
 
         def GetPixel(self, *idx):
