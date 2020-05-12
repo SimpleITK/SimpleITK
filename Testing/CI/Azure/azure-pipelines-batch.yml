@@ -11,7 +11,7 @@ jobs:
       maxParallel: 1
       matrix:
         v142-64-shared:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v142
+          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
           CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
@@ -19,7 +19,7 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=ON
           imageName: 'windows-2019'
         v141-64:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v141
+          CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
           CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017"
@@ -27,13 +27,13 @@ jobs:
             WRAP_CSHARP:BOOL=ON
           imageName: 'vs2017-win2016'
         v142-64:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v142
+          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
           CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           imageName: 'windows-2019'
         v140-64:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v140
+          CTEST_CMAKE_GENERATOR_TOOLSET: v140,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
           CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017"
