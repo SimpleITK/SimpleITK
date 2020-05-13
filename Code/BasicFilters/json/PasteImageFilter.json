@@ -6,6 +6,7 @@
   "doc" : "",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "filter_type" : "itk::PasteImageFilter< InputImageType, InputImageType, OutputImageType >",
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();\n",
   "inputs" : [
     {
       "name" : "DestinationImage",
@@ -22,7 +23,7 @@
     {
       "name" : "SourceSize",
       "type" : "unsigned int",
-      "default" : "std::vector<unsigned int>(3, 1)",
+      "default" : "std::vector<unsigned int>(SITK_MAX_DIMENSION, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
       "custom_itk_cast" : ""
@@ -30,7 +31,7 @@
     {
       "name" : "SourceIndex",
       "type" : "int",
-      "default" : "std::vector<int>(3, 0)",
+      "default" : "std::vector<int>(SITK_MAX_DIMENSION, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
       "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inDestinationImage->GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_SourceIndex[i] );\n    itkRegion.SetSize( i, m_SourceSize[i] );\n    }\n  filter->SetSourceRegion( itkRegion );"
@@ -38,7 +39,7 @@
     {
       "name" : "DestinationIndex",
       "type" : "int",
-      "default" : "std::vector<int>(3, 0)",
+      "default" : "std::vector<int>(SITK_MAX_DIMENSION, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
       "briefdescriptionSet" : "",
