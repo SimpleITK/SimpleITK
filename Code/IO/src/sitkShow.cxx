@@ -379,25 +379,20 @@ namespace itk
 #ifdef _WIN32
 
   std::string ProgramFiles;
-  if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES", ProgramFiles ) )
-    {
-    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
-    }
+  std::vector<std::string> windirs = { "PROGRAMFILES", "PROGRAMFILES(x86)", "PROGRAMW6432",
+                                       "USERPROFILE" };
+  std::vector<std::string>::iterator it;
 
-  if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES(x86)", ProgramFiles ) )
+  for (it=windirs.begin(); it=windirs.end(); it++)
     {
-    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
+      if ( itksys::SystemTools::GetEnv ( (*it), ProgramFiles ) )
+        {
+        paths.push_back ( ProgramFiles + "\\" + directory + "\\");
+        }
     }
-
-  if ( itksys::SystemTools::GetEnv ( "PROGRAMW6432", ProgramFiles ) )
-    {
-    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
-    }
-
   if ( itksys::SystemTools::GetEnv ( "USERPROFILE", ProgramFiles ) )
     {
-    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
-    paths.push_back ( ProgramFiles + "\\Desktop\\" + directory + "\\");
+    paths.push_back ( ProgramFiles + "\\DESKTOP\\" + directory + "\\");
     }
 
   // Find the executable
@@ -406,11 +401,8 @@ namespace itk
 #elif defined(__APPLE__)
 
   // Common places on the Mac to look
-  paths.push_back( "/Applications" );
-  paths.push_back( "/Applications/" + directory );
-  paths.push_back( "/Developer" );
-  paths.push_back( "/opt/" + directory );
-  paths.push_back( "/usr/local/" + directory );
+  paths = { "/Applications", "/Applications/" + directory,
+            "/Developer", "/opt/" + directory, "/usr/local/" + directory };
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
@@ -423,7 +415,7 @@ namespace itk
 #else
 
   // linux and other systems
-  paths.push_back( "./" + directory );
+  paths = { "./" + directory };
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
