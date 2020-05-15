@@ -76,15 +76,26 @@ file( TO_NATIVE_PATH "${SimpleITK_PYTHON_PACKAGE_DIR}" SimpleITK_PYTHON_PACKAGE_
 
 set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
 
+
+
+set(SimpleITK_Py_Files "__init__.py" "extra.py" )
+
 if(DEFINED SKBUILD)
   # Currently this installation
   install(FILES
       ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
-      ${CMAKE_SWIG_OUTDIR}/__init___.py
       ${SimpleITK_DOC_FILES}
     DESTINATION SimpleITK
     COMPONENT Runtime
     )
+
+  foreach( _file ${SimpleITK_Py_Files})
+    install(FILES
+     "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
+      DESTINATION SimpleITK
+      COMPONENT Runtime
+    )
+  endforeach()
 
   install(TARGETS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     RUNTIME DESTINATION SimpleITK COMPONENT Runtime

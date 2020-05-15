@@ -40,7 +40,6 @@ add_custom_command(
   COMMENT "Generating setup.py..."
   )
 
-set(SimpleITK_Py_Files "__init__.py" )
 
 foreach( _file ${SimpleITK_Py_Files})
 
