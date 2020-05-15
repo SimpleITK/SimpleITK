@@ -774,51 +774,7 @@
 }
 
 
-%extend itk::simple::Transform {
-   %pythoncode %{
-
-        def __copy__(self):
-          """Create a SimpleITK shallow copy, where the internal transform is shared with a copy on write implementation."""
-          return self.__class__(self)
-
-        def __deepcopy__(self, memo):
-          """Create a new copy of the data and internal ITK Transform object."""
-          dc = self.__class__(self)
-          dc.MakeUnique()
-          return dc
-
-        def __setstate__(self, args):
-          if args[0] != 0:
-            raise ValueError("Unable to handle SimpleITK.Transform pickle version {0}".args[0])
-
-          if len(args) == 1:
-            return
-
-          state = namedtuple('state_tuple_0', "version fixed_parameters parameters")(*args)
-
-          self.SetFixedParameters(state.fixed_parameters)
-          self.SetParameters(state.parameters)
-
-
-        def __reduce_ex__(self, protocol ):
-          version = 0
-
-          if self.__class__ is DisplacementFieldTransform:
-            args = (self.GetDisplacementField(), )
-            S = (version, )
-          if self.__class__ is BSplineTransform:
-            args = (tuple(self.GetCoefficientImages()), self.GetOrder())
-            S = (version, )
-          else:
-            args = (self.GetDimension(),)
-            S = (version, self.GetFixedParameters(), self.GetParameters())
-
-          return self.__class__, args, S
-
-          %}
-
-};
-
+%include sitkTransform.i
 
 // This is included inline because SwigMethods (SimpleITKPYTHON_wrap.cxx)
 // is declared static.
