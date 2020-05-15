@@ -35,15 +35,20 @@ add_custom_command(
   COMMAND ${CMAKE_COMMAND}
     "-DSimpleITK_BINARY_MODULE=$<TARGET_FILE_NAME:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>"
     "-DCONFIGUREBUILDTIME_filename=${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py.in"
-    "-DCONFIGUREBUILDTIME_out_filename=${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py"
+    "-DCONFIGUREBUILDTIME_out_filename=${CMAKE_CURRENT_BINARY_DIR}/setup.py"
     -P "${SimpleITK_SOURCE_DIR}/CMake/configure_file_build_time.cmake"
   COMMENT "Generating setup.py..."
   )
 
-configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py"
-  "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
-  COPYONLY )
+set(SimpleITK_Py_Files "__init__.py" )
+
+foreach( _file ${SimpleITK_Py_Files})
+
+   configure_file(
+     "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
+     "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/${_file}"
+     COPYONLY )
+endforeach()
 
 option(SimpleITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testing." ON)
 mark_as_advanced(SimpleITK_PYTHON_USE_VIRTUALENV)
