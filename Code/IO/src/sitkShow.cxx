@@ -383,7 +383,7 @@ namespace itk
                                        "USERPROFILE" };
   std::vector<std::string>::iterator it;
 
-  for (it=windirs.begin(); it=windirs.end(); it++)
+  for (it=windirs.begin(); it!=windirs.end(); it++)
     {
       if ( itksys::SystemTools::GetEnv ( (*it), ProgramFiles ) )
         {
