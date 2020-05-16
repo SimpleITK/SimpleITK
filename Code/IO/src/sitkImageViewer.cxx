@@ -148,10 +148,7 @@ void ImageViewer::initializeDefaults()
 #ifdef _WIN32
 
   std::string ProgramFiles;
-  std::vector<std::string> win_dirs;
-  win_dirs.push_back("PROGRAMFILES");
-  win_dirs.push_back("PROGRAMFILES(x86)");
-  win_dirs.push_back("PROGRAMW6432");
+  std::vector<std::string> win_dirs = { "PROGRAMFILES", "PROGRAMFILES(x86)", "PROGRAMW6432" };
 
   for (unsigned int i=0; i<win_dirs.size(); i++)
     {
@@ -170,10 +167,7 @@ void ImageViewer::initializeDefaults()
 #elif defined(__APPLE__)
 
   // Common places on the Mac to look
-  m_GlobalDefaultSearchPath.push_back( "/Applications/" );
-  m_GlobalDefaultSearchPath.push_back(  "/Developer/" );
-  m_GlobalDefaultSearchPath.push_back(  "/opt/" );
-  m_GlobalDefaultSearchPath.push_back(  "/usr/local/" );
+  m_GlobalDefaultSearchPath = { "/Applications/", "/Developer/", "/opt/", "/usr/local/" };
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
@@ -184,7 +178,7 @@ void ImageViewer::initializeDefaults()
 #else
 
   // linux and other systems
-  m_GlobalDefaultSearchPath.emplace_back("./" );
+  m_GlobalDefaultSearchPath = { "./" };
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
@@ -202,14 +196,12 @@ void ImageViewer::initializeDefaults()
   //  Set the ExecutableNames
   //
 #if defined(_WIN32)
-  m_GlobalDefaultExecutableNames.push_back( "Fiji.app/ImageJ-win64.exe" );
-  m_GlobalDefaultExecutableNames.push_back( "Fiji.app/ImageJ-win32.exe" );
+  m_GlobalDefaultExecutableNames = { "Fiji.app/ImageJ-win64.exe", "Fiji.app/ImageJ-win32.exe" };
 #elif defined(__APPLE__)
-  m_GlobalDefaultExecutableNames.push_back( "Fiji.app" );
+  m_GlobalDefaultExecutableNames = { "Fiji.app" };
 #else
   // Linux
-  m_GlobalDefaultExecutableNames.emplace_back("Fiji.app/ImageJ-linux64" );
-  m_GlobalDefaultExecutableNames.emplace_back("Fiji.app/ImageJ-linux32" );
+  m_GlobalDefaultExecutableNames = { "Fiji.app/ImageJ-linux64", "Fiji.app/ImageJ-linux32" };
 #endif
 
 #ifdef _WIN32
