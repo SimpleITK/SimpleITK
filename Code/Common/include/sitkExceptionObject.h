@@ -38,6 +38,15 @@ class ExceptionObject;
 namespace simple
 {
 
+#ifdef _MSC_VER
+// Ignore the following warning:
+// sitkExceptionObject.h(46,1): warning C4275: non dll-interface class
+// 'std::exception' used as base for dll-interface class
+// 'itk::simple::GenericException'
+#pragma warning( push )
+#pragma warning(disable:4275)
+#endif
+
 /** \class GenericException
  * \brief The base SimpleITK exception class
  */
@@ -91,6 +100,10 @@ public:
 private:
   const ExceptionObject *m_PimpleException;
 };
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 }
 }
