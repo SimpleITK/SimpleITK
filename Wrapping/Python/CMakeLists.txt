@@ -31,7 +31,7 @@ set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword )
 if( SimpleITK_PYTHON_THREADS )
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
 endif()
-set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
+set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
   ${CMAKE_CURRENT_SOURCE_DIR}/Python.i )
 SWIG_add_module ( SimpleITK python
@@ -55,14 +55,14 @@ target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
 
-set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SWIG_OUTDIR}")
 if ( MSVC )
     foreach ( CMAKE_CONFIGURATION_TYPE ${CMAKE_CONFIGURATION_TYPES} )
       string(TOUPPER ${CMAKE_CONFIGURATION_TYPE} CMAKE_CONFIGURATION_TYPE)
       set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME}
-        PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CMAKE_CURRENT_BINARY_DIR}")
+        PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CMAKE_SWIG_OUTDIR}")
       set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME}
-        PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CMAKE_CURRENT_BINARY_DIR}")
+        PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CMAKE_SWIG_OUTDIR}")
     endforeach( )
 endif()
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
@@ -76,15 +76,26 @@ file( TO_NATIVE_PATH "${SimpleITK_PYTHON_PACKAGE_DIR}" SimpleITK_PYTHON_PACKAGE_
 
 set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
 
+
+
+set(SimpleITK_Py_Files "__init__.py" "extra.py" )
+
 if(DEFINED SKBUILD)
   # Currently this installation
   install(FILES
-      ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.py
-      ${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py
+      ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
       ${SimpleITK_DOC_FILES}
     DESTINATION SimpleITK
     COMPONENT Runtime
     )
+
+  foreach( _file ${SimpleITK_Py_Files})
+    install(FILES
+     "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
+      DESTINATION SimpleITK
+      COMPONENT Runtime
+    )
+  endforeach()
 
   install(TARGETS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     RUNTIME DESTINATION SimpleITK COMPONENT Runtime

@@ -47,7 +47,7 @@ message(STATUS "Installing Python Package: SimpleITK")
 # setup.py is very important. As if the setup is run from another
 # directory files will not be correctly execute_process.
 execute_process(
-  COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/Packaging/setup.py" install
+  COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/setup.py" install
   WORKING_DIRECTORY "@SimpleITK_Python_BINARY_DIR@"
   RESULT_VARIABLE failed
   ERROR_VARIABLE error
