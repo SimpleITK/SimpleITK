@@ -261,7 +261,7 @@ To install a built python package into the system Python, as root run:
 .. code-block :: bash
 
  cd SimpleITK-build/Wrapping/Python
- python Packaging/setup.py install
+ python setup.py install
 
 Alternatively, a Python virtual environment can be created and the
 distribution installed there.
