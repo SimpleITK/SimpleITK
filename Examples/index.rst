@@ -16,6 +16,7 @@ Examples
   link_DicomSeriesReader_docs
   link_DicomSeriesReadModifyWrite_docs
   link_DicomSeriesFromArray_docs
+  link_DicomConvert_docs
   link_FastMarchingSegmentation_docs
   link_FilterProgressReporting_docs
   link_ImageGridManipulation_docs
