@@ -45,13 +45,22 @@
           version = 0
 
           if self.__class__ is DisplacementFieldTransform:
-            args = (self.GetDisplacementField(), )
-            S = (version, )
-          if self.__class__ is BSplineTransform:
+            dis = self.GetDisplacementField()
+            if all( 0 == s for s in dis.GetSize() ):
+                # The null state needs special handling
+                args = (self.GetDimension(),)
+                S = (version, self.GetFixedParameters(), self.GetParameters())
+            else:
+                args = (dis, )
+                S = (version, )
+          elif self.__class__ is BSplineTransform:
             args = (tuple(self.GetCoefficientImages()), self.GetOrder())
             S = (version, )
           else:
-            args = (self.GetDimension(),)
+            args = ()
+            if self.__class__ in [AffineTransform, ScaleTransform, TranslationTransform]:
+                args = (self.GetDimension(),)
+
             S = (version, self.GetFixedParameters(), self.GetParameters())
 
           return self.__class__, args, S
