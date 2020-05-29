@@ -91,7 +91,6 @@ def Resample(image1, *args, **kwargs):
         resampler.SetDefaultPixelValue(defaultPixelValue)
         resampler.SetOutputPixelType(outputPixelType)
         resampler.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator)
-        resampler.DebugOn()
         return resampler.Execute(image1)
 
     if args:
