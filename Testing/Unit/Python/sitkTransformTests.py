@@ -191,6 +191,10 @@ class TransformTests(unittest.TestCase):
 
             self.assertEqual(tx, tx2, msg="Testing {0}".format(tx.GetName()))
 
+            tx3 = pickle.loads(pickle.dumps(sitk.Transform(tx)))
+
+            self.assertEqual(tx, tx3, msg="Testing {0} from Transform: {1} {2}".format(tx.GetName(), tx3, sitk.Transform(tx).Downcast()))
+
     def test_deepcopy(self):
         """Test the custom __deepcopy__ method"""
 
