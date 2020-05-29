@@ -354,6 +354,15 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 
         temp = new PimpleTransform<itk::VersorRigid3DTransform< double > >();
         break;
+      case sitkScaleVersor:
+        if( VDimension != 3)
+          {
+          sitkExceptionMacro( "A sitkScaleVersor Transform only works for 3D!");
+          }
+
+        temp = new PimpleTransform<itk::ScaleVersor3DTransform< double > >();
+        break;
+
       case sitkScaleSkewVersor:
         if( VDimension != 3)
           {

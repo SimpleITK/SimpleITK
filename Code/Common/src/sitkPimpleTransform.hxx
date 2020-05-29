@@ -27,6 +27,8 @@
 #include "itkTranslationTransform.h"
 #include "itkScaleTransform.h"
 #include "itkScaleLogarithmicTransform.h"
+#include "itkScaleSkewVersor3DTransform.h"
+#include "itkScaleVersor3DTransform.h"
 #include "itkSimilarity2DTransform.h"
 #include "itkSimilarity3DTransform.h"
 #include "itkEuler2DTransform.h"

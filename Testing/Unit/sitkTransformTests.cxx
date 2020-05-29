@@ -230,6 +230,13 @@ TEST(TransformTest, SetGetParameters) {
   EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
+  tx = sitk::Transform( 3, sitk::sitkScaleVersor );
+  EXPECT_EQ( tx.GetParameters().size(), 9u );
+  EXPECT_EQ( tx.GetNumberOfParameters(), 9u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetNumberOfFixedParameters(), 3u );
+  EXPECT_TRUE(tx.IsLinear());
+
   tx = sitk::Transform( 3, sitk::sitkVersorRigid );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetNumberOfParameters(), 6u );
