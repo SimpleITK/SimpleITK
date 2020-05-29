@@ -579,6 +579,13 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
     return "Transform";
   }
 
+TransformEnum Transform::GetTransformEnum() const
+{
+  assert( m_PimpleTransform );
+  return m_PimpleTransform->GetTransformEnum();
+}
+
+
 
 void Transform::InternalInitialization(itk::TransformBase *transform)
 {
@@ -587,8 +594,10 @@ void Transform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
-  // The following list must have the *parent* classed before their children
-  // since the list is traversed end to the beginning, and t
+  // The following list must have the *parent* classes before their children
+  // since the list is traversed from the end to the beginning as the
+  // transform types are attempted to be dynamic_cast-ed to the
+  // correct type.
   typedef typelist::MakeTypeList<
                                  itk::VersorTransform< double >,
                                  itk::VersorRigid3DTransform< double >,

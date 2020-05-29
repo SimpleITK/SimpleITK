@@ -174,6 +174,8 @@ public:
   virtual std::vector< double > TransformVector( const std::vector< double > &v,
                                                  const std::vector< double > &p) const = 0;
 
+  virtual TransformEnum GetTransformEnum() const = 0;
+
 protected:
 
 };
@@ -428,6 +430,64 @@ public:
 
       return sitkITKVectorToSTL<double>( this->m_Transform->TransformVector( itk_vec, itk_pt ) );
     }
+
+  TransformEnum GetTransformEnum() const override { return GetTransformEnum(this->m_Transform.GetPointer());}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::IdentityTransform< VScalar, VDimension > *) const {return sitkIdentity;}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::TranslationTransform< VScalar, VDimension > *) const {return sitkTranslation;}
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::ScaleTransform< VScalar, VDimension > *) const {return sitkScale;}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::ScaleLogarithmicTransform< VScalar, VDimension > *) const {return sitkScaleLogarithmic;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::Euler2DTransform< VScalar > *) const {return sitkEuler;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::Euler3DTransform< VScalar > *) const {return sitkEuler;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::Similarity2DTransform< VScalar > *) const {return sitkSimilarity;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::Similarity3DTransform< VScalar > *) const {return sitkSimilarity;}
+
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::AffineTransform< VScalar, VDimension > *) const {return sitkAffine;}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::CompositeTransform< VScalar, VDimension > *) const {return sitkComposite;}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::BSplineTransform< VScalar, VDimension > *) const {return sitkBSplineTransform;}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::DisplacementFieldTransform< VScalar, VDimension > *) const {return sitkDisplacementField;}
+
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::ScaleSkewVersor3DTransform< VScalar > *) const {return sitkScaleSkewVersor;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::ScaleVersor3DTransform< VScalar > *) const {return sitkScaleVersor;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::QuaternionRigidTransform< VScalar > *) const {return sitkQuaternionRigid;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::VersorRigid3DTransform< VScalar > *) const {return sitkVersorRigid;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::VersorTransform< VScalar > *) const {return sitkVersor;}
+
+
+  template <typename VTransform>
+    TransformEnum GetTransformEnum( const VTransform *) const {return sitkUnknownTransform;}
 
 private:
 

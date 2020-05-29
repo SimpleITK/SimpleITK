@@ -46,7 +46,8 @@ namespace simple
 class PimpleTransformBase;
 
 
-enum TransformEnum { sitkIdentity,
+enum TransformEnum { sitkUnknownTransform = -1,
+                     sitkIdentity,
                      sitkTranslation,
                      sitkScale,
                      sitkScaleLogarithmic,
@@ -239,7 +240,7 @@ public:
    *
    * Creates a new transform object and tries to set the value to the
    * inverse. As not all transform types have inverse and some
-   * transforms are not invertable, an exception will be throw is
+   * transforms are not invertible, an exception will be throw is
    * there is no inverse.
    */
   Transform GetInverse() const;
@@ -259,12 +260,21 @@ public:
    */
   void MakeUnique( );
 
+  /** \brief Get the TransformEnum of the underlying Transform.
+   *
+   *  A SimpleITK Transform object can internally hold any ITK transform. This
+   *  method returns the TransformEnum representing the internal ITK
+   *  transform. This value may be used to identify which SimpleITK
+   *  class the transform can be converted to.
+   */
+  TransformEnum GetTransformEnum() const;
+
 protected:
 
 
   explicit Transform( PimpleTransformBase *pimpleTransform );
 
-  // this method is called to set the private pimpleTransfrom outside
+  // this method is called to set the private pimpleTransform outside
   // of the constructor, derived classes can override it of update the
   // state.
   virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
