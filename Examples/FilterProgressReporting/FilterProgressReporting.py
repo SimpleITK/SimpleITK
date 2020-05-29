@@ -28,7 +28,7 @@ if len(sys.argv) < 4:
     sys.exit(1)
 
 
-# #! [python director command]
+##! [python director command]
 class MyCommand(sitk.Command):
     def __init__(self, po):
         # required
@@ -41,7 +41,7 @@ class MyCommand(sitk.Command):
               )
 
 
-# #! [python director command]
+##! [python director command]
 
 reader = sitk.ImageFileReader()
 reader.SetFileName(sys.argv[1])
@@ -52,10 +52,10 @@ pixelID = image.GetPixelID()
 gaussian = sitk.DiscreteGaussianImageFilter()
 gaussian.SetVariance(float(sys.argv[2]))
 
-# #! [python lambda command]
+##! [python lambda command]
 gaussian.AddCommand(sitk.sitkStartEvent, lambda: print("StartEvent"))
 gaussian.AddCommand(sitk.sitkEndEvent, lambda: print("EndEvent"))
-# #! [python lambda command]
+##! [python lambda command]
 
 cmd = MyCommand(gaussian)
 gaussian.AddCommand(sitk.sitkProgressEvent, cmd)
