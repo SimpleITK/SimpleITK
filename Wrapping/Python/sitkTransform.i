@@ -16,7 +16,8 @@
 *
 *=========================================================================*/
 %extend itk::simple::Transform {
-   %pythoncode %{
+   %pythoncode
+%{
 
         def __copy__(self):
           """Create a SimpleITK shallow copy, where the internal transform is shared with a copy on write implementation."""
@@ -65,6 +66,37 @@
 
           return self.__class__, args, S
 
-          %}
 
-};
+        def Downcast(self):
+            """Convert to the appropriate derived SimpleITK object. A lazy copy to
+            the underlying ITK object is performed. """
+
+            transform_downcast_map  = {
+                sitkUnknownTransform: (None, None),
+                sitkIdentity: (Transform, Transform),
+                sitkTranslation: (TranslationTransform, TranslationTransform),
+                sitkScale: (ScaleTransform, ScaleTransform),
+                sitkScaleLogarithmic: (Transform, Transform),
+                sitkEuler: (Euler2DTransform, Euler3DTransform),
+                sitkSimilarity: (Similarity2DTransform, Similarity3DTransform),
+                sitkQuaternionRigid: (None, Transform),
+                sitkVersor: (None, VersorTransform),
+                sitkVersorRigid: ( None, VersorRigid3DTransform),
+                sitkScaleSkewVersor: ( None, ScaleSkewVersor3DTransform),
+                sitkScaleVersor: ( None, ScaleVersor3DTransform),
+                sitkAffine: (AffineTransform, AffineTransform),
+                sitkComposite: (Transform, Transform),
+                sitkDisplacementField: (DisplacementFieldTransform, DisplacementFieldTransform),
+                sitkBSplineTransform: (BSplineTransform, BSplineTransform)
+            }
+
+            id = self.GetTransformEnum()
+            if id is sitkUnknownTransform:
+                raise TypeError("Unknown internal ITK transform type.")
+            downcast_type = transform_downcast_map[id][self.GetDimension()-2]
+            if downcast_type is None:
+                raise TypeError("Unable to downcast transform type.")
+            return downcast_type(self)
+%}
+
+}
