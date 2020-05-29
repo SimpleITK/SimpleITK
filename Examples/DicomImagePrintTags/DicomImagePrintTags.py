@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,27 +15,29 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
 import SimpleITK as sitk
-import sys, os
+import sys
+import os
 
-if len ( sys.argv ) < 2:
-    print( "Usage: DicomImagePrintTags <input_file>" )
-    sys.exit ( 1 )
+if len(sys.argv) < 2:
+    print("Usage: DicomImagePrintTags <input_file>")
+    sys.exit(1)
 
 reader = sitk.ImageFileReader()
 
-reader.SetFileName( sys.argv[1] )
-reader.LoadPrivateTagsOn();
+reader.SetFileName(sys.argv[1])
+reader.LoadPrivateTagsOn()
 
-reader.ReadImageInformation();
+reader.ReadImageInformation()
 
 for k in reader.GetMetaDataKeys():
     v = reader.GetMetaData(k)
-    print("({0}) = = \"{1}\"".format(k,v))
+    print("({0}) = = \"{1}\"".format(k, v))
 
-print("Image Size: {0}".format(reader.GetSize()));
-print("Image PixelType: {0}".format(sitk.GetPixelIDValueAsString(reader.GetPixelID())));
+print("Image Size: {0}".format(reader.GetSize()))
+print("Image PixelType: {0}"
+      .format(sitk.GetPixelIDValueAsString(reader.GetPixelID())))

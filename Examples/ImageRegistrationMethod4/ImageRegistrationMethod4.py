@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,7 +15,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
@@ -23,12 +23,13 @@ import SimpleITK as sitk
 import sys
 import os
 
+if len(sys.argv) < 4:
+    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
+          "<outputTransformFile> <numberOfBins> <samplingPercentage>")
+    sys.exit(1)
 
-if len ( sys.argv ) < 4:
-    print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile> <numberOfBins> <samplingPercentage>".format(sys.argv[0]))
-    sys.exit ( 1 )
 
-def command_iteration(method) :
+def command_iteration(method):
     print("{0:3} = {1:10.5f} : {2}".format(method.GetOptimizerIteration(),
                                            method.GetMetricValue(),
                                            method.GetOptimizerPosition()))
@@ -37,40 +38,38 @@ def command_iteration(method) :
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
-
 numberOfBins = 24
 samplingPercentage = 0.10
 
-if len ( sys.argv ) > 4:
+if len(sys.argv) > 4:
     numberOfBins = int(sys.argv[4])
-if len ( sys.argv ) > 5:
+if len(sys.argv) > 5:
     samplingPercentage = float(sys.argv[5])
 
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMattesMutualInformation(numberOfBins)
-R.SetMetricSamplingPercentage(samplingPercentage,sitk.sitkWallClock)
+R.SetMetricSamplingPercentage(samplingPercentage, sitk.sitkWallClock)
 R.SetMetricSamplingStrategy(R.RANDOM)
-R.SetOptimizerAsRegularStepGradientDescent(1.0,.001,200)
+R.SetOptimizerAsRegularStepGradientDescent(1.0, .001, 200)
 R.SetInitialTransform(sitk.TranslationTransform(fixed.GetDimension()))
 R.SetInterpolator(sitk.sitkLinear)
 
-R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )
+R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R))
 
 outTx = R.Execute(fixed, moving)
 
-
 print("-------")
 print(outTx)
-print("Optimizer stop condition: {0}".format(R.GetOptimizerStopConditionDescription()))
+print("Optimizer stop condition: {0}"
+      .format(R.GetOptimizerStopConditionDescription()))
 print(" Iteration: {0}".format(R.GetOptimizerIteration()))
 print(" Metric value: {0}".format(R.GetMetricValue()))
 
-sitk.WriteTransform(outTx,  sys.argv[3])
+sitk.WriteTransform(outTx, sys.argv[3])
 
-
-if ( not "SITK_NOSHOW" in os.environ ):
+if ("SITK_NOSHOW" not in os.environ):
     resampler = sitk.ResampleImageFilter()
-    resampler.SetReferenceImage(fixed);
+    resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
     resampler.SetDefaultPixelValue(100)
     resampler.SetTransform(outTx)
@@ -78,5 +77,5 @@ if ( not "SITK_NOSHOW" in os.environ ):
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1//2.+simg2//2.)
-    sitk.Show( cimg, "ImageRegistration4 Composition" )
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    sitk.Show(cimg, "ImageRegistration4 Composition")

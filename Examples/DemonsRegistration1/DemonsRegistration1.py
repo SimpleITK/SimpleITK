@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,7 +15,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
@@ -24,50 +24,50 @@ import sys
 import os
 
 
-def command_iteration(filter) :
+def command_iteration(filter):
     print("{0:3} = {1:10.5f}".format(filter.GetElapsedIterations(),
-                                    filter.GetMetric()))
+                                     filter.GetMetric()))
 
-if len ( sys.argv ) < 4:
-    print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile>".format(sys.argv[0]))
-    sys.exit ( 1 )
 
+if len(sys.argv) < 4:
+    print(
+        "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile>"
+        .format(sys.argv[0]))
+    sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
-
 matcher = sitk.HistogramMatchingImageFilter()
 matcher.SetNumberOfHistogramLevels(1024)
 matcher.SetNumberOfMatchPoints(7)
 matcher.ThresholdAtMeanIntensityOn()
-moving = matcher.Execute(moving,fixed)
+moving = matcher.Execute(moving, fixed)
 
 # The basic Demons Registration Filter
-# Note there is a whole family of Demons Registration algorithms included in SimpleITK
+# Note there is a whole family of Demons Registration algorithms included in
+# SimpleITK
 demons = sitk.DemonsRegistrationFilter()
-demons.SetNumberOfIterations( 50 )
+demons.SetNumberOfIterations(50)
 # Standard deviation for Gaussian smoothing of displacement field
-demons.SetStandardDeviations( 1.0 )
+demons.SetStandardDeviations(1.0)
 
-demons.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(demons) )
+demons.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(demons))
 
-displacementField = demons.Execute( fixed, moving )
-
+displacementField = demons.Execute(fixed, moving)
 
 print("-------")
 print("Number Of Iterations: {0}".format(demons.GetElapsedIterations()))
 print(" RMS: {0}".format(demons.GetRMSChange()))
 
-outTx = sitk.DisplacementFieldTransform( displacementField )
+outTx = sitk.DisplacementFieldTransform(displacementField)
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ( not "SITK_NOSHOW" in os.environ ):
-
+if ("SITK_NOSHOW" not in os.environ):
     resampler = sitk.ResampleImageFilter()
-    resampler.SetReferenceImage(fixed);
+    resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
     resampler.SetDefaultPixelValue(100)
     resampler.SetTransform(outTx)
@@ -78,5 +78,5 @@ if ( not "SITK_NOSHOW" in os.environ ):
     # Use the // floor division operator so that the pixel type is
     # the same for all three images which is the expectation for
     # the compose filter.
-    cimg = sitk.Compose(simg1, simg2, simg1//2.+simg2//2.)
-    sitk.Show( cimg, "DeformableRegistration1 Composition" )
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    sitk.Show(cimg, "DeformableRegistration1 Composition")

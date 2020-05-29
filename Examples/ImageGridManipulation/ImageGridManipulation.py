@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,16 +15,16 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
 import SimpleITK as sitk
 import sys
 
-if len ( sys.argv ) < 3:
-    print( "Usage: " +sys.argv[0]+ " <input-1> <input-2>" )
-    sys.exit ( 1 )
+if len(sys.argv) < 3:
+    print("Usage: " + sys.argv[0] + " <input-1> <input-2>")
+    sys.exit(1)
 
 # Two vector images of same pixel type and dimension expected
 image_1 = sitk.ReadImage(sys.argv[1])
@@ -42,7 +42,8 @@ channel3_image = select.Execute(joined_image, 2, sitk.sitkUInt8)
 
 # Recompose image (should be same as joined_image)
 compose = sitk.ComposeImageFilter()
-composed_image = compose.Execute(channel1_image, channel2_image, channel3_image)
+composed_image = compose.Execute(channel1_image, channel2_image,
+                                 channel3_image)
 
 # Select same subregion using image slicing operator
 sliced_image = composed_image[100:400, 100:400, 0]
@@ -53,9 +54,11 @@ extract.SetSize([300, 300, 0])
 extract.SetIndex([100, 100, 0])
 extracted_image = extract.Execute(composed_image)
 
-# Select same subregion using CropImageFilter (NOTE: CropImageFilter cannot reduce dimensions
-# unlike ExtractImageFilter, so cropped_image is a three dimensional image with depth of 1)
+# Select same sub-region using CropImageFilter (NOTE: CropImageFilter cannot
+# reduce dimensions unlike ExtractImageFilter, so cropped_image is a three
+# dimensional image with depth of 1)
 crop = sitk.CropImageFilter()
 crop.SetLowerBoundaryCropSize([100, 100, 0])
-crop.SetUpperBoundaryCropSize([composed_image.GetWidth()-400, composed_image.GetHeight()-400, 1])
+crop.SetUpperBoundaryCropSize([composed_image.GetWidth() - 400,
+                               composed_image.GetHeight() - 400, 1])
 cropped_image = crop.Execute(composed_image)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,32 +15,32 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
 import SimpleITK as sitk
-import sys, os
+import sys
+import os
 
-if len ( sys.argv ) < 3:
-    print( "Usage: DicomSeriesReader <input_directory> <output_file>" )
-    sys.exit ( 1 )
+if len(sys.argv) < 3:
+    print("Usage: DicomSeriesReader <input_directory> <output_file>")
+    sys.exit(1)
 
-
-print( "Reading Dicom directory:", sys.argv[1] )
+print("Reading Dicom directory:", sys.argv[1])
 reader = sitk.ImageSeriesReader()
 
-dicom_names = reader.GetGDCMSeriesFileNames( sys.argv[1] )
+dicom_names = reader.GetGDCMSeriesFileNames(sys.argv[1])
 reader.SetFileNames(dicom_names)
 
 image = reader.Execute()
 
 size = image.GetSize()
-print( "Image size:", size[0], size[1], size[2] )
+print("Image size:", size[0], size[1], size[2])
 
-print( "Writing image:", sys.argv[2] )
+print("Writing image:", sys.argv[2])
 
-sitk.WriteImage( image, sys.argv[2] )
+sitk.WriteImage(image, sys.argv[2])
 
-if ( not "SITK_NOSHOW" in os.environ ):
-    sitk.Show( image, "Dicom Series" )
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(image, "Dicom Series")

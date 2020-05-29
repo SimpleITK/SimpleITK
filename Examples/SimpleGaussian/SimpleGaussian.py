@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,37 +15,36 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
-import SimpleITK as sitk
-import sys
 import os
+import sys
 
-if len ( sys.argv ) < 4:
-    print( "Usage: SimpleGaussian <input> <sigma> <output>" )
-    sys.exit ( 1 )
+import SimpleITK as sitk
 
+if len(sys.argv) < 4:
+    print("Usage: SimpleGaussian <input> <sigma> <output>")
+    sys.exit(1)
 
 reader = sitk.ImageFileReader()
-reader.SetFileName ( sys.argv[1] )
+reader.SetFileName(sys.argv[1])
 image = reader.Execute()
 
 pixelID = image.GetPixelID()
 
 gaussian = sitk.SmoothingRecursiveGaussianImageFilter()
-gaussian.SetSigma ( float ( sys.argv[2] ) )
-image = gaussian.Execute ( image )
+gaussian.SetSigma(float(sys.argv[2]))
+image = gaussian.Execute(image)
 
 caster = sitk.CastImageFilter()
-caster.SetOutputPixelType( pixelID )
-image = caster.Execute( image )
+caster.SetOutputPixelType(pixelID)
+image = caster.Execute(image)
 
 writer = sitk.ImageFileWriter()
-writer.SetFileName ( sys.argv[3] )
-writer.Execute ( image );
+writer.SetFileName(sys.argv[3])
+writer.Execute(image)
 
-
-if ( not "SITK_NOSHOW" in os.environ ):
-    sitk.Show( image, "Simple Gaussian" )
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(image, "Simple Gaussian")
