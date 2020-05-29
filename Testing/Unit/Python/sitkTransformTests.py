@@ -164,6 +164,33 @@ class TransformTests(unittest.TestCase):
 
         self.assertEqual(tx, tx2)
 
+    def test_default_pickle(self):
+        """Test pickling/unpickling of minimally constructed transforms"""
+
+        transforms = {
+            'AffineTransform': (3,),
+            'BSplineTransform': (3, 3),
+            'DisplacementFieldTransform': (3,),
+            'Euler2DTransform': (),
+            'Euler3DTransform': (),
+            'ScaleSkewVersor3DTransform': (),
+            'ScaleTransform': (3,),
+            'ScaleVersor3DTransform': (),
+            'Similarity2DTransform': (),
+            'Similarity3DTransform': (),
+            'Transform': (),
+            'TranslationTransform': (3,),
+            'VersorRigid3DTransform': (),
+            'VersorTransform': ()
+        }
+
+        for k, v in transforms.items():
+            tx = getattr(sitk, k)(*v)
+
+            tx2 = pickle.loads(pickle.dumps(tx))
+
+            self.assertEqual(tx, tx2, msg="Testing {0}".format(tx.GetName()))
+
     def test_deepcopy(self):
         """Test the custom __deepcopy__ method"""
 
