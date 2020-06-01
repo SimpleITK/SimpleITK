@@ -16,7 +16,8 @@
 *
 *=========================================================================*/
 %extend itk::simple::Transform {
-   %pythoncode %{
+   %pythoncode
+%{
 
         def __copy__(self):
           """Create a SimpleITK shallow copy, where the internal transform is shared with a copy on write implementation."""
@@ -41,30 +42,64 @@
           self.SetParameters(state.parameters)
 
 
-        def __reduce_ex__(self, protocol ):
+        def __reduce_ex__(self, protocol):
           version = 0
 
-          if self.__class__ is DisplacementFieldTransform:
-            dis = self.GetDisplacementField()
+          downcasted = self.Downcast()
+
+          if downcasted.__class__ is DisplacementFieldTransform:
+            dis = downcasted.GetDisplacementField()
             if all( 0 == s for s in dis.GetSize() ):
                 # The null state needs special handling
-                args = (self.GetDimension(),)
-                S = (version, self.GetFixedParameters(), self.GetParameters())
+                args = (downcasted.GetDimension(),)
+                S = (version, downcasted.GetFixedParameters(), downcasted.GetParameters())
             else:
                 args = (dis, )
                 S = (version, )
-          elif self.__class__ is BSplineTransform:
-            args = (tuple(self.GetCoefficientImages()), self.GetOrder())
+          elif downcasted.__class__ is BSplineTransform:
+            args = (tuple(downcasted.GetCoefficientImages()), downcasted.GetOrder())
             S = (version, )
           else:
             args = ()
-            if self.__class__ in [AffineTransform, ScaleTransform, TranslationTransform]:
-                args = (self.GetDimension(),)
+            if downcasted.__class__ in [AffineTransform, ScaleTransform, TranslationTransform]:
+                args = (downcasted.GetDimension(),)
+            elif downcasted.__class__ is Transform:
+                args = (downcasted.GetDimension(), downcasted.GetTransformEnum())
 
-            S = (version, self.GetFixedParameters(), self.GetParameters())
+            S = (version, downcasted.GetFixedParameters(), downcasted.GetParameters())
 
-          return self.__class__, args, S
+          return downcasted.__class__, args, S
 
-          %}
+        def Downcast(self):
+            """Convert to the appropriate derived SimpleITK object. A lazy copy to
+            the underlying ITK object is performed. """
 
-};
+            transform_downcast_map  = {
+                sitkUnknownTransform: (None, None),
+                sitkIdentity: (Transform, Transform),
+                sitkTranslation: (TranslationTransform, TranslationTransform),
+                sitkScale: (ScaleTransform, ScaleTransform),
+                sitkScaleLogarithmic: (Transform, Transform),
+                sitkEuler: (Euler2DTransform, Euler3DTransform),
+                sitkSimilarity: (Similarity2DTransform, Similarity3DTransform),
+                sitkQuaternionRigid: (None, Transform),
+                sitkVersor: (None, VersorTransform),
+                sitkVersorRigid: ( None, VersorRigid3DTransform),
+                sitkScaleSkewVersor: ( None, ScaleSkewVersor3DTransform),
+                sitkScaleVersor: ( None, ScaleVersor3DTransform),
+                sitkAffine: (AffineTransform, AffineTransform),
+                sitkComposite: (Transform, Transform),
+                sitkDisplacementField: (DisplacementFieldTransform, DisplacementFieldTransform),
+                sitkBSplineTransform: (BSplineTransform, BSplineTransform)
+            }
+
+            id = self.GetTransformEnum()
+            if id is sitkUnknownTransform:
+                raise TypeError("Unknown internal ITK transform type.")
+            downcast_type = transform_downcast_map[id][self.GetDimension()-2]
+            if downcast_type is None:
+                raise TypeError("Unable to downcast transform type.")
+            return downcast_type(self)
+%}
+
+}

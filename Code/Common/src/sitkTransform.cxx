@@ -354,6 +354,15 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 
         temp = new PimpleTransform<itk::VersorRigid3DTransform< double > >();
         break;
+      case sitkScaleVersor:
+        if( VDimension != 3)
+          {
+          sitkExceptionMacro( "A sitkScaleVersor Transform only works for 3D!");
+          }
+
+        temp = new PimpleTransform<itk::ScaleVersor3DTransform< double > >();
+        break;
+
       case sitkScaleSkewVersor:
         if( VDimension != 3)
           {
@@ -570,6 +579,13 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
     return "Transform";
   }
 
+TransformEnum Transform::GetTransformEnum() const
+{
+  assert( m_PimpleTransform );
+  return m_PimpleTransform->GetTransformEnum();
+}
+
+
 
 void Transform::InternalInitialization(itk::TransformBase *transform)
 {
@@ -578,17 +594,25 @@ void Transform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
-  // The following list must have the children before their parents to
-  // cast to the most derived classes
-  typedef typelist::MakeTypeList<itk::IdentityTransform<double, 2>,
+  // The following list must have the *parent* classes before their children
+  // since the list is traversed from the end to the beginning as the
+  // transform types are attempted to be dynamic_cast-ed to the
+  // correct type.
+  typedef typelist::MakeTypeList<
+                                 itk::VersorTransform< double >,
+                                 itk::VersorRigid3DTransform< double >,
+
+                                 itk::IdentityTransform<double, 2>,
                                  itk::IdentityTransform<double, 3>,
+
                                  itk::TranslationTransform<double, 2>,
                                  itk::TranslationTransform<double, 3>,
 
-                                 itk::ScaleLogarithmicTransform< double, 2 >,
-                                 itk::ScaleLogarithmicTransform< double, 3 >,
                                  itk::ScaleTransform< double, 2>,
                                  itk::ScaleTransform< double, 3>,
+
+                                 itk::ScaleLogarithmicTransform< double, 2 >,
+                                 itk::ScaleLogarithmicTransform< double, 3 >,
 
                                  TransformTraits< double, 2>::EulerTransformType,
 
@@ -599,8 +623,6 @@ void Transform::InternalInitialization(itk::TransformBase *transform)
                                  TransformTraits< double, 3>::SimilarityTransformType,
                                  itk::ScaleSkewVersor3DTransform< double >,
                                  itk::ScaleVersor3DTransform< double >,
-                                 itk::VersorRigid3DTransform< double >,
-                                 itk::VersorTransform< double >,
 
                                  itk::QuaternionRigidTransform< double >,
 

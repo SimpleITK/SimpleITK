@@ -191,6 +191,47 @@ class TransformTests(unittest.TestCase):
 
             self.assertEqual(tx, tx2, msg="Testing {0}".format(tx.GetName()))
 
+            tx3 = pickle.loads(pickle.dumps(sitk.Transform(tx)))
+
+            self.assertEqual(tx, tx3, msg="Testing {0} from Transform: {1} {2}".format(tx.GetName(), tx3, sitk.Transform(tx).Downcast()))
+
+
+    def test_downcast(self):
+        """Test downcasting"""
+
+        transforms = {
+            'AffineTransform': (3,),
+            'AffineTransform': (2,),
+            'BSplineTransform': (3, 3),
+            'BSplineTransform': (2, 3),
+            'DisplacementFieldTransform': (3,),
+            'DisplacementFieldTransform': (2,),
+            'Euler2DTransform': (),
+            'Euler3DTransform': (),
+            'ScaleSkewVersor3DTransform': (),
+            'ScaleTransform': (2,),
+            'ScaleTransform': (3,),
+            'ScaleVersor3DTransform': (),
+            'Similarity2DTransform': (),
+            'Similarity3DTransform': (),
+            'Transform': (),
+            'TranslationTransform': (3,),
+            'TranslationTransform': (2,),
+            'VersorRigid3DTransform': (),
+            'VersorTransform': ()
+        }
+
+        for k, v in transforms.items():
+            tx = getattr(sitk, k)(*v)
+
+            tx2 = sitk.Transform(tx)
+
+            tx3 = tx2.Downcast()
+
+            self.assertEqual(tx, tx3, msg="Testing {0}".format(tx.GetName()))
+            self.assertEqual(tx.__class__, tx3.__class__, msg="Testing {0}".format(tx.GetName()))
+
+
     def test_deepcopy(self):
         """Test the custom __deepcopy__ method"""
 
