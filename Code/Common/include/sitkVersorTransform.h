@@ -59,6 +59,9 @@ public:
 
   VersorTransform &operator=( const VersorTransform & );
 
+   /** Name of this class */
+  std::string GetName() const override { return std::string ("VersorTransform"); }
+
 /** fixed parameter */
   SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;

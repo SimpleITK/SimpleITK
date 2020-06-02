@@ -59,6 +59,9 @@ public:
 
   VersorRigid3DTransform &operator=( const VersorRigid3DTransform & );
 
+  /** Name of this class */
+  std::string GetName() const override { return std::string ("VersorRigid3DTransform"); }
+
 /** fixed parameter */
   SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
