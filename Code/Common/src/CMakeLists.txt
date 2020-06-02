@@ -3,6 +3,7 @@ set ( SimpleITKCommonSource
   sitkImageExplicit.cxx
   sitkProcessObject.cxx
   sitkTransform.cxx
+  sitkCompositeTransform.cxx
   sitkAffineTransform.cxx
   sitkBSplineTransform.cxx
   sitkDisplacementFieldTransform.cxx

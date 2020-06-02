@@ -96,6 +96,7 @@ namespace std
   %template(VectorFloat) vector<float>;
   %template(VectorDouble) vector<double>;
   %template(VectorOfImage) vector< itk::simple::Image >;
+  %template(VectorOfTransform) vector< itk::simple::Transform >;
   %template(VectorUIntList) vector< vector<unsigned int> >;
   %template(VectorString) vector< std::string >;
 
@@ -172,6 +173,7 @@ namespace std
 %include "sitkTranslationTransform.h"
 %include "sitkVersorTransform.h"
 %include "sitkVersorRigid3DTransform.h"
+%include "sitkCompositeTransform.h"
 
 
 // Basic Filter Base

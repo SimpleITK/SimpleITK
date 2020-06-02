@@ -396,19 +396,11 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
             }
           }
 
-
-        if ( compositeTransform->IsTransformQueueEmpty() )
-          {
-
-          // Load an identity transform in case no transforms are loaded.
-          using IdentityTransformType = itk::IdentityTransform<double, VDimension>;
-          typename IdentityTransformType::Pointer identityTransform = IdentityTransformType::New();
-
-          compositeTransform->AddTransform( identityTransform );
-          }
-
-        compositeTransform->SetAllTransformsToOptimizeOff();
-        compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
+        if (!compositeTransform->IsTransformQueueEmpty())
+        {
+            compositeTransform->SetAllTransformsToOptimizeOff();
+            compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
+        }
 
         temp = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
 
