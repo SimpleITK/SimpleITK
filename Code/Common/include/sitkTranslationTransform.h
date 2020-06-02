@@ -50,6 +50,9 @@ TranslationTransform( const Transform & );
 
 TranslationTransform &operator=( const TranslationTransform & );
 
+/** Name of this class */
+std::string GetName() const override { return std::string ("TranslationTransform"); }
+
 SITK_RETURN_SELF_TYPE_HEADER SetOffset(const std::vector<double> &params);
 std::vector<double> GetOffset( ) const;
 
