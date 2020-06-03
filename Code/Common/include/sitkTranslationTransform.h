@@ -62,8 +62,6 @@ void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 
-using Superclass::AddTransform;
-
 struct MyVisitor
 {
   itk::TransformBase *transform;

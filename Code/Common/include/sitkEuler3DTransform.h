@@ -89,8 +89,6 @@ void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
 
-using Superclass::AddTransform;
-
 void InternalInitialization(itk::TransformBase *transform);
 
 template <typename TransformType>

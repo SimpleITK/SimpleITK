@@ -82,8 +82,6 @@ protected:
 
 private:
 
-  using Superclass::AddTransform;
-
   void InternalInitialization(itk::TransformBase *transform);
 
   template <typename TransformType>
