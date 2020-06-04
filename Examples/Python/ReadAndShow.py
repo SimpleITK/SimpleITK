@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,20 +15,20 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
-import SimpleITK as sitk
-import sys
 import os
+import sys
 
-if len ( sys.argv ) != 2:
-    print( "Usage: %s inputImage" % ( sys.argv[0] ) )
-    sys.exit ( 1 )
+import SimpleITK as sitk
 
-inputImage = sitk.ReadImage( sys.argv[1] )
+if len(sys.argv) != 2:
+    print("Usage: %s inputImage" % (sys.argv[0]))
+    sys.exit(1)
 
+inputImage = sitk.ReadImage(sys.argv[1])
 
-if ( not "SITK_NOSHOW" in os.environ ):
-    sitk.Show( inputImage )
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(inputImage)

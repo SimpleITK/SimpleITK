@@ -25,51 +25,50 @@ import os
 #
 # Check Command Line
 #
-if len( sys.argv ) < 7:
-  print("Usage: ConnectedThresholdImageFilter inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]");
-  sys.exit( 1 )
-
+if len(sys.argv) < 7:
+    print(
+        "Usage: ConnectedThresholdImageFilter inputImage outputImage",
+        "lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]")
+    sys.exit(1)
 
 #
 # Read the image
 #
 reader = sitk.ImageFileReader()
-reader.SetFileName( sys.argv[1] )
-image = reader.Execute();
+reader.SetFileName(sys.argv[1])
+image = reader.Execute()
 
 #
 # Blur using CurvatureFlowImageFilter
 #
 blurFilter = sitk.CurvatureFlowImageFilter()
-blurFilter.SetNumberOfIterations( 5 )
-blurFilter.SetTimeStep( 0.125 )
-image = blurFilter.Execute( image )
+blurFilter.SetNumberOfIterations(5)
+blurFilter.SetTimeStep(0.125)
+image = blurFilter.Execute(image)
 
 #
 # Set up ConnectedThresholdImageFilter for segmentation
 #
 segmentationFilter = sitk.ConnectedThresholdImageFilter()
-segmentationFilter.SetLower( float(sys.argv[3]) )
-segmentationFilter.SetUpper( float(sys.argv[4]) )
-segmentationFilter.SetReplaceValue( 255 )
+segmentationFilter.SetLower(float(sys.argv[3]))
+segmentationFilter.SetUpper(float(sys.argv[4]))
+segmentationFilter.SetReplaceValue(255)
 
-for i in range( 5, len(sys.argv)-1, 2 ):
-  seed = [ int(sys.argv[i]), int(sys.argv[i+1]) ]
-  segmentationFilter.AddSeed( seed )
-  print( "Adding seed at: ", seed, " with intensity: ", image.GetPixel(*seed) )
+for i in range(5, len(sys.argv) - 1, 2):
+    seed = [int(sys.argv[i]), int(sys.argv[i + 1])]
+    segmentationFilter.AddSeed(seed)
+    print("Adding seed at: ", seed, " with intensity: ", image.GetPixel(*seed))
 
 # Run the segmentation filter
-image = segmentationFilter.Execute( image )
+image = segmentationFilter.Execute(image)
 image[seed] = 255
 
 #
 # Write out the result
 #
 writer = sitk.ImageFileWriter()
-writer.SetFileName( sys.argv[2] )
-writer.Execute( image )
+writer.SetFileName(sys.argv[2])
+writer.Execute(image)
 
-
-if ( not "SITK_NOSHOW" in os.environ ):
-  sitk.Show( image, "ConntectedThreshold" )
-
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(image, "ConntectedThreshold")

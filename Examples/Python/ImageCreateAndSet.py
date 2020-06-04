@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,29 +15,28 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
-import SimpleITK as sitk
 import os
 
-xImg = sitk.Image( 256, 256, sitk.sitkFloat32 )
-yImg = sitk.Image( 256, 256, sitk.sitkFloat32 )
+import SimpleITK as sitk
 
-for y in range( 0, xImg.GetSize()[1] ):
-    for x in range( 0, xImg.GetSize()[0] ):
-        xImg.SetPixel( x, y, x )
+xImg = sitk.Image(256, 256, sitk.sitkFloat32)
+yImg = sitk.Image(256, 256, sitk.sitkFloat32)
+
+for y in range(0, xImg.GetSize()[1]):
+    for x in range(0, xImg.GetSize()[0]):
+        xImg.SetPixel(x, y, x)
         yImg[x, y] = y
-
 
 sigma = 50
 
-xImg = sitk.Subtract( xImg,  xImg.GetSize()[0] / 2 )
+xImg = sitk.Subtract(xImg, xImg.GetSize()[0] / 2)
 yImg = yImg - yImg.GetSize()[1] / 2
 
-gaussianImg = sitk.Exp( -1 * (xImg**2 + yImg**2) / (2.0 * sigma**2) )
+gaussianImg = sitk.Exp(-1 * (xImg ** 2 + yImg ** 2) / (2.0 * sigma ** 2))
 
-
-if ( not "SITK_NOSHOW" in os.environ ):
-    sitk.Show( gaussianImg, "Gaussian Blob" )
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(gaussianImg, "Gaussian Blob")

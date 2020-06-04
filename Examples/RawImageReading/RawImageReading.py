@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,13 +15,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
-import SimpleITK as sitk
-import tempfile
 import argparse
 import os
 import sys
+import tempfile
+
+import SimpleITK as sitk
 
 
 def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
@@ -33,10 +34,14 @@ def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
     ----------
     binary_file_name (str): Raw, binary image file content.
     image_size (tuple like): Size of image (e.g. [2048,2048])
-    sitk_pixel_type (SimpleITK pixel type: Pixel type of data (e.g. sitk.sitkUInt16).
-    image_spacing (tuple like): Optional image spacing, if none given assumed to be [1]*dim.
-    image_origin (tuple like): Optional image origin, if none given assumed to be [0]*dim.
-    big_endian (bool): Optional byte order indicator, if True big endian, else little endian.
+    sitk_pixel_type (SimpleITK pixel type: Pixel type of data (e.g.
+        sitk.sitkUInt16).
+    image_spacing (tuple like): Optional image spacing, if none given assumed
+        to be [1]*dim.
+    image_origin (tuple like): Optional image origin, if none given assumed to
+        be [0]*dim.
+    big_endian (bool): Optional byte order indicator, if True big endian, else
+        little endian.
 
     Returns
     -------
@@ -53,21 +58,27 @@ def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
                   sitk.sitkInt64: 'MET_LONG_LONG',
                   sitk.sitkFloat32: 'MET_FLOAT',
                   sitk.sitkFloat64: 'MET_DOUBLE'}
-    direction_cosine = ['1 0 0 1', '1 0 0 0 1 0 0 0 1', '1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1']
+    direction_cosine = ['1 0 0 1', '1 0 0 0 1 0 0 0 1',
+                        '1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1']
     dim = len(image_size)
     header = ['ObjectType = Image\n'.encode(),
               ('NDims = {0}\n'.format(dim)).encode(),
-              ('DimSize = ' + ' '.join([str(v) for v in image_size]) + '\n').encode(),
-              ('ElementSpacing = ' + (' '.join([str(v) for v in image_spacing]) if image_spacing else ' '.join(
+              ('DimSize = ' + ' '.join([str(v) for v in image_size]) + '\n')
+              .encode(),
+              ('ElementSpacing = ' + (' '.join([str(v) for v in image_spacing])
+                                      if image_spacing else ' '.join(
                   ['1'] * dim)) + '\n').encode(),
               ('Offset = ' + (
-                  ' '.join([str(v) for v in image_origin]) if image_origin else ' '.join(['0'] * dim) + '\n')).encode(),
-              ('TransformMatrix = ' + direction_cosine[dim - 2] + '\n').encode(),
+                  ' '.join([str(v) for v in image_origin]) if image_origin
+                  else ' '.join(['0'] * dim) + '\n')).encode(),
+              ('TransformMatrix = ' + direction_cosine[dim - 2] + '\n')
+              .encode(),
               ('ElementType = ' + pixel_dict[sitk_pixel_type] + '\n').encode(),
               'BinaryData = True\n'.encode(),
               ('BinaryDataByteOrderMSB = ' + str(big_endian) + '\n').encode(),
+              # ElementDataFile must be the last entry in the header
               ('ElementDataFile = ' + os.path.abspath(
-                  binary_file_name) + '\n').encode()]  # ElementDataFile must be the last entry in the header
+                  binary_file_name) + '\n').encode()]
     fp = tempfile.NamedTemporaryFile(suffix='.mhd', delete=False)
 
     print(header)
@@ -83,11 +94,15 @@ def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
 
 parser = argparse.ArgumentParser()
 parser.add_argument('raw_file_name', help='path to raw binary image file')
-parser.add_argument('out_file_name', help='output file name when image read as little endian')
-parser.add_argument("big_endian", type=lambda v : v.lower() in {"1", "true"},
-                    help="\'false\' for little ending or \'true\'for big endian")
-parser.add_argument('sitk_pixel_type', help="SimpleITK pixel type (e.g. sitk.sitkUInt16)")
-parser.add_argument('sz', nargs='+', help="image size, x,y,...", type=int)
+parser.add_argument('out_file_name',
+                    help='output file name when image read as little endian')
+parser.add_argument("big_endian", type=lambda v: v.lower() in {"1", "true"},
+                    help="\'false\' for little ending or \'true\'for big endian"
+                    )
+parser.add_argument('sitk_pixel_type',
+                    help="SimpleITK pixel type (e.g. sitk.sitkUInt16)")
+parser.add_argument('sz', nargs='+', help="image size, x,y,...",
+                    type=int)
 args = parser.parse_args()
 
 string_to_pixelType = {"sitkUInt8": sitk.sitkUInt8,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,15 +15,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
 import sys
 import SimpleITK as sitk
 
-
-if len(sys.argv)<2:
+if len(sys.argv) < 2:
     print('Wrong number of arguments.', file=sys.stderr)
     print('Usage: ' + __file__ + ' image_file_name', file=sys.stderr)
     sys.exit(1)
@@ -32,12 +31,12 @@ if len(sys.argv)<2:
 file_reader = sitk.ImageFileReader()
 image_ios_tuple = file_reader.GetRegisteredImageIOs()
 print("The supported image IOs are: " + str(image_ios_tuple))
-print('-'*20)
+print('-' * 20)
 
 # Another option is to just print the reader and see which
 # IOs are supported
 print(file_reader)
-print('-'*20)
+print('-' * 20)
 
 # Force the use of a specific IO. If the IO doesn't support
 # reading the image type it will throw an exception.

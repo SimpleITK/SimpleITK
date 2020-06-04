@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,7 +15,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 
 from __future__ import print_function
 
@@ -23,30 +23,34 @@ import SimpleITK as sitk
 import sys
 import os
 
-if len ( sys.argv ) < 4:
-    print( "Usage: "+sys.argv[0]+ " <input> <variance> <output>" )
-    sys.exit ( 1 )
+if len(sys.argv) < 4:
+    print("Usage: " + sys.argv[0] + " <input> <variance> <output>")
+    sys.exit(1)
+
 
 ##! [python director command]
 class MyCommand(sitk.Command):
     def __init__(self, po):
         # required
-        super(MyCommand,self).__init__()
+        super(MyCommand, self).__init__()
         self.processObject = po
 
     def Execute(self):
-        print("{0} Progress: {1:1.2f}".format(self.processObject.GetName(),self.processObject.GetProgress()))
+        print("{0} Progress: {1:1.2f}".format(self.processObject.GetName(),
+                                              self.processObject.GetProgress())
+              )
+
+
 ##! [python director command]
 
 reader = sitk.ImageFileReader()
-reader.SetFileName ( sys.argv[1] )
+reader.SetFileName(sys.argv[1])
 image = reader.Execute()
 
 pixelID = image.GetPixelID()
 
 gaussian = sitk.DiscreteGaussianImageFilter()
-gaussian.SetVariance( float ( sys.argv[2] ) )
-
+gaussian.SetVariance(float(sys.argv[2]))
 
 ##! [python lambda command]
 gaussian.AddCommand(sitk.sitkStartEvent, lambda: print("StartEvent"))
@@ -56,16 +60,15 @@ gaussian.AddCommand(sitk.sitkEndEvent, lambda: print("EndEvent"))
 cmd = MyCommand(gaussian)
 gaussian.AddCommand(sitk.sitkProgressEvent, cmd)
 
-image = gaussian.Execute ( image )
+image = gaussian.Execute(image)
 
 caster = sitk.CastImageFilter()
-caster.SetOutputPixelType( pixelID )
-image = caster.Execute( image )
+caster.SetOutputPixelType(pixelID)
+image = caster.Execute(image)
 
 writer = sitk.ImageFileWriter()
-writer.SetFileName ( sys.argv[3] )
-writer.Execute ( image );
+writer.SetFileName(sys.argv[3])
+writer.Execute(image)
 
-
-if ( not "SITK_NOSHOW" in os.environ ):
-    sitk.Show( image, "Simple Gaussian" )
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(image, "Simple Gaussian")
