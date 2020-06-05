@@ -463,8 +463,8 @@ public:
   template <typename VScalar, unsigned int VDimension>
     TransformEnum GetTransformEnum( const itk::CompositeTransform< VScalar, VDimension > *) const {return sitkComposite;}
 
-  template <typename VScalar, unsigned int VDimension>
-    TransformEnum GetTransformEnum( const itk::BSplineTransform< VScalar, VDimension > *) const {return sitkBSplineTransform;}
+  template <typename VScalar, unsigned int VDimension, unsigned int VSplineOrder>
+    TransformEnum GetTransformEnum( const itk::BSplineTransform< VScalar, VDimension, VSplineOrder > *) const {return sitkBSplineTransform;}
 
   template <typename VScalar, unsigned int VDimension>
     TransformEnum GetTransformEnum( const itk::DisplacementFieldTransform< VScalar, VDimension > *) const {return sitkDisplacementField;}
