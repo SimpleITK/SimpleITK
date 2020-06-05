@@ -93,7 +93,7 @@ public:
    *
    * An exception is thrown if the vector is empty.
    */
-   explicit CompositeTransform(const std::vector<Transform> &);
+  explicit CompositeTransform(const std::vector<itk::simple::Transform> &);
 
   ~CompositeTransform() override;
 

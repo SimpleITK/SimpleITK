@@ -30,7 +30,9 @@ namespace itk
 template< typename TScalar > class TransformBaseTemplate;
 using TransformBase = TransformBaseTemplate<double>;
 
+#if !defined(SWIG)
 template< typename TScalar, unsigned int NDimension> class CompositeTransform;
+#endif
 
 namespace simple
 {
