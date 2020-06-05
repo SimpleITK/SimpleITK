@@ -222,13 +222,14 @@ class TransformTests(unittest.TestCase):
 
 
     def test_downcast(self):
-        """Test downcasting"""
+        """Test Downcast method with minimally constructed transforms"""
 
         transforms = {
             'AffineTransform': (3,),
             'AffineTransform': (2,),
             'BSplineTransform': (3, 3),
             'BSplineTransform': (2, 3),
+            'BSplineTransform': (2, 2),
             'DisplacementFieldTransform': (3,),
             'DisplacementFieldTransform': (2,),
             'Euler2DTransform': (),

@@ -584,6 +584,15 @@ TEST(TransformTest, ReadTransformConvert) {
   EXPECT_EQ(tx.GetOrder(), 3u);
   EXPECT_EQ(sitk::sitkBSplineTransform, tx.GetTransformEnum());
   }
+  {
+  sitk::BSplineTransform tx(3,2);
+  EXPECT_EQ(sitk::sitkBSplineTransform, tx.GetTransformEnum());
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW( tx = sitk::BSplineTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
+  EXPECT_EQ(tx.GetOrder(), 2u);
+  EXPECT_EQ(sitk::sitkBSplineTransform, tx.GetTransformEnum());
+  }
 
 }
 
