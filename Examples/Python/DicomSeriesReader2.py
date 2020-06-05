@@ -44,7 +44,7 @@ def usage():
 # Parse command line options
 try:
     opts, args = getopt.getopt(sys.argv[1:], "s:", ["series"])
-except getopt.GetoptError as err:
+except getopt.GetoptError:
     usage()
     sys.exit(1)
 

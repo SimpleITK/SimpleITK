@@ -30,9 +30,8 @@ def command_iteration(filter):
 
 
 if len(sys.argv) < 4:
-    print("Usage: {0} <fixedImageFilter> <movingImageFile> " +
-          "[initialTransformFile] <outputTransformFile>"
-          .format(sys.argv[0]))
+    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
+          "[initialTransformFile] <outputTransformFile>")
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1])

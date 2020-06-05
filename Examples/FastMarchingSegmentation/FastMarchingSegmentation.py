@@ -21,7 +21,6 @@ from __future__ import print_function
 
 import SimpleITK as sitk
 import sys
-import os
 
 if len(sys.argv) < 10:
     print("Usage:", sys.argv[0],

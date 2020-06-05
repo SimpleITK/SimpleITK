@@ -19,7 +19,6 @@
 
 import argparse
 import os
-import sys
 import tempfile
 
 import SimpleITK as sitk
@@ -97,8 +96,8 @@ parser.add_argument('raw_file_name', help='path to raw binary image file')
 parser.add_argument('out_file_name',
                     help='output file name when image read as little endian')
 parser.add_argument("big_endian", type=lambda v: v.lower() in {"1", "true"},
-                    help="\'false\' for little ending or \'true\'for big endian"
-                    )
+                    help="\'false\' for little ending or \'true\'for big "
+                    "endian")
 parser.add_argument('sitk_pixel_type',
                     help="SimpleITK pixel type (e.g. sitk.sitkUInt16)")
 parser.add_argument('sz', nargs='+', help="image size, x,y,...",
