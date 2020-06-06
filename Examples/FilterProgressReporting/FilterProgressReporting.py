@@ -19,9 +19,10 @@
 
 from __future__ import print_function
 
-import SimpleITK as sitk
-import sys
 import os
+import sys
+
+import SimpleITK as sitk
 
 if len(sys.argv) < 4:
     print("Usage: " + sys.argv[0] + " <input> <variance> <output>")

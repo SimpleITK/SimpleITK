@@ -21,7 +21,6 @@ from __future__ import print_function
 
 import SimpleITK as sitk
 import sys
-import os
 
 if len(sys.argv) < 2:
     print("Usage: DicomImagePrintTags <input_file>")
