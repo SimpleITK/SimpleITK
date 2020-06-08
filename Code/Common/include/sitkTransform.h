@@ -122,7 +122,7 @@ public:
    *
    * \deprecated This constructor will be removed in future releases.
    */
-  Transform( Image &displacement, TransformEnum type = sitkDisplacementField );
+  explicit Transform( Image &displacement, TransformEnum type = sitkDisplacementField );
 
   virtual ~Transform( );
 
