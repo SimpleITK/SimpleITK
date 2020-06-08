@@ -59,6 +59,13 @@
           elif downcasted.__class__ is BSplineTransform:
             args = (tuple(downcasted.GetCoefficientImages()), downcasted.GetOrder())
             S = (version, )
+          elif downcasted.__class__ == CompositeTransform:
+            if downcasted.GetNumberOfTransforms() > 0:
+               args = ([ downcasted.GetNthTransform(n) for n in range(downcasted.GetNumberOfTransforms()) ], )
+            else:
+               args = (downcasted.GetDimension(),)
+            S = (version, )
+
           else:
             args = ()
             if downcasted.__class__ in [AffineTransform, ScaleTransform, TranslationTransform]:
@@ -88,7 +95,7 @@
                 sitkScaleSkewVersor: ( None, ScaleSkewVersor3DTransform),
                 sitkScaleVersor: ( None, ScaleVersor3DTransform),
                 sitkAffine: (AffineTransform, AffineTransform),
-                sitkComposite: (Transform, Transform),
+                sitkComposite: (CompositeTransform, CompositeTransform),
                 sitkDisplacementField: (DisplacementFieldTransform, DisplacementFieldTransform),
                 sitkBSplineTransform: (BSplineTransform, BSplineTransform)
             }

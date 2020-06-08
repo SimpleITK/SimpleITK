@@ -21,6 +21,7 @@ import unittest
 import tempfile
 import os.path
 import shutil
+from copy import deepcopy
 
 import SimpleITK as sitk
 try:
@@ -54,6 +55,8 @@ class TransformTests(unittest.TestCase):
         for transform_type in transform_type_list:
             self.addTypeEqualityFunc(transform_type, self.assertTransformEqual)
 
+        self.addTypeEqualityFunc(sitk.CompositeTransform, self.assertCompositeEqual)
+
         # Create a temporary directory for output files
         self.test_dir = tempfile.mkdtemp()
 
@@ -70,6 +73,25 @@ class TransformTests(unittest.TestCase):
         self.assertEqual(tx1.GetDimension(), tx2.GetDimension())
         self.assertEqual(tx1.GetFixedParameters(), tx2.GetFixedParameters())
         self.assertEqual(tx1.GetParameters(), tx2.GetParameters())
+
+
+
+    def assertCompositeEqual(self, ctx1, ctx2, msg=None):
+        """ method to compare CompositeTransforms"""
+
+        self.assertEqual(ctx1.GetNumberOfTransforms(), ctx2.GetNumberOfTransforms())
+        self.assertEqual(ctx1.GetNumberOfFixedParameters(), ctx2.GetNumberOfFixedParameters())
+        self.assertEqual(ctx1.GetFixedParameters(), ctx2.GetFixedParameters())
+        self.assertEqual(ctx1.GetNumberOfParameters(), ctx2.GetNumberOfParameters())
+        self.assertEqual(ctx1.GetParameters(), ctx2.GetParameters())
+        self.assertTransformEqual(ctx1, ctx2, msg);
+
+        for idx in range(ctx1.GetNumberOfTransforms()):
+            tx1 = ctx1.GetNthTransform(idx)
+            tx2 = ctx2.GetNthTransform(idx)
+
+            self.assertTransformEqual(tx1, tx2, msg="Comparing transform {0}: {1}".format(idx, msg))
+
 
     def test_bspline_constructor(self):
 
@@ -164,6 +186,42 @@ class TransformTests(unittest.TestCase):
 
         self.assertEqual(tx, tx2)
 
+    def test_composite_pickle(self):
+        ctx = sitk.CompositeTransform( [sitk.Transform()] )
+
+        ptx = pickle.loads(pickle.dumps(ctx))
+        self.assertEqual(ctx, ptx)
+
+        ctx = sitk.CompositeTransform( [sitk.AffineTransform(2),
+                                        sitk.Euler2DTransform(),
+                                        sitk.TranslationTransform(2),
+                                        sitk.AffineTransform(2)] );
+
+        ptx = pickle.loads(pickle.dumps(ctx))
+        self.assertEqual(ctx, ptx)
+
+        displacement = sitk.Image([64]*3, sitk.sitkVectorFloat64, 3)
+        displacement.SetOrigin((7, 8.9, 6))
+
+        tx1 = sitk.DisplacementFieldTransform(displacement)
+
+        img1 = sitk.Image([5]*3, sitk.sitkFloat64)
+        img1.SetOrigin((.01, 2.3, 4.5))
+        img2 = deepcopy(img1)
+        img3 = deepcopy(img1)
+
+        img1 += -.1
+        img2 -= 0.1
+        img3 += -.3
+
+        tx2 = sitk.BSplineTransform([img1, img2, img3], 3)
+
+        ctx = sitk.CompositeTransform( [sitk.AffineTransform(3),
+                                        tx1,
+                                        tx2] )
+        ptx = pickle.loads(pickle.dumps(ctx))
+        self.assertEqual(ctx, ptx)
+
     def test_name(self):
         """Testing GetName method"""
 
@@ -181,7 +239,8 @@ class TransformTests(unittest.TestCase):
             'Transform': (),
             'TranslationTransform': (3,),
             'VersorRigid3DTransform': (),
-            'VersorTransform': ()
+            'VersorTransform': (),
+            'CompositeTransform': (3,)
         }
 
         for k, v in transforms.items():
@@ -206,7 +265,8 @@ class TransformTests(unittest.TestCase):
             'Transform': (),
             'TranslationTransform': (3,),
             'VersorRigid3DTransform': (),
-            'VersorTransform': ()
+            'VersorTransform': (),
+            'CompositeTransform': (3,)
         }
 
         for k, v in transforms.items():
@@ -244,17 +304,19 @@ class TransformTests(unittest.TestCase):
             'TranslationTransform': (3,),
             'TranslationTransform': (2,),
             'VersorRigid3DTransform': (),
-            'VersorTransform': ()
+            'VersorTransform': (),
+            'CompositeTransform' : (3,)
         }
 
         for k, v in transforms.items():
+            print("Testing {0}".format(k))
             tx = getattr(sitk, k)(*v)
 
             tx2 = sitk.Transform(tx)
 
             tx3 = tx2.Downcast()
 
-            self.assertEqual(tx, tx3, msg="Testing {0}".format(tx.GetName()))
+            self.assertEqual(tx, tx3)
             self.assertEqual(tx.__class__, tx3.__class__, msg="Testing {0}".format(tx.GetName()))
 
 
