@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
   }
   R.SetOptimizerScalesFromPhysicalShift();
 
-  R.SetInitialTransform(initialTx, true);
+  R.SetInitialTransform(initialTx);
 
   R.SetInterpolator(sitk::sitkLinear);
 
@@ -147,10 +147,10 @@ int main(int argc, char *argv[])
   MultiResolutionIterationUpdate cmd2(R);
   R.AddCommand( sitk::sitkMultiResolutionIterationEvent, cmd2);
 
-  sitk::Transform outTx = R.Execute( fixed, moving );
+  sitk::Transform outTx1 = R.Execute( fixed, moving );
 
   std::cout << "-------" << std::endl;
-  std::cout << outTx.ToString() << std::endl;
+  std::cout << outTx1.ToString() << std::endl;
   std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
   std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
 
 
 
-  R.SetMovingInitialTransform(outTx);
+  R.SetMovingInitialTransform(outTx1);
   R.SetInitialTransform(displacementTx, true);
 
   R.SetMetricAsANTSNeighborhoodCorrelation(4);
@@ -197,15 +197,17 @@ int main(int argc, char *argv[])
                                    estimateLearningRate
     );
   }
-  outTx.AddTransform( R.Execute(fixed, moving) );
+  R.Execute(fixed, moving);
+
 
   std::cout << "-------" << std::endl;
-  std::cout << outTx.ToString() << std::endl;
+  std::cout << displacementTx.ToString() << std::endl;
   std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
   std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
 
+  sitk::CompositeTransform outTx( {outTx1, displacementTx} );
   sitk::WriteTransform(outTx, argv[3]);
 
   return 0;

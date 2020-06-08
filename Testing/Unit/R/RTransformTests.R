@@ -29,13 +29,14 @@ compositeAddTransformTest <- function()
   tx2 <- c(3,4)
   translation2 <- TranslationTransform(dimension, tx2)
 
-  composite_transform <- Transform(translation1)
+  composite_transform <- CompositeTransform(translation1)
   dummy <- composite_transform$AddTransform(translation2)
   if (!is.null(dummy))
   {
     cat("failure in", fname, "\n")
     quit(save="no", status=1)
    }
+
 }
 
 translationTest()
