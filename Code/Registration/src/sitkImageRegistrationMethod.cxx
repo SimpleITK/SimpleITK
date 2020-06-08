@@ -913,12 +913,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   //
   // Configure Optimizer
   //
-  #if ITK_VERSION_MAJOR < 5
-  optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
-  #else
   optimizer->SetNumberOfWorkUnits(this->GetNumberOfThreads());
-  #endif
-
   registration->SetOptimizer( optimizer );
 
   if ( !m_OptimizerWeights.empty() )
@@ -1115,12 +1110,7 @@ ImageRegistrationMethod::SetupMetric(
   const unsigned int ImageDimension = FixedImageType::ImageDimension;
   using SpatialObjectMaskType = itk::SpatialObject<ImageDimension>;
 
-  #if ITK_VERSION_MAJOR < 5
-  metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
-  #else
   metric->SetMaximumNumberOfWorkUnits(this->GetNumberOfThreads());
-  #endif
-
 
   metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
   metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );

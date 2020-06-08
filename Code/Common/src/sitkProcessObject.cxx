@@ -398,12 +398,7 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
   assert(p);
 
   // propagate number of threads
-  #if ITK_VERSION_MAJOR < 5
-  p->SetNumberOfThreads(this->GetNumberOfThreads());
-  #else
   p->SetNumberOfWorkUnits(this->GetNumberOfThreads());
-  #endif
-
 
   try
     {

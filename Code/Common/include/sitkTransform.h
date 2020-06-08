@@ -27,16 +27,8 @@
 namespace itk
 {
 
-// Forward declaration for pointer
-// After ITK_VERSION 4.5 (Actually after June 20th, 2013) the ITK Transform
-// classes are now templated.  This requires forward declarations to be defined
-// differently.
-#if ( ( SITK_ITK_VERSION_MAJOR == 4 ) && ( SITK_ITK_VERSION_MINOR < 5 ) )
-class TransformBase;
-#else
 template< typename TScalar > class TransformBaseTemplate;
 using TransformBase = TransformBaseTemplate<double>;
-#endif
 
 template< typename TScalar, unsigned int NDimension> class CompositeTransform;
 
