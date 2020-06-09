@@ -27,8 +27,10 @@
 #include <sitkVersionConfig.h>
 #include <itkConfigure.h>
 
+#include <cctype>
 
-TEST( VersionTest, VersoinTest)
+
+TEST( VersionTest, VersionTest)
 {
   using Version = itk::simple::Version;
 
@@ -580,6 +582,28 @@ TEST( ProcessObject, Command_Ownership ) {
   EXPECT_EQ(5,destroyedCount);
 
 
+}
+
+TEST( ProcessObject, Threads )
+{
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter po;
+
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultNumberOfThreads(), po.GetNumberOfThreads() );
+
+
+  auto strupper = [](std::string s) {
+    std::transform( s.begin(), s.end(), s.begin(), [] ( char c ) { return (std::toupper( c ) ); } );
+    return s;
+  };
+
+  EXPECT_TRUE( sitk::ProcessObject::SetGlobalDefaultThreader("PLATFORM") );
+  EXPECT_EQ( "PLATFORM", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()) );
+
+
+  EXPECT_TRUE( sitk::ProcessObject::SetGlobalDefaultThreader("POOL") );
+  EXPECT_EQ( "POOL", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()) );
 }
 
 TEST( Command, Test2 ) {

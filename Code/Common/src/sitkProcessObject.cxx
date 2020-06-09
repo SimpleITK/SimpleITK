@@ -103,7 +103,8 @@ protected:
 //
 ProcessObject::ProcessObject ()
   : m_Debug(ProcessObject::GetGlobalDefaultDebug()),
-    m_NumberOfThreads(ProcessObject::GetGlobalDefaultNumberOfThreads()),
+    m_NumberOfThreads(itk::MultiThreaderBase::GetGlobalDefaultNumberOfThreads()),
+    m_NumberOfWorkUnits(0),
     m_ActiveProcess(nullptr),
     m_ProgressMeasurement(0.0)
 {
@@ -137,6 +138,9 @@ std::string ProcessObject::ToString() const
 
   out << "  NumberOfThreads: ";
   this->ToStringHelper(out, this->m_NumberOfThreads) << std::endl;
+
+  out << "  NumberOfWorkUnits: ";
+  this->ToStringHelper(out, this->m_NumberOfWorkUnits) << std::endl;
 
   out << "  Commands:" << (m_Commands.empty()?" (none)":"") << std::endl;
   for( std::list<EventCommand>::const_iterator i = m_Commands.begin();
@@ -277,13 +281,33 @@ void ProcessObject::SetGlobalDefaultDirectionTolerance(double tolerance)
 
 void ProcessObject::SetGlobalDefaultNumberOfThreads(unsigned int n)
 {
-  itk::ProcessObject::MultiThreaderType::SetGlobalDefaultNumberOfThreads(n);
+  itk::MultiThreaderBase::SetGlobalDefaultNumberOfThreads(n);
 }
-
 
 unsigned int ProcessObject::GetGlobalDefaultNumberOfThreads()
 {
-  return itk::ProcessObject::MultiThreaderType::GetGlobalDefaultNumberOfThreads();
+  return itk::MultiThreaderBase::GetGlobalDefaultNumberOfThreads();
+}
+
+bool ProcessObject::SetGlobalDefaultThreader(const std::string &threader)
+{
+  auto threaderEnum = itk::MultiThreaderBase::ThreaderTypeFromString(threader);
+  if (threaderEnum == itk::MultiThreaderBase::ThreaderEnum::Unknown
+#if !defined(ITK_USE_TBB)
+      || threaderEnum == itk::MultiThreaderBase::ThreaderEnum::Unknown
+#endif
+    )
+    {
+    return false;
+    }
+  itk::MultiThreaderBase::SetGlobalDefaultThreader(threaderEnum);
+  return true;
+}
+
+std::string ProcessObject::GetGlobalDefaultThreader()
+{
+  auto threaderEnum =  itk::MultiThreaderBase::GetGlobalDefaultThreader();
+  return itk::MultiThreaderBase::ThreaderTypeToString(threaderEnum);
 }
 
 
@@ -296,6 +320,18 @@ void ProcessObject::SetNumberOfThreads(unsigned int n)
 unsigned int ProcessObject::GetNumberOfThreads() const
 {
   return m_NumberOfThreads;
+}
+
+
+void ProcessObject::SetNumberOfWorkUnits(unsigned int n)
+{
+  m_NumberOfWorkUnits = n;
+}
+
+
+unsigned int ProcessObject::GetNumberOfWorkUnits() const
+{
+  return m_NumberOfWorkUnits;
 }
 
 
@@ -398,7 +434,12 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
   assert(p);
 
   // propagate number of threads
-  p->SetNumberOfWorkUnits(this->GetNumberOfThreads());
+  if ( this->GetNumberOfWorkUnits() != 0 )
+    {
+    p->SetNumberOfWorkUnits(this->GetNumberOfWorkUnits());
+    }
+
+  p->GetMultiThreader()->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
 
   try
     {
