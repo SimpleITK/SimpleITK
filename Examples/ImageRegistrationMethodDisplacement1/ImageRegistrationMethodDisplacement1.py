@@ -69,7 +69,7 @@ R.SetOptimizerAsGradientDescent(learningRate=1.0,
                                 estimateLearningRate=R.EachIteration)
 R.SetOptimizerScalesFromPhysicalShift()
 
-R.SetInitialTransform(initialTx, inPlace=True)
+R.SetInitialTransform(initialTx)
 
 R.SetInterpolator(sitk.sitkLinear)
 
@@ -77,10 +77,10 @@ R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R))
 R.AddCommand(sitk.sitkMultiResolutionIterationEvent,
              lambda: command_multiresolution_iteration(R))
 
-outTx = R.Execute(fixed, moving)
+outTx1 = R.Execute(fixed, moving)
 
 print("-------")
-print(outTx)
+print(outTx1)
 print("Optimizer stop condition: {0}"
       .format(R.GetOptimizerStopConditionDescription()))
 print(" Iteration: {0}".format(R.GetOptimizerIteration()))
@@ -93,7 +93,7 @@ del displacementField
 displacementTx.SetSmoothingGaussianOnUpdate(varianceForUpdateField=0.0,
                                             varianceForTotalField=1.5)
 
-R.SetMovingInitialTransform(outTx)
+R.SetMovingInitialTransform(outTx1)
 R.SetInitialTransform(displacementTx, inPlace=True)
 
 R.SetMetricAsANTSNeighborhoodCorrelation(4)
@@ -107,16 +107,17 @@ R.SetOptimizerAsGradientDescent(learningRate=1,
                                 numberOfIterations=300,
                                 estimateLearningRate=R.EachIteration)
 
-outTx.AddTransform(R.Execute(fixed, moving))
+R.Execute(fixed, moving)
 
 print("-------")
-print(outTx)
+print(displacementTx)
 print("Optimizer stop condition: {0}"
       .format(R.GetOptimizerStopConditionDescription()))
 print(" Iteration: {0}".format(R.GetOptimizerIteration()))
 print(" Metric value: {0}".format(R.GetMetricValue()))
 
-sitk.WriteTransform(outTx, sys.argv[3])
+compositeTx = sitk.CompositeTransform([outTx1, displacementTx])
+sitk.WriteTransform(compositeTx, sys.argv[3])
 
 if ("SITK_NOSHOW" not in os.environ):
     sitk.Show(displacementTx.GetDisplacementField(), "Displacement Field")
@@ -125,7 +126,7 @@ if ("SITK_NOSHOW" not in os.environ):
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
     resampler.SetDefaultPixelValue(100)
-    resampler.SetTransform(outTx)
+    resampler.SetTransform(compositeTx)
 
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)

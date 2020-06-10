@@ -396,19 +396,11 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
             }
           }
 
-
-        if ( compositeTransform->IsTransformQueueEmpty() )
-          {
-
-          // Load an identity transform in case no transforms are loaded.
-          using IdentityTransformType = itk::IdentityTransform<double, VDimension>;
-          typename IdentityTransformType::Pointer identityTransform = IdentityTransformType::New();
-
-          compositeTransform->AddTransform( identityTransform );
-          }
-
-        compositeTransform->SetAllTransformsToOptimizeOff();
-        compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
+        if (!compositeTransform->IsTransformQueueEmpty())
+        {
+            compositeTransform->SetAllTransformsToOptimizeOff();
+            compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
+        }
 
         temp = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
 
@@ -485,19 +477,6 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     return this->m_PimpleTransform->GetNumberOfFixedParameters();
   }
 
-  Transform &Transform::AddTransform( Transform t )
-  {
-    assert( m_PimpleTransform );
-    this->MakeUnique();
-    // this returns a pointer which may be the same or a new object
-    PimpleTransformBase *temp = this->m_PimpleTransform->AddTransform( t );
-    if ( temp != this->m_PimpleTransform )
-      {
-      this->SetPimpleTransform(temp);
-      }
-    return *this;
-  }
-
   std::vector< double > Transform::TransformPoint( const std::vector< double > &point ) const
   {
     assert( m_PimpleTransform );
@@ -553,14 +532,6 @@ std::vector< double > Transform::TransformVector( const std::vector< double > &v
       sitkExceptionMacro("Unable to create inverse!");
       }
     return tx;
-  }
-
-  Transform &Transform::FlattenTransform()
-  {
-    assert( m_PimpleTransform );
-    this->MakeUnique();
-    this->m_PimpleTransform->FlattenTransform();
-    return *this;
   }
 
 

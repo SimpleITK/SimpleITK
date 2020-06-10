@@ -112,8 +112,6 @@ protected:
 
 private:
 
-  using Superclass::AddTransform;
-
   struct MyVisitor
   {
     itk::TransformBase *transform;

@@ -142,8 +142,6 @@ public:
 
   virtual void SetIdentity() = 0;
 
-  virtual void FlattenTransform() = 0;
-
   // Tries to construct an inverse of the transform, if true is returned
   // the inverse was successful, and outputTransform is modified to
   // the new class and ownership it passed to the caller.  Otherwise
@@ -163,12 +161,6 @@ public:
       this->GetTransformBase()->Print ( out, 1 );
       return out.str();
     }
-
-  // note: the returned pointer needs to be externally managed and
-  // deleted
-  // Also the return pointer could be this
-  virtual PimpleTransformBase* AddTransform( Transform &t ) = 0;
-
 
   virtual std::vector< double > TransformPoint( const std::vector< double > &p ) const = 0;
   virtual std::vector< double > TransformVector( const std::vector< double > &v,
@@ -261,25 +253,6 @@ public:
       sitkExceptionMacro( "SetIdentity does is not implemented for transforms of type " << self->GetNameOfClass() );
     }
 
-  void FlattenTransform() override
-    {
-      this->FlattenTransform(this->m_Transform.GetPointer());
-    }
-
-  template <typename UTransform>
-  void FlattenTransform( UTransform *self)
-    {
-      Unused(self);
-      // nothing to do
-    }
-
-  template <typename UScalar, unsigned int UDimension>
-  void FlattenTransform( itk::CompositeTransform<UScalar, UDimension> *self)
-    {
-      self->FlattenTransformQueue();
-      // TODO: If there is only one transform remove it from the
-      // composite transform.
-    }
 
   bool GetInverse(PimpleTransformBase * &outputTransform) const override
     {
@@ -296,46 +269,6 @@ public:
         }
       outputTransform = new Self( another.GetPointer() );
       return true;
-    }
-
-
-  PimpleTransformBase* AddTransform( Transform &t ) override
-    {
-      if ( t.GetDimension() != TransformType::InputSpaceDimension )
-        {
-        sitkExceptionMacro( "Transform argument has dimension " << t.GetDimension()
-                            << " does not match this dimension of " << TransformType::InputSpaceDimension );
-        }
-
-      typename CompositeTransformType::TransformType* base =
-        dynamic_cast< typename CompositeTransformType::TransformType*>( t.GetITKBase() );
-
-      return this->AddTransform( base, typename std::is_same<TTransformType, CompositeTransformType>::type() );
-    }
-
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::true_type isCompositeTransform )
-    {
-      Unused( isCompositeTransform );
-      assert( t->GetInputSpaceDimension() == TransformType::InputSpaceDimension );
-
-      m_Transform->AddTransform( t );
-      m_Transform->SetAllTransformsToOptimizeOff();
-      m_Transform->SetOnlyMostRecentTransformToOptimizeOn();
-
-      return this;
-    }
-
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::false_type isNotCompositeTransform )
-    {
-      Unused( isNotCompositeTransform );
-
-      typename CompositeTransformType::Pointer composite = CompositeTransformType::New();
-      composite->AddTransform( this->m_Transform );
-      composite->AddTransform( t );
-      composite->SetAllTransformsToOptimizeOff();
-      composite->SetOnlyMostRecentTransformToOptimizeOn();
-
-      return new PimpleTransform<CompositeTransformType>( composite );
     }
 
 

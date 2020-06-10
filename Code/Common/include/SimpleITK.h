@@ -50,6 +50,7 @@
 #include "sitkTranslationTransform.h"
 #include "sitkVersorTransform.h"
 #include "sitkVersorRigid3DTransform.h"
+#include "sitkCompositeTransform.h"
 #include "sitkShow.h"
 
 #include "sitkInterpolator.h"

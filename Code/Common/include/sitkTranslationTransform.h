@@ -46,7 +46,7 @@ explicit TranslationTransform(unsigned int dimensions,
 
 TranslationTransform( const TranslationTransform & );
 
-TranslationTransform( const Transform & );
+explicit TranslationTransform( const Transform & );
 
 TranslationTransform &operator=( const TranslationTransform & );
 
@@ -61,8 +61,6 @@ protected:
 void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
 
 private:
-
-using Superclass::AddTransform;
 
 struct MyVisitor
 {
