@@ -47498,11 +47498,6 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 */"
 
 
-%typemap(javaimports) itk::simple::hash< std::tuple< TupleArgs... > > "/**
-C++ includes: sitkMemberFunctionFactoryBase.h
-*/"
-
-
 %typemap(javaimports) itk::simple::scope_exit "/**
 C++ includes: sitkTemplateFunctions.h
 */"

@@ -37843,12 +37843,6 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
-
-%feature("docstring") itk::simple::hash< std::tuple< TupleArgs... > > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
 %feature("docstring") itk::simple::scope_exit "
 C++ includes: sitkTemplateFunctions.h
 ";
