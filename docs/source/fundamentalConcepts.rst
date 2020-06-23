@@ -214,10 +214,10 @@ global domain. This transformation represents multiple transformations applied
 one after the other :math:`T_0(T_1(T_2(...T_n(p)...)))`. The semantics are
 stack based, that is, first in last applied:
 
-.. code-block:: r
+.. code-block:: python
 
- composite_transform <- Transform(T0)
- composite_transform$AddTransform(T1)
+ composite_transform = CompositeTransform([T0, T1])
+ composite_transform.AddTransform(T2)
 
 In the context of registration, if you use a composite transform as the transformation
 that is optimized, only the parameters of the last transformation :math:`T_n` will
@@ -240,6 +240,7 @@ Additional Resources
    * `2D or 3D AffineTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1AffineTransform.html>`_.
    * `2D or 3D BSplineTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BSplineTransform.html>`_.
    * `2D or 3D DisplacementFieldTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DisplacementFieldTransform.html>`_.
+   * `CompositeTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1CompositeTransform.html>`_.
    * `Transform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Transform.html>`_.
 
 2. To really understand the structure of SimpleITK transforms and how to work with them,
