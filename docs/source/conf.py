@@ -27,9 +27,9 @@ copyright = u'2020, NumFOCUS'
 author = u'Insight Software Consortium'
 
 # The short X.Y version
-version = u'1.2'
+version = u'2.0'
 # The full version, including alpha/beta/rc tags
-release = u'1.2.0.dev'
+release = u'2.0rc2'
 
 
 # -- General configuration ---------------------------------------------------
