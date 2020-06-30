@@ -9,7 +9,8 @@ Images
 There are numerous file formats support by SimpleITK's image readers and writers.
 Support for a particular format is handled by a specific ITK
 `ImageIO <https://itk.org/Doxygen/html/classitk_1_1ImageIOBase.html>`_ class.
-By default, the ImageIO is automatically determined for a particular file.
+By default, the ImageIO is automatically determined for a particular file based
+on the file name suffix and/or the contents of the file's header.
 Advanced SimpleITK installations can configure or extend which file formats
 are supported by SimpleITK. A list of registered ImageIO's can be found using the
 ``GetRegisteredImageIOs()`` method, but is posted here:
@@ -35,7 +36,7 @@ are supported by SimpleITK. A list of registered ImageIO's can be found using th
     - `VTKImageIO <https://itk.org/Doxygen/html/classitk_1_1VTKImageIO.html>`_ ( \*.vtk )
 
 
-Example read and write:
+A read and write example using SimpleITK's ImageFileReader and ImageFileWriter classes:
 
 .. code-block :: python
 
@@ -50,6 +51,21 @@ Example read and write:
         writer.SetFileName(outputImageFileName)
         writer.Execute(image)
 
+The above example specifies using the BMPImageIO to read the file.
+If that line is omitted, SimpleITK would determine which IO to use automatically,
+based on the file name's suffix and/or the file's header.
+
+An more compact example using SimpleITK's procedural interface:
+
+.. code-block :: python
+
+        import SimpleITK as sitk
+
+        image = sitk.ReadImage(inputImagefileName)
+        sitk.WriteImage(image, outputImagefileName)
+
+The procedural interface does not allow for a user specified IO when reading
+a file.
 
 .. _transformation-io:
 
