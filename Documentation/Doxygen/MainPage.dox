@@ -4,22 +4,22 @@
 \image html simpleitk_logo.svg
 
 \section intro Introduction
-SimpleITK: a simplified layer build on top of the Insight Toolkit
-(ITK), intended to facilitate its use in research, rapid prototyping
-and education. The toolkit is available in multiple programming
-languages including: C++, Python, R, Java, C#, Lua, Ruby, and TCL.
 
-Welcome to the Insight Segmentation Toolkit (ITK). ITK is an open-source,
-cross-platform system that provides developers with an extensive
-suite of software tools for image analysis. Among them, SimpleITK
-is a simplified layer built on top of ITK, intended to facilitate
-its use in research, rapid prototyping, and education in a variety of
-programming languages. SimpleITK has the following main characteristics:
+SimpleITK is a simplified programming interface to the algorithms and data structures of the Insight Toolkit (ITK) for image analysis.
+It supports interfaces for multiple programming languages including C++, Python, R, Java, C#, Lua, Ruby and TCL. These language
+bindings facilitate research, rapid software prototyping and education.
+
+The main characteristics of SimpleITK include:
 - C++ library
 - Object-oriented
-- Provides a simplified, easy-to-use, procedural interface without templates
+- Provides a simplified, easy-to-use, procedural interface
 - Is distributed under an open source Apache 2.0 License
 - Binary distributions for Python, C# and Java
+
+Toolkit development is overseen by the Insight Software Consortium,
+a non-profit, educational consortium dedicated to promoting and
+maintaining open-source, freely available software for medical image analysis.
+
 
 \section homepage Home Page
 
