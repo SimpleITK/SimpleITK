@@ -55,17 +55,15 @@ The above example specifies using the BMPImageIO to read the file.
 If that line is omitted, SimpleITK would determine which IO to use automatically,
 based on the file name's suffix and/or the file's header.
 
-An more compact example using SimpleITK's procedural interface:
+A more compact example using SimpleITK's procedural interface:
 
 .. code-block :: python
 
         import SimpleITK as sitk
 
-        image = sitk.ReadImage(inputImagefileName)
+        image = sitk.ReadImage(inputImagefileName, sitk.sitkUnknown, "BMPImageIO")
         sitk.WriteImage(image, outputImagefileName)
 
-The procedural interface does not allow for a user specified IO when reading
-a file.
 
 .. _transformation-io:
 
