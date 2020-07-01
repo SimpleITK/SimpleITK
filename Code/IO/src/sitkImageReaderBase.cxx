@@ -181,6 +181,29 @@ ImageReaderBase
   return this->m_ImageIOName;
 }
 
+std::string
+ImageReaderBase
+::GetImageIOFromFileName( const std::string &fileName )
+{
+  itk::ImageIOBase::Pointer iobase;
+  try
+    {
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeEnum::ReadMode);
+    }
+  catch(...)
+    {
+    // ignore exceptions
+    }
+
+
+  if ( iobase.IsNull() )
+    {
+    return std::string();
+    }
+
+  return iobase->GetNameOfClass();
+}
+
 void
 ImageReaderBase
 ::GetPixelIDFromImageIO( const std::string &fileName,

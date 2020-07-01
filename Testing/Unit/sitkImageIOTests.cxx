@@ -709,6 +709,23 @@ TEST(IO, ImageFileReader_SetImageIO )
 }
 
 
+TEST(IO, ImageFileReader_GetImageIOFromFileName )
+{
+  namespace sitk = itk::simple;
+
+  std::string imageio;
+
+  const std::string filename1 = dataFinder.GetFile ( "Input/RA-Slice-Short.png" );
+  EXPECT_EQ( "PNGImageIO" , sitk::ImageFileReader::GetImageIOFromFileName( filename1 ) );
+
+  const std::string filename2 =  dataFinder.GetFile( "Input/cthead1-Float.mha" );
+  EXPECT_EQ( "MetaImageIO" , sitk::ImageFileReader::GetImageIOFromFileName( filename2 ) );
+
+  EXPECT_NO_THROW( imageio = sitk::ImageFileReader::GetImageIOFromFileName( "file_does_not_exist" ) );
+  EXPECT_EQ( "", imageio);
+}
+
+
 TEST(IO, ImageFileReader_Extract1 )
 {
 
