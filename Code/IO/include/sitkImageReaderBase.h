@@ -96,6 +96,15 @@ class SmartPointer;
       virtual std::string GetImageIO( ) const;
       /* @} */
 
+      /** \brief Get the automatic ImageIO from the ImageIOFactory
+       *
+       * Returns the name of ImageIO automatically detected to read the
+       * file. The file is required to exist, and the file may be opened
+       * and/or the file extension examined. If an error is
+       * encountered such as the file does not exist, then an empty
+       * string ("") will be returned.
+       */
+      static std::string GetImageIOFromFileName(const std::string &fileName);
 
     protected:
 
