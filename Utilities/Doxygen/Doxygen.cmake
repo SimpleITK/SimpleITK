@@ -24,8 +24,8 @@ if (BUILD_DOXYGEN)
       add_custom_command( OUTPUT "${ITK_DOXYGEN_TAGFILE}"
         COMMAND ${CMAKE_COMMAND} -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
         -D "OUTPUT_PATH:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen"
-        -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
-        DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
+        -P "${CMAKE_CURRENT_LIST_DIR}/ITKDoxygenTags.cmake"
+        DEPENDS "${CMAKE_CURRENT_LIST_DIR}/ITKDoxygenTags.cmake"
         )
     endif()
 
@@ -36,7 +36,7 @@ if (BUILD_DOXYGEN)
 
   set(DOXYGEN_MATHJAX_RELPATH
     "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/"
-    CACHE STRING "The destination or URK to contain the MathJax.js script")
+    CACHE STRING "The destination or URL to contain the MathJax.js script")
 
   set(SIMPLEITK_DOXYGEN_TAGFILE "${PROJECT_BINARY_DIR}/Utilities/Doxygen/SimpleITKDoxygen.tag")
 
@@ -73,7 +73,16 @@ if (BUILD_DOXYGEN)
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 
-
+  # Create a "datetime.txt" file for a time stamp of the code
+  # generation. The time stamp in dynamically inserted into the HTML
+  # with javascript, to reduce the code change churn with regular
+  # updates.
+  add_custom_command(
+    TARGET Documentation
+    POST_BUILD
+    WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/Documentation/html"
+    COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_LIST_DIR}/datetime.py"
+    )
 
   message( STATUS
     "To generate Doxygen's documentation, you need to build the Documentation target"

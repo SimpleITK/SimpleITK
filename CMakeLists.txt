@@ -312,17 +312,16 @@ foreach(_f IN LISTS ITK_DOC_FILES)
   list( APPEND SimpleITK_DOC_FILES "${_o}" )
 endforeach()
 
-
-#------------------------------------------------------------------------------
-# Set up Documentation
-include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
-
 #------------------------------------------------------------------------------
 # Set up wrapping.
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
 include(sitkLanguageOptions)
+
+#------------------------------------------------------------------------------
+# Set up Documentation
+include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 
 #------------------------------------------------------------------------------
 # Ensure that development strips have been setup
