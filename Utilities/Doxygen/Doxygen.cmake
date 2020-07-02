@@ -24,8 +24,8 @@ if (BUILD_DOXYGEN)
       add_custom_command( OUTPUT "${ITK_DOXYGEN_TAGFILE}"
         COMMAND ${CMAKE_COMMAND} -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
         -D "OUTPUT_PATH:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen"
-        -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
-        DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
+        -P "${CMAKE_CURRENT_LIST_DIR}/ITKDoxygenTags.cmake"
+        DEPENDS "${CMAKE_CURRENT_LIST_DIR}/ITKDoxygenTags.cmake"
         )
     endif()
 
@@ -36,7 +36,7 @@ if (BUILD_DOXYGEN)
 
   set(DOXYGEN_MATHJAX_RELPATH
     "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/"
-    CACHE STRING "The destination or URK to contain the MathJax.js script")
+    CACHE STRING "The destination or URL to contain the MathJax.js script")
 
   set(SIMPLEITK_DOXYGEN_TAGFILE "${PROJECT_BINARY_DIR}/Utilities/Doxygen/SimpleITKDoxygen.tag")
 
