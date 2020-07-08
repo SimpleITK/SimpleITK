@@ -4,14 +4,14 @@ Getting Started
 Welcome to SimpleITK!
 
 SimpleITK provides a simplified interface to ITK in a variety of
-languages. You can either download binaries, if they are available for
-your platform and preferred language, or you can :ref:`build SimpleITK <building_simpleitk>`
-yourself from the source code.
+languages. A user can either download pre-built binaries, if they
+are available for the desired platform and language, or SimpleITK can be
+:ref:`built from the source code<building_simpleitk>`.
 
-In the following sections we describe how to install SimpleITK and additional auxiliary programs
-you will find useful.
+In the following sections we describe how to install SimpleITK and
+additional auxiliary software tools.
 
-After you have installed SimpleITK, we recommend going over the
+After installing SimpleITK, we recommend going over the
 :ref:`latest tutorial <lbl_tutorials_courses>` and skimming
 the `Doxygen <http://www.simpleitk.org/doxygen/latest/html/>`__ pages for
 more information.
@@ -27,8 +27,8 @@ more information.
 Downloading the binaries
 ========================
 
-One of the great advantages of SimpleITK is that (typically) you do not
-have to build it — you can simply download the binaries and get started
+One of the great advantages of SimpleITK is that (typically) the user does not
+have to build it — he or she can simply download the binaries and get started
 right away!
 
 Currently, **Python** binaries are available on Microsoft Windows, GNU
@@ -60,8 +60,8 @@ binary wheel:
 This installation requires a recent version of  pip (>=9.0), to properly detect
 compatibility with the `PEP 427
 <https://www.python.org/dev/peps/pep-0427/>`__ tags in the wheel
-filenames. You can update your version of pip using ``pip install -U pip``.
-Also your Python environment must be compatible with one of
+filenames. Pip can be updated using ``pip install -U pip``.
+Also the Python environment must be compatible with one of
 the pre-compiled binary wheels.
 
 Alternatively, the wheels can be manually downloaded from `GitHub releases
@@ -93,7 +93,7 @@ C# binary files
 `GitHub releases
 <https://github.com/SimpleITK/SimpleITK/releases>`__
 under the appropriate version. Installing the library should only
-involve importing the unzipped files into you C# environment. The
+involve importing the unzipped files into the C# environment. The
 files have the following naming convention:
 
 ``SimpleITK-version-CSharp-buildplatform-targetplatform.zip``
@@ -120,11 +120,16 @@ at :ref:`setup SimpleITK with Java <setup-java>`.
 R binary files
 --------------
 
-Only available for Linux and Mac.
+R binaries are currently only available for Linux and Mac.
 
-Install using a devtools based installer (`GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__). Strictly speaking, this is not a binary distribution, but this is a convenient way of automatically compiling and installing on your system.
+SimpleITK/R is installed using a devtools based installer
+(`GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__).
+Strictly speaking, this is not a binary distribution, but it is a convenient
+way of automatically compiling and installing on a system.
 
-Requires `R devtools <https://github.com/r-lib/devtools>`__, `CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__ and a compiler in the path.
+This installation requires `R devtools <https://github.com/r-lib/devtools>`__,
+`CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__, and a compiler
+in the path.
 
 .. code-block :: bash
 
@@ -135,7 +140,7 @@ Latest binaries
 ----------------
 
 If the latest SimpleITK bug fixes or features are required then
-pre-release binaries are needed. The pre-release binaries are built
+pre-release binaries are available. The pre-release binaries are built
 from the actively developed master branch. The SimpleITK packages are
 available on `Github releases
 <https://github.com/SimpleITK/SimpleITK/releases/tag/latest>`__ under
@@ -154,33 +159,35 @@ Recommended Software
 Fiji (Fiji is Just ImageJ)
 --------------------------
 
-SimpleITK has a built in function
-`itk::simple::Show() <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__
+SimpleITK has a built in function,
+`itk::simple::Show() <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__,
 which can be used for viewing images in an interactive session.
 By default this Show function searches for an installed
 `Fiji <https://fiji.sc>`__ to display images.  If Fiji is not found,
 then it searches for `ImageJ <http://rsbweb.nih.gov/ij/>`__. Fiji/ImageJ were
 chosen because they can handle all the image types that SimpleITK
-supports, including 3D vector images with n components.
+supports, including 3D vector images with n components per pixel.
 
-The Show function first searches the "PATH" environment variable, then
-additional standard locations are examined.  If problems are encountered
-the correct path can be added to this environment variable. Enabling the
-**"debugOn**" option to **"Show**", allows the user to see where SimpleITK
-is searching for Fiji (or other viewing application), and the actual command
-used to launch the viewing application.
+The Show function searches for Fiji/ImageJ in a number of standard locations.
+The exact locations depend on the system type (Linux, Mac or Windows).
+Enabling the **"debugOn**" option to **"Show**", allows the user to see
+where SimpleITK is searching for Fiji (or other viewing application),
+and the actual command used to launch the viewing application.
 
 The Show function can also be configured to use some other viewing application
-via the SITK_SHOW_COMMAND environment variable.
+via the SITK_SHOW_COMMAND environment variable.  More details can be found
+in the
+`Show documentation <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__
 
 IPython and Jupyter
 -------------------
 
-If you are using python, `IPython <http://ipython.org/>`__ with
+For python users, `IPython <http://ipython.org/>`__ with
 `Jupyter <http://jupyter.org>`__ is terrific environment to perform
-interactive computing for image processing. With the addition of numpy
-and scipy, you will have a powerful interactive environment.
+interactive computing for image processing.  The addition of the
+`numpy <https://numpy.org>`__ and `scipy <https://www.scipy.org>`__ packages
+creates a powerful interactive development environment.
 
 We have instructional `SimpleITK Jupyter
 Notebooks <http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/>`__
-which can help you get started.
+which can help a user get started.
