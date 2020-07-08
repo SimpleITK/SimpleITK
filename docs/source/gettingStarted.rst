@@ -32,7 +32,7 @@ have to build it — he or she can simply download the binaries and get started
 right away!
 
 Currently, **Python** binaries are available on Microsoft Windows, GNU
-Linux and Apple OS X. **C# and Java** binaries are available for
+Linux and Mac OS X. **C# and Java** binaries are available for
 Windows. We are also working towards supporting **R** packaging.
 
 Python binary files
