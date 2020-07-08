@@ -100,10 +100,11 @@ files have the following naming convention:
 
 e.g.
 
-| ``SimpleITK-1.2.0-CSharp-win64-x64.zip``
+| ``SimpleITK-1.2.4-CSharp-win64-x64.zip``
+
 
 Details about how to set up a C# Visual Studio project with SimpleITK
-can be found in the :ref:`setup SimpleITK with CSharp <setup-csharp>`.
+can be found in the :ref:`setup SimpleITK with CSharp <setup-csharp>` page.
 
 
 Java binary files
@@ -124,8 +125,6 @@ Only available for Linux and Mac.
 Install using a devtools based installer (`GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__). Strictly speaking, this is not a binary distribution, but this is a convenient way of automatically compiling and installing on your system.
 
 Requires `R devtools <https://github.com/r-lib/devtools>`__, `CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__ and a compiler in the path.
-
-From the R prompt:
 
 .. code-block :: bash
 
@@ -165,12 +164,14 @@ chosen because they can handle all the image types that SimpleITK
 supports, including 3D vector images with n components.
 
 The Show function first searches the "PATH" environment variable, then
-additional standard locations are examined, if problems are encountered
-the correct path can be added to this environment variable and the
-**"debugOn**" option to **"Show**" flag set.
+additional standard locations are examined.  If problems are encountered
+the correct path can be added to this environment variable. Enabling the
+**"debugOn**" option to **"Show**", allows the user to see where SimpleITK
+is searching for Fiji (or other viewing application), and the actual command
+used to launch the viewing application.
 
-The Show function can also be configured to invoke some other viewing application
-using the SITK_SHOW_COMMAND environment variable.
+The Show function can also be configured to use some other viewing application
+via the SITK_SHOW_COMMAND environment variable.
 
 IPython and Jupyter
 -------------------
