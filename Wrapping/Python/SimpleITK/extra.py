@@ -293,7 +293,7 @@ def GetImageFromArray(arr, isVector=None):
     # SimpleITK throws an exception if the image dimension is not supported
     img = Image(shape, id, number_of_components)
 
-    _SetImageFromArray(z.tostring(), img)
+    _SetImageFromArray(z.tobytes(), img)
 
     return img
 
