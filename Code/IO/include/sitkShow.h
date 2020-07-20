@@ -27,12 +27,12 @@ namespace itk
 namespace simple
 {
 
-  /** Display an image using Fiji, ImageJ or another application.
+  /** Display an image in an external viewer (Fiji by default)
    *
-   *  This function requires that Fiji ( https://fiji.sc ) or ImageJ
-   *  (http://rsb.info.nih.gov/ij/) be properly installed for Mac
-   *  and Windows, and in the user's path for Linux.  ImageJ must have
-   *  a plugin for reading Nifti formatted files (http://www.loci.wisc.edu/bio-formats/imagej).
+   *  The Show function displays an image with an external image display
+   *  application.  By default Show will search for a Fiji ( https://fiji.sc )
+   *  executable.  The image is written out to a temporary file and then passed
+   *  to the application.
    *
    *  Nifti is the default file format used to export images.  A different
    *  format can be chosen by setting the SITK_SHOW_EXTENSION environment variable.
@@ -78,19 +78,15 @@ namespace simple
    *  The string after \c "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite
    *  command to display the image in color.
    *
+   *  Note that the environment variables are only checked when SimpleITK is first launched.
+   *  This behavior is different than previous versions of SimpleITK, where the variables
+   *  were checked every time Show was called.
+   *
    *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
    *  appended to the command argument list.
    *
-   *
-   *  When invoked, Show searches for Fiji first, and then ImageJ.   Fiji is the most update-to-date
-   *  version of ImageJ and includes a lot of plugins which facilitate scientific image analysis.
-   *  By default, for a 64-bit build of SimpleITK on Macs, sitkShow searches for ImageJ64.app.
-   *  For a 32-bit Mac build, sitkShow searches for ImageJ.app.  If the user prefers a different
-   *  version of ImageJ (or a different image viewer altogether), it can be specified using
-   *  the SITK_SHOW_COMMAND environment variable.
-   *
-   *  The boolean parameter debugOn prints the search path Show uses to find ImageJ, the full path
-   *  to the ImageJ it found, and the full command line used to invoke ImageJ.
+   *  The boolean parameter debugOn prints the search path Show uses to find Fiji, the full path
+   *  to the Fiji it found, and the full command line used to invoke it.
    *
    **/
    void SITKIO_EXPORT Show ( const Image &image, const std::string& title = "", const bool debugOn=ProcessObject::GetGlobalDefaultDebug() );
