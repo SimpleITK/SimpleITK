@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
       std::cout << "Read 1\n";
       img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
       std::cout << "Show 1\n";
-      sitk::Show(img);
+      sitk::Show(img, "Show Test 1");
       }
     catch (std::exception &e)
       {
@@ -86,7 +86,7 @@ int main (int argc, char *argv[])
       std::cout << "Read 2\n";
       img = sitk::ReadImage( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
       std::cout << "Show 2\n";
-      sitk::Show(img);
+      sitk::Show(img, "Show Test 2");
       }
     catch (std::exception &e)
       {
@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
       std::cout << "Read 3\n";
       img = sitk::ReadImage( dataFinder.GetFile ( "Input/cthead1-Float.mha" ) );
       std::cout << "Show 3\n";
-      sitk::Show(img, "Dave was here", true);
+      sitk::Show(img, "Show Test 3", true);
       }
     catch (std::exception &e)
       {
