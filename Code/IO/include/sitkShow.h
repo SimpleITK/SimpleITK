@@ -79,8 +79,6 @@ namespace simple
    *  command to display the image in color.
    *
    *  Note that the environment variables are only checked when SimpleITK is first launched.
-   *  This behavior is different than previous versions of SimpleITK, where the variables
-   *  were checked every time Show was called.
    *
    *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
    *  appended to the command argument list.
