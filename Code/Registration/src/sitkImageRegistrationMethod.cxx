@@ -764,7 +764,7 @@ Transform ImageRegistrationMethod::Execute ( const Image &fixed, const Image & m
   if ( fixed.GetPixelIDValue() != moving.GetPixelIDValue() )
     {
     sitkExceptionMacro ( << "Fixed and moving images must be the same datatype! Got "
-                         << fixed.GetPixelIDValue() << " and " << moving.GetPixelIDValue() );
+                         << fixed.GetPixelIDTypeAsString() << " and " << moving.GetPixelIDTypeAsString() );
     }
 
   if ( fixed.GetDimension() != moving.GetDimension() )
