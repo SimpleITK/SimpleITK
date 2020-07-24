@@ -78,7 +78,8 @@ namespace simple
    *  The string after \c "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite
    *  command to display the image in color.
    *
-   *  Note that the environment variables are only checked when SimpleITK is first launched.
+   *  Note that the environment variables are only checked the first time either Show is called
+   *  or a ImageViewer object is constructed.
    *
    *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
    *  appended to the command argument list.
