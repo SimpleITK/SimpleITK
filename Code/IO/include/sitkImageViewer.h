@@ -35,8 +35,8 @@ namespace simple
   * executable.  The image is written out to a temporary file and then passed
   * to the application.
   *
-  * When SimpleITK is first invoked the following environment variables are
-  * queried to set up the external viewer:
+  * When the first ImageViewer object is constructed the following environment
+  * variables are queried to set up the external viewer:
   *
   * SITK_SHOW_EXTENSION:  file format extension of the temporary image file.
   * The default is '.mha', the [MetaIO](https://itk.org/Wiki/ITK/MetaIO)
@@ -45,7 +45,9 @@ namespace simple
   * SITK_SHOW_COMMAND:  The user can specify an application other than Fiji
   * to view images.
   *
-  * These environment variables are only checked at SimpleITK's launch.
+  * The environment variables are not checked for subsequent ImageViewer
+  * objects.
+  *
   */
 class SITKIO_EXPORT ImageViewer
 {
