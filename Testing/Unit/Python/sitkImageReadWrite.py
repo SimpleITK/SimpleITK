@@ -56,6 +56,32 @@ class ImageReadWrite(unittest.TestCase):
 
         return img
 
+    def test_write_procedure(self):
+        """ Test basic functionality of the ImageRead and ImageWrite procedures."""
+
+        img = sitk.Image([32,32], sitk.sitkUInt8)
+
+        fn = "{}_1.{}".format(self._testMethodName, "tiff")
+        sitk.WriteImage(img,
+                        fn,
+                        useCompression=True,
+                        compressor="DEFLATE",
+                        compressionLevel=1)
+        rimg = sitk.ReadImage(fn)
+
+        fn = "{}_2.{}".format(self._testMethodName, "jpg")
+        sitk.WriteImage(img,
+                        fn,
+                        True,
+                        1)
+        rimg = sitk.ReadImage(fn, imageIO="JPEGImageIO")
+
+        img = sitk.Image([32,32, 4], sitk.sitkUInt8)
+
+        fns = ["{}_series_{}.{}".format(self._testMethodName, i, "tif") for i in range(img.GetSize()[2])]
+        sitk.WriteImage(img, fns, compressionLevel=90)
+        img = sitk.ReadImage(fns, imageIO="TIFFImageIO")
+
     def _read_write_test(self, img, tmp_filename):
         """ """
 
