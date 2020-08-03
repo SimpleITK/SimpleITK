@@ -33,6 +33,8 @@
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
 %ignore itk::simple::Resample;
+%ignore itk::simple::ReadImage;
+%ignore itk::simple::WriteImage;
 
 
 // Make __str__ transparent by renaming ToString to __str__

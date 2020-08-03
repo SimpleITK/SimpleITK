@@ -20,6 +20,8 @@ from SimpleITK.SimpleITK import *
 from SimpleITK.SimpleITK import _GetMemoryViewFromImage
 from SimpleITK.SimpleITK import _SetImageFromArray
 
+from typing import List, Union
+
 
 def Resample(image1, *args, **kwargs):
     """
@@ -298,4 +300,98 @@ def GetImageFromArray(arr, isVector=None):
     return img
 
 
-__all__ = ["Resample", "GetArrayViewFromImage", "GetArrayFromImage", "GetImageFromArray"]
+def ReadImage(fileName: Union[str, List[str]],
+              outputPixelType: "PixelIDValueEnum" = sitkUnknown,
+              imageIO: str = "") \
+        -> Image:
+    r"""ReadImage is a procedural interface to the ImageFileReader class which is convenient for most image reading
+     tasks.
+
+    This method can read a single image or a list of images into a volume.
+
+    Parameters
+    ----------
+    fileName
+     A single or a list of file names. the filename of an Image e.g. "cthead.mha"
+    outputPixelType
+     The pixel type of the returned Image. By default the value is sitkUnknown, which enable the output pixel type to
+     be same as the file. If the pixel type is specified then the itk::ConvertPixelBuffer will be used to convert the
+     pixels.
+    imageIO
+     The name of the ITK ImageIO to use to read the file. An option to override the automatically detected ImageIO used
+     to read the image. The available ImageIOs are listed by the GetRegisteredImageIOs method. If the ImageIO can not
+     be constructed an exception will be generated. If the ImageIO can not read the file an exception will be
+     generated.
+
+    Returns
+    -------
+     The provided image file name(s) read into an Image.
+
+    Also See
+    --------
+     itk::simple::ImageFileReader for reading a single file.
+     itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
+
+    """
+
+    if isinstance(fileName, str):
+        reader = ImageFileReader()
+        reader.SetFileName(fileName)
+    else:
+        reader = ImageSeriesReader()
+        reader.SetFileNames(fileName)
+
+    reader.SetImageIO(imageIO)
+    reader.SetOutputPixelType(outputPixelType)
+    return reader.Execute()
+
+
+def WriteImage(image: "Image",
+               fileName: Union[str, List[str]],
+               useCompression: bool = False,
+               compressionLevel=-1,
+               *,
+               imageIO: str = "",
+               compressor: str = "") -> "None":
+    r"""
+    WriteImage is a procedural interface to the ImageFileWriter and ImageSeriesWriter classes which is convenient for
+    many image writing tasks.
+
+    For an input image of N dimensions, a series of N-1 dimensional (slices) images can be written by providing a list
+    if file names equal to the number of slices in the input image.
+
+    Parameters
+    ----------
+    image
+     the input image to be written
+    fileName
+     a single or a list of file names to be written
+    useCompression
+     request to compress the written file
+    compressionLevel
+     a hint for the amount of compression to be applied during writing
+    imageIO
+     the name of the ImageIO to perform the writing
+    compressor
+     a hint for the compression algorithm to use
+
+    Also See
+    --------
+     itk::simple::ImageFileWriter for writing a single file.
+     itk::simple::ImageSeriesWriter for writing a series of files
+    """
+    if isinstance(fileName, str):
+        writer = ImageFileWriter()
+        writer.SetFileName(fileName)
+    else:
+        writer = ImageSeriesWriter()
+        writer.SetFileNames(fileName)
+
+    writer.SetUseCompression(useCompression)
+    writer.SetCompressionLevel(compressionLevel)
+    writer.SetImageIO(imageIO)
+    writer.SetCompressor(compressor)
+    return writer.Execute(image)
+
+
+__all__ = ["Resample", "GetArrayViewFromImage", "GetArrayFromImage", "GetImageFromArray", "ReadImage", "WriteImage"]
