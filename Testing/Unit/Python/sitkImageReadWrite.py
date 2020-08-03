@@ -26,8 +26,8 @@ import shutil
 import SimpleITK as sitk
 
 
-class ImageReadWriteInt64(unittest.TestCase):
-    """Test reading and writing to 64 bit integers"""
+class ImageReadWrite(unittest.TestCase):
+    """Test reading and writing image"""
 
     def setUp(self):
 
@@ -37,17 +37,6 @@ class ImageReadWriteInt64(unittest.TestCase):
     def tearDown(self):
 
         # Delete the temporary directory and files contained within. Perhaps if tests fail then the output should  stick
-        # around to debug the problem
-        shutil.rmtree(self.test_dir)
-
-    def setUp(self):
-
-        # Create a temporary directory for output files
-        self.test_dir = tempfile.mkdtemp()
-
-    def tearDown(self):
-
-        # Delete the create temporary directory and files with  in. Perhaps if tests fail then the output should  stick
         # around to debug the problem
         shutil.rmtree(self.test_dir)
 
@@ -88,7 +77,7 @@ class ImageReadWriteInt64(unittest.TestCase):
 
         test_method = do_test
         test_method.__name__ = "test_read_write_int64{0}{1}".format(img_extension,int(img_type))
-        setattr(ImageReadWriteInt64, test_method.__name__, test_method)
+        setattr(ImageReadWrite, test_method.__name__, test_method)
 
 
 # Programmatically generate tests for different file formats
@@ -98,7 +87,7 @@ for p_ext_hash in [ ("mha", sitk.sitkUInt64),
                     ("nrrd", sitk.sitkInt64),
                     ("nii", sitk.sitkUInt64),
                     ("nii", sitk.sitkInt64)]:
-    ImageReadWriteInt64.generate_test(*p_ext_hash)
+    ImageReadWrite.generate_test(*p_ext_hash)
 
 
 if __name__ == '__main__':
