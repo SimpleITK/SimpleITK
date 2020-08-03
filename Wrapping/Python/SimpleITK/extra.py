@@ -16,9 +16,9 @@
 #
 # ========================================================================
 
-from .SimpleITK import *
-from .SimpleITK import _GetMemoryViewFromImage
-from .SimpleITK import _SetImageFromArray
+from SimpleITK.SimpleITK import *
+from SimpleITK.SimpleITK import _GetMemoryViewFromImage
+from SimpleITK.SimpleITK import _SetImageFromArray
 
 
 def Resample(image1, *args, **kwargs):
