@@ -152,12 +152,26 @@ class ImageIOBase;
       std::string m_ImageIOName;
     };
 
-    SITKIO_EXPORT void
-    WriteImage(const Image &                    image,
-               const std::vector<std::string> & fileNames,
-               bool                             useCompression = false,
-               int                              compressionLevel = -1);
-    }
+
+  /**
+   * \brief WriteImage is a procedural interface to the ImageSeriesWriter.
+   *     class which is convenient for many image writing tasks.
+   *
+   *  \param image the input image to be written
+   *  \param fileNames a vector of filenames of length equal to the
+   *  number of slices in the image.
+   *  \param useCompression request to compress the written file
+   *  \param compressionLevel a hint for the amount of compression to
+   *    be applied during writing.
+   *
+   *
+   * \sa itk::simple::ImageFileWriter for writing a single file.
+   */
+  SITKIO_EXPORT void WriteImage(const Image &                    image,
+                                const std::vector<std::string> & fileNames,
+                                bool                             useCompression = false,
+                                int                              compressionLevel = -1);
+  }
 }
 
 #endif
