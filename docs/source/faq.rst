@@ -105,17 +105,17 @@ An example implementing this approach is available here :ref:`here <lbl_raw_imag
 
 .. _lbl_imageJ_not_found:
 
-Why isn't ImageJ found by the Show function (RuntimeError: Exception thrown...)?
----------------------------------------------------------------------------------
+Why isn't Fiji or ImageJ found by the Show function (RuntimeError: Exception thrown...)?
+----------------------------------------------------------------------------------------
 
-The SimpleITK ``Show`` function expects the ImageJ program to be installed in
-specific locations. The recommended installation locations are:
+The SimpleITK ``Show`` function expects the Fiji or ImageJ application to be
+installed in specific locations. The recommended installation locations are:
 
 - On Windows: in your user directory (e.g. C:\\Users\\your_user_name\\Fiji.app).
 - On Linux: in ~/bin .
 - On Mac: in /Applications .
 
-To see the locations where the function is searching set its debugOn flag.
+To see the locations where the function is searching set Show's debugOn flag.
 
 In Python:
 
@@ -130,114 +130,92 @@ In R:
   Show(image, "file_name", TRUE)
 
 
-You can also indicate where a viewer (not necessarily ImageJ) is found by setting
-the path to the viewer in an environment variable SITK_SHOW_COMMAND.
+Show is a functional interface to the `ImageViewer class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageViewer.html>`__.
+Other viewing applications can be configured using an ImageViewer object, as
+described in the next section.
 
-Can I use another image file viewer beside ImageJ?
+Can I use another image file viewer beside Fiji?
 --------------------------------------------------
 
-By default when the `Show
-function <https://www.simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a7bacfc4685cff93e46d7401865f9579e>`__
-is called, SimpleITK writes out a temporary image in Nifti format then
-launches `ImageJ <http://rsbweb.nih.gov/ij/index.html>`__. The user can
+The
+`ImageViewer class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageViewer.html>`__ allows a user to configure what application
+SimpleITK uses to display images.
+An ImageViewer object displays an image via the Execute method.
+By default an ImageViewer writes out a temporary image
+in Nifti format then launches `Fiji <https://fiji.sc>`__. The user can
 override the file format of the temporary file and/or the application
-used to handle that file.
+used to display that file.
 
-The temporary file format can be specified via the
-**SITK\_SHOW\_EXTENSION** environment variable. For example, if the user
-wanted to export a PNG file, on Linux it might look like this:
+The temporary file format can be specified with ImageViewer's
+SetFileExtension method. For example, if a user wanted to use the PNG file
+format, in Python it would look like this:
 
-.. code-block :: bash
+.. code-block :: python
 
-        SITK_SHOW_EXTENSION=".png"
-        export SITK_SHOW_EXTENSION
+        import SimpleITK as sitk
+
+        viewer = sitk.ImageViewer()
+        viewer.SetFileExtension('.png')
 
 Use of an extension unsupported by ITK results in an error message. For
-the supported image formats, here is the `ITK Image IO
+the supported image formats, see the `ITK Image IO
 Filters <https://www.itk.org/Doxygen/html/group__IOFilters.html>`__.
 
-The default display application for all image types is ImageJ. To
-override ImageJ with some other application, use the
-**SITK\_SHOW\_COMMAND** environment variable. For instance, on Unix
-systems, using GNOME's image viewer eog would be:
+The default display application for all image types is Fiji. To
+override Fiji with some other application, use ImageViewer's
+SetCommand method.  For example in Python on Ubuntu
+systems, using ImageMagick's display program would look like this:
 
-.. code-block :: bash
+.. code-block :: python
 
-        SITK_SHOW_EXTENSION=".png"
-        export SITK_SHOW_EXTENSION
-        SITK_SHOW_COMMAND="eog"
-        export SITK_SHOW_COMMAND
+        import SimpleITK as sitk
 
-To override the default display applications for only color or 3d
-images, there are the **SITK\_SHOW\_COLOR\_COMMAND** and
-**SITK\_SHOW\_3D\_COMMAND** environment variables.
+        viewer = sitk.ImageViewer()
+        viewer.SetFileExtension('.png')
+        viewer.SetCommand('/usr/bin/display')
 
-More details on the Show function, including use of the "%a" and "%f"
-tokens, is at the `Show function Doxygen
-page <https://www.simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a7bacfc4685cff93e46d7401865f9579e>`__.
+More details into configuration can be found in the
+`Image Viewer class documentation <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageViewer.html>`__.
 
 How can I use 3D Slicer to view my images?
 ------------------------------------------
 
 `3D Slicer <https://slicer.org>`__ is a very powerful and popular
-application for visualization and medical image computing. The
-SITK\_SHOW\_COMMAND environment variable may be used to display images
-in Slicer instead of SimpleITK's default viewer, ImageJ. The following
-are examples of what settings for SITK\_SHOW\_COMMAND might look like
+application for visualization and medical image computing. An
+ImageViewer object can be configured to use
+Slicer instead of SimpleITK's default viewer, Fiji. The following
+are examples of how to configure an ImageViewer object in Python
 for Mac OS X, Linux and Windows to use Slicer.
 
 Mac OS X
 
-.. code-block :: bash
+.. code-block :: python
 
-        export SITK_SHOW_COMMAND=/Applications/Slicer.app/Contents/MacOS/Slicer
+        import SimpleITK as sitk
+
+        viewer = sitk.ImageViewer()
+        viewer.SetCommand('/Applications/Slicer.app/Contents/MacOS/Slicer')
 
 Linux
 
-.. code-block :: bash
+.. code-block :: python
 
-        export SITK_SHOW_COMMAND=Slicer
+        import SimpleITK as sitk
+
+        viewer = sitk.ImageViewer()
+        viewer.SetCommand('Slicer')
 
 Windows
 
-.. code-block :: bash
+.. code-block :: python
 
-        set SITK_SHOW_COMMAND=:"c:\Program Files\Slicer 4.2.2-1\Slicer"
+        import SimpleITK as sitk
 
-The value of SITK\_SHOW\_COMMAND should be modified to point to wherever
-Slicer is installed. If you only want to use Slicer for volumetric 3D
-images, use the SITK\_SHOW\_3D\_COMMAND environment variable instead of
-SITK\_SHOW\_COMMAND.
+        viewer = sitk.ImageViewer()
+        viewer.SetCommand( 'c:\Program Files\Slicer 4.10.2\Slicer' )
 
-How can I use a newer Java with ImageJ on Mac OS X?
----------------------------------------------------
-
-By default on Mac OS X, the ImageJ application expects Java 6, which is
-old and unsupported. The latest supported version of Java (currently
-version 8u25) can be downloaded from `Oracle's Java Development kit
-page <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`__.
-The following bash commands will set up the SITK\_SHOW\_COMMAND and
-SITK\_SHOW\_COLOR\_COMMAND to invoke ImageJ's jar file using the Java
-compiler.
-
-.. code-block :: bash
-
-        ij="/Applications/ImageJ/"
-        ijcmd="java -Dplugins.dir=$ij/plugins -jar $ij/ImageJ.app/Contents/Resources/Java/ij.jar"
-        export SITK_SHOW_COMMAND="$ijcmd -eval 'open( \"%f\" );'"
-        export SITK_SHOW_COLOR_COMMAND="$ijcmd -eval 'open( \"%f\" ); run(\"Make Composite\", \"display=Composite\");'"
-
-The first lines set a variable pointing to the standard location for the
-ImageJ directory. If ImageJ is installed somewhere else, the line should
-be modified. The second line provides the command to launch ImageJ using
-the Java compiler. It includes flags that point to ImageJ's plugin
-directory and ImageJ's ij.jar file.
-
-The SITK\_SHOW\_COMMAND tells SimpleITK.Show() to launch Java with
-ij.jar and then execute the open macro with an image file. The
-SITK\_SHOW\_COLOR\_COMMAND does these same things and then executes the
-ImageJ "Make Composite" command to treat a multichannel image as a
-composite color image.
+The call to SetCommand should be modified to point to wherever
+Slicer is installed.
 
 Wrapping
 ========
