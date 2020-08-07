@@ -1,3 +1,5 @@
+.. _FAQ:
+
 Frequently Asked Questions
 **************************
 
@@ -133,6 +135,8 @@ In R:
 Show is a functional interface to the `ImageViewer class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageViewer.html>`__.
 Other viewing applications can be configured using an ImageViewer object, as
 described in the next section.
+
+.. _alt_viewer:
 
 Can I use another image file viewer beside Fiji?
 --------------------------------------------------
