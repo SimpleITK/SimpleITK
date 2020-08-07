@@ -114,8 +114,8 @@ The SimpleITK ``Show`` function expects the Fiji or ImageJ application to be
 installed in specific locations. The recommended installation locations are:
 
 - On Windows: in your user directory (e.g. C:\\Users\\your_user_name\\Fiji.app).
-- On Linux: in ~/bin .
-- On Mac: in /Applications .
+- On Linux: in ~/bin.
+- On Mac: in /Applications or ~/Applications.
 
 To see the locations where the function is searching set Show's debugOn flag.
 
