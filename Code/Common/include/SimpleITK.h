@@ -82,6 +82,7 @@
 #include "sitkLandmarkBasedTransformInitializerFilter.h"
 #include "sitkCastImageFilter.h"
 #include "sitkExtractImageFilter.h"
+#include "sitkPasteImageFilter.h"
 
 #include "sitkAdditionalProcedures.h"
 
