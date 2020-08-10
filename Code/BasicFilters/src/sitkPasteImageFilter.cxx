@@ -31,7 +31,7 @@
 #include "itkComposeImageFilter.h"
 
 #include "sitkPasteImageFilter.h"
-#include "itkPasteImageFilter.h"
+#include "itkNPasteImageFilter.h"
 
 
 
@@ -76,6 +76,9 @@ std::string PasteImageFilter::ToString() const
   out << "  DestinationIndex: ";
   this->ToStringHelper(out, this->m_DestinationIndex);
   out << std::endl;
+  out << "  DestinationSkipAxes: ";
+  this->ToStringHelper(out, this->m_DestinationSkipAxes);
+  out << std::endl;
 
   out << ProcessObject::ToString();
   return out.str();
@@ -88,7 +91,7 @@ Image PasteImageFilter::Execute ( const Image & destinationImage, const Image & 
 {
   const PixelIDValueEnum type = destinationImage.GetPixelID();
   const unsigned int dimension = destinationImage.GetDimension();
-  CheckImageMatchingDimension(  destinationImage, sourceImage, "sourceImage" );
+  CheckImageMatchingPixelType(  destinationImage, sourceImage, "sourceImage" );
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( &destinationImage, &sourceImage );
 }
@@ -123,36 +126,62 @@ sitkClangWarningIgnore("-Wunused-local-typedef");
 template <class TImageType>
 Image PasteImageFilter::ExecuteInternal ( const Image * inDestinationImage, const Image * inSourceImage )
 {
+  assert( inDestinationImage != nullptr );
+  assert( inSourceImage != nullptr );
+
+
   // Define the input and output image types
   using InputImageType = TImageType;
 
 
+  // Get the pointer to the ITK image contained in image1
+  typename InputImageType::ConstPointer destinationImage = this->CastImageToITK<InputImageType>( *inDestinationImage );
+
+  return this->ExecuteInternal<TImageType>(destinationImage, inSourceImage,
+                                           std::integral_constant<unsigned int, TImageType::ImageDimension>());
+}
+
+template <class TImageType, unsigned int SourceDimension>
+Image PasteImageFilter::ExecuteInternal(
+    const TImageType *destinationImage, const Image *inSourceImage,
+    std::integral_constant<unsigned int, SourceDimension> )
+{
+  if (inSourceImage->GetDimension() != SourceDimension)
+  {
+    return this->ExecuteInternal(
+        destinationImage, inSourceImage, std::integral_constant< unsigned int, SourceDimension -1>());
+  }
+
+  // Define the input and output image types
+  using InputImageType = TImageType;
+  using SourceImageType =  typename InputImageType::template RebindImageType<typename InputImageType::PixelType, SourceDimension>;
+
+  using SourceIndexType = typename SourceImageType::IndexType;
+  using SourceSizeType = typename SourceImageType::SizeType;
+
   using OutputImageType = InputImageType;
 
-
-
-  using FilterType = itk::PasteImageFilter< InputImageType, InputImageType, OutputImageType >;
+  using FilterType = itk::NPasteImageFilter< InputImageType, SourceImageType, OutputImageType >;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
 
-  assert( inDestinationImage != nullptr );
-  typename FilterType::InputImageType::ConstPointer image1 = this->CastImageToITK<typename FilterType::InputImageType>( *inDestinationImage );
-  filter->SetInput( image1 );
+  assert( destinationImage != nullptr );
+  filter->SetInput( destinationImage );
   assert( inSourceImage != nullptr );
   filter->SetSourceImage( this->CastImageToITK<typename FilterType::SourceImageType>(*inSourceImage) );
 
+  typename SourceImageType::RegionType itkRegion(
+      sitkSTLVectorToITK<SourceIndexType>(m_SourceIndex),
+      sitkSTLVectorToITK<SourceSizeType>(m_SourceSize));
 
-
-   typename InputImageType::RegionType itkRegion;
-  for( unsigned int i = 0; i < inDestinationImage->GetDimension(); ++i )
-    {
-    itkRegion.SetIndex( i, m_SourceIndex[i] );
-    itkRegion.SetSize( i, m_SourceSize[i] );
-    }
   filter->SetSourceRegion( itkRegion );
   typename InputImageType::IndexType itkVecDestinationIndex = sitkSTLVectorToITK<typename InputImageType::IndexType>( this->GetDestinationIndex() );
   filter->SetDestinationIndex( itkVecDestinationIndex );
+  if (!m_DestinationSkipAxes.empty())
+  {
+    filter->SetDestinationSkipAxes(sitkSTLVectorToITK< typename FilterType::InputSkipAxesArrayType>(m_DestinationSkipAxes));
+  }
   filter->SetInPlace( m_InPlace );
 
 
@@ -165,14 +194,21 @@ Image PasteImageFilter::ExecuteInternal ( const Image * inDestinationImage, cons
   // Run the ITK filter and return the output as a SimpleITK image
   filter->Update();
 
-
-
   typename FilterType::OutputImageType::Pointer itkOutImage{ filter->GetOutput()};
   filter = nullptr;
   this->FixNonZeroIndex( itkOutImage.GetPointer() );
   return Image{ this->CastITKToImage( itkOutImage.GetPointer() ) };
-
 }
+
+template <class TImageType>
+Image PasteImageFilter::ExecuteInternal ( const TImageType *,
+                                          const Image * sourceImage,
+                                          std::integral_constant<unsigned int, 1> )
+{
+  sitkExceptionMacro("Unable to use the sourceImage of dimension" << sourceImage->GetDimension()
+                                                                  << " with destination dimension of " << TImageType::ImageDimension << ".");
+}
+
 
 sitkClangDiagnosticPop();
 
@@ -182,19 +218,25 @@ sitkClangDiagnosticPop();
 //
 // Function to run the Execute method of this filter
 //
-Image Paste ( const Image & destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize, std::vector<int> sourceIndex, std::vector<int> destinationIndex )
+Image Paste ( const Image & destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize, std::vector<int> sourceIndex, std::vector<int> destinationIndex, std::vector<bool> destinationSkipAxes )
 {
   PasteImageFilter filter;
-  filter.SetSourceSize( sourceSize );  filter.SetSourceIndex( sourceIndex );  filter.SetDestinationIndex( destinationIndex );
+  filter.SetSourceSize( sourceSize );
+  filter.SetSourceIndex( sourceIndex );
+  filter.SetDestinationIndex( destinationIndex );
+  filter.SetDestinationSkipAxes( std::move(destinationSkipAxes) );
   return filter.Execute ( destinationImage, sourceImage );
 }
 //
 // Function to run the Execute method of this filter
 //
-Image Paste ( Image && destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize, std::vector<int> sourceIndex, std::vector<int> destinationIndex )
+Image Paste ( Image && destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize, std::vector<int> sourceIndex, std::vector<int> destinationIndex, std::vector<bool> destinationSkipAxes )
 {
   PasteImageFilter filter;
-  filter.SetSourceSize( std::move(sourceSize) );  filter.SetSourceIndex( std::move(sourceIndex) );  filter.SetDestinationIndex( std::move(destinationIndex) );
+  filter.SetSourceSize( std::move(sourceSize) );
+  filter.SetSourceIndex( std::move(sourceIndex) );
+  filter.SetDestinationIndex( std::move(destinationIndex) );
+  filter.SetDestinationSkipAxes( std::move(destinationSkipAxes) );
   return filter.Execute ( std::move(destinationImage), sourceImage );
 }
 

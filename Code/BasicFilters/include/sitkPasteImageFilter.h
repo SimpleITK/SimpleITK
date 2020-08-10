@@ -32,15 +32,26 @@
 namespace itk {
   namespace simple {
 
-    /**\class PasteImageFilter
-\brief Paste an image into another image.
-
-PasteImageFilter allows you to take a section of one image and paste into another image. The SetDestinationIndex() method prescribes where in the first input to start pasting data from the second input. The SetSourceRegion method prescribes the section of the second image to paste into the first. If the output requested region does not include the SourceRegion after it has been repositioned to DestinationIndex, then the output will just be a copy of the input.
-
-The two inputs and output image will have the same pixel type.
-\sa itk::simple::Paste for the procedural interface
-\sa itk::PasteImageFilter for the Doxygen on the original ITK class.
-     */
+/** \class NPasteImageFilter
+ * \brief Paste an image (or a constant value) into another image.
+ *
+ * NPasteImageFilter allows a region in a destination image to be filled with a source image or a constant pixel value.
+ * The SetDestinationIndex() method
+ * prescribes where in the destination input to start pasting data from the
+ * source input.  The SetSourceRegion method prescribes the section of
+ * the second image to paste into the first. When a constant pixel value is set, the SourceRegion describes the size
+ * of the region filled. If the output requested
+ * region does not include the SourceRegion after it has been
+ * repositioned to DestinationIndex, then the output will just be
+ * a copy of the input.
+ *
+ * This filter supports running "InPlace" to efficiently reuses the destination image buffer for the output, removing the
+ * need to copy the destination pixels to the output.
+ *
+ * When the source image is a lower dimension than the destination image then the DestinationSkipAxes parameter
+ * specifies which axes in the destination image are set to 1 when copying the region or filling with a constant.
+ *
+ */
     class SITKBasicFilters_EXPORT PasteImageFilter : public ImageFilter {
     public:
       using Self = PasteImageFilter;
@@ -82,6 +93,29 @@ The two inputs and output image will have the same pixel type.
        */
       std::vector<int> GetDestinationIndex() const { return this->m_DestinationIndex; }
 
+
+      /** Set/Get the array describing which axes in the destination image to skip
+       *
+       * The axes with true values are set to 1, to fill the difference between the dimension of the input and source image.
+       * The number of true value in DestinationSkipAxes plus the DestinationImageDimension must equal the
+       * InputImageDimension.
+       *
+       * By default this array contains SourceImageDimension false values followed by true values for the remainder.
+       */
+      SITK_RETURN_SELF_TYPE_HEADER SetDestinationSkipAxes ( std::vector<bool> DestinationSkipAxes ) { this->m_DestinationSkipAxes = std::move(DestinationSkipAxes); return *this; }
+
+      /** Set/Get the array describing which axes in the destination image to skip
+       *
+       * The axes with true values are set to 1, to fill the difference between the dimension of the input and source image.
+       * The number of true values in DestinationSkipAxes plus the DestinationImageDimension must equal the
+       * InputImageDimension.
+       *
+       * By default this array contains SourceImageDimension false values followed by true values for the remainder.
+       */
+      std::vector<bool> GetDestinationSkipAxes() const { return this->m_DestinationSkipAxes; }
+
+
+
       /** Name of this class */
       std::string GetName() const { return std::string ("PasteImageFilter"); }
 
@@ -102,6 +136,11 @@ The two inputs and output image will have the same pixel type.
       using MemberFunctionType = Image (Self::*)( const Image * destinationImage, const Image * sourceImage );
       template <class TImageType> Image ExecuteInternal ( const Image * destinationImage, const Image * sourceImage );
 
+      template <class TImageType, unsigned int OutputDimension>
+        Image ExecuteInternal ( const TImageType *destinationImage, const Image * sourceImage, std::integral_constant<unsigned int, OutputDimension> meta );
+      template <class TImageType>
+        Image ExecuteInternal ( const TImageType *destinationImage, const Image * sourceImage, std::integral_constant<unsigned int, 1> meta );
+
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
@@ -114,6 +153,7 @@ The two inputs and output image will have the same pixel type.
 
       std::vector<int>  m_DestinationIndex{std::vector<int>(SITK_MAX_DIMENSION, 0)};
 
+      std::vector<bool> m_DestinationSkipAxes{};
 
       bool m_InPlace{false};
     };
@@ -128,9 +168,9 @@ The two inputs and output image will have the same pixel type.
      * @{
      */
 #ifndef SWIG
-     SITKBasicFilters_EXPORT Image Paste ( Image && destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> sourceIndex = std::vector<int>(SITK_MAX_DIMENSION, 0), std::vector<int> destinationIndex = std::vector<int>(SITK_MAX_DIMENSION, 0) );
+     SITKBasicFilters_EXPORT Image Paste ( Image && destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> sourceIndex = std::vector<int>(SITK_MAX_DIMENSION, 0), std::vector<int> destinationIndex = std::vector<int>(SITK_MAX_DIMENSION, 0), std::vector<bool> DestinationSkipAxes = std::vector<bool>() );
 #endif
-     SITKBasicFilters_EXPORT Image Paste ( const Image & destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> sourceIndex = std::vector<int>(SITK_MAX_DIMENSION, 0), std::vector<int> destinationIndex = std::vector<int>(SITK_MAX_DIMENSION, 0) );
+     SITKBasicFilters_EXPORT Image Paste ( const Image & destinationImage, const Image & sourceImage, std::vector<unsigned int> sourceSize = std::vector<unsigned int>(SITK_MAX_DIMENSION, 1), std::vector<int> sourceIndex = std::vector<int>(SITK_MAX_DIMENSION, 0), std::vector<int> destinationIndex = std::vector<int>(SITK_MAX_DIMENSION, 0), std::vector<bool> DestinationSkipAxes = std::vector<bool>() );
 
      /** @} */
   }

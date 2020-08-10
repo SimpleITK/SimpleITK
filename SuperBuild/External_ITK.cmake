@@ -23,7 +23,7 @@ if(NOT DEFINED Module_SimpleITKFilters)
   set(Module_SimpleITKFilters ON)
 endif()
 
-set(Module_SimpleITKFilters_GIT_TAG c8c42430626f0123e7ec401c17c72c7d5ce82669 )
+set(Module_SimpleITKFilters_GIT_TAG ce51d77771a54e7e0791fadb15e50dc38cbd8358 )
 
 get_cmake_property( _varNames VARIABLES )
 

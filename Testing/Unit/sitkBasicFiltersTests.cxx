@@ -1223,6 +1223,7 @@ TEST(BasicFilters, PasteImageFilter_2D)
   simg.SetPixelAsUInt16({1,2}, value);
 
   sitk::Image output;
+
   sitk::PasteImageFilter paster;
 
   paster.SetDestinationIndex({11,13});
@@ -1230,4 +1231,41 @@ TEST(BasicFilters, PasteImageFilter_2D)
   output = paster.Execute(img, simg);
   EXPECT_EQ(value, output.GetPixelAsUInt16({12, 15}));
   EXPECT_EQ(0, output.GetPixelAsUInt16({1, 2}));
+
+}
+
+
+TEST(BasicFilters, PasteImageFilter_3D_2D)
+{
+  constexpr uint16_t value = 17;
+
+  namespace sitk = itk::simple;
+  sitk::Image img = sitk::Image({32,32,32}, sitk::sitkUInt16);
+  sitk::Image simg = sitk::Image({5,5}, sitk::sitkUInt16);
+  simg.SetPixelAsUInt16({1,2}, value);
+
+  sitk::Image output;
+
+  sitk::PasteImageFilter paster;
+
+  paster.SetDestinationIndex({11,13, 15});
+  paster.SetSourceSize(simg.GetSize());
+  output = paster.Execute(img, simg);
+  EXPECT_EQ(value, output.GetPixelAsUInt16({12, 15, 15}));
+  EXPECT_EQ(0, output.GetPixelAsUInt16({1, 2, 15}));
+
+  paster.SetDestinationIndex({11,13,15});
+  paster.SetDestinationSkipAxes({true, false, false});
+  paster.SetSourceSize(simg.GetSize());
+  output = paster.Execute(img, simg);
+  EXPECT_EQ(0, output.GetPixelAsUInt16({12, 15, 15}));
+  EXPECT_EQ(value, output.GetPixelAsUInt16({11, 14, 17}));
+
+  paster.SetDestinationIndex({11,13,15});
+  paster.SetDestinationSkipAxes({false, true, false});
+  paster.SetSourceSize(simg.GetSize());
+  output = paster.Execute(img, simg);
+  EXPECT_EQ(0, output.GetPixelAsUInt16({12, 15, 15}));
+  EXPECT_EQ(value, output.GetPixelAsUInt16({12, 13, 17}));
+
 }
