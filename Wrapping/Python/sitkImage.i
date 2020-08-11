@@ -163,9 +163,15 @@
         Image __ipaste(const Image & sourceImage,
                    std::vector< unsigned int > sourceSize,
                    std::vector< int > sourceIndex,
-                   std::vector< int > destinationIndex)
+                   std::vector< int > destinationIndex,
+                   std::vector< bool > destinationSkipAxes)
         {
-          return (*$self) = itk::simple::Paste(std::move(*$self), sourceImage, sourceSize, sourceIndex, destinationIndex);
+        itk::simple::PasteImageFilter paster;
+        paster.SetSourceSize(std::move(sourceSize));
+        paster.SetSourceIndex(std::move(sourceIndex));
+        paster.SetDestinationIndex(std::move(destinationIndex));
+        paster.SetDestinationSkipAxes(destinationSkipAxes);
+        return (*$self) = paster.Execute(std::move(*$self), sourceImage);
         }
 
 
@@ -583,14 +589,20 @@
             dim = self.GetDimension()
             size = self.GetSize()
 
-            if (len(idx) > dim):
-              raise IndexError("too many indices for image")
-            elif len(idx) != dim:
-              raise IndexError("only {0} indices, not {1} as expected".format(len(idx), dim))
+            try:
+              if (len(idx) > dim):
+                raise IndexError("too many indices for image")
+              if (len(idx) < dim):
+                # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
+                idx = tuple(idx) + (slice(None),)*(dim-len(idx))
+            except TypeError:
+              # if the len function did not work then, assume is a
+              # non-iterable, and make it a single element in a tuple.
+              idx = (idx,) + (slice(None),)*(dim-1)
 
             # All the indices are integers use SetPixel
             if all( isint(i) for i in idx ):
-              # if any of the arguments are negative integers subract them for the size
+              # if any of the arguments are negative integers subract them from the size
               idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
 
               for i in range(len(idx)):
@@ -598,6 +610,18 @@
                   raise IndexError("index {0} is outside the extent for dimension {1} with size {2}".format( idx[i], i, size[i]))
 
               return self.SetPixel(*(tuple(idx)+(rvalue,)))
+
+            for i in range(len(idx)):
+              if type(idx[i]) is slice:
+                continue
+              elif isint(idx[i]):
+                s = idx[i]
+                if s < 0:
+                  s += size[i]
+                if s < 0 or s >= size[i]:
+                  raise IndexError("index {0} is outside the extent for dimension {1} with size {2}".format( idx[i], i, size[i]))
+
+                idx = tuple(idx[:i]) + (slice(s, s+1),)+ tuple(idx[i+1:])
 
             if all( type(i) is slice for i in idx ):
               sidx = [ idx[i].indices(size[i]) for i in range(len(idx ))]
@@ -610,10 +634,21 @@
                 if step[i] != 1:
                   raise IndexError("step {0} is not 1 for dimension {1}".format(step[i], i))
 
-              if not all( [ size[i] == sourceSize[i] for i in range(dim)] ):
-                raise IndexError("can not paste source with size {0} into destination with size {1}".format(size, sourceSize))
+              skipAxes = [False] * dim
 
-              return self.__ipaste( rvalue, sourceSize=size, sourceIndex=[0]*dim, destinationIndex=start)
+              s = 0;
+              for i in range(dim):
+
+                if size[i] == 1 and (len(sourceSize) <= s or sourceSize[s] != size[i]):
+                  skipAxes[i] = True
+                  continue
+
+                if len(sourceSize) <= s  or sourceSize[s] != size[i]:
+                  raise IndexError("cannot paste source with size {0} into destination with size {1}".format(size, sourceSize))
+                s += 1
+
+              size = [ sz for sz,skip  in zip(size, skipAxes) if not skip ]
+              return self.__ipaste( rvalue, sourceSize=size, sourceIndex=[0]*rvalue.GetDimension(), destinationIndex=start, destinationSkipAxes=skipAxes)
 
             # the index parameter was an invalid set of objects
             raise IndexError("invalid index with types: {0}".format([type(i) for i in idx]))
