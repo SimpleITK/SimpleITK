@@ -25,13 +25,16 @@
 #include "sitkPyCommand.h"
 %}
 
-%include "PythonDocstrings.i"
+// %include "PythonDocstrings.i"
+%feature("autodoc", "1");
 
 // ignore overload methods of int type when there is an enum
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
 %ignore itk::simple::Resample;
+%ignore itk::simple::ReadImage;
+%ignore itk::simple::WriteImage;
 
 
 // Make __str__ transparent by renaming ToString to __str__
