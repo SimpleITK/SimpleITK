@@ -1234,6 +1234,29 @@ TEST(BasicFilters, PasteImageFilter_2D)
 
 }
 
+TEST(BasicFilters, PasteImageFilter_Constant)
+{
+  constexpr uint32_t c = 4321;
+
+  namespace sitk = itk::simple;
+  sitk::Image img = sitk::Image({32,32}, sitk::sitkInt32);
+
+  sitk::PasteImageFilter paster;
+
+  paster.SetDestinationIndex({11,13});
+  paster.SetSourceSize( {5,7});
+  sitk::Image  output = paster.Execute(img, c);
+  EXPECT_EQ(0, output.GetPixelAsInt32({10, 13}));
+  EXPECT_EQ(0, output.GetPixelAsInt32({11, 12}));
+
+  EXPECT_EQ(c, output.GetPixelAsInt32({11, 13}));
+  EXPECT_EQ(c, output.GetPixelAsInt32({15, 13}));
+  EXPECT_EQ(c, output.GetPixelAsInt32({11, 19}));
+
+  EXPECT_EQ(c, output.GetPixelAsInt32({15, 19}));
+
+}
+
 
 TEST(BasicFilters, PasteImageFilter_3D_2D)
 {

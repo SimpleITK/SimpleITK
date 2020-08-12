@@ -33,6 +33,8 @@
 #include "sitkPasteImageFilter.h"
 #include "itkNPasteImageFilter.h"
 
+#include "sitkToPixelType.hxx"
+
 
 
 namespace itk {
@@ -49,6 +51,8 @@ PasteImageFilter::PasteImageFilter ()
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
 
+  this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type>( this ) );
+  this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
 
 
 }
@@ -95,15 +99,32 @@ Image PasteImageFilter::Execute ( const Image & destinationImage, const Image & 
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( &destinationImage, &sourceImage );
 }
+Image PasteImageFilter::Execute ( const Image & destinationImage, double constant )
+{
+  const PixelIDValueEnum type = destinationImage.GetPixelID();
+  const unsigned int dimension = destinationImage.GetDimension();
+
+  return this->m_MemberFactory2->GetMemberFunction( type, dimension )( &destinationImage, constant );
+}
 Image PasteImageFilter::Execute ( Image && destinationImage, const Image & sourceImage )
 {
   Image &temp = destinationImage;
   auto autoResetInPlace = make_scope_exit([this, &temp]{this->m_InPlace=false; Image moved(std::move(temp));});
   if (temp.IsUnique())
-    {
+  {
     m_InPlace = true;
-    }
+  }
   return this->Execute( destinationImage, sourceImage );
+}
+Image PasteImageFilter::Execute ( Image && destinationImage, double constant )
+{
+  Image &temp = destinationImage;
+  auto autoResetInPlace = make_scope_exit([this, &temp]{this->m_InPlace=false; Image moved(std::move(temp));});
+  if (temp.IsUnique())
+  {
+    m_InPlace = true;
+  }
+  return this->Execute( destinationImage, constant );
 }
 
 //-----------------------------------------------------------------------------
@@ -209,6 +230,62 @@ Image PasteImageFilter::ExecuteInternal ( const TImageType *,
                                                                   << " with destination dimension of " << TImageType::ImageDimension << ".");
 }
 
+template <class TImageType>
+Image PasteImageFilter::ExecuteInternal ( const Image * inDestinationImage, double constant )
+{
+  // Define the input and output image types
+  using InputImageType = TImageType;
+  using SourceImageType =  InputImageType;
+
+  using SourceIndexType = typename SourceImageType::IndexType;
+  using SourceSizeType = typename SourceImageType::SizeType;
+
+  using OutputImageType = InputImageType;
+
+
+  using FilterType = itk::NPasteImageFilter< InputImageType, SourceImageType, OutputImageType >;
+  // Set up the ITK filter
+  typename FilterType::Pointer filter = FilterType::New();
+
+
+  // Get the pointer to the ITK image contained in image1
+  typename InputImageType::ConstPointer destinationImage = this->CastImageToITK<InputImageType>( *inDestinationImage );
+  assert( destinationImage != nullptr );
+  filter->SetInput( destinationImage );
+
+  typename SourceImageType::PixelType c;
+  NumericTraits<typename SourceImageType::PixelType>::SetLength( c, destinationImage->GetNumberOfComponentsPerPixel() );
+  ToPixelType( constant, c );
+  filter->SetConstant(c);
+
+  typename SourceImageType::RegionType itkRegion(
+      sitkSTLVectorToITK<SourceIndexType>(m_SourceIndex),
+      sitkSTLVectorToITK<SourceSizeType>(m_SourceSize));
+
+  filter->SetSourceRegion( itkRegion );
+  typename InputImageType::IndexType itkVecDestinationIndex = sitkSTLVectorToITK<typename InputImageType::IndexType>( this->GetDestinationIndex() );
+  filter->SetDestinationIndex( itkVecDestinationIndex );
+  if (!m_DestinationSkipAxes.empty())
+  {
+    filter->SetDestinationSkipAxes(sitkSTLVectorToITK< typename FilterType::InputSkipAxesArrayType>(m_DestinationSkipAxes));
+  }
+  filter->SetInPlace( m_InPlace );
+
+
+
+
+  this->PreUpdate( filter.GetPointer() );
+
+
+
+  // Run the ITK filter and return the output as a SimpleITK image
+  filter->Update();
+
+  typename FilterType::OutputImageType::Pointer itkOutImage{ filter->GetOutput()};
+  filter = nullptr;
+  this->FixNonZeroIndex( itkOutImage.GetPointer() );
+  return Image{ this->CastITKToImage( itkOutImage.GetPointer() ) };
+}
 
 sitkClangDiagnosticPop();
 

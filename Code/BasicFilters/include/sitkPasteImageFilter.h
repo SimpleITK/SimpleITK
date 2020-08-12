@@ -126,8 +126,11 @@ namespace itk {
       /** Execute the filter on the input image */
 #ifndef SWIG
       Image Execute ( Image && destinationImage, const Image & sourceImage );
+      Image Execute ( Image && destinationImage, double constant);
 #endif
       Image Execute ( const Image & destinationImage, const Image & sourceImage );
+      Image Execute ( const Image & destinationImage, double constant);
+
 
     private:
 
@@ -145,6 +148,11 @@ namespace itk {
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
       std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+
+      using MemberFunction2Type = Image (Self::*)( const Image* image, double constant );
+      template <class TImageType> Image ExecuteInternal ( const Image* image, double constant );
+      friend struct detail::MemberFunctionAddressor<MemberFunction2Type>;
+      std::unique_ptr<detail::MemberFunctionFactory<MemberFunction2Type> > m_MemberFactory2;
 
 
       std::vector<unsigned int>  m_SourceSize{std::vector<unsigned int>(SITK_MAX_DIMENSION, 1)};
