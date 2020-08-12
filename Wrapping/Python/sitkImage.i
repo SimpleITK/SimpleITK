@@ -170,8 +170,21 @@
         paster.SetSourceSize(std::move(sourceSize));
         paster.SetSourceIndex(std::move(sourceIndex));
         paster.SetDestinationIndex(std::move(destinationIndex));
-        paster.SetDestinationSkipAxes(destinationSkipAxes);
+        paster.SetDestinationSkipAxes(std::move(destinationSkipAxes));
         return (*$self) = paster.Execute(std::move(*$self), sourceImage);
+        }
+        Image __ipaste(double constant,
+                   std::vector< unsigned int > sourceSize,
+                   std::vector< int > sourceIndex,
+                   std::vector< int > destinationIndex,
+                   std::vector< bool > destinationSkipAxes)
+        {
+        itk::simple::PasteImageFilter paster;
+        paster.SetSourceSize(std::move(sourceSize));
+        paster.SetSourceIndex(std::move(sourceIndex));
+        paster.SetDestinationIndex(std::move(destinationIndex));
+        paster.SetDestinationSkipAxes(std::move(destinationSkipAxes));
+        return (*$self) = paster.Execute(std::move(*$self), constant);
         }
 
 
@@ -572,11 +585,16 @@
             The dimension of idx must match that of the image.
 
             If all indices are integers then rvalue should be a pixel value
-            ( scalar or sequence for vector pixels). Value is assigned pixel.
+            ( scalar or sequence for vector pixels). The value is assigned to
+            the pixel.
 
-            If all indices are slice indices then, rvalue should be an image
-            of matching size, dimension and type as the image and region. This
-            image's pixel are then assigned the rvalue image with the paste filter.
+            If the indices are slices or integers then, the PasteImageFilter is
+            used to assign values to this image. The rvalue can be an image
+            or a scalar constant value. When rvalue is an image it must be of
+            the same pixel type and equal or lesser dimension than self. The
+            region defined by idx and rvalue's size must be compatible. The
+            region defined by idx will collapse one sized idx dimensions when it
+            does not match the rvalue image's size.
             """
 
             if sys.version_info[0] < 3:
@@ -628,7 +646,10 @@
 
               (start, stop, step) = zip(*sidx)
               size = [ e-b for b, e in zip(start, stop) ]
-              sourceSize = rvalue.GetSize()
+              try:
+                sourceSize = rvalue.GetSize()
+              except AttributeError:
+                sourceSize = size
 
               for i in range(dim):
                 if step[i] != 1:
@@ -648,7 +669,7 @@
                 s += 1
 
               size = [ sz for sz,skip  in zip(size, skipAxes) if not skip ]
-              return self.__ipaste( rvalue, sourceSize=size, sourceIndex=[0]*rvalue.GetDimension(), destinationIndex=start, destinationSkipAxes=skipAxes)
+              return self.__ipaste( rvalue, size, [0]*len(size), start, skipAxes)
 
             # the index parameter was an invalid set of objects
             raise IndexError("invalid index with types: {0}".format([type(i) for i in idx]))
