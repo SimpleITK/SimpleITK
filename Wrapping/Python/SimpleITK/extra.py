@@ -394,4 +394,51 @@ def WriteImage(image: "Image",
     return writer.Execute(image)
 
 
-__all__ = ["Resample", "GetArrayViewFromImage", "GetArrayFromImage", "GetImageFromArray", "ReadImage", "WriteImage"]
+def SmoothingRecursiveGaussian(image1, sigma=[1]*3, normalizeAcrossScale=False):
+    """Computes the smoothing of an image by convolution with
+    the Gaussian kernels implemented as IIR filters.
+
+    This function directly calls the execute method of SmoothingRecursiveGaussianImageFilter
+    in order to support a procedural API.
+
+    Also See
+    --------
+      itk::simple::SmoothingRecursiveGaussianImageFilter for the object oriented interface
+    """
+
+    f = SmoothingRecursiveGaussianImageFilter()
+    f.SetSigma(sigma)
+    f.SetNormalizeAcrossScale(normalizeAcrossScale)
+    return f.Execute(image1)
+
+
+def DiscreteGaussian(image1, variance=[1] * 3, maximumKernelWidth=32, maximumError=0.01, useImageSpacing=True):
+    """Blurs an image by separable convolution with discrete
+     gaussian kernels. This filter performs Gaussian blurring by
+     separable convolution of an image and a discrete Gaussian
+     operator (kernel).
+
+     This function directly calls the execute method of DiscreteGaussianImageFilter
+     in order to support a procedural API.
+
+    Also See
+    --------
+      \sa itk::simple::DiscreteGaussianImageFilter for the object oriented interface
+    """
+    f = DiscreteGaussianImageFilter()
+    f.SetVariance(variance)
+    f.SetMaximumKernelWidth(maximumKernelWidth)
+    f.SetMaximumError(maximumError)
+    f.SetUseImageSpacing(useImageSpacing)
+    return f.Execute(image1)
+
+
+
+__all__ = ["Resample",
+           "GetArrayViewFromImage",
+           "GetArrayFromImage",
+           "GetImageFromArray",
+           "ReadImage",
+           "WriteImage",
+           "SmoothingRecursiveGaussian",
+           "DiscreteGaussian"]
