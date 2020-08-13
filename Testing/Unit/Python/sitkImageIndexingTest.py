@@ -116,18 +116,107 @@ class TestImageIndexingInterface(unittest.TestCase):
     def test_setitem(self):
         """ testing __setitem__ with pasting to roi"""
 
-        nda = np.linspace(0, 59, 60 ).reshape(3,4,5)
+        nda = np.linspace(0, 59, 60).reshape(3, 4, 5)
 
-        img = sitk.GetImageFromArray( nda )
+        img = sitk.GetImageFromArray(nda)
 
-        img[1:3, 2:4, 0:2] = sitk.Image([2,2,2], sitk.sitkFloat64)
+        img[1:3, 2:4, 0:2] = sitk.Image([2, 2, 2], sitk.sitkFloat64) + 1
+        self.assertTrue(all([px == 1 for px in img[1:3, 2:4, 0:2]]))
+        img[0:1, 0:1, 0:1] = sitk.Image([1, 1, 1], sitk.sitkFloat64) + 2
+        self.assertEqual(2, img.GetPixel(0, 0, 0))
+        img[0:1, 0:2, 0:3] = sitk.Image([2, 3], sitk.sitkFloat64) + 3
+        self.assertTrue(all([px == 3 for px in img[0:1, 0:2, 0:3]]))
+        img[0:2, 0:1, 0:3] = sitk.Image([2, 3], sitk.sitkFloat64) + 4
+        self.assertTrue(all([px == 4 for px in img[0:2, 0:1, 0:3]]))
+        img[0:2, 0:3, 0:1] = sitk.Image([2, 3], sitk.sitkFloat64) + 5
+        self.assertTrue(all([px == 5 for px in img[0:2, 0:3, 0:1]]))
 
-        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(1,3), slice(2,4)), sitk.Image([2,2,2], sitk.sitkFloat64)))
-        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([2,2], sitk.sitkFloat64)))
-        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([2,2,1], sitk.sitkFloat64)))
-        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([2,1,2], sitk.sitkFloat64)))
-        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(0,2), )*3, sitk.Image([1,2,2], sitk.sitkFloat64)))
+        img[-1, 0:1, 0:3] = sitk.Image([1, 3], sitk.sitkFloat64) + 6
+        self.assertTrue(all([px == 6 for px in img[-1, 0:1, 0:3]]))
+        img[1:2, 1, 0:3] = sitk.Image([1, 3], sitk.sitkFloat64) + 7
+        self.assertTrue(all([px == 7 for px in img[1:2, 1, 0:3]]))
+        img[2:3, 0:3, 1] = sitk.Image([1, 3], sitk.sitkFloat64) + 8
+        self.assertTrue(all([px == 8 for px in img[2:3, 0:3, 1]]))
 
+        self.assertRaises(IndexError, lambda: self.doImageAssign(img, (slice(1, 3), slice(2, 4)),
+                                                                 sitk.Image([2, 2, 2], sitk.sitkFloat64)))
+        self.assertRaises(IndexError,
+                          lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([2, 2], sitk.sitkFloat64)))
+        self.assertRaises(IndexError,
+                          lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([2, 2, 1], sitk.sitkFloat64)))
+        self.assertRaises(IndexError,
+                          lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([2, 1, 2], sitk.sitkFloat64)))
+        self.assertRaises(IndexError,
+                          lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([1, 2, 2], sitk.sitkFloat64)))
+
+    def test_5d_setitem(self):
+        """ testing __setitem__ with pasting to 5D roi"""
+
+        # Check if we have 5D Image support
+        try:
+            sitk.Image([2]*5, sitk.sitkFloat32)
+        except RuntimeError:
+            return  # exit and don't run the test
+
+        size = [19, 17, 13, 2, 3]
+        img = sitk.Image(size, sitk.sitkFloat64)
+
+        img[0, 0, 0, 0, 0] = 1
+        self.assertEqual(1, img.GetPixel([0, 0, 0, 0, 0]))
+
+        img[-19, -17, -13, -2, -3] = 2
+        self.assertEqual(2, img.GetPixel([0, 0, 0, 0, 0]))
+
+        img[:, :, :, 0, 0] = sitk.Image(size[:3], sitk.sitkFloat64) + 3
+        self.assertEqual(3, img.GetPixel([0, 0, 0, 0, 0]))
+        self.assertTrue(all([px == 3 for px in img[:, :, :, 0, 0]]))
+
+        img[:, 1, 1, :, 2] = sitk.Image((size[0], size[3]), sitk.sitkFloat64) + 4
+        self.assertEqual(4, img.GetPixel([0, 1, 1, 0, 2]))
+        self.assertEqual(4, img[0, 1, 1, 0, 2])
+        self.assertTrue(all([px == 4 for px in img[:, 1, 1, :, 2]]))
+
+    def test_constant_setitem(self):
+        """ testing __setitem__ with pasting to 5D roi"""
+
+        img = sitk.Image([10,  11], sitk.sitkVectorUInt8, 3)
+
+        img[0:2, 4:11] = 1
+        self.assertTrue(all([px == (1, 1, 1) for px in img[0:2, 4:11]]))
+
+        img[2, 4:11] = 2
+        self.assertTrue(all([px == (2, 2, 2) for px in img[2:3, 4:11]]))
+
+    def test_constant_5d_setitem(self):
+        """ testing __setitem__ with pasting to 5D roi"""
+
+        # Check if we have 5D Image support
+        try:
+            sitk.Image([2]*5, sitk.sitkFloat32)
+        except RuntimeError:
+            return  # exit and don't run the test
+
+        size = [19, 17, 13, 2, 3]
+        img = sitk.Image(size, sitk.sitkInt32)
+
+        img[:, :, 1, 1, 1] = 1
+        self.assertEqual(0, img.GetPixel([0, 0, 0, 0, 0]))
+        self.assertEqual(1, img[0, 0, 1, 1, 1])
+        self.assertTrue(all([px == 1 for px in img[:, :, 1, 1, 1]]))
+
+        img[:, :, 2, 0, :] = 2
+        self.assertEqual(0, img.GetPixel([0, 0, 0, 0, 0]))
+        self.assertEqual(1, img[0, 0, 1, 1, 1])
+        self.assertTrue(all([px == 2 for px in img[:, :, 2, 0, :]]))
+
+        img[:, :, :, :, :] = 3
+        self.assertEqual(3, img.GetPixel([0, 0, 0, 0, 0]))
+        self.assertTrue(all([px == 3 for px in img]))
+
+        img[1:3, 2:4, 3:5, 0:2, 0:2] = 4
+        self.assertEqual(3, img.GetPixel([0, 0, 0, 0, 2]))
+        self.assertEqual(4, img.GetPixel([1, 2, 3, 0, 0]))
+        self.assertTrue(all([px == 4 for px in img[1:3, 2:4, 3:5, 0:2, 0:2]]))
 
     def test_3d_extract(self):
          """testing __getitem__ for extracting 2D slices from 3D image"""

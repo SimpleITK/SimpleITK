@@ -80,6 +80,13 @@ class BasicFiltersTests(unittest.TestCase):
         self.assertImageAlmostEqual( baseline_image,
                                      sitk.Resample(img, size=(64, 64), transform=tx, defaultPixelValue=255.0, outputPixelType=sitk.sitkFloat64 ) )
 
+    def test_paste_filter(self):
+
+        img1 = sitk.GaborSource(sitk.sitkFloat32, [64, 64, 64], frequency=.05)
+        img2 = sitk.Image([32,32,32], sitk.sitkFloat32)
+
+        sitk.Paste(img1, img2)
+
 
 if __name__ == '__main__':
     unittest.main()
