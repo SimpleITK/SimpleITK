@@ -35,6 +35,8 @@
 %ignore itk::simple::Resample;
 %ignore itk::simple::ReadImage;
 %ignore itk::simple::WriteImage;
+%ignore itk::simple::SmoothinRecursiveGaussian;
+%ignore itk::simple::DiscreteGaussian;
 
 
 // Make __str__ transparent by renaming ToString to __str__
