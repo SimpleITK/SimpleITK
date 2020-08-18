@@ -75,9 +75,9 @@ for i in range(parts):
     file_reader.SetExtractIndex(current_index)
     file_reader.SetExtractSize(extract_size)
     sub_image2 = file_reader.Execute()
-    result_img = sitk.Paste(result_img, sub_image1 - sub_image2,
-                            extract_size, [0] * file_reader.GetDimension(),
-                            current_index)
+    idx = [slice(None,None)]*file_reader.GetDimension()
+    idx[-1] = current_index[-1]
+    result_img[idx] =  sub_image1 - sub_image2
     current_index[-1] += extract_size[-1]
 del sub_image1
 del sub_image2
