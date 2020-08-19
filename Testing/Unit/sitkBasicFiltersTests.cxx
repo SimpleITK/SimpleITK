@@ -918,8 +918,8 @@ TEST(BasicFilters,ResampleImageFilter_DefaultParameters)
   sitk::Image result = filter.Execute(img);
 
   // Resample with default parameters returns a 0x0 image
-  EXPECT_EQ ( 0, result.GetWidth() );
-  EXPECT_EQ ( 0, result.GetHeight() );
+  EXPECT_EQ ( 0u, result.GetWidth() );
+  EXPECT_EQ ( 0u, result.GetHeight() );
 }
 
 
@@ -1236,7 +1236,7 @@ TEST(BasicFilters, PasteImageFilter_2D)
 
 TEST(BasicFilters, PasteImageFilter_Constant)
 {
-  constexpr uint32_t c = 4321;
+  constexpr int32_t c = 4321;
 
   namespace sitk = itk::simple;
   sitk::Image img = sitk::Image({32,32}, sitk::sitkInt32);

@@ -850,7 +850,7 @@ TEST(IO, ImageFileReader_Extract2 )
   EXPECT_EQ( "my_value", result.GetMetaData("MyKey") );
   EXPECT_EQ( generatedImage.GetSpacing(), result.GetSpacing() );
   EXPECT_EQ( v3(3.0, 8.0, 15.0), result.GetOrigin() );
-  EXPECT_EQ( 3, result.GetDimension() );
+  EXPECT_EQ( 3u, result.GetDimension() );
   EXPECT_EQ( extractSize, result.GetSize() );
 
 
