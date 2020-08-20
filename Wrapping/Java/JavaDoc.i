@@ -1,5 +1,33 @@
 
 
+%typemap(javaimports) NPasteImageFilter "/**
+
+Paste an image (or a constant value) into another image.
+
+
+NPasteImageFilter allows a region in a destination image to be filled with a source
+image or a constant pixel value. The SetDestinationIndex() method
+prescribes where in the destination input to start pasting data from
+the source input. The SetSourceRegion method prescribes the section of
+the second image to paste into the first. When a constant pixel value
+is set, the SourceRegion describes the size of the region filled. If
+the output requested region does not include the SourceRegion after it
+has been repositioned to DestinationIndex, then the output will just
+be a copy of the input.
+
+This filter supports running \"InPlace\" to efficiently reuses the
+destination image buffer for the output, removing the need to copy the
+destination pixels to the output.
+
+When the source image is a lower dimension than the destination image
+then the DestinationSkipAxes parameter specifies which axes in the
+destination image are set to 1 when copying the region or filling with
+a constant.
+
+C++ includes: sitkPasteImageFilter.h
+*/"
+
+
 %typemap(javaimports) itk::HashImageFilter "/**
 
 Generates a hash string from an image.
@@ -19900,8 +19928,8 @@ The ImageViewer class displays an image with an external image display applicati
 By default the class will search for a Fiji ( https://fiji.sc ) executable. The image is written out to a temporary file and then
 passed to the application.
 
-When SimpleITK is first invoked the following environment variables
-are queried to set up the external viewer:
+When the first ImageViewer object is constructed the following environment variables are queried
+to set up the external viewer:
 
 SITK_SHOW_EXTENSION: file format extension of the temporary image
 file. The default is '.mha', the MetaIO file format.
@@ -19909,7 +19937,7 @@ file. The default is '.mha', the MetaIO file format.
 SITK_SHOW_COMMAND: The user can specify an application other than Fiji
 to view images.
 
-These environment variables are only checked at SimpleITK's launch.
+The environment variables are not checked for subsequent ImageViewer objects.
 
 C++ includes: sitkImageViewer.h
 */"
@@ -31933,25 +31961,6 @@ public ";
 
 
 %typemap(javaimports) itk::simple::PasteImageFilter "/**
-
-Paste an image into another image.
-
-
-PasteImageFilter allows you to take a section of one image and paste into another
-image. The SetDestinationIndex() method prescribes where in the first input to start pasting data from
-the second input. The SetSourceRegion method prescribes the section of
-the second image to paste into the first. If the output requested
-region does not include the SourceRegion after it has been
-repositioned to DestinationIndex, then the output will just be a copy
-of the input.
-
-The two inputs and output image will have the same pixel type.
-See:
- itk::simple::Paste for the procedural interface
-
- itk::PasteImageFilter for the Doxygen on the original ITK class.
-
-
 C++ includes: sitkPasteImageFilter.h
 */"
 
@@ -31964,7 +31973,17 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::PasteImageFilter::Execute "/**
+Image itk::simple::PasteImageFilter::Execute(Image &&destinationImage, double constant)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PasteImageFilter::Execute "/**
 Image itk::simple::PasteImageFilter::Execute(const Image &destinationImage, const Image &sourceImage)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PasteImageFilter::Execute "/**
+Image itk::simple::PasteImageFilter::Execute(const Image &destinationImage, double constant)
 */
 public ";
 
@@ -31973,6 +31992,23 @@ std::vector<int> itk::simple::PasteImageFilter::GetDestinationIndex() const
 
 Set/Get the destination index (where in the first input the second
 input will be pasted.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PasteImageFilter::GetDestinationSkipAxes "/**
+std::vector<bool> itk::simple::PasteImageFilter::GetDestinationSkipAxes() const
+
+Set/Get the array describing which axes in the destination image to
+skip
+
+The axes with true values are set to 1, to fill the difference between
+the dimension of the input and source image. The number of true values
+in DestinationSkipAxes plus the DestinationImageDimension must equal
+the InputImageDimension.
+
+By default this array contains SourceImageDimension false values
+followed by true values for the remainder.
 
 */
 public ";
@@ -32009,6 +32045,23 @@ Self& itk::simple::PasteImageFilter::SetDestinationIndex(std::vector< int > Dest
 
 Set/Get the destination index (where in the first input the second
 input will be pasted.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PasteImageFilter::SetDestinationSkipAxes "/**
+Self& itk::simple::PasteImageFilter::SetDestinationSkipAxes(std::vector< bool > DestinationSkipAxes)
+
+Set/Get the array describing which axes in the destination image to
+skip
+
+The axes with true values are set to 1, to fill the difference between
+the dimension of the input and source image. The number of true value
+in DestinationSkipAxes plus the DestinationImageDimension must equal
+the InputImageDimension.
+
+By default this array contains SourceImageDimension false values
+followed by true values for the remainder.
 
 */
 public ";
@@ -45502,6 +45555,21 @@ void itk::GE5ImageIOFactoryRegister__Private()
 */
 public ";
 
+%javamethodmodifiers  itk::Accessor::GenerateConnectedImageNeighborhoodShapeOffsets "/**
+std::array< Offset< VImageDimension >, ConnectedImageNeighborhoodShape< VImageDimension >::CalculateNumberOfOffsets(VMaximumCityblockDistance, VIncludeCenterPixel)> itk::GenerateConnectedImageNeighborhoodShapeOffsets() noexcept
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::GenerateImageNeighborhoodOffsets "/**
+std::vector< Offset< TImageNeighborhoodShape::ImageDimension > > itk::GenerateImageNeighborhoodOffsets(const TImageNeighborhoodShape &shape)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::GenerateRectangularImageNeighborhoodOffsets "/**
+std::vector< Offset< VImageDimension > > itk::GenerateRectangularImageNeighborhoodOffsets(const Size< VImageDimension > &radius)
+*/
+public ";
+
 %javamethodmodifiers  itk::Accessor::Get64BitPragma "/**
 std::string itk::Get64BitPragma()
 */
@@ -45760,19 +45828,24 @@ itk::ITK_MESH_DEFAULTCONVERTTRAITS_MATRIX_TYPE_ALL_TYPES_MACRO(Matrix)
 public ";
 
 %javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
-EventObject AnyEvent AnyEvent AnyEvent AnyEvent itk::itkEventMacroDeclaration(IterationEvent, AnyEvent)
-itkEventMacroDeclaration(MultiResolutionIterationEvent
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
-EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent PickEvent itk::itkEventMacroDeclaration(EndPickEvent, PickEvent) itkEventMacroDeclaration(AbortCheckEvent
+EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent PickEvent PickEvent itk::itkEventMacroDeclaration(FunctionEvaluationIterationEvent, IterationEvent)
+itkEventMacroDeclaration(GradientEvaluationIterationEvent
 */
 public ";
 
 %javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
 EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent PickEvent PickEvent IterationEvent itk::itkEventMacroDeclaration(FunctionAndGradientEvaluationIterationEvent, IterationEvent)
 itkEventMacroDeclaration(UserEvent
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
+EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent itk::itkEventMacroDeclaration(PickEvent, AnyEvent) itkEventMacroDeclaration(StartPickEvent
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
+EventObject AnyEvent AnyEvent AnyEvent itk::itkEventMacroDeclaration(ModifiedEvent, AnyEvent) itkEventMacroDeclaration(InitializeEvent
 */
 public ";
 
@@ -45792,18 +45865,13 @@ EventObject AnyEvent AnyEvent itk::itkEventMacroDeclaration(ExitEvent, AnyEvent)
 public ";
 
 %javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
-EventObject AnyEvent AnyEvent AnyEvent itk::itkEventMacroDeclaration(ModifiedEvent, AnyEvent) itkEventMacroDeclaration(InitializeEvent
+EventObject AnyEvent AnyEvent AnyEvent AnyEvent itk::itkEventMacroDeclaration(IterationEvent, AnyEvent)
+itkEventMacroDeclaration(MultiResolutionIterationEvent
 */
 public ";
 
 %javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
-EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent itk::itkEventMacroDeclaration(PickEvent, AnyEvent) itkEventMacroDeclaration(StartPickEvent
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::itkEventMacroDeclaration "/**
-EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent PickEvent PickEvent itk::itkEventMacroDeclaration(FunctionEvaluationIterationEvent, IterationEvent)
-itkEventMacroDeclaration(GradientEvaluationIterationEvent
+EventObject AnyEvent AnyEvent AnyEvent AnyEvent IterationEvent PickEvent itk::itkEventMacroDeclaration(EndPickEvent, PickEvent) itkEventMacroDeclaration(AbortCheckEvent
 */
 public ";
 
@@ -45892,6 +45960,11 @@ public ";
 %javamethodmodifiers  itk::Accessor::MakeFourierSeriesPathTraceChainCode "/**
 void itk::MakeFourierSeriesPathTraceChainCode(TFourierSeriesPath &FSPath, const TChainCodePath &chainPath, unsigned
 int numHarmonics=8)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::MakeImageBufferRange "/**
+ImageBufferRange< TImage > itk::MakeImageBufferRange(TImage *const image)
 */
 public ";
 
@@ -46070,49 +46143,7 @@ void itk::StimulateImageIOFactoryRegister__Private()
 public ";
 
 %javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(SymmetricSecondRankTensor< T > &a, SymmetricSecondRankTensor< T > &b)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(Index< VDimension > &one, Index< VDimension > &two)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(MetaDataDictionary &a, MetaDataDictionary &b)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(const Matrix< T, NRows, NColumns > &a, const Matrix< T, NRows,
-NColumns > &b)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(CovariantVector< T, NVectorDimension > &a, CovariantVector< T,
-NVectorDimension > &b)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(FixedArray< TValue, VLength > &a, FixedArray< TValue, VLength > &b)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(Size< VDimension > &one, Size< VDimension > &two)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
 void itk::swap(RGBPixel< T > &a, RGBPixel< T > &b)
-*/
-public ";
-
-%javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(Vector< T, NVectorDimension > &a, Vector< T, NVectorDimension > &b)
 */
 public ";
 
@@ -46123,17 +46154,37 @@ NPointDimension > &b)
 public ";
 
 %javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(Size< VDimension > &one, Size< VDimension > &two)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(Vector< T, NVectorDimension > &a, Vector< T, NVectorDimension > &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(MetaDataDictionary &a, MetaDataDictionary &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(SymmetricSecondRankTensor< T > &a, SymmetricSecondRankTensor< T > &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
 void itk::swap(Array< T > &a, Array< T > &b)
 */
 public ";
 
 %javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(Offset< VDimension > &one, Offset< VDimension > &two)
+void itk::swap(RGBAPixel< T > &a, RGBAPixel< T > &b)
 */
 public ";
 
 %javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(DiffusionTensor3D< T > &a, DiffusionTensor3D< T > &b)
+void itk::swap(Index< VDimension > &one, Index< VDimension > &two)
 */
 public ";
 
@@ -46143,7 +46194,29 @@ void itk::swap(SmartPointer< T > &a, SmartPointer< T > &b) noexcept
 public ";
 
 %javamethodmodifiers  itk::Accessor::swap "/**
-void itk::swap(RGBAPixel< T > &a, RGBAPixel< T > &b)
+void itk::swap(CovariantVector< T, NVectorDimension > &a, CovariantVector< T,
+NVectorDimension > &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(const Matrix< T, NRows, NColumns > &a, const Matrix< T, NRows,
+NColumns > &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(FixedArray< TValue, VLength > &a, FixedArray< TValue, VLength > &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(DiffusionTensor3D< T > &a, DiffusionTensor3D< T > &b)
+*/
+public ";
+
+%javamethodmodifiers  itk::Accessor::swap "/**
+void itk::swap(Offset< VDimension > &one, Offset< VDimension > &two)
 */
 public ";
 
@@ -46896,11 +46969,11 @@ see ImageReaderBase::SetOutputPixelType
 imageIO:
 see ImageReaderBase::SetImageIO
 
- Note that when reading a series of images that have meta-data
-associated with them (e.g. a DICOM series) the resulting image will
-have an empty meta-data dictionary. If you need the meta-data
-dictionaries associated with each slice then you should use the ImageSeriesReader class.
 
+When reading a series of images that have meta-data associated with
+them (e.g. a DICOM series) the resulting image will have an empty
+meta-data dictionary. If you need the meta-data dictionaries
+associated with each slice then you should use the ImageSeriesReader class.
 
 See:
  itk::simple::ImageFileReader for reading a single file.
@@ -46950,59 +47023,9 @@ public ";
 void SITKIO_EXPORT itk::simple::Show(const Image &image, const std::string &title=\"\", const bool
 debugOn=ProcessObject::GetGlobalDefaultDebug())
 
-Display an image using Fiji, ImageJ or another application.
+Display an image in an external viewer (Fiji by default)
 
-This function requires that Fiji ( https://fiji.sc ) or ImageJ ( http://rsb.info.nih.gov/ij/) be properly installed for Mac and Windows, and in the user's path
-for Linux. ImageJ must have a plugin for reading Nifti formatted files
-( http://www.loci.wisc.edu/bio-formats/imagej).
-
-Nifti is the default file format used to export images. A different
-format can be chosen by setting the SITK_SHOW_EXTENSION environment
-variable. For example, set SITK_SHOW_EXTENSION to \".png\" to use PNG
-format.
-
-The user can specify an application other than ImageJ to view images
-via the SITK_SHOW_COMMAND environment variable.
-
-The user can also select applications specifically for color images or
-3D images using the SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-environment variables.
-
-SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-allow the following tokens in their strings.\\\\li \\\\c \"%a\"  for the ImageJ application \\\\li \\\\c \"%f\"
-for SimpleITK's temporary image file
-
-For example, the default SITK_SHOW_COMMAND string on Linux systems is:
-
-
-After token substitution it may become:
-
-
-For another example, the default SITK_SHOW_COLOR_COMMAND string on Mac
-OS X is:
-
-
-After token substitution the string may become:
-
-
-The string after \"-eval\" is an ImageJ macro the opens the file and runs ImageJ's Make
-Composite command to display the image in color.
-
-If the \"%f\" token is not found in the command string, the temporary file name is
-automatically appended to the command argument list.
-
-When invoked, Show searches for Fiji first, and then ImageJ. Fiji is
-the most update-to-date version of ImageJ and includes a lot of
-plugins which facilitate scientific image analysis. By default, for a
-64-bit build of SimpleITK on Macs, sitkShow searches for ImageJ64.app.
-For a 32-bit Mac build, sitkShow searches for ImageJ.app. If the user
-prefers a different version of ImageJ (or a different image viewer
-altogether), it can be specified using the SITK_SHOW_COMMAND
-environment variable.
-
-The boolean parameter debugOn prints the search path Show uses to find
-ImageJ, the full path to the ImageJ it found, and the full command
-line used to invoke ImageJ.
+This function directly calls the execute method of ImageViewer in order to support a procedural API
 
 */
 public ";
@@ -47161,12 +47184,63 @@ public ";
 %javamethodmodifiers  itk::simple::WriteImage "/**
 SITKIO_EXPORT void itk::simple::WriteImage(const Image &image, const std::vector< std::string > &fileNames, bool
 useCompression=false, int compressionLevel=-1)
+
+WriteImage is a procedural interface to the ImageSeriesWriter. class which is convenient for many image writing tasks.
+
+
+
+
+Parameters:
+
+image:
+the input image to be written
+
+fileNames:
+a vector of filenames of length equal to the number of slices in the
+image.
+
+useCompression:
+request to compress the written file
+
+compressionLevel:
+a hint for the amount of compression to be applied during writing.
+
+
+See:
+ itk::simple::ImageFileWriter for writing a single file.
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::WriteImage "/**
 SITKIO_EXPORT void itk::simple::WriteImage(const Image &image, const std::string &fileName, bool
 useCompression=false, int compressionLevel=-1)
+
+WriteImage is a procedural interface to the ImageFileWriter. class which is convenient for many image writing tasks.
+
+
+
+
+Parameters:
+
+image:
+the input image to be written
+
+fileName:
+the filename of an Image e.g. \"cthead.mha\"
+
+useCompression:
+request to compress the written file
+
+compressionLevel:
+a hint for the amount of compression to be applied during writing
+
+
+See:
+ itk::simple::ImageFileWriter for writing a single file.
+
+
 */
 public ";
 
