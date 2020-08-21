@@ -103,5 +103,10 @@ setup(
     license='Apache',
     keywords = 'SimpleITK ITK InsightToolkit segmentation registration',
     url = r'http://simpleitk.org/',
+    project_urls={
+        "Bug Tracker": "https://github.com/SimpleITK/SimpleITK/issues",
+        "Documentation": "https://simpleitk.readthedocs.io/en/release/",
+        "Source Code": "https://github.com/SimpleITK/SimpleITK",
+    },
     cmdclass={'build_ext':build_ext}
     )
