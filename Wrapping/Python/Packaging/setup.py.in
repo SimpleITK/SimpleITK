@@ -77,7 +77,6 @@ setup(
     ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'])],
     packages= ['SimpleITK'],
     data_files = [("", doc_files)],
-    download_url = r'https://www.simpleitk.org/doxygen/latest/html/PyDownloadPage.html',
     platforms = [],
     description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
     long_description  = 'SimpleITK provides an abstraction layer to ITK that enables developers \
