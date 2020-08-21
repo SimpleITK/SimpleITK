@@ -10,40 +10,10 @@ except ImportError:
 
 import re
 
+from SimpleITK._version import __version__
+
 doc_files = @SimpleITK_DOC_FILES_AS_LIST@
 
-def get_pep386version():
-    """This method examines the SimpleITK's CMake version variables to make a pep 386 compliant version string when building a version indented for distribution."""
-    sitkMAJOR = "@SimpleITK_VERSION_MAJOR@"
-    sitkMINOR = "@SimpleITK_VERSION_MINOR@"
-    sitkPATCH = "@SimpleITK_VERSION_PATCH@"
-    sitkTWEAK = "@SimpleITK_VERSION_TWEAK@"
-    sitkRC    = "@SimpleITK_VERSION_RC@"
-    sitkPOST  = "@SimpleITK_VERSION_POST@"
-    sitkDEV   = "@SimpleITK_VERSION_DEV@"
-    sitkHASH  = "@SimpleITK_VERSION_HASH@"
-
-
-    version = sitkMAJOR+"."+sitkMINOR
-
-    if sitkPATCH:
-        version += "."+sitkPATCH
-        if sitkTWEAK:
-            version += "."+sitkTWEAK
-
-    if  sitkRC:
-        version += sitkRC
-
-    if sitkPOST:
-        version += ".post"+sitkPOST
-    elif sitkDEV:
-        version += ".dev"+sitkDEV
-
-    # Local Version Identifier
-    if sitkHASH and not "@SimpleITK_BUILD_DISTRIBUTE@" in ['1', 'ON']:
-        version += "+g"+sitkHASH
-
-    return version
 
 class build_ext(_build_ext):
     """ Override standard command class to build an extension, to
@@ -71,7 +41,7 @@ class build_ext(_build_ext):
 
 setup(
     name = 'SimpleITK',
-    version = get_pep386version(),
+    version = __version__,
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
     ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'])],
