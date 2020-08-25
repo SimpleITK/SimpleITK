@@ -14,6 +14,8 @@ from SimpleITK._version import __version__
 
 doc_files = @SimpleITK_DOC_FILES_AS_LIST@
 
+with open('@SimpleITK_SOURCE_DIR@/Readme.md', encoding='utf-8') as f:
+    long_description = f.read()
 
 class build_ext(_build_ext):
     """ Override standard command class to build an extension, to
@@ -49,9 +51,7 @@ setup(
     data_files = [("", doc_files)],
     platforms = [],
     description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
-    long_description  = 'SimpleITK provides an abstraction layer to ITK that enables developers \
-                         and users to access the powerful features of the InsightToolkit in an easy \
-                         to use manner for biomedical image analysis.',
+    long_description = long_description,
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
