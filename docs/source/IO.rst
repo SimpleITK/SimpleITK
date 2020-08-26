@@ -74,11 +74,16 @@ In SimpleITK, transformation files can be written in several different formats.
 Just like there are numerous IOs for images, there are several for transforms,
 including TxtTransformIO, MINCTransformIO, HDF5TransformIO, and MatlabTransformIO
 (although this list can be extended as well). These support a variety of file
-formats, including .txt, .tfm, .mat, and .xfm. A displacement field, such as one
-stored in a DisplacementFieldTransform object, can also be saved as an image
+formats, including .txt, .tfm, .xfm, .hdf and .mat.
+
+Because of their size, displacement fields may require more careful attention.
+To save a displacement field we recommend using one of the binary transformation
+file formats (e.g. .hdf, .mat). Saving it in a text based format results in
+significantly larger files and longer IO runtimes. Another option is to save
+the displacement field found in a DisplacementFieldTransform object as an image
 (.nrrd, .nhdr, .mha, .mhd, .nii, .nii.gz).
 
-Take an example of a transformation written to and read from a file in Python:
+Take for example of a transformation written to and read from a file in Python:
 
 .. code-block :: python
 
