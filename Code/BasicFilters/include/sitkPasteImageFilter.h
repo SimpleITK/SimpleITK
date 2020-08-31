@@ -32,10 +32,10 @@
 namespace itk {
   namespace simple {
 
-/** \class NPasteImageFilter
+/** \class PasteImageFilter
  * \brief Paste an image (or a constant value) into another image.
  *
- * NPasteImageFilter allows a region in a destination image to be filled with a source image or a constant pixel value.
+ * PasteImageFilter allows a region in a destination image to be filled with a source image or a constant pixel value.
  * The SetDestinationIndex() method
  * prescribes where in the destination input to start pasting data from the
  * source input.  The SetSourceRegion method prescribes the section of
