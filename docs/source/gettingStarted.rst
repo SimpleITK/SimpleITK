@@ -9,7 +9,7 @@ are available for the desired platform and language, or SimpleITK can be
 :ref:`built from the source code<building_simpleitk>`.
 
 In the following sections we describe how to install SimpleITK and
-additional auxiliary software tools.
+auxiliary software tools.
 
 After installing SimpleITK, we recommend going over the
 :ref:`latest tutorial <lbl_tutorials_courses>` and skimming
@@ -139,7 +139,7 @@ in the path.
 Latest binaries
 ----------------
 
-If the latest SimpleITK bug fixes or features are required then
+If the latest SimpleITK bug fixes and features are required then
 pre-release binaries are available. The pre-release binaries are built
 from the actively developed master branch. The SimpleITK packages are
 available on `Github releases
