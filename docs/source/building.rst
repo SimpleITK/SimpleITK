@@ -4,10 +4,10 @@ Building SimpleITK
 ******************
 
 
-In many cases a user does not need to build SimpleITK because of the
-available pre-built binaries (see :ref:`Downloading the binaries
-<installation-binaries>`). However there are several reasons a user
-might prefer to **build SimpleITK from source code**:
+Pre-built binaries (see :ref:`Downloading the binaries
+<installation-binaries>`) are available in many cases so
+users do not need to build SimpleITK. However, there are
+several reasons a user might prefer to **build SimpleITK from source code**:
 
 -  The binary files for your programming language of choice are not
    (yet) distributed
@@ -33,17 +33,17 @@ To build SimpleITK you need:
 -  To use the latest developmental version, source code can be
    downloaded with `git <http://git-scm.com/>`__ >= 1.65
 
-   -  Git is required if building SimpleITK using "SuperBuild" (see
-      below) to automatically download the matching version of ITK,
+   -  Git is required if building SimpleITK using :ref:`SuperBuild <building_superbuild>`
+      to automatically download the matching version of ITK,
       SWIG, etc...
    -  Windows users may prefer `msysGit <http://msysgit.github.com/>`__
 
+-  The Python interface requires Python version 3.5 or greater.
+
 -  It is recommended to have numpy installed when testing Python
-   bindings
+   bindings.
 
--  The R package requires R version 3.3 or greater.
-
--  The Lua package requires Lua version 5.3 or greater.
+-  The R interface requires R version 3.3 or greater.
 
 Recipes / Formulas / Short cuts
 ===============================
@@ -67,11 +67,6 @@ building of SimpleITK (see their repository for more details):
    available from `this GitHub
    repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
 
--  **On the Mac**, with the `Homebrew package
-   manager <http://brew.sh/>`__, a SimpleITK formula is available:
-   https://github.com/Homebrew/homebrew-science/blob/master/simpleitk.rb
-   for multiple language wrappings.
-
 -  For the **Lua language** with the Luarocks module deployment system,
    a SimpleITK rockspec is available at the `Luarocks repository <https://luarocks.org/modules/dave3d/simpleitk>`__
    or from `this GitHub repository <https://github.com/SimpleITK/SimpleITKLuaRock>`__.
@@ -79,6 +74,7 @@ building of SimpleITK (see their repository for more details):
 
 Source code
 ===========
+
 If one of the above language specific front-ends are not used then
 SimpleITK must be built directly.
 
@@ -101,6 +97,8 @@ First obtain the SimpleITK source code:
 
  git clone https://github.com/SimpleITK/SimpleITK.git
 
+
+.. _building-superbuild
 
 Building using SuperBuild
 -------------------------
@@ -168,9 +166,9 @@ The following are dependencies you will need when not using the SuperBuild:
 
 #. `Lua <https://www.lua.org/>`__ 5.3.5
 
-#. `SWIG <http://www.swig.org/>`__ >= 3.0.11
+#. `SWIG <http://www.swig.org/>`__ >= 4.0
 
-#. GTest or `Google <https://github.com/google/googletest>`__ >= 1.0.8
+#. GTest or `Google Test <https://github.com/google/googletest>`__ >= 1.10
    is needed if testing is enabled.
 
 
@@ -232,8 +230,9 @@ Testing
 -------
 
 After compilation the prudent thing to do is to test SimpleITK to
-ensure that your build is stable and suitable for installation and use.
-The following commands execute the SimpleITK tests.
+ensure that the build is stable and suitable for installation and use. To enable
+testing the cmake `BUILD_TESTING` variable must be enabled during the build process.
+Then the following commands execute the SimpleITK tests.
 
 .. code-block :: bash
 
@@ -263,11 +262,11 @@ To install a built python package into the system Python, as root run:
  cd SimpleITK-build/Wrapping/Python
  python setup.py install
 
-Alternatively, a Python virtual environment can be created and the
+Preferably, a Python virtual environment is created and the
 distribution installed there.
 
-A Python Wheel file (.whl) can be created in the "Wrapping/Python/dist"
-directory, by building the "dist" target. If you have used the
+A Python Wheel file (.whl) is built by the "dist" target and produced in the
+"Wrapping/Python/dist" directory. If you use the
 Superbuild with the "make" generator then issue the following command:
 
 .. code-block :: bash
@@ -285,13 +284,13 @@ To install a built R package:
  cd SimpleITK-build/Wrapping/R/Packaging
  R CMD INSTALL SimpleITK
 
-This will install the R package "SimpleITK" in /usr/local as root or
+This installs the R package "SimpleITK" in /usr/local as root or
 your local R installation directory.
 
-If you are working in a multi-user environment, and are considerate of
+If you work in a multi-user environment, and are considerate of
 your fellow users you can install the package in a local directory:
 
-#. Create a local directory where you will install your R packages
+#. Create a local directory to install your R packages
 
 .. code-block :: bash
 
