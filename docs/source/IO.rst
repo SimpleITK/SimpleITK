@@ -61,7 +61,7 @@ A more compact example using SimpleITK's procedural interface:
 
         import SimpleITK as sitk
 
-        image = sitk.ReadImage(inputImagefileName, sitk.sitkUnknown, "BMPImageIO")
+        image = sitk.ReadImage(inputImagefileName, imageIO="BMPImageIO")
         sitk.WriteImage(image, outputImagefileName)
 
 

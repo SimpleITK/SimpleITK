@@ -20,7 +20,7 @@ Does SimpleITK offer all the functionality as the C++ ITK?
 SimpleITK supports most ITK image filters (:ref:`see list <lbl_filter>`) and the
 IO and registration frameworks. It exposes fewer settings than ITK, hence the
 Simple in the name. The main ITK
-elements ommited from SimpleITK are the pipeline architecture,
+elements omitted from SimpleITK are the pipeline architecture,
 spatial objects framework, point sets, and the mesh framework.
 
 
@@ -276,19 +276,13 @@ Is my compiler supported?
 -------------------------
 
 SimpleITK uses advanced C++ meta-programming to instantiate ITK's Images
-and Filters. Additionally, we use some headers which are included in the
-C99 and C++ TR1 extension. Therefore SimpleITK places additional
-requirements on the compiler beyond what is required for ITK. In
-principle we require C++x03 with C99's "stdint.h" and TR1's
-"functional". If a compiler has those features it is likely able to
-be supported.
+and Filters. SimpleITK is developed to require the C++11 standard.
 
-The additional requirement for a supported compiler is that it is on the
-nightly dashboard. With this regard, the list of supported compilers is
-on the SimpleITK `SimpleITK
+In practice the list of compilers actively supported are those that are used for continuous
+testing and integration. These can be seen on the `SimpleITK
 dashboard <https://open.cdash.org/index.php?project=SimpleITK>`__. We
 welcome user contributions to the nightly dashboard to expand the list
-of supported compilers.
+of these compilers and contributions to fix additional compilation problems.
 
 Noted Problems
 ~~~~~~~~~~~~~~
@@ -296,66 +290,14 @@ Noted Problems
 -  Microsoft compilers before Visual Studio 14 (2015) have had memory
    limitation issues.
 
-Why am I getting a compilation error on OSX?
-------------------------------------------------------
 
-With SimpleITK <=0.7 the following error occurred during compilation on
-Apple OSX 10.9 Mavericks with **clang 5.0**:
+Are 32-bits architectures supported?
+-----------------------------------
 
-::
+While 32-bit binaries are no longer pre-compiled, the intel 32-architecture are still
+tested to help ensure robustness of the toolkit. Contributions and bug reports to support
+additional architectures are welcomed.
 
-         SimpleITK/Code/Common/include/sitkMemberFunctionFactoryBase.h:106:16:  error: no member named 'tr1' in namespace 'std'
-         typedef std::tr1::function< MemberFunctionResultType ( ) > FunctionObjectType;
-         ~~~~~^
-
-With Xcode 5.0, Apple's distributed version of clang (5.0) changed which
-implementation of the C++ Standard Library it uses by default. Previous
-versions of clang (4.2 and earlier) used `GNU's
-libstdc++ <https://gcc.gnu.org/libstdc++/>`__ , while clang 5.0 now uses
-`LLVM's libc++ <https://libcxx.llvm.org>`__. SimpleITK 0.7 and earlier
-require certain features from `C++
-tr1 <https://en.wikipedia.org/wiki/C%2B%2B_Technical_Report_1>`__ which
-are not implemented in LLVM's libc++ but are available in GNU's
-libstdc++.
-
-To build SimpleITK <=0.7 with clang 5.0, the compiler can be configured
-to use GNU's stdlibc++. This change must be done at the initial
-configuration:
-
-.. code-block :: bash
-
-        cmake "-DCMAKE_CXX_FLAGS:STRING=-stdlib=libstdc++" ../SimpleITK/SuperBuild
-
-NOTE: If there is already a build directory which has been partially
-configured, the contents must be deleted. The above line needs to be done
-for an initial configuration in an empty build directory. NOTE: This
-work around does not work when with the CMake "Xcode" generator. It is
-recommended to just use the default "Unix Makefiles" generator, to build
-SimpleITK, and get using SimpleITK, not building it.
-
-The following is a **compatibility table for clang 5.0**. It shows that
-the default of libc++ does not work with SimpleITK, while the other
-options do. The choice of which standard library to use and which C++
-language standard to use are independent.
-
-+---------------------------+------------------+---------------------+
-| Clang 5.0 compatibility   | -stdlib=libc++   | -stdlib=libstdc++   |
-+===========================+==================+=====================+
-| (c++03)                   | FAIL             | OK                  |
-+---------------------------+------------------+---------------------+
-| -std=c++11                | OK (>=0.8)       | OK                  |
-+---------------------------+------------------+---------------------+
-
-For SimpleITK >=0.8, support for the tr1 features migrated to C++11 has
-been improved with better feature detection, and the necessary flags are
-now automatically added. LLVM's libc++ will now work if compiling with
-the C++11 standard by adding the flag "-std=c++11" in the initial
-configuration.
-
-To further complicate dependencies and interactions, some downloadable
-languages such as Java, or R, may be compiled against GNU's libstdc++.
-This may cause a conflict in the types used in the interface resulting
-in compilation errors while wrapping the language.
 
 Why does the Superbuild fail compiling PCRE on Mac OS X?
 --------------------------------------------------------
@@ -384,21 +326,11 @@ To reset the default command line tools path:
 
    xcode-select --reset
 
-Do I need to download an option package for TR1 support?
---------------------------------------------------------
-
-Visual Studio 2008 requires an additional download for TR1 support. This
-support is best provided with the Service Pack 1. There is a separate
-TR1 feature pack which can be downloaded, but it is no longer
-recommended since Service Pack 1 includes TR1 and numerous bug and
-performance improvements.
-
 
 What Configurations on Windows are Supported For Building?
 ----------------------------------------------------------
 
-We recommend to use Microsoft Visual Studio 14 (2015) or newer to
-compile SimpleITK.
+We recommend using at least Microsoft Visual Studio 15 (2017) with MSVC v140 toolset.
 
 
 Where is the Test Data?
