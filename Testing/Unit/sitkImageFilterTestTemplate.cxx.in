@@ -285,7 +285,7 @@ end)
 
 $(if in_place then
     OUT=OUT..[=[
-  ASSERT_LE(1, inputs.size());
+  ASSERT_LE(1u, inputs.size());
   itk::simple::Image inPlaceOutput;
   itk::simple::Image temp = inputs[0];
   temp.MakeUnique();
