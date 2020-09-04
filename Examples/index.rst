@@ -9,6 +9,7 @@ Examples
 
   link_HelloWorld_docs
   link_CppCMake_docs
+  link_CppInPlace_docs
   link_CSharp_docs
   link_DemonsRegistration1_docs
   link_DemonsRegistration2_docs
