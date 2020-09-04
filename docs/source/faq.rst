@@ -292,7 +292,7 @@ Noted Problems
 
 
 Are 32-bits architectures supported?
------------------------------------
+------------------------------------
 
 While 32-bit binaries are no longer pre-compiled, the intel 32-architecture are still
 tested to help ensure robustness of the toolkit. Contributions and bug reports to support

@@ -98,7 +98,7 @@ First obtain the SimpleITK source code:
  git clone https://github.com/SimpleITK/SimpleITK.git
 
 
-.. _building-superbuild
+.. _building_superbuild
 
 Building using SuperBuild
 -------------------------
