@@ -5,7 +5,7 @@ Reading-Gaussian Blurring-Writing
 Overview
 --------
 
-Introductory example which demotrates the basics of reading, filtering,
+Introductory example which demonstrates the basics of reading, filtering,
 and writing an image. This examples works for any scalar or vector
 image type. It processes the image with a Gaussian blurring filter,
 which produces an image with floating point pixel type, then cast the
