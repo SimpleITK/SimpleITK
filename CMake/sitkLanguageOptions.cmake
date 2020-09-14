@@ -26,7 +26,7 @@ mark_as_advanced(WRAP_DEFAULT)
 # Modified Variables:
 #  - _do_find_package - always defined, true if find_pacakge for
 #    languages should be run.
-#  - _find_package_extra_args - may be set to `REQUIRED` of `QUIET` as
+#  - _find_package_extra_args - may be set to `REQUIRED` or `QUIET` as
 #    needed.
 #  - WRAP_<languageName>_DEFAULT - may be set to `ON` or `OFF` if it
 #    can be determined with out a find_package call
