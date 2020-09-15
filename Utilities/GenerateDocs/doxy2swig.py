@@ -474,7 +474,7 @@ class Doxy2R(Doxy2SWIG):
 
     def rdescape(self, value):
         """escape percent signs in Rd files"""
-        v1=self.Rdpercent.sub(r"\%", value)
+        v1=self.Rdpercent.sub(r"\\%", value)
         v1=self.escapedquote.sub(r'"', v1)
         return(v1)
 
