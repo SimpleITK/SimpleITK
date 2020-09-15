@@ -251,6 +251,7 @@ be the Release configuration, as such:
 Installation from Build Tree
 ----------------------------
 
+.. _python_installation:
 
 Python Installation
 ^^^^^^^^^^^^^^^^^^^
