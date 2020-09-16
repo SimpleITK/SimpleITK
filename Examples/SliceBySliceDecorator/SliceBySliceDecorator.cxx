@@ -83,7 +83,7 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
         extract_size.begin(), extract_size.begin() + iter_dim));
 
 
-    while (extract_index.back() < image.GetSize().back())
+    while (static_cast<unsigned int>(extract_index.back()) < image.GetSize().back())
     {
       extractor.SetIndex(extract_index);
 
@@ -100,7 +100,7 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
       for (unsigned int e = iter_dim; e + 1 < dim; ++e)
       {
         // if the index element is beyond the size, propagate to next element.
-        if (extract_index[e] > image.GetSize()[e])
+        if (static_cast<unsigned int>(extract_index[e]) > image.GetSize()[e])
         {
           extract_index[e] = 0;
           ++extract_index[e + 1];
