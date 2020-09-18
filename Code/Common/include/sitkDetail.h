@@ -50,6 +50,13 @@ struct DualExecuteInternalAddressor
     {
       return &ObjectType::template DualExecuteInternal< TImageType1, TImageType2 >;
     }
+
+
+  template< typename TImageType>
+  TMemberFunctionPointer operator() ( ) const
+  {
+    return &ObjectType::template DualExecuteInternal< TImageType, TImageType >;
+  }
 };
 
 /** An addressor of ExecuteInternalCast to be utilized with

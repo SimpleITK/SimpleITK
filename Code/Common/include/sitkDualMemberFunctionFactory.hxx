@@ -45,8 +45,8 @@ struct DualMemberFunctionInstantiater
   DualMemberFunctionInstantiater( TMemberFunctionFactory &factory )
     : m_Factory( factory )
     {}
-  template <class TPixelIDType1, class TPixelIDType2>
 
+  template <class TPixelIDType1, class TPixelIDType2 = TPixelIDType1>
   typename std::enable_if< IsInstantiated<TPixelIDType1,VImageDimension>::Value &&
                               IsInstantiated<TPixelIDType2,VImageDimension>::Value >::type
   operator()( TPixelIDType1* t1=nullptr, TPixelIDType2*t2=nullptr ) const
@@ -63,7 +63,7 @@ struct DualMemberFunctionInstantiater
     }
 
   // this methods is conditionally enabled when the PixelID is not instantiated
-  template <class TPixelIDType1, class TPixelIDType2>
+  template <class TPixelIDType1, class TPixelIDType2 = TPixelIDType1>
   typename std::enable_if< ! (IsInstantiated<TPixelIDType1,VImageDimension>::Value &&
                               IsInstantiated<TPixelIDType2,VImageDimension>::Value) >::type
   operator()( TPixelIDType1*t1=nullptr, TPixelIDType2*t2=nullptr ) const
@@ -126,6 +126,21 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
 
   // initialize function array with pointer
   typelist::DualVisit<TPixelIDTypeList1, TPixelIDTypeList2> visitEachComboInLists;
+  visitEachComboInLists( InstantiaterType( *this ) );
+}
+
+
+template <typename TMemberFunctionPointer>
+template < typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor >
+void
+DualMemberFunctionFactory< TMemberFunctionPointer >
+::RegisterMemberFunctions( )
+{
+
+  using InstantiaterType = DualMemberFunctionInstantiater< Self, VImageDimension, TAddressor >;
+
+  // initialize function array with pointer
+  typelist::Visit<TPixelIDTypeList> visitEachComboInLists;
   visitEachComboInLists( InstantiaterType( *this ) );
 }
 
