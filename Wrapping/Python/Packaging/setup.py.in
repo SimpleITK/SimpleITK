@@ -52,6 +52,7 @@ setup(
     platforms = [],
     description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
     long_description = long_description,
+    long_description_content_type='text/markdown',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
