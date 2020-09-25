@@ -48,7 +48,7 @@ setup(
     author_email = 'insight-users@itk.org',
     ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'])],
     packages= ['SimpleITK'],
-    data_files = [("", doc_files)],
+    package_data = {"SimpleITK": doc_files},
     platforms = [],
     description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
     long_description = long_description,
