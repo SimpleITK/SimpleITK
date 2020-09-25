@@ -343,6 +343,55 @@ class TransformTests(unittest.TestCase):
         tx_c.SetCenter([9, 10])
         self.assertNotEqual(tx.GetCenter(), tx_c.GetCenter())
 
+    def test_readwrite(self):
+        """Test reading and writing transforms"""
+
+        transforms = {
+            'AffineTransform': (3,),
+            'AffineTransform': (2,),
+            'BSplineTransform': (3, 3),
+            'BSplineTransform': (2, 3),
+            'BSplineTransform': (2, 2),
+            'DisplacementFieldTransform': (3,),
+            'DisplacementFieldTransform': (2,),
+            'Euler2DTransform': (),
+            'Euler3DTransform': (),
+            'ScaleSkewVersor3DTransform': (),
+            'ScaleTransform': (2,),
+            'ScaleTransform': (3,),
+            'ScaleVersor3DTransform': (),
+            'Similarity2DTransform': (),
+            'Similarity3DTransform': (),
+            'Transform': (),
+            'TranslationTransform': (3,),
+            'TranslationTransform': (2,),
+            'VersorRigid3DTransform': (),
+            'VersorTransform': (),
+            'CompositeTransform' : (3,)
+        }
+
+        extensions = [
+            "txt",
+            "tfm",
+            "xfm", # requires ITKIOTransformMINC module enabled
+            "hdf",
+            "mat"
+        ]
+
+        tx_extension = "txt"
+
+        for ext in extensions:
+            for k, v in transforms.items():
+
+                fname = os.path.join(self.test_dir, "test_readwrite_"+k+"."+tx_extension)
+
+                print("Testing I/O {0} with {1}".format(k,ext))
+                tx = getattr(sitk, k)(*v)
+
+                sitk.WriteTransform(tx, fname)
+                read_tx = sitk.ReadTransform(fname)
+                self.assertEqual(tx, read_tx.Downcast())
+
 
 if __name__ == '__main__':
 
