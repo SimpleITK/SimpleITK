@@ -92,7 +92,10 @@ public:
 
   /** \brief Set the full path to the viewing application used in the command string.
    *
-   * The SetApplication method expects a full path name.
+   * The SetApplication method expects a full path name to the display
+   * application's executable.  For instance, on Windows when using Fiji, one
+   * would use the full path to the ImageJ-win64.exe such as
+   * \c C:\\Users\dave\Fiji.app\ImageJ-win64.exe
    *
    * Using this method overrides the default application search.
    *
