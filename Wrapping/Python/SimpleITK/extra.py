@@ -292,6 +292,9 @@ def GetImageFromArray(arr, isVector=None):
         id = _get_sitk_pixelid(z)
         shape = z.shape[::-1]
 
+    if 0 in shape:
+        raise ValueError('One or more dimensions of the array are zero sized.')
+
     # SimpleITK throws an exception if the image dimension is not supported
     img = Image(shape, id, number_of_components)
 

@@ -87,6 +87,8 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
         img = sitk.GetImageFromArray( sitk.GetArrayFromImage( img ) )
 
         self.assertEqual( h, sitk.Hash( img ))
+        # Do not accept a numpy array with one or more zero dimensions
+        self.assertRaises(ValueError, sitk.GetImageFromArray(np.zeros((40, 0, 1), dtype=np.uint64))
 
     def test_isVector(self):
         """ Test Behavior of isVector option. """
