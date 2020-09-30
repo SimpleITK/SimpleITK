@@ -58,7 +58,7 @@
 %ignore itk::simple::Image::GetITKBase( void );
 %ignore itk::simple::Image::GetITKBase( void ) const;
 
-#ifndef SWIGCSHARP
+#if !(defined(SWIGCSHARP) || defined(SWIGJAVA))
 %ignore itk::simple::Image::GetBufferAsInt8;
 %ignore itk::simple::Image::GetBufferAsUInt8;
 %ignore itk::simple::Image::GetBufferAsInt16;
