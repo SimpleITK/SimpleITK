@@ -135,6 +135,18 @@ public:
     using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
     this->RegisterMemberFunctions< TPixelIDTypeList1, TPixelIDTypeList2, VImageDimension, AddressorType>();
   }
+
+  template < typename TPixelIDTypeList,
+      unsigned int VImageDimension,
+      typename TAddressor >
+  void RegisterMemberFunctions( );
+  template < typename TPixelIDTypeList,
+      unsigned int VImageDimension >
+  void RegisterMemberFunctions( )
+  {
+    using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
+    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType>();
+  }
   /** @} */
 
   /** \brief Query to determine if an member function has been
