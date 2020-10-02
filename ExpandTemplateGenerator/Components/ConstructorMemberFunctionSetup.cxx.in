@@ -4,7 +4,6 @@ $(if custom_register then
   OUT='  ${custom_register}'
 else
 OUT = [[
-  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, 3 > ();
 ]]
 end)
