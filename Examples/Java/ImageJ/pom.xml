@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.scijava</groupId>
+        <artifactId>pom-scijava</artifactId>
+        <version>29.2.1</version>
+        <relativePath />
+    </parent>
+
+    <groupId>org.simpleitk</groupId>
+    <artifactId>imagej-simpleitk-example_</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <name>SimpleITK-ImageJ Example plugin</name>
+    <description>A Maven project implementing an ImageJ plugin which uses SimpleITK.</description>
+    <url>http://simpleitk.org/</url>
+    <inceptionYear>2020</inceptionYear>
+    <organization>
+        <name>SimpleITK</name>
+        <url>http://simpleitk.org/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Simplified BSD License</name>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>haesleinhuepf</id>
+            <name>Robert Haase</name>
+            <url>https://imagej.net/User:Haesleinhuepf</url>
+            <roles>
+                <role>lead</role>
+                <role>developer</role>
+                <role>debugger</role>
+                <role>reviewer</role>
+                <role>support</role>
+                <role>maintainer</role>
+            </roles>
+        </developer>
+    </developers>
+    <contributors>
+        <contributor>
+            <name>none</name>
+        </contributor>
+    </contributors>
+
+    <mailingLists>
+        <mailingList>
+            <name>Image.sc Forum</name>
+            <archive>https://forum.image.sc/tags/imagej</archive>
+        </mailingList>
+    </mailingLists>
+
+    <scm>
+        <connection>scm:git:git://github.com/simpleitk/simpleitk/</connection>
+        <developerConnection>scm:git:git@github.com:simpleitk/simpleitk/</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/simpleitk/simpleitk/</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/simpleitk/simpleitk/</url>
+    </issueManagement>
+    <ciManagement>
+        <system>None</system>
+    </ciManagement>
+
+    <properties>
+        <package-name>org.simpleitk.imagej</package-name>
+        <main-class>org.simpleitk.imagej.ExamplePlugin</main-class>
+        <license.licenseName>bsd_2</license.licenseName>
+        <license.copyrightOwners>Robert Haase, MPI CBG, SimpleITK Team</license.copyrightOwners>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.imagej</groupId>
+            <artifactId>ij</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.haesleinhuepf</groupId>
+            <artifactId>clij-coremem</artifactId>
+            <version>2.0.0.10</version>
+        </dependency>
+        <dependency>
+            <artifactId>.simpleitk.</artifactId>
+            <groupId>..</groupId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>C:/structure/code/simpleitk/SimpleITK-2.1.0.dev15-Java-win64/simpleitk-2.1.0.dev15.jar</systemPath>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>imagej.releases</id>
+            <url>http://maven.imagej.net/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>clij</id>
+            <url>http://dl.bintray.com/haesleinhuepf/clij</url>
+        </repository>
+    </repositories>
+</project>
