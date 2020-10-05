@@ -23,6 +23,10 @@ if(NOT DEFINED Module_SimpleITKFilters)
   set(Module_SimpleITKFilters ON)
 endif()
 
+if (NOT DEFINED Module_ITKIOTransformMINC)
+  set(Module_ITKIOTransformMINC ON)
+endif()
+
 get_cmake_property( _varNames VARIABLES )
 
 foreach (_varName ${_varNames})
