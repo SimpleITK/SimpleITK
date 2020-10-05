@@ -1,0 +1,9 @@
+{
+  # Symbols marked as 'local' are not exported
+  local:
+    extern "C++" {
+      # The C++11 versioned symbol appears to conflict with the C++17 version between
+      # versions is libstdc++, so the symbol is marked local to avoid conflict.
+      *std::__once_call*;
+    };
+};
