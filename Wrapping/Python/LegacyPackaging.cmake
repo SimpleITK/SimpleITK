@@ -1,18 +1,26 @@
 if ( SimpleITK_DOC_FILES )
-  # create a python list for the import documents to include in
-  # packaging
+  # Copy the documentation files into the SimpleITK python package
+  # directory under "docs" sub-directory. And create a list of the
+  # copied files in the python list syntax.
 
-  # specially handle the first element
-  list( GET SimpleITK_DOC_FILES 0 d )
-  file(TO_NATIVE_PATH "${d}" d )
-  set( SimpleITK_DOC_FILES_AS_LIST "[r'${d}'")
-  set( _doc_list "${SimpleITK_DOC_FILES}" )
-  list( REMOVE_AT _doc_list 0 )
+  set( SimpleITK_DOC_FILES_AS_LIST "")
 
-  foreach( d ${_doc_list} )
-    file(TO_NATIVE_PATH "${d}" d )
-    set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST},r'${d}'")
+  foreach( d ${SimpleITK_DOC_FILES} )
+    get_filename_component(fn "${d}" NAME)
+    set(_out "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/docs/${fn}")
+    configure_file(
+      "${d}"
+      "${_out}"
+     COPYONLY )
+
+    file(TO_NATIVE_PATH "${_out}" d )
+    if (SimpleITK_DOC_FILES_AS_LIST STREQUAL "")
+        set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST}[r'${_out}'")
+    else()
+        set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST},r'${_out}'")
+    endif()
   endforeach()
+
   set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST}]")
 
 endif()
