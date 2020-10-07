@@ -99,8 +99,8 @@ enum PixelIDValueEnum {
   sitkInt64 = PixelIDToPixelIDValue< BasicPixelID<int64_t> >::Result,   ///< Signed 64 bit integer
   sitkFloat32 = PixelIDToPixelIDValue< BasicPixelID<float> >::Result,   ///< 32 bit float
   sitkFloat64 = PixelIDToPixelIDValue< BasicPixelID<double> >::Result,  ///< 64 bit float
-  sitkComplexFloat32 = PixelIDToPixelIDValue< BasicPixelID<std::complex<float> > >::Result,  ///< compelex number of 32 bit float
-  sitkComplexFloat64 = PixelIDToPixelIDValue< BasicPixelID<std::complex<double> > >::Result,  ///< compelex number of 64 bit float
+  sitkComplexFloat32 = PixelIDToPixelIDValue< BasicPixelID<std::complex<float> > >::Result,  ///< complex number of 32 bit float
+  sitkComplexFloat64 = PixelIDToPixelIDValue< BasicPixelID<std::complex<double> > >::Result,  ///< complex number of 64 bit float
   sitkVectorUInt8 = PixelIDToPixelIDValue< VectorPixelID<uint8_t> >::Result, ///< Multi-component of unsigned 8 bit integer
   sitkVectorInt8 = PixelIDToPixelIDValue< VectorPixelID<int8_t> >::Result, ///< Multi-component of signed 8 bit integer
   sitkVectorUInt16 = PixelIDToPixelIDValue< VectorPixelID<uint16_t> >::Result, ///< Multi-component of unsigned 16 bit integer
@@ -124,7 +124,7 @@ const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueEnum ty
 /** \brief Function mapping enumeration names in std::string to values
  *
  * This function is intended for use by the R bindings. R stores the enumeration values
- * using the names : "sitkUnkown", "sitkUInt8", etc from PixelIDValueEnum above.
+ * using the names : "sitkUnknown", "sitkUInt8", etc from PixelIDValueEnum above.
  * This function is used to provide the integer values using calls like:
  *
  * val = GetPixelIDValueFromString("sitkInt32")

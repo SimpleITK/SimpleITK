@@ -392,9 +392,9 @@ struct SITK_ABI_HIDDEN DualVisit
 *
 * The procedural algorithm for this code is:
 * \code
-*  foreach leftType in TLeftTypList
+*  foreach leftType in TLeftTypeList
 *    foreach rightType in TRightTypeList
-*      visit( leftType, rightTYpe )
+*      visit( leftType, rightType )
 * \endcode
 *
 * Where inner loop has been unwound in to a tail recursive templated

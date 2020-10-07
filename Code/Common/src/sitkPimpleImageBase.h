@@ -30,12 +30,12 @@ namespace itk
   /** \class PimpleImageBase
    * \brief Private implementation idiom image base class
    *
-   * We utilize the private implementation ( or PImple)
+   * We utilize the private implementation ( or PImpl)
    * programming idiom to modify the behavior of the simple image
    * class based on the different image types.
    *
    * This class is designed to utilize the trivial copy,
-   * and assgnement operators
+   * and assignment operators
    */
   class SITKCommon_HIDDEN PimpleImageBase
   {

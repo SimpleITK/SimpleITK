@@ -33,7 +33,7 @@ class SmartPointer;
   namespace simple {
 
     /** \class ImageReaderBase
-     * \brief An abract base class for image readers
+     * \brief An abstract base class for image readers
      *
      */
     class SITKIO_EXPORT ImageReaderBase :

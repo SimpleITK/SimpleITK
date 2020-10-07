@@ -30,7 +30,7 @@ namespace itk {
 /** \class HashImageFilter
  * \brief Generates a hash string from an image.
  *
- * \note This class utlizes low level buffer pointer access, to work
+ * \note This class utilizes low level buffer pointer access, to work
  * with itk::Image and itk::VectorImage. It is modeled after the access
  * an ImageFileWriter provides to an ImageIO.
  *

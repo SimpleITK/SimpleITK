@@ -46,7 +46,7 @@ namespace detail
  *  Image::Pointer ExecuteInternal( Image::Pointer );
  *  \endcode
  *
- *  The  provided Addressor will instantiate the templeted
+ *  The  provided Addressor will instantiate the templated
  *  member functions by taking the address in the
  *  RegisterMethods. Later they can be retrieve with the
  *  GetMemberFunction method, which returns a function object with the
