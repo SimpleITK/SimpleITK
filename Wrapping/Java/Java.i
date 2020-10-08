@@ -24,12 +24,15 @@
   }
 %}
 
+%include "JavaBufferHelper.i"
 %include "JavaDoc.i"
 
 // Make Java method names follow the naming conventions
 // See the swig.swg file, and ruby.swg for details on how this works
 // Documented in: http://www.swig.org/Doc2.0/SWIG.html#SWIG_advanced_renaming
 %rename("%(firstlowercase)s", %$isfunction ) "";
+
+%rename( getBufferAsByteBuffer ) itk::simple::Image::GetBufferAsVoid;
 
 // Enable Java classes derived from Command Execute method to be
 // called from C++
