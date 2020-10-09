@@ -36,7 +36,7 @@ class SmartPointer;
 namespace simple {
 namespace ioutils {
 
-/* Internal method which prints all registed ImageIO names and the
+/* Internal method which prints all registered ImageIO names and the
  * file extensions they report as supporting.
  */
 SITKIO_HIDDEN void PrintRegisteredImageIOs(std::ostream & out);

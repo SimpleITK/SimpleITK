@@ -85,8 +85,8 @@ class ImageIOBase;
       /** \brief Enable compression if available for file type.
        *
        * These methods Set/Get/Toggle the UseCompression flag which
-       * get's passed to image file's itk::ImageIO object. This is
-       * only a request as not all file formatts support compression.
+       * gets passed to image file's itk::ImageIO object. This is
+       * only a request as not all file formats support compression.
        * @{ */
       SITK_RETURN_SELF_TYPE_HEADER SetUseCompression( bool UseCompression );
       bool GetUseCompression( ) const;

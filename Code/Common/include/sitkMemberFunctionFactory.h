@@ -41,7 +41,7 @@ namespace detail {
  *  type alias Self& (Self::*MemberFunctionType)( Image* );
  *  \endcode
  *
- *  The RegisterMemberFunctions instantiate the templeted member
+ *  The RegisterMemberFunctions instantiate the templated member
  *  functions and registers the member function pointer, so that it
  *  be used for dispatch later. Later they can be retrieve
  *  with the GetMemberFunction methods, which return a function object

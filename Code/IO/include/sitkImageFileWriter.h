@@ -72,7 +72,7 @@ class SmartPointer;
       /** \brief Enable compression if available for file type.
        *
        * These methods Set/Get/Toggle the UseCompression flag which
-       * get's passed to image file's itk::ImageIO object. This is
+       * gets passed to image file's itk::ImageIO object. This is
        * only a request as not all file formats support compression.
        * @{ */
       SITK_RETURN_SELF_TYPE_HEADER SetUseCompression( bool UseCompression );
@@ -123,7 +123,7 @@ class SmartPointer;
       /** \brief Use the original study/series/frame of reference.
        *
        * These methods Set/Get/Toggle the KeepOriginalImageUID flag which
-       * get's passed to image file's itk::ImageIO object. This is
+       * gets passed to image file's itk::ImageIO object. This is
        * relevant only for the DICOM file format, configuring the writer
        * to use the information in the image's meta-data dictionary or
        * to create new study/series/frame of reference values.
