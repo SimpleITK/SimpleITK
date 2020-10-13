@@ -9,10 +9,14 @@ except ImportError:
     from distutils.command.build_ext import build_ext as _build_ext
 
 import re
+import os.path as osp
 
 from SimpleITK._version import __version__
 
-doc_files = @SimpleITK_DOC_FILES_AS_LIST@
+def to_package_relpath(filename, pkg_name='SimpleITK'):
+    return osp.relpath(filename, osp.join(os.curdir, pkg_name))
+
+doc_files = [to_package_relpath(f) for f in @SimpleITK_DOC_FILES_AS_LIST@]
 
 with open('@SimpleITK_SOURCE_DIR@/Readme.md', encoding='utf-8') as f:
     long_description = f.read()
@@ -48,7 +52,7 @@ setup(
     author_email = 'insight-users@itk.org',
     ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'])],
     packages= ['SimpleITK'],
-    data_files = [("", doc_files)],
+    package_data = {"SimpleITK": doc_files},
     platforms = [],
     description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
     long_description = long_description,
