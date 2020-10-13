@@ -23,6 +23,7 @@
 #include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.h"
 #include "sitkPixelIDTypeLists.h"
+#include "sitkConditional.h"
 
 #include <utility>
 
@@ -138,6 +139,63 @@ namespace itk
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetNumberOfPixels();
     }
+
+  unsigned int Image::GetSizeOfPixelComponent( ) const
+    {
+    switch( this->GetPixelIDValue() )
+      {
+      case ConditionalValue< sitkVectorUInt8 != sitkUnknown, sitkVectorUInt8, -14 >::Value:
+      case ConditionalValue< sitkUInt8 != sitkUnknown, sitkUInt8, -2 >::Value:
+        return sizeof( uint8_t );
+        break;
+      case ConditionalValue< sitkVectorInt8 != sitkUnknown, sitkVectorInt8, -15 >::Value:
+      case ConditionalValue< sitkInt8 != sitkUnknown, sitkInt8, -3 >::Value:
+        return sizeof( int8_t );
+        break;
+      case ConditionalValue< sitkVectorUInt16 != sitkUnknown, sitkVectorUInt16, -16 >::Value:
+      case ConditionalValue< sitkUInt16 != sitkUnknown, sitkUInt16, -4 >::Value:
+        return sizeof( uint16_t );
+        break;
+      case ConditionalValue< sitkVectorInt16 != sitkUnknown, sitkVectorInt16, -17 >::Value:
+      case ConditionalValue< sitkInt16 != sitkUnknown, sitkInt16, -5 >::Value:
+        return sizeof( int16_t );
+        break;
+      case ConditionalValue< sitkVectorUInt32 != sitkUnknown, sitkVectorUInt32, -18 >::Value:
+      case ConditionalValue< sitkUInt32 != sitkUnknown, sitkUInt32, -6 >::Value:
+        return sizeof( uint32_t );
+        break;
+      case ConditionalValue< sitkVectorInt32 != sitkUnknown, sitkVectorInt32, -19 >::Value:
+      case ConditionalValue< sitkInt32 != sitkUnknown, sitkInt32, -7 >::Value:
+        return sizeof( int32_t );
+        break;
+      case ConditionalValue< sitkVectorUInt64 != sitkUnknown, sitkVectorUInt64, -20 >::Value:
+      case ConditionalValue< sitkUInt64 != sitkUnknown, sitkUInt64, -8 >::Value:
+        return sizeof( uint64_t );
+        break;
+      case ConditionalValue< sitkVectorInt64 != sitkUnknown, sitkVectorInt64, -21 >::Value:
+      case ConditionalValue< sitkInt64 != sitkUnknown, sitkInt64, -9 >::Value:
+        return sizeof( int64_t );
+        break;
+      case ConditionalValue< sitkVectorFloat32 != sitkUnknown, sitkVectorFloat32, -22 >::Value:
+      case ConditionalValue< sitkFloat32 != sitkUnknown, sitkFloat32, -10 >::Value:
+        return sizeof( float );
+        break;
+      case ConditionalValue< sitkVectorFloat64 != sitkUnknown, sitkVectorFloat64, -23 >::Value:
+      case ConditionalValue< sitkFloat64 != sitkUnknown, sitkFloat64, -11 >::Value:
+        return sizeof( double );
+        break;
+      case ConditionalValue< sitkComplexFloat32 != sitkUnknown, sitkComplexFloat32, -12 >::Value:
+        return 2*sizeof( float );
+        break;
+      case ConditionalValue< sitkComplexFloat64 != sitkUnknown, sitkComplexFloat64, -13 >::Value:
+        return 2*sizeof( double );
+        break;
+      case sitkUnknown:
+      default:
+        return 0;
+      }
+    }
+
 
     std::string Image::GetPixelIDTypeAsString( ) const
     {
