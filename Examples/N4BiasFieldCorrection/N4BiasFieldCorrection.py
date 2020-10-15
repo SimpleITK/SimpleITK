@@ -61,3 +61,4 @@ sitk.WriteImage(output, sys.argv[2])
 
 if ("SITK_NOSHOW" not in os.environ):
     sitk.Show(output, "N4 Corrected")
+    sitk.Show(corrector.GetLogBiasFieldAsImage(inputImage), "N4 Bias Fields")
