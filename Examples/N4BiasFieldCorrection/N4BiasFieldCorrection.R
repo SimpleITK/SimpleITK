@@ -29,7 +29,8 @@ if (length(args) < 2) {
          "[maskImage], [numberOfIterations], [numberOfFittingLevels]")
 }
 
-inputImage <- ReadImage(args[[1]])
+inputImage <- ReadImage(args[[1]], 'sitkFloat32')
+image <- inputImage
 
 if (length( args ) > 4) {
     maskImage <- ReadImage( args[[4]], 'sitkUint8' )
@@ -38,7 +39,7 @@ if (length( args ) > 4) {
 }
 
 if (length( args ) > 3) {
-    inputImage <- Shrink( inputImage, rep(strtoi(args[3]), inputImage$GetDimension()) )
+    image <- Shrink( inputImage, rep(strtoi(args[3]), inputImage$GetDimension()) )
     maskImage <- Shrink( maskImage, rep(strtoi(args[3]), inputImage$GetDimension()) )
 }
 
@@ -56,6 +57,10 @@ if (length ( args ) > 5) {
     corrector$SetMaximumNumberOfIterations( rep(strtoi( args[[5]], numberFittingLevels)) )
 }
 
-output <- corrector$Execute( inputImage, maskImage )
+output <- corrector$Execute( image, maskImage )
+
+logBiasField <- corrector$GetLogBiasFieldAsImage(inputImage)
+
+output <- inputImage / Exp( logBiasField )
 
 WriteImage(output, args[[2]])

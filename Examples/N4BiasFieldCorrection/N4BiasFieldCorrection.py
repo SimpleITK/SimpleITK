@@ -29,7 +29,8 @@ if len(sys.argv) < 2:
           "[numberOfFittingLevels]")
     sys.exit(1)
 
-inputImage = sitk.ReadImage(sys.argv[1])
+inputImage = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
+image = inputImage
 
 if len(sys.argv) > 4:
     maskImage = sitk.ReadImage(sys.argv[4], sitk.sitkUint8)
@@ -37,12 +38,10 @@ else:
     maskImage = sitk.OtsuThreshold(inputImage, 0, 1, 200)
 
 if len(sys.argv) > 3:
-    inputImage = sitk.Shrink(inputImage,
+    image = sitk.Shrink(inputImage,
                              [int(sys.argv[3])] * inputImage.GetDimension())
     maskImage = sitk.Shrink(maskImage,
                             [int(sys.argv[3])] * inputImage.GetDimension())
-
-inputImage = sitk.Cast(inputImage, sitk.sitkFloat32)
 
 corrector = sitk.N4BiasFieldCorrectionImageFilter()
 
@@ -55,10 +54,14 @@ if len(sys.argv) > 5:
     corrector.SetMaximumNumberOfIterations([int(sys.argv[5])]
                                            * numberFittingLevels)
 
-output = corrector.Execute(inputImage, maskImage)
+output = corrector.Execute(image, maskImage)
+
+
+log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage)
+
+output = inputImage / sitk.Exp( log_bias_field )
 
 sitk.WriteImage(output, sys.argv[2])
 
 if ("SITK_NOSHOW" not in os.environ):
     sitk.Show(output, "N4 Corrected")
-    sitk.Show(corrector.GetLogBiasFieldAsImage(inputImage), "N4 Bias Fields")
