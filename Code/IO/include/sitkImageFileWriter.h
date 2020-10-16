@@ -165,10 +165,22 @@ class SmartPointer;
 
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image& image,
-    const std::string &fileName,
-    bool useCompression=false,
-    int compressionLevel=-1);
+  /**
+   * \brief WriteImage is a procedural interface to the ImageFileWriter.
+   *     class which is convenient for many image writing tasks.
+   *
+   *  \param image the input image to be written
+   *  \param fileName the filename of an Image e.g. "cthead.mha"
+   *  \param useCompression request to compress the written file
+   *  \param compressionLevel a hint for the amount of compression to
+   *    be applied during writing
+   *
+   * \sa itk::simple::ImageFileWriter for writing a single file.
+   */
+  SITKIO_EXPORT void WriteImage (const Image& image,
+                                 const std::string &fileName,
+                                 bool useCompression=false,
+                                 int compressionLevel=-1);
   }
 }
 

@@ -73,9 +73,9 @@ TEST(ImageViewerTest,Methods)
   delay = iv.GetProcessDelay();
 
 #ifdef _WIN32
-  EXPECT_EQ( delay, 1 );
+  EXPECT_EQ( delay, 1u );
 #else
-  EXPECT_EQ( delay, 500 );
+  EXPECT_EQ( delay, 500u );
 #endif
   iv.SetProcessDelay( delay );
   }

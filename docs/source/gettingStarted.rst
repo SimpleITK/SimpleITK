@@ -9,7 +9,7 @@ are available for the desired platform and language, or SimpleITK can be
 :ref:`built from the source code<building_simpleitk>`.
 
 In the following sections we describe how to install SimpleITK and
-additional auxiliary software tools.
+auxiliary software tools.
 
 After installing SimpleITK, we recommend going over the
 :ref:`latest tutorial <lbl_tutorials_courses>` and skimming
@@ -139,7 +139,7 @@ in the path.
 Latest binaries
 ----------------
 
-If the latest SimpleITK bug fixes or features are required then
+If the latest SimpleITK bug fixes and features are required then
 pre-release binaries are available. The pre-release binaries are built
 from the actively developed master branch. The SimpleITK packages are
 available on `Github releases
@@ -171,13 +171,15 @@ supports, including 3D vector images with n components per pixel.
 The Show function searches for Fiji/ImageJ in a number of standard locations.
 The exact locations depend on the system type (Linux, Mac or Windows).
 Enabling the **"debugOn**" option to **"Show**", allows the user to see
-where SimpleITK is searching for Fiji (or other viewing application),
+where SimpleITK is searching for Fiji (or other viewing application)
 and the actual command used to launch the viewing application.
 
-The Show function can also be configured to use some other viewing application
-via the SITK_SHOW_COMMAND environment variable.  More details can be found
-in the
-`Show documentation <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a86cb9e226d455efca3ba034dc2154605>`__
+Show is a functional interface to the `ImageViewer class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageViewer.html>`__.
+Other viewing applications can be configured using an ImageViewer object,
+see the following section of the :ref:`FAQ`:
+
+    :ref:`alt_viewer`.
+
 
 IPython and Jupyter
 -------------------

@@ -23,7 +23,9 @@ if(NOT DEFINED Module_SimpleITKFilters)
   set(Module_SimpleITKFilters ON)
 endif()
 
-set(Module_SimpleITKFilters_GIT_TAG c8c42430626f0123e7ec401c17c72c7d5ce82669 )
+if (NOT DEFINED Module_ITKIOTransformMINC)
+  set(Module_ITKIOTransformMINC ON)
+endif()
 
 get_cmake_property( _varNames VARIABLES )
 
@@ -55,7 +57,7 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/I
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-set(_DEFAULT_ITK_GIT_TAG "6eb2bb0005da1d32065dd91b44b3796d44a84f0f")
+set(_DEFAULT_ITK_GIT_TAG "5e598141dbf059c9490b9e438ac424cfac47f172")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")

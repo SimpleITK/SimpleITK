@@ -181,11 +181,11 @@ namespace itk {
    *  \param outputPixelType see ImageReaderBase::SetOutputPixelType
    *  \param imageIO see ImageReaderBase::SetImageIO
 
-   *     Note that when reading a series of images that have meta-data
-   *     associated with them (e.g. a DICOM series) the resulting
-   *     image will have an empty meta-data dictionary.
-   *     If you need the meta-data dictionaries associated with each
-   *     slice then you should use the ImageSeriesReader class.
+   *  \note When reading a series of images that have meta-data
+   *  associated with them (e.g. a DICOM series) the resulting
+   *  image will have an empty meta-data dictionary.
+   *  If you need the meta-data dictionaries associated with each
+   *  slice then you should use the ImageSeriesReader class.
    *
    * \sa itk::simple::ImageFileReader for reading a single file.
    * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.

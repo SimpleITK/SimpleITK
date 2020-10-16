@@ -1368,7 +1368,7 @@ TEST_F(sitkRegistrationMethodTest, BSpline_adaptor_inplace)
   EXPECT_EQ( outTx.GetNumberOfParameters(), 450u);
   EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
   EXPECT_EQ( outTx.GetParameters(), tx.GetParameters() );
-  ASSERT_EQ( cmd1.m_NumberOfParametersPerLevel.size(), 3);
+  ASSERT_EQ( cmd1.m_NumberOfParametersPerLevel.size(), 3u);
   EXPECT_EQ( cmd1.m_NumberOfParametersPerLevel[0], 72u);
   EXPECT_EQ( cmd1.m_NumberOfParametersPerLevel[1], 162u);
   EXPECT_EQ( cmd1.m_NumberOfParametersPerLevel[2], 450u);

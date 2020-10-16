@@ -87,6 +87,9 @@ typedef typelist::MakeTypeList<BasicPixelID<uint8_t>,
 #endif
                                >::Type UnsignedIntegerPixelIDTypeList;
 
+/** The convential type used for a mask image as a list */
+using MaskedPixelIDTypeList = typelist::MakeTypeList<BasicPixelID<uint8_t>>::Type;
+
 
 /** List of pixel ids which are real types for the itk::Image class.
  *

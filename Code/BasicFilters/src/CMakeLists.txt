@@ -110,7 +110,8 @@ list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKTransform
 set(SimpleITKBasicFiltersGeneratedSource_ITKTransform ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL "")
 
 list(APPEND SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters
-  sitkDICOMOrientImageFilter_Support.cxx )
+  sitkDICOMOrientImageFilter_Support.cxx
+  sitkPasteImageFilter.cxx)
 set(SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters ${SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters} CACHE INTERNAL "")
 
 list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon

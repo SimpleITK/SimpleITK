@@ -15,5 +15,7 @@
 #  limitations under the License.
 #
 # ========================================================================
-from .SimpleITK import *
-from .extra import *
+from SimpleITK.SimpleITK import *
+from SimpleITK.extra import *
+
+from SimpleITK._version import __version__

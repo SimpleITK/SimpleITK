@@ -9,41 +9,17 @@ except ImportError:
     from distutils.command.build_ext import build_ext as _build_ext
 
 import re
+import os.path as osp
 
-doc_files = @SimpleITK_DOC_FILES_AS_LIST@
+from SimpleITK._version import __version__
 
-def get_pep386version():
-    """This method examines the SimpleITK's CMake version variables to make a pep 386 compliant version string when building a version indented for distribution."""
-    sitkMAJOR = "@SimpleITK_VERSION_MAJOR@"
-    sitkMINOR = "@SimpleITK_VERSION_MINOR@"
-    sitkPATCH = "@SimpleITK_VERSION_PATCH@"
-    sitkTWEAK = "@SimpleITK_VERSION_TWEAK@"
-    sitkRC    = "@SimpleITK_VERSION_RC@"
-    sitkPOST  = "@SimpleITK_VERSION_POST@"
-    sitkDEV   = "@SimpleITK_VERSION_DEV@"
-    sitkHASH  = "@SimpleITK_VERSION_HASH@"
+def to_package_relpath(filename, pkg_name='SimpleITK'):
+    return osp.relpath(filename, osp.join(os.curdir, pkg_name))
 
+doc_files = [to_package_relpath(f) for f in @SimpleITK_DOC_FILES_AS_LIST@]
 
-    version = sitkMAJOR+"."+sitkMINOR
-
-    if sitkPATCH:
-        version += "."+sitkPATCH
-        if sitkTWEAK:
-            version += "."+sitkTWEAK
-
-    if  sitkRC:
-        version += sitkRC
-
-    if sitkPOST:
-        version += ".post"+sitkPOST
-    elif sitkDEV:
-        version += ".dev"+sitkDEV
-
-    # Local Version Identifier
-    if sitkHASH and not "@SimpleITK_BUILD_DISTRIBUTE@" in ['1', 'ON']:
-        version += "+g"+sitkHASH
-
-    return version
+with open('@SimpleITK_SOURCE_DIR@/Readme.md', encoding='utf-8') as f:
+    long_description = f.read()
 
 class build_ext(_build_ext):
     """ Override standard command class to build an extension, to
@@ -71,18 +47,16 @@ class build_ext(_build_ext):
 
 setup(
     name = 'SimpleITK',
-    version = get_pep386version(),
+    version = __version__,
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
     ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'])],
     packages= ['SimpleITK'],
-    data_files = [("", doc_files)],
-    download_url = r'https://www.simpleitk.org/doxygen/latest/html/PyDownloadPage.html',
+    package_data = {"SimpleITK": doc_files},
     platforms = [],
     description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
-    long_description  = 'SimpleITK provides an abstraction layer to ITK that enables developers \
-                         and users to access the powerful features of the InsightToolkit in an easy \
-                         to use manner for biomedical image analysis.',
+    long_description = long_description,
+    long_description_content_type='text/markdown',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
@@ -103,5 +77,10 @@ setup(
     license='Apache',
     keywords = 'SimpleITK ITK InsightToolkit segmentation registration',
     url = r'http://simpleitk.org/',
+    project_urls={
+        "Bug Tracker": "https://github.com/SimpleITK/SimpleITK/issues",
+        "Documentation": "https://simpleitk.readthedocs.io/en/release/",
+        "Source Code": "https://github.com/SimpleITK/SimpleITK",
+    },
     cmdclass={'build_ext':build_ext}
     )

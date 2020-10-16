@@ -31,13 +31,18 @@ namespace simple {
 $(include ConstructorSignature.cxx.in)
 {
 
-  using PixelIDTypeList2 = ${pixel_types2};
-
-
   this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
+$(if pixel_types2 then
+  OUT =  [[  using PixelIDTypeList2 = ${pixel_types2};]]
+end)$(if custom_register then
+  OUT='  ${custom_register}'
+else
+OUT = [[
 
   this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 > ();
   this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 > ();
+]]
+end)
 
 $(if vector_pixel_types_by_component then
   OUT=[[  using VectorByComponentsPixelIDTypeList = ${vector_pixel_types_by_component};

@@ -1,5 +1,33 @@
 
 
+%feature("docstring") NPasteImageFilter "
+
+Paste an image (or a constant value) into another image.
+
+
+NPasteImageFilter allows a region in a destination image to be filled with a source
+image or a constant pixel value. The SetDestinationIndex() method
+prescribes where in the destination input to start pasting data from
+the source input. The SetSourceRegion method prescribes the section of
+the second image to paste into the first. When a constant pixel value
+is set, the SourceRegion describes the size of the region filled. If
+the output requested region does not include the SourceRegion after it
+has been repositioned to DestinationIndex, then the output will just
+be a copy of the input.
+
+This filter supports running \"InPlace\" to efficiently reuses the
+destination image buffer for the output, removing the need to copy the
+destination pixels to the output.
+
+When the source image is a lower dimension than the destination image
+then the DestinationSkipAxes parameter specifies which axes in the
+destination image are set to 1 when copying the region or filling with
+a constant.
+
+C++ includes: sitkPasteImageFilter.h
+";
+
+
 %feature("docstring") itk::HashImageFilter "
 
 Generates a hash string from an image.
@@ -16060,8 +16088,8 @@ The ImageViewer class displays an image with an external image display applicati
 By default the class will search for a Fiji ( https://fiji.sc ) executable. The image is written out to a temporary file and then
 passed to the application.
 
-When SimpleITK is first invoked the following environment variables
-are queried to set up the external viewer:
+When the first ImageViewer object is constructed the following environment variables are queried
+to set up the external viewer:
 
 SITK_SHOW_EXTENSION: file format extension of the temporary image
 file. The default is '.mha', the MetaIO file format.
@@ -16069,7 +16097,7 @@ file. The default is '.mha', the MetaIO file format.
 SITK_SHOW_COMMAND: The user can specify an application other than Fiji
 to view images.
 
-These environment variables are only checked at SimpleITK's launch.
+The environment variables are not checked for subsequent ImageViewer objects.
 
 C++ includes: sitkImageViewer.h
 ";
@@ -25768,25 +25796,6 @@ Destructor
 
 
 %feature("docstring") itk::simple::PasteImageFilter "
-
-Paste an image into another image.
-
-
-PasteImageFilter allows you to take a section of one image and paste into another
-image. The SetDestinationIndex() method prescribes where in the first input to start pasting data from
-the second input. The SetSourceRegion method prescribes the section of
-the second image to paste into the first. If the output requested
-region does not include the SourceRegion after it has been
-repositioned to DestinationIndex, then the output will just be a copy
-of the input.
-
-The two inputs and output image will have the same pixel type.
-See:
- itk::simple::Paste for the procedural interface
-
- itk::PasteImageFilter for the Doxygen on the original ITK class.
-
-
 C++ includes: sitkPasteImageFilter.h
 ";
 
@@ -25799,10 +25808,31 @@ Execute the filter on the input image
 %feature("docstring")  itk::simple::PasteImageFilter::Execute "
 ";
 
+%feature("docstring")  itk::simple::PasteImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::PasteImageFilter::Execute "
+";
+
 %feature("docstring")  itk::simple::PasteImageFilter::GetDestinationIndex "
 
 Set/Get the destination index (where in the first input the second
 input will be pasted.
+
+";
+
+%feature("docstring")  itk::simple::PasteImageFilter::GetDestinationSkipAxes "
+
+Set/Get the array describing which axes in the destination image to
+skip
+
+The axes with true values are set to 1, to fill the difference between
+the dimension of the input and source image. The number of true values
+in DestinationSkipAxes plus the DestinationImageDimension must equal
+the InputImageDimension.
+
+By default this array contains SourceImageDimension false values
+followed by true values for the remainder.
 
 ";
 
@@ -25829,6 +25859,21 @@ parameters
 
 Set/Get the destination index (where in the first input the second
 input will be pasted.
+
+";
+
+%feature("docstring")  itk::simple::PasteImageFilter::SetDestinationSkipAxes "
+
+Set/Get the array describing which axes in the destination image to
+skip
+
+The axes with true values are set to 1, to fill the difference between
+the dimension of the input and source image. The number of true value
+in DestinationSkipAxes plus the DestinationImageDimension must equal
+the InputImageDimension.
+
+By default this array contains SourceImageDimension false values
+followed by true values for the remainder.
 
 ";
 
@@ -36489,6 +36534,15 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 %feature("docstring")  itk::Accessor::GE5ImageIOFactoryRegister__Private "
 ";
 
+%feature("docstring")  itk::Accessor::GenerateConnectedImageNeighborhoodShapeOffsets "
+";
+
+%feature("docstring")  itk::Accessor::GenerateImageNeighborhoodOffsets "
+";
+
+%feature("docstring")  itk::Accessor::GenerateRectangularImageNeighborhoodOffsets "
+";
+
 %feature("docstring")  itk::Accessor::Get64BitPragma "
 ";
 
@@ -36718,6 +36772,9 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
 %feature("docstring")  itk::Accessor::MakeFourierSeriesPathTraceChainCode "
+";
+
+%feature("docstring")  itk::Accessor::MakeImageBufferRange "
 ";
 
 %feature("docstring")  itk::Accessor::MatlabTransformIOFactoryRegister__Private "
@@ -37316,11 +37373,11 @@ see ImageReaderBase::SetOutputPixelType
 imageIO:
 see ImageReaderBase::SetImageIO
 
- Note that when reading a series of images that have meta-data
-associated with them (e.g. a DICOM series) the resulting image will
-have an empty meta-data dictionary. If you need the meta-data
-dictionaries associated with each slice then you should use the ImageSeriesReader class.
 
+When reading a series of images that have meta-data associated with
+them (e.g. a DICOM series) the resulting image will have an empty
+meta-data dictionary. If you need the meta-data dictionaries
+associated with each slice then you should use the ImageSeriesReader class.
 
 See:
  itk::simple::ImageFileReader for reading a single file.
@@ -37362,59 +37419,9 @@ See:
 
 %feature("docstring")  itk::simple::Show "
 
-Display an image using Fiji, ImageJ or another application.
+Display an image in an external viewer (Fiji by default)
 
-This function requires that Fiji ( https://fiji.sc ) or ImageJ ( http://rsb.info.nih.gov/ij/) be properly installed for Mac and Windows, and in the user's path
-for Linux. ImageJ must have a plugin for reading Nifti formatted files
-( http://www.loci.wisc.edu/bio-formats/imagej).
-
-Nifti is the default file format used to export images. A different
-format can be chosen by setting the SITK_SHOW_EXTENSION environment
-variable. For example, set SITK_SHOW_EXTENSION to \".png\" to use PNG
-format.
-
-The user can specify an application other than ImageJ to view images
-via the SITK_SHOW_COMMAND environment variable.
-
-The user can also select applications specifically for color images or
-3D images using the SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-environment variables.
-
-SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-allow the following tokens in their strings.\\\\li \\\\c \"%a\"  for the ImageJ application \\\\li \\\\c \"%f\"
-for SimpleITK's temporary image file
-
-For example, the default SITK_SHOW_COMMAND string on Linux systems is:
-
-
-After token substitution it may become:
-
-
-For another example, the default SITK_SHOW_COLOR_COMMAND string on Mac
-OS X is:
-
-
-After token substitution the string may become:
-
-
-The string after \"-eval\" is an ImageJ macro the opens the file and runs ImageJ's Make
-Composite command to display the image in color.
-
-If the \"%f\" token is not found in the command string, the temporary file name is
-automatically appended to the command argument list.
-
-When invoked, Show searches for Fiji first, and then ImageJ. Fiji is
-the most update-to-date version of ImageJ and includes a lot of
-plugins which facilitate scientific image analysis. By default, for a
-64-bit build of SimpleITK on Macs, sitkShow searches for ImageJ64.app.
-For a 32-bit Mac build, sitkShow searches for ImageJ.app. If the user
-prefers a different version of ImageJ (or a different image viewer
-altogether), it can be specified using the SITK_SHOW_COMMAND
-environment variable.
-
-The boolean parameter debugOn prints the search path Show uses to find
-ImageJ, the full path to the ImageJ it found, and the full command
-line used to invoke ImageJ.
+This function directly calls the execute method of ImageViewer in order to support a procedural API
 
 ";
 
@@ -37527,9 +37534,60 @@ compiler warning.
 ";
 
 %feature("docstring")  itk::simple::WriteImage "
+
+WriteImage is a procedural interface to the ImageSeriesWriter. class which is convenient for many image writing tasks.
+
+
+
+
+Parameters:
+
+image:
+the input image to be written
+
+fileNames:
+a vector of filenames of length equal to the number of slices in the
+image.
+
+useCompression:
+request to compress the written file
+
+compressionLevel:
+a hint for the amount of compression to be applied during writing.
+
+
+See:
+ itk::simple::ImageFileWriter for writing a single file.
+
+
 ";
 
 %feature("docstring")  itk::simple::WriteImage "
+
+WriteImage is a procedural interface to the ImageFileWriter. class which is convenient for many image writing tasks.
+
+
+
+
+Parameters:
+
+image:
+the input image to be written
+
+fileName:
+the filename of an Image e.g. \"cthead.mha\"
+
+useCompression:
+request to compress the written file
+
+compressionLevel:
+a hint for the amount of compression to be applied during writing
+
+
+See:
+ itk::simple::ImageFileWriter for writing a single file.
+
+
 ";
 
 %feature("docstring")  itk::simple::WriteTransform "
@@ -37842,6 +37900,12 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 %feature("docstring") itk::simple::hash< std::pair< S, T > > "
 C++ includes: sitkMemberFunctionFactoryBase.h
 ";
+
+
+%feature("docstring") itk::simple::hash< std::tuple< TupleArgs... > > "
+C++ includes: sitkMemberFunctionFactoryBase.h
+";
+
 
 %feature("docstring") itk::simple::scope_exit "
 C++ includes: sitkTemplateFunctions.h

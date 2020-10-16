@@ -1,11 +1,12 @@
 {
   "name" : "MaskNegatedImageFilter",
-  "template_code_filename" : "ImageFilter",
+  "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 0,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "filter_type" : "itk::MaskNegatedImageFilter<InputImageType, InputImageType,  OutputImageType>",
+  "pixel_types2" : "MaskedPixelIDTypeList",
+  "custom_register" : "this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();\n  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 > ();\n  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 > (); ",
   "include_files" : [
     "sitkToPixelType.hxx"
   ],
@@ -49,6 +50,16 @@
       "inputs" : [
         "Input/STAPLE1.png",
         "Input/STAPLE2.png"
+      ]
+    },
+    {
+      "tag" : "2d_uint8",
+      "description" : "2d with uint8 mask",
+      "settings" : [],
+      "md5hash" : "7e7fd456a83cc74ba3452761313d64f5",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/2th_cthead1.mha"
       ]
     }
   ],

@@ -55,6 +55,8 @@ add_subdirectory(DemonsRegistration1)
 add_subdirectory(DemonsRegistration2)
 add_subdirectory(RawImageReading)
 add_subdirectory(CppCMake)
+add_subdirectory(CppInPlace)
+add_subdirectory(SliceBySliceDecorator)
 
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)

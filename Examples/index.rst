@@ -9,6 +9,7 @@ Examples
 
   link_HelloWorld_docs
   link_CppCMake_docs
+  link_CppInPlace_docs
   link_CSharp_docs
   link_DemonsRegistration1_docs
   link_DemonsRegistration2_docs
@@ -33,6 +34,7 @@ Examples
   link_N4BiasFieldCorrection_docs
   link_SimpleGaussian_docs
   link_ImageViewing_docs
+  link_SliceBySliceDecorator_docs
   link_AdvancedImageReading_docs
   link_ImageIOSelection_docs
   link_RawImageReading_docs

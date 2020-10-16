@@ -17,10 +17,12 @@ if(NOT ExternalData_OBJECT_STORES)
   set(ExternalData_OBJECT_STORES "${CMAKE_BINARY_DIR}/ExternalData/Objects")
   file(MAKE_DIRECTORY "${ExternalData_OBJECT_STORES}")
 endif()
-list(APPEND ExternalData_OBJECT_STORES
-  # Local data store populated by the ITK pre-commit hook
-  "${SimpleITK_SOURCE_DIR}/.ExternalData"
-  )
+if (DEFINED SimpleITK_SOURCE_DIR AND EXISTS "${SimpleITK_SOURCE_DIR}/.ExternalData")
+  # Add source directory path
+  list(APPEND ExternalData_OBJECT_STORES
+          "${SimpleITK_SOURCE_DIR}/.ExternalData"
+    )
+endif()
 
 set(ExternalData_BINARY_ROOT ${CMAKE_BINARY_DIR}/ExternalData)
 
