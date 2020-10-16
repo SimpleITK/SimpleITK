@@ -37,7 +37,7 @@ namespace simple {
 *
 * All overloaded simpleITK operators are performed on a per-pixel
 * basis, and implemented with the corresponding image filters. These
-* operators gernerally don't work with label images, and the logical
+* operators generally don't work with label images, and the logical
 * operators don't work with images of real components or vector images.
 * @{
 */

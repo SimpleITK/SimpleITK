@@ -328,7 +328,7 @@ namespace itk {
       // an exception is throw.
       virtual itk::ProcessObject *GetActiveProcess( );
 
-      // overidable callback when the active process has completed
+      // overridable callback when the active process has completed
       virtual void OnActiveProcessDelete( );
 
       friend class itk::simple::Command;

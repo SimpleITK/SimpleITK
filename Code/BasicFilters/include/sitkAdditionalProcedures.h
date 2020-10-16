@@ -33,7 +33,7 @@ namespace simple {
  * \brief itk::simple::ResampleImageFilter Procedural Interface
  *
  * These functions call the execute method of ResampleImageFilter
- * in order to support a procedual API.
+ * in order to support a procedural API.
  *
  * The difference between the three functions is in the way the output
  * image's domain parameters are specified (origin, spacing,

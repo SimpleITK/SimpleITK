@@ -465,7 +465,7 @@ namespace simple
     /** \brief Methods called by the constructor to allocate and initialize
      * an image.
      *
-     * This method internally utlizes the member function factory to
+     * This method internally utilizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
     void Allocate ( const std::vector<unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
