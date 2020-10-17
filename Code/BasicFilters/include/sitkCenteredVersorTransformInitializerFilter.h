@@ -38,6 +38,7 @@ namespace itk {
 intended to initialize the center of rotation, versor, and translation
 of the VersorRigid3DTransform.
 
+
 This class is derived from the CenteredTransformInitializerFilter and uses it in
 a more constrained context. It always uses the Moments mode, and also
 takes advantage of the second order moments in order to initialize the
