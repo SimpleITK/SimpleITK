@@ -192,20 +192,27 @@ namespace simple
 
     /** \brief Get the number of components for each pixel
      *
-     * For scalar images this methods returns 1. For vector images the
-     * number of components for each pixel is returned.
+     * For images with scalar or complex pixel types this method
+     * returns one. For images with a vector pixel type the method
+     * returns the number of vector components per pixel.
      */
     unsigned int GetNumberOfComponentsPerPixel( ) const;
 
     /** \brief Get the number of pixels in the image
      *
-     * To Calculate the total number of values stored continuously for
+     * To calculate the total number of values stored continuously for
      * the image's buffer, the NumberOfPixels should be multiplied by
      * NumberOfComponentsPerPixel in order to account for multiple
      * component images.
      *
      */
     uint64_t GetNumberOfPixels( ) const;
+
+    /** \brief Get the number of bytes per component of a pixel.
+     *
+     * Returns the `sizeof` the pixel component type.
+     */
+    unsigned int GetSizeOfPixelComponent( ) const;
 
     /** Get/Set the Origin in physical space
      * @{
