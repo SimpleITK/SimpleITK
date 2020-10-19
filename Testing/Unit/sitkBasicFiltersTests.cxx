@@ -55,6 +55,7 @@
 #include <sitkSignedMaurerDistanceMapImageFilter.h>
 #include <sitkDICOMOrientImageFilter.h>
 #include <sitkPasteImageFilter.h>
+#include <sitkN4BiasFieldCorrectionImageFilter.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -1290,5 +1291,33 @@ TEST(BasicFilters, PasteImageFilter_3D_2D)
   output = paster.Execute(img, simg);
   EXPECT_EQ(0, output.GetPixelAsUInt16({12, 15, 15}));
   EXPECT_EQ(value, output.GetPixelAsUInt16({12, 13, 17}));
+
+}
+
+TEST(BasicFilters, N4BiasFieldCorrectionImageFilter_GetLogBiasField)
+{
+  namespace sitk = itk::simple;
+  sitk::Image img(100,100, sitk::sitkFloat32);
+
+  sitk::N4BiasFieldCorrectionImageFilter n4;
+
+  // test before execution
+  EXPECT_ANY_THROW(n4.GetLogBiasFieldAsImage(img));
+
+  n4.Execute(img);
+
+  n4.GetLogBiasFieldAsImage(img);
+
+  n4.GetLogBiasFieldAsImage(sitk::Image(15,15, sitk::sitkUInt8));
+  sitk::Image reference(200, 200, sitk::sitkLabelUInt8);
+  reference.SetOrigin( { 1.1, 2.2 } );
+  reference.SetSpacing( { 0.5, 0.4 } );
+  sitk::Image logBiasField = n4.GetLogBiasFieldAsImage(reference);
+
+
+  EXPECT_EQ( reference.GetSize(), logBiasField.GetSize() );
+  EXPECT_VECTOR_DOUBLE_NEAR( reference.GetOrigin(), logBiasField.GetOrigin(), 1e-8 );
+  EXPECT_VECTOR_DOUBLE_NEAR( reference.GetSpacing(), logBiasField.GetSpacing(), 1e-8 );
+  EXPECT_VECTOR_DOUBLE_NEAR( reference.GetDirection(), logBiasField.GetDirection(), 1e-8 );
 
 }
