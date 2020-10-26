@@ -27,6 +27,8 @@
 
 require "SimpleITK"
 
+local unpack = unpack or table.unpack
+
 inputs = 1
 $(if number_of_inputs then
     OUT=[[inputs = ${number_of_inputs}]]
