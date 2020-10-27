@@ -45,6 +45,20 @@
   $result = JCALL2(NewDirectByteBuffer, jenv, $1, size);
 }
 
+%ignore itk::simple::Image::GetBufferAsInt8();
+%ignore itk::simple::Image::GetBufferAsUInt8();
+%ignore itk::simple::Image::GetBufferAsInt16();
+%ignore itk::simple::Image::GetBufferAsUInt16();
+%ignore itk::simple::Image::GetBufferAsInt32();
+%ignore itk::simple::Image::GetBufferAsUInt32();
+%ignore itk::simple::Image::GetBufferAsInt64();
+%ignore itk::simple::Image::GetBufferAsUInt64();
+%ignore itk::simple::Image::GetBufferAsFloat();
+%ignore itk::simple::Image::GetBufferAsDouble();
+
+%ignore itk::simple::Image::GetBufferAsVoid( ) const;
+
+
 
 %rename( getBufferAsByteBuffer ) itk::simple::Image::GetBufferAsVoid;
 
@@ -95,7 +109,7 @@
 %}
 
 
-// Enableja Java classes derived from Command Execute method to be
+// Enable Java classes derived from Command Execute method to be
 // called from C++
 %feature("director") itk::simple::Command;
 
