@@ -3,6 +3,8 @@ trigger:
    tags:
      include:
        - '*'
+     exclude:
+       - latest
    branches:
      exclude:
        - '*'
