@@ -63,7 +63,7 @@ typename itk::Image<itk::Vector<double,NDimension>,NDimension>::Pointer
 
   if (inImage.GetPixelID() != sitkVectorFloat64)
     {
-    sitkExceptionMacro("Expected input displacement field image for be of pixel type: " << sitkVectorFloat64);
+    sitkExceptionMacro("Expected input displacement field image must be of pixel type: " << sitkVectorFloat64);
     }
 
   typename VectorImageType::Pointer image = dynamic_cast < VectorImageType* > ( inImage.GetITKBase() );
