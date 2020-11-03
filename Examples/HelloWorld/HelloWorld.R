@@ -54,4 +54,6 @@ face = Paste( face, mouth, mouthSize, mouthLoc, mouthLoc )
 image <- image + face
 
 # Display the results
-Show(image, "Hello World: R", debugOn=TRUE)
+if(Sys.getenv("SITK_NOSHOW") == "") {
+    Show(image, "Hello World: R", debugOn=TRUE)
+}

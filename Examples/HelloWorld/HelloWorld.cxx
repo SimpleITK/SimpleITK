@@ -67,6 +67,7 @@ int main ( int argc, char* argv[] ) {
   image = image + face;
 
   // Display the results
-  sitk::Show( image, "Hello World: C++", true );
+  if (getenv("SITK_NOSHOW") == NULL)
+    sitk::Show( image, "Hello World: C++", true );
 
 }

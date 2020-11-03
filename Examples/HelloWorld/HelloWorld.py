@@ -17,6 +17,7 @@
 #
 # =========================================================================
 
+import os
 import SimpleITK as sitk
 
 # Create an image
@@ -55,4 +56,5 @@ face = sitk.Paste(face, mouth, mouthSize, mouthLoc, mouthLoc)
 image = image + face
 
 # Display the results
-sitk.Show(image, title="Hello World: Python", debugOn=True)
+if ("SITK_NOSHOW" not in os.environ):
+    sitk.Show(image, title="Hello World: Python", debugOn=True)
