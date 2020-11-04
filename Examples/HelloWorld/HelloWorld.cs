@@ -64,7 +64,9 @@ namespace itk.simple.examples {
         // Apply the face to the original image
         image = SimpleITK.Add( image, face );
 
-        SimpleITK.Show( image, "Hello World: CSharp", true );
+        // Display the results
+        if (Environment.GetEnvironmentVariable("SITK_NOSHOW") == null)
+          SimpleITK.Show( image, "Hello World: CSharp", true );
 
       } catch (Exception ex) {
         Console.WriteLine(ex);

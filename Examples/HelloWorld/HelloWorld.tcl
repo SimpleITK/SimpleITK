@@ -54,4 +54,6 @@ set face [ Paste $face $mouth $mouthSize $mouthLoc $mouthLoc ]
 set img $face
 
 # Display the results
-Show $img "Hello World: TCL" 1
+if { ![info exists ::env(SITK_NOSHOW)] } {
+    Show $img "Hello World: TCL" 1
+}

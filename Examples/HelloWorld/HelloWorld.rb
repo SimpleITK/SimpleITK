@@ -76,4 +76,6 @@ face = Simpleitk::paste( face, mouth, mouthSize, mouthLoc, mouthLoc )
 # Apply the face to the original image
 image = Simpleitk.add( image, face )
 
-Simpleitk.show( image, "Hello World: Ruby", true )
+if (ENV["SITK_NOSHOW"] == "")
+    Simpleitk.show( image, "Hello World: Ruby", true )
+end

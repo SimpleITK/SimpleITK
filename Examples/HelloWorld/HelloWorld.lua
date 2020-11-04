@@ -79,4 +79,6 @@ face = sitk.Paste( face, mouth, mouthSize, mouthLoc, mouthLoc );
 image = sitk.Add( image, face )
 
 -- Display the results
-sitk.Show( image, "Hello World: Lua", true )
+if os.getenv("SITK_NOSHOW") == nil then
+    sitk.Show( image, "Hello World: Lua", true )
+end
