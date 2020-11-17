@@ -85,6 +85,38 @@ namespace itk.simple {
                 image /= image;
                 CheckHash(image, "287046eafd10b9984977f6888ea50ea50fe846b5", ref success);  
 
+                image = new Image(100, 100, PixelId.sitkInt8);
+                IntPtr buffer = image.GetBufferAsInt8();
+                image = new Image(100, 100, PixelId.sitkUInt8);
+                buffer = image.GetBufferAsUInt8();
+
+                image = new Image(100, 100, PixelId.sitkInt16);
+                buffer = image.GetBufferAsInt16();
+                image = new Image(100, 100, PixelId.sitkUInt16);
+                buffer = image.GetBufferAsUInt16();
+
+                image = new Image(100, 100, PixelId.sitkInt32);
+                buffer = image.GetBufferAsInt32();
+                image = new Image(100, 100, PixelId.sitkUInt32);
+                buffer = image.GetBufferAsUInt32();
+
+                image = new Image(100, 100, PixelId.sitkInt64);
+                buffer = image.GetBufferAsInt64();
+                image = new Image(100, 100, PixelId.sitkUInt64);
+                buffer = image.GetBufferAsUInt64();
+
+                image = new Image(100, 100, PixelId.sitkFloat32);
+                buffer = image.GetBufferAsFloat();
+                image = new Image(100, 100, PixelId.sitkFloat64);
+                buffer = image.GetBufferAsDouble();
+
+                buffer = image.GetBufferAsVoid();
+
+                if (buffer == IntPtr.Zero)
+                {
+                  success = ExitFailure;
+                  Console.WriteLine("GetBufferAsVoid returned 0.");
+                }
 
             } catch (Exception ex) {
                 success = ExitFailure;

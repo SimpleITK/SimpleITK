@@ -40,8 +40,11 @@
 %CSharpTypemapHelper( uint16_t*, System.IntPtr )
 %CSharpTypemapHelper( int32_t*, System.IntPtr )
 %CSharpTypemapHelper( uint32_t*, System.IntPtr )
+%CSharpTypemapHelper( int64_t*, System.IntPtr )
+%CSharpTypemapHelper( uint64_t*, System.IntPtr )
 %CSharpTypemapHelper( float*, System.IntPtr )
 %CSharpTypemapHelper( double*, System.IntPtr )
+%CSharpTypemapHelper( void*, System.IntPtr )
 
 
 // CSharp does not hadle overloaded const methods. So they are
