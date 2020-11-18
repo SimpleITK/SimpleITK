@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+set -x
 
 if [ -n "$ExternalData_OBJECT_STORES" -a -d "$ExternalData_OBJECT_STORES" ] ; then
     extra_args="-v ${ExternalData_OBJECT_STORES}:/var/io/.ExternalData --env ExternalData_OBJECT_STORES=/var/io/.ExternalData"
@@ -10,8 +10,7 @@ fi
 if [ -n "${SIMPLEITK_GIT_TAG}" ]; then
     extra_args="$extra_args --env SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG}"
 else
-    SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-    SRC_DIR="${SRC_DIR}/../../../"
+    SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &&  git rev-parse --show-toplevel )"
     extra_args="$extra_args --mount type=bind,source=${SRC_DIR},destination=/tmp/SimpleITK,readonly"
 fi
 
