@@ -1,0 +1,12 @@
+FROM quay.io/pypa/manylinux2010_x86_64
+MAINTAINER Insight Software Consortium <community@itk.org>
+
+ADD https://github.com/Kitware/CMake/releases/download/v3.13.5/cmake-3.13.5-Linux-x86_64.sh \
+    /tmp/
+
+WORKDIR /tmp/
+RUN yum remove cmake -y
+RUN sh cmake-3.13.5-Linux-x86_64.sh --prefix=/usr --skip-license && rm -rf /tmp/*
+
+# User is expected to mount directory to "/work"
+ENTRYPOINT ["bash", "-c", "/work/io/imagefiles/cmd.sh" ]

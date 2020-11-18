@@ -1,9 +1,9 @@
 parameters:
-  ARCH: x86_64
+  DOCKERFILE: Dockerfile-2010-x86_64
   PYTHON_VERSIONS: "cp35-cp35m cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39"
 
 jobs:
-  - job: Linux
+  - job: Linux_${{replace(parameters.DOCKERFILE, '-', '_')}}
     dependsOn: Configure
     condition: ne( variables['configure.skiplinux'], 'true' )
     timeoutInMinutes: 300
@@ -13,17 +13,23 @@ jobs:
       - template: ./git-download-steps.yml
       - bash: |
           cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
-          docker build --pull=true --rm=true -t simpleitk_manylinux_${{ parameters.ARCH }} -f Dockerfile-${{ parameters.ARCH }} .
+          docker build --pull=true --rm=true -t simpleitk_manylinux -f ${{ parameters.DOCKERFILE }} .
         displayName: Build Docker Image
       - bash: |
-          echo "Building SimpleITK tag \"${SIMPLEITK_GIT_TAG}\"..."
           cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
-          ./run.sh
+          docker run --rm \
+               --user "$(id -u):$(id -g)" \
+               --mount type=bind,source=${BUILD_SOURCESDIRECTORY},destination=/tmp/SimpleITK,readonly \
+               --mount type=bind,source=${ExternalData_OBJECT_STORES},destination=/var/io/.ExternalData \
+               --env "ExternalData_OBJECT_STORES=/var/io/.ExternalData" \
+               --env PYTHON_VERSIONS \
+               --env SIMPLEITK_GIT_TAG \
+                -v "$(pwd):/work/io" \
+                -t simpleitk_manylinux
         env:
           ExternalData_OBJECT_STORES: "$(Build.SourcesDirectory)/.ExternalData"
           SIMPLEITK_GIT_TAG: "$(SimpleITKBuildHash)"
           PYTHON_VERSIONS: ${{ parameters.PYTHON_VERSIONS }}
-          ARCH: ${{ parameters.ARCH }}
       - task: CopyFiles@2
         inputs:
           sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/wheelhouse'

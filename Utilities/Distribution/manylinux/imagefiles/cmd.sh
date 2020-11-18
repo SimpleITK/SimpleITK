@@ -22,6 +22,7 @@ mkdir -p ${ExternalData_OBJECT_STORES}
 
 export PYTHONUSERBASE=${PYTHONUSERBASE:-/tmp/.pylocal}
 mkdir -p ${PYTHONUSERBASE}
+export PATH=${PATH}:/tmp/.pylocal/bin
 
 function build_simpleitk {
 

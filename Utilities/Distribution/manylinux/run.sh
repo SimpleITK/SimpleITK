@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+set -x
 
 if [ -n "$ExternalData_OBJECT_STORES" -a -d "$ExternalData_OBJECT_STORES" ] ; then
     extra_args="-v ${ExternalData_OBJECT_STORES}:/var/io/.ExternalData --env ExternalData_OBJECT_STORES=/var/io/.ExternalData"
@@ -10,22 +10,23 @@ fi
 if [ -n "${SIMPLEITK_GIT_TAG}" ]; then
     extra_args="$extra_args --env SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG}"
 else
-    SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-    SRC_DIR="${SRC_DIR}/../../../"
+    SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &&  git rev-parse --show-toplevel )"
     extra_args="$extra_args --mount type=bind,source=${SRC_DIR},destination=/tmp/SimpleITK,readonly"
 fi
 
-ARCHS=${ARCH:-"i686 x86_64"}
-for ARCH in ${ARCHS}; do
-    docker build --pull=true --rm=true -t simpleitk_manylinux_${ARCH} -f Dockerfile-${ARCH} .
+DOCKERFILE=${DOCKERFILE:="Dockerfile-2010-x86_64 Dockerfile-x86_64 Dockerfile-i686"}
 
-    docker run --rm \
+for DF in ${DOCKERFILE}; do
+    image_name="simpleitk_manylinux_$(echo "${DF}" | tr '[:upper:]' '[:lower:]')"
+    docker build --pull=true --rm=true -t ${image_name} -f ${DF} .
+
+    docker run -i --rm \
            --user "$(id -u):$(id -g)" \
            ${extra_args} \
            ${PYTHON_VERSIONS:+--env PYTHON_VERSIONS="${PYTHON_VERSIONS}"} \
            -v "$(pwd):/work/io" \
-           -t simpleitk_manylinux_${ARCH}
+           -t ${image_name}
 
     # use this command to get an interactive prompt to debug behavior
-    #docker run --rm -i -t --entrypoint=/bin/bash -u=root $extra_args -v $(pwd):/work/io simpleitk_manylinux_${ARCH}
+    #docker run --rm -i -t --entrypoint=/bin/bash -u=root $extra_args -v $(pwd):/work/io simpleitk_manylinux_${DF}
 done
