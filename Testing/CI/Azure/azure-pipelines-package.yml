@@ -1,4 +1,3 @@
-
 trigger:
    tags:
      include:
@@ -24,7 +23,10 @@ jobs:
         name: configure
   - template: templates/package-linux-job.yml
     parameters:
-      ARCH: x86_64
+        DOCKERFILE: Dockerfile-2010-x86_64
+  - template: templates/package-linux-job.yml
+    parameters:
+        DOCKERFILE: Dockerfile-x86_64
   - template: templates/package-mac-job.yml
   - template: templates/package-win-job.yml
     parameters:
