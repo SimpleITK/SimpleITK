@@ -19,7 +19,6 @@ jobs:
           cd ${BUILD_SOURCESDIRECTORY}/Utilities/Distribution/manylinux
           docker run --rm \
                --user "$(id -u):$(id -g)" \
-               --mount type=bind,source=${BUILD_SOURCESDIRECTORY},destination=/tmp/SimpleITK,readonly \
                --mount type=bind,source=${ExternalData_OBJECT_STORES},destination=/var/io/.ExternalData \
                --env "ExternalData_OBJECT_STORES=/var/io/.ExternalData" \
                --env PYTHON_VERSIONS \
