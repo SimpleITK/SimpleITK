@@ -1,0 +1,27 @@
+name: Python Spell Checking
+
+on:
+  push:
+    branches: [ master, release ]
+  pull_request:
+    branches: [ master, release ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        git clone https://github.com/SimpleITK/SimpleITKSpellChecking.git
+        python -m pip install -r SimpleITKSpellChecking/requirements.txt
+    - name: Do spell checking
+      run: |
+        python SimpleITKSpellChecking/codespell.py Code --exclude Ancillary
