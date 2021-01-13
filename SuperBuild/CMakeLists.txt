@@ -14,6 +14,7 @@ endif()
 
 cmake_minimum_required ( VERSION 3.10 )
 project ( SuperBuildSimpleITK )
+cmake_policy( VERSION 3.10 )
 
 
 #-----------------------------------------------------------------------------
