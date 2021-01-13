@@ -7,6 +7,11 @@ if ( NOT BUILD_TESTING )
   return ()
 endif ()
 
+if( MSVC )
+  # suppress warning C4996 in Visual Studio
+  add_definitions (-D_CRT_SECURE_NO_WARNINGS)
+endif()
+
 
 sitk_add_test( NAME CXX.Example.HelloWorld
   COMMAND $<TARGET_FILE:HelloWorld>
