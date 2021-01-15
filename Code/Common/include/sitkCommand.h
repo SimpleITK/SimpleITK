@@ -20,7 +20,7 @@
 
 
 #include "sitkCommon.h"
-#include "sitkNonCopyable.h"
+#include "sitkObjectOwnedBase.h"
 
 #include <set>
 
@@ -41,51 +41,40 @@ class ProcessObject;
  *
  * For more information see the page \ref CommandPage.
  */
-class SITKCommon_EXPORT Command:
-    protected NonCopyable
+class SITKCommon_EXPORT Command : public ObjectOwnedBase
 {
 public:
-
   /** \brief Default Constructor */
   Command();
 
   /** Destructor. */
-  virtual ~Command();
+  virtual ~Command() override;
 
   /** Set/Get Command Name */
-  virtual std::string GetName() const { return this->m_Name; }
-  virtual void SetName(const std::string &name) { this->m_Name = name; }
+  std::string
+  GetName() const override;
+  void
+  SetName(const std::string & n) override;
 
   /** The method that defines action to be taken by the command */
-  virtual void Execute();
+  virtual void
+  Execute();
 
 protected:
-
   friend class itk::simple::ProcessObject;
 
-  #ifndef SWIG
+#ifndef SWIG
   // internal methods to maintain reference between ProcessObject and
   // Command, so when either is destroyed, the other will be notified.
   //
   // Return value is the number of referenced process objects after
   // operation.
-  virtual size_t AddProcessObject(itk::simple::ProcessObject *o);
-  virtual size_t RemoveProcessObject(const itk::simple::ProcessObject *o);
+  virtual size_t
+  AddProcessObject(itk::simple::ProcessObject * o);
+  virtual size_t
+  RemoveProcessObject(const itk::simple::ProcessObject * o);
 
-  virtual void SetOwnedByProcessObjects(bool o) {this->m_OwnedByProcessObjects = o;}
-  virtual bool GetOwnedByProcessObjects() const {return this->m_OwnedByProcessObjects;}
-  virtual void OwnedByProcessObjectsOn() {this->SetOwnedByProcessObjects(true);}
-  virtual void OwnedByProcessObjectsOff() {this->SetOwnedByProcessObjects(false);}
-  #endif
-
-
-private:
-
-  // a set of objects who use us
-  std::set<itk::simple::ProcessObject*> m_ReferencedObjects;
-
-  bool        m_OwnedByProcessObjects;
-  std::string m_Name;
+#endif
 };
 
 } // end namespace simple

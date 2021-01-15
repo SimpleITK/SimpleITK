@@ -152,6 +152,7 @@ namespace std
 %include "sitkVersion.h"
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
+%include "sitkObjectOwnedBase.h"
 %include "sitkCommand.h"
 %include "sitkInterpolator.h"
 %include "sitkKernel.h"

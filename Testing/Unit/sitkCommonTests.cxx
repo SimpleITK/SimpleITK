@@ -496,10 +496,10 @@ TEST( ProcessObject, Command_Ownership ) {
     HeapCommand() : v(false) {};
     ~HeapCommand() override {++destroyedCount;}
     void Execute() override {v=true;}
-    using Command::SetOwnedByProcessObjects;
-    using Command::GetOwnedByProcessObjects;
-    using Command::OwnedByProcessObjectsOn;
-    using Command::OwnedByProcessObjectsOff;
+    using Command::SetOwnedByObjects;
+    using Command::GetOwnedByObjects;
+    using Command::OwnedByObjectsOn;
+    using Command::OwnedByObjectsOff;
 
     bool v;
   };
@@ -507,16 +507,16 @@ TEST( ProcessObject, Command_Ownership ) {
   {
   // test set/get/on/off
   HeapCommand cmd;
-  EXPECT_FALSE(cmd.GetOwnedByProcessObjects());
-  cmd.SetOwnedByProcessObjects(true);
-  EXPECT_TRUE(cmd.GetOwnedByProcessObjects());
-  cmd.OwnedByProcessObjectsOff();
-  EXPECT_FALSE(cmd.GetOwnedByProcessObjects());
-  cmd.OwnedByProcessObjectsOn();
-  EXPECT_TRUE(cmd.GetOwnedByProcessObjects());
+  EXPECT_FALSE(cmd.GetOwnedByObjects());
+  cmd.SetOwnedByObjects(true);
+  EXPECT_TRUE(cmd.GetOwnedByObjects());
+  cmd.OwnedByObjectsOff();
+  EXPECT_FALSE(cmd.GetOwnedByObjects());
+  cmd.OwnedByObjectsOn();
+  EXPECT_TRUE(cmd.GetOwnedByObjects());
 
   HeapCommand *cmd1 = new HeapCommand();
-  cmd1->OwnedByProcessObjectsOn();
+  cmd1->OwnedByObjectsOn();
   EXPECT_EQ(0,destroyedCount);
   delete cmd1;
   EXPECT_EQ(1,destroyedCount);
@@ -530,7 +530,7 @@ TEST( ProcessObject, Command_Ownership ) {
   sitk::Image img(5,5, sitk::sitkUInt16);
 
   HeapCommand *cmd2 = new HeapCommand();
-  cmd2->OwnedByProcessObjectsOn();
+  cmd2->OwnedByObjectsOn();
   po.AddCommand(sitk::sitkAnyEvent, *cmd2);
 
   EXPECT_FALSE(cmd2->v);
@@ -539,7 +539,7 @@ TEST( ProcessObject, Command_Ownership ) {
   cmd2->v = false;
 
   HeapCommand *cmd3 = new HeapCommand();
-  cmd3->OwnedByProcessObjectsOn();
+  cmd3->OwnedByObjectsOn();
   po.AddCommand(sitk::sitkAnyEvent, *cmd3);
 
   EXPECT_FALSE(cmd2->v);
@@ -561,7 +561,7 @@ TEST( ProcessObject, Command_Ownership ) {
   std::unique_ptr<sitk::CastImageFilter> po2(new sitk::CastImageFilter());
 
   HeapCommand *cmd = new HeapCommand();
-  cmd->OwnedByProcessObjectsOn();
+  cmd->OwnedByObjectsOn();
 
   po1->AddCommand(sitk::sitkAnyEvent, *cmd);
   po1->AddCommand(sitk::sitkStartEvent, *cmd);
