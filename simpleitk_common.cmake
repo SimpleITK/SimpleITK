@@ -73,7 +73,7 @@
 #   set(ENV{FC}  /path/to/fc)   # Fortran compiler (optional)
 #   set(ENV{LD_LIBRARY_PATH} /path/to/vendor/lib) # (if necessary)
 
-cmake_minimum_required(VERSION 2.8.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 set(dashboard_user_home "$ENV{HOME}")
 
