@@ -123,8 +123,10 @@ jobs:
           root: /home/circleci/SimpleITK-build
           paths:
             - "*"
-  python3.5-and-test:
+  python3.6-and-test:
     <<: *defaults
+    docker:
+      - image: circleci/python:3.6-buster
     environment:
       <<: *default_environment_keys
       CTEST_BUILD_FLAGS: "-j 2"
@@ -159,10 +161,10 @@ jobs:
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-fotmatting
       - *junit-store-test-results
-  python3.8-and-test:
+  python3.9-and-test:
     <<: *defaults
     docker:
-     - image: circleci/python:3.8-buster
+     - image: circleci/python:3.9-buster
     environment:
       <<: *default_environment_keys
       CTEST_BUILD_FLAGS: "-j 2"
@@ -325,10 +327,10 @@ workflows:
                  - gh-pages
                  - dashboard
                  - hooks
-      - python3.5-and-test:
+      - python3.6-and-test:
           requires:
             - build-and-test
-      - python3.8-and-test:
+      - python3.9-and-test:
           requires:
             - build-and-test
       - r-and-test:
