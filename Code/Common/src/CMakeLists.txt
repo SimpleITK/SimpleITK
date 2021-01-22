@@ -25,6 +25,7 @@ set ( SimpleITKCommonSource
   sitkEvent.cxx
   sitkInterpolator.cxx
   sitkVersion.cxx
+  sitkObjectOwnedBase.cxx
   ../include/Ancillary/hl_sha1.cxx
   )
 

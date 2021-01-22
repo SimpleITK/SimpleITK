@@ -75,6 +75,13 @@ class GenericException;
     throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str().c_str()); \
   }
 
+#define sitkWarningMacro(x)                                                                                            \
+  {                                                                                                                    \
+    std::ostringstream msg;                                                                                            \
+    msg << this->GetName() << " (" << this << "): " x;                                                                 \
+    itk::OutputWindowDisplayWarningText(msg.str().c_str());                                                            \
+  }
+
 
 #define sitkDebugMacro(x) \
   {\

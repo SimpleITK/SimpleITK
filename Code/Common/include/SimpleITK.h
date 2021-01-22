@@ -59,6 +59,7 @@
 
 #include "sitkProcessObject.h"
 #include "sitkImageFilter.h"
+#include "sitkObjectOwnedBase.h"
 #include "sitkCommand.h"
 #include "sitkFunctionCommand.h"
 

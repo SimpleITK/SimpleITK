@@ -230,7 +230,7 @@ itk::simple::Image ArrayAsIm(SEXP arr,
        cmd = new itk::simple::RCommand();
        cmd->SetFunctionClosure(obj);
        int ret = self->AddCommand(e,*cmd);
-       cmd->OwnedByProcessObjectsOn();
+       cmd->OwnedByObjectsOn();
        return(ret);
      }
    catch(...)

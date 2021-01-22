@@ -71,7 +71,7 @@
        cmd = new itk::simple::PyCommand();
        cmd->SetCallbackPyCallable(obj);
        int ret = self->AddCommand(e,*cmd);
-       cmd->OwnedByProcessObjectsOn();
+       cmd->OwnedByObjectsOn();
        return ret;
      }
    catch(...)

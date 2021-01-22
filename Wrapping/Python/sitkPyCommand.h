@@ -65,10 +65,10 @@ public:
 
   #ifndef SWIG
   // export for access in the custom ProcessObject method for callables
-  using Super::SetOwnedByProcessObjects;
-  using Super::GetOwnedByProcessObjects;
-  using Super::OwnedByProcessObjectsOn;
-  using Super::OwnedByProcessObjectsOff;
+  using Super::SetOwnedByObjects;
+  using Super::GetOwnedByObjects;
+  using Super::OwnedByObjectsOn;
+  using Super::OwnedByObjectsOff;
   #endif
 
 private:
