@@ -154,6 +154,7 @@ namespace std
 %include "sitkImage.h"
 %include "sitkObjectOwnedBase.h"
 %include "sitkCommand.h"
+%include "sitkLogger.h"
 %include "sitkInterpolator.h"
 %include "sitkKernel.h"
 %include "sitkEvent.h"
