@@ -28,19 +28,7 @@ namespace simple
 
 ObjectOwnedBase::~ObjectOwnedBase()
 {
-  // move to local variable to prevent any call backs modifying the multimap of objects
-  decltype(m_ReferencedObjectsCallbacks) referencedObjects;
-  referencedObjects.swap(m_ReferencedObjectsCallbacks);
-
-  for (auto & p : referencedObjects)
-  {
-    p.second();
-  }
-
-  if (!m_ReferencedObjectsCallbacks.empty())
-  {
-    sitkWarningMacro("Detected modification of referenced objects during destruction.")
-  }
+  ExecuteCallbacks();
 }
 
 
@@ -116,6 +104,24 @@ void
 ObjectOwnedBase::OwnedByObjectsOff()
 {
   this->SetOwnedByObjects(false);
+}
+
+
+void ObjectOwnedBase::ExecuteCallbacks()
+{
+  // move to local variable to prevent any call backs modifying the multimap of objects
+  decltype(m_ReferencedObjectsCallbacks) referencedObjects;
+  referencedObjects.swap(m_ReferencedObjectsCallbacks);
+
+  for (auto & p : referencedObjects)
+  {
+    p.second();
+  }
+
+  if (!m_ReferencedObjectsCallbacks.empty())
+  {
+    sitkWarningMacro("Detected modification of referenced objects during callback execution!")
+  }
 }
 
 } // namespace simple

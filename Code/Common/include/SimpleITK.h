@@ -62,6 +62,7 @@
 #include "sitkObjectOwnedBase.h"
 #include "sitkCommand.h"
 #include "sitkFunctionCommand.h"
+#include "sitkLogger.h"
 
 // IO classes
 #include "sitkImageFileReader.h"
