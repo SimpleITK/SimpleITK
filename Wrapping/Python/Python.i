@@ -82,4 +82,6 @@
  }
 };
 
+%feature("director") itk::simple::LoggerBase;
+
 #endif
