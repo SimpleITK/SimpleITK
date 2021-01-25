@@ -33,7 +33,8 @@ ObjectOwnedBase::~ObjectOwnedBase()
 
 
 ObjectOwnedBase::ObjectOwnedBase(const ObjectOwnedBase & o)
-  : m_Name(o.m_Name)
+  : NonCopyable()
+  , m_Name(o.m_Name)
 {
   if (o.m_OwnedByObjects)
   {
