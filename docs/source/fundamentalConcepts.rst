@@ -112,11 +112,19 @@ units has `not ended well in the past <https://en.wikipedia.org/wiki/Mars_Climat
 Finally, having convinced you to think of images as objects occupying a physical region
 in space, we need to answer two questions:
 
-1. How do you access the pixel values in an image:
+1. How do you access the pixel values in an image?
 
-   .. code-block:: python
+   a. In dynamically typed typed languages such as Python and R use a type agnostic function:
 
-     image.GetPixel((0,0))
+      .. code-block:: python
+
+        image.GetPixel((0,0))
+
+   b. In statically typed languages such as C# and C++ use type specific functions:
+
+      .. code-block:: C++
+
+        image.GetPixelAsUInt8( {0, 0} )
 
    SimpleITK functions use a zero based indexing scheme. The toolkit also includes
    syntactic sugar that allows one to use the bracket operator in combination with
