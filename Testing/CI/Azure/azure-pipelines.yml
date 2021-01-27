@@ -76,8 +76,9 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          sudo python -m pip install setuptools numpy
-          sudo python -m pip install ninja scikit-ci-addons
+          python -m pip install --upgrade pip
+          sudo python -m pip install setuptools wheel
+          sudo python -m pip install numpy ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
@@ -128,8 +129,9 @@ jobs:
           addToPath: true
       - script: |
           python --version
-          python -m pip install setuptools numpy
-          python -m pip install ninja scikit-ci-addons
+          python -m pip install --upgrade pip
+          python -m pip install setuptools wheel
+          python -m pip install numpy ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
