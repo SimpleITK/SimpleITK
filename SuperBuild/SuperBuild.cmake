@@ -358,24 +358,6 @@ if ( BUILD_TESTING )
 endif()
 
 #------------------------------------------------------------------------------
-# Python virtualenv
-#------------------------------------------------------------------------------
-option( SimpleITK_USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
-sitk_legacy_naming( SimpleITK_USE_SYSTEM_VIRTUALENV USE_SYSTEM_VIRTUALENV)
-mark_as_advanced(SimpleITK_USE_SYSTEM_VIRTUALENV)
-if( NOT DEFINED SimpleITK_PYTHON_USE_VIRTUALENV OR SimpleITK_PYTHON_USE_VIRTUALENV )
-  if ( SimpleITK_USE_SYSTEM_VIRTUALENV )
-    find_package( PythonVirtualEnv REQUIRED)
-  else()
-    include(External_virtualenv)
-    if ( WRAP_PYTHON )
-      list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES virtualenv)
-    endif()
-  endif()
-  list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_SCRIPT)
-endif()
-
-#------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
 
@@ -518,7 +500,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest virtualenv ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest ${CMAKE_PROJECT_NAME})
 
 
 #-----------------------------------------------------------------------------

@@ -63,20 +63,12 @@ sitk_legacy_naming(SimpleITK_PYTHON_USE_VIRTUALENV)
 
 if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
-  # Executable to setup a new Python virtual environment
-  find_package( PythonVirtualEnv REQUIRED )
-
-  sitk_enforce_forbid_downloads( SimpleITK_PYTHON_USE_VIRTUALENV )
-
-  if (SimpleITK_PYTHON_WHEEL AND PYTHON_VIRTUALENV_VERSION VERSION_LESS "13")
-    message(SEND_ERROR "In sufficient version of virutalenv for \
-      building wheels. Require virtualenv>=13.0.")
-  endif()
+  #TODO Check python version
 
   #
   # Setup Python Virtual Environment for testing and packaging
   #
-  set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
+  set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/pyvenv" )
 
   # virtualenv places the python executable in different
   # locations. Also note than on windows installations where python is

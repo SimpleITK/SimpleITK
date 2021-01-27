@@ -1,32 +1,18 @@
 
 cmake_policy(VERSION 3.10.0)
 
-set(VIRTUALENV_ARGS --clear --no-pip)
+set(VIRTUALENV_ARGS --clear --without-pip)
 if ( "@SimpleITK_FORBID_DOWNLOADS@" )
   set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --never-download)
-endif()
-if ( NOT "@SimpleITK_PYTHON_WHEEL@" )
-  if ("@PYTHON_VIRTUALENV_VERSION_STRING@" VERSION_GREATER "13")
-    set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --no-wheel)
-  endif()
-  if ( NOT "@SimpleITK_PYTHON_EGG@" )
-    set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --no-setuptools)
-  endif()
 endif()
 
 #
 # Create the Python virtual environment.
 #
 execute_process(
-  COMMAND ${CMAKE_COMMAND}
-    "-E"
-    "remove_directory"
-    "@PythonVirtualenvHome@"
-  )
-execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
-    "@PYTHON_VIRTUALENV_SCRIPT@"
-    "--python=@PYTHON_EXECUTABLE@"
+    "-m"
+    "venv"
     ${VIRTUALENV_ARGS}
     "@PythonVirtualenvHome@"
   WORKING_DIRECTORY "@SimpleITK_SOURCE_DIR@/Wrapping/Python"
