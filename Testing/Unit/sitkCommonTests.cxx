@@ -26,9 +26,10 @@
 #include <sitkVersion.h>
 #include <sitkVersionConfig.h>
 #include <itkConfigure.h>
-
+#include "sitkLogger.h"
 #include <cctype>
 
+#include "itkMacro.h"
 
 TEST( VersionTest, VersionTest)
 {
@@ -765,5 +766,104 @@ TEST( Kernel, Test1 )
   ss.str("");
   ss << sitk::sitkPolygon9;
   EXPECT_EQ("Polygon9", ss.str());
+
+}
+
+TEST(Logger, Logger)
+{
+  namespace sitk = itk::simple;
+
+  auto logger = sitk::LoggerBase::GetGlobalITKLogger();
+
+
+  testing::internal::CaptureStderr();
+
+  logger.DisplayText("one\n");
+
+  logger.DisplayErrorText("two\n");
+
+  logger.DisplayWarningText("three\n");
+
+  logger.DisplayGenericOutputText("four\n");
+
+  logger.DisplayDebugText("five\n");
+
+  const std::string expectedOutput = "one\n"
+                                     "two\n"
+                                     "three\n"
+                                     "four\n"
+                                     "five\n";
+
+  EXPECT_EQ( testing::internal::GetCapturedStderr(), expectedOutput);
+}
+
+namespace {
+// A mockup of a logger which saves messages to strings.
+class MockLogger
+:public itk::simple::LoggerBase {
+public:
+
+  MockLogger() = default;
+
+  ~MockLogger() override = default;
+
+  void DisplayText(const char * t) override {m_DisplayText << t;}
+
+  void DisplayErrorText(const char * t) override {m_DisplayErrorText << t;}
+
+  void DisplayWarningText(const char * t) override {m_DisplayWarningText << t;}
+
+  void DisplayGenericOutputText(const char * t) override {m_DisplayGenericOutputText << t;}
+
+  void DisplayDebugText(const char * t) override {m_DisplayDebugText << t;}
+
+  std::stringstream m_DisplayText;
+  std::stringstream m_DisplayErrorText;
+  std::stringstream m_DisplayWarningText;
+  std::stringstream m_DisplayGenericOutputText;
+  std::stringstream m_DisplayDebugText;
+};
+}
+
+
+TEST(Logger, MockLogger)
+{
+
+  namespace sitk = itk::simple;
+
+  testing::internal::CaptureStderr();
+
+  {
+    MockLogger logger;
+
+    logger.SetAsGlobalITKLogger();
+
+    logger.DisplayText("test1\n");
+    itk::OutputWindowDisplayText( "OutputWindowDisplayText1\n" );
+    itk::OutputWindowDisplayErrorText( "OutputWindowDisplayErrorText1\n" );
+    itk::OutputWindowDisplayWarningText( "OutputWindowDisplayWarningText1\n" );
+    itk::OutputWindowDisplayGenericOutputText( "OutputWindowDisplayGenericOutputText1\n" );
+    itk::OutputWindowDisplayDebugText("OutputWindowDebugText1\n" );
+
+
+    EXPECT_EQ(logger.m_DisplayText.str(), "test1\nOutputWindowDisplayText1\n" );
+    EXPECT_EQ(logger.m_DisplayErrorText.str(), "OutputWindowDisplayErrorText1\n" );
+    EXPECT_EQ(logger.m_DisplayWarningText.str(), "OutputWindowDisplayWarningText1\n" );
+    EXPECT_EQ(logger.m_DisplayGenericOutputText.str(), "OutputWindowDisplayGenericOutputText1\n" );
+    EXPECT_EQ(logger.m_DisplayDebugText.str(), "OutputWindowDebugText1\n" );
+  }
+  itk::OutputWindowDisplayText( "OutputWindowDisplayText2\n" );
+  itk::OutputWindowDisplayErrorText( "OutputWindowDisplayErrorText2\n" );
+  itk::OutputWindowDisplayWarningText( "OutputWindowDisplayWarningText2\n" );
+  itk::OutputWindowDisplayGenericOutputText( "OutputWindowDisplayGenericOutputText2\n" );
+  itk::OutputWindowDisplayDebugText("OutputWindowDebugText2\n" );
+
+  const std::string expectedLogOutput = "OutputWindowDisplayText2\n"
+                                        "OutputWindowDisplayErrorText2\n"
+                                        "OutputWindowDisplayWarningText2\n"
+                                        "OutputWindowDisplayGenericOutputText2\n"
+                                        "OutputWindowDebugText2\n";
+
+  EXPECT_EQ( testing::internal::GetCapturedStderr(), expectedLogOutput);
 
 }

@@ -23,6 +23,7 @@ set ( SimpleITKCommonSource
   sitkExceptionObject.cxx
   sitkKernel.cxx
   sitkEvent.cxx
+  sitkLogger.cxx
   sitkInterpolator.cxx
   sitkVersion.cxx
   sitkObjectOwnedBase.cxx

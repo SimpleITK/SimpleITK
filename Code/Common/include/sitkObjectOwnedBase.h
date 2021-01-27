@@ -75,6 +75,7 @@ protected:
    */
   ObjectOwnedBase(const ObjectOwnedBase & o);
 
+
 #ifndef SWIG
   /** \brief Register an Object and a method to call on this object's destructor.
    *
@@ -110,6 +111,9 @@ protected:
 
 
 private:
+
+  void ExecuteCallbacks(void);
+
   bool                                                m_OwnedByObjects{ false };
   std::multimap<itk::Object *, std::function<void()>> m_ReferencedObjectsCallbacks;
   std::string                                         m_Name;

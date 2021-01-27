@@ -57,6 +57,7 @@ add_subdirectory(RawImageReading)
 add_subdirectory(CppCMake)
 add_subdirectory(CppInPlace)
 add_subdirectory(SliceBySliceDecorator)
+add_subdirectory(Logging)
 
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)
