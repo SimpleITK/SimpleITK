@@ -38,7 +38,7 @@
 %rename( __GetPixelAsVectorFloat32__ ) itk::simple::Image::GetPixelAsVectorFloat32;
 %rename( __GetPixelAsVectorFloat64__ ) itk::simple::Image::GetPixelAsVectorFloat64;
 %rename( __GetPixelAsComplexFloat32__ ) itk::simple::Image::GetPixelAsComplexFloat32;
-%rename( __GetPixelAsComplexFloat64__ ) itk::simple::Image::GetPixelAsComplextFloat64;
+%rename( __GetPixelAsComplexFloat64__ ) itk::simple::Image::GetPixelAsComplexFloat64;
 
 %rename( __SetPixelAsInt8__ ) itk::simple::Image::SetPixelAsInt8;
 %rename( __SetPixelAsUInt8__ ) itk::simple::Image::SetPixelAsUInt8;
