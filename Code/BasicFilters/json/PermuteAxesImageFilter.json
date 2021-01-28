@@ -6,7 +6,9 @@
   "doc" : "",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "filter_type" : "itk::PermuteAxesImageFilter< InputImageType >",
-  "public_declarations" : "static const unsigned int DefaultOrder[3];",
+  "public_declarations" : "static const std::vector<unsigned int> DefaultOrder;",
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();\n",
+
   "include_files" : [
     "sitkPermuteAxis_Static.hxx"
   ],
@@ -14,7 +16,7 @@
     {
       "name" : "Order",
       "type" : "unsigned int",
-      "default" : "std::vector<unsigned int>(&itk::simple::PermuteAxesImageFilter::DefaultOrder[0], &itk::simple::PermuteAxesImageFilter::DefaultOrder[3])",
+      "default" : "std::vector<unsigned int>(itk::simple::PermuteAxesImageFilter::DefaultOrder)",
       "doc" : "",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::PermuteOrderArrayType",
@@ -27,7 +29,7 @@
   "tests" : [
     {
       "tag" : "default",
-      "description" : "Test PermiteAxes with default",
+      "description" : "Test PermuteAxes with default",
       "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
       "settings" : [],
       "inputs" : [
@@ -36,7 +38,7 @@
     },
     {
       "tag" : "identity",
-      "description" : "Test PermiteAxes with identity",
+      "description" : "Test PermuteAxes with identity",
       "md5hash" : "a9a0207c759cb8d9e0507414992905d6",
       "settings" : [
         {
@@ -75,7 +77,7 @@
     }
   ],
   "briefdescription" : "Permutes the image axes according to a user specified order.",
-  "detaileddescription" : "PermuateAxesImageFilter permutes the image axes according to a user specified order. The permutation order is set via method SetOrder( order ) where the input is an array of ImageDimension number of unsigned int. The elements of the array must be a rearrangment of the numbers from 0 to ImageDimension - 1.\n\nThe i-th axis of the output image corresponds with the order[i]-th axis of the input image.\n\nThe output meta image information (LargestPossibleRegion, spacing, origin) is computed by permuting the corresponding input meta information.",
+  "detaileddescription" : "PermuteAxesImageFilter permutes the image axes according to a user specified order. The permutation order is set via method SetOrder( order ) where the input is an array of ImageDimension number of unsigned int. The elements of the array must be a rearrangement of the numbers from 0 to ImageDimension - 1.\n\nThe i-th axis of the output image corresponds with the order[i]-th axis of the input image.\n\nThe output meta image information (LargestPossibleRegion, spacing, origin) is computed by permuting the corresponding input meta information.",
   "itk_module" : "ITKImageGrid",
   "itk_group" : "ImageGrid",
   "in_place" : false
