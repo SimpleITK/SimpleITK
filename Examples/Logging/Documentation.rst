@@ -28,6 +28,6 @@ Code
 
   .. tab:: Python
 
-    .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/Logging.py
+    .. literalinclude:: ../../Examples/Logging/Logging.py
        :language: python
        :lines: 1,19-
