@@ -27,8 +27,22 @@
 
 namespace itk {
   namespace simple {
+  namespace
+  {
+  // Return a vector containing 0 to len.
+  std::vector<unsigned int> init(size_t len)
+  {
+    std::vector<unsigned int> v(len);
+    unsigned int c = 0;
+    for (auto &&i : v)
+    {
+      i = c++;
+    }
+    return v;
+  }
+  }
 
-  const unsigned int PermuteAxesImageFilter::DefaultOrder[3] = {0,1,2};
+  const std::vector<unsigned int> PermuteAxesImageFilter::DefaultOrder = init(SITK_MAX_DIMENSION);
 
   }
 }
