@@ -452,6 +452,7 @@ ExternalProject_Add(${proj}
     -DBUILD_EXAMPLES:BOOL=${BUILD_TESTING}
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
   ${External_Project_USES_TERMINAL}
+  STEP_TARGETS configure build doc forcebuild
 )
 
 ExternalProject_Add_Step(${proj} forcebuild
@@ -471,10 +472,6 @@ ExternalProject_Add_Step(${proj} doc
   EXCLUDE_FROM_MAIN 1
   LOG 1
 )
-
-# adds superbuild level target "SimpleITK-documentation" etc..
-ExternalProject_Add_StepTargets(${proj} configure build test forcebuild doc)
-
 
 
 # Load the SimpleITK version variables, scope isolated in a function.
