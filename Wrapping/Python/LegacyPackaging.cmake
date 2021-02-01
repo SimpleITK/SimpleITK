@@ -63,20 +63,12 @@ sitk_legacy_naming(SimpleITK_PYTHON_USE_VIRTUALENV)
 
 if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
-  # Executable to setup a new Python virtual environment
-  find_package( PythonVirtualEnv REQUIRED )
-
-  sitk_enforce_forbid_downloads( SimpleITK_PYTHON_USE_VIRTUALENV )
-
-  if (SimpleITK_PYTHON_WHEEL AND PYTHON_VIRTUALENV_VERSION VERSION_LESS "13")
-    message(SEND_ERROR "In sufficient version of virutalenv for \
-      building wheels. Require virtualenv>=13.0.")
-  endif()
+  #TODO Check python version
 
   #
   # Setup Python Virtual Environment for testing and packaging
   #
-  set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
+  set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/pyvenv" )
 
   # virtualenv places the python executable in different
   # locations. Also note than on windows installations where python is
@@ -90,28 +82,27 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
     CACHE INTERNAL "Python executable for testing." FORCE )
 
-  # configure a scripts which creates the virtualenv and installs numpy
-  configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-    @ONLY )
-
   set( PythonVirtualEnv_ALL "" )
   if ( BUILD_TESTING )
     set( PythonVirtualEnv_ALL "ALL" )
   endif()
 
   add_custom_target( PythonVirtualEnv ${PythonVirtualEnv_ALL}
-    DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}"
-    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in )
+    DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}" )
 
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
-    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
+    COMMAND "${PYTHON_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
+    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "setup.py" install
+    WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
     "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
-    "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-    COMMENT "Creating python virtual enviroment..."
+    COMMENT "Creating python virtual environment..."
     )
+
+  add_custom_command( TARGET PythonVirtualEnv
+    POST_BUILD
+    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" -m pip install numpy
+)
 endif()
 
 # Packaging for distribution

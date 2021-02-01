@@ -76,4 +76,7 @@ SET(CTEST_CUSTOM_ERROR_EXCEPTION
 
  # Error to ignore on Windows during wheel production
  "pep425tags.*RuntimeWarning.*ABI tag may be incorrect"
+
+ # Warning marked as error
+ "dist.py.*UserWarning.*Unknown distribution option"
 )
