@@ -157,7 +157,8 @@ jobs:
             export CTEST_CACHE="
                         CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
-                        BUILD_EXAMPLES:BOOL=ON"
+                        BUILD_EXAMPLES:BOOL=ON
+                        PYTHON_EXECUTABLE=/usr/local/bin/python3.6"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-formatting
       - *junit-store-test-results
@@ -195,7 +196,8 @@ jobs:
             export CTEST_CACHE="
                         CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
-                        BUILD_EXAMPLES:BOOL=ON"
+                        BUILD_EXAMPLES:BOOL=ON
+                        PYTHON_EXECUTABLE=/usr/local/bin/python3.9"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-formatting
       - *junit-store-test-results
