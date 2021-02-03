@@ -235,7 +235,9 @@ if( _do_find_package )
 
   find_package ( Ruby ${_find_package_extra_args} )
 
-  if ( RUBY_FOUND )
+  # CMake 3.15 switch to the conforming "Ruby" prefix, while
+  # supporting the legacy "RUBY"
+  if ( Ruby_FOUND OR RUBY_FOUND )
     set ( WRAP_RUBY_DEFAULT ${WRAP_DEFAULT} )
   else ( )
     set ( WRAP_RUBY_DEFAULT OFF )
@@ -245,14 +247,20 @@ endif()
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
 if ( WRAP_RUBY )
-  list( APPEND SITK_LANGUAGES_VARS
-    RUBY_EXECUTABLE
-    RUBY_INCLUDE_DIRS
-    RUBY_LIBRARY
-    RUBY_VERSION
-    RUBY_FOUND
-    RUBY_INCLUDE_PATH
-    )
+  if ( Ruby_FOUND )
+    list( APPEND SITK_LANGUAGES_VARS
+      Ruby_EXECUTABLE
+      Ruby_INCLUDE_DIRS
+      Ruby_LIBRARIES
+      )
+  else ()
+    list( APPEND SITK_LANGUAGES_VARS
+      RUBY_EXECUTABLE
+      RUBY_INCLUDE_DIRS
+      RUBY_LIBRARY
+      RUBY_VERSION
+      )
+  endif()
 endif()
 
 
