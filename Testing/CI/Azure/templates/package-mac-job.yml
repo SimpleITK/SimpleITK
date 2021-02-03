@@ -114,3 +114,7 @@ jobs:
       - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
         displayName: Build Python 36
         continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
