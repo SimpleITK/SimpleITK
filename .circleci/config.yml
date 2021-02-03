@@ -1,7 +1,7 @@
 referenced:
   defaults: &defaults
     docker:
-     - image: circleci/python:3.5-stretch
+     - image: circleci/python:3.6-buster
     working_directory: ~/
     resource_class: medium
   default_environment_keys:  &default_environment
@@ -219,10 +219,6 @@ jobs:
           name: Additional Dependencies
           command: |
             sudo apt-get update -y
-            sudo apt-get -y install dirmngr apt-transport-https software-properties-common
-            sudo apt-key adv --keyserver http://keyserver.ubuntu.com --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
-            sudo add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/"
-            sudo apt-get update -y
             sudo apt-get install -y r-base r-base-dev
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
@@ -241,7 +237,7 @@ jobs:
   java-and-test:
     <<: *defaults
     docker:
-      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/openjdk:8-jdk-buster
     resource_class: medium
     environment:
       <<: *default_environment_keys
