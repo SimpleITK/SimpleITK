@@ -79,9 +79,6 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   else( )
     set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
   endif()
-  set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
-    CACHE INTERNAL "Python executable for testing." FORCE )
-
   set( PythonVirtualEnv_ALL "" )
   if ( BUILD_TESTING )
     set( PythonVirtualEnv_ALL "ALL" )
@@ -91,7 +88,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
     DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}" )
 
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
-    COMMAND "${PYTHON_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
+    COMMAND "${SimpleITK_PYTHON_TEST_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "setup.py" install
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
@@ -103,6 +100,11 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
     POST_BUILD
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" -m pip --disable-pip-version-check install numpy wheel
 )
+
+  # Use above to resolve Python vs PYTHON naming
+  set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
+          CACHE INTERNAL "Python executable for testing." FORCE )
+
 endif()
 
 # Packaging for distribution

@@ -108,49 +108,71 @@ sitkLanguageShouldDoFindPackage( PYTHON )
 
 if( _do_find_package )
 
-  find_package ( PythonInterp ${_find_package_extra_args})
+  set( WRAP_PYTHON_DEFAULT OFF )
 
-  # if we don't need to link against a library, the make the
-  # find_package quiet.
-  if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
-    set( _find_package_extra_args "QUIET" )
-  endif()
+  if("${CMAKE_VERSION}" VERSION_LESS_EQUAL "3.15.0")
+    find_package ( PythonInterp ${_find_package_extra_args})
 
-  if ( PYTHONINTERP_FOUND )
-    find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_find_package_extra_args} )
-  else ()
-    find_package ( PythonLibs ${_find_package_extra_args} )
-  endif()
+    if ( PYTHONINTERP_FOUND )
+      find_package ( PythonLibs  ${PYTHON_VERSION_STRING} EXACT ${_find_package_extra_args} )
+    else ()
+      find_package ( PythonLibs ${_find_package_extra_args} )
+    endif()
 
-  if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
-      AND (PYTHON_VERSION_STRING VERSION_EQUAL PYTHONLIBS_VERSION_STRING) )
-    set( WRAP_PYTHON_DEFAULT ON )
+    if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
+        AND (PYTHON_VERSION_STRING VERSION_EQUAL PYTHONLIBS_VERSION_STRING) )
+      set( WRAP_PYTHON_DEFAULT ON )
+    endif()
+
   else()
-    set( WRAP_PYTHON_DEFAULT OFF )
+
+    find_package ( Python ${_find_package_extra_args} COMPONENTS Interpreter Development )
+
+    if ( Python_Interpreter_FOUND AND Python_Development_FOUND)
+      set( WRAP_PYTHON_DEFAULT ON )
+    endif()
   endif()
+
 endif()
 
 option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 
 
 if ( WRAP_PYTHON )
-  if ( PYTHON_VERSION_STRING VERSION_LESS 2.7 )
-    message( WARNING "Python version less than 2.7: \"${PYTHON_VERSION_STRING}\"." )
-  endif()
 
-  list( APPEND SITK_LANGUAGES_VARS
-    PYTHON_DEBUG_LIBRARY
-    PYTHON_EXECUTABLE
-    PYTHON_LIBRARY
-    PYTHON_INCLUDE_DIR
-    #  PYTHON_INCLUDE_PATH ( deprecated )
-    )
-# Debian "jessie" has this additional variable required to match
-# python versions.
-  if(PYTHON_INCLUDE_DIR2)
+  set(_PYTHON_MINIMUM_VERSION "3.6")
+  if ( Python_FOUND )
+    if ( "${Python_VERSION}" VERSION_LESS _PYTHON_MINIMUM_VERSION )
+      message( WARNING "Python version \"${Python_VERSION}\" less than minimum supported ${_PYTHON_MINIMUM_VERSION}")
+    endif()
+
     list( APPEND SITK_LANGUAGES_VARS
-      PYTHON_INCLUDE_DIR2
+      Python_EXECUTABLE
+      Python_LIBRARY
+      Python_INCLUDE_DIR
+      Python_LIBRARY_DEBUG
+      Python_LIBRARY_RELEASE
       )
+
+  else ( Python_FOUND )
+    if ( "${PYTHON_VERSION}" VERSION_LESS _PYTHON_MINIMUM_VERSION )
+      message( WARNING "Python version \"${PYTHON_VERSION_STRING}\" less than minimum supported ${_PYTHON_MINIMUM_VERSION}" )
+    endif()
+
+    list( APPEND SITK_LANGUAGES_VARS
+      PYTHON_DEBUG_LIBRARY
+      PYTHON_EXECUTABLE
+      PYTHON_LIBRARY
+      PYTHON_INCLUDE_DIR
+      #  PYTHON_INCLUDE_PATH ( deprecated )
+      )
+    # Debian "jessie" has this additional variable required to match
+    # python versions.
+    if(PYTHON_INCLUDE_DIR2)
+      list( APPEND SITK_LANGUAGES_VARS
+        PYTHON_INCLUDE_DIR2
+        )
+    endif()
   endif()
 endif ()
 
