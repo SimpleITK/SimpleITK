@@ -359,7 +359,7 @@ int ProcessObject::AddCommand(itk::simple::EventEnum event, const std::function<
   cmd->SetCallbackFunction(func);
 
   int id = this->AddCommand(event, *cmd.get());
-  cmd->GetOwnedByObjects();
+  cmd->OwnedByObjectsOn();
   cmd.release();
   return id;
 }
