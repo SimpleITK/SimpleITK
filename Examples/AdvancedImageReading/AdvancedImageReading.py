@@ -17,8 +17,6 @@
 #
 # =========================================================================
 
-from __future__ import print_function
-
 import sys
 
 import SimpleITK as sitk
@@ -33,8 +31,7 @@ if len(sys.argv) < 2:
 file_reader = sitk.ImageFileReader()
 file_reader.SetFileName(sys.argv[1])
 file_reader.ReadImageInformation()
-print('image size: {0}\nimage spacing: {1}'.format(file_reader.GetSize(),
-                                                   file_reader.GetSpacing()))
+print(f'image size: {file_reader.GetSize()}\nimage spacing: {file_reader.GetSpacing()}')
 # Some files have a rich meta-data dictionary (e.g. DICOM)
 for key in file_reader.GetMetaDataKeys():
     print(key + ': ' + file_reader.GetMetaData(key))

@@ -61,7 +61,7 @@ def read_raw(binary_file_name, image_size, sitk_pixel_type, image_spacing=None,
                         '1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1']
     dim = len(image_size)
     header = ['ObjectType = Image\n'.encode(),
-              ('NDims = {0}\n'.format(dim)).encode(),
+              (f'NDims = {dim}\n').encode(),
               ('DimSize = ' + ' '.join([str(v) for v in image_size]) + '\n')
               .encode(),
               ('ElementSpacing = ' + (' '.join([str(v) for v in image_spacing])
