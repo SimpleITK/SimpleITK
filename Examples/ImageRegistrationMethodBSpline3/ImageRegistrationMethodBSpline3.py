@@ -17,8 +17,6 @@
 #
 # =========================================================================
 
-from __future__ import print_function
-
 import SimpleITK as sitk
 import sys
 import os
@@ -31,8 +29,7 @@ def command_iteration(method, bspline_transform):
         # to show the adapted BSpline transform.
         print(bspline_transform)
 
-    print("{0:3} = {1:10.5f}".format(method.GetOptimizerIteration(),
-                                     method.GetMetricValue()))
+    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():10.5f}")
 
 
 def command_multi_iteration(method):
@@ -40,10 +37,9 @@ def command_multi_iteration(method):
     # resolution of the transform. This event is used here to print
     # the status of the optimizer from the previous registration level.
     if R.GetCurrentLevel() > 0:
-        print("Optimizer stop condition: {0}"
-              .format(R.GetOptimizerStopConditionDescription()))
-        print(" Iteration: {0}".format(R.GetOptimizerIteration()))
-        print(" Metric value: {0}".format(R.GetMetricValue()))
+        print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+        print(f" Iteration: {R.GetOptimizerIteration()}")
+        print(f" Metric value: {R.GetMetricValue()}")
 
     print("--------- Resolution Changing ---------")
 
@@ -61,7 +57,7 @@ transformDomainMeshSize = [2] * fixed.GetDimension()
 tx = sitk.BSplineTransformInitializer(fixed,
                                       transformDomainMeshSize)
 
-print("Initial Number of Parameters: {0}".format(tx.GetNumberOfParameters()))
+print(f"Initial Number of Parameters: {tx.GetNumberOfParameters()}")
 
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsJointHistogramMutualInformation()
@@ -88,10 +84,9 @@ outTx = R.Execute(fixed, moving)
 print("-------")
 print(tx)
 print(outTx)
-print("Optimizer stop condition: {0}"
-      .format(R.GetOptimizerStopConditionDescription()))
-print(" Iteration: {0}".format(R.GetOptimizerIteration()))
-print(" Metric value: {0}".format(R.GetMetricValue()))
+print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+print(f" Iteration: {R.GetOptimizerIteration()}")
+print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 

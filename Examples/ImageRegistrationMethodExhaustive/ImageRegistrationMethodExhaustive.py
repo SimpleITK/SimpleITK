@@ -34,9 +34,6 @@ size. The resulting transform is a reasonable guess where to start
 further registration.
 """
 
-from __future__ import print_function
-from __future__ import division
-
 import SimpleITK as sitk
 import sys
 import os
@@ -46,9 +43,7 @@ from math import pi
 def command_iteration(method):
     if (method.GetOptimizerIteration() == 0):
         print("Scales: ", method.GetOptimizerScales())
-    print("{0:3} = {1:7.5f} : {2}".format(method.GetOptimizerIteration(),
-                                          method.GetMetricValue(),
-                                          method.GetOptimizerPosition()))
+    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():7.5f} : {method.GetOptimizerPosition()}")
 
 
 if len(sys.argv) < 4:
@@ -94,10 +89,9 @@ outTx = R.Execute(fixed, moving)
 
 print("-------")
 print(outTx)
-print("Optimizer stop condition: {0}"
-      .format(R.GetOptimizerStopConditionDescription()))
-print(" Iteration: {0}".format(R.GetOptimizerIteration()))
-print(" Metric value: {0}".format(R.GetMetricValue()))
+print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+print(f" Iteration: {R.GetOptimizerIteration()}")
+print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 

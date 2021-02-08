@@ -17,8 +17,6 @@
 #
 # =========================================================================
 
-from __future__ import print_function
-
 import SimpleITK as sitk
 import sys
 import os
@@ -26,20 +24,17 @@ import os
 
 def command_iteration(method):
     if (method.GetOptimizerIteration() == 0):
-        print("\tLevel: {0}".format(method.GetCurrentLevel()))
-        print("\tScales: {0}".format(method.GetOptimizerScales()))
-    print("#{0}".format(method.GetOptimizerIteration()))
-    print("\tMetric Value: {0:10.5f}".format(method.GetMetricValue()))
-    print("\tLearningRate: {0:10.5f}"
-          .format(method.GetOptimizerLearningRate()))
+        print(f"\tLevel: {method.GetCurrentLevel()}")
+        print(f"\tScales: {method.GetOptimizerScales()}")
+    print(f"#{method.GetOptimizerIteration()}")
+    print(f"\tMetric Value: {method.GetMetricValue():10.5f}")
+    print(f"\tLearningRate: {method.GetOptimizerLearningRate():10.5f}")
     if (method.GetOptimizerConvergenceValue() != sys.float_info.max):
-        print("\tConvergence Value: {0:.5e}"
-              .format(method.GetOptimizerConvergenceValue()))
+        print(f"\tConvergence Value: {method.GetOptimizerConvergenceValue():.5e}")
 
 
 def command_multiresolution_iteration(method):
-    print("\tStop Condition: {0}"
-          .format(method.GetOptimizerStopConditionDescription()))
+    print(f"\tStop Condition: {method.GetOptimizerStopConditionDescription()}")
     print("============= Resolution Change =============")
 
 
@@ -81,10 +76,9 @@ outTx1 = R.Execute(fixed, moving)
 
 print("-------")
 print(outTx1)
-print("Optimizer stop condition: {0}"
-      .format(R.GetOptimizerStopConditionDescription()))
-print(" Iteration: {0}".format(R.GetOptimizerIteration()))
-print(" Metric value: {0}".format(R.GetMetricValue()))
+print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+print(f" Iteration: {R.GetOptimizerIteration()}")
+print(f" Metric value: {R.GetMetricValue()}")
 
 displacementField = sitk.Image(fixed.GetSize(), sitk.sitkVectorFloat64)
 displacementField.CopyInformation(fixed)
@@ -111,10 +105,9 @@ R.Execute(fixed, moving)
 
 print("-------")
 print(displacementTx)
-print("Optimizer stop condition: {0}"
-      .format(R.GetOptimizerStopConditionDescription()))
-print(" Iteration: {0}".format(R.GetOptimizerIteration()))
-print(" Metric value: {0}".format(R.GetMetricValue()))
+print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+print(f" Iteration: {R.GetOptimizerIteration()}")
+print(f" Metric value: {R.GetMetricValue()}")
 
 compositeTx = sitk.CompositeTransform([outTx1, displacementTx])
 sitk.WriteTransform(compositeTx, sys.argv[3])

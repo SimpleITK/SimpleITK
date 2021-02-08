@@ -17,8 +17,6 @@
 #
 # =========================================================================
 
-from __future__ import print_function
-
 import SimpleITK as sitk
 import sys
 
@@ -35,8 +33,7 @@ reader.ReadImageInformation()
 
 for k in reader.GetMetaDataKeys():
     v = reader.GetMetaData(k)
-    print("({0}) = = \"{1}\"".format(k, v))
+    print(f"({k}) = = \"{v}\"")
 
-print("Image Size: {0}".format(reader.GetSize()))
-print("Image PixelType: {0}"
-      .format(sitk.GetPixelIDValueAsString(reader.GetPixelID())))
+print(f"Image Size: {reader.GetSize()}")
+print(f"Image PixelType: {sitk.GetPixelIDValueAsString(reader.GetPixelID())}")

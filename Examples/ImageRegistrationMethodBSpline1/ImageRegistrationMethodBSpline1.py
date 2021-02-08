@@ -17,16 +17,13 @@
 #
 # =========================================================================
 
-from __future__ import print_function
-
 import SimpleITK as sitk
 import sys
 import os
 
 
 def command_iteration(method):
-    print("{0:3} = {1:10.5f}".format(method.GetOptimizerIteration(),
-                                     method.GetMetricValue()))
+    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():10.5f}")
 
 
 if len(sys.argv) < 4:
@@ -62,10 +59,9 @@ outTx = R.Execute(fixed, moving)
 
 print("-------")
 print(outTx)
-print("Optimizer stop condition: {0}"
-      .format(R.GetOptimizerStopConditionDescription()))
-print(" Iteration: {0}".format(R.GetOptimizerIteration()))
-print(" Metric value: {0}".format(R.GetMetricValue()))
+print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+print(f" Iteration: {R.GetOptimizerIteration()}")
+print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
