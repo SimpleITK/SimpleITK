@@ -243,7 +243,7 @@ if(MSVC_VERSION EQUAL 1700)
   # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
   # templates are not deep enough by default. We are not currently
   # using the GTest features which require tuple, so just disable them
-  # and hope that upstream premanetly addresses the problem, with out
+  # and hope that upstream permanently addresses the problem, without
   # required more CMake core for compiler issues.
   add_definitions(-DGTEST_HAS_TR1_TUPLE=0 )
 endif()
@@ -261,6 +261,9 @@ add_test( NAME sitkSystemInformationTest COMMAND sitkSystemInformationTest ${CMA
 target_compile_options( sitkSystemInformationTest
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
+add_test( NAME sitkCMakeCacheTest COMMAND ${CMAKE_COMMAND} -E echo  "Attaching file: \"${SimpleITK_BINARY_DIR}/CMakeCache.txt\"" )
+set_tests_properties( sitkCMakeCacheTest PROPERTIES ATTACHED_FILES "${SimpleITK_BINARY_DIR}/CMakeCache.txt" )
 
 
  # CMake 3.10 added this method, to avoid configure time introspection
