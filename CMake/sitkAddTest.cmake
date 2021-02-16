@@ -124,7 +124,11 @@ function(sitk_add_ruby_test name)
     return()
   endif()
 
-  set(command "${RUBY_EXECUTABLE}")
+  if (DEFINED Ruby_EXECUTABLE)
+    set(command "${Ruby_EXECUTABLE}")
+  else()
+    set(command "${RUBY_EXECUTABLE}")
+  endif()
 
   # add extra command which may be needed on some systems
   if(CMAKE_OSX_ARCHITECTURES)

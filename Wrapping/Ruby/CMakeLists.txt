@@ -20,12 +20,12 @@ target_link_libraries( ${SWIG_MODULE_simpleitk_TARGET_NAME}
   ${SimpleITK_LIBRARIES} )
 set_source_files_properties( ${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 
-if (Ruby_FOUND)
+if (Ruby_FOUND AND DEFINED Ruby_INCLUDE_DIRS)
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_simpleitk_TARGET_NAME} ${Ruby_LIBRARY} )
   target_include_directories( ${SWIG_MODULE_simpleitk_TARGET_NAME}
     PRIVATE
       ${Ruby_INCLUDE_DIRS} )
-  else()
+else()
     sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_simpleitk_TARGET_NAME} ${RUBY_LIBRARY} )
     target_include_directories( ${SWIG_MODULE_simpleitk_TARGET_NAME}
       PRIVATE
