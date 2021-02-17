@@ -114,7 +114,7 @@ namespace itk {
       const std::vector<double> &GetSpacing( ) const;
       const std::vector<double> &GetDirection() const;
       const std::vector<uint64_t> &GetSize( ) const;
-      /* @} */
+      /** @} */
 
       /** \brief Get the meta-data dictionary keys
        *
