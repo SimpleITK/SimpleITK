@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# =========================================================================
+#=========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,36 +14,37 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-# =========================================================================
+#=========================================================================
+require 'simpleitk'
 
-import sys
-import SimpleITK as sitk
-
-if len(sys.argv) < 2:
-    print('Wrong number of arguments.', file=sys.stderr)
-    print('Usage: ' + __file__ + ' image_file_name', file=sys.stderr)
-    sys.exit(1)
+if ARGV.length != 1 then
+  puts "Usage: SimpleGaussian image_input_file";
+  exit( 1 )
+end
 
 # Find out which image IOs are supported
-file_reader = sitk.ImageFileReader()
-image_ios_tuple = file_reader.GetRegisteredImageIOs()
-print("The supported image IOs are: " + str(image_ios_tuple))
-print('-' * 20)
+reader = Simpleitk::ImageFileReader.new
+reader.set_file_name( ARGV[0] )
+image_ios = reader.get_registered_image_ios()
+
+print "The supported image IOs are: "
+for i in image_ios do
+  print i, " "
+end
+puts "\n--------------------"
 
 # Another option is to just print the reader and see which
 # IOs are supported
-print(file_reader)
-print('-' * 20)
+puts reader.to_string()
+puts "\n--------------------"
 
 # Force the use of a specific IO. If the IO doesn't support
 # reading the image type it will throw an exception.
-file_reader.SetImageIO('PNGImageIO')
-file_reader.SetFileName(sys.argv[1])
-try:
-    image = file_reader.Execute()
-    print('Read image: ' + sys.argv[1])
-except Exception as err:
-    print('Reading failed: ', err)
-    sys.exit(1)
+reader.set_image_io("PNGImageIO")
 
-sys.exit(0)
+begin
+  image = reader.execute
+  puts "Read image: " + ARGV[0]
+rescue StandardError => e
+  puts "Read failed: " + e.message
+end
