@@ -10,15 +10,12 @@ which python
 python --version
 PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
 
-python -m pip install numpy --progress-bar off
-
 read -r -d '' CTEST_CACHE << EOM || true
 CMAKE_PREFIX_PATH:PATH=${COREBINARYDIRECTORY}
 CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
 CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
 CMAKE_OSX_DEPLOYMENT_TARGET=10.9
 SWIG_EXECUTABLE:FILEPATH=${COREBINARYDIRECTORY}/Swig/bin/swig
-PYTHON_VIRTUALENV_SCRIPT:FILEPATH=${COREBINARYDIRECTORY}/virtualenv/virtualenv.py
 BUILD_EXAMPLES:BOOL=ON
 BUILD_TESTING:BOOL=ON
 SimpleITK_PYTHON_PLAT_NAME:STRING=macosx-10.9-x86_64

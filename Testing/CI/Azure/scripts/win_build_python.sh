@@ -12,14 +12,11 @@ which python
 python --version
 PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
 
-python -m pip install numpy --progress-bar off
 
-_PYTHON_VIRTUALENV_SCRIPT=$(echo "${COREBINARYDIRECTORY}\virtualenv\virtualenv.py" |sed 's/\\/\//g')
 
 read -r -d '' CTEST_CACHE << EOM || true
 CMAKE_PREFIX_PATH:PATH=${COREBINARYDIRECTORY}
 SWIG_EXECUTABLE:FILEPATH=${COREBINARYDIRECTORY}\swigwin\swig.exe
-PYTHON_VIRTUALENV_SCRIPT:FILEPATH=${_PYTHON_VIRTUALENV_SCRIPT}
 BUILD_TESTING:BOOL=ON
 BUILD_EXAMPLES:BOOL=ON
 SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
