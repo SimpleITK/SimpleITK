@@ -65,7 +65,6 @@ function build_simpleitk_python {
     echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
     echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
 
-    ${PYTHON_EXECUTABLE} -m pip install --no-cache-dir --user numpy --progress-bar off
     rm -rf ${BLD_DIR}-${PYTHON} &&
     mkdir -p ${BLD_DIR}-${PYTHON} &&
     cd ${BLD_DIR}-${PYTHON} &&
@@ -83,7 +82,6 @@ function build_simpleitk_python {
         -DSimpleITK_PYTHON_EGG:BOOL=OFF \
         -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
-        -DPYTHON_VIRTUALENV_SCRIPT:FILEPATH=${BLD_DIR}/virtualenv/virtualenv.py \
         ${SRC_DIR}/Wrapping/Python &&
     make &&
     make dist

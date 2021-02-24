@@ -24,7 +24,7 @@ jobs:
           python -m site --user-site
           python -m pip install --upgrade --user pip
           python -m pip install --user setuptools
-          python -m pip install --user numpy scikit-ci-addons
+          python -m pip install --user scikit-ci-addons
         displayName: 'Install python tools and dependency'
       - bash: |
           set -x
@@ -78,7 +78,7 @@ jobs:
           python --version
           python -m pip install --upgrade pip
           sudo python -m pip install setuptools wheel
-          sudo python -m pip install numpy ninja scikit-ci-addons
+          sudo python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
@@ -131,7 +131,7 @@ jobs:
           python --version
           python -m pip install --upgrade pip
           python -m pip install setuptools wheel
-          python -m pip install numpy ninja scikit-ci-addons
+          python -m pip install ninja scikit-ci-addons
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
