@@ -25,8 +25,8 @@
 #include "sitkPyCommand.h"
 %}
 
-// %include "PythonDocstrings.i"
-%feature("autodoc", "1");
+%include "PythonDocstrings.i"
+ //%feature("autodoc", "1");
 
 // ignore overload methods of int type when there is an enum
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
