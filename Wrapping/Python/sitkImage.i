@@ -471,8 +471,30 @@
 
         # set/get pixel methods
 
+        def __delitem__( self, key ):
+            """Remove an item from the meta-data dictionary.
+
+            It is an exception to delete the "origin", "spacing" and "direction" reserved keys.
+
+            If the key does not exist in the dictionary no action or exception occours.
+            """
+            if not isinstance(key, str):
+              raise TypeError("MetaData dictionary key must be str")
+            if key in [ 'origin', 'spacing', 'direction' ]:
+              raise KeyError(f"'{key} is read-only")
+            return self.EraseMetaData( key )
+
+
+        def __contains__( self, key ):
+            """Test if key is contained in the meta-data dictionary.
+            """
+            if not isinstance(key, str):
+              raise TypeError("MetaData dictionary key must be str")
+            return key in [ 'origin', 'spacing', 'direction' ] or self.HasMetaDataKey( key )
+
+
         def __getitem__( self, idx ):
-            """ Get an pixel value or a sliced image.
+            """ Get an pixel value, a sliced image, or a metadata item
 
             This operator implements basic indexing where idx is
             arguments or a squence of integers the same dimension as
@@ -493,7 +515,27 @@
             When an index element is an integer, that dimension is
             collapsed extracting an image with reduced dimensionality.
             The minimum dimension of an image which can be extracted
-            is 2D."""
+            is 2D.
+
+            If indexing with a string, then the metadata dictionary
+            queried with the index as the key. If the metadata dictionary
+            does not contain the key, a KeyError will occour.
+            """
+
+            if isinstance(idx, str):
+              if idx == 'origin':
+                return self.GetOrigin()
+              elif idx == 'spacing':
+                return self.GetSpacing()
+              elif idx == 'direction':
+                return self.GetDirection()
+              else:
+                try:
+                  return self.GetMetaData(idx)
+                except RuntimeError as e:
+                    if not self.HasMetaDataKey( idx ):
+                      raise KeyError(f"\"{idx}\" not in meta-data dictionary")
+                    raise e
 
             if sys.version_info[0] < 3:
               def isint( i ):
@@ -596,6 +638,18 @@
             region defined by idx will collapse one sized idx dimensions when it
             does not match the rvalue image's size.
             """
+            if isinstance(idx, str):
+              if idx == 'origin':
+                return self.SetOrigin(rvalue)
+              elif idx == 'spacing':
+                return self.SetSpacing(rvalue)
+              elif idx == 'direction':
+                return self.SetDirection(rvalue)
+              else:
+                if not isinstance(rvalue, str):
+                  raise TypeError("metadata item must be a string")
+                return self.SetMetaData(idx, rvalue)
+
 
             if sys.version_info[0] < 3:
               def isint( i ):
