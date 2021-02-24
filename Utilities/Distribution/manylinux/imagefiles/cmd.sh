@@ -83,7 +83,6 @@ function build_simpleitk_python {
         -DSimpleITK_PYTHON_EGG:BOOL=OFF \
         -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
-        -DPYTHON_VIRTUALENV_SCRIPT:FILEPATH=${BLD_DIR}/virtualenv/virtualenv.py \
         ${SRC_DIR}/Wrapping/Python &&
     make &&
     make dist
