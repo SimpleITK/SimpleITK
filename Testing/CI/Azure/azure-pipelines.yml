@@ -166,6 +166,10 @@ jobs:
       - bash : |
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build
         displayName: Cleanup build
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_java.sh
+        displayName: Build Java
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
