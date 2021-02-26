@@ -149,8 +149,10 @@ jobs:
     strategy:
       maxParallel: 3
       matrix:
-       default: {}
+       default:
+         env_file:
        ITK-master:
+         env_file:
          ctest.cache_extra: |
            ITK_GIT_TAG:STRING=master
            CMAKE_CXX_STANDARD:STRING=11
