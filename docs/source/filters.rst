@@ -318,7 +318,7 @@ SimpleITK Filters
      - Class for binary morphological erosion of label images.
    * - `LabelSetErodeImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelSetErodeImageFilter.html>`_
      - Class for binary morphological erosion of label images.
-   * - `LabelShapeStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelImageToShapeLabelMapFilter.html>`_
+   * - `LabelShapeStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelShapeStatisticsImageFilter>`_
      - Converts a label image to a label map and valuates the shape attributes.
    * - `LabelStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelStatisticsImageFilter.html>`_
      - Given an intensity image and a label map, compute min, max, variance and mean of the pixels associated with each label or segment.
