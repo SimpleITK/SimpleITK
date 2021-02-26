@@ -119,14 +119,15 @@ jobs:
     timeoutInMinutes: 0
     pool:
       vmImage: 'vs2017-win2016'
+    variables:
+      PYTHON_ARCH: x64
+      CMAKE_PLATFORM: x64
+      VCVAR_OPTIONS: amd64
+      CTEST_CONFIGURATION_TYPE: MinSizeRel
+      DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+      COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
     steps:
       - template: templates/git-download-steps.yml
-      - task: UsePythonVersion@0
-        displayName: Enable Python
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-          addToPath: true
       - script: |
           python --version
           python -m pip install --upgrade pip
@@ -138,11 +139,10 @@ jobs:
           ctest -S "$(Build.SourcesDirectory)/Testing/CI/Azure/azure.cmake" -V -j 4
         displayName: Build and test
         env:
-          CTEST_CONFIGURATION_TYPE: MinSizeRel
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
           CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
-          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: /MP
           CFLAGS: /MP
@@ -152,8 +152,6 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_CSHARP:BOOL=OFF
-            WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -165,3 +163,19 @@ jobs:
           testRunTitle: 'CTest $(Agent.OS)'
         condition: succeededOrFailed()
         displayName: 'Publish test results'
+      - bash : |
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build
+        displayName: Cleanup build
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_java.sh
+        displayName: Build Java
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.8'
+          architecture: '${{ variables.PYTHON_ARCH }}'
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
+        displayName: Build Python 38
