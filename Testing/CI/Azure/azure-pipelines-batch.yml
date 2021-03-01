@@ -155,8 +155,10 @@ jobs:
     strategy:
       maxParallel: 3
       matrix:
-       default: {}
+       default:
+         env_file:
        ITK-master:
+         env_file:
          ctest.cache_extra: |
            ITK_GIT_TAG:STRING=master
            CMAKE_CXX_STANDARD:STRING=11
@@ -164,6 +166,9 @@ jobs:
          env_file: '/opt/rh/devtoolset-7/enable'
        devtools-8:
          env_file: '/opt/rh/devtoolset-8/enable'
+       devtools-9:
+         env_file: '/opt/rh/devtoolset-9/enable'
+
     workspace:
       clean: all
     steps:
