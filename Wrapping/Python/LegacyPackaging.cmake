@@ -101,7 +101,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
   add_custom_command( TARGET PythonVirtualEnv
     POST_BUILD
-    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" -m pip install numpy wheel
+    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" -m pip --disable-pip-version-check install numpy wheel
 )
 endif()
 
