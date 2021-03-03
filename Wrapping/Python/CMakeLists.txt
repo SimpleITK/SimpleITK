@@ -12,9 +12,13 @@ if("${CMAKE_VERSION}" VERSION_LESS_EQUAL "3.15.0")
   find_package ( PythonInterp REQUIRED )
   find_package ( PythonLibs ${_QUIET_LIBRARY} )
 else()
-    find_package ( Python ${_find_package_extra_args} COMPONENTS
-      Interpreter Development )
+    find_package ( Python REQUIRED COMPONENTS Interpreter Development )
 endif()
+
+message("Python_FOUND: ${Python_FOUND}")
+message("Python_EXECUTABLE: ${Python_EXECUTABLE}")
+message("Python_INCLUDE_DIRS: ${Python_INCLUDE_DIRS}")
+
 
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
