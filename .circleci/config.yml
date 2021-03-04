@@ -54,7 +54,7 @@ referenced:
        command: |
          echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
          echo 'export PATH=/usr/lib/ccache:${PATH}' >> $BASH_ENV
-  junit-fotmatting: &junit-fotmatting
+  junit-formatting: &junit-formatting
      run:
        name: Formatting CTest for JUnit
        when: always
@@ -106,7 +106,7 @@ jobs:
           when: always
           command: |
             ccache --show-stats
-      - *junit-fotmatting
+      - *junit-formatting
       - *junit-store-test-results
       - save_cache:
           key: 'ccache-{{ arch }}-{{ .Branch }}-{{ epoch }}'
@@ -159,7 +159,7 @@ jobs:
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
                         BUILD_EXAMPLES:BOOL=ON"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-fotmatting
+      - *junit-formatting
       - *junit-store-test-results
   python3.9-and-test:
     <<: *defaults
@@ -197,7 +197,7 @@ jobs:
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
                         BUILD_EXAMPLES:BOOL=ON"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-fotmatting
+      - *junit-formatting
       - *junit-store-test-results
   r-and-test:
     <<: *defaults
@@ -232,7 +232,7 @@ jobs:
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
                         BUILD_EXAMPLES:BOOL=ON"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/R" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-fotmatting
+      - *junit-formatting
       - *junit-store-test-results
   java-and-test:
     <<: *defaults
@@ -273,7 +273,7 @@ jobs:
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
                         BUILD_EXAMPLES:BOOL=ON"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Java" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-fotmatting
+      - *junit-formatting
       - *junit-store-test-results
   docs:
     <<: *defaults
