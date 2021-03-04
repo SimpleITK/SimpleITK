@@ -9,6 +9,15 @@
 #the language will not be wrapped.
 #
 
+foreach(p
+    CMP0094  # Find Python with LOCATION strategy
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
+
+
 include(sitkTargetLinkLibrariesWithDynamicLookup)
 
 sitk_check_dynamic_lookup(MODULE

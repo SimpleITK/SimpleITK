@@ -1,5 +1,6 @@
 
 foreach(p
+        CMP0094  # Find Python with LOCATION strategy
     )
   if(POLICY ${p})
     cmake_policy(SET ${p} NEW)
