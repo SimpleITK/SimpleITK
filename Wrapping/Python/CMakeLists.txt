@@ -12,6 +12,7 @@ if("${CMAKE_VERSION}" VERSION_LESS_EQUAL "3.15.0")
   find_package ( PythonInterp REQUIRED )
   find_package ( PythonLibs ${_QUIET_LIBRARY} )
 else()
+    cmake_policy(SET CMP0094 NEW)
     find_package ( Python REQUIRED COMPONENTS Interpreter Development )
 endif()
 

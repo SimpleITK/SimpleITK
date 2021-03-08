@@ -128,11 +128,16 @@ jobs:
       COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
     steps:
       - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.8'
+          architecture: '${{ variables.PYTHON_ARCH }}'
       - script: |
           python --version
           python -m pip install --upgrade pip
           python -m pip install setuptools wheel
-          python -m pip install ninja scikit-ci-addons
+          python -m pip install ninja scikit-ci-addons lxml
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
@@ -163,9 +168,6 @@ jobs:
           testRunTitle: 'CTest $(Agent.OS)'
         condition: succeededOrFailed()
         displayName: 'Publish test results'
-      - bash : |
-          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build
-        displayName: Cleanup build
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_java.sh
