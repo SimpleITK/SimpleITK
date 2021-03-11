@@ -1,4 +1,4 @@
-Reading and Writing for Images and Transforms
+  Reading and Writing for Images and Transforms
 *********************************************
 
 .. _image-io:
@@ -38,18 +38,18 @@ are supported by SimpleITK. A list of registered ImageIO's can be found using th
 
 A read and write example using SimpleITK's ImageFileReader and ImageFileWriter classes:
 
-.. code-block :: python
+.. tabs::
+  .. tab:: Python
 
-        import SimpleITK as sitk
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
+       :language: python
+       :lines: 25-34
 
-        reader = sitk.ImageFileReader()
-        reader.SetImageIO("BMPImageIO")
-        reader.SetFileName(inputImageFileName)
-        image = reader.Execute();
+  .. tab:: C++
 
-        writer = sitk.ImageFileWriter()
-        writer.SetFileName(outputImageFileName)
-        writer.Execute(image)
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
+       :language: python
+       :lines: 28-37
 
 The above example specifies using the BMPImageIO to read the file.
 If that line is omitted, SimpleITK would determine which IO to use automatically,
@@ -57,13 +57,21 @@ based on the file name's suffix and/or the file's header.
 
 A more compact example using SimpleITK's procedural interface:
 
-.. code-block :: python
+.. tabs::
+  .. tab:: Python
 
-        import SimpleITK as sitk
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
+       :language: python
+       :lines: 41-44
 
-        image = sitk.ReadImage(inputImagefileName, imageIO="BMPImageIO")
-        sitk.WriteImage(image, outputImagefileName)
+  .. tab:: C++
 
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
+       :language: python
+       :lines: 42-45
+
+Similarly, if the imageIO parameter is omitted, SimpleITK will determine
+which IO to use automatically.
 
 .. _transformation-io:
 
@@ -85,15 +93,18 @@ the displacement field found in a DisplacementFieldTransform object as an image
 
 Take for example of a transformation written to and read from a file in Python:
 
-.. code-block :: python
+.. tabs::
+  .. tab:: Python
 
-        basic_transform = sitk.Euler2DTransform()
-        basic_transform.SetTranslation((2,3))
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
+       :language: python
+       :lines: 51-59
 
-        sitk.WriteTransform(basic_transform, 'euler2D.tfm')
-        read_result = sitk.ReadTransform('euler2D.tfm')
+  .. tab:: C++
 
-        assert(str(type(read_result) != type(basic_transform)))
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
+       :language: python
+       :lines: 50-56
 
 ``read_result`` will be an object of the generic ``sitk.Transform()`` class and ``basic_transform``
 will be of ``sitk.Euler2DTransform()``, but both represent the same transformation. Although this

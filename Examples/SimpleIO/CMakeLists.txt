@@ -1,0 +1,24 @@
+
+
+add_executable ( SimpleIO SimpleIO.cxx )
+target_link_libraries ( SimpleIO ${SimpleITK_LIBRARIES} )
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
+sitk_add_test(NAME CXX.Example.SimpleIO
+  COMMAND $<TARGET_FILE:SimpleIO>
+     DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png}
+     "${SimpleITK_TEST_OUTPUT_DIR}/CXX.SimpleIO.png"
+   IMAGE_COMPARE
+     "${SimpleITK_TEST_OUTPUT_DIR}/CXX.SimpleIO.png"
+     DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png} )
+
+sitk_add_python_test( Example.SimpleIO
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleIO.py"
+  DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Python.SimpleIO.png"
+  IMAGE_COMPARE
+      "${SimpleITK_TEST_OUTPUT_DIR}/Python.SimpleIO.png"
+     DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png} )
