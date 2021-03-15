@@ -57,7 +57,7 @@ void example3()
   itk::simple::WriteTransform(basic_transform, "euler2D.tfm");
   itk::simple::Transform read_result = itk::simple::ReadTransform("euler2D.tfm");
 
-  assert(basic_transform == read_result);
+  assert(type(basic_transform) != type(read_result));
   }
 namespace sitk = itk::simple;
 
