@@ -17,6 +17,9 @@
 #
 # =========================================================================
 
+# These examples are used in the I/O documentation page. The IO.rst file
+# pulls the code examples based their line numbers in this file. So any
+# change in the line numbers of the code below will break the I/O page.
 
 # A simple image input/output example
 #

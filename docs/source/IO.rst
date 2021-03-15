@@ -39,15 +39,15 @@ are supported by SimpleITK. A list of registered ImageIO's can be found using th
 A read and write example using SimpleITK's ImageFileReader and ImageFileWriter classes:
 
 .. tabs::
-  .. tab:: Python
-
-    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
-       :language: python
-       :lines: 25-34
-
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
+       :language: python
+       :lines: 32-41
+
+  .. tab:: Python
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
        :lines: 28-37
 
@@ -58,17 +58,17 @@ based on the file name's suffix and/or the file's header.
 A more compact example using SimpleITK's procedural interface:
 
 .. tabs::
-  .. tab:: Python
-
-    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
-       :language: python
-       :lines: 41-44
-
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: python
-       :lines: 42-45
+       :lines: 46-49
+
+  .. tab:: Python
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
+       :language: python
+       :lines: 44-47
 
 Similarly, if the imageIO parameter is omitted, SimpleITK will determine
 which IO to use automatically.
@@ -94,17 +94,17 @@ the displacement field found in a DisplacementFieldTransform object as an image
 Take for example of a transformation written to and read from a file in Python:
 
 .. tabs::
-  .. tab:: Python
-
-    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
-       :language: python
-       :lines: 51-59
-
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: python
-       :lines: 50-56
+       :lines: 54-60
+
+  .. tab:: Python
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
+       :language: python
+       :lines: 54-62
 
 ``read_result`` will be an object of the generic ``sitk.Transform()`` class and ``basic_transform``
 will be of ``sitk.Euler2DTransform()``, but both represent the same transformation. Although this
