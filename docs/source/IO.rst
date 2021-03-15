@@ -42,7 +42,7 @@ A read and write example using SimpleITK's ImageFileReader and ImageFileWriter c
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
-       :language: python
+       :language: cpp
        :lines: 32-41
 
   .. tab:: Python
@@ -50,6 +50,12 @@ A read and write example using SimpleITK's ImageFileReader and ImageFileWriter c
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
        :lines: 28-37
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
+       :language: r
+       :lines: 29-38
 
 The above example specifies using the BMPImageIO to read the file.
 If that line is omitted, SimpleITK would determine which IO to use automatically,
@@ -61,7 +67,7 @@ A more compact example using SimpleITK's procedural interface:
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
-       :language: python
+       :language: cpp
        :lines: 46-49
 
   .. tab:: Python
@@ -69,6 +75,12 @@ A more compact example using SimpleITK's procedural interface:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
        :lines: 44-47
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
+       :language: r
+       :lines: 42-45
 
 Similarly, if the imageIO parameter is omitted, SimpleITK will determine
 which IO to use automatically.
@@ -105,6 +117,12 @@ Take for example of a transformation written to and read from a file in Python:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
        :lines: 54-62
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
+       :language: r
+       :lines: 49-57
 
 ``read_result`` will be an object of the generic ``sitk.Transform()`` class and ``basic_transform``
 will be of ``sitk.Euler2DTransform()``, but both represent the same transformation. Although this
