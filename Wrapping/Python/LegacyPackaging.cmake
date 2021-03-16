@@ -74,8 +74,8 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   # locations. Also note than on windows installations where python is
   # installed only for a single user the may be a missing dll issue.
   if( WIN32 )
-    set( VIRTUAL_PYTHON_EXECUTABLE
-      "${PythonVirtualenvHome}/Scripts/python")
+    file(TO_NATIVE_PATH "${PythonVirtualenvHome}/Scripts/python" VIRTUAL_PYTHON_EXECUTABLE)
+    file(TO_NATIVE_PATH "${PythonVirtualenvHome}" PythonVirtualenvHome)
   else( )
     set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
   endif()
@@ -87,9 +87,10 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   add_custom_target( PythonVirtualEnv ${PythonVirtualEnv_ALL}
     DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}" )
 
+  file(MAKE_DIRECTORY "${PythonVirtualenvHome}")
+
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
-    COMMAND "${SimpleITK_PYTHON_TEST_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
-    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "setup.py" install
+    COMMAND "${SimpleITK_PYTHON_TEST_EXECUTABLE}" "-m" "venv" "${PythonVirtualenvHome}"
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
     "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
@@ -98,12 +99,21 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
   add_custom_command( TARGET PythonVirtualEnv
     POST_BUILD
+    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "setup.py" install
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" -m pip --disable-pip-version-check install numpy wheel
 )
 
   # Use above to resolve Python vs PYTHON naming
   set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
           CACHE INTERNAL "Python executable for testing." FORCE )
+
+else()
+
+  if (Python_FOUND)
+    set(SimpleITK_PYTHON_TEST_EXECUTABLE "${Python_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
+  else()
+    set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
+  endif()
 
 endif()
 
