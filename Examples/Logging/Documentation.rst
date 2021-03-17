@@ -30,4 +30,4 @@ Code
 
     .. literalinclude:: ../../Examples/Logging/Logging.py
        :language: python
-       :lines: 1,19-
+       :lines: 19-
