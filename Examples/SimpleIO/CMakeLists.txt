@@ -30,3 +30,11 @@ sitk_add_r_test( Example.SimpleIO
   IMAGE_COMPARE
   "${SimpleITK_TEST_OUTPUT_DIR}/R.SimpleIO.png"
      DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png} )
+
+sitk_add_csharp_test( Example.SimpleIO
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleIO.cs"
+  DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png}
+  "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.SimpleIO.png"
+  IMAGE_COMPARE
+  "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.SimpleIO.png"
+     DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png} )

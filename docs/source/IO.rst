@@ -1,4 +1,4 @@
-  Reading and Writing for Images and Transforms
+Reading and Writing for Images and Transforms
 *********************************************
 
 .. _image-io:
@@ -39,6 +39,12 @@ are supported by SimpleITK. A list of registered ImageIO's can be found using th
 A read and write example using SimpleITK's ImageFileReader and ImageFileWriter classes:
 
 .. tabs::
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cs
+       :language: csharp
+       :lines: 31-38
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
@@ -64,6 +70,12 @@ based on the file name's suffix and/or the file's header.
 A more compact example using SimpleITK's procedural interface:
 
 .. tabs::
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cs
+       :language: csharp
+       :lines: 42-43
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
@@ -106,6 +118,12 @@ the displacement field found in a DisplacementFieldTransform object as an image
 Take for example of a transformation written to and read from a file in Python:
 
 .. tabs::
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cs
+       :language: csharp
+       :lines: 47-55
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
