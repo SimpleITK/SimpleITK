@@ -79,6 +79,74 @@ class ImageTests(unittest.TestCase):
         img_c.SetOrigin([7, 8])
         self.assertNotEqual(img.GetOrigin(), img_c.GetOrigin())
 
+    def test_get_item_metadata(self):
+        """Test the __getitem__ with a string to access meta-data dictionary"""
+
+        img = sitk.Image([10, 9, 11], sitk.sitkFloat32 )
+        img.SetSpacing([.3, .1, .2])
+        img.SetOrigin([-3.0, -2.0, -1.0])
+
+        self.assertEqual(img["spacing"], (.3, .1, .2))
+        self.assertEqual(img["origin"], (-3.0, -2.0, -1.0))
+        self.assertEqual(img["direction"], (1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0, 1.0))
+
+        with self.assertRaises(KeyError):
+            img[""]
+
+        with self.assertRaises(KeyError):
+            img["does_not_exit"]
+
+    def test_setitem_metadata(self):
+        """Test the __setitem__ with a string to access meta-data dictionary"""
+
+        img = sitk.Image([10, 9], sitk.sitkFloat32)
+
+        img["spacing"] = [.3, .1, .2]
+        self.assertEqual(img["spacing"], (.3, .1))
+        self.assertEqual(img.GetSpacing(), (.3, .1))
+
+        img["origin"] = [-3.0, -2.0, -1.0]
+        self.assertEqual(img["origin"], (-3.0, -2.0))
+        self.assertEqual(img.GetOrigin(), (-3.0, -2.0))
+
+        with self.assertRaises(RuntimeError):
+            img["direction"] = (-1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0)
+
+        img["direction"] = (-1.0, 0.0, 0.0, 1.0)
+        self.assertEqual(img["direction"], (-1.0, 0.0, 0.0, 1.0))
+        self.assertEqual(img.GetDirection(), (-1.0, 0.0, 0.0, 1.0))
+
+
+        with self.assertRaises(TypeError):
+            img["test"] = 1
+
+    def test_delitem_metadata(self):
+        """Test the __delitem__ with a string key to remove elements from meta-data """
+
+        img = sitk.Image([10, 9], sitk.sitkFloat32)
+
+        for k in ['origin', 'spacing', 'direction']:
+            with self.assertRaises(KeyError):
+                del img[k]
+
+        for k in [1.0, [1, 2], (3, 4)]:
+            with self.assertRaises(TypeError):
+                k in img
+
+    def test_contains_metadata(self):
+        """Test the __contains__ with a string key  """
+
+        img = sitk.Image([10, 9], sitk.sitkFloat32)
+
+        for k in ['origin', 'spacing', 'direction']:
+            self.assertTrue(k in img)
+
+        for k in [1.0, [1, 2], (3, 4)]:
+            with self.assertRaises(TypeError):
+                k in img
+
+
+
     def test_pickle_file(self):
        """Test the custom pickling and un-pickling interface"""
 
