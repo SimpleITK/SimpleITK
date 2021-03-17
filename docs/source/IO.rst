@@ -51,6 +51,12 @@ A read and write example using SimpleITK's ImageFileReader and ImageFileWriter c
        :language: cpp
        :lines: 32-41
 
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
+       :language: java
+       :lines: 29-36
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
@@ -81,6 +87,12 @@ A more compact example using SimpleITK's procedural interface:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: cpp
        :lines: 46-49
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
+       :language: java
+       :lines: 40-41
 
   .. tab:: Python
 
@@ -129,6 +141,12 @@ Take for example of a transformation written to and read from a file in Python:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: python
        :lines: 54-60
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
+       :language: java
+       :lines: 45-53
 
   .. tab:: Python
 
