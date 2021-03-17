@@ -492,6 +492,21 @@
               raise TypeError("MetaData dictionary key must be str")
             return key in [ 'origin', 'spacing', 'direction' ] or self.HasMetaDataKey( key )
 
+        def _expand_ellipsis(self, idx):
+            """Expand "..." in idx with slice(None) to fill to dimension."""
+            if Ellipsis in idx:
+              if idx.count(Ellipsis) > 1:
+                raise IndexError("an index can only have one ellipses ('...')")
+              nidx = []
+              for i in range(len(idx)):
+                if idx[i] is Ellipsis:
+                  dim = self.GetDimension()
+                  nidx.extend( [slice(None)]*(dim - len(idx) + 1) )
+                else:
+                  nidx.append(idx[i])
+              return tuple(nidx)
+            return tuple(idx)
+
 
         def __getitem__( self, idx ):
             """ Get an pixel value, a sliced image, or a metadata item
@@ -548,16 +563,22 @@
             size = self.GetSize()
 
             try:
-              if (len(idx) < dim):
-                # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
-                idx = tuple(idx) + (slice(None),)*(dim-len(idx))
-            except TypeError:
+              len(idx)
+            except TypeError as e:
               # if the len function did not work then, assume is a
-              # non-iterable, and make it a single element in a tuple.
-              idx = (idx,) + (slice(None),)*(dim-1)
+              # non-iterable, and make it a single element then an ...
+              if idx == Ellipsis:
+                idx = (Ellipsis,)
+              else:
+                idx = (idx, Ellipsis)
 
-            if (len(idx) > dim):
-               raise IndexError("too many indices for image")
+            if len(idx) > dim + (Ellipsis in idx):
+              raise IndexError("too many indices for image")
+            if (len(idx) < dim) and Ellipsis not in idx:
+              # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
+              idx = tuple(idx) + (Ellipsis,)
+
+            idx = self._expand_ellipsis(idx)
 
             # All the indices are integers just return GetPixel value
             if all( isint(i) for i in idx ):
@@ -638,6 +659,7 @@
             region defined by idx will collapse one sized idx dimensions when it
             does not match the rvalue image's size.
             """
+
             if isinstance(idx, str):
               if idx == 'origin':
                 return self.SetOrigin(rvalue)
@@ -650,7 +672,6 @@
                   raise TypeError("metadata item must be a string")
                 return self.SetMetaData(idx, rvalue)
 
-
             if sys.version_info[0] < 3:
               def isint( i ):
                 return type(i) == int or type(i) == long
@@ -662,15 +683,22 @@
             size = self.GetSize()
 
             try:
-              if (len(idx) > dim):
-                raise IndexError("too many indices for image")
-              if (len(idx) < dim):
-                # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
-                idx = tuple(idx) + (slice(None),)*(dim-len(idx))
-            except TypeError:
+              len(idx)
+            except TypeError as e:
               # if the len function did not work then, assume is a
-              # non-iterable, and make it a single element in a tuple.
-              idx = (idx,) + (slice(None),)*(dim-1)
+              # non-iterable, and make it a single element then an ...
+              if idx == Ellipsis:
+                idx = (Ellipsis,)
+              else:
+                idx = (idx, Ellipsis)
+
+            if len(idx) > dim + (Ellipsis in idx):
+              raise IndexError("too many indices for image")
+            if (len(idx) < dim) and Ellipsis not in idx:
+              # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
+              idx = tuple(idx) + (Ellipsis,)
+
+            idx = self._expand_ellipsis(idx)
 
             # All the indices are integers use SetPixel
             if all( isint(i) for i in idx ):
