@@ -57,6 +57,12 @@ A read and write example using SimpleITK's ImageFileReader and ImageFileWriter c
        :language: java
        :lines: 29-36
 
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.lua
+       :language: lua
+       :lines: 25-34
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
@@ -93,6 +99,12 @@ A more compact example using SimpleITK's procedural interface:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
        :language: java
        :lines: 40-41
+
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.lua
+       :language: lua
+       :lines: 38-41
 
   .. tab:: Python
 
@@ -147,6 +159,12 @@ Take for example of a transformation written to and read from a file in Python:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
        :language: java
        :lines: 45-53
+
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.lua
+       :language: lua
+       :lines: 45-56
 
   .. tab:: Python
 
