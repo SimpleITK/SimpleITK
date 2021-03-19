@@ -75,6 +75,12 @@ A read and write example using SimpleITK's ImageFileReader and ImageFileWriter c
        :language: r
        :lines: 29-38
 
+  .. tab:: Ruby
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.rb
+       :language: ruby
+       :lines: 24-33
+
 The above example specifies using the BMPImageIO to read the file.
 If that line is omitted, SimpleITK would determine which IO to use automatically,
 based on the file name's suffix and/or the file's header.
@@ -117,6 +123,12 @@ A more compact example using SimpleITK's procedural interface:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
        :language: r
        :lines: 42-45
+
+  .. tab:: Ruby
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.rb
+       :language: ruby
+       :lines: 37-40
 
 Similarly, if the imageIO parameter is omitted, SimpleITK will determine
 which IO to use automatically.
@@ -177,6 +189,12 @@ Take for example of a transformation written to and read from a file in Python:
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
        :language: r
        :lines: 49-57
+
+  .. tab:: Ruby
+
+    .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.rb
+       :language: ruby
+       :lines: 44-55
 
 ``read_result`` will be an object of the generic ``sitk.Transform()`` class and ``basic_transform``
 will be of ``sitk.Euler2DTransform()``, but both represent the same transformation. Although this
