@@ -62,3 +62,11 @@ sitk_add_ruby_test( Example.SimpleIO
   IMAGE_COMPARE
   "${SimpleITK_TEST_OUTPUT_DIR}/Ruby.SimpleIO.png"
      DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png} )
+
+sitk_add_tcl_test( Example.SimpleIO
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleIO.tcl"
+  DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Tcl.SimpleIO.png"
+  IMAGE_COMPARE
+  "${SimpleITK_TEST_OUTPUT_DIR}/Tcl.SimpleIO.png"
+     DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png} )
