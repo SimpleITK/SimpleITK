@@ -87,7 +87,7 @@ A read and write example using SimpleITK's ImageFileReader and ImageFileWriter c
        :language: tcl
        :lines: 24-35
 
-The above example specifies using the BMPImageIO to read the file.
+The above example specifies using the PNGImageIO to read the file.
 If that line is omitted, SimpleITK would determine which IO to use automatically,
 based on the file name's suffix and/or the file's header.
 
