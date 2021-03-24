@@ -25,6 +25,7 @@
 #include <SimpleITK.h>
 #include <iostream>
 #include <assert.h>
+#include <typeinfo>
 
 
 void example1(std::string inputImageFileName, std::string outputImageFileName)
@@ -57,9 +58,8 @@ void example3()
   itk::simple::WriteTransform(basic_transform, "euler2D.tfm");
   itk::simple::Transform read_result = itk::simple::ReadTransform("euler2D.tfm");
 
-  assert(type(basic_transform) != type(read_result));
+  assert(typeid(basic_transform) != typeid(read_result));
   }
-namespace sitk = itk::simple;
 
 
 int main ( int argc, char* argv[] ) {
