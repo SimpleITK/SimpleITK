@@ -36,7 +36,7 @@ are supported by SimpleITK. A list of registered ImageIO's can be found using th
     - `VTKImageIO <https://itk.org/Doxygen/html/classitk_1_1VTKImageIO.html>`_ ( \*.vtk )
 
 
-A read and write example using SimpleITK's ImageFileReader and ImageFileWriter classes:
+A read and write example using SimpleITK's `ImageFileReader <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageFileReader.html>`_ and `ImageFileWriter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageFileWriter.html>`_ classes:
 
 .. tabs::
   .. tab:: C#
@@ -151,19 +151,20 @@ Transformations
 ===============
 
 In SimpleITK, transformation files can be written in several different formats.
-Just like there are numerous IOs for images, there are several for transforms,
+Just as there are numerous IOs for images, there are several for transforms,
 including TxtTransformIO, MINCTransformIO, HDF5TransformIO, and MatlabTransformIO
 (although this list can be extended as well). These support a variety of file
 formats, including .txt, .tfm, .xfm, .hdf and .mat.
 
-Because of their size, displacement fields may require more careful attention.
-To save a displacement field we recommend using one of the binary transformation
-file formats (e.g. .hdf, .mat). Saving it in a text based format results in
-significantly larger files and longer IO runtimes. Another option is to save
-the displacement field found in a DisplacementFieldTransform object as an image
-(.nrrd, .nhdr, .mha, .mhd, .nii, .nii.gz).
+Because of the size of displacement fields, writing them may require more careful
+attention.  To save a displacement field we recommend using one of the binary
+transformation file formats (e.g. .hdf, .mat). Saving it in a text based format
+results in significantly larger files and longer IO runtimes. Another option is
+to save the displacement field found in a DisplacementFieldTransform object as an
+image (.nrrd, .nhdr, .mha, .mhd, .nii, .nii.gz).
 
-Take for example of a transformation written to and read from a file in Python:
+Here is a simple example of creating a transformation, writing it to a file,
+reading it back, and then comparing the results.
 
 .. tabs::
   .. tab:: C#
@@ -214,7 +215,8 @@ Take for example of a transformation written to and read from a file in Python:
        :language: tcl
        :lines: 47-59
 
-``read_result`` will be an object of the generic ``sitk.Transform()`` class and ``basic_transform``
-will be of ``sitk.Euler2DTransform()``, but both represent the same transformation. Although this
-example only uses a single SimpleITK transformation, a .tfm file can hold a composite (set of
+``read_result`` returns an object of the generic ``sitk.Transform()`` class and
+``basic_transform`` creates a ``sitk.Euler2DTransform()`` object, but both
+represent the same transformation. Although this example only uses a single
+SimpleITK transformation, a .tfm file can hold a composite (set of
 transformations).
