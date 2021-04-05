@@ -69,7 +69,7 @@ There are nearly **300 ITK image filters** wrapped
 in SimpleITK. We have a
 :ref:`list of filters <lbl_filter>` accompanied by a brief
 description. Additionally the
-`Doxygen <https://www.simpleitk.org/doxygen/latest/html/classes.html>`__ can
+`Doxygen <https://simpleitk.org/doxygen/latest/html/classes.html>`__ can
 be examined to determine the availability of a filter.
 
 What image file formats can SimpleITK read?
