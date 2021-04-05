@@ -11,6 +11,7 @@ set ( SimpleITKCommonSource
   sitkEuler3DTransform.cxx
   sitkScaleTransform.cxx
   sitkScaleSkewVersor3DTransform.cxx
+  sitkComposeScaleSkewVersor3DTransform.cxx
   sitkScaleVersor3DTransform.cxx
   sitkSimilarity2DTransform.cxx
   sitkSimilarity3DTransform.cxx

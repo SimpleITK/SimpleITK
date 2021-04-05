@@ -28,6 +28,7 @@
 #include "itkScaleTransform.h"
 #include "itkScaleLogarithmicTransform.h"
 #include "itkScaleSkewVersor3DTransform.h"
+#include "itkComposeScaleSkewVersor3DTransform.h"
 #include "itkScaleVersor3DTransform.h"
 #include "itkSimilarity2DTransform.h"
 #include "itkSimilarity3DTransform.h"
@@ -346,6 +347,9 @@ public:
 
   template <typename VScalar>
     TransformEnum GetTransformEnum( const itk::ScaleSkewVersor3DTransform< VScalar > *) const {return sitkScaleSkewVersor;}
+
+  template <typename VScalar>
+    TransformEnum GetTransformEnum( const itk::ComposeScaleSkewVersor3DTransform< VScalar > *) const {return sitkComposeScaleSkewVersor;}
 
   template <typename VScalar>
     TransformEnum GetTransformEnum( const itk::ScaleVersor3DTransform< VScalar > *) const {return sitkScaleVersor;}

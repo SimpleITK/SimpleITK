@@ -28,6 +28,7 @@
 #include "sitkScaleTransform.h"
 #include "sitkScaleVersor3DTransform.h"
 #include "sitkScaleSkewVersor3DTransform.h"
+#include "sitkComposeScaleSkewVersor3DTransform.h"
 #include "sitkSimilarity2DTransform.h"
 #include "sitkSimilarity3DTransform.h"
 #include "sitkVersorRigid3DTransform.h"
@@ -435,6 +436,15 @@ TEST(TransformTest, ReadTransformConvert) {
   EXPECT_NO_THROW(tx = sitk::ScaleSkewVersor3DTransform( sitk::ReadTransform(filename) ) );
   EXPECT_EQ(tx.GetDimension(), 3u);
   EXPECT_EQ(sitk::sitkScaleSkewVersor, tx.GetTransformEnum());
+  }
+  {
+    std::cout << "compose\n";
+    sitk::ComposeScaleSkewVersor3DTransform tx;
+    sitk::WriteTransform(tx, "composeSSV.txt");
+    exit(0);
+    EXPECT_NO_THROW(tx = sitk::ComposeScaleSkewVersor3DTransform( sitk::ReadTransform("composeSSV.txt") ) );
+    EXPECT_EQ(tx.GetDimension(), 3u);
+    EXPECT_EQ(sitk::sitkComposeScaleSkewVersor, tx.GetTransformEnum());
   }
   {
   sitk::ScaleTransform tx(2);
@@ -1756,6 +1766,135 @@ TEST(TransformTest,ScaleSkewVersor3DTransform)
 
   // BUG: inverse does not work!!!!
   //EXPECT_NO_THROW(tx->SetInverse());
+
+}
+
+
+TEST(TransformTest,ComposeScaleSkewVersor3DTransform)
+{
+  // test ComposeScaleSkewVersor3DTransform
+  const std::vector<double> center(3,1.1);
+  const std::vector<double> zeros(3,0.0);
+  const std::vector<double> trans(3, 2.2);
+  const std::vector<double> skew(3,2.7);
+
+  std::unique_ptr<sitk::ComposeScaleSkewVersor3DTransform> tx(new sitk::ComposeScaleSkewVersor3DTransform());
+  std::cout << tx->ToString() << std::endl;
+  EXPECT_EQ( tx->GetParameters().size(), 12u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetTranslation(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx->GetScale(), v3(1.0,1.0,1.0) );
+  EXPECT_EQ( tx->GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
+
+  EXPECT_EQ( tx->SetScale(v3(1.0,2.0,3.0)).GetScale(), v3(1.0,2.0,3.0) );
+  EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
+
+  EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
+
+  sitk::ComposeScaleSkewVersor3DTransform tx0(v3(0.4,0.5,0.6), skew, v4(0.0,0.0,0.0,1.0), trans );
+  EXPECT_EQ( tx0.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx0.GetTranslation(), trans );
+  EXPECT_EQ( tx0.GetScale(), v3(0.4,0.5,0.6) );
+  EXPECT_EQ( tx0.GetSkew(), skew );
+  EXPECT_EQ( tx0.GetVersor(),  v4(0.0,0.0,0.0,1.0) );
+
+  //constructor using axis-angle (rotation of 90 degrees around z)
+  sitk::ComposeScaleSkewVersor3DTransform tx00(v3(0.4,0.5,0.6), skew, v3(0.0,0.0,1.0),1.5707963267948966, trans );
+  EXPECT_EQ( tx00.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx00.GetTranslation(), trans );
+  EXPECT_EQ( tx00.GetScale(), v3(0.4,0.5,0.6) );
+  EXPECT_EQ( tx00.GetSkew(), skew );
+  EXPECT_VECTOR_DOUBLE_NEAR(tx00.GetVersor(), v4(0.0,0.0,0.70710678118654757,0.70710678118654757), 1e-15);
+
+  // copy constructor
+  sitk::ComposeScaleSkewVersor3DTransform tx1( *(tx.get()) );
+  EXPECT_EQ( tx1.GetFixedParameters()[0], 1.1 );
+  EXPECT_EQ( tx1.GetFixedParameters()[1], 1.1 );
+  EXPECT_EQ( tx1.GetFixedParameters()[2], 1.1 );
+  EXPECT_EQ( tx1.GetParameters()[7], 2.0 ); // scale y
+  EXPECT_EQ( tx1.GetParameters(), tx->GetParameters() );
+  EXPECT_EQ( tx1.GetCenter(), center );
+
+  sitk::ComposeScaleSkewVersor3DTransform tx2;
+
+  // assignment operator
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetCenter(), zeros );
+  EXPECT_EQ( tx1.GetParameters().size(), 12u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx1.GetTranslation(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx1.GetScale(), v3(1.0,1.0,1.0) );
+  EXPECT_EQ( tx1.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+
+
+  // copy on write
+  tx1.SetFixedParameters(center);
+  EXPECT_EQ( tx1.GetCenter(), center);
+  EXPECT_EQ( tx1.GetFixedParameters(), center );
+  EXPECT_EQ( tx2.GetFixedParameters(), zeros );
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetCenter(), zeros );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+  tx1.SetCenter(center);
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetTranslation(), zeros );
+  EXPECT_EQ( tx2.GetTranslation(), zeros );
+  tx1.SetTranslation(trans);
+  EXPECT_EQ( tx1.GetTranslation(), trans );
+  EXPECT_EQ( tx2.GetTranslation(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetScale(), v3(1.0,1.0,1.0) );
+  EXPECT_EQ( tx2.GetScale(), v3(1.0,1.0,1.0) );
+  tx1.SetScale(v3(3.0,2.0,1.0));
+  EXPECT_EQ( tx1.GetScale(), v3(3.0,2.0,1.0) );
+  EXPECT_EQ( tx2.GetScale(), v3(1.0,1.0,1.0) );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx2.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  tx1.SetRotation(v3(1.0,0.0,0.0), itk::Math::pi);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx1.GetVersor(), v4(1.0,0.0,0.0,0.0), 1e-15 );
+  EXPECT_EQ( tx2.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+
+
+  sitk::Transform tx3( *tx );
+  tx.reset();
+
+  EXPECT_EQ( tx3.GetParameters().size(), 12u );
+  EXPECT_EQ( tx3.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx3.GetFixedParameters()[0], 1.1 );
+  EXPECT_EQ( tx3.GetFixedParameters()[1], 1.1 );
+  EXPECT_EQ( tx3.GetFixedParameters()[2], 1.1 );
+  EXPECT_EQ( tx3.GetParameters()[0], 0.0 );
+  EXPECT_EQ( tx3.GetParameters()[1], 0.0 );
+  EXPECT_EQ( tx3.GetParameters()[2], 0.0 );
+  EXPECT_EQ( tx3.GetParameters()[7], 2.0 );
+
+
+  tx.reset( new sitk::ComposeScaleSkewVersor3DTransform());
+
+  // test member setters/getters
+  EXPECT_EQ(tx->GetCenter(), zeros);
+  tx->SetCenter(center);
+  EXPECT_EQ(tx->GetCenter(), center);
+
+  EXPECT_EQ( tx->SetRotation(v4(0.0,1.0,0.0,0.0)).GetVersor(), v4(0.0,1.0,0.0,0.0) );
+  EXPECT_THROW( tx->SetRotation(v3(1.0,0.0,0.0)).GetVersor(), sitk::GenericException );
+
+  EXPECT_EQ(tx->GetTranslation(), zeros);
+  tx->SetTranslation(trans);
+  EXPECT_EQ(tx->GetTranslation(),trans);
+
+  // BUG: inverse does not work!!!!
+  EXPECT_NO_THROW(tx->SetInverse());
 
 }
 
