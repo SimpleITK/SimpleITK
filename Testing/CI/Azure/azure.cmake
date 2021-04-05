@@ -122,7 +122,6 @@ SET (_dashboard_cache "
 
 set_from_env(dashboard_cache "CTEST_CACHE" DEFAULT ${_dashboard_cache})
 
-endif()
 
 
 
