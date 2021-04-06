@@ -39,6 +39,7 @@
 #include "itkVersorTransform.h"
 #include "itkVersorRigid3DTransform.h"
 #include "itkScaleSkewVersor3DTransform.h"
+#include "itkComposeScaleSkewVersor3DTransform.h"
 #include "itkScaleVersor3DTransform.h"
 #include "itkAffineTransform.h"
 #include "itkCompositeTransform.h"
@@ -371,6 +372,14 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 
         temp = new PimpleTransform<itk::ScaleSkewVersor3DTransform< double > >();
         break;
+      case sitkComposeScaleSkewVersor:
+        if( VDimension != 3)
+          {
+          sitkExceptionMacro( "A sitkComposeScaleSkewVersor Transform only works for 3D!");
+          }
+
+        temp = new PimpleTransform<itk::ComposeScaleSkewVersor3DTransform< double > >();
+        break;
       case sitkAffine:
         temp = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
         break;
@@ -593,6 +602,7 @@ void Transform::InternalInitialization(itk::TransformBase *transform)
 
                                  TransformTraits< double, 3>::SimilarityTransformType,
                                  itk::ScaleSkewVersor3DTransform< double >,
+                                 itk::ComposeScaleSkewVersor3DTransform< double >,
                                  itk::ScaleVersor3DTransform< double >,
 
                                  itk::QuaternionRigidTransform< double >,
