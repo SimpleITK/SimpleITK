@@ -144,7 +144,6 @@ if (NOT DEFINED SimpleITK_PYTHON_TEST_EXECUTABLE )
   else()
     set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." )
   endif()
-
 endif()
 
 
