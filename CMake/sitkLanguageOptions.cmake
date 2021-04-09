@@ -134,7 +134,7 @@ if( _do_find_package )
     endif()
 
   else()
-
+    set(Python_FIND_STRATEGY LOCATION)
     find_package ( Python ${_find_package_extra_args} COMPONENTS Interpreter Development )
 
     if ( Python_Interpreter_FOUND AND Python_Development_FOUND)
