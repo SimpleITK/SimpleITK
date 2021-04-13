@@ -40,7 +40,6 @@ class sitkImageTests
 
   public static void main(String argv[])
     {
-    int ntests = 2;
     int npass = 0;
     int nfail = 0;
 
@@ -62,6 +61,20 @@ class sitkImageTests
     System.out.println("[----------]");
 
     System.out.println("[----------]");
+    System.out.println("[ RUN      ] Java.ImageBufferTest");
+    if (ImageBufferTest())
+      {
+      System.out.println("[       OK ] Java.ImageBufferTest");
+      npass++;
+      }
+    else
+      {
+      System.out.println("[     FAIL ] Java.ImageBufferTest");
+      nfail++;
+      }
+    System.out.println("[----------]");
+
+    System.out.println("[----------]");
     System.out.println("[ RUN      ] Java.LabelShapeStatisticsTest");
     if (LabelShapeStatisticsTest())
       {
@@ -75,7 +88,8 @@ class sitkImageTests
       }
     System.out.println("[----------]");
     System.out.println("[==========]");
-    if (npass == ntests)
+
+    if (nfail == 0)
       {
       System.out.println("[  PASSED  ]");
       }
@@ -125,6 +139,66 @@ class sitkImageTests
       {
       return false;
       }
+    return true;
+    }
+
+  public static boolean ImageBufferTest()
+    {
+      long[] v = {2,3,4};
+    VectorUInt32 idx = new VectorUInt32( v );
+
+    int size = 7*8*9;
+    short val = 42;
+
+    Image image = new Image(7,8,9, PixelIDValueEnum.sitkUInt8);
+    image.setPixelAsUInt8(idx, (short)99);
+
+    // Low level method is not recommended, but has been useful when
+    // interfacing with other low level C based libraries in Java
+    long ptr = image.getBufferAsNativePointer();
+
+    if (ptr == 0)
+      {
+        System.out.println("Null native buffer pointer");
+        return false;
+      }
+
+    java.nio.Buffer b1 = image.getBufferAsBuffer();
+
+    if (b1.capacity() != size)
+      {
+        System.out.println("Capacity is not as expected");
+        return false;
+      }
+
+    if (!b1.isDirect())
+      {
+        System.out.println("Buffer is not direct");
+        return false;
+      }
+
+    if (b1.isReadOnly())
+      {
+        System.out.println("Buffer is read-only");
+        return false;
+      }
+
+    java.nio.ByteBuffer bb = (java.nio.ByteBuffer) b1;
+
+    if (bb.get(0) != 0)
+      {
+        System.out.println("Expected 0 value");
+        return false;
+      }
+
+    if (bb.get(2+7*3+7*8*4) != 99)
+      {
+        System.out.println("Expected 99 value");
+        return false;
+      }
+
+
+
     return true;
     }
 
