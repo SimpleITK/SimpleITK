@@ -21,6 +21,32 @@ Code illustrating various aspects of the registration framework can be found in
 the set of :ref:`examples <lbl_examples>` which are part of the SimpleITK distribution
 and in the SimpleITK `Jupyter notebook repository <http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/>`_.
 
+Initialization and Center of Rotation
+.....................................
+
+The task of registration is formulated using non-linear optimization which requires an initial estimate. The two
+most common initialization approaches are (1) Use the identity transform (a.k.a. forgot to initialize).
+(2) Align the physical centers of the two images (see `CenteredTransformInitializerFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1CenteredTransformInitializerFilter.html>`_). If after initialization there is no overlap between the
+images, registration will fail. The closer the initialization transformation is to the actual transformation, the higher the probability
+of convergence to the correct solution.
+
+If your registration involves the use of a global domain transform (:ref:`described here <lbl_transforms>`), you should also set
+an appropriate center of rotation. In many cases you want the center of rotation to be the physical center of the fixed image
+(the CenteredTransformCenteredTransformInitializerFilter ensures this). This is of significant importance for registration convergence due
+to the non-linear nature of rotation. When the center of rotation is far from our physical region of interest (ROI), a small rotational angle
+results in a large displacement. Think of moving the pivot/fulcrum point of a `lever <https://en.wikipedia.org/wiki/Lever>`_. For the same
+rotation angle, the farther you are from the fulcrum the larger the displacement. For numerical stability we do not want our computations
+to be sensitive to very small variations in the rotation angle, thus the ideal center of rotation is the point which minimizes the
+distance to the farthest point in our ROI:
+
+.. math::
+
+   p_{center} = \underset{p_{rotation}} {\arg\min}\ dist(p_{rotation}, \{p_{roi}\})
+
+
+Without additional knowledge we can only assume that the ROI is the whole fixed image. If your ROI is only in a sub
+region of the image, a more appropriate point would be the center of the oriented bounding box of that ROI.
+
 
 ImageRegistrationMethod
 ........................
