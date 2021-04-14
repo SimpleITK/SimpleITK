@@ -104,6 +104,16 @@ bool RegisterMoreTransforms()
   using BSplineTransformO2Type = itk::BSplineTransform<double, Dimension, 2>;
   itk::TransformFactory<BSplineTransformO2Type>::RegisterTransform();
 
+  // This transform was not added to the IOFactory the initial release.
+  if (ITK_VERSION_MAJOR == 5 && ITK_VERSION_MINOR == 2 && ITK_VERSION_PATCH == 0)
+  {
+    if (Dimension == 3)
+    {
+      using ComposeScaleSkewVersor3DTransformType = itk::ComposeScaleSkewVersor3DTransform<double>;
+      itk::TransformFactory<ComposeScaleSkewVersor3DTransformType>::RegisterTransform();
+    }
+  }
+
   return true;
 }
 
