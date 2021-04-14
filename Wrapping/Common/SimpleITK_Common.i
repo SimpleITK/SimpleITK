@@ -58,18 +58,35 @@
 %ignore itk::simple::Image::GetITKBase( void );
 %ignore itk::simple::Image::GetITKBase( void ) const;
 
+#if !(defined(SWIGCSHARP)
+%ignore itk::simple::Image::GetBufferAsInt8();
+%ignore itk::simple::Image::GetBufferAsUInt8();
+%ignore itk::simple::Image::GetBufferAsInt16();
+%ignore itk::simple::Image::GetBufferAsUInt16();
+%ignore itk::simple::Image::GetBufferAsInt32();
+%ignore itk::simple::Image::GetBufferAsUInt32();
+%ignore itk::simple::Image::GetBufferAsInt64();
+%ignore itk::simple::Image::GetBufferAsUInt64();
+%ignore itk::simple::Image::GetBufferAsFloat();
+%ignore itk::simple::Image::GetBufferAsDouble();
+
+%ignore itk::simple::Image::GetBufferAsInt8( ) const;
+%ignore itk::simple::Image::GetBufferAsUInt8( ) const;
+%ignore itk::simple::Image::GetBufferAsInt16( ) const;
+%ignore itk::simple::Image::GetBufferAsUInt16( ) const;
+%ignore itk::simple::Image::GetBufferAsInt32( ) const;
+%ignore itk::simple::Image::GetBufferAsUInt32( ) const;
+%ignore itk::simple::Image::GetBufferAsInt64( ) const;
+%ignore itk::simple::Image::GetBufferAsUInt64( ) const;
+%ignore itk::simple::Image::GetBufferAsFloat( ) const;
+%ignore itk::simple::Image::GetBufferAsDouble( ) const;
+
+#endif
+
+
 #if !(defined(SWIGCSHARP) || defined(SWIGJAVA))
-%ignore itk::simple::Image::GetBufferAsInt8;
-%ignore itk::simple::Image::GetBufferAsUInt8;
-%ignore itk::simple::Image::GetBufferAsInt16;
-%ignore itk::simple::Image::GetBufferAsUInt16;
-%ignore itk::simple::Image::GetBufferAsInt32;
-%ignore itk::simple::Image::GetBufferAsUInt32;
-%ignore itk::simple::Image::GetBufferAsInt64;
-%ignore itk::simple::Image::GetBufferAsUInt64;
-%ignore itk::simple::Image::GetBufferAsFloat;
-%ignore itk::simple::Image::GetBufferAsDouble;
-%ignore itk::simple::Image::GetBufferAsVoid;
+%ignore itk::simple::Image::GetBufferAsVoid();
+%ignore itk::simple::Image::GetBufferAsVoid() const;
 #endif
 
 
