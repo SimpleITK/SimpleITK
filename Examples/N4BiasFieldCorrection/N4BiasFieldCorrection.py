@@ -54,14 +54,14 @@ if len(sys.argv) > 5:
     corrector.SetMaximumNumberOfIterations([int(sys.argv[5])]
                                            * numberFittingLevels)
 
-output = corrector.Execute(image, maskImage)
+corrected_image = corrector.Execute(image, maskImage)
 
 
 log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage)
 
-output = inputImage / sitk.Exp( log_bias_field )
+bias_field = inputImage / sitk.Exp( log_bias_field )
 
-sitk.WriteImage(output, sys.argv[2])
+sitk.WriteImage(corrected_image, sys.argv[2])
 
 if ("SITK_NOSHOW" not in os.environ):
-    sitk.Show(output, "N4 Corrected")
+    sitk.Show(corrected_image, "N4 Corrected")

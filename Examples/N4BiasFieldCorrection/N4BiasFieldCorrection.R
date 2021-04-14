@@ -57,10 +57,10 @@ if (length ( args ) > 5) {
     corrector$SetMaximumNumberOfIterations( rep(strtoi( args[[5]], numberFittingLevels)) )
 }
 
-output <- corrector$Execute( image, maskImage )
+correctedImage <- corrector$Execute( image, maskImage )
 
 logBiasField <- corrector$GetLogBiasFieldAsImage(inputImage)
 
-output <- inputImage / Exp( logBiasField )
+biasField <- inputImage / Exp( logBiasField )
 
-WriteImage(output, args[[2]])
+WriteImage(correctedImage, args[[2]])
