@@ -438,11 +438,9 @@ TEST(TransformTest, ReadTransformConvert) {
   EXPECT_EQ(sitk::sitkScaleSkewVersor, tx.GetTransformEnum());
   }
   {
-    std::cout << "compose\n";
     sitk::ComposeScaleSkewVersor3DTransform tx;
-    sitk::WriteTransform(tx, "composeSSV.txt");
-    exit(0);
-    EXPECT_NO_THROW(tx = sitk::ComposeScaleSkewVersor3DTransform( sitk::ReadTransform("composeSSV.txt") ) );
+    sitk::WriteTransform(tx, filename);
+    EXPECT_NO_THROW(tx = sitk::ComposeScaleSkewVersor3DTransform( sitk::ReadTransform(filename) ) );
     EXPECT_EQ(tx.GetDimension(), 3u);
     EXPECT_EQ(sitk::sitkComposeScaleSkewVersor, tx.GetTransformEnum());
   }
