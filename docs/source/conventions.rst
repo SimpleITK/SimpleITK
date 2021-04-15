@@ -3,6 +3,16 @@ Common Conventions
 
 This document contains common conventions that SimpleITK filters, and objects follow. It is intended to describe the interfaces that users should use and developers should implement. If a method or class does not specify different behavior or default values then those described here, it should be assumed that it follows the following conventions.
 
+Naming
+......
+
+The object oriented interface of process objects are named based on the specific operation they perform on their input image(s)
+with a suffix of **ImageFilter**, the ITK convention. For example, `AbsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1AbsImageFilter.html>`_, `BinaryMinMaxCurvatureFlowImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BinaryMinMaxCurvatureFlowImageFilter.html>`_ etc. For almost all process objects there is also a procedural interface. This interface provides one or more functions which
+allow setting parameter values and invoking the operation in one call. This results in concise code and is useful if the filter is only applied once.
+These functions use the same naming as the object oriented interface only without the suffix. That is,
+the corresponding procedural methods to the object oriented interface examples above are `Abs <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#a54161a47394e60c5758193cd0ab6930e>`_ and `BinaryMinMaxCurvatureFlow <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#ab0cd996e578cd566b0e7318978bd0420>`_.
+
+Note that the complete/detailed documentation appears in the doxygen of the object oriented interface.
 
 Dimensional Vectors
 ...................
