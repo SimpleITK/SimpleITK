@@ -176,6 +176,7 @@ Additional Resources
    `SimpleITK Jupyter notebooks <https://github.com/InsightSoftwareConsortium/SimpleITK-Notebooks>`_
    (Python and R only).
 
+.. _lbl_transforms:
 
 Transforms
 ++++++++++
