@@ -3,7 +3,6 @@
 Building SimpleITK
 ******************
 
-
 Pre-built binaries (see :ref:`Downloading the binaries
 <installation-binaries>`) are available in many cases so
 users do not need to build SimpleITK. However, there are
@@ -71,6 +70,7 @@ building of SimpleITK (see their repository for more details):
    a SimpleITK rockspec is available at the `Luarocks repository <https://luarocks.org/modules/dave3d/simpleitk>`__
    or from `this GitHub repository <https://github.com/SimpleITK/SimpleITKLuaRock>`__.
 
+.. _source_code:
 
 Source code
 ===========
@@ -137,6 +137,10 @@ important to use the appropriate flags to enable multi-process
 compilation i.e. "-j" for make, "/MP" for Visual Studio, or use the
 CMake `Ninja <https://ninja-build.org>`__ generator.
 
+For **building SimpleITK on Windows** using the CMake GUI see:
+
+.. toctree::
+  buildingWindows.rst
 
 Building Manually
 -----------------
