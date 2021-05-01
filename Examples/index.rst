@@ -25,6 +25,7 @@ Examples
   link_ImageRegistrationMethod2_docs
   link_ImageRegistrationMethod3_docs
   link_ImageRegistrationMethod4_docs
+  link_ImageRegistrationOptimizerWeights_docs
   link_ImageRegistrationMethodBSpline1_docs
   link_ImageRegistrationMethodBSpline2_docs
   link_ImageRegistrationMethodBSpline3_docs
