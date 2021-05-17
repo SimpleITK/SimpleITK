@@ -78,7 +78,7 @@ pygments_style = None
 # -- Options for HTML output -------------------------------------------------
 
 def setup(app):
-    app.add_stylesheet("style.css")
+    app.add_css_file("style.css")
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
