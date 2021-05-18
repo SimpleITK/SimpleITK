@@ -326,11 +326,11 @@ endif()
 #------------------------------------------------------------------------------
 # Swig
 #------------------------------------------------------------------------------
-option ( SimpleITK_USE_SYSTEM_SWIG "Use a pre-compiled version of SWIG 3.0 previously configured for your system" OFF )
+option ( SimpleITK_USE_SYSTEM_SWIG "Use a pre-compiled version of SWIG 4.0 previously configured for your system" OFF )
 sitk_legacy_naming( SimpleITK_USE_SYSTEM_SWIG USE_SYSTEM_SWIG )
 mark_as_advanced(SimpleITK_USE_SYSTEM_SWIG)
 if(SimpleITK_USE_SYSTEM_SWIG)
-  find_package ( SWIG 3 REQUIRED )
+  find_package ( SWIG 4 REQUIRED )
 else()
   include(External_Swig)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Swig)

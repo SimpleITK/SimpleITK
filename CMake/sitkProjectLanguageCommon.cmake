@@ -77,7 +77,7 @@ endif()
 # General SWIG configuration
 #
 
-find_package ( SWIG 3 REQUIRED )
+find_package ( SWIG 4 REQUIRED )
 
 include (sitkUseSWIG)
 
