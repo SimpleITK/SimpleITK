@@ -13,7 +13,7 @@ Build/Install SimpleITK
 For Windows, you have two options:
 
  - :ref:`Download <installation-binaries>` the binary for SimpleITK
- - :doc:`Build <building>` the binary
+ - :doc:`Build <buildingWindows>` the binary
 
 For any other OS, you must build the binaries yourself.
 
