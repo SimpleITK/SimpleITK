@@ -49,7 +49,7 @@ A read and write example using SimpleITK's `ImageFileReader <https://simpleitk.o
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: cpp
-       :lines: 32-41
+       :lines: 33-41
 
   .. tab:: Java
 
@@ -104,7 +104,7 @@ A more compact example using SimpleITK's procedural interface:
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: cpp
-       :lines: 46-49
+       :lines: 47-49
 
   .. tab:: Java
 
@@ -177,7 +177,7 @@ reading it back, and then comparing the results.
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: python
-       :lines: 54-60
+       :lines: 55-60
 
   .. tab:: Java
 
