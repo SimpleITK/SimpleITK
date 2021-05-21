@@ -26,6 +26,30 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.cs
+       :language: csharp
+       :lines: 18-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.cxx
+       :language: cpp
+       :lines: 19-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.java
+       :language: java
+       :lines: 23-
+
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.lua
+       :language: lua
+       :lines: 19-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.py
@@ -37,3 +61,15 @@ Code
     .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.R
        :language: R
        :lines: 22-
+
+  .. tab:: Ruby
+
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.rb
+       :language: ruby
+       :lines: 18-
+
+  .. tab:: Tcl
+
+    .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.tcl
+       :language: tcl
+       :lines: 19-
