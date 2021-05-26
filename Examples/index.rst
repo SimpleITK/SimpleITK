@@ -40,3 +40,4 @@ Examples
   link_AdvancedImageReading_docs
   link_ImageIOSelection_docs
   link_RawImageReading_docs
+  link_JavaGetSetBuffer_docs.rst
