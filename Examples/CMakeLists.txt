@@ -69,9 +69,13 @@ macro(add_language_subdirectory lang)
   endif()
 endmacro()
 
+
+
+
 if ( BUILD_TESTING )
   add_subdirectory( test )
 
+  add_language_subdirectory( Java )
   add_language_subdirectory( CSharp )
   add_language_subdirectory( Python )
 
