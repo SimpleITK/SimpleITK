@@ -22,8 +22,8 @@
       "description" : "3D",
       "settings" : [],
       "tolerance" : "1e-8",
-      "inputA_cast" : "sitkUInt32",
-      "inputB_cast" : "sitkUInt32",
+      "inputA_cast" : "sitkInt32",
+      "inputB_cast" : "sitkInt32",
       "inputs" : [
         "Input/RA-Short.nrrd",
         "Input/RA-Short.nrrd"
