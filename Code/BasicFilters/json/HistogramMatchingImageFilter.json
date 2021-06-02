@@ -3,9 +3,21 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "filter_type" : "itk::HistogramMatchingImageFilter<InputImageType, OutputImageType>",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
+    "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "ReferenceImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetReferenceImage(this->CastImageToITK<typename FilterType::InputImageType>(*inReferenceImage));",
+      "no_size_check" : 1
+    }
+  ],
   "members" : [
     {
       "name" : "NumberOfHistogramLevels",
