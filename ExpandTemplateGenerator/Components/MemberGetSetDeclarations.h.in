@@ -110,13 +110,13 @@ OUT=[[
 end)      */
 $(if active then
 OUT=[[
-     ${type} Get${name}($(if parameters then
+     ${type} $(if function_name then OUT = function_name else OUT = 'Get' .. name end)($(if parameters then
 for inum=1,#parameters do
   if inum>1 then
     OUT = OUT .. ', '
   end
   OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].name
-end end)) const { return this->m_pfGet${name}($(if parameters then
+end end))$(if not non_const then OUT=' const' end) { return this->m_pfGet${name}($(if parameters then
 for inum=1,#parameters do
   if inum>1 then
     OUT = OUT .. ', '
