@@ -30,7 +30,7 @@ set ( SimpleITKUnitTestSource
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
   sitkImageViewerTest.cxx
-  )
+  sitkDemonsRegistrationTests.cxx)
 
 if ( SimpleITK_MAX_DIMENSION GREATER_EQUAL 4 )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
