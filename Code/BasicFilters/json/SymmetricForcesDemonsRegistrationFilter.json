@@ -125,6 +125,16 @@
       "default" : 0.0,
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the metric value. The metric value is the mean square difference in intensity between the fixed image and transforming moving image computed over the the overlapping region between the two images. This value is calculated for the current iteration"
+    },
+    {
+      "name" : "StopRegistration",
+      "function_name" : "StopRegistration",
+      "non_const" : true,
+      "type" : "void",
+      "active" : "true",
+      "itk_get" : "f->StopRegistration()",
+      "no_print" : true,
+      "breifdescriptionGet" : "Stop the registration after the current iteration."
     }
   ],
   "tests" : [
