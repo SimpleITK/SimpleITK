@@ -161,7 +161,7 @@ jobs:
          env_file:
          ctest.cache_extra: |
            ITK_GIT_TAG:STRING=master
-           CMAKE_CXX_STANDARD:STRING=11
+           CMAKE_CXX_STANDARD:STRING=14
        devtools-7:
          env_file: '/opt/rh/devtoolset-7/enable'
        devtools-8:
