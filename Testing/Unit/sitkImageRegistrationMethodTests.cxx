@@ -1175,6 +1175,61 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
 }
 
 
+TEST_F(sitkRegistrationMethodTest, StopRegistration)
+{
+  sitk::Image fixedImage = MakeDualGaussianBlobs({ 64, 64}, {54, 74}, {256, 256,});
+  sitk::Image movingImage = MakeDualGaussianBlobs({61, 65}, {51.2, 75.5}, {256,256});
+
+
+  //fixedImage = sitk::AdditiveGaussianNoise(fixedImage,  0.1, 0, 1u);
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(2u);
+  R.SetInitialTransform(tx, false);
+  R.SetMetricAsMeanSquares();
+
+  constexpr int stop_iteration = 3;
+  auto stopLambda =  [&R, stop_iteration] ()
+  {
+    std::cout << R.GetOptimizerIteration() << " " << R.GetOptimizerPosition() << std::endl;
+    if ( R.GetOptimizerIteration() >= stop_iteration )
+    {
+      std::cout << "STOP" << std::endl;
+      R.StopRegistration();
+    }
+  };
+
+
+  std::function< void(void) > set_optimizer_funcs[] = {
+    [&R] () {R.SetOptimizerAsConjugateGradientLineSearch(1.0, 100);},
+    [&R] () {R.SetOptimizerAsGradientDescent(1.0, 100);},
+    [&R] () {R.SetOptimizerAsGradientDescentLineSearch(1.0, 100);},
+    [&R] () {R.SetOptimizerAsRegularStepGradientDescent(1.0, 0.001, 100, 0.5, 1e-6);},
+    [&R] () {R.SetOptimizerAsExhaustive({5, 5}, 0.5);},
+    [&R] () {R.SetOptimizerAsPowell(100, 100, 1,1e-6, 1e-8);},
+    [&R] () {R.SetOptimizerAsOnePlusOneEvolutionary(100);}
+  };
+
+
+  R.AddCommand(sitk::sitkIterationEvent, stopLambda);
+
+  for (const auto &setOptimizer : set_optimizer_funcs)
+  {
+    setOptimizer();
+
+    sitk::Transform outTx1 = R.Execute(fixedImage, movingImage);
+
+    std::cout << "GetOptimizerPosition(): " << R.GetOptimizerPosition() << std::endl;
+    std::cout << "outTx1.GetParameters(): " << outTx1.GetParameters() << std::endl;
+    std::cout << "GetOptimizerIteration(): " << R.GetOptimizerIteration() << std::endl;
+    std::cout << "Stop Condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+    EXPECT_EQ(stop_iteration+1, R.GetOptimizerIteration());
+  }
+
+}
+
 
 TEST_F(sitkRegistrationMethodTest, BSpline_adaptor)
 {
