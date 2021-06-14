@@ -17,7 +17,7 @@ OUT=OUT..[[
 end
 OUT=OUT..[[
 
-  static ${type} CustomCast( const FilterType *f]]
+  static ${type} CustomCast($(if not non_const then OUT=' const' end) FilterType *f]]
 if parameters then
   for inum=1,#parameters do
     OUT=OUT..', '..parameters[inum].type..' '..parameters[inum].name
