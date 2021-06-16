@@ -189,6 +189,26 @@ the registration runtime. The ImageRegistration method allows you to
 specify how/if to sample the voxels, `SetMetricSamplingStrategy <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#aa49fdfae5950c2ec6e01a75df59078f6>`_, and
 if using a sampling, what percentage, `SetMetricSamplingPercentage <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#a8b891c62404a8dc5010241fea619c932>`_.
 
+The registration framework supports three sampling strategies:
+
+1. NONE - use all voxels, sampled points are the voxel centers.
+2. REGULAR - sample image voxels using a regular grid, then within each voxel randomly perturb from center.
+3. RANDOM - sample image voxels with replacement using a uniform distribution, then within each voxel randomly perturb from center.
+
+When using the REGULAR or RANDOM sampling strategies, running the same
+registration code multiple times will yield different results. To remove
+the randomness, set the pseudo-random number generator's seed in the
+`SetMetricSamplingPercentage <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#a8b891c62404a8dc5010241fea619c932>`_
+method to a constant. The default seed value is
+wall clock time.
+
+Note that using the RANDOM sampling strategy with a 100% sampling rate is not
+equivalent to using the sampling strategy of NONE. Given an image with N voxels,
+the former randomly selects N voxels with repetition and perturbs the points
+within each voxel, the latter uses the centers of all N voxels. Thus, for
+repeated random sampling with 100% rate, you get different samples and likely
+none of them is of the centers of all N voxels.
+
 Scaling in Parameter Space
 ==========================
 

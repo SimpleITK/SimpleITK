@@ -495,6 +495,15 @@ namespace simple
     /** \brief Get the percentage of pixels used for metric evaluation.  */
     const std::vector<double> &GetMetricSamplingPercentagePerLevel() const;
 
+    /** \brief Sampling strategies for obtaining points.
+     *
+     * - NONE: use all voxels, sampled points are the voxel centers.
+     * - REGULAR: sample image voxels using a regular grid, then within
+     *            each voxel randomly perturb from center.
+     * - RANDOM: sample image voxels with replacement using a uniform
+     *           distribution, then within each voxel randomly perturb
+     *           from center.
+     */
     enum MetricSamplingStrategyType {
       NONE,
       REGULAR,
