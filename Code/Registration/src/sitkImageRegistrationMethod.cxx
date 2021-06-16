@@ -604,6 +604,16 @@ std::string ImageRegistrationMethod::GetOptimizerStopConditionDescription() cons
   return this->m_StopConditionDescription;
 }
 
+bool ImageRegistrationMethod::StopRegistration()
+{
+  if (bool(this->m_pfOptimizerStopRegistration))
+  {
+    this->m_pfOptimizerStopRegistration();
+    return true;
+  }
+  return false;
+}
+
 unsigned int ImageRegistrationMethod::GetOptimizerIteration() const
 {
   if (bool(this->m_pfGetOptimizerIteration))
@@ -1209,6 +1219,7 @@ void ImageRegistrationMethod::OnActiveProcessDelete( ) noexcept
   this->m_pfGetMetricNumberOfValidPoints = nullptr;
   this->m_pfGetOptimizerScales = nullptr;
   this->m_pfGetOptimizerStopConditionDescription = nullptr;
+  this->m_pfOptimizerStopRegistration = nullptr;
 
   this->m_pfUpdateWithBestValue = nullptr;
 

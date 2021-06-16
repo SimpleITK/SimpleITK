@@ -110,6 +110,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopOptimization, optimizer.GetPointer());
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -135,6 +136,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopOptimization, optimizer.GetPointer());
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -164,6 +166,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopOptimization, optimizer.GetPointer());
 
 
       optimizer->Register();
@@ -193,6 +196,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopOptimization, optimizer.GetPointer());
 
 
       return optimizer.GetPointer();
@@ -245,6 +249,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = nullptr;
 
 
       return optimizer.GetPointer();
@@ -272,6 +277,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = nullptr;
 
 
       return optimizer.GetPointer();
@@ -298,6 +304,7 @@ namespace simple
                                                   &(this->m_MetricValue),
                                                   std::placeholders::_1);
 
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopWalking, optimizer.GetPointer());
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -324,6 +331,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = nullptr;
 
 
       optimizer->Register();
@@ -347,6 +355,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopOptimization, optimizer.GetPointer());
 
 
       optimizer->Register();
@@ -386,7 +395,7 @@ namespace simple
       this->m_pfGetOptimizerScales = [x]() {
         return PositionOptimizerCustomCast::Helper(x->GetScales());
       };
-
+      this->m_pfOptimizerStopRegistration = std::bind(&_OptimizerType::StopOptimization, optimizer.GetPointer());
 
       optimizer->Register();
       return optimizer.GetPointer();
