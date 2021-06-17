@@ -7,3 +7,12 @@ function(value, .copy = FALSE)
 {
   PermuteAxesImageFilter_DefaultOrder_get(.copy)
 }
+
+if (existsMethod("$", "ExternalReference")) {
+  packageStartupMessage("SimpleITK - swig has been fixed so the $ method insize zFixes can be removed")
+} else {
+  setMethod("$", "ExternalReference",function(x, name){
+    msg <- paste0("Unknown method: ", sQuote(name), ". Check spelling, documentation etc.")
+    stop(msg)
+  })
+}
