@@ -185,7 +185,7 @@ IPython and Jupyter
 -------------------
 
 For python users, `IPython <http://ipython.org/>`__ with
-`Jupyter <http://jupyter.org>`__ is terrific environment to perform
+`Jupyter <http://jupyter.org>`__ is a terrific environment to perform
 interactive computing for image processing.  The addition of the
 `numpy <https://numpy.org>`__ and `scipy <https://www.scipy.org>`__ packages
 creates a powerful interactive development environment.
