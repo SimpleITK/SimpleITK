@@ -192,7 +192,9 @@ if using a sampling, what percentage, `SetMetricSamplingPercentage <https://simp
 The registration framework supports three sampling strategies:
 
 1. NONE - use all voxels, sampled points are the voxel centers.
-2. REGULAR - sample image voxels using a regular grid, then within each voxel randomly perturb from center.
+2. REGULAR - sample every n-th voxel while traversing the image
+   in scan-line order, then within each voxel randomly
+   perturb from center.
 3. RANDOM - sample image voxels with replacement using a uniform distribution, then within each voxel randomly perturb from center.
 
 When using the REGULAR or RANDOM sampling strategies, running the same
@@ -206,8 +208,19 @@ Note that using the RANDOM sampling strategy with a 100% sampling rate is not
 equivalent to using the sampling strategy of NONE. Given an image with N voxels,
 the former randomly selects N voxels with repetition and perturbs the points
 within each voxel, the latter uses the centers of all N voxels. Thus, for
-repeated random sampling with 100% rate, you get different samples and likely
+repeated random sampling with 100% rate, different samples are produced and likely
 none of them is of the centers of all N voxels.
+
+Combining a mask with sampling is done using a rejection approach. First a sample is generated and
+then it is accepted or rejected if it is inside or outside the mask. This may cause
+problems when the mask region occupies a very small region in the original image. Because the sampling
+only discards data,the sample rate may be reduced from the requested one. For some similarity metrics (e.g. mutual information)
+this can result in an insufficient number of samples for metric value computation, leading to registraiton failure.
+Other metrics are more robust to small sample sizes (e.g. mean squares), but they all suffer from it.
+In such cases it is better to use a cropped version of the image for registration, possibly the mask's bounding box,
+instead of the original image with a mask.
+
+
 
 Scaling in Parameter Space
 ==========================
