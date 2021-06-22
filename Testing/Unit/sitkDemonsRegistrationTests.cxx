@@ -46,7 +46,7 @@ moving.SetPixelAsFloat({101,101}, 10);
 
 sitk::DemonsRegistrationFilter filter;
 
-constexpr int stop_iteration = 2;
+constexpr unsigned int stop_iteration = 2;
 
 auto stopLambda =  [&filter, stop_iteration] (){ if ( filter.GetElapsedIterations() >= stop_iteration ){ filter.StopRegistration();}};
 filter.AddCommand(sitk::sitkIterationEvent, stopLambda);
