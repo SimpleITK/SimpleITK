@@ -1190,7 +1190,7 @@ TEST_F(sitkRegistrationMethodTest, StopRegistration)
   R.SetInitialTransform(tx, false);
   R.SetMetricAsMeanSquares();
 
-  constexpr int stop_iteration = 3;
+  constexpr unsigned int stop_iteration = 3;
   auto stopLambda =  [&R, stop_iteration] ()
   {
     std::cout << R.GetOptimizerIteration() << " " << R.GetOptimizerPosition() << std::endl;
