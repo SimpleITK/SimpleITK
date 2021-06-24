@@ -11,6 +11,10 @@ pr: none
 
 # Scheduled builds on master to build the "latest" are configure through the AZP GUI.
 
+# The packaging pipeline takes in a few variables:
+# configure.buildhash - Branch, tag, or commit that is used for the code being built.
+#   Build/CI scripts will follow build.sourcebranch
+
 jobs:
   - job: Configure
     displayName: Configure Variables
@@ -19,7 +23,14 @@ jobs:
     steps:
       - checkout: none
       - bash: |
-          echo "##vso[task.setvariable variable=BuildHash;isOutput=true]${CONFIGURE_BUILDHASH:-release}"
+          if [ "$CONFIGURE_BUILDHASH" = "master" ];
+          then
+            echo "The source branch is $BUILD_SOURCEBRANCH"
+            echo "##vso[task.setvariable variable=BuildHash;isOutput=true]$BUILD_SOURCEBRANCH"
+          else
+            echo "The source branch is ${CONFIGURE_BUILDHASH:=$BUILD_SOURCEBRANCH}"
+            echo "##vso[task.setvariable variable=BuildHash;isOutput=true]${CONFIGURE_BUILDHASH:=$BUILD_SOURCEBRANCH}"
+          fi
         name: configure
   - template: templates/package-linux-job.yml
     parameters:
@@ -46,12 +57,13 @@ jobs:
           docker build -f Dockerfile -t simpleitk-doxygen .
         displayName: Build Docker Image
       - bash: |
+          export SIMPLEITK_GIT_TAG_PATH=$(echo $SIMPLEITK_GIT_TAG | sed -e 's/\//-/g')
           docker run \
                  --mount type=bind,source=${BUILD_SOURCESDIRECTORY},destination=/work/SimpleITK,readonly \
                  --env SIMPLEITK_GIT_TAG \
                  --name sitk-dox simpleitk-doxygen
           mkdir -p $(Build.ArtifactStagingDirectory)/Doxygen
-          docker cp sitk-dox:/SimpleITKDoxygen.tar.gz $(Build.ArtifactStagingDirectory)/Doxygen/SimpleITKDoxygen-${SIMPLEITK_GIT_TAG}.tar.gz
+          docker cp sitk-dox:/SimpleITKDoxygen.tar.gz $(Build.ArtifactStagingDirectory)/Doxygen/SimpleITKDoxygen-${SIMPLEITK_GIT_TAG_PATH}.tar.gz
         displayName: Docker doxygen generation
       - task: PublishBuildArtifacts@1
         inputs:
