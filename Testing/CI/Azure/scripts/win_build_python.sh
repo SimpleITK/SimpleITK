@@ -8,10 +8,10 @@ export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=2
 
 echo "COREBINARYDIRECTORY: ${COREBINARYDIRECTORY}"
 
-which python
+type -p python
 python --version
 PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
-
+_PYTHON_ROOT_DIR=$(python -c 'import sys;print(sys.prefix)' )
 
 
 read -r -d '' CTEST_CACHE << EOM || true
@@ -20,10 +20,12 @@ SWIG_EXECUTABLE:FILEPATH=${COREBINARYDIRECTORY}\swigwin\swig.exe
 BUILD_TESTING:BOOL=ON
 BUILD_EXAMPLES:BOOL=ON
 SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+Python_ROOT_DIR:PATH=${_PYTHON_ROOT_DIR}
+Python_FIND_REGISTRY:STRING=NEVER
 SimpleITK_PYTHON_WHEEL:BOOL=1
 EOM
 
-
+echo "CTEST_CACHE: ${CTEST_CACHE}"
 export CTEST_CACHE
 export CTEST_BINARY_DIRECTORY="${AGENT_BUILDDIRECTORY}/py${PYTHON_VERSION}"
 

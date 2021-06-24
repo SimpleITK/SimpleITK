@@ -125,14 +125,14 @@ jobs:
       VCVAR_OPTIONS: amd64
       CTEST_CONFIGURATION_TYPE: MinSizeRel
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
-      COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
+      coreBinaryDirectory: $(Build.SourcesDirectory)-build
     steps:
       - template: templates/git-download-steps.yml
       - script: |
           python --version
           python -m pip install --upgrade pip
           python -m pip install setuptools wheel
-          python -m pip install ninja scikit-ci-addons
+          python -m pip install ninja scikit-ci-addons lxml
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
@@ -152,6 +152,7 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
+            WRAP_PYTHON:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -164,7 +165,8 @@ jobs:
         condition: succeededOrFailed()
         displayName: 'Publish test results'
       - bash : |
-          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
         displayName: Cleanup build
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0

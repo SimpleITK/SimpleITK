@@ -3,14 +3,25 @@ cmake_minimum_required ( VERSION 3.10 FATAL_ERROR )
 project( SimpleITK_Python )
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
-
-if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
-  set( _QUIET_LIBRARY "QUIET" )
+if("${CMAKE_VERSION}" VERSION_LESS_EQUAL "3.15.0")
+  if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
+    set( _QUIET_LIBRARY "QUIET" )
+  else()
+    set( _QUIET_LIBRARY "REQUIRED" )
+  endif()
+  find_package ( PythonInterp REQUIRED )
+  find_package ( PythonLibs ${_QUIET_LIBRARY} )
 else()
-  set( _QUIET_LIBRARY "REQUIRED" )
+  cmake_policy(SET CMP0094 NEW)
+  set(Python_FIND_STRATEGY LOCATION)
+  find_package ( Python REQUIRED COMPONENTS Interpreter Development )
 endif()
-find_package ( PythonInterp REQUIRED )
-find_package ( PythonLibs ${_QUIET_LIBRARY} )
+
+message("Python_FOUND: ${Python_FOUND}")
+message("Python_EXECUTABLE: ${Python_EXECUTABLE}")
+message("Python_INCLUDE_DIRS: ${Python_INCLUDE_DIRS}")
+
+
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #
@@ -48,11 +59,20 @@ if(NOT PYTHON_DEBUG_LIBRARIES AND MSVC)
     PRIVATE
     $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>)
 endif()
-sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${PYTHON_LIBRARIES} )
-
-target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+if (Python_FOUND)
+  sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${Python_LIBRARIES} )
+  target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
-    ${PYTHON_INCLUDE_DIR} )
+    ${Python_INCLUDE_DIRS} )
+
+else()
+  sitk_target_link_libraries_with_dynamic_lookup(  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${PYTHON_LIBRARIES} )
+  target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PRIVATE
+    ${PYTHON_INCLUDE_DIRS} )
+
+endif()
+
 target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
@@ -86,8 +106,6 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 set( SimpleITK_PYTHON_PACKAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}" )
 file( TO_NATIVE_PATH "${SimpleITK_PYTHON_PACKAGE_DIR}" SimpleITK_PYTHON_PACKAGE_DIR )
 
-set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
-
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
@@ -119,6 +137,14 @@ if(DEFINED SKBUILD)
     )
 else()
   include(LegacyPackaging.cmake)
+endif()
+
+if (NOT DEFINED SimpleITK_PYTHON_TEST_EXECUTABLE )
+  if (Python_FOUND)
+    set(SimpleITK_PYTHON_TEST_EXECUTABLE "${Python_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." )
+  else()
+    set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." )
+  endif()
 endif()
 
 
