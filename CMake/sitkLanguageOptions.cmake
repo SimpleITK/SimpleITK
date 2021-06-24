@@ -106,6 +106,8 @@ endif()
 
 sitkLanguageShouldDoFindPackage( PYTHON )
 
+set(Python_ADDITIONAL_VERSIONS 3.9 3.8 3.7 3.6)
+
 if( _do_find_package )
 
   find_package ( PythonInterp ${_find_package_extra_args})
@@ -117,7 +119,7 @@ if( _do_find_package )
   endif()
 
   if ( PYTHONINTERP_FOUND )
-    find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_find_package_extra_args} )
+    find_package ( PythonLibs ${_find_package_extra_args} )
   else ()
     find_package ( PythonLibs ${_find_package_extra_args} )
   endif()
@@ -134,8 +136,8 @@ option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 
 
 if ( WRAP_PYTHON )
-  if ( PYTHON_VERSION_STRING VERSION_LESS 2.7 )
-    message( WARNING "Python version less than 2.7: \"${PYTHON_VERSION_STRING}\"." )
+  if ( NOT "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" IN_LIST Python_ADDITIONAL_VERSIONS  )
+    message( WARNING "Python version less than 3.6: \"${PYTHON_VERSION_STRING}\"." )
   endif()
 
   list( APPEND SITK_LANGUAGES_VARS
