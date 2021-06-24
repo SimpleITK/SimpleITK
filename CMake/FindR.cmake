@@ -26,14 +26,14 @@ if(R_COMMAND)
 
 endif(R_COMMAND)
 
-find_program(RSCRIPT_EXECUTABLE Rscript DOC "Rscript executable.")
+find_program(RSCRIPT_EXECUTABLE Rscript PATHS ${R_BASE_DIR} PATH_SUFFIXES bin/x64 bin/ 	DOC "Rscript executable.")
 
 set(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
 
 # R.h gets installed in all sorts of places -
 # ubuntu: /usr/share/R/include, RHEL/Fedora: /usr/include/R/R.h
 find_path(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 /usr/share /usr/include ${R_BASE_DIR} PATH_SUFFIXES include R R/include DOC "Path to file R.h")
-find_library(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "R library (example libR.a, libR.dylib, etc.).")
+find_library(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib /bin/x64 DOC "R library (example libR.a, libR.dylib, etc.).")
 
 set(R_LIBRARIES ${R_LIBRARY_BASE})
 mark_as_advanced(RSCRIPT_EXECUTABLE R_LIBRARIES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE)
