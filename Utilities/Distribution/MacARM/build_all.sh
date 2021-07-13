@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-SIMPLEITK_GIT_TAG='v2.1rc2'
+SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v2.1rc2}
 
 # Look for a git tag as the first command line argument
 if [ ! -z $1 ]
