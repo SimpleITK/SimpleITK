@@ -15,7 +15,7 @@ jobs:
   - job: Configure
     displayName: Configure Variables
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: 'ubuntu-latest'
     steps:
       - checkout: none
       - bash: |
