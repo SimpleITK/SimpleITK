@@ -61,8 +61,6 @@ extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<std::complex<doubl
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<std::complex<double>, 3u>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<std::complex<float>, 2u>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<std::complex<float>, 3u>;
-extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<std::deque<itk::LabelObjectLine<2u>, std::allocator<itk::LabelObjectLine<2u> > >, 1u>;
-extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<std::deque<itk::LabelObjectLine<3u>, std::allocator<itk::LabelObjectLine<3u> > >, 2u>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<unsigned char, 1u>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<unsigned char, 2u>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<unsigned char, 3u>;
