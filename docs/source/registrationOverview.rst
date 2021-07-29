@@ -243,3 +243,18 @@ This is done using the Command-Observer pattern, associating callbacks with spec
 To associate a callback with a specific `event <https://simpleitk.org/doxygen/latest/html/namespaceitk_1_1simple.html#aa7399868984d99493c5a307cce373ace>`_
 use the `AddCommand <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html#a2199e5cca19b45d504676a595e1f6cfd>`_
 method.
+
+Reproducibility
+===============
+
+Generally speaking, repeated registrations of the same datasets will yield slightly different results. This is
+associated with the registration framework's similarity metric computation implementation which utilizes both
+randomization and multi-threading.
+
+The primary source of variability is the use of randomization. To eliminate randomization variability,
+set the seed parameter for the `SetMetricSamplingPercentage <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#a8b891c62404a8dc5010241fea619c932>`_ to a fixed value (e.g. `42 <https://en.wikipedia.org/wiki/42_(number)>`_).
+
+The secondary, and much more minor, source of variability has to do with the multithreading implementation, different
+order of operations in each registration run. To eliminate multithreading variability, set the number of threads to one
+via the `SetGlobalDefaultNumberOfThreads <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html#a305b43330f9feb26325eadfc30695bd9>`_ method. From a practical standpoint, in the tradeoff between full reproducibility and computational efficiency with minor
+variability in results, computational efficiency is most often more important.
