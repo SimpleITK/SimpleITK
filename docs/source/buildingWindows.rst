@@ -1,12 +1,23 @@
 
+.. _building_windows:
+
 Building SimpleITK on Windows
 ###########################################
+
+.. toctree::
+  :maxdepth: 1
+
+  windowsPathLength.rst
+
 
 This page describes how to build a SimpleITK Superbuild on
 Windows.  To build SimpleITK we use CMake to generate a Visual Studio project,
 and Visual Studio to compile the C/C++ code.  To obtain the SimpleITK source
 code see :ref:`source_code`.
 
+
+CMake GUI on Windows
+--------------------
 The Windows version of CMake includes a graphical-user-interface (GUI) version
 of the program, in addition to the standard command-line CMake.  Here is what
 the CMake GUI looks like:
@@ -21,6 +32,8 @@ and build directories at the root of a volume to minimize path name lengths.
 Windows has a `default max path length <https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=cmd>`_
 of 260 characters, and ITK has long paths which can cause build issues.
 
+See `Windows Path Length <windowsPathLength.html>`__ for more information.
+
 .. image:: ../images/cmake-win-2.png
   :width: 400
   :alt: Visual Studio Selection
@@ -31,6 +44,8 @@ what versions of Visual Studio are installed on the system.  The user must
 specify **x64** for the platform version, since the default option (x86) is
 not supported by SimpleITK.
 
+Configuring and Generating the Build
+------------------------------------
 .. image:: ../images/cmake-win-3.png
   :width: 45%
   :alt: CMake Configure
@@ -50,6 +65,8 @@ Note for the **CMAKE_CXX_FLAGS** and **CMAKE_C_FLAGS** variables, we have
 appended the **'/MP'** flag, enabling multiple processor when building with Visual
 Studio.  This flag is *not* enabled by default.
 
+Building SimpleITK in Visual Studio
+-----------------------------------
 After CMake has completed the generation process, the user can actually build
 SimpleITK with Visual Studio.  The user should select a build type in Visual
 Studio.  We recommend choosing **Release** or **MinSizeRel** (release with
@@ -72,6 +89,10 @@ the following commands entered in a PowerShell::
 
     cd C:\SimpleITK-build\SimpleITK-build
     ctest -R Release
+
+Running ctest executes all the built in test code for SimpleITK, more than 500
+tests for the core C++ code, and approximately another 500 tests per wrapped language
+(e.g. Python, CSharp, R, Lua, etc.).
 
 These commands assume that the SimpleITK build directory is
 :code:`C:\\SimpleITK-build` and that the build is a Release build.

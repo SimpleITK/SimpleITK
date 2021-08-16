@@ -332,6 +332,13 @@ What Configurations on Windows are Supported For Building?
 
 We recommend using at least Microsoft Visual Studio 15 (2017) with MSVC v140 toolset.
 
+Path Length Issues on Windows
+-----------------------------
+The location of the build and source directories on Windows can cause the build
+to fail.  By default, Windows does not allow path lengths longer than 260 characters.
+
+See `Windows Path Length <windowsPathLength.html>`__ for more information.
+
 
 Where is the Test Data?
 -----------------------

@@ -101,7 +101,7 @@ First obtain the SimpleITK source code:
 .. _building_superbuild:
 
 Building using SuperBuild
--------------------------
+=========================
 
 After downloading SimpleITK's source code we **STRONGLY** recommend
 running cmake on the SuperBuild subdirectory of SimpleITK. Execute the
@@ -143,7 +143,7 @@ For **building SimpleITK on Windows** using the CMake GUI see:
   buildingWindows.rst
 
 Building Manually
------------------
+=================
 
 By not using the superbuild, you must manually specify all dependencies
 used during the building of SimpleITK instead of using the known
@@ -155,7 +155,7 @@ External CMake files in the Superbuild sub-directory.
 
 
 Additional Prerequisites
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 The following are dependencies you will need when not using the SuperBuild:
 
@@ -177,7 +177,7 @@ The following are dependencies you will need when not using the SuperBuild:
 
 
 Configuration and Building
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------
 
 After the source code is obtained, SimpleITK can be configured on
 Unix-like systems like so:
