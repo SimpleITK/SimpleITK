@@ -54,7 +54,7 @@ Code
 
     .. literalinclude:: ../../Examples/FastMarchingSegmentation/FastMarchingSegmentation.cxx
        :language: C++
-       :lines: 1,19-
+       :lines: 19-
 
   .. tab:: Python
 
