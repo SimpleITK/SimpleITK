@@ -6,6 +6,7 @@
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();\n",
   "members" : [
     {
       "name" : "ProjectionDimension",
