@@ -44,6 +44,13 @@ To build SimpleITK you need:
 
 -  The R interface requires R version 3.3 or greater.
 
+System Requirements
+===================
+Building SimpleITK requires a significant amount of compute power, and we recommend
+a reasonably powerful, modern computer.  We suggest at least 4 gigabytes of RAM plus
+an additional 2 gigabytes per thread when building with multiple threads.  We also
+suggest a system with at least 4 cores for multithreaded compilation.
+
 Recipes / Formulas / Short cuts
 ===============================
 
