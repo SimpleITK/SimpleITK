@@ -46,10 +46,17 @@ To build SimpleITK you need:
 
 System Requirements
 ===================
-Building SimpleITK requires a significant amount of compute power, and we recommend
-a reasonably powerful, modern computer.  We suggest at least 4 gigabytes of RAM plus
-an additional 2 gigabytes per thread when building with multiple threads.  We also
-suggest a system with at least 4 cores for multithreaded compilation.
+Building SimpleITK requires a significant amount of compute power, and we
+recommend a reasonably powerful, modern computer.  We suggest at least 4
+gigabytes (GB) of RAM plus an additional 2 GB per thread when building with
+multiple threads.  We also suggest a system with at least 4 cores for
+multithreaded compilation.
+
+Building a SuperBuild of SimpleITK's C++ core including all the testing and
+example code requires approximately 10 GB of disk space.  Enabling the
+wrapping of Python or R can add 2 GB per language, and enabling the
+wrapping of all the languages SimpleITK supports, can bring the entire
+build folder to 16 GB.
 
 Recipes / Formulas / Short cuts
 ===============================
