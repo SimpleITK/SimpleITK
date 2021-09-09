@@ -44,7 +44,7 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
       ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
     PRIVATE
       ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
-  target_compile_features( ${library_name} PUBLIC cxx_std_11 )
+  target_compile_features( ${library_name} PUBLIC cxx_std_14 )
 
   add_dependencies ( ${library_name} BasicFiltersSourceCode )
 
@@ -85,7 +85,7 @@ target_compile_options( SimpleITKBasicFilters0
     ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
-target_compile_features( SimpleITKBasicFilters0 PUBLIC cxx_std_11 )
+target_compile_features( SimpleITKBasicFilters0 PUBLIC cxx_std_14 )
 sitk_install_exported_target( SimpleITKBasicFilters0 )
 
 # append this new library to the globally cached list

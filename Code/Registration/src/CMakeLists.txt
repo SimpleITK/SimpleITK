@@ -29,6 +29,6 @@ target_compile_options( SimpleITKRegistration
     ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
-target_compile_features( SimpleITKRegistration PUBLIC cxx_std_11 )
+target_compile_features( SimpleITKRegistration PUBLIC cxx_std_14 )
 
 sitk_install_exported_target( SimpleITKRegistration )
