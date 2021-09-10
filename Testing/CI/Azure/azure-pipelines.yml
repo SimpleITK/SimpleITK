@@ -14,6 +14,7 @@ jobs:
       - Agent.OS -equals Linux
     variables:
       PYTHONUSERBASE: $(Agent.BuildDirectory)/.pypkgs
+      env_file: '/opt/rh/devtoolset-7/enable'
     workspace:
       clean: all
     steps:
@@ -27,6 +28,7 @@ jobs:
           python -m pip install --user scikit-ci-addons
         displayName: 'Install python tools and dependency'
       - bash: |
+          [[ ! -z "$(env_file)" ]] && source $(env_file)
           set -x
           c++ --version
           cmake --version
