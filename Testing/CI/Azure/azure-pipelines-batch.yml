@@ -155,8 +155,6 @@ jobs:
     strategy:
       maxParallel: 3
       matrix:
-       default:
-         env_file:
        ITK-master:
          env_file: '/opt/rh/devtoolset-7/enable'
          ctest.cache_extra: |
