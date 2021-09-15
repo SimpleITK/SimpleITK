@@ -43,7 +43,7 @@ namespace itk.simple.examples
             // Read input image
             SitkImage input = SimpleITK.ReadImage(inputFilename);
 
-            // Cast to we know the the pixel type
+            // Cast so we know the the pixel type
             input = SimpleITK.Cast(input, PixelId.sitkFloat32);
 
             // calculate the number of pixels
@@ -92,7 +92,8 @@ namespace itk.simple.examples
             }
             Console.WriteLine("Pixel value total: {0}", total);
 
-            // Set buffer of new SimpleITK Image from managed array. bufferAsArray could also have come from a bmp,png,etc...
+            // Set buffer of new SimpleITK Image from managed array.
+            // bufferAsArray could also have come from a bmp,png,etc...
 
             uint width = input.GetWidth();
             uint height = input.GetHeight();
