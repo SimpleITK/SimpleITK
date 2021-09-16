@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 as simpleitk-doxygen
+FROM ubuntu:20.04 as simpleitk-doxygen
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
