@@ -156,7 +156,7 @@ int main( int argc, char *argv[])
 
   for (int i = 5; i+1 < argc; i+=2)
     {
-    std::vector<unsigned int> seed = { (unsigned int) atoi(argv[i]), (unsigned int) atoi(argv[i+1] };
+    std::vector<unsigned int> seed = { (unsigned int) atoi(argv[i]), (unsigned int) atoi(argv[i+1]) };
     segmentationFilter.AddSeed(seed);
     std::cout << "Adding a seed at ";
     for( unsigned int j = 0; j < seed.size(); ++i )
