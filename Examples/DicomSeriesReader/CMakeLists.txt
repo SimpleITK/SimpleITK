@@ -51,3 +51,12 @@ sitk_add_java_test( Example.DicomSeriesReader
     "${SimpleITK_TEST_OUTPUT_DIR}/Java.DicomSeriesReader.nrrd"
     "8e65f711d450b6b466c6d76a667ecb72"
   )
+
+sitk_add_csharp_test( Example.DicomSeriesReader
+  "${CMAKE_CURRENT_SOURCE_DIR}/DicomSeriesReader.cs"
+    DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
+    "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.DicomSeriesReader.nrrd"
+  IMAGE_MD5_COMPARE
+    "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.DicomSeriesReader.nrrd"
+    "8e65f711d450b6b466c6d76a667ecb72"
+  )

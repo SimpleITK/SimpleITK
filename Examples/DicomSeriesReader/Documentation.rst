@@ -17,6 +17,12 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/DicomSeriesReader/DicomSeriesReader.cs
+       :language: c#
+       :lines: 18-
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/DicomSeriesReader/DicomSeriesReader.cxx
