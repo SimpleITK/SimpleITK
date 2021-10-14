@@ -348,7 +348,7 @@ the source code. It is mirrored on several data repositories on the web.
 
 If the source code was obtained from the git repository, the test data should
 be downloaded as part of the build process via the CMake `ExternalData
-<https://cmake.org/cmake/help/v3.10/module/ExternalData.html>`__ module.
+<https://cmake.org/cmake/help/latest/module/ExternalData.html>`__ module.
 
 A tar-ball of the "SimpleITKData" can be downloaded for
 a release from the `GitHub Assets

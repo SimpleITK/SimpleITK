@@ -12,9 +12,10 @@ if( NOT DEFINED CMAKE_INSTALL_PREFIX )
   set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go")
 endif()
 
-cmake_minimum_required ( VERSION 3.10 )
+
+include("${CMAKE_CURRENT_SOURCE_DIR}/../CMake/sitkCMakeInit.cmake")
+cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION})
 project ( SuperBuildSimpleITK )
-cmake_policy( VERSION 3.10 )
 
 
 #-----------------------------------------------------------------------------
