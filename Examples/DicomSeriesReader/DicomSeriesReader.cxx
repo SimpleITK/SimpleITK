@@ -49,5 +49,8 @@ int main ( int argc, char* argv[] ) {
 
   sitk::WriteImage( image, argv[2] );
 
+  if (getenv("SITK_NOSHOW") == NULL)
+    sitk::Show( image, "Hello World: C++", true );
+
   return 0;
 }

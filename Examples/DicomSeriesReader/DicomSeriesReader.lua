@@ -36,3 +36,7 @@ print("Image size:", size[0], size[1], size[2]);
 
 print( "Writing image:", arg[2] )
 SimpleITK.WriteImage( image, arg[2] )
+
+if os.getenv("SITK_NOSHOW") == nil then
+    sitk.Show( image, "Hello World: Lua", true )
+end

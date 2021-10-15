@@ -40,5 +40,10 @@ public class DicomSeriesReader {
     System.out.println("Writing " + args[1]);
 
     SimpleITK.writeImage(image, args[1]);
+
+    if (System.getenv("SITK_NOSHOW") == null) {
+      SimpleITK.show( image, "Hello World: Java", true );
+    }
+
   }
 }
