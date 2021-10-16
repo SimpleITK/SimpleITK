@@ -47,3 +47,7 @@ cat ("Image size:", size[1], size[2], size[3])
 cat("Writing image:", args[[2]])
 
 WriteImage(image, args[[2]])
+
+if(Sys.getenv("SITK_NOSHOW") == "") {
+    Show(image, "Hello World: R", debugOn=TRUE)
+}
