@@ -365,7 +365,7 @@ option(SimpleITK_USE_SYSTEM_ITK "Use a pre-built version of ITK" OFF)
 sitk_legacy_naming( SimpleITK_USE_SYSTEM_ITK USE_SYSTEM_ITK )
 mark_as_advanced(SimpleITK_USE_SYSTEM_ITK)
 if(SimpleITK_USE_SYSTEM_ITK)
-  find_package(ITK REQUIRED)
+  find_package(ITK COMPONENTS ITKCommon REQUIRED)
   #we require certain packages be turned on in ITK
   include(sitkCheckForITKModuleDependencies)
 else()
