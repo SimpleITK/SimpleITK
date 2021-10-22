@@ -1,0 +1,28 @@
+{
+  "name" : "TransformGeometryImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 0,
+  "doc" : "",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "filter_type" : "itk::TransformGeometryImageFilter<InputImageType, OutputImageType>",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "Transform",
+      "type" : "Transform",
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );\n  if ( !itkTx )\n    {\n    sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n    }\n  else { filter->SetTransform( itkTx ); }",
+      "no_size_check" : 0
+    }
+  ],
+  "members" : [],
+    "custom_methods" : [],
+    "tests" : [],
+  "briefdescription" : "",
+  "detaileddescription" : "",
+  "itk_module" : "ITKTransform",
+  "itk_group" : "Transform",
+  "in_place" : true
+}

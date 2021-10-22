@@ -275,7 +275,7 @@ end)
       // This will fail if the filter is being run in-place
       EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputs[0] ) ) << "Input was modified by filter.";
 
-      // Check that the input buffer is different that the output
+      // Check that the input buffer is different than the output
       // buffer, this does not check complex or label map pixel types.
       if(!isLabelType(output) && !isLabelType(inputs[0]))
         {

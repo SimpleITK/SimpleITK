@@ -20,7 +20,7 @@ for inum=2,number_of_inputs do
 end
 if inputs then
   for inum=2,#inputs do
-    if not inputs[inum].optional or not no_optional then
+    if inputs[inum].type == "Image" and (not inputs[inum].optional or not no_optional) then
       local currentInputName = inputs[inum].name:sub(1,1):lower()..inputs[inum].name:sub(2,-1)
       OUT=OUT..[[
   CheckImageMatchingDimension(  ]] .. inputName .. [[, ]] .. currentInputName .. [[, "]] .. currentInputName .. [[" );
