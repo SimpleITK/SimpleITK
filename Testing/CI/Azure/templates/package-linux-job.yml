@@ -7,6 +7,8 @@ jobs:
     dependsOn: Configure
     condition: ne( variables['configure.skiplinux'], 'true' )
     timeoutInMinutes: 300
+    pool:
+      vmImage: 'ubuntu-latest'
     variables:
       SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
     steps:

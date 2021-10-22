@@ -34,6 +34,8 @@ jobs:
     dependsOn: Configure
     condition: ne( variables['configure.doxygen'], 'true' )
     timeoutInMinutes: 60
+    pool:
+      vmImage: 'ubuntu-latest'
     variables:
       SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
     steps:
