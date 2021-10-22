@@ -1,13 +1,15 @@
-name: Python 3.7 Build
+name: Build and Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    # The CMake configure and build commands are platform agnostic and should work a cross
+    # platforms.
 
     runs-on: ${{ matrix.os }}
     strategy:
@@ -17,48 +19,36 @@ jobs:
         include:
           - os: ubuntu-18.04
             cmake-build-type: "Release"
-          # - os: windows-2019
-          #   cmake-build-type: "MinSizeRel"
           - os: macos-10.15
             cmake-build-type: "Release"
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.7
+        python-version: 3.8
 
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install ninja
-        python -m pip install scikit-ci-addons
+        python -m pip install ninja scikit-ci-addons cmake~=3.18.0
 
-    - name: Get specific version of CMake, Ninja
-      uses: lukka/get-cmake@v3.18.3
-
-    - name: Build SimpleITK Unix
-      if: matrix.os != 'windows-2019'
+    - name: Build SimpleITK
       run: |
-        export CXXFLAGS="$CXXFLAGS -fPIC"
-        mkdir SIb
-        cd SIb
-        cmake -DWRAP_DEFAULT:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_TESTING:BOOL=ON -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF -v -GNinja ../SuperBuild
+        mkdir sitk-bld
+        cd sitk-bld
+        cmake -DWRAP_DEFAULT:BOOL=OFF \
+              -DBUILD_EXAMPLES:BOOL=OFF \
+              -DBUILD_TESTING:BOOL=ON \
+              -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} \
+              -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF \
+              -G Ninja \
+              -v ${GITHUB_WORKSPACE}/SuperBuild
         ninja
-
-    # - name: Build SimpleITK Windows
-    #   if: matrix.os == 'windows-2019'
-    #   shell: cmd
-    #   run: |
-    #     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-    #     mkdir SIb
-    #     cd SIb
-    #     cmake -DWRAP_DEFAULT:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_TESTING:BOOL=ON -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF -v -GNinja ../SuperBuild
-    #     ninja
 
     - name: Test SimpleITK
       run: |
-        cd SIb/SimpleITK-build
+        cd sitk-bld/SimpleITK-build
         ctest -C Release
