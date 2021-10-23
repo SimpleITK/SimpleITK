@@ -1,0 +1,54 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work a cross
+    # platforms.
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        os: [macos-10.15, ubuntu-18.04]
+        include:
+          - os: ubuntu-18.04
+            cmake-build-type: "Release"
+          - os: macos-10.15
+            cmake-build-type: "Release"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install ninja scikit-ci-addons cmake~=3.18.0
+
+    - name: Build SimpleITK
+      run: |
+        mkdir sitk-bld
+        cd sitk-bld
+        cmake -DWRAP_DEFAULT:BOOL=OFF \
+              -DBUILD_EXAMPLES:BOOL=OFF \
+              -DBUILD_TESTING:BOOL=ON \
+              -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} \
+              -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF \
+              -G Ninja \
+              -v ${GITHUB_WORKSPACE}/SuperBuild
+        ninja
+
+    - name: Test SimpleITK
+      run: |
+        cd sitk-bld/SimpleITK-build
+        ctest -C Release
