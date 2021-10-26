@@ -49,17 +49,21 @@ reader:SetFileName ( arg[1] )
 -- We need a function to pass to pcall, the Lua error handler.
 -- So we embed the reader's Execute method in this function.
 function read_execute( reader )
-  reader:Execute()
+  return reader:Execute()
 end
 
 -- Call the reader's execute method through Lua's pcall error handler
 --
-local status, err = pcall(read_execute, reader)
+local status, rv = pcall(read_execute, reader)
 if status then
   -- The reader succeeded
   write("Read image: ")
   write(arg[1])
   write("\n")
+
+  image = rv
+  size = image:GetSize();
+  print("Image size:", size[0], size[1]);
 else
   -- The reader failed
   write("Read failed: ")

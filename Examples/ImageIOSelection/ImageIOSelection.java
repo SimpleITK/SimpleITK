@@ -49,8 +49,11 @@ class ImageIOSelection {
     reader.setFileName(argv[0]);
 
     try {
-      Image img = reader.execute();
+      Image image = reader.execute();
       System.out.println("Read image: " + argv[0]);
+
+      VectorUInt32 size = image.getSize();
+      System.out.println("Image size: " + size.get(0) + " " + size.get(1));
     } catch(Exception e) {
       System.out.println("Read failed: " + e);
     }

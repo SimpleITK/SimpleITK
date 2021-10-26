@@ -48,6 +48,9 @@ namespace itk.simple.examples {
                 Image image = reader.Execute();
                 Console.WriteLine("Read image: " + args[0]);
 
+                VectorUInt32 size = image.GetSize();
+                Console.WriteLine( "Image size: " + size[0] + " " + size[1] );
+
             } catch (Exception ex) {
                 Console.WriteLine("Read failed: " + ex);
             }

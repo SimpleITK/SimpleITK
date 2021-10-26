@@ -61,6 +61,9 @@ int main ( int argc, char* argv[] )
     {
     sitk::Image image = reader.Execute();
     std::cout << "Read image: " << argv[1] << std::endl;
+
+    std::vector<unsigned int> size = image.GetSize();
+    std::cout << "Image size: " << size[0] << " " << size[1] << std::endl;
     }
   catch (std::exception& e)
     {

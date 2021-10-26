@@ -45,6 +45,9 @@ reader.set_image_io("PNGImageIO")
 begin
   image = reader.execute
   puts "Read image: " + ARGV[0]
+
+  size = image.get_size
+  puts "Image size: " + size[0] +  " " + size[1]
 rescue StandardError => e
   puts "Read failed: " + e.message
 end

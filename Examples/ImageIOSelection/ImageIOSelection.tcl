@@ -37,6 +37,8 @@ reader SetImageIO "PNGImageIO"
 if {[catch {set image [ reader Execute ]} errmsg]} {
   puts "Read failed: $errmsg"
 }
+set size [ $image GetSize ]
+puts "Image size: $size"
 
 # Tcl requires explicit cleanup Cleanup
 reader -delete
