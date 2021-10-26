@@ -43,6 +43,9 @@ file_reader.SetFileName(sys.argv[1])
 try:
     image = file_reader.Execute()
     print('Read image: ' + sys.argv[1])
+
+    size = image.GetSize()
+    print("Image size:", size[0], size[1])
 except Exception as err:
     print('Reading failed: ', err)
     sys.exit(1)

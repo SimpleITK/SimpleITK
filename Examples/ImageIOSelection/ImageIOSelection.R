@@ -53,4 +53,8 @@ image <- tryCatch(file_reader$Execute(),
                   }
                   )
 cat('Read image:',args[1],'\n')
+
+size <- image$GetSize()
+cat ("Image size:", size[1], size[2])
+
 quit(save="no", status=0)
