@@ -1193,6 +1193,7 @@ TEST_F(sitkRegistrationMethodTest, StopRegistration)
   constexpr unsigned int stop_iteration = 3;
   auto stopLambda =  [&R, stop_iteration] ()
   {
+    (void) stop_iteration;
     std::cout << R.GetOptimizerIteration() << " " << R.GetOptimizerPosition() << std::endl;
     if ( R.GetOptimizerIteration() >= stop_iteration )
     {
