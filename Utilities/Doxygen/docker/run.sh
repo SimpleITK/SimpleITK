@@ -27,4 +27,5 @@ mkdir -p ${BLD_DIR} && \
           ${SRC_DIR}/SuperBuild/ && \
     cmake --build . --target SimpleITK-doc && \
     cd ${BLD_DIR}/SimpleITK-build/Documentation/ && \
-    tar --exclude=\*.md5 --exclude=\*.map -zcvf /SimpleITKDoxygen.tar.gz ./html
+    tar --exclude=\*.md5 --exclude=\*.map -zcvf /SimpleITKDoxygen.tar.gz ./html && \
+    tar -zcvf /SimpleITKDoxygenXML.tar.gz ./xml
