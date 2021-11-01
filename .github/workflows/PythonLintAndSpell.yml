@@ -7,8 +7,10 @@ on:
     branches: [ master, release ]
 
 jobs:
-  lint:
 
+  # The 'lint' job runs flake8 on all the Python code to make sure the format
+  # conforms to the PEP 8 style guide.
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +33,9 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 Examples --count --exit-zero --statistics
 
+  # The 'spell' job runs a spelling checker on all the C++ header files in
+  # the SimpleITK source code.  That checker only runs on the comments in
+  # the C++ code.
   spell:
     runs-on: ubuntu-latest
 
