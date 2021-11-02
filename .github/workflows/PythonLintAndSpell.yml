@@ -1,0 +1,58 @@
+name: Python Lint and Spell Checking
+
+on:
+  push:
+    branches: [ master, release ]
+  pull_request:
+    branches: [ master, release ]
+
+jobs:
+
+  # The 'lint' job runs flake8 on all the Python code to make sure the format
+  # conforms to the PEP 8 style guide.
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8
+
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 Examples --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 Examples --count --exit-zero --statistics
+
+  # The 'spell' job runs a spelling checker on all the C++ header files in
+  # the SimpleITK source code.  That checker only runs on the comments in
+  # the C++ code.
+  spell:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        git clone https://github.com/SimpleITK/SimpleITKSpellChecking.git
+        python -m pip install -r SimpleITKSpellChecking/requirements.txt
+
+    - name: Do spell checking
+      run: |
+        python SimpleITKSpellChecking/codespell.py Code --exclude Ancillary
