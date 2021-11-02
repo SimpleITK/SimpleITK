@@ -72,6 +72,9 @@ jobs:
     <<: *defaults
     environment:
       <<: *default_environment_keys
+      PARALLEL_LEVEL: 4
+      CTEST_BUILD_FLAGS: "-j 4"
+    resource_class: large
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -129,8 +132,6 @@ jobs:
       - image: circleci/python:3.6-buster
     environment:
       <<: *default_environment_keys
-      CTEST_BUILD_FLAGS: "-j 2"
-      PARALLEL_LEVEL: 2
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
     resource_class: medium
     steps:
@@ -167,8 +168,6 @@ jobs:
      - image: circleci/python:3.9-buster
     environment:
       <<: *default_environment_keys
-      CTEST_BUILD_FLAGS: "-j 2"
-      PARALLEL_LEVEL: 2
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
     resource_class: medium
     steps:
@@ -204,8 +203,6 @@ jobs:
     resource_class: medium
     environment:
       <<: *default_environment_keys
-      CTEST_BUILD_FLAGS: "-j 2"
-      PARALLEL_LEVEL: 2
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-R"
     steps:
       - checkout:
@@ -241,8 +238,6 @@ jobs:
     resource_class: medium
     environment:
       <<: *default_environment_keys
-      CTEST_BUILD_FLAGS: "-j 2"
-      PARALLEL_LEVEL: 2
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-Java"
     steps:
       - checkout:
