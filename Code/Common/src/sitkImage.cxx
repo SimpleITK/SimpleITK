@@ -370,6 +370,18 @@ namespace itk
       return this->m_PimpleImage->TransformContinuousIndexToPhysicalPoint( idx );
     }
 
+    std::vector<double> Image::EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->EvaluateAtContinuousIndex(index, interp);
+    }
+    std::vector<double> Image::EvaluateAtPhysicalPoint( const std::vector<double> &point, InterpolatorEnum interp) const
+    {
+      assert( m_PimpleImage );
+      const std::vector<double> index = this->TransformPhysicalPointToContinuousIndex(point);
+      return this->EvaluateAtContinuousIndex(index, interp);
+    }
+
     int8_t Image::GetPixelAsInt8( const std::vector<uint32_t> &idx) const
     {
       assert( m_PimpleImage );

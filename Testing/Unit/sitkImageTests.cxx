@@ -1815,3 +1815,154 @@ TEST_F(Image,Mandelbrot)
 
   sitk::WriteImage( img, "mandelbrot.nrrd" );
 }
+
+TEST_F(Image, Evaluate)
+{
+
+  sitk::Image img;
+
+  img = sitk::Image(10,10,  sitk::sitkUInt8);
+  EXPECT_VECTOR_DOUBLE_NEAR( img.EvaluateAtPhysicalPoint({0.5, 0.5}), {0.0}, 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(img.EvaluateAtContinuousIndex({0.5, 0.5}), {0.0}, 1e-10);
+
+  img = sitk::Image(10,10, sitk::sitkFloat32);
+
+  for (auto interp : {sitk::sitkNearestNeighbor,
+                      sitk::sitkLinear,
+                      sitk::sitkBSpline,
+                      sitk::sitkGaussian,
+                      sitk::sitkLabelGaussian,
+                      sitk::sitkHammingWindowedSinc,
+                      sitk::sitkCosineWindowedSinc,
+                      sitk::sitkWelchWindowedSinc,
+                      sitk::sitkLanczosWindowedSinc,
+                      sitk::sitkBSplineResamplerOrder1,
+                      sitk::sitkBSplineResamplerOrder2,
+                      sitk::sitkBSplineResamplerOrder3,
+                      sitk::sitkBSplineResamplerOrder4,
+                      sitk::sitkBSplineResamplerOrder5
+       })
+  {
+    std::vector<double> result;
+    EXPECT_NO_THROW(result = img.EvaluateAtPhysicalPoint({0.5, 0.5}, interp));
+    EXPECT_VECTOR_DOUBLE_NEAR( result, {0.0}, 1e-10) << " with interp as" << interp;
+    EXPECT_NO_THROW(result = img.EvaluateAtContinuousIndex({0.5, 0.5}, interp));
+    EXPECT_VECTOR_DOUBLE_NEAR(result, {0.0}, 1e-10) << " with interp as" << interp;
+  }
+
+  img = sitk::Image(10,10, sitk::sitkComplexFloat32);
+
+  for (auto interp : {sitk::sitkNearestNeighbor,
+                      sitk::sitkLinear
+       })
+  {
+    std::vector<double> result;
+    EXPECT_NO_THROW(result = img.EvaluateAtPhysicalPoint({0.5, 0.5}, interp));
+    EXPECT_VECTOR_DOUBLE_NEAR( result, v2(.0, 0.0), 1e-10) << " with interp as" << interp;
+    EXPECT_NO_THROW(result = img.EvaluateAtContinuousIndex({0.5, 0.5}, interp));
+    EXPECT_VECTOR_DOUBLE_NEAR(result, v2(0.0, 0.0), 1e-10) << " with interp as" << interp;
+  }
+
+  for (auto interp : {
+           sitk::sitkBSpline,
+           sitk::sitkGaussian,
+           sitk::sitkLabelGaussian,
+           sitk::sitkHammingWindowedSinc,
+           sitk::sitkCosineWindowedSinc,
+           sitk::sitkWelchWindowedSinc,
+           sitk::sitkLanczosWindowedSinc,
+           sitk::sitkBSplineResamplerOrder1,
+           sitk::sitkBSplineResamplerOrder2,
+           sitk::sitkBSplineResamplerOrder3,
+           sitk::sitkBSplineResamplerOrder4,
+           sitk::sitkBSplineResamplerOrder5})
+  {
+     EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({0.0,0.0}, interp));
+  }
+
+  img = sitk::Image( {10, 10}, sitk::sitkVectorFloat32, 2);
+
+  for (auto interp : {sitk::sitkNearestNeighbor,
+                      sitk::sitkLinear
+        })
+  {
+    std::vector<double> result;
+    EXPECT_NO_THROW(result = img.EvaluateAtPhysicalPoint({0.5, 0.5}, interp));
+    EXPECT_VECTOR_DOUBLE_NEAR( result, v2(0.0, 0.0), 1e-10) << " with interp as" << interp;
+    EXPECT_NO_THROW(result = img.EvaluateAtContinuousIndex({0.5, 0.5}, interp));
+    EXPECT_VECTOR_DOUBLE_NEAR(result, v2(0.0, 0.0), 1e-10) << " with interp as" << interp;
+  }
+  for (auto interp : {
+           sitk::sitkBSpline,
+           sitk::sitkGaussian,
+           sitk::sitkLabelGaussian,
+           sitk::sitkHammingWindowedSinc,
+           sitk::sitkCosineWindowedSinc,
+           sitk::sitkWelchWindowedSinc,
+           sitk::sitkLanczosWindowedSinc,
+           sitk::sitkBSplineResamplerOrder1,
+           sitk::sitkBSplineResamplerOrder2,
+           sitk::sitkBSplineResamplerOrder3,
+           sitk::sitkBSplineResamplerOrder4,
+           sitk::sitkBSplineResamplerOrder5})
+  {
+    EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({0.0,0.0}, interp));
+  }
+
+  img = sitk::Image( {3,3}, sitk::sitkLabelUInt8);
+  for (auto interp : {sitk::sitkNearestNeighbor,
+                      sitk::sitkLinear,
+                      sitk::sitkBSpline,
+                      sitk::sitkGaussian,
+                      sitk::sitkLabelGaussian,
+                      sitk::sitkHammingWindowedSinc,
+                      sitk::sitkCosineWindowedSinc,
+                      sitk::sitkWelchWindowedSinc,
+                      sitk::sitkLanczosWindowedSinc,
+                      sitk::sitkBSplineResamplerOrder1,
+                      sitk::sitkBSplineResamplerOrder2,
+                      sitk::sitkBSplineResamplerOrder3,
+                      sitk::sitkBSplineResamplerOrder4,
+                      sitk::sitkBSplineResamplerOrder5
+       }) {
+    EXPECT_ANY_THROW(img.EvaluateAtContinuousIndex({0.0, 0.0}, interp));
+  }
+}
+
+TEST_F(Image, Evaluate_boundary) {
+
+  sitk::Image img;
+
+  for (auto pixelType : {sitk::sitkUInt8,
+                         sitk::sitkFloat32,
+                         sitk::sitkComplexFloat64,
+                         sitk::sitkVectorFloat32})
+  {
+    img = sitk::Image(10, 10, pixelType);
+
+    EXPECT_NO_THROW(img.EvaluateAtContinuousIndex({-0.5, -0.5}));
+    EXPECT_NO_THROW(img.EvaluateAtContinuousIndex({9.5, 9.5}));
+
+    EXPECT_NO_THROW(img.EvaluateAtPhysicalPoint({-0.5, -0.5}));
+    EXPECT_NO_THROW(img.EvaluateAtPhysicalPoint({9.5, 9.5}));
+
+    EXPECT_ANY_THROW(img.EvaluateAtContinuousIndex({-0.51, -0.51}));
+    EXPECT_ANY_THROW(img.EvaluateAtContinuousIndex({9.51, 9.51}));
+
+    EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({-0.51, -0.51}));
+    EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({9.51, 9.51}));
+
+    img.SetDirection({0.0, 1.0, 1.0, 0.0});
+    img.SetSpacing({1.0, 10.0});
+
+
+    EXPECT_NO_THROW(img.EvaluateAtContinuousIndex({-0.5, -0.5}));
+    EXPECT_NO_THROW(img.EvaluateAtContinuousIndex({9.5, 9.5}));
+
+    EXPECT_NO_THROW(img.EvaluateAtPhysicalPoint({-5, -0.5}));
+    EXPECT_NO_THROW(img.EvaluateAtPhysicalPoint({95, 9.5}));
+
+    EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({-5.1, 0}));
+    EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({95.01, 9.5}));
+  }
+}
