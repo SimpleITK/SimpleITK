@@ -48,7 +48,14 @@ sitk::DemonsRegistrationFilter filter;
 
 constexpr unsigned int stop_iteration = 2;
 
-auto stopLambda =  [&filter, stop_iteration] (){ if ( filter.GetElapsedIterations() >= stop_iteration ){ filter.StopRegistration();}};
+auto stopLambda =  [&filter, stop_iteration] ()
+{
+  (void) stop_iteration;
+  if ( filter.GetElapsedIterations() >= stop_iteration )
+  {
+    filter.StopRegistration();
+  }
+};
 filter.AddCommand(sitk::sitkIterationEvent, stopLambda);
 
 
