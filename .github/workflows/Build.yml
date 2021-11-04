@@ -52,6 +52,6 @@ jobs:
       run: |
         cd sitk-bld/SimpleITK-build
         ctest -C Release
-     env:
-       CTEST_OUTPUT_ON_FAILURE: 1
-       ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
+        ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
