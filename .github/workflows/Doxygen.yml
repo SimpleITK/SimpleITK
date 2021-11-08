@@ -1,8 +1,6 @@
 name: Doxygen
 
 on:
-  pull_request:
-    branches: [ master, release ]
   push:
     branches: [ master, release ]
 
