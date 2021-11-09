@@ -18,7 +18,7 @@
 #ifndef sitkCreateInterpolator_hxx
 #define sitkCreateInterpolator_hxx
 
-
+#include "sitkRegistration.h"
 #include "sitkInterpolator.h"
 #include <itkNearestNeighborInterpolateImageFunction.h>
 #include <itkLinearInterpolateImageFunction.h>
@@ -35,6 +35,7 @@ namespace simple
 {
 
 template<typename TInterpolatorType>
+SITKRegistration_HIDDEN
 typename TInterpolatorType::Pointer
 ConditionalCreateInterpolator( const TrueType & )
 {
@@ -42,6 +43,7 @@ ConditionalCreateInterpolator( const TrueType & )
 }
 
 template<typename TInterpolatorType>
+SITKRegistration_HIDDEN
 TInterpolatorType*
 ConditionalCreateInterpolator( const FalseType & )
 {
@@ -49,6 +51,7 @@ ConditionalCreateInterpolator( const FalseType & )
 }
 
 template< typename TImageType >
+SITKRegistration_HIDDEN
 typename itk::InterpolateImageFunction< TImageType, double >::Pointer
 CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
 {
