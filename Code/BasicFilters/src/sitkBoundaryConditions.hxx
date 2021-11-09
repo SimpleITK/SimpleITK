@@ -25,6 +25,7 @@
 
 namespace itk {
   namespace simple {
+  namespace {
 
   /** Creates a boundary condition object from an enum. Uses an
    * unique_ptr for dynamically allocated object, to enforce the user to
@@ -53,6 +54,7 @@ namespace itk {
         break;
       }
     }
+  }
   }
 }
 

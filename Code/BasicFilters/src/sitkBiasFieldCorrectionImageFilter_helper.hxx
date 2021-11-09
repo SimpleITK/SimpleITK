@@ -24,6 +24,7 @@ namespace itk
 {
 namespace simple
 {
+namespace {
 
 template<typename TBiasFieldType>
 Image BSplineLatticeToImage(const TBiasFieldType *bsplineLattice, const Image &referenceImage, unsigned int splineOrder = 3)
@@ -52,6 +53,7 @@ Image BSplineLatticeToImage(const TBiasFieldType *bsplineLattice, const Image &r
   caster->Update();
 
   return Image(caster->GetOutput());
+}
 }
 }
 }
