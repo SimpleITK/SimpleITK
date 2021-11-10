@@ -22,6 +22,7 @@ namespace itk
 {
 namespace simple
 {
+namespace {
 
 /** \brief Set the Colormap functor to the provided color map
  *
@@ -92,7 +93,7 @@ GetRLEIndexesFromLabelObject( const TLabelObject &lo )
     }
   return rle;
 }
-
+}
 }
 }
 

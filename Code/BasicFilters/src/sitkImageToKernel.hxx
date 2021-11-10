@@ -24,7 +24,7 @@
 
 namespace itk {
 namespace simple {
-
+namespace {
 
 /** \brief Convert an itk Image to an itk ImageKernalOperator
  *
@@ -83,6 +83,7 @@ kernelOperator->CreateToRadius( radius );
 return kernelOperator;
 }
 
+}
 } // end namespace simple
 } // end namespace itk
 
