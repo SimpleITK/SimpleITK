@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> <!-- Created with Vectornator for iOS (http://vectornator.io/) --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="100%" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" xmlns:vectornator="http://vectornator.io" version="1.1" viewBox="0 0 30 30">
+<metadata>
+<vectornator:setting key="DimensionsVisible" value="1"/>
+<vectornator:setting key="PencilOnly" value="0"/>
+<vectornator:setting key="SnapToPoints" value="0"/>
+<vectornator:setting key="OutlineMode" value="0"/>
+<vectornator:setting key="CMYKEnabledKey" value="0"/>
+<vectornator:setting key="RulersVisible" value="1"/>
+<vectornator:setting key="SnapToEdges" value="0"/>
+<vectornator:setting key="GuidesVisible" value="1"/>
+<vectornator:setting key="DisplayWhiteBackground" value="0"/>
+<vectornator:setting key="doHistoryDisabled" value="0"/>
+<vectornator:setting key="SnapToGuides" value="1"/>
+<vectornator:setting key="TimeLapseWatermarkDisabled" value="0"/>
+<vectornator:setting key="Units" value="Points"/>
+<vectornator:setting key="DynamicGuides" value="0"/>
+<vectornator:setting key="IsolateActiveLayer" value="0"/>
+<vectornator:setting key="SnapToGrid" value="0"/>
+</metadata>
+<defs/>
+<g id="Layer 1" vectornator:layerName="Layer 1">
+<path d="M7.06792+9.73446C6.10013+11.412+6.6808+13.4766+8.29379+14.4444L20.2944+21.5415C21.9719+22.5093+24.0365+21.9286+25.0043+20.3156C25.9721+18.6381+25.3914+16.5735+23.7784+15.6057L11.8423+8.5086C10.1648+7.47629+8.03571+8.05696+7.06792+9.73446Z" opacity="1" fill="#2a57a3"/>
+<path d="M25.1333+16.8961C24.1655+15.2186+22.0364+14.6379+20.4234+15.6702L8.29379+22.5738C6.61628+23.5416+6.03561+25.6707+7.06792+27.2837C8.03571+28.9612+10.1648+29.5419+11.7778+28.5096L23.8429+21.5415C25.5204+20.7028+26.1011+18.5091+25.1333+16.8961Z" opacity="1" fill="#e8b121"/>
+<path d="M7.0034+13.154C7.97119+14.8315+10.1003+15.4122+11.7133+14.3799L23.7784+7.41177C25.4559+6.44398+26.0366+4.31484+25.0043+2.70186C23.972+1.08887+21.9074+0.443681+20.2944+1.47599L8.29379+8.44408C6.61628+9.41187+6.03561+11.4765+7.0034+13.154Z" opacity="1" fill="#e8b121"/>
+</g>
+</svg>
