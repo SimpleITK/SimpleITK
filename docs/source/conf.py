@@ -97,7 +97,7 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 html_logo= '../images/simpleitk_logo.png'
-html_favicon = '_static/orange_itk_icon.svg'
+html_favicon = '_static/yellow_itk_icon.svg'
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
