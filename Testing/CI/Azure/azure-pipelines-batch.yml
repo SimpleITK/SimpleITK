@@ -94,7 +94,7 @@ jobs:
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
-          versionSpec: '3.6'
+          versionSpec: '3.8'
           architecture: 'x64'
           addToPath: true
       - script: |
