@@ -21,6 +21,7 @@
 #include "sitkPimpleImageBase.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkConditional.h"
+#include "sitkCreateInterpolator.hxx"
 
 #include "itkImage.h"
 #include "itkVectorImage.h"
@@ -264,7 +265,12 @@ namespace itk
       return sitkITKVectorToSTL<double>( point );
       }
 
-    unsigned int GetSize( unsigned int dimension ) const override
+      std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const
+          {
+          return InternalEvaluateAtContinuousIndex<typename ImageTypeToPixelID<ImageType>::PixelIDType> (index, interp);
+          }
+
+      unsigned int GetSize( unsigned int dimension ) const override
       {
         if ( dimension > ImageType::ImageDimension - 1 )
           {
@@ -663,6 +669,77 @@ namespace itk
 
 
   protected:
+
+    template <typename TPixelIDType>
+    typename std::enable_if<!IsLabel<TPixelIDType>::Value
+                                && !typelist::HasType<ComplexPixelIDTypeList, TPixelIDType>::Result
+                            && !IsVector<TPixelIDType>::Value,
+                            std::vector<double> >::type
+        InternalEvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp ) const
+    {
+      auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
+      if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( cidx ) ) {
+        sitkExceptionMacro("index out of bounds");
+      }
+      auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
+      assert(itkInterpolator != nullptr_t);
+      if (itkInterpolator == nullptr)
+      {
+        sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support basic pixel types.")
+      }
+      itkInterpolator->SetInputImage(this->m_Image.GetPointer());
+      auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
+      return {{double(result)}};
+    }
+
+    template <typename TPixelIDType>
+    typename std::enable_if<typelist::HasType<ComplexPixelIDTypeList, TPixelIDType>::Result,
+                            std::vector<double> >::type
+    InternalEvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp ) const
+    {
+      auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
+      if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( cidx ) ) {
+        sitkExceptionMacro("index out of bounds");
+      }
+      auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
+      if (itkInterpolator == nullptr)
+      {
+        sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support complex pixel types.")
+      }
+      itkInterpolator->SetInputImage(this->m_Image.GetPointer());
+      auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
+      return {{double(result.real()),double(result.imag())}};
+    }
+
+    template <typename TPixelIDType>
+    typename std::enable_if< IsVector<TPixelIDType>::Value,
+                            std::vector<double> >::type
+    InternalEvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp ) const
+    {
+      auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
+      if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( cidx ) ) {
+        sitkExceptionMacro("index out of bounds");
+      }
+      auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
+      if (itkInterpolator == nullptr)
+      {
+        sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support vector pixel types.")
+      }
+      itkInterpolator->SetInputImage(this->m_Image.GetPointer());
+      auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
+      return std::vector<double>{result.GetDataPointer(), result.GetDataPointer()+result.Size()};
+    }
+
+    template <typename TPixelIDType>
+    typename std::enable_if<IsLabel<TPixelIDType>::Value,
+                            std::vector<double> >::type
+    InternalEvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp, ...) const
+    {
+      Unused(index);
+      Unused(interp);
+      sitkExceptionMacro("Interpolation is not supported for label pixel types.")
+    }
+
 
     template < typename TPixelIDType >
     typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value

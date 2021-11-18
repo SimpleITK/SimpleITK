@@ -74,8 +74,9 @@ namespace itk
     virtual std::vector<double> TransformPhysicalPointToContinuousIndex( const std::vector<double> &pt) const = 0;
     virtual std::vector<double> TransformContinuousIndexToPhysicalPoint( const std::vector<double> &idx) const = 0;
 
-    virtual std::string ToString() const = 0;
+    virtual std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const = 0;
 
+    virtual std::string ToString() const = 0;
 
     virtual int GetReferenceCountOfImage() const = 0;
 

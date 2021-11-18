@@ -22,6 +22,7 @@
 #include "sitkTemplateFunctions.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
+#include "sitkInterpolator.h"
 
 #include <vector>
 #include <memory>
@@ -40,7 +41,7 @@ namespace simple
 {
 
   // This is the forward declaration of a class used internally to the
-  // Image class, but the actually interface is not exposed to simple
+  // Image class, but the actual interface is not exposed to simple
   // ITK. A pointer to the implementation is used as per the pimple
   // idiom.
   class PimpleImageBase;
@@ -253,6 +254,32 @@ namespace simple
 
     /** Transform continuous index to physical point */
     std::vector< double > TransformContinuousIndexToPhysicalPoint( const std::vector< double > &index) const;
+
+    /** \brief Interpolate pixel value at a continuous index.
+     *
+     * This method is not supported for Label pixel types.
+     *
+     * The valid range of continuous index is [-0.5, size-0.5] for each dimension. An exception is thrown if index is out of bounds.
+     *
+     * @param index The continuous index must be at least the length of the image dimension.
+     * @param interp The interpolation type to use, only sitkNearest and sitkLinear are supported for Vector and Complex pixel types.
+     *
+     * @return All supported pixel types are returned as an array, where complex numbers are returned with the real followed by the complex component.
+     */
+    std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp = sitkLinear) const;
+
+    /** Interpolate pixel value at a physical point.
+     *
+     * This method is not supported for Label pixel types.
+     *
+     * An exception is thrown if the point is out of the defined region for the image.
+     *
+     * @param point The physical point at which the interpolation is computed.
+     * @param interp The interpolation type to use, only sitkNearest and sitkLinear are supported for Vector and Complex pixel types.
+     *
+     * @return All supported pixel types are returned as an array, where complex numbers are returned with the real followed by the complex component.
+     */
+    std::vector<double> EvaluateAtPhysicalPoint( const std::vector<double> &point, InterpolatorEnum interp = sitkLinear) const;
 
     /** Get the number of pixels the Image is in each dimension as a
       * std::vector. The size of the vector is equal to the number of dimensions
