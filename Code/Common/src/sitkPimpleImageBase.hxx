@@ -265,7 +265,7 @@ namespace itk
       return sitkITKVectorToSTL<double>( point );
       }
 
-      std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const
+      std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const override
           {
           return InternalEvaluateAtContinuousIndex<typename ImageTypeToPixelID<ImageType>::PixelIDType> (index, interp);
           }
