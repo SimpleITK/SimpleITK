@@ -100,7 +100,7 @@ jobs:
       - script: |
           python --version
           sudo python -m pip install setuptools numpy
-          sudo python -m pip install ninja scikit-ci-addons
+          sudo python -m pip install ninja scikit-ci-addons lxml
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
