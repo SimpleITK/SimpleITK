@@ -265,7 +265,7 @@ namespace itk
       return sitkITKVectorToSTL<double>( point );
       }
 
-      std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const
+      std::vector<double> EvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp) const override
           {
           return InternalEvaluateAtContinuousIndex<typename ImageTypeToPixelID<ImageType>::PixelIDType> (index, interp);
           }
@@ -682,7 +682,7 @@ namespace itk
         sitkExceptionMacro("index out of bounds");
       }
       auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
-      assert(itkInterpolator != nullptr_t);
+      assert(itkInterpolator != nullptr);
       if (itkInterpolator == nullptr)
       {
         sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support basic pixel types.")
