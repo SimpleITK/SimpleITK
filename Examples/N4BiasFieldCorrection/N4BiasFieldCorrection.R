@@ -64,3 +64,7 @@ logBiasField <- corrector$GetLogBiasFieldAsImage(inputImage)
 biasField <- inputImage / Exp( logBiasField )
 
 WriteImage(correctedImage, args[[2]])
+
+if(Sys.getenv("SITK_NOSHOW") == "") {
+    Show(correctedImage, "N4 Corrected")
+}
