@@ -23,10 +23,10 @@ jobs:
           CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
           CTEST_CONFIGURATION_TYPE: Release
-          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017"
+          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           ctest.cache_extra: |
             WRAP_CSHARP:BOOL=ON
-          imageName: 'vs2017-win2016'
+          imageName: 'windows-2019'
         v142-64:
           CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
@@ -43,8 +43,8 @@ jobs:
           CTEST_CMAKE_GENERATOR_TOOLSET: v140
           CTEST_CMAKE_GENERATOR_PLATFORM: Win32
           CTEST_CONFIGURATION_TYPE: MinSizeRel
-          CTEST_CMAKE_GENERATOR: "Visual Studio 15 2017"
-          imageName: 'vs2017-win2016'
+          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
+          imageName: 'windows-2019'
 
     pool:
       vmImage: $(imageName)
