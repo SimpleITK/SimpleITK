@@ -2,7 +2,7 @@ jobs:
   - job: MacOS
     dependsOn: Configure
     condition: ne( variables['configure.skipmacos'], 'true' )
-    timeoutInMinutes: 200
+    timeoutInMinutes: 300
     variables:
       xcodeVersion: 9.4.1
       coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
