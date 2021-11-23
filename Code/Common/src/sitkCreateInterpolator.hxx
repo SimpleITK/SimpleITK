@@ -54,8 +54,6 @@ CreateInterpolator(const itk::VectorImage<TPixelType, N> * image,
   using TImageType = itk::VectorImage<TPixelType, N>;
   using RType =
       typename itk::InterpolateImageFunction<TImageType, double>::Pointer;
-  using BoundaryCondition =
-      typename itk::ZeroFluxNeumannBoundaryCondition<TImageType, TImageType>;
 
   switch (itype) {
   case sitkNearestNeighbor: {
@@ -83,8 +81,6 @@ CreateInterpolator(const itk::Image<std::complex<TPixelType>, N> * image,
   using TImageType = itk::Image<std::complex<TPixelType>, N>;
   using RType =
       typename itk::InterpolateImageFunction<TImageType, double>::Pointer;
-  using BoundaryCondition =
-      typename itk::ZeroFluxNeumannBoundaryCondition<TImageType, TImageType>;
 
   switch (itype) {
   case sitkNearestNeighbor: {
