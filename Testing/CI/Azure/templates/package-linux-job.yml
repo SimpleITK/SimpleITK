@@ -37,7 +37,5 @@ jobs:
           contents: '*.whl'
           targetFolder: $(Build.ArtifactStagingDirectory)/python
           flattenFolders: true
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
-          artifactName: Python
+      - publish: $(Build.ArtifactStagingDirectory)/python
+        artifact: Python
