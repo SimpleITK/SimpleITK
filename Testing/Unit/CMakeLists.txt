@@ -23,6 +23,7 @@ set ( SimpleITKUnitTestSource
   sitkBasicFiltersTests.cxx
   sitkLabelStatisticsTest.cxx
   sitkTransformToDisplacementFieldFilterTest.cxx
+  sitkTransformGeometryImageFilterTest.cxx
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   sitkTransformTests.cxx
@@ -287,6 +288,7 @@ ExternalData_Expand_Arguments(  SimpleITKData
   DATA{${SimpleITK_DATA_ROOT}/Input/xforms/versor_i_3.txt}
   DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_TransformToDisplacementFieldFilter_defaults.nrrd}
   DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_TransformToDisplacementFieldFilter_32.nrrd}
+  DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_TransformGeometryImageFilter_defaults.nrrd}
   )
 
 ExternalData_Expand_Arguments(  SimpleITKData
