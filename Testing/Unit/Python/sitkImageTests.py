@@ -327,6 +327,66 @@ class ImageTests(unittest.TestCase):
         image %= 4
         self.assertEqual(image[1, 1], 2)
 
+    def test_evaluate_at_continuous_index(self):
+        """Test for EvaluateAtContinuousIndex"""
+
+        for pixel_type in (sitk.sitkFloat32, sitk.sitkFloat64,
+                           sitk.sitkUInt8, sitk.sitkInt8,
+                           sitk.sitkUInt16, sitk.sitkInt16,
+                           sitk.sitkUInt32, sitk.sitkInt32,
+                           sitk.sitkUInt64, sitk.sitkInt64):
+            image = sitk.Image([2, 2], pixel_type)
+            result = image.EvaluateAtContinuousIndex([0.5, 0.5])
+            self.assertEqual(result, 0.0)
+            self.assertEqual(type(result), float)
+
+        for pixel_type in (sitk.sitkComplexFloat32,
+                           sitk.sitkComplexFloat64):
+            image = sitk.Image([2, 2], pixel_type)
+            result = image.EvaluateAtContinuousIndex([0.5, 0.5])
+            self.assertEqual(result, complex(0.0, 0.0))
+            self.assertEqual(type(result), complex)
+
+        for pixel_type in (sitk.sitkVectorFloat32, sitk.sitkVectorFloat64,
+                           sitk.sitkVectorUInt8, sitk.sitkVectorInt8,
+                           sitk.sitkVectorUInt16, sitk.sitkVectorInt16,
+                           sitk.sitkVectorUInt32, sitk.sitkVectorInt32,
+                           sitk.sitkVectorUInt64, sitk.sitkVectorInt64):
+            image = sitk.Image([2, 2], pixel_type, 7)
+            result = image.EvaluateAtContinuousIndex([0.5, 0.5])
+            self.assertEqual(len(result), 7)
+            self.assertTrue(all(i == 0 for i in result))
+
+    def test_evaluate_at_physical_point(self):
+        """Test for EvaluateAtPhysicalPoint"""
+
+        for pxiel_type in (sitk.sitkFloat32, sitk.sitkFloat64,
+                           sitk.sitkUInt8, sitk.sitkInt8,
+                           sitk.sitkUInt16, sitk.sitkInt16,
+                           sitk.sitkUInt32, sitk.sitkInt32,
+                           sitk.sitkUInt64, sitk.sitkInt64):
+            image = sitk.Image([2, 2], pxiel_type)
+            result = image.EvaluateAtPhysicalPoint([0.5, 0.5])
+            self.assertEqual(result, 0.0)
+            self.assertEqual(type(result), float)
+
+        for pxiel_type in (sitk.sitkComplexFloat32,
+                           sitk.sitkComplexFloat64):
+            image = sitk.Image([2, 2], pxiel_type)
+            result = image.EvaluateAtPhysicalPoint([0.5, 0.5])
+            self.assertEqual(result, complex(0.0, 0.0))
+            self.assertEqual(type(result), complex)
+
+        for pxiel_type in (sitk.sitkVectorFloat32, sitk.sitkVectorFloat64,
+                           sitk.sitkVectorUInt8, sitk.sitkVectorInt8,
+                           sitk.sitkVectorUInt16, sitk.sitkVectorInt16,
+                           sitk.sitkVectorUInt32, sitk.sitkVectorInt32,
+                           sitk.sitkVectorUInt64, sitk.sitkVectorInt64):
+            image = sitk.Image([2, 2], pxiel_type, 7)
+            result = image.EvaluateAtPhysicalPoint([0.5, 0.5])
+            self.assertEqual(len(result), 7)
+            self.assertTrue(all(i == 0 for i in result))
+
     def test_legacy(self):
         """ This is old testing cruft before unittest"""
 
