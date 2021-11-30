@@ -49,6 +49,8 @@ namespace itk.simple.examples {
             s_array[i] = s;
           }
           VectorUInt32 shrink = new VectorUInt32(s_array);
+          image = sitk.Shrink(inputImage, shrink);
+          maskImage = sitk.Shrink(maskImage, shrink);
         }
 
         N4BiasFieldCorrectionImageFilter corrector
