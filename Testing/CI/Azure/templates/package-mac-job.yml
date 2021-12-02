@@ -123,4 +123,4 @@ jobs:
         displayName: Build Python 36
         continueOnError: true
       - publish: $(Build.ArtifactStagingDirectory)/python
-        artifact: Python
+        actifact: Python
