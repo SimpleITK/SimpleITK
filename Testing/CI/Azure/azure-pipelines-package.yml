@@ -53,5 +53,7 @@ jobs:
           docker cp sitk-dox:/SimpleITKDoxygen.tar.gz $(Build.ArtifactStagingDirectory)/Doxygen/SimpleITKDoxygen-${SIMPLEITK_GIT_TAG}.tar.gz
           docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz $(Build.ArtifactStagingDirectory)/Doxygen/SimpleITKDoxygenXML-${SIMPLEITK_GIT_TAG}.tar.gz
         displayName: Docker doxygen generation
-      - publish: $(Build.ArtifactStagingDirectory)/Doxygen
-        artifact: Doxygen
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/Doxygen
+          artifactName: Doxygen

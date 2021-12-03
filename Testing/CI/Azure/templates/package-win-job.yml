@@ -117,5 +117,7 @@ jobs:
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 36
         continueOnError: true
-      - publish: $(Build.ArtifactStagingDirectory)/python
-        artifact: Python
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/python
+          artifactName: Python
