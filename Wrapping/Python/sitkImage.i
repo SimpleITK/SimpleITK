@@ -63,6 +63,8 @@
 %rename( __SetPixelAsComplexFloat32__ ) itk::simple::Image::SetPixelAsComplexFloat32;
 %rename( __SetPixelAsComplexFloat64__ ) itk::simple::Image::SetPixelAsComplextFloat64;
 
+%rename( __EvaluateAtContinuousIndex__ ) itk::simple::Image::EvaluateAtContinuousIndex;
+%rename( __EvaluateAtPhysicalPoint__ ) itk::simple::Image::EvaluateAtPhysicalPoint;
 
 %pythoncode %{
    import operator
@@ -885,6 +887,76 @@
 
           raise Exception("unknown pixel type")
 
+        @staticmethod
+        def _tuple_to_py_type(v, pixelID):
+          if pixelID in (sitkComplexFloat32, sitkComplexFloat64):
+              return complex(*v)
+          elif pixelID in (sitkVectorUInt8, sitkVectorInt8,
+                           sitkVectorUInt16, sitkVectorInt16,
+                           sitkVectorUInt32, sitkVectorInt32,
+                           sitkVectorUInt64, sitkVectorInt64,
+                           sitkVectorFloat32, sitkVectorFloat64):
+              return v
+          elif pixelID in (sitkUInt8, sitkInt8,
+                           sitkUInt16, sitkInt16,
+                           sitkUInt32, sitkInt32,
+                           sitkUInt64, sitkInt64,
+                           sitkFloat32, sitkFloat64,
+                           sitkLabelUInt8,
+                           sitkLabelUInt16,
+                           sitkLabelUInt32,
+                           sitkLabelUInt64):
+            assert(len(v)==1)
+            return v[0]
+          else:
+            raise ValueError(f"pixelID of {pixelID} is not supported.")
+
+        def EvaluateAtContinuousIndex(self, index, interp = sitkLinear):
+          """Interpolate pixel value at a continuous index.
+
+          This method is not supported for Label pixel types.
+
+          The valid range of continuous index is [-0.5, size-0.5] for each dimension. An exception is thrown if index is out of bounds.
+
+          Parameters
+          ----------
+          index
+            The continuous index must be at least the length of the image dimension.
+          interp
+            The interpolation type to use, only sitkNearest and sitkLinear are supported for Vector and Complex pixel types.
+
+          Returns
+          -------
+            The results will be of type float, complex, or an tuple of float of vectors.
+
+          """
+
+          r = self.__EvaluateAtContinuousIndex__(index, interp)
+
+          return self._tuple_to_py_type(r, self.GetPixelIDValue())
+
+        def EvaluateAtPhysicalPoint(self, point, interp = sitkLinear):
+          """ Interpolate pixel value at a physical point.
+
+          This method is not supported for Label pixel types.
+
+          An exception is thrown if the point is out of the defined region for the image.
+
+          Parameters
+          ----------
+          point
+            The physical point at which the interpolation is computed.
+          interp
+            The interpolation type to use, only sitkNearest and sitkLinear are supported for Vector and Complex pixel types.
+
+          Returns
+          -------
+            The results will be of type float, complex, or an tuple of float of vectors.
+          """
+
+          r = self.__EvaluateAtPhysicalPoint__(point, interp)
+
+          return self._tuple_to_py_type(r, self.GetPixelIDValue())
 
          %}
 
