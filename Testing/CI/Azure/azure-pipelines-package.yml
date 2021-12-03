@@ -24,6 +24,9 @@ jobs:
   - template: templates/package-linux-job.yml
     parameters:
         DOCKERFILE: Dockerfile-2010-x86_64
+  - template: templates/package-linux-job.yml
+    parameters:
+        DOCKERFILE: Dockerfile-2014-x86_64
   - template: templates/package-mac-job.yml
   - template: templates/package-win-job.yml
     parameters:
