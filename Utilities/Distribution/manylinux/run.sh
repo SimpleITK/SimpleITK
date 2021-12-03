@@ -14,7 +14,7 @@ else
     extra_args="$extra_args --mount type=bind,source=${SRC_DIR},destination=/tmp/SimpleITK,readonly"
 fi
 
-DOCKERFILE=${DOCKERFILE:="Dockerfile-2010-x86_64 Dockerfile-x86_64 Dockerfile-i686"}
+DOCKERFILE=${DOCKERFILE:="Dockerfile-2014-x86_64 Dockerfile-2010-x86_64"}
 
 for DF in ${DOCKERFILE}; do
     image_name="simpleitk_manylinux_$(echo "${DF}" | tr '[:upper:]' '[:lower:]')"
