@@ -59,6 +59,25 @@ This issue can be resolved by installing the appropriate
 `Redistributable for Visual Studio <https://www.microsoft.com/en-us/download/details.aspx?id=48145>`__ package.
 
 
+Why am I getting "DllNotFoundException: Unable to load DLL 'SimpleITKCSharpNative'" when running a CSharp application on Windows?
+---------------------------------------------------------------------------------------------------------------------------------
+This error message can be the result of an incomplete installation of SimpleITK
+in the CSharp application.  Below is the complete error message that can result:
+
+.. code-block :: bash
+
+  System.TypeInitializationException: 'The type initializer for 'itk.simple.SimpleITKPINVOKE' threw an exception.'
+
+  TypeInitializationException: The type initializer for 'SWIGExceptionHelper' threw an exception.
+
+  DllNotFoundException: Unable to load DLL 'SimpleITKCSharpNative': The specified module could not be found. (Exception from HRESULT: 0x8007007E)
+
+
+The application is missing the SimpleITK dynamically loaded library (DLL).  To
+fix this problem, follow the instructions in the
+`Add Native Library <https://simpleitk.readthedocs.io/en/master/setUp.html#add-native-library>`__
+section of the SimpleITK Visual Studio/C# build instructions.
+
 How to Use
 ==========
 
