@@ -87,6 +87,32 @@ class BasicFiltersTests(unittest.TestCase):
 
         sitk.Paste(img1, img2)
 
+    def test_landmark_based_transform_initializer(self):
+        """
+        Test downcast of LandmarkBasedTransformInitializer return Transform
+        :return:
+        """
+
+        point_set = [i for i in range(12)]
+
+        tx_initializer = sitk.LandmarkBasedTransformInitializerFilter()
+        tx_initializer.SetFixedLandmarks(point_set)
+        tx_initializer.SetMovingLandmarks(point_set)
+
+        self.assertEqual(tx_initializer.Execute(sitk.Euler2DTransform()).__class__,
+                         sitk.Euler2DTransform)
+        self.assertEqual(tx_initializer.Execute(sitk.Similarity2DTransform()).__class__,
+                         sitk.Similarity2DTransform)
+        self.assertEqual(tx_initializer.Execute(sitk.AffineTransform(2)).__class__,
+                         sitk.AffineTransform)
+
+        self.assertEqual(tx_initializer.Execute(sitk.VersorRigid3DTransform()).__class__,
+                         sitk.VersorRigid3DTransform)
+        self.assertEqual(tx_initializer.Execute(sitk.ScaleVersor3DTransform()).__class__,
+                        sitk.ScaleVersor3DTransform)
+        self.assertEqual(tx_initializer.Execute(sitk.AffineTransform(3)).__class__,
+                        sitk.AffineTransform)
+
 
 if __name__ == '__main__':
     unittest.main()

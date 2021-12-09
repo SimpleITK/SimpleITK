@@ -91,7 +91,7 @@
   val = val.Downcast()
 };
 
-%pythonappend itk::simple::LandmarkBasedTransformInitializerFilter(const Transform &)
+%pythonappend itk::simple::LandmarkBasedTransformInitializerFilter::Execute(const Transform &)
 {
   val = val.Downcast()
 };
@@ -99,6 +99,6 @@
 %pythonappend itk::simple::LandmarkBasedTransformInitializer
 {
   val = val.Downcast()
-  };
+};
 
 #endif

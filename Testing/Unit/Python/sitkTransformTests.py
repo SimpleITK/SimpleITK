@@ -385,13 +385,38 @@ class TransformTests(unittest.TestCase):
 
                 fname = os.path.join(self.test_dir, "test_readwrite_"+k+"."+tx_extension)
 
-                print("Testing I/O {0} with {1}".format(k,ext))
                 tx = getattr(sitk, k)(*v)
 
                 sitk.WriteTransform(tx, fname)
                 read_tx = sitk.ReadTransform(fname)
-                self.assertEqual(tx, read_tx.Downcast())
+                self.assertEqual(tx, read_tx.Downcast(), msg=f"Testing I/O {k} with {ext}")
 
+    def test_downcast_returned(self):
+        """
+        Test python specific methods where returned type is downcasted to derived class.
+        """
+
+        tx = sitk.AffineTransform(3)
+        itx = tx.GetInverse()
+        self.assertEqual(tx.__class__, itx.__class__)
+        self.assertEqual(tx.GetDimension(), itx.GetDimension())
+
+        tx = sitk.Euler2DTransform()
+        itx = tx.GetInverse()
+        self.assertEqual(tx.__class__, itx.__class__)
+        self.assertEqual(tx.GetDimension(), itx.GetDimension())
+
+
+        tx_list = [sitk.AffineTransform(2),
+                   sitk.Euler2DTransform(),
+                   sitk.TranslationTransform(2),
+                   sitk.AffineTransform(2)]
+        ctx = sitk.CompositeTransform( tx_list );
+
+        self.assertEqual(ctx.GetBackTransform().__class__, sitk.AffineTransform)
+
+        for i, itx in enumerate(tx_list):
+            self.assertEqual(ctx.GetNthTransform(i).__class__, itx.__class__)
 
 if __name__ == '__main__':
 
