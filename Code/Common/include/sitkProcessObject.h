@@ -373,6 +373,18 @@ namespace itk {
 
         return Image(out.GetPointer());
       }
+
+      template< unsigned int VImageDimension, unsigned int  VLength,
+                template<unsigned int> class TVector >
+        static Image CastITKToImage( itk::Image< TVector< VLength >, VImageDimension> *img )
+      {
+        // The implementation defined int sitkImageConvert.hxx needs
+        // to be manually included when this method is used.
+        auto out = GetVectorImageFromImage(img, true);
+
+        return Image(out.GetPointer());
+      }
+
 #endif
 
       /**

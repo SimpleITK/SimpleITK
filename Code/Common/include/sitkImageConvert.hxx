@@ -164,6 +164,65 @@ GetVectorImageFromImage( itk::Image< itk::CovariantVector< TPixelType, NLength>,
 }
 
 
+template< unsigned int NImageDimension, unsigned int NLength >
+SITKCommon_HIDDEN
+typename itk::VectorImage<
+  typename std::conditional<sizeof(typename itk::Offset< NLength >::OffsetValueType) == sizeof(int64_t),
+    int64_t,
+    FalseType>::type, NImageDimension >::Pointer
+GetVectorImageFromImage( itk::Image< itk::Offset< NLength >, NImageDimension> *img, bool transferOwnership )
+{
+
+  // The itk::OffsetValueType may map to a different type that that of the fixed integer types. e.g. long != int64
+  using VectorPixelType =  typename std::conditional<sizeof(typename itk::Offset< NLength >::OffsetValueType) == sizeof(int64_t),
+    int64_t,
+    int32_t>::type;
+
+
+  static_assert(sizeof(VectorPixelType) == sizeof(typename itk::Offset< NLength >::OffsetValueType),
+                "Incorrect fixed type pixel type used for OffsetValueType");
+
+  using VectorImageType = itk::VectorImage<  VectorPixelType, NImageDimension >;
+  using ImageType = itk::Image< itk::Offset< NLength >, NImageDimension>;
+
+  size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
+  typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
+
+  // Unlike an image of Vectors a VectorImage's container is a
+  // container of TPixelType, whos size is the image's number of
+  // pixels * number of pixels per component
+  numberOfElements *= NLength;
+
+
+  typename VectorImageType::Pointer out = VectorImageType::New();
+
+  if (img->GetPixelContainer()->GetContainerManageMemory() && transferOwnership)
+    {
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
+    img->GetPixelContainer()->ContainerManageMemoryOff();
+    }
+  else
+    {
+    auto holder = itk::HolderCommand<typename ImageType::PixelContainer::Pointer>::New();
+    holder->Set( typename ImageType::PixelContainer::Pointer(img->GetPixelContainer()) );
+
+    // Set the image's pixel container to import the pointer provided.
+    out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, false );
+    out->AddObserver( itk::DeleteEvent(), holder);
+
+    }
+
+
+  out->CopyInformation( img );
+  out->SetRegions( img->GetBufferedRegion() );
+
+  assert(out->GetNumberOfComponentsPerPixel() == NLength);
+
+  return out;
+}
+
+
+
 }
 }
 
