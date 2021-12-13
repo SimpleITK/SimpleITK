@@ -95,10 +95,9 @@ fail:
 static PyObject*
 sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 {
+  PyObject * pyObj = NULL;
   PyObject * pyImage = NULL;
 
-  const void *buffer;
-  Py_ssize_t buffer_len;
   Py_buffer  pyBuffer;
   memset(&pyBuffer, 0, sizeof(Py_buffer));
 
@@ -110,36 +109,15 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   // We wish to support both the new PEP3118 buffer interface and the
   // older. So we first try to parse the arguments with the new buffer
   // protocol, then the old.
-  if (!PyArg_ParseTuple( args, "s*O", &pyBuffer, &pyImage ) )
+  if (!PyArg_ParseTuple( args, "OO", &pyObj, &pyImage ))
     {
-    PyErr_Clear();
-
-#ifdef PY_SSIZE_T_CLEAN
-    using bufSizeType = Py_ssize_t;
-#else
-    using bufSizeType = int;
-#endif
-
-    bufSizeType _len;
-    // This function takes 2 arguments from python, the first is an
-    // python object which support the old "ReadBuffer" interface
-    if( !PyArg_ParseTuple( args, "s#O", &buffer, &_len, &pyImage ) )
-      {
-      return NULL;
-      }
-    buffer_len = _len;
+    return NULL;
     }
-  else
+  if (PyObject_GetBuffer(pyObj, &pyBuffer, PyBUF_FULL_RO) != 0)
     {
-    if ( PyBuffer_IsContiguous( &pyBuffer, 'C' ) != 1 )
-      {
-      PyBuffer_Release( &pyBuffer );
-      PyErr_SetString( PyExc_TypeError, "A C Contiguous buffer object is required." );
-      return NULL;
-      }
-    buffer_len = pyBuffer.len;
-    buffer = pyBuffer.buf;
+    return NULL;
     }
+
 
   /* Cast over to a sitk Image. */
   {
@@ -175,13 +153,11 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   len = size_t(sitkImage->GetNumberOfPixels()) * sitkImage->GetSizeOfPixelComponent();
   len *= sitkImage->GetNumberOfComponentsPerPixel();
 
-  if ( buffer_len != len )
+  // checks len matches pyBuffer.len
+  if (PyBuffer_ToContiguous( sitkBufferPtr, &pyBuffer, len, 'C') != 0)
     {
-    PyErr_SetString( PyExc_RuntimeError, "Size mismatch of image and Buffer." );
     goto fail;
     }
-
-  memcpy( (void *)sitkBufferPtr, buffer, len );
 
 
   PyBuffer_Release( &pyBuffer );
