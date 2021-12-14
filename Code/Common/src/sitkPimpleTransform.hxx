@@ -344,6 +344,12 @@ public:
   template <typename VScalar, unsigned int VDimension>
     TransformEnum GetTransformEnum( const itk::DisplacementFieldTransform< VScalar, VDimension > *) const {return sitkDisplacementField;}
 
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::BSplineSmoothingOnUpdateDisplacementFieldTransform< VScalar, VDimension > *) const {return sitkDisplacementField;}
+
+  template <typename VScalar, unsigned int VDimension>
+    TransformEnum GetTransformEnum( const itk::GaussianSmoothingOnUpdateDisplacementFieldTransform< VScalar, VDimension > *) const {return sitkDisplacementField;}
+
 
   template <typename VScalar>
     TransformEnum GetTransformEnum( const itk::ScaleSkewVersor3DTransform< VScalar > *) const {return sitkScaleSkewVersor;}
