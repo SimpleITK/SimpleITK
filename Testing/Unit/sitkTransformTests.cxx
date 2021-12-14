@@ -503,6 +503,7 @@ TEST(TransformTest, ReadTransformConvert) {
   {
   sitk::DisplacementFieldTransform tx(2);
   tx.SetSmoothingGaussianOnUpdate();
+  EXPECT_EQ(sitk::sitkDisplacementField, tx.GetTransformEnum());
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW( tx = sitk::DisplacementFieldTransform( sitk::ReadTransform(filename) ) );
   EXPECT_EQ(tx.GetDimension(), 2u);
@@ -1028,14 +1029,19 @@ TEST(TransformTest,DisplacementFieldTransform)
   EXPECT_EQ( disImage.GetSize()[1], 0u);
 
   tx3.SetSmoothingGaussianOnUpdate();
+  EXPECT_EQ(sitk::sitkDisplacementField, tx3.GetTransformEnum());
   tx3.SetSmoothingBSplineOnUpdate();
+  EXPECT_EQ(sitk::sitkDisplacementField, tx3.GetTransformEnum());
   tx3.SetSmoothingOff();
 
 
   // test conversion methods with initial values
   tx1 = sitk::DisplacementFieldTransform(2);
+  EXPECT_EQ(sitk::sitkDisplacementField, tx1.GetTransformEnum());
   tx1.SetSmoothingGaussianOnUpdate();
+  EXPECT_EQ(sitk::sitkDisplacementField, tx1.GetTransformEnum());
   tx1.SetSmoothingBSplineOnUpdate();
+  EXPECT_EQ(sitk::sitkDisplacementField, tx1.GetTransformEnum());
   tx1.SetSmoothingOff();
 
   const double fixedParametersArray[] = {5.0, 5.0, 0.1, 0.2, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0};
