@@ -35,6 +35,26 @@
       "detaileddescriptionGet" : "Get whether spacing is used."
     }
   ],
+  "measurements" : [
+    {
+      "name" : "VoronoiMap",
+      "type" : "Image",
+      "default" : "Image()",
+      "custom_itk_cast" : "this->m_VoronoiMap = this->CastITKToImage(filter->GetVoronoiMap());",
+      "no_print" : true,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get Voronoi Map This map shows for each pixel what object is closest to it. Each object should be labeled by a number (larger than 0), so the map has a value for each pixel corresponding to the label of the closest object."
+    },
+    {
+      "name" : "VectorDistanceMap",
+      "type" : "Image",
+      "default" : "Image()",
+      "custom_itk_cast" : "this->m_VectorDistanceMap = this->CastITKToImage(filter->GetVectorDistanceMap());",
+      "no_print" : true,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get Distance map image.  The distance map is shown as a gray value image depending on the pixel type of the output image. Regarding the source image, background should be dark (gray value = 0) and object should have a gray value larger than 0.  The minimal distance is calculated on the object frontier, and the output image gives for each pixel its minimal distance from the object (if there is more than one object the closest object is considered)."
+    }
+  ],
   "tests" : [
     {
       "tag" : "default",

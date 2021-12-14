@@ -53,6 +53,7 @@
 #include <sitkCommand.h>
 #include <sitkResampleImageFilter.h>
 #include <sitkSignedMaurerDistanceMapImageFilter.h>
+#include <sitkSignedDanielssonDistanceMapImageFilter.h>
 #include <sitkDICOMOrientImageFilter.h>
 #include <sitkPasteImageFilter.h>
 #include <sitkN4BiasFieldCorrectionImageFilter.h>
@@ -874,6 +875,25 @@ TEST(BasicFilters,SignedMaurerDistanceMap_Abort) {
   EXPECT_EQ ( 0, userCmd.m_Count );
   EXPECT_LE( abortAtProgress, progressCmd.m_Progress );
 
+}
+
+TEST(BasicFilters, SignedDanielssonDistanceMap_Measurements)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image img;
+  ASSERT_NO_THROW( img = sitk::ReadImage( dataFinder.GetFile ( "Input/2th_cthead1.png" ) ) ) << "Reading input Image.";
+
+  sitk::Image voronoiMap;
+  sitk::Image vectorDistanceMap;
+  {
+  sitk::SignedDanielssonDistanceMapImageFilter filter;
+
+  sitk::Image result = filter.Execute(img);
+
+  voronoiMap = filter.GetVoronoiMap();
+  vectorDistanceMap = filter.GetVectorDistanceMap();
+  }
 }
 
 TEST(BasicFilters,ResampleImageFilter_AdditionalProcedures)

@@ -25,6 +25,7 @@ namespace itk
 
 template< typename T, unsigned int NVectorDimension > class Vector;
 template< typename T, unsigned int NVectorDimension > class CovariantVector;
+template< unsigned int VDimension> struct Offset;
 
 namespace simple
 {
@@ -48,6 +49,16 @@ template< class TPixelType, unsigned int NImageDimension, unsigned int NLength >
 SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::CovariantVector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false );
+
+
+template< unsigned int NImageDimension, unsigned int NLength >
+SITKCommon_HIDDEN
+typename itk::VectorImage<
+  typename std::conditional<sizeof(typename itk::Offset< NLength >::OffsetValueType) == sizeof(int64_t),
+    int64_t,
+    FalseType>::type, NImageDimension >::Pointer
+GetVectorImageFromImage( itk::Image< itk::Offset< NLength >, NImageDimension> *img, bool transferOwnership = false );
+
 
 
 }
