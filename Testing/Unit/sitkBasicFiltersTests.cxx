@@ -893,6 +893,7 @@ TEST(BasicFilters, SignedDanielssonDistanceMap_Measurements)
 
   voronoiMap = filter.GetVoronoiMap();
   vectorDistanceMap = filter.GetVectorDistanceMap();
+  EXPECT_EQ(img.GetDimension(), vectorDistanceMap.GetNumberOfComponentsPerPixel());
   }
 }
 

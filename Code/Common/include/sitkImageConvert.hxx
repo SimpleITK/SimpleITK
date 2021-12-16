@@ -214,6 +214,7 @@ GetVectorImageFromImage( itk::Image< itk::Offset< NLength >, NImageDimension> *i
 
 
   out->CopyInformation( img );
+  out->SetNumberOfComponentsPerPixel(NLength);
   out->SetRegions( img->GetBufferedRegion() );
 
   assert(out->GetNumberOfComponentsPerPixel() == NLength);
