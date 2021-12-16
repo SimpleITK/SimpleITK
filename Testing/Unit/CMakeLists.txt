@@ -1,5 +1,9 @@
-# remove me
+# The ITK factories are already compiled into the SimpleITK
+# libraries. So they are not needed again, additionally using ITK this
+# way will not cause the headers to be generated, so the managers
+# should not be used.
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
+set ( ITK_NO_FFT_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
 
