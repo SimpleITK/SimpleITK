@@ -38,10 +38,31 @@ enum InterpolatorEnum {
    */
   sitkLinear = 2,
 
+  /** \brief B-Spline of order 1 interpolation
+   * \sa itk::BSplineInterpolateImageFunction
+   */
+  sitkBSpline1 = 21,
+
+  /** \brief B-Spline of order 2 interpolation
+   * \sa itk::BSplineInterpolateImageFunction
+   */
+  sitkBSpline2 = 22,
+
   /** \brief B-Spline of order 3 interpolation
    * \sa itk::BSplineInterpolateImageFunction
    */
-  sitkBSpline = 3,
+  sitkBSpline = 23,
+  sitkBSpline3 = 23,
+
+  /** \brief B-Spline of order 4 interpolation
+   * \sa itk::BSplineInterpolateImageFunction
+   */
+  sitkBSpline4 = 24,
+
+  /** \brief B-Spline of order 5 interpolation
+   * \sa itk::BSplineInterpolateImageFunction
+   */
+  sitkBSpline5 = 25,
 
   /** \brief Gaussian interpolation
    *

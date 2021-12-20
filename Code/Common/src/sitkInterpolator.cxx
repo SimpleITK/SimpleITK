@@ -31,7 +31,6 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
     {
     sitkInterpolatorToStringCaseMacro(NearestNeighbor);
     sitkInterpolatorToStringCaseMacro(Linear);
-    sitkInterpolatorToStringCaseMacro(BSpline);
     sitkInterpolatorToStringCaseMacro(Gaussian);
     sitkInterpolatorToStringCaseMacro(LabelGaussian);
     sitkInterpolatorToStringCaseMacro(HammingWindowedSinc);
@@ -45,6 +44,12 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
     sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder3);
     sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder4);
     sitkInterpolatorToStringCaseMacro(BSplineResamplerOrder5);
+    sitkInterpolatorToStringCaseMacro(BSpline1);
+    sitkInterpolatorToStringCaseMacro(BSpline2);
+    //sitkInterpolatorToStringCaseMacro(BSpline);
+    sitkInterpolatorToStringCaseMacro(BSpline3);
+    sitkInterpolatorToStringCaseMacro(BSpline4);
+    sitkInterpolatorToStringCaseMacro(BSpline5);
     }
   return os;
 }
