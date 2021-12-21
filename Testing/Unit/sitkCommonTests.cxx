@@ -708,7 +708,7 @@ TEST( Interpolator, Test1 )
   EXPECT_EQ("BSpline3", ss.str());
   ss.str("");
   ss << sitk::sitkBSpline;
-  EXPECT_EQ("BSpline", ss.str());
+  EXPECT_EQ("BSpline3", ss.str());
   ss.str("");
   ss << sitk::sitkBSpline;
   EXPECT_EQ("BSpline3", ss.str());
