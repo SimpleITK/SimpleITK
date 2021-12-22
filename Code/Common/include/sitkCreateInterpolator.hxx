@@ -123,10 +123,36 @@ CreateInterpolator(const TImageType *image, InterpolatorEnum itype) {
         itk::LinearInterpolateImageFunction<TImageType, double>;
     return RType(InterpolatorType::New());
   }
-  case sitkBSpline: {
+  case sitkBSpline1: {
       using InterpolatorType = itk::BSplineInterpolateImageFunction<TImageType, double>;
-      return RType( ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() ) );
+      auto interp = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
+      interp->SetSplineOrder(1);
+      return interp;
   }
+    case sitkBSpline2: {
+      using InterpolatorType = itk::BSplineInterpolateImageFunction<TImageType, double>;
+      auto interp = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
+      interp->SetSplineOrder(2);
+      return interp;
+    }
+    case sitkBSpline3: {
+      using InterpolatorType = itk::BSplineInterpolateImageFunction<TImageType, double>;
+      auto interp = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
+      interp->SetSplineOrder(3);
+      return interp;
+    }
+    case sitkBSpline4: {
+      using InterpolatorType = itk::BSplineInterpolateImageFunction<TImageType, double>;
+      auto interp = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
+      interp->SetSplineOrder(4);
+      return interp;
+    }
+    case sitkBSpline5: {
+      using InterpolatorType = itk::BSplineInterpolateImageFunction<TImageType, double>;
+      auto interp = ConditionalCreateInterpolator<InterpolatorType>( typename IsBasic<TImageType>::Type() );
+      interp->SetSplineOrder(5);
+      return interp;
+    }
   case sitkGaussian: {
     using InterpolatorType = itk::GaussianInterpolateImageFunction<TImageType, double>;
 
@@ -141,7 +167,7 @@ CreateInterpolator(const TImageType *image, InterpolatorEnum itype) {
       return p;
     }
     p->SetSigma(sigma);
-    //p->SetAlpha(4.0);
+    p->SetAlpha(4.0);
     return RType(p);
   }
   case sitkLabelGaussian: {
