@@ -1,0 +1,4 @@
+$(function(){
+    document.getElementById("datetime").textContent = "@_DATETIME@"
+    document.getElementById("projectnumber").textContent = "@SimpleITK_VERSION@"
+});

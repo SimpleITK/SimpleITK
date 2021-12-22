@@ -73,16 +73,14 @@ if (BUILD_DOXYGEN)
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 
-  # Create a "datetime.txt" file for a time stamp of the code
-  # generation. The time stamp in dynamically inserted into the HTML
-  # with javascript, to reduce the code change churn with regular
-  # updates.
-  add_custom_command(
-    TARGET Documentation
-    POST_BUILD
-    WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/Documentation/html"
-    COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_LIST_DIR}/datetime.py"
-    )
+  execute_process(COMMAND ${PYTHON_EXECUTABLE}
+    -c "import  time;import sys; sys.stdout.write(time.strftime('%a, %d %b %Y %H:%M:%S +0000', time.gmtime()))"
+             OUTPUT_VARIABLE _DATETIME)
+
+  configure_file(${PROJECT_SOURCE_DIR}/Utilities/Doxygen/build_text.js.in
+    "${PROJECT_BINARY_DIR}/Documentation/html/build_text.js")
+
+
 
   message( STATUS
     "To generate Doxygen's documentation, you need to build the Documentation target"
