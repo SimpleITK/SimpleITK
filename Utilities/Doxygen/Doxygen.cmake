@@ -35,7 +35,7 @@ if (BUILD_DOXYGEN)
   endif()
 
   set(DOXYGEN_MATHJAX_RELPATH
-    "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/"
+    "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/"
     CACHE STRING "The destination or URL to contain the MathJax.js script")
 
   set(SIMPLEITK_DOXYGEN_TAGFILE "${PROJECT_BINARY_DIR}/Utilities/Doxygen/SimpleITKDoxygen.tag")
