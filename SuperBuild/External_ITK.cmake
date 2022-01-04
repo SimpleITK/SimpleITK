@@ -39,6 +39,7 @@ foreach (_varName ${_varNames})
       OR _varName MATCHES "^ITKV4"
       OR _varName MATCHES "FFTW"
       OR _varName MATCHES "^GDCM_"
+      OR _varName MATCHES "^NIFTI_"
       OR _varName MATCHES "^Module_"
       OR _varName STREQUAL "TBB_DIR")
     message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to ITK external project.")
