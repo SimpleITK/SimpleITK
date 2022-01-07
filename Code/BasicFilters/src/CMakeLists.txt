@@ -169,3 +169,34 @@ add_filter_library(SimpleITKBasicFilters1 SimpleITKBasicFilters1Source no_itk_de
 
 target_link_libraries ( SimpleITKBasicFilters1
   PRIVATE ${PREV_SimpleITK_LIBRARIES} )
+
+
+
+find_package(ITK COMPONENTS ITKFFT )
+set(ITK_NO_IO_FACTORY_REGISTER_MANAGER 1)
+
+# the ITK CMake file sets directory level properties for the factories
+# that need to bedisabled and only set for the SimpleITK_ITKFFT
+# target.
+# Note: The ITK USE file also sets other directory level properties
+# such include dirs for all the FFT dependencies, and link_dirs and
+# maybe others that are not desired for all the libraries.
+include(${ITK_USE_FILE})
+
+get_property(_dir_compile_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)
+list( REMOVE_ITEM _dir_compile_definitions
+  ITK_FFT_FACTORY_REGISTER_MANAGER )
+set_property( DIRECTORY PROPERTY COMPILE_DEFINITIONS ${_dir_compile_definitions})
+
+get_property(_dir_include_directories DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
+list( REMOVE_ITEM ${_dir_include_directories}
+  "${CMAKE_CURRENT_BINARY_DIRECTORY}/ITKFactoryRegistration" )
+set_property( DIRECTORY PROPERTY INCLUDE_DIRECTORIES ${_dir_include_directories})
+
+
+target_compile_definitions( SimpleITK_ITKFFT
+  PRIVATE
+  ITK_FFT_FACTORY_REGISTER_MANAGER)
+target_include_directories( SimpleITK_ITKFFT
+  PRIVATE
+  "${CMAKE_CURRENT_BINARY_DIRECTORY}/ITKFactoryRegistration" )
