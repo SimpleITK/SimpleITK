@@ -58,7 +58,7 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
 endfunction()
 
 
-find_package(ITK COMPONENTS ITKCommon REQUIRED)
+find_package(ITK COMPONENTS ITKCommon REQUIRED OPTIONAL_COMPONENTS ITKFFT )
 
 
 # common source which all basic filter libraries need to be linked against
@@ -169,3 +169,7 @@ add_filter_library(SimpleITKBasicFilters1 SimpleITKBasicFilters1Source no_itk_de
 
 target_link_libraries ( SimpleITKBasicFilters1
   PRIVATE ${PREV_SimpleITK_LIBRARIES} )
+
+sitk_target_use_itk_factory( SimpleITK_ITKFFT FFT )
+sitk_target_use_itk_factory( SimpleITK_ITKConvolution FFT )
+sitk_target_use_itk_factory( SimpleITK_ITKDeconvolution FFT )
