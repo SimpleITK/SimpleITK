@@ -994,23 +994,14 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     }
   else
     {
-    // TOOD: It should not be necessary to return a composite
-    // transform the sitk::Transform class is missing a constructor
-    // which accepts an arbitrary ITK transform.
     typename RegistrationType::OutputTransformType* itkOutTx = registration->GetModifiableTransform();
-
-    using CompositeTransformType = itk::CompositeTransform<double, ImageDimension>;
-
-    typename CompositeTransformType::Pointer comp = CompositeTransformType::New();
-    comp->ClearTransformQueue();
-    comp->AddTransform( itkOutTx );
 
     if (m_pfUpdateWithBestValue)
       {
-      m_pfUpdateWithBestValue(comp);
+      m_pfUpdateWithBestValue(itkOutTx);
       }
 
-    return Transform(comp.GetPointer());
+    return Transform(itkOutTx);
     }
 }
 
