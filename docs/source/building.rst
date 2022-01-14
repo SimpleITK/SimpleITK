@@ -333,3 +333,46 @@ your fellow users you can install the package in a local directory:
 
  cd SimpleITK-build/Wrapping/R/Packaging
  R CMD INSTALL -l /path_to/my_R_libs SimpleITK
+
+
+Building SimpleITK documentation
+================================
+
+SimpleITK uses `Sphinx <https://www.sphinx-doc.org>`__ to build documentation. The Sphinx build system is not integrated with the CMake configuration and build infrastructure, so user need to set it up separately, and then use it to build SimpleITK documentation.
+
+
+Setting up Sphinx
+-----------------
+
+The following are steps for setting up Sphinx:
+
+#. Create a Python virtual environment ("sitkenv" is the name for the new virtual environment and its directory in this example).
+
+.. code-block :: bash
+
+ python -m venv sitkenv
+
+2. Activate the virtual environment
+
+.. code-block :: bash
+
+ $ source sitkenv/bin/activate
+ (sitkenv) $
+
+3. Install Sphinx and packages using the requirements.txt (found in SimpleITK/docs directory).
+
+.. code-block :: bash
+
+ (sitkenv) $ pip install -r SimpleITK/docs/requirements.txt
+
+
+Building documentation
+----------------------
+
+After Sphinx and required packages are installed, user can build SimpleITK documentation with following command in the SimpleITK/docs directory (on Mac/Linux):
+
+.. code-block :: bash
+
+ (sitkenv) $ make html
+
+Results are in the SimpleITK/docs/build/html directory.
