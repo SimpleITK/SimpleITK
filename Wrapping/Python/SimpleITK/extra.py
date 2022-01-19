@@ -16,11 +16,15 @@
 #
 # ========================================================================
 
+from pathlib import Path
 from SimpleITK.SimpleITK import *
 from SimpleITK.SimpleITK import _GetMemoryViewFromImage
 from SimpleITK.SimpleITK import _SetImageFromArray
 
-from typing import List, Optional, Type, Union
+from typing import Iterable, List, Optional, Type, Union
+
+
+PathType = Union[str, Path, Iterable[str], Iterable[Path]]
 
 
 def Resample(image1: Image, *args, **kwargs) -> Image:
@@ -301,7 +305,7 @@ def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> 
 
 
 def ReadImage(
-    fileName: Union[str, List[str]],
+    fileName: PathType,
     outputPixelType: int = sitkUnknown,
     imageIO: str = "",
 ) -> Image:
@@ -335,12 +339,12 @@ def ReadImage(
 
     """
 
-    if isinstance(fileName, str):
+    if isinstance(fileName, (str, Path)):
         reader = ImageFileReader()
-        reader.SetFileName(fileName)
+        reader.SetFileName(str(fileName))
     else:
         reader = ImageSeriesReader()
-        reader.SetFileNames(fileName)
+        reader.SetFileNames([str(name) for name in fileName])
 
     reader.SetImageIO(imageIO)
     reader.SetOutputPixelType(outputPixelType)
@@ -348,13 +352,13 @@ def ReadImage(
 
 
 def WriteImage(
-        image: Image,
-        fileName: Union[str, List[str]],
-        useCompression: bool = False,
-        compressionLevel: int = -1,
-        *,
-        imageIO: str = "",
-        compressor: str = "",
+    image: Image,
+    fileName: PathType,
+    useCompression: bool = False,
+    compressionLevel: int = -1,
+    *,
+    imageIO: str = "",
+    compressor: str = "",
 ) -> None:
     r"""
     WriteImage is a procedural interface to the ImageFileWriter and ImageSeriesWriter classes which is convenient for
@@ -383,12 +387,12 @@ def WriteImage(
      itk::simple::ImageFileWriter for writing a single file.
      itk::simple::ImageSeriesWriter for writing a series of files
     """
-    if isinstance(fileName, str):
+    if isinstance(fileName, (str, Path)):
         writer = ImageFileWriter()
-        writer.SetFileName(fileName)
+        writer.SetFileName(str(fileName))
     else:
         writer = ImageSeriesWriter()
-        writer.SetFileNames(fileName)
+        writer.SetFileNames([str(name) for name in fileName])
 
     writer.SetUseCompression(useCompression)
     writer.SetCompressionLevel(compressionLevel)
