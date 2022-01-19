@@ -27,7 +27,13 @@ from typing import Iterable, List, Optional, Type, Union
 PathType = Union[str, Path, Iterable[str], Iterable[Path]]
 
 
-def Resample(image1: Image, *args, **kwargs) -> Image:
+def Resample(
+    image1: Image,
+    *args,
+    referenceImage: Optional[Image] = None,
+    size: Optional[int] = None,
+    **kwargs,
+) -> Image:
     """
      Resample ( Image image1,
                 Transform transform = itk::simple::Transform(),
@@ -106,13 +112,13 @@ def Resample(image1: Image, *args, **kwargs) -> Image:
             try:
                 iter(args[0])
                 return _r(*args, **kwargs)
-            except TypeError as e:
+            except TypeError:
                 pass
 
-    if "referenceImage" in kwargs:
-        return _r_image(*args, **kwargs)
-    if "size" in kwargs:
-        return _r(*args, **kwargs)
+    if referenceImage is not None:
+        return _r_image(referenceImage, *args, **kwargs)
+    if size is not None:
+        return _r(size, *args, **kwargs)
 
     return _r_image(image1, *args, **kwargs)
 
