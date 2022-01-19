@@ -20,10 +20,10 @@ from SimpleITK.SimpleITK import *
 from SimpleITK.SimpleITK import _GetMemoryViewFromImage
 from SimpleITK.SimpleITK import _SetImageFromArray
 
-from typing import List, Union
+from typing import List, Optional, Type, Union
 
 
-def Resample(image1, *args, **kwargs):
+def Resample(image1: Image, *args, **kwargs) -> Image:
     """
      Resample ( Image image1,
                 Transform transform = itk::simple::Transform(),
@@ -120,7 +120,7 @@ except ImportError:
     HAVE_NUMPY = False
 
 
-def _get_numpy_dtype(sitkImage):
+def _get_numpy_dtype(sitkImage: Image) -> Type["numpy.number"]:
     """Given a SimpleITK image, returns the numpy.dtype which describes the data"""
 
     if not HAVE_NUMPY:
@@ -152,13 +152,13 @@ def _get_numpy_dtype(sitkImage):
                 sitkLabelUInt8: numpy.uint8,
                 sitkLabelUInt16: numpy.uint16,
                 sitkLabelUInt32: numpy.uint32,
-                sitkLabelUInt64: numpy.uint64
+                sitkLabelUInt64: numpy.uint64,
                 }
 
     return _sitk_np[sitkImage.GetPixelIDValue()]
 
 
-def _get_sitk_pixelid(numpy_array_type):
+def _get_sitk_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
     """Returns a SimpleITK PixelID given a numpy array."""
 
     if not HAVE_NUMPY:
@@ -189,7 +189,7 @@ def _get_sitk_pixelid(numpy_array_type):
         raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
 
 
-def _get_sitk_vector_pixelid(numpy_array_type):
+def _get_sitk_vector_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
     """Returns a SimpleITK vector PixelID given a numpy array."""
 
     if not HAVE_NUMPY:
@@ -221,7 +221,7 @@ def _get_sitk_vector_pixelid(numpy_array_type):
 
 # SimplyITK <-> Numpy Array conversion support.
 
-def GetArrayViewFromImage(image):
+def GetArrayViewFromImage(image: Image) -> "numpy.ndarray":
     """Get a NumPy ndarray view of a SimpleITK Image.
 
     Returns a Numpy ndarray object as a "view" of the SimpleITK's Image buffer. This reduces pixel buffer copies, but
@@ -243,13 +243,13 @@ def GetArrayViewFromImage(image):
     image.MakeUnique()
 
     image_memory_view = _GetMemoryViewFromImage(image)
-    array_view = numpy.asarray(image_memory_view).view(dtype = dtype)
+    array_view = numpy.asarray(image_memory_view).view(dtype=dtype)
     array_view.shape = shape[::-1]
 
     return array_view
 
 
-def GetArrayFromImage(image):
+def GetArrayFromImage(image: Image) -> "numpy.ndarray":
     """Get a NumPy ndarray from a SimpleITK Image.
 
     This is a deep copy of the image buffer and is completely safe and without potential side effects.
@@ -262,7 +262,7 @@ def GetArrayFromImage(image):
     return numpy.array(array_view, copy=True)
 
 
-def GetImageFromArray(arr, isVector=None):
+def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> Image:
     """ Get a SimpleITK Image from a numpy array.
 
      If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be
@@ -276,8 +276,8 @@ def GetImageFromArray(arr, isVector=None):
     z = numpy.asarray(arr)
 
     if isVector is None:
-      if z.ndim == 4 and z.dtype != numpy.complex64 and z.dtype != numpy.complex128:
-          isVector = True
+        if z.ndim == 4 and z.dtype != numpy.complex64 and z.dtype != numpy.complex128:
+            isVector = True
 
     if isVector:
         id = _get_sitk_vector_pixelid(z)
@@ -300,10 +300,11 @@ def GetImageFromArray(arr, isVector=None):
     return img
 
 
-def ReadImage(fileName: Union[str, List[str]],
-              outputPixelType: "PixelIDValueEnum" = sitkUnknown,
-              imageIO: str = "") \
-        -> Image:
+def ReadImage(
+    fileName: Union[str, List[str]],
+    outputPixelType: int = sitkUnknown,
+    imageIO: str = "",
+) -> Image:
     r"""ReadImage is a procedural interface to the ImageFileReader class which is convenient for most image reading
      tasks.
 
@@ -346,13 +347,15 @@ def ReadImage(fileName: Union[str, List[str]],
     return reader.Execute()
 
 
-def WriteImage(image: "Image",
-               fileName: Union[str, List[str]],
-               useCompression: bool = False,
-               compressionLevel=-1,
-               *,
-               imageIO: str = "",
-               compressor: str = "") -> "None":
+def WriteImage(
+        image: Image,
+        fileName: Union[str, List[str]],
+        useCompression: bool = False,
+        compressionLevel: int = -1,
+        *,
+        imageIO: str = "",
+        compressor: str = "",
+) -> None:
     r"""
     WriteImage is a procedural interface to the ImageFileWriter and ImageSeriesWriter classes which is convenient for
     many image writing tasks.
@@ -394,7 +397,11 @@ def WriteImage(image: "Image",
     return writer.Execute(image)
 
 
-def SmoothingRecursiveGaussian(image1, sigma=[1]*3, normalizeAcrossScale=False):
+def SmoothingRecursiveGaussian(
+    image1: Image,
+    sigma: List[float] = [1]*3,
+    normalizeAcrossScale: bool = False,
+) -> Image:
     """Computes the smoothing of an image by convolution with
     the Gaussian kernels implemented as IIR filters.
 
@@ -412,7 +419,13 @@ def SmoothingRecursiveGaussian(image1, sigma=[1]*3, normalizeAcrossScale=False):
     return f.Execute(image1)
 
 
-def DiscreteGaussian(image1, variance=[1] * 3, maximumKernelWidth=32, maximumError=0.01, useImageSpacing=True):
+def DiscreteGaussian(
+    image1: Image,
+    variance: List[float] = [1] * 3,
+    maximumKernelWidth: int = 32,
+    maximumError: float = 0.01,
+    useImageSpacing: bool = True,
+) -> Image:
     """Blurs an image by separable convolution with discrete
      gaussian kernels. This filter performs Gaussian blurring by
      separable convolution of an image and a discrete Gaussian
@@ -431,7 +444,6 @@ def DiscreteGaussian(image1, variance=[1] * 3, maximumKernelWidth=32, maximumErr
     f.SetMaximumError(maximumError)
     f.SetUseImageSpacing(useImageSpacing)
     return f.Execute(image1)
-
 
 
 __all__ = ["Resample",
