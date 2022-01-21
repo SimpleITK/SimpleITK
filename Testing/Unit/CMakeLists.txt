@@ -2,8 +2,12 @@
 # libraries. So they are not needed again, additionally using ITK this
 # way will not cause the headers to be generated, so the managers
 # should not be used.
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-set ( ITK_NO_FFT_FACTORY_REGISTER_MANAGER 1 )
+
+# set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
+foreach(_f ${ITK_FACTORY_LIST})
+  string(TOUPPER ${_f} _f)
+  set ( ITK_NO_${_f}_FACTORY_REGISTER_MANAGER 1 )
+endforeach()
 include(${ITK_USE_FILE})
 
 

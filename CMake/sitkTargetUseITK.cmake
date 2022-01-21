@@ -32,3 +32,17 @@ function(sitk_target_use_itk target_name interface_keyword)
   endif()
 
 endfunction()
+
+function(sitk_target_use_itk_factory target_name factory_name)
+  itk_generate_factory_registration(${factory_name} )
+
+  string(TOUPPER ${factory_name} factory_uc)
+
+  target_compile_definitions( ${target_name}
+    PRIVATE
+    ITK_${factory_uc}_FACTORY_REGISTER_MANAGER)
+
+  target_include_directories( ${target_name}
+    PRIVATE
+    "${CMAKE_CURRENT_BINARY_DIR}/ITKFactoryRegistration" )
+endfunction()
