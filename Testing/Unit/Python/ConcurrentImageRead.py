@@ -79,7 +79,7 @@ class ConcurrentImageRead(unittest.TestCase):
 
 
 # Programmatically generate tests for different file formats
-for p_ext_hash in [("jpg", "44fac4bedde4df04b9572ac665d3ac2c5cd00c7d"),
+for p_ext_hash in [("jpg", "44fac4bedde4df04b9572ac665d3ac2c5cd00c7d", sitk.sitkUInt8),
                    ("tiff", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
                    ("png", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
                    ("nii", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75"),
