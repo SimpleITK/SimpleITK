@@ -5,7 +5,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "typelist::Append< SignedPixelIDTypeList, ComplexPixelIDTypeList >::Type",
+  "pixel_types" : "typelist2::append< SignedPixelIDTypeList, ComplexPixelIDTypeList >::type",
   "filter_type" : "itk::UnaryFunctorImageFilter< InputImageType, OutputImageType, itk::Functor::UnaryMinus<typename InputImageType::PixelType, typename OutputImageType::PixelType> >",
   "vector_pixel_types_by_component" : "SignedVectorPixelIDTypeList",
   "include_files" : [

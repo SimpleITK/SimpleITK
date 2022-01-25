@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "\\todo this filter may not work in 3D\n \\note the output of this filter is still the same as the input type eventhough the output is 0 or 1.",
-  "pixel_types" : "typelist::MakeTypeList<BasicPixelID<uint8_t> >::Type",
+  "pixel_types" : "typelist2::typelist<BasicPixelID<uint8_t> >",
   "members" : [
     {
       "name" : "Iteration",

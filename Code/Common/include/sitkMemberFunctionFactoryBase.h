@@ -24,7 +24,7 @@
 #include "sitkMacro.h"
 #include "sitkNonCopyable.h"
 
-#include "Ancillary/TypeList.h"
+#include "Ancillary/type_list2.h"
 #include "Ancillary/FunctionTraits.h"
 
 #include <unordered_map>
@@ -120,7 +120,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction( 3*typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3*typelist2::length<InstantiatedPixelIDTypeList>::value )
     { }
 
 public:
@@ -175,7 +175,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist2::length<InstantiatedPixelIDTypeList>::value )
     { }
 
 public:
@@ -227,7 +227,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist2::length<InstantiatedPixelIDTypeList>::value )
     { }
 
 public:
@@ -280,7 +280,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist2::length<InstantiatedPixelIDTypeList>::value )
     { }
 
 public:
@@ -333,7 +333,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist2::length<InstantiatedPixelIDTypeList>::value )
     { }
 
 public:
@@ -386,7 +386,7 @@ protected:
 
 
   MemberFunctionFactoryBase( )
-    :  m_PFunction( 3 * typelist::Length<InstantiatedPixelIDTypeList>::Result )
+    :  m_PFunction( 3 * typelist2::length<InstantiatedPixelIDTypeList>::value )
     { }
 
 public:

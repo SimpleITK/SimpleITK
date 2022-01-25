@@ -85,10 +85,10 @@ template<typename TImageType >
 void MemberFunctionFactory<TMemberFunctionPointer>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
-  PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::Result;
+  PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::value;
 
   // this shouldn't occur, just may be useful for debugging
-  assert( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
+  assert( pixelID >= 0 && pixelID < typelist2::length< InstantiatedPixelIDTypeList >::value );
 
   static_assert( IsInstantiated<TImageType>::Value,
                     "UnInstantiated ImageType or dimension");
@@ -109,7 +109,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
   using InstantiaterType = MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension,TAddressor >;
 
   // visit each type in the list, and register if instantiated
-  typelist::Visit<TPixelIDTypeList> visitEachType;
+  typelist2::visit<TPixelIDTypeList> visitEachType;
   visitEachType( InstantiaterType( *this ) );
 }
 
@@ -138,7 +138,7 @@ typename MemberFunctionFactory<TMemberFunctionPointer>::FunctionObjectType
 MemberFunctionFactory<TMemberFunctionPointer>
 ::GetMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  )
 {
-  if ( pixelID >= typelist::Length< InstantiatedPixelIDTypeList >::Result || pixelID < 0 )
+  if ( pixelID >= typelist2::length< InstantiatedPixelIDTypeList >::value || pixelID < 0 )
     {
     sitkExceptionMacro ( << "unexpected error pixelID is out of range " << pixelID << " "  << typeid(ObjectType).name() );
     }

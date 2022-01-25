@@ -536,25 +536,9 @@ namespace simple
      * chosen carefully to flexibly enable this.
      */
     template <int VPixelIDValue, unsigned int VImageDimension>
-    void InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
-                                                                                       VPixelIDValue>::Result,
+    void InternalInitialization( typename PixelIDToImageType<typename typelist2::type_at<InstantiatedPixelIDTypeList,
+                                                                                       VPixelIDValue>::type,
                                                              VImageDimension>::ImageType *i );
-
-    /** Dispatched from the InternalInitialization method. The
-     * "enable-if" idiom is used here for method overloading. The
-     * second method is for non-instantiated image, which turn into a
-     * void pointer for the parameter. However, this second method
-     * should never be executed.
-     * @{
-     */
-    template<int VPixelIDValue, typename TImageType>
-      typename std::enable_if<!std::is_same<TImageType, void>::value>::type
-    ConditionalInternalInitialization( TImageType *i);
-
-    template<int VPixelIDValue, typename TImageType>
-    typename std::enable_if<std::is_same<TImageType, void>::value>::type
-    ConditionalInternalInitialization( TImageType *) { assert( false ); }
-     /**@}*/
 
     /** An addressor of AllocateInternal to be utilized with
      * registering member functions with the factory.

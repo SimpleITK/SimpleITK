@@ -37,7 +37,59 @@ namespace itk
 {
   namespace simple
   {
-    void Image::Allocate ( const std::vector<unsigned int> &_size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
+
+
+  /** A class to explicitly instantiate the Image::InternalInitialization method over the compiled pixel types and the
+   * image dimensions.
+  **/
+  template <typename... Ts>
+  struct InternalInitializationInstantiator;
+  template <typename... Ts>
+  struct InternalInitializationInstantiator<typelist2::typelist<Ts...>>
+  {
+    InternalInitializationInstantiator(void)
+    {
+      (void)instantiate_function();
+    }
+  private:
+
+    static void
+    instantiate_function(void)
+    {
+      instantiate_with_sequence(std::make_integer_sequence<unsigned int, SITK_MAX_DIMENSION + 1 - min_dimension>{});
+    }
+
+  private:
+
+    static const unsigned int min_dimension = 2;
+
+    template <typename TImageType>
+    static int
+    f()
+    {
+      (void)&Image::InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>;
+      return 0;
+    }
+
+    template <unsigned int D>
+    static int
+    instantiate_fs(void)
+    {
+      (void)std::initializer_list<int>{ f<typename PixelIDToImageType<Ts, min_dimension + D>::ImageType>()... };
+      return 0;
+    }
+
+    template <unsigned int... Ds>
+    static void
+    instantiate_with_sequence(const std::integer_sequence<unsigned int, Ds...> &)
+    {
+      (void)std::initializer_list<int>{ instantiate_fs<Ds>()... };
+    }
+  };
+
+  static const InternalInitializationInstantiator<InstantiatedPixelIDTypeList> instantiator;
+
+  void Image::Allocate ( const std::vector<unsigned int> &_size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
     {
       // initialize member function factory for allocating images
 
@@ -66,74 +118,3 @@ namespace itk
     }
   }
 }
-
-
-//
-// There is only one templated function in the external interface
-// which need to be instantiated, so that the itk::Image and the
-// sitk::PimpleImage are completely encapsulated. That is the
-// InternalInitialization method. The following uses a macro to
-// explicitly instantiate for the expected image types.
-//
-
-#define SITK_TEMPLATE_InternalInitialization_D( I, D )                \
-  namespace itk { namespace simple {                                    \
-  template SITKCommon_EXPORT void \
-  Image::InternalInitialization<I,D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
-                                       I>::Result,                      \
-                                       D>::ImageType *i );              \
-  } }
-
-#if SITK_MAX_DIMENSION < 2 || SITK_MAX_DIMENSION > 9
-#error "Unsupported SITK_MAX_DIMENSION value".
-#endif
-
-#define SITK_TEMPLATE_InternalInitialization_2( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 )
-#define SITK_TEMPLATE_InternalInitialization_3( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 ) SITK_TEMPLATE_InternalInitialization_2( _I )
-#define SITK_TEMPLATE_InternalInitialization_4( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 4 ) SITK_TEMPLATE_InternalInitialization_3( _I )
-#define SITK_TEMPLATE_InternalInitialization_5( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 5 ) SITK_TEMPLATE_InternalInitialization_4( _I )
-#define SITK_TEMPLATE_InternalInitialization_6( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 6 ) SITK_TEMPLATE_InternalInitialization_5( _I )
-#define SITK_TEMPLATE_InternalInitialization_7( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 7 ) SITK_TEMPLATE_InternalInitialization_6( _I )
-#define SITK_TEMPLATE_InternalInitialization_8( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 8 ) SITK_TEMPLATE_InternalInitialization_7( _I )
-#define SITK_TEMPLATE_InternalInitialization_9( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 9 ) SITK_TEMPLATE_InternalInitialization_8( _I )
-
-
-#define SITK_TEMPLATE_InternalInitialization_CONCAT( I ) sitkMacroJoin( SITK_TEMPLATE_InternalInitialization_, SITK_MAX_DIMENSION ) ( I )
-
-#define SITK_TEMPLATE_InternalInitialization( I ) SITK_TEMPLATE_InternalInitialization_CONCAT ( I )
-
-
-// Instantiate for all types in the lists
-SITK_TEMPLATE_InternalInitialization( 0 );
-SITK_TEMPLATE_InternalInitialization( 1 );
-SITK_TEMPLATE_InternalInitialization( 2 );
-SITK_TEMPLATE_InternalInitialization( 3 );
-SITK_TEMPLATE_InternalInitialization( 4 );
-SITK_TEMPLATE_InternalInitialization( 5 );
-SITK_TEMPLATE_InternalInitialization( 6 );
-SITK_TEMPLATE_InternalInitialization( 7 );
-SITK_TEMPLATE_InternalInitialization( 8 );
-SITK_TEMPLATE_InternalInitialization( 9 );
-SITK_TEMPLATE_InternalInitialization( 10 );
-SITK_TEMPLATE_InternalInitialization( 11 );
-SITK_TEMPLATE_InternalInitialization( 12 );
-SITK_TEMPLATE_InternalInitialization( 13 );
-SITK_TEMPLATE_InternalInitialization( 14 );
-SITK_TEMPLATE_InternalInitialization( 15 );
-SITK_TEMPLATE_InternalInitialization( 16 );
-SITK_TEMPLATE_InternalInitialization( 17 );
-SITK_TEMPLATE_InternalInitialization( 18 );
-SITK_TEMPLATE_InternalInitialization( 19 );
-SITK_TEMPLATE_InternalInitialization( 20 );
-SITK_TEMPLATE_InternalInitialization( 21 );
-SITK_TEMPLATE_InternalInitialization( 22 );
-SITK_TEMPLATE_InternalInitialization( 23 );
-SITK_TEMPLATE_InternalInitialization( 24 );
-SITK_TEMPLATE_InternalInitialization( 25 );
-SITK_TEMPLATE_InternalInitialization( 26 );
-SITK_TEMPLATE_InternalInitialization( 27 );
-SITK_TEMPLATE_InternalInitialization( 28 );
-SITK_TEMPLATE_InternalInitialization( 29 );
-
-
-static_assert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result < 30, "Number of explicitly instantiated pixel types is more then expected!" );

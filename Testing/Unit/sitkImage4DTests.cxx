@@ -138,15 +138,15 @@ TEST_F(Image4D,ImageDataType) {
   // this test checks that the DataType of the images are correct
   int result;
 
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::value;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result);
   EXPECT_EQ( shortImage->GetPixelID(), result);
 
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<float> >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<float> >::value;
   EXPECT_EQ( floatImage->GetPixelIDValue(), result );
   EXPECT_EQ( floatImage->GetPixelID(), result );
 
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::VectorPixelID<float> >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList, itk::simple::VectorPixelID<float> >::value;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
   EXPECT_EQ( floatVectorImage->GetPixelID(), result );
 
@@ -166,11 +166,11 @@ TEST_F(Image4D,ImageDataType) {
 
 
 
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<ShortImageType>::PixelIDType >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<ShortImageType>::PixelIDType >::value;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result );
   EXPECT_EQ( shortImage->GetPixelID(), result );
 
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<FloatVectorImageType>::PixelIDType >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<FloatVectorImageType>::PixelIDType >::value;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
   EXPECT_EQ( floatVectorImage->GetPixelID(), result );
 
@@ -205,7 +205,7 @@ TEST_F(Image4D,Constructors) {
   s4d6[3] = 67;
   itk::simple::Image image ( s4d6, itk::simple::sitkUInt8 );
   EXPECT_EQ ( "d2ed3a9bceae811402dcb5223fb16990cd89537d", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::value;
   EXPECT_EQ ( image.GetPixelIDValue(), result );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "8-bit unsigned integer" );
   EXPECT_EQ ( image.GetDimension(), 4u );
@@ -217,7 +217,7 @@ TEST_F(Image4D,Constructors) {
 
   image = itk::simple::Image ( s4d6, itk::simple::sitkInt16 );
   EXPECT_EQ ( "0e444ec26123b59643b58f84dd8f685a991dfb4b", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
+  result = typelist2::index_of< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::value;
   EXPECT_EQ ( image.GetPixelIDValue(), result );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "16-bit signed integer" );
   EXPECT_EQ ( image.GetDimension(), 4u );

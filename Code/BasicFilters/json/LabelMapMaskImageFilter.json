@@ -5,7 +5,7 @@
   "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "LabelPixelIDTypeList",
-  "pixel_types2" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "pixel_types2" : "typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type",
   "filter_type" : "itk::LabelMapMaskImageFilter<InputImageType, InputImageType2>",
   "inputs" : [
     {

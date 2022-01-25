@@ -311,7 +311,7 @@ struct SITK_ABI_HIDDEN HasType<TypeList<Head, TTail>, TType> {
  * }
  *
  * using MyTypeList = typelist::MakeTypeList<int, char>::Type;
- * typelist::Visit<MyTypeList>( Predicate() );
+ * typelist2::visit<MyTypeList>( Predicate() );
  *
  * \endcode
  *

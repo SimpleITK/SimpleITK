@@ -35,40 +35,25 @@ namespace itk
   namespace simple
   {
 
-  // this is a little specialization just to get the
-  // InternalInitialization method's PixelIDTpImageType lookup to get
-  // a valid void type, so it'll dispatch to the a specialized
-  // method. All this is just to instantiate something that will never
-  // be actually used.
-  template <unsigned int VImageDimension>
-  struct PixelIDToImageType< typelist::NullType , VImageDimension >
-  {
-    using ImageType = void;
-  };
-
   // This method is explicitly instantiated, and in-turn implicitly
-  // instantates the PipleImage for all used image types. This method
-  // just dispatces to nother method, to aid in instantiating only the
+  // instantiates the PimpleImage for all used image types. This method
+  // just dispatches to another method, to aid in instantiating only the
   // images requested.
   template <int VPixelIDValue, unsigned int VImageDimension>
-  void Image::InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
-                                                                                            VPixelIDValue>::Result,
-                                                                  VImageDimension>::ImageType *i )
+  void Image::InternalInitialization( typename PixelIDToImageType<typename typelist2::type_at<InstantiatedPixelIDTypeList,
+                                                                                            VPixelIDValue>::type,
+                                                                  VImageDimension>::ImageType *image )
   {
-    this->ConditionalInternalInitialization<VPixelIDValue>( i );
-  }
+    using ImageType =
+      typename PixelIDToImageType<typename typelist2::type_at<InstantiatedPixelIDTypeList, VPixelIDValue>::type,
+                                  VImageDimension>::ImageType;
 
-  template<int VPixelIDValue, typename TImageType>
-  typename std::enable_if<!std::is_same<TImageType, void>::value>::type
-  Image::ConditionalInternalInitialization( TImageType *image )
-  {
     // no need to check if null
     delete this->m_PimpleImage;
     this->m_PimpleImage = nullptr;
 
-    this->m_PimpleImage = new PimpleImage<TImageType>( image );
+    this->m_PimpleImage = new PimpleImage<ImageType>(image);
   }
-
 
   template<class TImageType>
   typename std::enable_if<IsBasic<TImageType>::Value>::type

@@ -219,17 +219,16 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
-  typedef typelist::MakeTypeList<
-  itk::BSplineTransform<double, 3, 0>,
-    itk::BSplineTransform<double, 2, 0>,
-  itk::BSplineTransform<double, 3, 1>,
-    itk::BSplineTransform<double, 2, 1>,
-  itk::BSplineTransform<double, 3, 2>,
-    itk::BSplineTransform<double, 2, 2>,
-  itk::BSplineTransform<double, 3, 3>,
-    itk::BSplineTransform<double, 2, 3> >::Type TransformTypeList;
+  using TransformTypeList = typelist2::typelist<itk::BSplineTransform<double, 3, 0>,
+                                                itk::BSplineTransform<double, 2, 0>,
+                                                itk::BSplineTransform<double, 3, 1>,
+                                                itk::BSplineTransform<double, 2, 1>,
+                                                itk::BSplineTransform<double, 3, 2>,
+                                                itk::BSplineTransform<double, 2, 2>,
+                                                itk::BSplineTransform<double, 3, 3>,
+                                                itk::BSplineTransform<double, 2, 3>>;
 
-  typelist::Visit<TransformTypeList> callInternalInitialization;
+  typelist2::visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
   this->m_pfGetTransformDomainDirection = nullptr;

@@ -672,7 +672,7 @@ namespace itk
 
     template <typename TPixelIDType>
     typename std::enable_if<!IsLabel<TPixelIDType>::Value
-                                && !typelist::HasType<ComplexPixelIDTypeList, TPixelIDType>::Result
+                                && !typelist2::has_type<ComplexPixelIDTypeList, TPixelIDType>::value
                             && !IsVector<TPixelIDType>::Value,
                             std::vector<double> >::type
         InternalEvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp ) const
@@ -693,7 +693,7 @@ namespace itk
     }
 
     template <typename TPixelIDType>
-    typename std::enable_if<typelist::HasType<ComplexPixelIDTypeList, TPixelIDType>::Result,
+    typename std::enable_if<typelist2::has_type<ComplexPixelIDTypeList, TPixelIDType>::value,
                             std::vector<double> >::type
     InternalEvaluateAtContinuousIndex( const std::vector<double> &index, InterpolatorEnum interp ) const
     {
