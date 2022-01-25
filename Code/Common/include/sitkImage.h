@@ -571,7 +571,10 @@ namespace simple
       }
     };
 
-    PimpleImageBase *m_PimpleImage;
+    template <typename... Ts>
+    friend struct InternalInitializationInstantiator;
+
+    PimpleImageBase * m_PimpleImage;
   };
 
 }
