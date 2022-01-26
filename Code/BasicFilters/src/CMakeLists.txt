@@ -171,5 +171,3 @@ target_link_libraries ( SimpleITKBasicFilters1
   PRIVATE ${PREV_SimpleITK_LIBRARIES} )
 
 sitk_target_use_itk_factory( SimpleITK_ITKFFT FFT )
-sitk_target_use_itk_factory( SimpleITK_ITKConvolution FFT )
-sitk_target_use_itk_factory( SimpleITK_ITKDeconvolution FFT )
