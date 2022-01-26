@@ -38,56 +38,46 @@ namespace itk
   namespace simple
   {
 
-
-  /** A class to explicitly instantiate the Image::InternalInitialization method over the compiled pixel types and the
-   * image dimensions.
-  **/
-  template <typename... Ts>
-  struct InternalInitializationInstantiator;
-  template <typename... Ts>
-  struct InternalInitializationInstantiator<typelist2::typelist<Ts...>>
+  /** An addressor of AllocateInternal to be utilized with
+   * registering member functions with the factory.
+   */
+  struct AllocateMemberFunctionAddressor
   {
-    InternalInitializationInstantiator(void)
-    {
-      (void)instantiate_function();
-    }
-  private:
-
-    static void
-    instantiate_function(void)
-    {
-      instantiate_with_sequence(std::make_integer_sequence<unsigned int, SITK_MAX_DIMENSION + 1 - min_dimension>{});
-    }
-
-  private:
-
-    static const unsigned int min_dimension = 2;
-
     template <typename TImageType>
-    static int
-    f()
+    auto
+    operator()() const
     {
-      (void)&Image::InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>;
-      return 0;
-    }
-
-    template <unsigned int D>
-    static int
-    instantiate_fs(void)
-    {
-      (void)std::initializer_list<int>{ f<typename PixelIDToImageType<Ts, min_dimension + D>::ImageType>()... };
-      return 0;
-    }
-
-    template <unsigned int... Ds>
-    static void
-    instantiate_with_sequence(const std::integer_sequence<unsigned int, Ds...> &)
-    {
-      (void)std::initializer_list<int>{ instantiate_fs<Ds>()... };
+      return &Image::template AllocateInternal<TImageType>;
     }
   };
 
-  static const InternalInitializationInstantiator<InstantiatedPixelIDTypeList> instantiator;
+  struct DispatchedInternalInitialiationAddressor
+  {
+    template <typename TImageType>
+    auto
+    operator()() const
+    {
+      return &Image::template DispatchedInternalInitialization<TImageType>;
+    }
+  };
+
+  void
+  Image::InternalInitialization(PixelIDValueType type, unsigned int dimension, itk::DataObject * image)
+  {
+    using PixelIDTypeList = AllPixelIDTypeList;
+    using Addressor = DispatchedInternalInitialiationAddressor;
+
+
+    typedef PimpleImageBase * ( Self::*MemberFunctionType )( itk::DataObject * );
+
+    detail::MemberFunctionFactory<MemberFunctionType> memberFactory(this);
+
+    memberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, Addressor>();
+
+    std::unique_ptr<PimpleImageBase> temp(memberFactory.GetMemberFunction(type, dimension)(image));
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = temp.release();
+  }
 
   void Image::Allocate ( const std::vector<unsigned int> &_size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
     {
@@ -98,7 +88,7 @@ namespace itk
 
       typedef void ( Self::*MemberFunctionType )( const std::vector<unsigned int> &, unsigned int );
 
-      using AllocateAddressor = AllocateMemberFunctionAddressor< MemberFunctionType >;
+      using AllocateAddressor = AllocateMemberFunctionAddressor;
 
       detail::MemberFunctionFactory< MemberFunctionType > allocateMemberFactory( this );
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION, AllocateAddressor > ();
@@ -110,7 +100,7 @@ namespace itk
 
       if (_size.size() < 2 || _size.size() > SITK_MAX_DIMENSION)
         {
-        sitkExceptionMacro("Unsupported number of dimesions specified by size: " << _size << "!\n"
+        sitkExceptionMacro("Unsupported number of dimensions specified by size: " << _size << "!\n"
                            << "The maximum supported Image dimension is " << SITK_MAX_DIMENSION << "." );
         }
 

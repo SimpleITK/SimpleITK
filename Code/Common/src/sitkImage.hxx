@@ -35,27 +35,16 @@ namespace itk
   namespace simple
   {
 
-  // This method is explicitly instantiated, and in-turn implicitly
-  // instantiates the PimpleImage for all used image types. This method
-  // just dispatches to another method, to aid in instantiating only the
-  // images requested.
-  template <int VPixelIDValue, unsigned int VImageDimension>
-  void Image::InternalInitialization( typename PixelIDToImageType<typename typelist2::type_at<InstantiatedPixelIDTypeList,
-                                                                                            VPixelIDValue>::type,
-                                                                  VImageDimension>::ImageType *image )
+
+  template <typename TImageType>
+  PimpleImageBase *
+  Image::DispatchedInternalInitialization(itk::DataObject * image)
   {
-    using ImageType =
-      typename PixelIDToImageType<typename typelist2::type_at<InstantiatedPixelIDTypeList, VPixelIDValue>::type,
-                                  VImageDimension>::ImageType;
-
-    // no need to check if null
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = nullptr;
-
-    this->m_PimpleImage = new PimpleImage<ImageType>(image);
+    return new PimpleImage<TImageType>(dynamic_cast<TImageType *>(image));
   }
 
-  template<class TImageType>
+
+  template <class TImageType>
   typename std::enable_if<IsBasic<TImageType>::Value>::type
   Image::AllocateInternal ( const std::vector<unsigned int > &_size, unsigned int numberOfComponents )
   {
