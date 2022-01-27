@@ -390,6 +390,12 @@ class TransformTests(unittest.TestCase):
                 sitk.WriteTransform(tx, fname)
                 read_tx = sitk.ReadTransform(fname)
                 self.assertEqual(tx, read_tx.Downcast(), msg=f"Testing I/O {k} with {ext}")
+                self.assertEqual(read_tx, read_tx.Downcast(), msg=f"Testing ReadTransform downcast")
+
+                sitk.WriteTransform(sitk.Transform(tx), fname)
+                read_tx = sitk.ReadTransform(fname)
+                self.assertEqual(tx, read_tx.Downcast(), msg=f"Testing I/O Transform {k} with {ext}")
+                self.assertEqual(read_tx, read_tx.Downcast(), msg=f"Testing ReadTransform downcast")
 
     def test_downcast_returned(self):
         """
