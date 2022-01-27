@@ -32,6 +32,11 @@
  val = val.Downcast()
 };
 
+%pythonappend itk::simple::ReadTransform( const std::string &filename )
+{
+ val = val.Downcast()
+};
+
 %extend itk::simple::Transform {
    %pythoncode
 %{
