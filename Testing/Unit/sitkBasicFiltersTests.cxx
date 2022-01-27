@@ -346,7 +346,9 @@ TEST(BasicFilters,ProcessObject_NumberOfThreads) {
   sitk::CastImageFilter caster;
   sitk::ProcessObject &filter = caster;
 
-  unsigned int gNum = filter.GetGlobalDefaultNumberOfThreads();
+  const unsigned int gNum = filter.GetGlobalDefaultNumberOfThreads();
+  const unsigned int targetNum = gNum == 13 ? 11 : 13;
+
   EXPECT_NE(filter.GetGlobalDefaultNumberOfThreads(), 0u);
   EXPECT_NE(filter.GetNumberOfThreads(), 0u);
   EXPECT_EQ(filter.GetNumberOfThreads(), filter.GetGlobalDefaultNumberOfThreads());
@@ -355,13 +357,13 @@ TEST(BasicFilters,ProcessObject_NumberOfThreads) {
   EXPECT_EQ(3u, filter.GetNumberOfThreads());
   EXPECT_EQ(gNum, filter.GetGlobalDefaultNumberOfThreads());
 
-  filter.SetGlobalDefaultNumberOfThreads(gNum+1);
-  EXPECT_EQ(gNum+1, filter.GetGlobalDefaultNumberOfThreads());
+  filter.SetGlobalDefaultNumberOfThreads(targetNum);
+  EXPECT_EQ(targetNum, filter.GetGlobalDefaultNumberOfThreads());
   EXPECT_EQ(3u, filter.GetNumberOfThreads());
 
   sitk::CastImageFilter caster2;
-  EXPECT_EQ(gNum+1, caster2.GetNumberOfThreads());
-  EXPECT_EQ(gNum+1, caster2.GetGlobalDefaultNumberOfThreads());
+  EXPECT_EQ(targetNum, caster2.GetNumberOfThreads());
+  EXPECT_EQ(targetNum, caster2.GetGlobalDefaultNumberOfThreads());
 }
 
 TEST(BasicFilters,Cast) {
