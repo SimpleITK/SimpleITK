@@ -169,7 +169,7 @@ SITKCommon_HIDDEN
 typename itk::VectorImage<
   typename std::conditional<sizeof(typename itk::Offset< NLength >::OffsetValueType) == sizeof(int64_t),
     int64_t,
-    FalseType>::type, NImageDimension >::Pointer
+    int32_t>::type, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::Offset< NLength >, NImageDimension> *img, bool transferOwnership )
 {
 
