@@ -94,7 +94,7 @@ configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
   "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py" )
 
-set(SimpleITK_Py_Files "__init__.py" "extra.py" )
+set(SimpleITK_Py_Files "__init__.py" "extra.py" "py.typed" )
 
 if(DEFINED SKBUILD)
   # Currently this installation
