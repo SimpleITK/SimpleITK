@@ -1,0 +1,8 @@
+# This Valgrind suppression file is for the Ubuntu 20.04 LTS system compiler and valgrind.
+{
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:_Znwm
+   fun:_ZN4Json5Value13nullSingletonEv
+   obj:/usr/lib/x86_64-linux-gnu/libjsoncpp.so.1.7.*
+}
