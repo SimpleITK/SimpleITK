@@ -104,21 +104,15 @@ if ( MSVC AND SITK_BUILD_SHARED_LIBS )
   set( SITK_SimpleITKExplit_STATIC 1 )
 endif()
 
-set( SimpleITK_INT64_PIXELIDS_DEFAULT ON )
-if( MSVC )
-  # See http://www.cmake.org/cmake/help/v2.8.10/cmake.html#variable:MSVC_VERSION
-  # and https://en.wikipedia.org/wiki/Microsoft_Visual_Studio#Version_history
-  #   1500 = VS  9.0 (Visual Studio 2008)
-  #   1600 = VS 10.0 (Visual Studio 2010)
-  #   1700 = VS 11.0 (Visual Studio 2012)
-  if(MSVC_VERSION VERSION_LESS 1600)
-    # with this option on the linker runs out of memory
-    set( SimpleITK_INT64_PIXELIDS_DEFAULT OFF )
-  endif()
-endif()
-option( SimpleITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including unsigned, vector and label maps."
-  ${SimpleITK_INT64_PIXELIDS_DEFAULT} )
+
+option( SimpleITK_INT64_PIXELIDS
+  "Instantiate 64-bit integer pixels, including unsigned, vector and label maps (required for 64-bit compilation and deprecated)."
+  ON )
 sitk_legacy_naming(SimpleITK_INT64_PIXELIDS)
+message("CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
+if (NOT SimpleITK_INT64_PIXELIDS AND CMAKE_SIZEOF_VOID_P GREATER_EQUAL 8)
+  message(FATAL_ERROR "SimpleITK_INT64_PIXELIDS is required to be enabled for 64-bit compilation.")
+endif()
 
 include(sitkMaxDimensionOption)
 
