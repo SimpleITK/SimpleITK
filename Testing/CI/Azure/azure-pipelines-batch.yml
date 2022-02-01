@@ -33,6 +33,12 @@ jobs:
           CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           imageName: 'windows-2019'
+        v143-64:
+          CTEST_CMAKE_GENERATOR_TOOLSET: v143,host=x64
+          CTEST_CMAKE_GENERATOR_PLATFORM: x64
+          CTEST_CONFIGURATION_TYPE: Release
+          CTEST_CMAKE_GENERATOR: "Visual Studio 17 2022"
+          imageName: 'windows-2022'
         v141-32:
           CTEST_CMAKE_GENERATOR_TOOLSET: v141
           CTEST_CMAKE_GENERATOR_PLATFORM: Win32
