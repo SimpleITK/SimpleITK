@@ -8,7 +8,7 @@ jobs:
   - job: VisualStudio
     timeoutInMinutes: 0
     strategy:
-      maxParallel: 1
+      maxParallel: 2
       matrix:
         v142-64-shared:
           CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
