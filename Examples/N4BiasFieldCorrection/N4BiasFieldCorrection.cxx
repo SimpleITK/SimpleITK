@@ -68,7 +68,7 @@ int main ( int argc, char* argv[] ) {
 
   sitk::Image log_bias_field = corrector->GetLogBiasFieldAsImage( inputImage );
 
-  sitk::Image bias_field = sitk::Divide( inputImage, sitk::Exp( log_bias_field ) );
+  sitk::Image corrected_image_full_resolution = sitk::Divide( inputImage, sitk::Exp( log_bias_field ) );
 
   sitk::WriteImage( corrected_image, argv[2] );
 

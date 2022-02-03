@@ -59,7 +59,7 @@ corrected_image = corrector.Execute(image, maskImage)
 
 log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage)
 
-bias_field = inputImage / sitk.Exp( log_bias_field )
+corrected_image_full_resolution = inputImage / sitk.Exp( log_bias_field )
 
 sitk.WriteImage(corrected_image, sys.argv[2])
 
