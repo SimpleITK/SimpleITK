@@ -61,7 +61,7 @@ correctedImage <- corrector$Execute( image, maskImage )
 
 logBiasField <- corrector$GetLogBiasFieldAsImage(inputImage)
 
-biasField <- inputImage / Exp( logBiasField )
+correctedImageFullResolution <- inputImage / Exp( logBiasField )
 
 WriteImage(correctedImage, args[[2]])
 

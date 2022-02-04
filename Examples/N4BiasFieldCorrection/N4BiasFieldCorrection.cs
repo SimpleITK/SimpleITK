@@ -76,7 +76,7 @@ namespace itk.simple.examples {
 
         Image log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage);
 
-        Image bias_field = sitk.Divide(inputImage, sitk.Exp(log_bias_field));
+        Image corrected_image_full_resolution = sitk.Divide(inputImage, sitk.Exp(log_bias_field));
 
         sitk.WriteImage(corrected_image, args[1]);
 
