@@ -59,7 +59,7 @@ def example3():
   sitk.WriteTransform(basic_transform, 'euler2D.tfm')
   read_result = sitk.ReadTransform('euler2D.tfm')
 
-  assert(str(type(read_result) != type(basic_transform)))
+  assert(type(read_result) == type(basic_transform))
 
 
 import sys

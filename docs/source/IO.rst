@@ -215,8 +215,9 @@ reading it back, and then comparing the results.
        :language: tcl
        :lines: 47-59
 
-``read_result`` returns an object of the generic ``sitk.Transform()`` class and
-``basic_transform`` creates a ``sitk.Euler2DTransform()`` object, but both
+In all languages, except Python, ``read_result`` returns an object of the
+generic ``sitk.Transform()`` class and ``basic_transform`` creates a
+``sitk.Euler2DTransform()`` object, but both
 represent the same transformation. Although this example only uses a single
 SimpleITK transformation, a .tfm file can hold a composite (set of
 transformations).
