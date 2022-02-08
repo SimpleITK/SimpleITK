@@ -9,7 +9,7 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "include_files" : [
     "sitkImageConvert.hxx"
-   ],
+  ],
   "members" : [
     {
       "name" : "TrialPoints",

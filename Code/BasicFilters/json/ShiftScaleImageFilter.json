@@ -129,7 +129,7 @@
           "R_value" : "'sitkUInt8'"
         }
       ],
-        "md5hash" : "be9651a54b488ced65c15abc55b86c05",
+      "md5hash" : "be9651a54b488ced65c15abc55b86c05",
       "inputs" : [
         "Input/RA-Short.nrrd"
       ],
@@ -144,7 +144,6 @@
         }
       ]
     },
-
     {
       "tag" : "OutputOverflow",
       "description" : "Shift and scale with smaller output pixel type",

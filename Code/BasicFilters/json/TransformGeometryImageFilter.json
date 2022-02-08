@@ -18,10 +18,10 @@
     }
   ],
   "members" : [],
-    "custom_methods" : [],
-    "tests" : [],
-  "briefdescription" : "",
-  "detaileddescription" : "",
+  "custom_methods" : [],
+  "tests" : [],
+  "briefdescription" : "Pseudo-Resample an image by modifying the geometric meta-data and not the pixels.",
+  "detaileddescription" : "The TransformGeometryImageFilter will generate a physical memory-modified version of the input image if the input transform is not identity. Its neglectful use can be a source of problems: e.g. it can exhaust the memory if the image is very large, and it WILL reduce the image quality when there are lots of transforms to be superimposed for the input image. Often times, we are not interested in the intermediate transformed images.\n\nIf all the transforms are rigid, there is a far superior way to achieve a similar result. Updating image metadata in-place removes the accumulated resampling errors as well as eliminating the expense of accessing the physical memory of the image. We need to compose all the transforms beforehand to make use of this filter.",
   "itk_module" : "ITKTransform",
   "itk_group" : "Transform",
   "in_place" : true

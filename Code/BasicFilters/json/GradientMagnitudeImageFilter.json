@@ -12,9 +12,9 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in the computation of the derivatives. Use On to compute the gradient in physical space; use Off to ignore image spacing and to compute the gradient in isotropic voxel space. Default is On.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in the computation of the derivatives. Use On to compute the gradient in physical space; use Off to ignore image spacing and to compute the gradient in isotropic voxel space. Default is On."
     }
   ],
   "tests" : [
@@ -29,7 +29,7 @@
     }
   ],
   "briefdescription" : "Computes the gradient magnitude of an image region at each pixel.",
-  "detaileddescription" : "\\see Image \n\n\\see Neighborhood \n\n\\see NeighborhoodOperator \n\n\\see NeighborhoodIterator",
+  "detaileddescription" : "\\see Image \n\n\n\\see Neighborhood \n\n\n\\see NeighborhoodOperator \n\n\n\\see NeighborhoodIterator",
   "itk_module" : "ITKImageGradient",
   "itk_group" : "ImageGradient",
   "in_place" : false

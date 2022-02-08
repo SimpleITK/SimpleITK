@@ -34,7 +34,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Get/Set the threshold values that will be used to calculate the speed function.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Get/Set the threshold values that will be used to calculate the speed function."
     },
     {
       "name" : "MaximumRMSError",

@@ -6,7 +6,7 @@
   "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
-    "inputs" : [
+  "inputs" : [
     {
       "name" : "Image",
       "type" : "Image"
