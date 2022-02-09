@@ -75,6 +75,7 @@ def process_xml(root, debug=False):
 
     # Remove the parents of 'Wiki Examples' title nodes
     wiki_sect = root.xpath('//title[contains(., "Wiki Examples")]/..')
+    wiki_sect += root.xpath('//title[contains(., "ITK Sphinx Examples")]/..')
     for ws in wiki_sect:
         par = ws.getparent()
 
