@@ -43,9 +43,9 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get wether a flat image must be considered as a minima or not. Defaults to true.",
+      "detaileddescriptionSet" : "Set/Get whether a flat image must be considered as a minima or not. Defaults to true.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get wether a flat image must be considered as a minima or not. Defaults to true."
+      "detaileddescriptionGet" : "Set/Get whether a flat image must be considered as a minima or not. Defaults to true."
     }
   ],
   "custom_methods" : [],

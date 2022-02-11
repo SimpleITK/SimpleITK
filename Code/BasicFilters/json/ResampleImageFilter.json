@@ -83,9 +83,9 @@
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
       "custom_itk_cast" : "filter->SetOutputDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the output direciton cosine matrix.",
+      "detaileddescriptionSet" : "Set the output direction cosine matrix.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set the output direciton cosine matrix."
+      "detaileddescriptionGet" : "Set the output direction cosine matrix."
     },
     {
       "name" : "DefaultPixelValue",

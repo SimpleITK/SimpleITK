@@ -25,7 +25,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get intensity value representing non-objects in the mask.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get intensity value representing the interior of objects in the mask."
+      "detaileddescriptionGet" : "Set/Get intensity value representing non-objects in the mask."
     }
   ],
   "tests" : [

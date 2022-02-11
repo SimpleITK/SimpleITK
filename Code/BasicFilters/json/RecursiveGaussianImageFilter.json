@@ -38,9 +38,9 @@
       "itk_type" : "typename FilterType::OrderEnumType",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the Order of the Gaussian to convolve with. \n\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default. \n\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian. \n\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian.",
+      "detaileddescriptionSet" : "Set/Get the Order of the Gaussian to convolve with. \n\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default. \n\n\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian. \n\n\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the Order of the Gaussian to convolve with. \n\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default. \n\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian. \n\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian."
+      "detaileddescriptionGet" : "Set/Get the Order of the Gaussian to convolve with. \n\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default. \n\n\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian. \n\n\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian."
     },
     {
       "name" : "Direction",

@@ -18,7 +18,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image (1/spacing) in the calculation of the Jacobian determinant. Use On to compute the Jacobian determinant in the space in which the data was acquired; use Off to reset the derivative weights, ignore the image spacing, and to compute the Jacobian determinant in the image space. Default is On.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image (1/spacing) in the calculation of the Jacobian determinant. Use On to compute the Jacobian determinant in the space in which the data was acquired; use Off to reset the derivative weights, ignore the image spacing, and to compute the Jacobian determinant in the image space. Default is On."
     },
     {
       "name" : "DerivativeWeights",

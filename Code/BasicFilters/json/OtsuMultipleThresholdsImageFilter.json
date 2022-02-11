@@ -48,7 +48,11 @@
     {
       "name" : "ReturnBinMidpoint",
       "type" : "bool",
-      "default" : "false"
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Should the threshold value be mid-point of the bin or the maximum? Default is to return bin maximum.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Should the threshold value be mid-point of the bin or the maximum? Default is to return bin maximum."
     }
   ],
   "measurements" : [
