@@ -161,6 +161,9 @@ namespace std
 #define SITKRegistration_EXPORT
 #define SITKRegistration_HIDDEN
 
+#define SITKElastix_EXPORT
+#define SITKElastix_HIDDEN
+
 
 // Any new classes need to have an "%include" statement to be wrapped.
 
@@ -219,6 +222,19 @@ namespace std
 %include "sitkExtractImageFilter.h"
 %include "sitkPasteImageFilter.h"
 %include "sitkAdditionalProcedures.h"
+
+#ifdef SITK_USE_ELASTIX
+%{
+#include <sitkElastixImageFilter.h>
+#include <sitkTransformixImageFilter.h>
+%}
+
+// Elastix and Transformix
+%template( ParameterMap ) std::map< std::string, std::vector< std::string > >;
+%template( VectorOfParameterMap ) std::vector< std::map< std::string, std::vector< std::string > > >;
+%include "sitkElastixImageFilter.h"
+%include "sitkTransformixImageFilter.h"
+#endif
 
 // Registration
 %include "sitkImageRegistrationMethod.h"

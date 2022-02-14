@@ -39,6 +39,10 @@ sitk_add_python_test( Test.ImageReadWrite
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageReadWrite.py"
   )
 
+if(SimpleITK_USE_ELASTIX)
+  sitk_add_python_test( Test.TransformixImageFilterTest
+    "${CMAKE_CURRENT_SOURCE_DIR}/sitkTransformixImageFilterTest.py" )
+endif()
 
 if(TEST Python.Test.ConcurrentImageRead AND APPLE)
   set_tests_properties( Python.Test.ConcurrentImageRead PROPERTIES LABELS "UNSTABLE" )

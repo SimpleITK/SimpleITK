@@ -43,6 +43,7 @@ jobs:
               -DBUILD_EXAMPLES:BOOL=OFF \
               -DBUILD_TESTING:BOOL=ON \
               -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} \
+              -DSimpleITK_USE_ELASTIX:BOOL=ON \
               -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF \
               -G Ninja \
               -v ${GITHUB_WORKSPACE}/SuperBuild

@@ -373,6 +373,14 @@ else()
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 endif()
 
+#------------------------------------------------------------------------------
+# Elastix
+#------------------------------------------------------------------------------
+option(SimpleITK_USE_ELASTIX "Use the Elastix image registration library" OFF)
+if(SimpleITK_USE_ELASTIX )
+  include(External_Elastix)
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Elastix)
+endif()
 
 
 get_cmake_property( _varNames VARIABLES )
@@ -450,6 +458,7 @@ ExternalProject_Add(${proj}
     -DWRAP_CSHARP:BOOL=${WRAP_CSHARP}
     -DWRAP_R:BOOL=${WRAP_R}
     -DBUILD_EXAMPLES:BOOL=${BUILD_TESTING}
+    -DElastix_DIR:PATH=${Elastix_DIR}
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
   ${External_Project_USES_TERMINAL}
   STEP_TARGETS configure build doc forcebuild

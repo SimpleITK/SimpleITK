@@ -7,6 +7,7 @@ add_subdirectory( src )
 set( SITK_INT64_PIXELIDS ${SimpleITK_INT64_PIXELIDS} )
 set( SITK_4D_IMAGES ${SimpleITK_4D_IMAGES} )
 set( SITK_EXPLICIT_INSTANTIATION ${SimpleITK_EXPLICIT_INSTANTIATION} )
+set( SITK_USE_ELASTIX ${SimpleITK_USE_ELASTIX} )
 
 include(sitkCheckTemplateDisambiguation)
 
