@@ -22,8 +22,6 @@
 # Please look at PythonImageFilterTestTemplate.py.in to make changes.
 #
 
-from __future__ import print_function
-
 # This is Python code to test ${name}
 import SimpleITK
 import sys

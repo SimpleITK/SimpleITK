@@ -3,7 +3,6 @@
 
 #    /files/some/path/stats/json
 
-from __future__ import print_function
 import requests
 import json
 import datetime
