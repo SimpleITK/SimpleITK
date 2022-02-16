@@ -80,6 +80,27 @@ class BasicFiltersTests(unittest.TestCase):
         self.assertImageAlmostEqual( baseline_image,
                                      sitk.Resample(img, size=(64, 64), transform=tx, defaultPixelValue=255.0, outputPixelType=sitk.sitkFloat64 ) )
 
+        with self.assertRaises(TypeError) as cm:
+             sitk.Resample(img, img, wrong_keyword1=img)
+        self.assertTrue("unexpected keyword argument" in str(cm.exception))
+
+        with self.assertRaises(TypeError) as cm:
+            sitk.Resample(img, [64,64], wrong_keyword2=img)
+        self.assertTrue("unexpected keyword argument" in str(cm.exception))
+
+        with self.assertRaises(TypeError) as cm:
+            sitk.Resample(img, referenceImage=img, wrong_keyword3=img)
+        self.assertTrue("unexpected keyword argument" in str(cm.exception))
+
+        with self.assertRaises(TypeError) as cm:
+            sitk.Resample(img, size=[64,64], wrong_keyword4=img)
+        self.assertTrue("unexpected keyword argument" in str(cm.exception))
+
+        with self.assertRaises(TypeError) as cm:
+            sitk.Resample(img, tx, wrong_keyword5=img)
+        self.assertTrue("unexpected keyword argument" in str(cm.exception))
+
+
     def test_paste_filter(self):
 
         img1 = sitk.GaborSource(sitk.sitkFloat32, [64, 64, 64], frequency=.05)
