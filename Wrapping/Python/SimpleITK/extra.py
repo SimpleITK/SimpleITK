@@ -111,9 +111,10 @@ def Resample(
         if not isinstance(args[0], Transform):
             try:
                 iter(args[0])
-                return _r(*args, **kwargs)
             except TypeError:
                 pass
+            else:
+                return _r(*args, **kwargs)
 
     if referenceImage is not None:
         return _r_image(referenceImage, *args, **kwargs)
