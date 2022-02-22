@@ -1,6 +1,6 @@
 
 # Information on how to retrieve the ITK documentation tag file
-set(ITK_DOXYGEN_TAG_LOCATION "http://public.kitware.com/pub/itk/NightlyDoxygen/InsightDoxygenDocTag.gz")
+set(ITK_DOXYGEN_TAG_LOCATION "http://itk.org/files/NightlyDoxygen/InsightDoxygenDocTag.gz")
 set(ITK_DOXYGEN_COMPRESSED_TAG_FILE ${OUTPUT_PATH}/InsightDoxygen.tag.gz)
 set(ITK_DOXYGEN_TAG_FILE ${OUTPUT_PATH}/InsightDoxygen.tag)
 
