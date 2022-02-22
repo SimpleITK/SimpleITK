@@ -48,6 +48,7 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             WRAP_R:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
+            WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -105,6 +106,7 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
             WRAP_JAVA:BOOL=ON
+            WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -130,11 +132,17 @@ jobs:
       COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
     steps:
       - template: templates/git-download-steps.yml
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.8'
+          architecture: 'x64'
+          addToPath: true
       - script: |
           python --version
           python -m pip install --upgrade pip
           python -m pip install setuptools wheel
-          python -m pip install ninja scikit-ci-addons
+          python -m pip install ninja scikit-ci-addons lxml
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
@@ -154,6 +162,8 @@ jobs:
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
+            WRAP_PYTHON:BOOL=ON
+            WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
