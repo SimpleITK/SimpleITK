@@ -26,7 +26,6 @@
 #  series name is given, the first series found is written.
 #
 
-from __future__ import print_function
 
 import sys
 import getopt

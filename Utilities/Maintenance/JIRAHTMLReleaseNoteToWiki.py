@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
 import xml.dom.minidom
 from  xml.parsers.expat import ExpatError
 import argparse
