@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v2.1rc2}
+SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v2.2rc2}
 
 # Look for a git tag as the first command line argument
 if [ ! -z $1 ]
@@ -45,12 +45,10 @@ pushd $COREBINARYDIRECTORY
 sh $SCRIPT_DIR/mac_build_core.sh
 popd
 
-mkdir -p $Build_Root/py38
-pushd $Build_Root/py38
-COREBINARYDIRECTORY=$COREBINARYDIRECTORY sh $SCRIPT_DIR/mac_build_py.sh 3.8
+for version in 3.8 3.9 3.10
+do
+    mkdir -p $Build_Root/py$version
+    pushd $Build_Root/py$version
+    COREBINARYDIRECTORY=$COREBINARYDIRECTORY sh $SCRIPT_DIR/mac_build_py.sh $version
 popd
-
-mkdir -p $Build_Root/py39
-pushd $Build_Root/py39
-COREBINARYDIRECTORY=$COREBINARYDIRECTORY sh $SCRIPT_DIR/mac_build_py.sh 3.9
-popd
+done
