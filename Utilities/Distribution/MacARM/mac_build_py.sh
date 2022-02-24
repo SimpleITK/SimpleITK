@@ -15,6 +15,12 @@ then
     PY_MINOR=9
     PY_VERSION=3.9
 fi
+if [ $1 == "3.10" ]
+then
+    PY_MAJOR=3
+    PY_MINOR=10
+    PY_VERSION=3.10
+fi
 
 PY_DIR=/Library/Frameworks/Python.framework/Versions/${PY_VERSION}
 echo $PY_DIR
