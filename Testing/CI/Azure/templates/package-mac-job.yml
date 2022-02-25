@@ -82,6 +82,15 @@ jobs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/java
           artifactName: Java
         continueOnError: true
+      - script: |
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/mac_build_csharp.sh
+        displayName: Build CSharp
+        continueOnError: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/csharp
+          artifactName: CSharp
+        continueOnError: true
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
