@@ -92,7 +92,6 @@ function build_simpleitk_python {
 build_simpleitk || exit 1
 
 
-
 if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-csharp &&
         cd ${BLD_DIR}-csharp &&

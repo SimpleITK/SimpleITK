@@ -44,3 +44,14 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/python
           artifactName: Python
+      - ${{ if ne( parameters.BUILD_CSHARP, 0 ) }}:
+          - task: CopyFiles@2
+            inputs:
+                sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/'
+                contents: '*CSharp*.zip'
+                targetFolder: $(Build.ArtifactStagingDirectory)/csharp
+                flattenFolders: true
+          - task: PublishBuildArtifacts@1
+            inputs:
+                pathtoPublish: $(Build.ArtifactStagingDirectory)/csharp
+                artifactName: CSharp
