@@ -41,3 +41,4 @@ Examples
   link_ImageIOSelection_docs
   link_RawImageReading_docs
   link_JavaGetSetBuffer_docs.rst
+  link_PythonFileLogging.rst
