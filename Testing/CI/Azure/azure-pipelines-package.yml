@@ -27,6 +27,7 @@ jobs:
   - template: templates/package-linux-job.yml
     parameters:
         DOCKERFILE: Dockerfile-2014-x86_64
+        BUILD_CSHARP: 1
   - template: templates/package-mac-job.yml
   - template: templates/package-win-job.yml
     parameters:

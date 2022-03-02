@@ -1,6 +1,7 @@
 parameters:
   DOCKERFILE: Dockerfile-2010-x86_64
   PYTHON_VERSIONS: "cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310"
+  BUILD_CSHARP: 0
 
 jobs:
   - job: Linux_${{replace(parameters.DOCKERFILE, '-', '_')}}
@@ -25,12 +26,14 @@ jobs:
                --env "ExternalData_OBJECT_STORES=/var/io/.ExternalData" \
                --env PYTHON_VERSIONS \
                --env SIMPLEITK_GIT_TAG \
+               --env BUILD_CSHARP \
                 -v "$(pwd):/work/io" \
                 -t simpleitk_manylinux
         env:
           ExternalData_OBJECT_STORES: "$(Build.SourcesDirectory)/.ExternalData"
           SIMPLEITK_GIT_TAG: "$(SimpleITKBuildHash)"
           PYTHON_VERSIONS: ${{ parameters.PYTHON_VERSIONS }}
+          BUILD_CSHARP: ${{ parameters.BUILD_CSHARP }}
       - task: CopyFiles@2
         inputs:
           sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/wheelhouse'
@@ -41,3 +44,14 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/python
           artifactName: Python
+      - ${{ if ne( parameters.BUILD_CSHARP, 0 ) }}:
+          - task: CopyFiles@2
+            inputs:
+                sourceFolder: '$(Build.SourcesDirectory)/Utilities/Distribution/manylinux/'
+                contents: '*CSharp*.zip'
+                targetFolder: $(Build.ArtifactStagingDirectory)/csharp
+                flattenFolders: true
+          - task: PublishBuildArtifacts@1
+            inputs:
+                pathtoPublish: $(Build.ArtifactStagingDirectory)/csharp
+                artifactName: CSharp

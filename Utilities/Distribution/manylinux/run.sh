@@ -21,8 +21,11 @@ elif [ "$proc" == "aarch64" ] ; then
     DOCKERFILE=${DOCKERFILE:="Dockerfile-2014-aarch64"}
 fi
 
-echo "\nDOCKERFILE"
-echo $DOCKERFILE
+
+if [ -n "${BUILD_CSHARP}" ]; then
+    extra_args="$extra_args --env BUILD_CSHARP"
+fi
+
 
 for DF in ${DOCKERFILE}; do
     image_name="simpleitk_manylinux_$(echo "${DF}" | tr '[:upper:]' '[:lower:]')"
