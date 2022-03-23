@@ -27,16 +27,38 @@ namespace simple
 {
 
 enum KernelEnum {
+  /** \brief Annulus, ring, shaped structuring element.
+   */
   sitkAnnulus,
+  /** \brief Ball (sphere in 3D, circle in 2D) shaped structuring element.
+   */
   sitkBall,
+  /** \brief Box shaped structuring element.
+   */
   sitkBox,
+  /** \brief Cross shaped structuring element.
+   */
   sitkCross,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon3,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon4,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon5,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon6,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon7,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon8,
+  /** \brief Separable approximation of ball structuring element for faster computation.
+   */
   sitkPolygon9
 };
 
