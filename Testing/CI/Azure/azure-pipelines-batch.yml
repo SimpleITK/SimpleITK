@@ -87,14 +87,11 @@ jobs:
           imageName: 'macos-10.15'
           xcodeVersion: 11.7
         XCode_11_2_1:
-          imageName: 'macos-10.14'
+          imageName: 'macos-10.15'
           xcodeVersion: 11.2.1
         XCode_10:
-          imageName: 'macos-10.14'
-          xcodeVersion: 10.2.1
-        XCode_9_4:
-          imageName: 'macos-10.14'
-          xcodeVersion: 9.4.1
+          imageName: 'macos-10.15'
+          xcodeVersion: 10.3
     pool:
       vmImage: $(imageName)
 
@@ -103,7 +100,7 @@ jobs:
       - task: UsePythonVersion@0
         displayName: Enable Python
         inputs:
-          versionSpec: '3.6'
+          versionSpec: '3.8'
           architecture: 'x64'
           addToPath: true
       - script: |
@@ -155,8 +152,6 @@ jobs:
     strategy:
       maxParallel: 3
       matrix:
-       default:
-         env_file:
        ITK-master:
          env_file:
          ctest.cache_extra: |
