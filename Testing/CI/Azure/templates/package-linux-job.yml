@@ -1,12 +1,14 @@
 parameters:
   DOCKERFILE: Dockerfile-2010-x86_64
-  PYTHON_VERSIONS: "cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39"
+  PYTHON_VERSIONS: "cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310"
 
 jobs:
   - job: Linux_${{replace(parameters.DOCKERFILE, '-', '_')}}
     dependsOn: Configure
     condition: ne( variables['configure.skiplinux'], 'true' )
     timeoutInMinutes: 300
+    pool:
+      vmImage: 'ubuntu-latest'
     variables:
       SIMPLEITK_GIT_TAG: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
     steps:

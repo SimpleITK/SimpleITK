@@ -2,7 +2,7 @@ jobs:
   - job: MacOS
     dependsOn: Configure
     condition: ne( variables['configure.skipmacos'], 'true' )
-    timeoutInMinutes: 200
+    timeoutInMinutes: 300
     variables:
       xcodeVersion: 9.4.1
       coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
@@ -10,7 +10,7 @@ jobs:
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       DASHBOARD_GIT_BRANCH: $[ dependencies.Configure.outputs['configure.BuildHash'] ]
     pool:
-      vmImage: 'macos-10.14'
+      vmImage: 'macos-10.15'
     steps:
       - template: ./git-download-steps.yml
       - task: UsePythonVersion@0
@@ -81,6 +81,14 @@ jobs:
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/java
           artifactName: Java
+        continueOnError: true
+      - task: UsePythonVersion@0
+        displayName: Enable Python
+        inputs:
+          versionSpec: '3.10'
+          architecture: 'x64'
+      - bash: ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/scripts/mac_build_python.sh
+        displayName: Build Python 310
         continueOnError: true
       - task: UsePythonVersion@0
         displayName: Enable Python
