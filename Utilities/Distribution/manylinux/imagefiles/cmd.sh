@@ -8,7 +8,8 @@ export OUT_DIR="/work/io"
 
 SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 
-PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[0-6][^ ]\+ \?//g')}
+# Remove Python 2 and pure Python builds
+PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
 
 NPROC=$(grep -c processor /proc/cpuinfo)
 export MAKEFLAGS="-j ${NPROC}"
