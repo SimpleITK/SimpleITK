@@ -11,7 +11,7 @@
 set(SimpleITK_VERSION_MAJOR 2)
 set(SimpleITK_VERSION_MINOR 1)
 set(SimpleITK_VERSION_PATCH 1)
-#set(SimpleITK_VERSION_TWEAK "")
+set(SimpleITK_VERSION_TWEAK 1)
 
 
 include(sitkSourceVersion)
