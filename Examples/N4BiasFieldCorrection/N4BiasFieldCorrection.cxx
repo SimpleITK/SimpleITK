@@ -42,9 +42,10 @@ int main ( int argc, char* argv[] ) {
     maskImage = sitk::OtsuThreshold( image, 0, 1, 200 );
   }
 
+  unsigned int shrinkFactor = 1;
   if ( argc > 3 ) {
-    unsigned int s = atoi( argv[3] );
-    std::vector<unsigned int> shrink( inputImage.GetDimension(), s );
+    shrinkFactor = atoi( argv[3] );
+    std::vector<unsigned int> shrink( inputImage.GetDimension(), shrinkFactor );
     image = sitk::Shrink( inputImage, shrink );
     maskImage = sitk::Shrink( maskImage, shrink );
   }
@@ -70,7 +71,11 @@ int main ( int argc, char* argv[] ) {
 
   sitk::Image corrected_image_full_resolution = sitk::Divide( inputImage, sitk::Exp( log_bias_field ) );
 
-  sitk::WriteImage( corrected_image, argv[2] );
+  sitk::WriteImage( corrected_image_full_resolution, argv[2] );
+
+  if (shrinkFactor > 1) {
+    sitk::WriteImage( corrected_image, "CXX-Example-N4BiasFieldCorrection-shrunk.nrrd" );
+  }
 
   if (getenv("SITK_NOSHOW") == NULL)
     sitk::Show(corrected_image, "N4 Corrected");

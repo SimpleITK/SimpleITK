@@ -42,11 +42,12 @@ namespace itk.simple.examples {
           maskImage = sitk.OtsuThreshold(image, 0, 1, 200);
         }
 
+        uint shrinkFactor = 1;
         if (args.Length>2) {
-          uint s = UInt32.Parse(args[2]);
+          shrinkFactor = UInt32.Parse(args[2]);
           uint[] s_array = new uint[image.GetDimension()];
           for (uint i=0; i<image.GetDimension(); i++) {
-            s_array[i] = s;
+            s_array[i] = shrinkFactor;
           }
           VectorUInt32 shrink = new VectorUInt32(s_array);
           image = sitk.Shrink(inputImage, shrink);
@@ -78,7 +79,11 @@ namespace itk.simple.examples {
 
         Image corrected_image_full_resolution = sitk.Divide(inputImage, sitk.Exp(log_bias_field));
 
-        sitk.WriteImage(corrected_image, args[1]);
+        sitk.WriteImage(corrected_image_full_resolution, args[1]);
+
+        if (shrinkFactor>1) {
+          sitk.WriteImage(corrected_image, "CSharp-Example-N4BiasFieldCorrection-shrunk.nrrd");
+        }
 
         if (Environment.GetEnvironmentVariable("SITK_NOSHOW") == null)
           SimpleITK.Show(corrected_image, "N4 Corrected");

@@ -42,6 +42,18 @@ Code
 
 .. tabs::
 
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.cxx
+       :language: c++
+       :lines: 18-
+
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.cs
+       :language: c#
+       :lines: 18-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.py
