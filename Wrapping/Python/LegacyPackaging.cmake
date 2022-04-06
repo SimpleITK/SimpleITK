@@ -92,6 +92,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
     COMMAND "${PYTHON_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
+    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "setup.py" install
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
