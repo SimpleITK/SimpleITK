@@ -38,9 +38,11 @@ if (length( args ) > 4) {
     maskImage <- OtsuThreshold( inputImage, 0, 1, 200 )
 }
 
+shrinkFactor = 1
 if (length( args ) > 3) {
-    image <- Shrink( inputImage, rep(strtoi(args[3]), inputImage$GetDimension()) )
-    maskImage <- Shrink( maskImage, rep(strtoi(args[3]), inputImage$GetDimension()) )
+    shrinkFactor = strtoi(args[3])
+    image <- Shrink( inputImage, rep(shrinkFactor, inputImage$GetDimension()) )
+    maskImage <- Shrink( maskImage, rep(shrinkFactor, inputImage$GetDimension()) )
 }
 
 inputImage <- Cast( inputImage, 'sitkFloat32' )
@@ -63,7 +65,11 @@ logBiasField <- corrector$GetLogBiasFieldAsImage(inputImage)
 
 correctedImageFullResolution <- inputImage / Exp( logBiasField )
 
-WriteImage(correctedImage, args[[2]])
+WriteImage(correctedImageFullResolution, args[[2]])
+
+if (shrinkFactor > 1) {
+    WriteImage(correctedImage, "R-Example-N4BiasFieldCorrection-shrunk.nrrd")
+}
 
 if(Sys.getenv("SITK_NOSHOW") == "") {
     Show(correctedImage, "N4 Corrected")

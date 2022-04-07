@@ -36,11 +36,12 @@ if len(sys.argv) > 4:
 else:
     maskImage = sitk.OtsuThreshold(inputImage, 0, 1, 200)
 
+shrinkFactor = 1
 if len(sys.argv) > 3:
-    image = sitk.Shrink(inputImage,
-                             [int(sys.argv[3])] * inputImage.GetDimension())
-    maskImage = sitk.Shrink(maskImage,
-                            [int(sys.argv[3])] * inputImage.GetDimension())
+    shrinkFactor = int(sys.argv[3])
+    if shrinkFactor>1:
+        image = sitk.Shrink(inputImage, [shrinkFactor] * inputImage.GetDimension())
+        maskImage = sitk.Shrink(maskImage, [shrinkFactor] * inputImage.GetDimension())
 
 corrector = sitk.N4BiasFieldCorrectionImageFilter()
 
@@ -60,7 +61,10 @@ log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage)
 
 corrected_image_full_resolution = inputImage / sitk.Exp( log_bias_field )
 
-sitk.WriteImage(corrected_image, sys.argv[2])
+sitk.WriteImage(corrected_image_full_resolution, sys.argv[2])
+
+if shrinkFactor>1:
+    sitk.WriteImage(corrected_image, "Python-Example-N4BiasFieldCorrection-shrunk.nrrd")
 
 if ("SITK_NOSHOW" not in os.environ):
     sitk.Show(corrected_image, "N4 Corrected")
