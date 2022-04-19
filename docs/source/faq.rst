@@ -124,6 +124,34 @@ sample.mhd:
 
 An example implementing this approach is available here :ref:`here <lbl_raw_image_reading>`.
 
+
+Why does my image appear to be empty / all black / blank when visualized?
+-------------------------------------------------------------------------
+
+There are two possible reasons for this:
+
+#. The image is indeed empty. This is rarely the case, and indicates that there is something incorrect with the code, will require debugging.
+#. The image contains very low values (1, 2, 3...). This is very common with segmentation and :ref:`binary mask <lbl_conventions_mask_image>` images. What you are experiencing is an issue with data visualization, not with the data itself. The code below illustrates the difference, and shows how to quickly visualize such images using the existing SimpleITK functionality.
+
+.. code-block :: python
+
+  import SimpleITK as sitk
+
+  # Create segmentation image
+  segmentation_image = sitk.Image([128,128], sitk.sitkUInt8)
+  segmentation_image[40:50,20:120] = 1
+  segmentation_image[50:60,20:120] = 2
+  segmentation_image[60:70,20:120] = 3
+
+  # When visualized with Fiji, image looks all black. To see the data
+  # change the display settings Image->Adjust->Brightness/Contrast.
+  sitk.Show(segmentation_image)
+
+  # For quick visualization, convert to float and add
+  # 255 so that the data is immediately visible in Fiji.
+  sitk.Show(sitk.Cast(segmentation_image,sitk.sitkFloat32) + 255)
+
+
 .. _lbl_imageJ_not_found:
 
 Why isn't Fiji or ImageJ found by the Show function (RuntimeError: Exception thrown...)?
