@@ -18,7 +18,6 @@
 #include "SimpleITKTestHarness.h"
 #include <sitkPixelIDTypeLists.h>
 
-#include <Ancillary/TypeList.h>
 #include <Ancillary/type_list2.h>
 
 class TypeListTest
@@ -61,33 +60,6 @@ public:
   CountPredicate pred;
   const CountPredicate constPred;
 };
-
-
-TEST_F(TypeListTest, Visit) {
-
-  using MyTypeList = typelist::MakeTypeList<int, char, void>::Type;
-
-  typelist::Visit<MyTypeList> ListVisitor;
-  ListVisitor( pred );
-  ListVisitor( constPred );
-
-  EXPECT_EQ( pred.count, 3 );
-  EXPECT_EQ( constPred.count, 3 );
-
-}
-
-TEST_F(TypeListTest, DualVisit) {
-
-  using MyTypeList = typelist::MakeTypeList<int, char, short>::Type;
-
-  typelist::DualVisit<MyTypeList,MyTypeList> ListVisitor;
-  ListVisitor( pred );
-  ListVisitor( constPred );
-
-  EXPECT_EQ( pred.count, 9 );
-  EXPECT_EQ( constPred.count, 9 );
-
-}
 
 
 TEST_F(TypeListTest, typelist)
