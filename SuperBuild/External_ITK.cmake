@@ -83,6 +83,12 @@ else()
     "-DITK_TEMPLATE_VISIBILITY_DEFAULT:BOOL=OFF" )
 endif()
 
+if (USE_TBB)
+  list( APPEND ep_itk_args
+    -DModule_ITKTBB:BOOL=ON
+    -DTBB_DIR:PATH=${TBB_DIR} )
+endif()
+
 
 if( ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG )
   # Unable to use ITK_LEGACY_REMOVE due to change in the enum types.

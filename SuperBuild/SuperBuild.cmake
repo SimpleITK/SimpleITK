@@ -357,6 +357,22 @@ if ( BUILD_TESTING )
   endif()
 endif()
 
+
+#------------------------------------------------------------------------------
+# oneTBB
+#------------------------------------------------------------------------------
+option( USE_TBB "Enable TBB for ITK Threading" OFF)
+if( USE_TBB )
+  option( SimpleITK_USE_SYSTEM_TBB "Use an external version of TBB/oneTBB" OFF )
+  mark_as_advanced(SimpleITK_USE_SYSTEM_TBB)
+  if(SimpleITK_USE_SYSTEM_TBB)
+    set( TBB_DIR "" CACHE PATH "Path to TBBConfig.cmake")
+  else()
+    include(External_TBB)
+  endif()
+endif()
+
+
 #------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
@@ -369,6 +385,10 @@ if(SimpleITK_USE_SYSTEM_ITK)
   #we require certain packages be turned on in ITK
   include(sitkCheckForITKModuleDependencies)
 else()
+  if(USE_TBB AND NOT SimpleITK_USE_SYSTEM_TBB)
+    list(APPEND ITK_DEPENDENCIES TBB)
+  endif()
+
   include(External_ITK)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 endif()
@@ -497,7 +517,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest ${CMAKE_PROJECT_NAME})
+set(external_project_list TBB ITK Swig SimpleITKExamples PCRE Lua GTest ${CMAKE_PROJECT_NAME})
 
 
 #-----------------------------------------------------------------------------
