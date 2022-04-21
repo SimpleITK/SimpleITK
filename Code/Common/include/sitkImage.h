@@ -144,12 +144,16 @@ namespace simple
 
     template <typename TImageType>
       explicit Image( TImageType* image )
-      : m_PimpleImage( nullptr )
+      : m_PimpleImage( Self::DispatchedInternalInitialization<TImageType>(image) )
       {
-        static_assert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
-                          "invalid pixel type" );
-        this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image );
-      }
+      const PixelIDValueType type = ImageTypeToPixelIDValue<TImageType>::Result;
+      const unsigned int     dimension = TImageType::ImageDimension;
+
+      static_assert(type != sitkUnknown, "invalid pixel type");
+      static_assert(dimension >= 2 && dimension <= SITK_MAX_DIMENSION, "Unsupported image dimension.");
+
+      //this->InternalInitialization(type, dimension, image);
+    }
     /**@}*/
 
     /** Get access to internal ITK data object.
@@ -528,50 +532,24 @@ namespace simple
   private:
 
    /** Method called by certain constructors to convert ITK images
-     * into simpleITK ones.
+     * into SimpleITK ones.
      *
      * This is the single method which needs to be explicitly
      * instantiated to separate the internal ITK and Pimple image from
      * the external SimpleITK interface. Template parameters have been
      * chosen carefully to flexibly enable this.
      */
-    template <int VPixelIDValue, unsigned int VImageDimension>
-    void InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
-                                                                                       VPixelIDValue>::Result,
-                                                             VImageDimension>::ImageType *i );
+    void InternalInitialization( PixelIDValueType type, unsigned  int dimension, itk::DataObject *image );
 
-    /** Dispatched from the InternalInitialization method. The
-     * "enable-if" idiom is used here for method overloading. The
-     * second method is for non-instantiated image, which turn into a
-     * void pointer for the parameter. However, this second method
-     * should never be executed.
-     * @{
-     */
-    template<int VPixelIDValue, typename TImageType>
-      typename std::enable_if<!std::is_same<TImageType, void>::value>::type
-    ConditionalInternalInitialization( TImageType *i);
+    template <typename TImageType>
+    PimpleImageBase * DispatchedInternalInitialization(itk::DataObject *image);
 
-    template<int VPixelIDValue, typename TImageType>
-    typename std::enable_if<std::is_same<TImageType, void>::value>::type
-    ConditionalInternalInitialization( TImageType *) { assert( false ); }
-     /**@}*/
 
-    /** An addressor of AllocateInternal to be utilized with
-     * registering member functions with the factory.
-     */
-    template < class TMemberFunctionPointer >
-    struct AllocateMemberFunctionAddressor
-    {
-      using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
+    friend struct DispatchedInternalInitialiationAddressor;
+    friend struct AllocateMemberFunctionAddressor;
 
-      template< typename TImageType >
-      TMemberFunctionPointer operator() ( ) const
-      {
-        return &ObjectType::template AllocateInternal< TImageType >;
-      }
-    };
 
-    PimpleImageBase *m_PimpleImage;
+    PimpleImageBase * m_PimpleImage;
   };
 
 }

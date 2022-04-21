@@ -5,7 +5,7 @@
   "constant_type" : "double",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
-  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "pixel_types" : "typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type",
   "members" : [],
   "tests" : [
     {

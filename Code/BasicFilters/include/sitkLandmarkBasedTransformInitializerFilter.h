@@ -85,7 +85,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       LandmarkBasedTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      using PixelIDTypeList = typelist::MakeTypeList<BasicPixelID<float> >::Type;
+      using PixelIDTypeList = typelist2::typelist<BasicPixelID<float> >;
 
 
       /**

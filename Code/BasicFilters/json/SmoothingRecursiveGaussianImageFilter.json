@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "doc" : "",
   "number_of_inputs" : 1,
-  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "pixel_types" : "typelist2::append<BasicPixelIDTypeList, VectorPixelIDTypeList>::type",
   "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
   "members" : [
     {

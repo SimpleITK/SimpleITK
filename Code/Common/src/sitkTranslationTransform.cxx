@@ -84,10 +84,10 @@ void TranslationTransform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
-  typedef typelist::MakeTypeList<itk::TranslationTransform<double, 3>,
-                                 itk::TranslationTransform<double, 2> >::Type TransformTypeList;
+  using TransformTypeList =
+    typelist2::typelist<itk::TranslationTransform<double, 3>, itk::TranslationTransform<double, 2>>;
 
-  typelist::Visit<TransformTypeList> callInternalInitialization;
+  typelist2::visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetOffset = nullptr;

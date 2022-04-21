@@ -248,15 +248,14 @@ void DisplacementFieldTransform::InternalInitialization(itk::TransformBase *tran
   visitor.transform = transform;
   visitor.that = this;
 
-  typedef typelist::MakeTypeList<
-    itk::DisplacementFieldTransform<double, 3>,
-    itk::DisplacementFieldTransform<double, 2>,
-    itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<double, 3>,
-    itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<double, 2>,
-    itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<double, 3>,
-    itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<double, 2> >::Type TransformTypeList;
+  using TransformTypeList = typelist2::typelist<itk::DisplacementFieldTransform<double, 3>,
+                                                itk::DisplacementFieldTransform<double, 2>,
+                                                itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<double, 3>,
+                                                itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<double, 2>,
+                                                itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<double, 3>,
+                                                itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<double, 2>>;
 
-  typelist::Visit<TransformTypeList> callInternalInitialization;
+  typelist2::visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
   m_pfSetDisplacementField = nullptr;

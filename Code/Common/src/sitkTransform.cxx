@@ -189,7 +189,7 @@ Transform::Transform( Image &image, TransformEnum txType )
       const unsigned int dimension = image.GetDimension();
 
       // The pixel IDs supported
-      using PixelIDTypeList = typelist::MakeTypeList<VectorPixelID<double> >::Type;
+      using PixelIDTypeList = typelist2::typelist<VectorPixelID<double> >;
 
       typedef void (Self::*MemberFunctionType)( Image & );
 
@@ -588,52 +588,50 @@ void Transform::InternalInitialization(itk::TransformBase *transform)
   // since the list is traversed from the end to the beginning as the
   // transform types are attempted to be dynamic_cast-ed to the
   // correct type.
-  typedef typelist::MakeTypeList<
-                                 itk::VersorTransform< double >,
-                                 itk::VersorRigid3DTransform< double >,
+  using TransformTypeList = typelist2::typelist<itk::VersorTransform<double>,
+                                                itk::VersorRigid3DTransform<double>,
 
-                                 itk::IdentityTransform<double, 2>,
-                                 itk::IdentityTransform<double, 3>,
+                                                itk::IdentityTransform<double, 2>,
+                                                itk::IdentityTransform<double, 3>,
 
-                                 itk::TranslationTransform<double, 2>,
-                                 itk::TranslationTransform<double, 3>,
+                                                itk::TranslationTransform<double, 2>,
+                                                itk::TranslationTransform<double, 3>,
 
-                                 itk::ScaleTransform< double, 2>,
-                                 itk::ScaleTransform< double, 3>,
+                                                itk::ScaleTransform<double, 2>,
+                                                itk::ScaleTransform<double, 3>,
 
-                                 itk::ScaleLogarithmicTransform< double, 2 >,
-                                 itk::ScaleLogarithmicTransform< double, 3 >,
+                                                itk::ScaleLogarithmicTransform<double, 2>,
+                                                itk::ScaleLogarithmicTransform<double, 3>,
 
-                                 TransformTraits< double, 2>::EulerTransformType,
+                                                TransformTraits<double, 2>::EulerTransformType,
 
-                                 TransformTraits< double, 3>::EulerTransformType,
+                                                TransformTraits<double, 3>::EulerTransformType,
 
-                                 TransformTraits< double, 2>::SimilarityTransformType,
+                                                TransformTraits<double, 2>::SimilarityTransformType,
 
-                                 TransformTraits< double, 3>::SimilarityTransformType,
-                                 itk::ScaleSkewVersor3DTransform< double >,
-                                 itk::ComposeScaleSkewVersor3DTransform< double >,
-                                 itk::ScaleVersor3DTransform< double >,
+                                                TransformTraits<double, 3>::SimilarityTransformType,
+                                                itk::ScaleSkewVersor3DTransform<double>,
+                                                itk::ComposeScaleSkewVersor3DTransform<double>,
+                                                itk::ScaleVersor3DTransform<double>,
 
-                                 itk::QuaternionRigidTransform< double >,
+                                                itk::QuaternionRigidTransform<double>,
 
-                                 itk::AffineTransform<double,3>,
-                                 itk::AffineTransform<double,2>,
+                                                itk::AffineTransform<double, 3>,
+                                                itk::AffineTransform<double, 2>,
 
-                                 itk::DisplacementFieldTransform<double, 3>,
-                                 itk::DisplacementFieldTransform<double, 2>,
+                                                itk::DisplacementFieldTransform<double, 3>,
+                                                itk::DisplacementFieldTransform<double, 2>,
 
-                                 itk::BSplineTransform<double, 3, 0>,
-                                 itk::BSplineTransform<double, 2, 0>,
-                                 itk::BSplineTransform<double, 3, 1>,
-                                 itk::BSplineTransform<double, 2, 1>,
-                                 itk::BSplineTransform<double, 3, 2>,
-                                 itk::BSplineTransform<double, 2, 2>,
-                                 itk::BSplineTransform<double, 3, 3>,
-                                 itk::BSplineTransform<double, 2, 3>
-                                 >::Type TransformTypeList;
+                                                itk::BSplineTransform<double, 3, 0>,
+                                                itk::BSplineTransform<double, 2, 0>,
+                                                itk::BSplineTransform<double, 3, 1>,
+                                                itk::BSplineTransform<double, 2, 1>,
+                                                itk::BSplineTransform<double, 3, 2>,
+                                                itk::BSplineTransform<double, 2, 2>,
+                                                itk::BSplineTransform<double, 3, 3>,
+                                                itk::BSplineTransform<double, 2, 3>>;
 
-  typelist::Visit<TransformTypeList> callInternalInitialization;
+  typelist2::visit<TransformTypeList> callInternalInitialization;
 
   callInternalInitialization(visitor);
 

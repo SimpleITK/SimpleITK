@@ -151,10 +151,10 @@ void AffineTransform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
-  typedef typelist::MakeTypeList<itk::AffineTransform<double, 3>,
-                                 itk::AffineTransform<double, 2> >::Type TransformTypeList;
+  using TransformTypeList = typelist2::typelist<itk::AffineTransform<double, 3>,
+                                 itk::AffineTransform<double, 2> >;
 
-  typelist::Visit<TransformTypeList> callInternalInitialization;
+  typelist2::visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetCenter = nullptr;

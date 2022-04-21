@@ -23,7 +23,7 @@
 #include "sitkConfigure.h"
 #include "sitkPixelIDTypes.h"
 
-#include "Ancillary/TypeList.h"
+#include "Ancillary/type_list2.h"
 
 #include <complex>
 
@@ -39,18 +39,18 @@ namespace simple
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
-                               BasicPixelID<uint8_t>,
-                               BasicPixelID<int16_t>,
-                               BasicPixelID<uint16_t>,
-                               BasicPixelID<int32_t>,
-                               BasicPixelID<uint32_t>,
+using BasicPixelIDTypeList = typelist2::typelist<BasicPixelID<int8_t>,
+                                                 BasicPixelID<uint8_t>,
+                                                 BasicPixelID<int16_t>,
+                                                 BasicPixelID<uint16_t>,
+                                                 BasicPixelID<int32_t>,
+                                                 BasicPixelID<uint32_t>,
 #ifdef SITK_INT64_PIXELIDS
-                               BasicPixelID<int64_t>,
-                               BasicPixelID<uint64_t>,
+                                                 BasicPixelID<int64_t>,
+                                                 BasicPixelID<uint64_t>,
 #endif
-                               BasicPixelID<float>,
-                               BasicPixelID<double> >::Type BasicPixelIDTypeList;
+                                                 BasicPixelID<float>,
+                                                 BasicPixelID<double>>;
 
 /** List of all single valued images of the itk::Image class.
  *
@@ -63,109 +63,110 @@ using ScalarPixelIDTypeList = BasicPixelIDTypeList;
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
-                               BasicPixelID<uint8_t>,
-                               BasicPixelID<int16_t>,
-                               BasicPixelID<uint16_t>,
-                               BasicPixelID<int32_t>,
-                               BasicPixelID<uint32_t>
+using IntegerPixelIDTypeList = typelist2::typelist<BasicPixelID<int8_t>,
+                                                   BasicPixelID<uint8_t>,
+                                                   BasicPixelID<int16_t>,
+                                                   BasicPixelID<uint16_t>,
+                                                   BasicPixelID<int32_t>,
+                                                   BasicPixelID<uint32_t>
 #ifdef SITK_INT64_PIXELIDS
-                               , BasicPixelID<int64_t>,
-                               BasicPixelID<uint64_t>
+                                                   ,
+                                                   BasicPixelID<int64_t>,
+                                                   BasicPixelID<uint64_t>
 #endif
-                               >::Type IntegerPixelIDTypeList;
+                                                   >;
 
 /** List of pixel ids which are unsigned integer types for the itk::Image class.
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList<BasicPixelID<uint8_t>,
-                               BasicPixelID<uint16_t>,
-                               BasicPixelID<uint32_t>
+using UnsignedIntegerPixelIDTypeList = typelist2::typelist<BasicPixelID<uint8_t>,
+                                                           BasicPixelID<uint16_t>,
+                                                           BasicPixelID<uint32_t>
 #ifdef SITK_INT64_PIXELIDS
-                               , BasicPixelID<uint64_t>
+                                                           ,
+                                                           BasicPixelID<uint64_t>
 #endif
-                               >::Type UnsignedIntegerPixelIDTypeList;
+                                                           >;
 
 /** The conventional type used for a mask image as a list */
-using MaskedPixelIDTypeList = typelist::MakeTypeList<BasicPixelID<uint8_t>>::Type;
+using MaskedPixelIDTypeList = typelist2::typelist<uint8_t>;
 
 
 /** List of pixel ids which are real types for the itk::Image class.
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList<BasicPixelID<float>,
-                               BasicPixelID<double> >::Type RealPixelIDTypeList;
+using RealPixelIDTypeList = typelist2::typelist<BasicPixelID<float>, BasicPixelID<double>>;
 
 /** List of pixel ids which are std::complex types for the itk::Image class.
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
-                                BasicPixelID<std::complex< double > > >::Type ComplexPixelIDTypeList;
+using ComplexPixelIDTypeList =
+  typelist2::typelist<BasicPixelID<std::complex<float>>, BasicPixelID<std::complex< double > > >;
 
 /** List of pixel ids which are signed
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
-                               BasicPixelID<int16_t>,
-                               BasicPixelID<int32_t>,
+using SignedPixelIDTypeList = typelist2::typelist<BasicPixelID<int8_t>,
+                                                  BasicPixelID<int16_t>,
+                                                  BasicPixelID<int32_t>,
 #ifdef SITK_INT64_PIXELIDS
-                               BasicPixelID<int64_t>,
+                                                  BasicPixelID<int64_t>,
 #endif
-                               BasicPixelID<float>,
-                               BasicPixelID<double> >::Type SignedPixelIDTypeList;
+                                                  BasicPixelID<float>,
+                                                  BasicPixelID<double>>;
 
 
 /** List of pixel ids which are vectors for itk::VectorImage class.
  *
  * \sa VectorPixelID
  */
-typedef typelist::MakeTypeList<VectorPixelID<int8_t>,
-                               VectorPixelID<uint8_t>,
-                               VectorPixelID<int16_t>,
-                               VectorPixelID<uint16_t>,
-                               VectorPixelID<int32_t>,
-                               VectorPixelID<uint32_t>,
+using VectorPixelIDTypeList = typelist2::typelist<VectorPixelID<int8_t>,
+                                                  VectorPixelID<uint8_t>,
+                                                  VectorPixelID<int16_t>,
+                                                  VectorPixelID<uint16_t>,
+                                                  VectorPixelID<int32_t>,
+                                                  VectorPixelID<uint32_t>,
 #ifdef SITK_INT64_PIXELIDS
-                               VectorPixelID<int64_t>,
-                               VectorPixelID<uint64_t>,
+                                                  VectorPixelID<int64_t>,
+                                                  VectorPixelID<uint64_t>,
 #endif
-                               VectorPixelID<float>,
-                               VectorPixelID<double> >::Type VectorPixelIDTypeList;
+                                                  VectorPixelID<float>,
+                                                  VectorPixelID<double>>;
 
 
 /** List of pixel ids which are real vectors for itk::VectorImage class.
  *
  * \sa VectorPixelID
  */
-typedef typelist::MakeTypeList<VectorPixelID<float>,
-                               VectorPixelID<double> >::Type RealVectorPixelIDTypeList;
+using  RealVectorPixelIDTypeList = typelist2::typelist<VectorPixelID<float>, VectorPixelID<double>>;
 
 /** List of pixel ids which are signed of vectors
  *
  * \sa BasicPixelID
  */
-typedef typelist::MakeTypeList< VectorPixelID<int8_t>,
-                                VectorPixelID<int16_t>,
-                                VectorPixelID<int32_t>,
-                                VectorPixelID<float>,
-                                VectorPixelID<double> >::Type SignedVectorPixelIDTypeList;
+using SignedVectorPixelIDTypeList = typelist2::typelist<VectorPixelID<int8_t>,
+                                                        VectorPixelID<int16_t>,
+                                                        VectorPixelID<int32_t>,
+                                                        VectorPixelID<float>,
+                                                        VectorPixelID<double>>;
 
 
 /** List of pixel ids which are for itk::LabelMap Image class.
  *
  * \sa LabelPixelID
  */
-typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
-                               LabelPixelID<uint16_t>,
-                               LabelPixelID<uint32_t>
+using LabelPixelIDTypeList = typelist2::typelist<LabelPixelID<uint8_t>,
+                                                 LabelPixelID<uint16_t>,
+                                                 LabelPixelID<uint32_t>
 #ifdef SITK_INT64_PIXELIDS
-                               ,LabelPixelID<uint64_t>
+                                                 ,
+                                                 LabelPixelID<uint64_t>
 #endif
-                               >::Type LabelPixelIDTypeList;
+                                                 >;
 
 using IntegerLabelPixelIDTypeList = UnsignedIntegerPixelIDTypeList;
 
@@ -177,10 +178,8 @@ using IntegerLabelPixelIDTypeList = UnsignedIntegerPixelIDTypeList;
  * \sa VectorPixelID
  * \sa LabelPixelID
  */
-typedef typelist::Append<
-  typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
-  VectorPixelIDTypeList
-  >::Type NonLabelPixelIDTypeList;
+using NonLabelPixelIDTypeList =
+  typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList, VectorPixelIDTypeList>::type;
 
 
 /** List of all pixel ids available, this include image of itk::Image,
@@ -192,10 +191,8 @@ typedef typelist::Append<
  * \sa VectorPixelID
  * \sa LabelPixelID
  */
-typedef typelist::Append<
-  typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
-  typelist::Append< VectorPixelIDTypeList, LabelPixelIDTypeList >::Type
-  >::Type AllPixelIDTypeList;
+using AllPixelIDTypeList =
+  typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList, VectorPixelIDTypeList, LabelPixelIDTypeList>::type;
 
 
 /** List of pixel ids which are instantiated for use in SimpleITK

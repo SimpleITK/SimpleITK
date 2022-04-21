@@ -3,7 +3,7 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "pixel_types" : "typelist2::append<BasicPixelIDTypeList, VectorPixelIDTypeList>::type",
   "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n",
   "public_declarations" : "static std::string GetOrientationFromDirectionCosines( const std::vector<double> &direction );\n   static std::vector<double> GetDirectionCosinesFromOrientation( const std::string &str );",
   "filter_type" : "itk::DICOMOrientImageFilter<InputImageType>",

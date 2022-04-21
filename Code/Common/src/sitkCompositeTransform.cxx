@@ -82,13 +82,12 @@ void CompositeTransform::InternalInitialization(itk::TransformBase *transform)
   // The list is traversed from the end to the beginning. The transform is first tested
   // to see if it is an itk::CompositeTransform, then if it is a regular transform
   // a CompositeTransform will be constructed and the transform added to it.
-  typedef typelist::MakeTypeList<
-      itk::CompositeTransform<double, 3>,
-      itk::CompositeTransform<double, 2>,
-      itk::Transform<double, 2, 2>,
-      itk::Transform<double, 3, 3> >::Type TransformTypeList;
+  using TransformTypeList = typelist2::typelist<itk::CompositeTransform<double, 3>,
+                                                itk::CompositeTransform<double, 2>,
+                                                itk::Transform<double, 2, 2>,
+                                                itk::Transform<double, 3, 3>>;
 
-  typelist::Visit<TransformTypeList> callInternalInitialization;
+  typelist2::visit<TransformTypeList> callInternalInitialization;
 
   // explicitly remove all function pointer with reference to prior transform
   this->m_pfFlattenTransform = nullptr;
