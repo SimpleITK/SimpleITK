@@ -11,7 +11,8 @@ except ImportError:
 import re
 import os.path as osp
 
-from SimpleITK._version import __version__
+with open(os.path.join("SimpleITK", "_version.py")) as fp:
+    exec(fp.read())
 
 def to_package_relpath(filename, pkg_name='SimpleITK'):
     return osp.relpath(filename, osp.join(os.curdir, pkg_name))
