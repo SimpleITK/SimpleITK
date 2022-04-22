@@ -139,7 +139,7 @@ struct index_of<typelist<t0, Ts...>, T>
  */
 template <typename Typelist, typename T>
 struct has_type;
-#if not defined(_MSC_VER) || _MSC_VER >= 1930
+#if !defined(_MSC_VER) || _MSC_VER >= 1930
 // note the following causes a syntax error with MS VS 16
 template <typename... Ts, typename T>
 struct has_type<typelist<Ts...>, T>
