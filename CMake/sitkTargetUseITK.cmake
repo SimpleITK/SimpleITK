@@ -34,6 +34,12 @@ function(sitk_target_use_itk target_name interface_keyword)
 endfunction()
 
 function(sitk_target_use_itk_factory target_name factory_name)
+
+  list( FIND ITK_FACTORY_LIST "${factory_name}" _index )
+  if(_index EQUAL -1)
+    message(FATAL_ERROR "Factory \"${factory_name}\" not contained in ITK_FACTORY_LIST: \"${ITK_FACTORY_LIST}\"")
+  endif()
+
   itk_generate_factory_registration(${factory_name} )
 
   string(TOUPPER ${factory_name} factory_uc)
