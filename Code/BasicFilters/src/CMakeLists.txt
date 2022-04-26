@@ -170,6 +170,6 @@ add_filter_library(SimpleITKBasicFilters1 SimpleITKBasicFilters1Source no_itk_de
 target_link_libraries ( SimpleITKBasicFilters1
   PRIVATE ${PREV_SimpleITK_LIBRARIES} )
 
-sitk_target_use_itk_factory( SimpleITK_ITKFFT FFT )
-sitk_target_use_itk_factory( SimpleITK_ITKConvolution FFT )
-sitk_target_use_itk_factory( SimpleITK_ITKDeconvolution FFT )
+sitk_target_use_itk_factory( SimpleITK_ITKFFT FFTImageFilterInit )
+sitk_target_use_itk_factory( SimpleITK_ITKConvolution FFTImageFilterInit )
+sitk_target_use_itk_factory( SimpleITK_ITKDeconvolution FFTImageFilterInit )
