@@ -429,6 +429,15 @@ TEST(IO, SeriesReader) {
   fileNames.resize(0);
   reader.SetFileNames ( fileNames );
   EXPECT_THROW( reader.Execute(), sitk::GenericException );
+
+  // Read series where first image has rescale slope of 1 and second
+  // of 4.5 (should return a float64 image)
+  fileNames.resize(0);
+  fileNames.push_back( dataFinder.GetFile ( "Input/DicomSeriesVariableRescale/0.dcm" ) );
+  fileNames.push_back( dataFinder.GetFile ( "Input/DicomSeriesVariableRescale/1.dcm" ) );
+  reader.SetFileNames ( fileNames );
+  image = reader.Execute();
+  EXPECT_EQ ( "f59726435701b906aece19456db742890810a134", sitk::Hash( image ) );
 }
 
 
