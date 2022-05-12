@@ -70,7 +70,8 @@ class ExternalViewerTest(unittest.TestCase):
 
         try:
             viewer = sitk.ImageViewer()
-            viewer.SetTitle("Basic Image Viewer Test")
+            # Some funky characters in the title to test the temp file name filter
+            viewer.SetTitle("Basic Image Viewer Test/:\'")
             viewer.Execute(ExternalViewerTest.IMG)
 
             print("\nImageViewer parameters")
