@@ -769,6 +769,30 @@ std::vector<std::string> ConvertCommand( const std::string & command, const std:
   return result;
   }
 
+
+// Check if character is not allowed for the temporary file name.
+//
+bool IsBadCharacter(char c)
+  {
+  if (!isgraph(c))
+    {
+    return true;
+    }
+
+  switch(c)
+    {
+    case '/':
+    case '\\':
+    case ' ':
+    case ':':
+    case '\"':
+    case '\'':
+      return true;
+    default:
+      return false;
+    }
+  }
+
 //
 std::string FormatFileName ( const std::string & TempDirectory, const std::string & name, const std::string & extension,
                              const int tagID )
@@ -787,7 +811,7 @@ std::string FormatFileName ( const std::string & TempDirectory, const std::strin
     {
     std::string n = name;
     // remove whitespace
-    n.erase(std::remove_if(n.begin(), n.end(), &::isspace), n.end());
+    n.erase(std::remove_if(n.begin(), n.end(), &IsBadCharacter), n.end());
 
     tmp << n << "-" << pid << "-" << tagID;
     TempFile = TempFile + tmp.str() + extension;
