@@ -772,7 +772,7 @@ std::vector<std::string> ConvertCommand( const std::string & command, const std:
 
 // Check if character is not allowed for the temporary file name.
 //
-bool IsBadCharacter(char c)
+static bool IsBadCharacter(char c)
   {
   if (!isgraph(c))
     {
