@@ -144,7 +144,7 @@ namespace simple
 
     template <typename TImageType>
       explicit Image( TImageType* image )
-      : m_PimpleImage( Self::DispatchedInternalInitialization<TImageType>(image) )
+      : m_PimpleImage( nullptr )
       {
       const PixelIDValueType type = ImageTypeToPixelIDValue<TImageType>::Result;
       const unsigned int     dimension = TImageType::ImageDimension;
@@ -152,7 +152,7 @@ namespace simple
       static_assert(type != sitkUnknown, "invalid pixel type");
       static_assert(dimension >= 2 && dimension <= SITK_MAX_DIMENSION, "Unsupported image dimension.");
 
-      //this->InternalInitialization(type, dimension, image);
+      this->InternalInitialization(type, dimension, image);
     }
     /**@}*/
 
