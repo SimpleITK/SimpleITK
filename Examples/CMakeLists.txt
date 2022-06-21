@@ -19,9 +19,6 @@ mark_as_advanced(SimpleITK_TESTING_NOSHOW)
 
 
 if(SimpleITK_USE_ELASTIX)
-  # TODO (Niels Dekker, LKEB, 2022) include(${ELASTIX_CONFIG_TARGETS_FILE})
-  include(${CMAKE_BINARY_DIR}/../Elastix-build/ElastixTargets.cmake)
-
   # Add individual cxx executables
   add_executable ( elx elx.cxx )
   target_link_libraries ( elx ${SimpleITK_LIBRARIES} )

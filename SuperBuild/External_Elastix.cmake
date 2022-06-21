@@ -3,7 +3,7 @@ file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep
 
 set( ELASTIX_GIT_REPOSITORY ${git_protocol}://github.com/SuperElastix/elastix )
 # Commit 024897 = ENH: Support CMake based client project to build against the install dir
-set( ELASTIX_GIT_TAG 02489736455ad9893856ccb376f616b7305d0a6a )
+set( ELASTIX_GIT_TAG 3b27d01340f37de78918de723412aa4e743a9270)
 
 if( NOT ${BUILD_SHARED_LIBS} )
   list( APPEND ep_elastix_args
