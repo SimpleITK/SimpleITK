@@ -40,6 +40,17 @@ namespace itk {
      * Once the image series is read the meta-data is directly
      * accessible from the reader.
      *
+     * \note If the pixel type for the returned image is not specified
+     * it is deduced from the first image in the series. This approach
+     * is computationally efficient and assumes that all images in a
+     * series have the same pixel type. In rare situations this is not
+     * the case, not all images have the same pixel type.
+     * If this leads to a narrowing conversion (e.g. first image pixel
+     * type is unsigned int and others are float) the returned
+     * image does not represent the data correctly. To resolve such
+     * situations, explicitly specify the expected pixel type via the
+     * SetOutputPixelType method before reading the series.
+     *
      * \sa itk::simple::ReadImage for the procedural interface
      **/
     class SITKIO_EXPORT ImageSeriesReader
@@ -180,12 +191,19 @@ namespace itk {
    *  \param fileNames a vector of file names
    *  \param outputPixelType see ImageReaderBase::SetOutputPixelType
    *  \param imageIO see ImageReaderBase::SetImageIO
-
+   *
    *  \note When reading a series of images that have meta-data
    *  associated with them (e.g. a DICOM series) the resulting
    *  image will have an empty meta-data dictionary.
    *  If you need the meta-data dictionaries associated with each
    *  slice then you should use the ImageSeriesReader class.
+   *
+   *  \note If the pixel type for the returned image is not specified
+   *  it is deduced from the first image in the series. This approach
+   *  is computationally efficient and assumes that all images in a
+   *  series have the same pixel type. If this is not the case,
+   *  explicitly specify the widest pixel type in the series as the
+   *  outputPixelType.
    *
    * \sa itk::simple::ImageFileReader for reading a single file.
    * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
