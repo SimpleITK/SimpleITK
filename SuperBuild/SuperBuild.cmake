@@ -506,7 +506,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest Elastix ${CMAKE_PROJECT_NAME})
 
 
 #-----------------------------------------------------------------------------

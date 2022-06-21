@@ -1,8 +1,12 @@
 set( proj Elastix )
+
+# Set dependency list
+set(${proj}_DEPENDENCIES "ITK")
+
+
 file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_common_cache}" )
 
 set( ELASTIX_GIT_REPOSITORY ${git_protocol}://github.com/SuperElastix/elastix )
-# Commit 024897 = ENH: Support CMake based client project to build against the install dir
 set( ELASTIX_GIT_TAG 3b27d01340f37de78918de723412aa4e743a9270)
 
 if( NOT ${BUILD_SHARED_LIBS} )
@@ -120,8 +124,10 @@ ExternalProject_Add( ${proj}
   -DUSE_VarianceOverLastDimensionMetric:BOOL=ON
   -DUSE_ViolaWellsMutualInformationMetric:BOOL=OFF
   -DUSE_WeightedCombinationTransformElastix:BOOL=ON
-  DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
-  BUILD_ALWAYS 0
+  BUILD_COMMAND ${BUILD_COMMAND_STRING}
+  DEPENDS
+      ${${proj}_DEPENDENCIES}
+  ${External_Project_USES_TERMINAL}
 )
 
 ExternalProject_Get_Property( ${proj} install_dir )
