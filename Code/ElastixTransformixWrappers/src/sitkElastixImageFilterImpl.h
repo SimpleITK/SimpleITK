@@ -173,4 +173,4 @@ public:
 } // end namespace simple
 } // end namespace itk
 
-#endif // silkelastiximagefilterimpl_h
+#endif // sitkelastiximagefilterimpl_h

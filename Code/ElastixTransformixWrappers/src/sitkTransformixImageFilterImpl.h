@@ -1,5 +1,5 @@
-#ifndef silktransformiximagefilterimpl_h
-#define silktransformiximagefilterimpl_h
+#ifndef sitktransformiximagefilterimpl_h
+#define sitktransformiximagefilterimpl_h
 
 // SimpleITK
 #include "sitkTransformixImageFilter.h"
@@ -133,4 +133,4 @@ public:
 } // end namespace simple
 } // end namespace itk
 
-#endif // silktransformiximagefilterimpl_h
+#endif // sitktransformiximagefilterimpl_h
