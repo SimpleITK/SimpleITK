@@ -23,12 +23,19 @@ import os
 
 
 def command_iteration(method):
-    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():10.5f}")
+    print(
+        f"{method.GetOptimizerIteration():3} "
+        + f"= {method.GetMetricValue():10.5f}"
+    )
 
 
 if len(sys.argv) < 4:
-    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
-          "<outputTransformFile>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        "<fixedImageFilter> <movingImageFile>",
+        "<outputTransformFile>",
+    )
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
@@ -36,8 +43,7 @@ fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
 transformDomainMeshSize = [8] * moving.GetDimension()
-tx = sitk.BSplineTransformInitializer(fixed,
-                                      transformDomainMeshSize)
+tx = sitk.BSplineTransformInitializer(fixed, transformDomainMeshSize)
 
 print("Initial Parameters:")
 print(tx.GetParameters())
@@ -45,11 +51,13 @@ print(tx.GetParameters())
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsCorrelation()
 
-R.SetOptimizerAsLBFGSB(gradientConvergenceTolerance=1e-5,
-                       numberOfIterations=100,
-                       maximumNumberOfCorrections=5,
-                       maximumNumberOfFunctionEvaluations=1000,
-                       costFunctionConvergenceFactor=1e+7)
+R.SetOptimizerAsLBFGSB(
+    gradientConvergenceTolerance=1e-5,
+    numberOfIterations=100,
+    maximumNumberOfCorrections=5,
+    maximumNumberOfFunctionEvaluations=1000,
+    costFunctionConvergenceFactor=1e7,
+)
 R.SetInitialTransform(tx, True)
 R.SetInterpolator(sitk.sitkLinear)
 
@@ -65,7 +73,7 @@ print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
@@ -75,5 +83,5 @@ if ("SITK_NOSHOW" not in os.environ):
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "ImageRegistration1 Composition")

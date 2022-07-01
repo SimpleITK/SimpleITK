@@ -29,5 +29,5 @@ if len(sys.argv) != 2:
 
 inputImage = sitk.ReadImage(sys.argv[1])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(inputImage)

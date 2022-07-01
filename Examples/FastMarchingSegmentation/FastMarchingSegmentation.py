@@ -22,9 +22,12 @@ import SimpleITK as sitk
 import sys
 
 if len(sys.argv) < 10:
-    print("Usage:", sys.argv[0],
-          " <inputImage> <outputImage> <seedX> <seedY> <Sigma>",
-          "<SigmoidAlpha> <SigmoidBeta> <TimeThreshold>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        " <inputImage> <outputImage> <seedX> <seedY> <Sigma>",
+        "<SigmoidAlpha> <SigmoidBeta> <TimeThreshold>",
+    )
     sys.exit(1)
 
 inputFilename = sys.argv[1]

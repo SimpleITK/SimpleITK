@@ -23,14 +23,21 @@ import os
 
 
 def command_iteration(method):
-    if (method.GetOptimizerIteration() == 0):
+    if method.GetOptimizerIteration() == 0:
         print("Estimated Scales: ", method.GetOptimizerScales())
-    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():7.5f} : {method.GetOptimizerPosition()}")
+    print(
+        f"{method.GetOptimizerIteration():3} "
+        + f"= {method.GetMetricValue():7.5f} "
+        + f": {method.GetOptimizerPosition()}"
+    )
 
 
 if len(sys.argv) < 4:
-    print("Usage:", sys.argv[0],
-          "<fixedImageFilter> <movingImageFile>  <outputTransformFile>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        "<fixedImageFilter> <movingImageFile>  <outputTransformFile>",
+    )
     sys.exit(1)
 
 pixelType = sitk.sitkFloat32
@@ -43,14 +50,17 @@ R = sitk.ImageRegistrationMethod()
 
 R.SetMetricAsCorrelation()
 
-R.SetOptimizerAsRegularStepGradientDescent(learningRate=2.0,
-                                           minStep=1e-4,
-                                           numberOfIterations=500,
-                                           gradientMagnitudeTolerance=1e-8)
+R.SetOptimizerAsRegularStepGradientDescent(
+    learningRate=2.0,
+    minStep=1e-4,
+    numberOfIterations=500,
+    gradientMagnitudeTolerance=1e-8,
+)
 R.SetOptimizerScalesFromIndexShift()
 
-tx = sitk.CenteredTransformInitializer(fixed, moving,
-                                       sitk.Similarity2DTransform())
+tx = sitk.CenteredTransformInitializer(
+    fixed, moving, sitk.Similarity2DTransform()
+)
 R.SetInitialTransform(tx)
 
 R.SetInterpolator(sitk.sitkLinear)
@@ -67,7 +77,7 @@ print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
@@ -78,5 +88,5 @@ if ("SITK_NOSHOW" not in os.environ):
 
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "ImageRegistration2 Composition")

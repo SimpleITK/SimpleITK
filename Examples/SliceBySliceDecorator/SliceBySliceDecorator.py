@@ -27,10 +27,13 @@ from functools import wraps
 
 def slice_by_slice_decorator(func):
     """
-    A function decorator which executes func on each 3D sub-volume and *in-place* pastes the results into the
-    input image. The input image type and the output image type are required to be the same type.
+    A function decorator which executes func on each 3D sub-volume and
+    *in-place* pastes the results into the input image. The input image type
+    and the output image type are required to be the same type.
 
-    :param func: A function which take a SimpleITK Image as it's first argument and returns an Image as results.
+    :param func: A function which take a SimpleITK Image as it's first
+    argument and returns an Image as results.
+
     :return: A decorated function.
     """
 
@@ -47,7 +50,7 @@ def slice_by_slice_decorator(func):
             return image
 
         extract_size = list(image.GetSize())
-        extract_size[iter_dim:] = itertools.repeat(0,  dim-iter_dim)
+        extract_size[iter_dim:] = itertools.repeat(0, dim - iter_dim)
 
         extract_index = [0] * dim
         paste_idx = [slice(None, None)] * dim
@@ -55,16 +58,19 @@ def slice_by_slice_decorator(func):
         extractor = sitk.ExtractImageFilter()
         extractor.SetSize(extract_size)
 
-        for high_idx in itertools.product(*[range(s) for s in image.GetSize()[iter_dim:]]):
+        for high_idx in itertools.product(
+            *[range(s) for s in image.GetSize()[iter_dim:]]
+        ):
 
             # The lower 2 elements of extract_index are always 0.
             # The remaining indices are iterated through all indexes.
             extract_index[iter_dim:] = high_idx
             extractor.SetIndex(extract_index)
 
-            # Sliced based indexing for setting image values internally uses the PasteImageFilter executed "inplace".
-            # The lower 2 elements are equivalent to ":". For a less general case the assignment could be written
-            # as image[:,:,z] = ...
+            # Sliced based indexing for setting image values internally uses
+            # the PasteImageFilter executed "inplace".  The lower 2 elements
+            # are equivalent to ":". For a less general case the assignment
+            # could be written as image[:,:,z] = ...
             paste_idx[iter_dim:] = high_idx
             image[paste_idx] = func(extractor.Execute(image), *args, **kwargs)
 
@@ -80,8 +86,12 @@ if len(sys.argv) < 3:
 inputImage = sitk.ReadImage(sys.argv[1])
 
 # Decorate the function
-adaptive_histogram_equalization_2d = slice_by_slice_decorator(sitk.AdaptiveHistogramEqualization)
+adaptive_histogram_equalization_2d = slice_by_slice_decorator(
+    sitk.AdaptiveHistogramEqualization
+)
 
-adaptive_histogram_equalization_2d(inputImage, radius=[20]*2, alpha=0.3, beta=0.3)
+adaptive_histogram_equalization_2d(
+    inputImage, radius=[20] * 2, alpha=0.3, beta=0.3
+)
 
 sitk.WriteImage(inputImage, sys.argv[2])

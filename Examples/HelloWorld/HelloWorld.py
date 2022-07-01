@@ -44,9 +44,12 @@ face = sitk.BinaryThreshold(face, 200, 255, 255)
 # Create the mouth
 mouthRadii = [30, 20]
 mouthCenter = [64, 76]
-mouth = 255 - sitk.BinaryThreshold(sitk.GaussianSource(
-    pixelType, imageSize, mouthRadii, mouthCenter),
-    200, 255, 255)
+mouth = 255 - sitk.BinaryThreshold(
+    sitk.GaussianSource(pixelType, imageSize, mouthRadii, mouthCenter),
+    200,
+    255,
+    255,
+)
 # Paste the mouth into the face
 mouthSize = [64, 18]
 mouthLoc = [32, 76]
@@ -56,5 +59,5 @@ face = sitk.Paste(face, mouth, mouthSize, mouthLoc, mouthLoc)
 image = image + face
 
 # Display the results
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(image, title="Hello World: Python", debugOn=True)

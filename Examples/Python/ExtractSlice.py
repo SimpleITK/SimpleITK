@@ -41,5 +41,5 @@ Extractor.SetIndex(index)
 
 sitk.WriteImage(Extractor.Execute(inputImage), str(sys.argv[3]))
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(Extractor.Execute(inputImage))

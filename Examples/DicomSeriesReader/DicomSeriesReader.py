@@ -41,5 +41,5 @@ print("Writing image:", sys.argv[2])
 
 sitk.WriteImage(image, sys.argv[2])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(image, "Dicom Series")
