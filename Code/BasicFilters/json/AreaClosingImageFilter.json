@@ -1,0 +1,54 @@
+{
+  "name" : "AreaClosingImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::AreaClosingImageFilter<InputImageType,OutputImageType>",
+  "members" : [
+    {
+      "name" : "Lambda",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "",
+      "briefdescriptionSet" : "The size of the area opening"
+    },
+    {
+      "name" : "UseImageSpacing",
+      "type" : "bool",
+      "default" : "true",
+      "doc" : "",
+      "briefdescriptionSet" : "Interpret Lambda as voxel counts or world units"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "basic",
+      "description" : "Test area closing",
+      "md5hash" : "83928600f9346290ecb6ccacb6b41d3a",
+      "settings" : [
+        {
+          "parameter" : "Lambda",
+          "cxx_value" : 20,
+          "value" : 20.0
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "grayscale attribute closing of an image",
+  "detaileddescription" : "Attribute closing remove holes according to criteria such as area.\n When applied to grayscale images it has the effect of trimming peaks based on area while leaving the rest of the image unchanged.\n It is possible to use attributes besides area, but no others are implemented yet",
+  "itk_module" : "ITKReview",
+  "itk_group" : "ITKReview",
+  "in_place" : false
+}
