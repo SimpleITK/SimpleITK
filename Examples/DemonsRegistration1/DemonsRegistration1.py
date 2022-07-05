@@ -28,7 +28,9 @@ def command_iteration(filter):
 
 if len(sys.argv) < 4:
     print(
-        f"Usage: {sys.argv[0]} <fixedImageFilter> <movingImageFile> <outputTransformFile>")
+        f"Usage: {sys.argv[0]}"
+        + " <fixedImageFilter> <movingImageFile> <outputTransformFile>"
+    )
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
@@ -61,7 +63,7 @@ outTx = sitk.DisplacementFieldTransform(displacementField)
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
@@ -74,5 +76,5 @@ if ("SITK_NOSHOW" not in os.environ):
     # Use the // floor division operator so that the pixel type is
     # the same for all three images which is the expectation for
     # the compose filter.
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "DeformableRegistration1 Composition")

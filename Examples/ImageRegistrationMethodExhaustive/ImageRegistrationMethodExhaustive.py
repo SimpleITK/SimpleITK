@@ -41,14 +41,22 @@ from math import pi
 
 
 def command_iteration(method):
-    if (method.GetOptimizerIteration() == 0):
+    if method.GetOptimizerIteration() == 0:
         print("Scales: ", method.GetOptimizerScales())
-    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():7.5f} : {method.GetOptimizerPosition()}")
+    print(
+        f"{method.GetOptimizerIteration():3} "
+        + f"= {method.GetMetricValue():7.5f} "
+        + f": {method.GetOptimizerPosition()}"
+    )
 
 
 if len(sys.argv) < 4:
-    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
-          "<outputTransformFile>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        "<fixedImageFilter> <movingImageFile>",
+        "<outputTransformFile>",
+    )
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
@@ -69,11 +77,26 @@ if fixed.GetDimension() == 2:
     R.SetOptimizerScales([2.0 * pi / sample_per_axis, 1.0, 1.0])
 elif fixed.GetDimension() == 3:
     tx = sitk.Euler3DTransform()
-    R.SetOptimizerAsExhaustive([sample_per_axis // 2, sample_per_axis // 2,
-                                sample_per_axis // 4, 0, 0, 0])
+    R.SetOptimizerAsExhaustive(
+        [
+            sample_per_axis // 2,
+            sample_per_axis // 2,
+            sample_per_axis // 4,
+            0,
+            0,
+            0,
+        ]
+    )
     R.SetOptimizerScales(
-        [2.0 * pi / sample_per_axis, 2.0 * pi / sample_per_axis,
-         2.0 * pi / sample_per_axis, 1.0, 1.0, 1.0])
+        [
+            2.0 * pi / sample_per_axis,
+            2.0 * pi / sample_per_axis,
+            2.0 * pi / sample_per_axis,
+            1.0,
+            1.0,
+            1.0,
+        ]
+    )
 
 # Initialize the transform with a translation and the center of
 # rotation from the moments of intensity.
@@ -95,7 +118,7 @@ print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
@@ -106,5 +129,5 @@ if ("SITK_NOSHOW" not in os.environ):
 
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "ImageRegistrationExhaustive Composition")

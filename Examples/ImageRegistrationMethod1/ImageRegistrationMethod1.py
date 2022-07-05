@@ -23,12 +23,20 @@ import os
 
 
 def command_iteration(method):
-    print(f"{method.GetOptimizerIteration():3} = {method.GetMetricValue():10.5f} : {method.GetOptimizerPosition()}")
+    print(
+        f"{method.GetOptimizerIteration():3} "
+        + f"= {method.GetMetricValue():10.5f} "
+        + f": {method.GetOptimizerPosition()}"
+    )
 
 
 if len(sys.argv) < 4:
-    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
-          "<outputTransformFile>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        "<fixedImageFilter> <movingImageFile>",
+        "<outputTransformFile>",
+    )
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
@@ -37,7 +45,7 @@ moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMeanSquares()
-R.SetOptimizerAsRegularStepGradientDescent(4.0, .01, 200)
+R.SetOptimizerAsRegularStepGradientDescent(4.0, 0.01, 200)
 R.SetInitialTransform(sitk.TranslationTransform(fixed.GetDimension()))
 R.SetInterpolator(sitk.sitkLinear)
 
@@ -53,7 +61,7 @@ print(f" Metric value: {R.GetMetricValue()}")
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
@@ -63,5 +71,5 @@ if ("SITK_NOSHOW" not in os.environ):
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "ImageRegistration1 Composition")

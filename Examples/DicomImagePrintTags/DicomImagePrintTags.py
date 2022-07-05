@@ -33,7 +33,7 @@ reader.ReadImageInformation()
 
 for k in reader.GetMetaDataKeys():
     v = reader.GetMetaData(k)
-    print(f"({k}) = = \"{v}\"")
+    print(f'({k}) = = "{v}"')
 
 print(f"Image Size: {reader.GetSize()}")
 print(f"Image PixelType: {sitk.GetPixelIDValueAsString(reader.GetPixelID())}")

@@ -23,14 +23,17 @@ import os
 
 
 def command_iteration(method):
-    if (method.GetOptimizerIteration() == 0):
+    if method.GetOptimizerIteration() == 0:
         print(f"\tLevel: {method.GetCurrentLevel()}")
         print(f"\tScales: {method.GetOptimizerScales()}")
     print(f"#{method.GetOptimizerIteration()}")
     print(f"\tMetric Value: {method.GetMetricValue():10.5f}")
     print(f"\tLearningRate: {method.GetOptimizerLearningRate():10.5f}")
-    if (method.GetOptimizerConvergenceValue() != sys.float_info.max):
-        print(f"\tConvergence Value: {method.GetOptimizerConvergenceValue():.5e}")
+    if method.GetOptimizerConvergenceValue() != sys.float_info.max:
+        print(
+            "\tConvergence Value: "
+            + f"{method.GetOptimizerConvergenceValue():.5e}"
+        )
 
 
 def command_multiresolution_iteration(method):
@@ -39,17 +42,21 @@ def command_multiresolution_iteration(method):
 
 
 if len(sys.argv) < 4:
-    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
-          "<outputTransformFile>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        "<fixedImageFilter> <movingImageFile>",
+        "<outputTransformFile>",
+    )
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
-initialTx = sitk.CenteredTransformInitializer(fixed, moving,
-                                              sitk.AffineTransform(
-                                                  fixed.GetDimension()))
+initialTx = sitk.CenteredTransformInitializer(
+    fixed, moving, sitk.AffineTransform(fixed.GetDimension())
+)
 
 R = sitk.ImageRegistrationMethod()
 
@@ -59,9 +66,11 @@ R.SetSmoothingSigmasPerLevel([2, 1, 1])
 R.SetMetricAsJointHistogramMutualInformation(20)
 R.MetricUseFixedImageGradientFilterOff()
 
-R.SetOptimizerAsGradientDescent(learningRate=1.0,
-                                numberOfIterations=100,
-                                estimateLearningRate=R.EachIteration)
+R.SetOptimizerAsGradientDescent(
+    learningRate=1.0,
+    numberOfIterations=100,
+    estimateLearningRate=R.EachIteration,
+)
 R.SetOptimizerScalesFromPhysicalShift()
 
 R.SetInitialTransform(initialTx)
@@ -69,8 +78,10 @@ R.SetInitialTransform(initialTx)
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R))
-R.AddCommand(sitk.sitkMultiResolutionIterationEvent,
-             lambda: command_multiresolution_iteration(R))
+R.AddCommand(
+    sitk.sitkMultiResolutionIterationEvent,
+    lambda: command_multiresolution_iteration(R),
+)
 
 outTx1 = R.Execute(fixed, moving)
 
@@ -84,8 +95,9 @@ displacementField = sitk.Image(fixed.GetSize(), sitk.sitkVectorFloat64)
 displacementField.CopyInformation(fixed)
 displacementTx = sitk.DisplacementFieldTransform(displacementField)
 del displacementField
-displacementTx.SetSmoothingGaussianOnUpdate(varianceForUpdateField=0.0,
-                                            varianceForTotalField=1.5)
+displacementTx.SetSmoothingGaussianOnUpdate(
+    varianceForUpdateField=0.0, varianceForTotalField=1.5
+)
 
 R.SetMovingInitialTransform(outTx1)
 R.SetInitialTransform(displacementTx, inPlace=True)
@@ -97,9 +109,11 @@ R.SetShrinkFactorsPerLevel([3, 2, 1])
 R.SetSmoothingSigmasPerLevel([2, 1, 1])
 
 R.SetOptimizerScalesFromPhysicalShift()
-R.SetOptimizerAsGradientDescent(learningRate=1,
-                                numberOfIterations=300,
-                                estimateLearningRate=R.EachIteration)
+R.SetOptimizerAsGradientDescent(
+    learningRate=1,
+    numberOfIterations=300,
+    estimateLearningRate=R.EachIteration,
+)
 
 R.Execute(fixed, moving)
 
@@ -112,7 +126,7 @@ print(f" Metric value: {R.GetMetricValue()}")
 compositeTx = sitk.CompositeTransform([outTx1, displacementTx])
 sitk.WriteTransform(compositeTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(displacementTx.GetDisplacementField(), "Displacement Field")
 
     resampler = sitk.ResampleImageFilter()
@@ -124,5 +138,5 @@ if ("SITK_NOSHOW" not in os.environ):
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "ImageRegistration1 Composition")

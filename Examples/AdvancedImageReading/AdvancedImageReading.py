@@ -23,19 +23,21 @@ import SimpleITK as sitk
 import numpy as np
 
 if len(sys.argv) < 2:
-    print('Wrong number of arguments.', file=sys.stderr)
-    print('Usage: ' + __file__ + ' image_file_name', file=sys.stderr)
+    print("Wrong number of arguments.", file=sys.stderr)
+    print("Usage: " + __file__ + " image_file_name", file=sys.stderr)
     sys.exit(1)
 
 # Read image information without reading the bulk data.
 file_reader = sitk.ImageFileReader()
 file_reader.SetFileName(sys.argv[1])
 file_reader.ReadImageInformation()
-print(f'image size: {file_reader.GetSize()}\nimage spacing: {file_reader.GetSpacing()}')
+print(f"image size: {file_reader.GetSize()}")
+print(f"image spacing: {file_reader.GetSpacing()}")
+
 # Some files have a rich meta-data dictionary (e.g. DICOM)
 for key in file_reader.GetMetaDataKeys():
-    print(key + ': ' + file_reader.GetMetaData(key))
-print('-' * 20)
+    print(key + ": " + file_reader.GetMetaData(key))
+print("-" * 20)
 
 # When low on memory, we can incrementally work on sub-images. The following
 # subtracts two images (ok, the same image) by reading them as multiple'
@@ -51,8 +53,11 @@ file_reader.SetFileName(image1_file_name)
 file_reader.ReadImageInformation()
 image_size = file_reader.GetSize()
 
-result_img = sitk.Image(file_reader.GetSize(), file_reader.GetPixelID(),
-                        file_reader.GetNumberOfComponents())
+result_img = sitk.Image(
+    file_reader.GetSize(),
+    file_reader.GetPixelID(),
+    file_reader.GetNumberOfComponents(),
+)
 result_img.SetSpacing(file_reader.GetSpacing())
 result_img.SetOrigin(file_reader.GetOrigin())
 result_img.SetDirection(file_reader.GetDirection())
@@ -72,17 +77,21 @@ for i in range(parts):
     file_reader.SetExtractIndex(current_index)
     file_reader.SetExtractSize(extract_size)
     sub_image2 = file_reader.Execute()
-    idx = [slice(None,None)]*file_reader.GetDimension()
+    idx = [slice(None, None)] * file_reader.GetDimension()
     idx[-1] = current_index[-1]
-    result_img[idx] =  sub_image1 - sub_image2
+    result_img[idx] = sub_image1 - sub_image2
     current_index[-1] += extract_size[-1]
 del sub_image1
 del sub_image2
 
 # Check that our iterative approach is equivalent to reading the whole images.
-if np.any(sitk.GetArrayViewFromImage(result_img
-                                     - sitk.ReadImage(image1_file_name)
-                                     + sitk.ReadImage(image2_file_name))):
-    print('Subtraction error.')
+if np.any(
+    sitk.GetArrayViewFromImage(
+        result_img
+        - sitk.ReadImage(image1_file_name)
+        + sitk.ReadImage(image2_file_name)
+    )
+):
+    print("Subtraction error.")
     sys.exit(1)
 sys.exit(0)

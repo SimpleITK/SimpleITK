@@ -67,7 +67,7 @@ A read and write example using SimpleITK's `ImageFileReader <https://simpleitk.o
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
-       :lines: 28-37
+       :lines: 31-40
 
   .. tab:: R
 
@@ -122,7 +122,7 @@ A more compact example using SimpleITK's procedural interface:
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
-       :lines: 44-47
+       :lines: 47-50
 
   .. tab:: R
 
@@ -195,7 +195,7 @@ reading it back, and then comparing the results.
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
-       :lines: 54-62
+       :lines: 57-65
 
   .. tab:: R
 

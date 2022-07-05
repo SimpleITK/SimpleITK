@@ -17,6 +17,9 @@
 #
 # =========================================================================
 
+import sys
+
+
 # These examples are used in the I/O documentation page. The IO.rst file
 # pulls the code examples based their line numbers in this file. So any
 # change in the line numbers of the code below will break the I/O page.
@@ -25,44 +28,42 @@
 #
 def example1(inputImageFileName, outputImageFileName):
 
-  import SimpleITK as sitk
+    import SimpleITK as sitk
 
-  reader = sitk.ImageFileReader()
-  reader.SetImageIO("PNGImageIO")
-  reader.SetFileName(inputImageFileName)
-  image = reader.Execute();
+    reader = sitk.ImageFileReader()
+    reader.SetImageIO("PNGImageIO")
+    reader.SetFileName(inputImageFileName)
+    image = reader.Execute()
 
-  writer = sitk.ImageFileWriter()
-  writer.SetFileName(outputImageFileName)
-  writer.Execute(image)
+    writer = sitk.ImageFileWriter()
+    writer.SetFileName(outputImageFileName)
+    writer.Execute(image)
 
 
 # A simple procedural image input/output example
 #
 def example2(inputImageFileName, outputImageFileName):
 
-  import SimpleITK as sitk
+    import SimpleITK as sitk
 
-  image = sitk.ReadImage(inputImageFileName, imageIO="PNGImageIO")
-  sitk.WriteImage(image, outputImageFileName)
+    image = sitk.ReadImage(inputImageFileName, imageIO="PNGImageIO")
+    sitk.WriteImage(image, outputImageFileName)
 
 
 # A simple transform input/output example
 #
 def example3():
 
-  import SimpleITK as sitk
+    import SimpleITK as sitk
 
-  basic_transform = sitk.Euler2DTransform()
-  basic_transform.SetTranslation((2,3))
+    basic_transform = sitk.Euler2DTransform()
+    basic_transform.SetTranslation((2, 3))
 
-  sitk.WriteTransform(basic_transform, 'euler2D.tfm')
-  read_result = sitk.ReadTransform('euler2D.tfm')
+    sitk.WriteTransform(basic_transform, "euler2D.tfm")
+    read_result = sitk.ReadTransform("euler2D.tfm")
 
-  assert(type(read_result) == type(basic_transform))
+    assert type(read_result) == type(basic_transform)
 
-
-import sys
 
 if __name__ == "__main__":
 

@@ -1,4 +1,4 @@
-'''=========================================================================
+"""=========================================================================
 '
 '  Copyright NumFOCUS
 '
@@ -14,7 +14,7 @@
 '  See the License for the specific language governing permissions and
 '  limitations under the License.
 '
-'========================================================================='''
+'========================================================================="""
 
 
 import SimpleITK as sitk
@@ -27,7 +27,8 @@ import os
 if len(sys.argv) < 7:
     print(
         "Usage: ConnectedThresholdImageFilter inputImage outputImage",
-        "lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]")
+        "lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]",
+    )
     sys.exit(1)
 
 #
@@ -69,5 +70,5 @@ writer = sitk.ImageFileWriter()
 writer.SetFileName(sys.argv[2])
 writer.Execute(image)
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(image, "ConntectedThreshold")

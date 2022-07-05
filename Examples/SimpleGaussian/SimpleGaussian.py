@@ -45,5 +45,5 @@ writer = sitk.ImageFileWriter()
 writer.SetFileName(sys.argv[3])
 writer.Execute(image)
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(image, "Simple Gaussian")

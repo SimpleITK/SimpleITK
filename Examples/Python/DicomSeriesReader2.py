@@ -36,8 +36,10 @@ output_image = ""
 
 
 def usage():
-    print("\nUsage: %s [-s series_name] input_directory [output_image]\n"
-          % (sys.argv[0]))
+    print(
+        "\nUsage: %s [-s series_name] input_directory [output_image]\n"
+        % (sys.argv[0])
+    )
 
 
 # Parse command line options
@@ -87,7 +89,7 @@ if len(series_found):
             print("\nImage size: ", image.GetSize())
 
             if (output_image != "") and not written:
-                if (target_series == "" or target_series == serie):
+                if target_series == "" or target_series == serie:
                     print("\nWriting", output_image)
                     sitk.WriteImage(image, output_image)
                     written = True

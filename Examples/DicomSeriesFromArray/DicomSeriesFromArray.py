@@ -23,17 +23,21 @@ import time
 import os
 import numpy as np
 
-pixel_dtypes = {"int16": np.int16,
-                "float64": np.float64}
+pixel_dtypes = {"int16": np.int16, "float64": np.float64}
 
 
 def writeSlices(series_tag_values, new_img, out_dir, i):
     image_slice = new_img[:, :, i]
 
     # Tags shared by the series.
-    list(map(lambda tag_value: image_slice.SetMetaData(tag_value[0],
-                                                       tag_value[1]),
-             series_tag_values))
+    list(
+        map(
+            lambda tag_value: image_slice.SetMetaData(
+                tag_value[0], tag_value[1]
+            ),
+            series_tag_values,
+        )
+    )
 
     # Slice specific tags.
     #   Instance Creation Date
@@ -48,20 +52,27 @@ def writeSlices(series_tag_values, new_img, out_dir, i):
     # (0020, 0032) image position patient determines the 3D spacing between
     # slices.
     #   Image Position (Patient)
-    image_slice.SetMetaData("0020|0032", '\\'.join(
-        map(str, new_img.TransformIndexToPhysicalPoint((0, 0, i)))))
+    image_slice.SetMetaData(
+        "0020|0032",
+        "\\".join(map(str, new_img.TransformIndexToPhysicalPoint((0, 0, i)))),
+    )
     #   Instance Number
     image_slice.SetMetaData("0020,0013", str(i))
 
     # Write to the output directory and add the extension dcm, to force
     # writing in DICOM format.
-    writer.SetFileName(os.path.join(out_dir, str(i) + '.dcm'))
+    writer.SetFileName(os.path.join(out_dir, str(i) + ".dcm"))
     writer.Execute(image_slice)
 
 
 if len(sys.argv) < 3:
-    print("Usage: python " + __file__ + " <output_directory> [" + ", "
-          .join(pixel_dtypes) + "]")
+    print(
+        "Usage: python "
+        + __file__
+        + " <output_directory> ["
+        + ", ".join(pixel_dtypes)
+        + "]"
+    )
     sys.exit(1)
 
 # Create a new series from a numpy array
@@ -102,13 +113,31 @@ series_tag_values = [
     ("0008|0031", modification_time),  # Series Time
     ("0008|0021", modification_date),  # Series Date
     ("0008|0008", "DERIVED\\SECONDARY"),  # Image Type
-    ("0020|000e", "1.2.826.0.1.3680043.2.1125."
-     + modification_date + ".1" + modification_time),  # Series Instance UID
-    ("0020|0037", '\\'.join(map(str, (direction[0], direction[3], direction[6],
-                                      direction[1], direction[4],
-                                      direction[7])))),  # Image Orientation
+    (
+        "0020|000e",
+        "1.2.826.0.1.3680043.2.1125."
+        + modification_date
+        + ".1"
+        + modification_time,
+    ),  # Series Instance UID
+    (
+        "0020|0037",
+        "\\".join(
+            map(
+                str,
+                (
+                    direction[0],
+                    direction[3],
+                    direction[6],
+                    direction[1],
+                    direction[4],
+                    direction[7],
+                ),
+            )
+        ),
+    ),  # Image Orientation
     # (Patient)
-    ("0008|103e", "Created-SimpleITK")  # Series Description
+    ("0008|103e", "Created-SimpleITK"),  # Series Description
 ]
 
 if pixel_dtype == np.float64:
@@ -118,16 +147,21 @@ if pixel_dtype == np.float64:
     # information.
     rescale_slope = 0.001  # keep three digits after the decimal point
     series_tag_values = series_tag_values + [
-        ('0028|1053', str(rescale_slope)),  # rescale slope
-        ('0028|1052', '0'),  # rescale intercept
-        ('0028|0100', '16'),  # bits allocated
-        ('0028|0101', '16'),  # bits stored
-        ('0028|0102', '15'),  # high bit
-        ('0028|0103', '1')]  # pixel representation
+        ("0028|1053", str(rescale_slope)),  # rescale slope
+        ("0028|1052", "0"),  # rescale intercept
+        ("0028|0100", "16"),  # bits allocated
+        ("0028|0101", "16"),  # bits stored
+        ("0028|0102", "15"),  # high bit
+        ("0028|0103", "1"),
+    ]  # pixel representation
 
 # Write slices to output directory
-list(map(lambda i: writeSlices(series_tag_values, new_img, sys.argv[1], i),
-         range(new_img.GetDepth())))
+list(
+    map(
+        lambda i: writeSlices(series_tag_values, new_img, sys.argv[1], i),
+        range(new_img.GetDepth()),
+    )
+)
 
 # Re-read the series
 # Read the original series. First obtain the series file names using the
@@ -135,11 +169,15 @@ list(map(lambda i: writeSlices(series_tag_values, new_img, sys.argv[1], i),
 data_directory = sys.argv[1]
 series_IDs = sitk.ImageSeriesReader.GetGDCMSeriesIDs(data_directory)
 if not series_IDs:
-    print("ERROR: given directory \"" + data_directory +
-          "\" does not contain a DICOM series.")
+    print(
+        'ERROR: given directory "'
+        + data_directory
+        + '" does not contain a DICOM series.'
+    )
     sys.exit(1)
 series_file_names = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(
-    data_directory, series_IDs[0])
+    data_directory, series_IDs[0]
+)
 
 series_reader = sitk.ImageSeriesReader()
 series_reader.SetFileNames(series_file_names)
@@ -151,5 +189,5 @@ series_reader.SetFileNames(series_file_names)
 # private ones.
 series_reader.LoadPrivateTagsOn()
 image3D = series_reader.Execute()
-print(image3D.GetSpacing(), 'vs', new_img.GetSpacing())
+print(image3D.GetSpacing(), "vs", new_img.GetSpacing())
 sys.exit(0)

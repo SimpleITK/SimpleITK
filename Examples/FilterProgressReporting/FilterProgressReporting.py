@@ -35,7 +35,10 @@ class MyCommand(sitk.Command):
         self.processObject = po
 
     def Execute(self):
-        print(f"{self.processObject.GetName()} Progress: {self.processObject.GetProgress():1.2f}")
+        print(
+            f"{self.processObject.GetName()}"
+            + f" Progress: {self.processObject.GetProgress():1.2f}"
+        )
 
 
 ##! [python director command]
@@ -67,5 +70,5 @@ writer = sitk.ImageFileWriter()
 writer.SetFileName(sys.argv[3])
 writer.Execute(image)
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     sitk.Show(image, "Simple Gaussian")

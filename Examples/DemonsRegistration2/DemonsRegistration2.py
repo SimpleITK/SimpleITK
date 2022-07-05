@@ -27,8 +27,12 @@ def command_iteration(filter):
 
 
 if len(sys.argv) < 4:
-    print("Usage:", sys.argv[0], "<fixedImageFilter> <movingImageFile>",
-          "[initialTransformFile] <outputTransformFile>")
+    print(
+        "Usage:",
+        sys.argv[0],
+        "<fixedImageFilter> <movingImageFile>",
+        "[initialTransformFile] <outputTransformFile>",
+    )
     sys.exit(1)
 
 fixed = sitk.ReadImage(sys.argv[1])
@@ -36,7 +40,7 @@ fixed = sitk.ReadImage(sys.argv[1])
 moving = sitk.ReadImage(sys.argv[2])
 
 matcher = sitk.HistogramMatchingImageFilter()
-if (fixed.GetPixelID() in (sitk.sitkUInt8, sitk.sitkInt8)):
+if fixed.GetPixelID() in (sitk.sitkUInt8, sitk.sitkInt8):
     matcher.SetNumberOfHistogramLevels(128)
 else:
     matcher.SetNumberOfHistogramLevels(1024)
@@ -77,7 +81,7 @@ outTx = sitk.DisplacementFieldTransform(displacementField)
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ("SITK_NOSHOW" not in os.environ):
+if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
@@ -87,5 +91,5 @@ if ("SITK_NOSHOW" not in os.environ):
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1 // 2. + simg2 // 2.)
+    cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
     sitk.Show(cimg, "DeformableRegistration1 Composition")
