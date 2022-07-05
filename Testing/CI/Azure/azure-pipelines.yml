@@ -165,8 +165,6 @@ jobs:
             BUILD_TESTING:BOOL=ON
             SimpleITK_USE_ELASTIX:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_PYTHON:BOOL=ON
-            WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
