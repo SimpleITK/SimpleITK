@@ -62,7 +62,7 @@ set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/I
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-set(_DEFAULT_ITK_GIT_TAG "ee664da6bb1a83cdf82e2582126e65119a4de1a4")
+set(_DEFAULT_ITK_GIT_TAG "v5.3rc04")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
@@ -115,7 +115,7 @@ ExternalProject_Add(${proj}
   -DITK_INSTALL_PACKAGE_DIR=lib/cmake/ITK
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
-    ${ITK_DEPENDENCIES}
+    ${${proj}_DEPENDENCIES}
   ${External_Project_USES_TERMINAL}
   )
 
