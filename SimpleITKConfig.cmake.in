@@ -45,6 +45,10 @@ if(NOT "SimpleITK_VERSION_HASH@" STREQUAL "")
 endif()
 set(SimpleITK_VERSION_COUNT)
 
+set(SimpleITK_USE_ELASTIX @SimpleITK_USE_ELASTIX@)
+if( SimpleITK_USE_ELASTIX AND NOT ELASTIX_CONFIG_TARGETS_FILE)
+  find_package(Elastix REQUIRED) # may require exact version
+endif()
 
 
 

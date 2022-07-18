@@ -12,13 +12,21 @@ endforeach()
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)
-
 endif()
 
 option(SimpleITK_TESTING_NOSHOW "Disable the Show function in SimpleITK testing." ON)
 mark_as_advanced(SimpleITK_TESTING_NOSHOW)
 
-# Add individual cxx executables
+
+if(SimpleITK_USE_ELASTIX)
+  # Add individual cxx executables
+  add_executable ( elx elx.cxx )
+  target_link_libraries ( elx ${SimpleITK_LIBRARIES} )
+
+  add_executable ( tfx tfx.cxx )
+  target_link_libraries ( tfx ${SimpleITK_LIBRARIES} )
+endif()
+
 
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )

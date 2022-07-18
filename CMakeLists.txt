@@ -137,6 +137,11 @@ set ( SimpleITK_INCLUDE_DIRS
 
 set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration )
 
+if (SimpleITK_USE_ELASTIX)
+  list (APPEND SimpleITK_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/Code/ElastixTransformixWrappers/include)
+  list (APPEND SimpleITK_LIBRARIES ElastixImageFilter TransformixImageFilter)
+endif()
+
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   list ( APPEND SimpleITK_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/Code/Explicit/include )
   # This library is linked privately to SimpleITK libraries and is not
@@ -431,6 +436,11 @@ file( GLOB __files
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/[^.]*.h
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/[^.]*.hxx
   )
+
+if (SimpleITK_USE_ELASTIX)
+  file( GLOB elastixTransformixWrapperFiles ${CMAKE_SOURCE_DIR}/Code/ElastixTransformixWrappers/include/[^.]*.h)
+  list (APPEND __files ${elastixTransformixWrapperFiles})
+endif()
 
 install(FILES ${__files}
   DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}

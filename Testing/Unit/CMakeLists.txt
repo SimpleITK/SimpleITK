@@ -45,6 +45,13 @@ if ( SimpleITK_MAX_DIMENSION GREATER_EQUAL 4 )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 
+if ( SimpleITK_USE_ELASTIX )
+  list(APPEND SimpleITKUnitTestSource
+    sitkParameterMapTests.cxx
+    sitkElastixImageFilterTests.cxx
+    sitkTransformixImageFilterTests.cxx )
+endif()
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/sitkImageViewerTest.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/sitkImageViewerTest.h ESCAPE_QUOTES)
 

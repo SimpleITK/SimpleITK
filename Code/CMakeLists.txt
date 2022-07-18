@@ -6,3 +6,7 @@ add_subdirectory(Common)
 add_subdirectory(BasicFilters)
 add_subdirectory(IO)
 add_subdirectory(Registration)
+
+if(SimpleITK_USE_ELASTIX)
+  add_subdirectory(ElastixTransformixWrappers)
+endif()

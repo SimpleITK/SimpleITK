@@ -37,6 +37,8 @@
 
 #cmakedefine SITK_EXPLICIT_INSTANTIATION
 
+#cmakedefine SITK_USE_ELASTIX
+
 // Include ITK version reported in CMake with SITK prefix, so that
 // SimpleITK doesn't need ITK header in our headers.
 #define SITK_ITK_VERSION_MAJOR @ITK_VERSION_MAJOR@

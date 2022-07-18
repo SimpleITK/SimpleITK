@@ -89,6 +89,11 @@
 
 #include "sitkAdditionalProcedures.h"
 
+#ifdef SITK_USE_ELASTIX
+#  include "sitkElastixImageFilter.h"
+#  include "sitkTransformixImageFilter.h"
+#endif
+
 #include "sitkImageRegistrationMethod.h"
 
 // These headers are auto-generated

@@ -45,6 +45,7 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
             WRAP_R:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
@@ -103,6 +104,7 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
             WRAP_JAVA:BOOL=ON
@@ -161,9 +163,8 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=ON
             WRAP_DEFAULT:BOOL=OFF
-            WRAP_PYTHON:BOOL=ON
-            WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -176,7 +177,7 @@ jobs:
         condition: succeededOrFailed()
         displayName: 'Publish test results'
       - bash : |
-          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build ${COREBINARYDIRECTORY}/Elastix ${COREBINARYDIRECTORY}/Elastix-build
         displayName: Cleanup build
       - script: |
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
