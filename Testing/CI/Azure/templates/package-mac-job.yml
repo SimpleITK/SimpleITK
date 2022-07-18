@@ -4,7 +4,7 @@ jobs:
     condition: ne( variables['configure.skipmacos'], 'true' )
     timeoutInMinutes: 300
     variables:
-      xcodeVersion: 9.4.1
+      xcodeVersion: 12.4
       coreBinaryDirectory:  '$(Agent.BuildDirectory)/sitk-build'
       CTEST_CONFIGURATION_TYPE: Release
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
