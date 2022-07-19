@@ -23,6 +23,7 @@
 #include "sitkImage.h"
 
 #include <map>
+#include <memory> // For unique_ptr.
 #include <string>
 #include <vector>
 
@@ -174,7 +175,7 @@ public:
 private:
 
   class ElastixImageFilterImpl;
-  ElastixImageFilterImpl* m_Pimple;
+  const std::unique_ptr<ElastixImageFilterImpl> m_Pimple;
 
 };
 

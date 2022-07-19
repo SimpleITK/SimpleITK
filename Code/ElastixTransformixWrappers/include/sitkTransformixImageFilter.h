@@ -23,6 +23,7 @@
 #include "sitkImage.h"
 
 #include <map>
+#include <memory> // For unique_ptr.
 #include <string>
 #include <vector>
 
@@ -122,7 +123,7 @@ public:
 private:
 
   class TransformixImageFilterImpl;
-  TransformixImageFilterImpl* m_Pimple;
+  const std::unique_ptr<TransformixImageFilterImpl> m_Pimple;
 
 };
 
