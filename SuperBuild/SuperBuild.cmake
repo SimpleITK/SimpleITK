@@ -461,18 +461,11 @@ ExternalProject_Add(${proj}
     -DElastix_DIR:PATH=${Elastix_DIR}
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
   ${External_Project_USES_TERMINAL}
-  STEP_TARGETS configure build doc forcebuild
+  STEP_TARGETS configure build doc
+  BUILD_ALWAYS 1
 )
 
-ExternalProject_Add_Step(${proj} forcebuild
-  COMMAND ${CMAKE_COMMAND} -E remove
-    ${CMAKE_CURRENT_BUILD_DIR}/${proj}-prefix/src/${proj}-stamp/${prog}-build
-  DEPENDEES configure
-  DEPENDERS build
-  ALWAYS 1
-)
-
-# explicitly add a non-default step to build SimpleITK do
+# explicitly add a non-default step to build SimpleITK docs
 ExternalProject_Add_Step(${proj} doc
   COMMAND ${CMAKE_COMMAND}
       --build <BINARY_DIR>
