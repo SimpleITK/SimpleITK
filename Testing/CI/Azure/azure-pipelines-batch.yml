@@ -33,6 +33,14 @@ jobs:
           CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           imageName: 'windows-2019'
+        v142-64-Elastix:
+          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
+          CTEST_CMAKE_GENERATOR_PLATFORM: x64
+          CTEST_CONFIGURATION_TYPE: Release
+          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
+          imageName: 'windows-2019'
+          ctest.cache_extra: |
+            SimpleITK_USE_ELASTIX:BOOL=ON
         v143-64:
           CTEST_CMAKE_GENERATOR_TOOLSET: v143,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
@@ -86,6 +94,11 @@ jobs:
         XCode_13:
           imageName: 'macos-11'
           xcodeVersion: 13.2.1
+        XCode_13-Elastix:
+          imageName: 'macos-11'
+          xcodeVersion: 13.2.1
+          ctest.cache_extra: |
+            SimpleITK_USE_ELASTIX:BOOL=ON
         XCode_12:
           imageName: 'macos-10.15'
           xcodeVersion: 12.4
@@ -134,6 +147,7 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
             WRAP_JAVA:BOOL=ON
+            $(ctest.cache_extra)
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
           ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
@@ -166,6 +180,10 @@ jobs:
          env_file: '/opt/rh/devtoolset-8/enable'
        devtools-9:
          env_file: '/opt/rh/devtoolset-9/enable'
+       devtools-9-Elastix:
+         env_file: '/opt/rh/devtoolset-9/enable'
+         ctest.cache_extra: |
+            SimpleITK_USE_ELASTIX:BOOL=ON
 
     workspace:
       clean: all
