@@ -65,8 +65,8 @@ jobs:
   - job: macOS
     timeoutInMinutes: 0
     variables:
-      imageName: 'macos-10.15'
-      xcodeVersion: 10.3
+      imageName: 'macos-11'
+      xcodeVersion: 12.4
     pool:
       vmImage: $(imageName)
 
