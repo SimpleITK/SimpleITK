@@ -32,7 +32,7 @@ public:
   typedef ParameterObjectType::ParameterValueType        ParameterValueType;
   typedef ParameterObjectType::ParameterValueVectorType  ParameterValueVectorType;
 
-  const std::string GetName();
+  std::string GetName() const;
 
   void SetMovingImage( const Image& movingImage );
   Image& GetMovingImage();

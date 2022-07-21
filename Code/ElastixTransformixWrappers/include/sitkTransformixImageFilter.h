@@ -47,7 +47,7 @@ public:
   typedef ParameterMapType::iterator                              ParameterMapIterator;
   typedef ParameterMapType::const_iterator                        ParameterMapConstIterator;
 
-  const std::string GetName();
+  std::string GetName() const;
 
   SITK_RETURN_SELF_TYPE_HEADER SetMovingImage( const Image& movingImage );
   Image& GetMovingImage();

@@ -226,9 +226,9 @@ TransformixImageFilter::TransformixImageFilterImpl
   return this->m_ResultImage;
 }
 
-const std::string
+std::string
 TransformixImageFilter::TransformixImageFilterImpl
-::GetName()
+::GetName() const
 {
   const std::string name = std::string( "TransformixImageFilter" );
   return name;
