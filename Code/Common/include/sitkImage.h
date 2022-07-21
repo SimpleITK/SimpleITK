@@ -144,7 +144,7 @@ namespace simple
 
     template <typename TImageType>
       explicit Image( TImageType* image )
-      : m_PimpleImage( nullptr )
+       : Image()
       {
       const PixelIDValueType type = ImageTypeToPixelIDValue<TImageType>::Result;
       const unsigned int     dimension = TImageType::ImageDimension;
@@ -549,7 +549,7 @@ namespace simple
     friend struct AllocateMemberFunctionAddressor;
 
 
-    PimpleImageBase * m_PimpleImage;
+    std::unique_ptr<PimpleImageBase> m_PimpleImage;
   };
 
 }
