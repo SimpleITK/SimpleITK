@@ -74,9 +74,7 @@ namespace itk
 
     memberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, Addressor>();
 
-    std::unique_ptr<PimpleImageBase> temp(memberFactory.GetMemberFunction(type, dimension)(image));
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = temp.release();
+    this->m_PimpleImage.reset(memberFactory.GetMemberFunction(type, dimension)(image));
   }
 
   void Image::Allocate ( const std::vector<unsigned int> &_size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )

@@ -33,14 +33,9 @@ namespace itk
   namespace simple
   {
 
-  Image::~Image( )
-  {
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = nullptr;
-  }
+  Image::~Image( ) = default;
 
   Image::Image( )
-    : m_PimpleImage( nullptr )
   {
     Allocate ( {0, 0}, sitkUInt8, 1 );
   }
@@ -51,9 +46,8 @@ namespace itk
   }
 
   Image::Image( Image && img ) noexcept
-  : m_PimpleImage( img.m_PimpleImage )
+    : m_PimpleImage( std::move(img.m_PimpleImage) )
   {
-    img.m_PimpleImage = nullptr;
   }
 
   Image& Image::operator=( const Image &img )
@@ -69,19 +63,16 @@ namespace itk
   }
 
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
-      : m_PimpleImage( nullptr )
     {
       Allocate ( {Width, Height}, ValueEnum, 0 );
     }
 
     Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
-      : m_PimpleImage( nullptr )
     {
       Allocate ( {Width, Height, Depth}, ValueEnum, 0 );
     }
 
     Image::Image( const std::vector< unsigned int > &size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
-      : m_PimpleImage( nullptr )
     {
       Allocate( size, ValueEnum, numberOfComponents );
     }
@@ -817,10 +808,7 @@ namespace itk
       assert( m_PimpleImage );
       if ( this->m_PimpleImage->GetReferenceCountOfImage() > 1 )
         {
-        // note: care is take here to be exception safe with memory allocation
-        std::unique_ptr<PimpleImageBase> temp( this->m_PimpleImage->DeepCopy() );
-        delete this->m_PimpleImage;
-        this->m_PimpleImage = temp.release();
+        this->m_PimpleImage.reset( this->m_PimpleImage->DeepCopy() );
         }
 
     }

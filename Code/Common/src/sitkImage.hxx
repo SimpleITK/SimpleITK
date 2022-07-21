@@ -65,10 +65,7 @@ namespace itk
     image->SetRegions ( region );
     image->Allocate();
     image->FillBuffer ( itk::NumericTraits<typename TImageType::PixelType>::ZeroValue() );
-
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = nullptr;
-    m_PimpleImage =  new PimpleImage<TImageType>( image );
+    m_PimpleImage.reset(  new PimpleImage<TImageType>( image ) );
   }
 
   template<class TImageType>
@@ -97,10 +94,7 @@ namespace itk
     image->Allocate();
     image->FillBuffer ( zero );
 
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = nullptr;
-
-    m_PimpleImage = new PimpleImage<TImageType>( image );
+    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
   }
 
   template<class TImageType>
@@ -125,10 +119,7 @@ namespace itk
     image->Allocate();
     image->SetBackgroundValue( 0 );
 
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = nullptr;
-
-    m_PimpleImage = new PimpleImage<TImageType>( image );
+    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
   }
 
   }
