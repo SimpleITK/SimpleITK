@@ -93,7 +93,7 @@ public:
    */
   template<unsigned int NDimension>
   explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
-    : m_PimpleTransform( nullptr )
+  : Transform()
     {
       static_assert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
       if ( compositeTransform == nullptr )
@@ -306,7 +306,7 @@ private:
   // As is the architecture of all SimpleITK pimples,
   // this pointer should never be null and should always point to a
   // valid object
-  PimpleTransformBase *m_PimpleTransform;
+  std::unique_ptr<PimpleTransformBase> m_PimpleTransform;
 };
 
 

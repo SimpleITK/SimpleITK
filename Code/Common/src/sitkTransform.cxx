@@ -128,19 +128,16 @@ bool initialized = RegisterMoreTransforms<2>() && RegisterMoreTransforms<3>();
 //
 
 Transform::Transform( )
-  : m_PimpleTransform( nullptr )
+  : m_PimpleTransform( new PimpleTransform<itk::IdentityTransform< double, 3 > >() )
   {
-    m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, 3 > >();
   }
 
 Transform::Transform( itk::TransformBase *transformBase )
-  : m_PimpleTransform( nullptr )
 {
   this->InternalInitialization( transformBase );
 }
 
   Transform::Transform( unsigned int dimensions, TransformEnum type)
-    : m_PimpleTransform( nullptr )
   {
     if ( dimensions == 2 )
       {
@@ -157,14 +154,9 @@ Transform::Transform( itk::TransformBase *transformBase )
   }
 
 
-  Transform::~Transform()
-  {
-    delete m_PimpleTransform;
-    this->m_PimpleTransform = nullptr;
-  }
+  Transform::~Transform() = default;
 
   Transform::Transform( const Transform &txf )
-    : m_PimpleTransform( nullptr )
   {
     Self::SetPimpleTransform( txf.m_PimpleTransform->ShallowCopy() );
   }
@@ -178,8 +170,7 @@ Transform::Transform( itk::TransformBase *transformBase )
   }
 
 
-Transform::Transform( Image &image, TransformEnum txType )
-    : m_PimpleTransform( nullptr )
+  Transform::Transform( Image &image, TransformEnum txType )
   {
 
 
@@ -314,8 +305,7 @@ Transform::Transform( PimpleTransformBase *pimpleTransform )
 
 void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
-  delete this->m_PimpleTransform;
-  this->m_PimpleTransform = pimpleTransform;
+  this->m_PimpleTransform.reset(pimpleTransform);
 }
 
 
