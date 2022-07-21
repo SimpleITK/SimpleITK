@@ -1,6 +1,3 @@
-#ifndef __sitktransformiximagefilter_cxx_
-#define __sitktransformiximagefilter_cxx_
-
 #include "sitkTransformixImageFilter.h"
 #include "sitkTransformixImageFilterImpl.h"
 
@@ -476,5 +473,3 @@ Transformix( const Image& movingImage, const TransformixImageFilter::ParameterMa
 
 } // end namespace simple
 } // end namespace itk
-
-#endif // __sitktransformiximagefilter_cxx_

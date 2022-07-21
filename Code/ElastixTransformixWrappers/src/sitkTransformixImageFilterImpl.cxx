@@ -1,6 +1,3 @@
-#ifndef __sitktransformiximagefilterimpl_cxx_
-#define __sitktransformiximagefilterimpl_cxx_
-
 #include "sitkTransformixImageFilter.h"
 #include "sitkTransformixImageFilterImpl.h"
 #include "sitkCastImageFilter.h"
@@ -705,5 +702,3 @@ TransformixImageFilter::TransformixImageFilterImpl
 
 } // end namespace simple
 } // end namespace itk
-
-#endif // __sitktransformiximagefilterimpl_cxx_
