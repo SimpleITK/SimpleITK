@@ -16,9 +16,6 @@
 *
 *=========================================================================*/
 
-#ifndef sitkImageIOUtilities_h
-#define sitkImageIOUtilities_h
-
 #include "sitkMacro.h"
 #include "sitkExceptionObject.h"
 #include "itkImageIOBase.h"
@@ -103,5 +100,3 @@ itk::SmartPointer<ImageIOBase> CreateImageIOByName(const std::string & ioname)
 }
 }
 }
-
-#endif

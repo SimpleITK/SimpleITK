@@ -1,6 +1,3 @@
-#ifndef __sitkelastiximagefilter_cxx_
-#define __sitkelastiximagefilter_cxx_
-
 #include "sitkElastixImageFilter.h"
 #include "sitkElastixImageFilterImpl.h"
 
@@ -804,5 +801,3 @@ Elastix( const Image& fixedImage, const Image& movingImage, ElastixImageFilter::
 
 } // end namespace simple
 } // end namespace itk
-
-#endif // __sitkelastiximagefilter_cxx_
