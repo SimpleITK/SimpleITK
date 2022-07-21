@@ -35,7 +35,7 @@ public:
   typedef elastix::ParameterObject                    ParameterObjectType;
   typedef elastix::ParameterObject::Pointer           ParameterObjectPointer;
 
-  const std::string GetName( void );
+  std::string GetName( void ) const;
 
   void SetFixedImage( const Image& fixedImage );
   void SetFixedImage( const VectorOfImage& fixedImages );

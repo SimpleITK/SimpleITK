@@ -263,9 +263,9 @@ ElastixImageFilter::ElastixImageFilterImpl
   return this->m_ResultImage;
 }
 
-const std::string
+std::string
 ElastixImageFilter::ElastixImageFilterImpl
-::GetName( void )
+::GetName( void ) const
 {
   const std::string name = "ElastixImageFilter";
   return name;

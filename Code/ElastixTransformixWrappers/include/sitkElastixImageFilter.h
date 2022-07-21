@@ -52,7 +52,7 @@ public:
   typedef ParameterMapType::iterator                              ParameterMapIterator;
   typedef ParameterMapType::const_iterator                        ParameterMapConstIterator;
 
-  const std::string GetName();
+  std::string GetName() const;
 
   /** \brief Sets a fixed image.
    *

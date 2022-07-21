@@ -19,9 +19,9 @@ TransformixImageFilter
   m_Pimple = NULL;
 }
 
-const std::string
+std::string
 TransformixImageFilter
-::GetName()
+::GetName() const
 {
   return this->m_Pimple->GetName();
 }

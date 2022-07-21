@@ -19,9 +19,9 @@ ElastixImageFilter
   m_Pimple = NULL;
 }
 
-const std::string
+std::string
 ElastixImageFilter
-::GetName()
+::GetName() const
 {
   return this->m_Pimple->GetName();
 }
