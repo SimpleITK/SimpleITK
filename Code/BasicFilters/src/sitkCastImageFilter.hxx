@@ -76,7 +76,7 @@ Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
   using CastFilterType = itk::CastImageFilter< typename FilterType::OutputImageType, OutputImageType >;
   typename CastFilterType::Pointer caster = CastFilterType::New();
   caster->SetInput( filter->GetOutput() );
-  caster->InPlaceOn();
+  //caster->InPlaceOn();
 
   sitkDebugMacro( << "Executing ITK filters:" << std::endl
                   << filter
