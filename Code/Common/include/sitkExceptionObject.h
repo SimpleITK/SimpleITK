@@ -21,6 +21,8 @@
 #include "sitkMacro.h"
 #include "sitkCommon.h"
 
+#include <memory> // For shared_ptr.
+
 #ifndef sitkMacro_h
 #error "sitkMacro.h must be included before sitkExceptionObject.h"
 #endif // sitkMacro_h
@@ -98,7 +100,7 @@ public:
   virtual unsigned int GetLine() const;
 
 private:
-  const ExceptionObject *m_PimpleException;
+  std::shared_ptr<const ExceptionObject> m_PimpleException;
 };
 
 #ifdef _MSC_VER

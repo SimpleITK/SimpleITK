@@ -33,28 +33,13 @@ GenericException::GenericException() noexcept
   : m_PimpleException( nullptr )
 {}
 
-GenericException::GenericException( const GenericException &e ) noexcept
-
-  : std::exception( e )
-{
-  try
-    {
-    if ( e.m_PimpleException != nullptr )
-      {
-      m_PimpleException =  new itk::ExceptionObject( *e.m_PimpleException );
-      }
-    }
-  catch(...) // prevent exception from leaving constructor
-    {
-    this->m_PimpleException = nullptr;
-    }
-}
+GenericException::GenericException( const GenericException &e ) noexcept = default;
 
 GenericException::GenericException(const char *file, unsigned int lineNumber) noexcept
 {
   try
     {
-    m_PimpleException =  new itk::ExceptionObject( file, lineNumber );
+    m_PimpleException = std::make_shared<itk::ExceptionObject>( file, lineNumber );
     }
   catch(...) // prevent exception from leaving constructor
     {
@@ -67,7 +52,7 @@ GenericException::GenericException(const std::string & file, unsigned int lineNu
 {
   try
     {
-    m_PimpleException =  new itk::ExceptionObject( file, lineNumber );
+    m_PimpleException = std::make_shared<itk::ExceptionObject>( file, lineNumber );
     }
   catch(...) // prevent exception from leaving constructor
     {
@@ -82,7 +67,7 @@ GenericException::GenericException(const std::string & file,
 {
   try
     {
-    m_PimpleException =  new itk::ExceptionObject( file, lineNumber, desc );
+    m_PimpleException = std::make_shared<itk::ExceptionObject>( file, lineNumber, desc );
     }
   catch(...) // prevent exception from leaving constructor
     {
@@ -90,10 +75,7 @@ GenericException::GenericException(const std::string & file,
     }
 }
 
-GenericException::~GenericException() noexcept
-{
-  delete this->m_PimpleException;
-}
+GenericException::~GenericException() noexcept = default;
 
 
 GenericException & GenericException::operator=(const GenericException & orig)
