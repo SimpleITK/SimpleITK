@@ -366,7 +366,7 @@ TEST(BasicFilters,ProcessObject_NumberOfThreads) {
   EXPECT_EQ(targetNum, caster2.GetGlobalDefaultNumberOfThreads());
 }
 
-TEST(BasicFilters,Cast) {
+TEST(BasicFilters,Cast_Float32) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
 
@@ -378,36 +378,26 @@ TEST(BasicFilters,Cast) {
 
   EXPECT_EQ ( image.GetPixelIDValue(), itk::simple::sitkFloat32 );
   EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkFloat32 );
-  EXPECT_EQ ( image.GetPixelIDTypeAsString(), "32-bit float" );
+  EXPECT_EQ ( image.GetPixelIDTypeAsString(), itk::simple::GetPixelIDValueAsString (itk::simple::sitkFloat32) );
 
   using MapType = std::map<std::string,itk::simple::PixelIDValueEnum>;
-  MapType mapping;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkUInt8;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkInt8;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkUInt16;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkInt16;
-  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkUInt32;
-  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkInt32;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkUInt64;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkInt64;
-  mapping["3ccccde44efaa3d688a86e94335c1f16"] = itk::simple::sitkFloat32;
-  mapping["ac0228acc17038fd1f1ed28eb2841c73"] = itk::simple::sitkFloat64;
-  mapping["226dabda8fc07f20e2b9e44ca1c83955"] = itk::simple::sitkComplexFloat32;
-  mapping["e92cbb187a92610068d7de0cb23364db"] = itk::simple::sitkComplexFloat64;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkVectorUInt8;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkVectorInt8;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkVectorUInt16;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkVectorInt16;
-  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkVectorUInt32;
-  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkVectorInt32;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkVectorUInt64;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkVectorInt64;
-  mapping["3ccccde44efaa3d688a86e94335c1f16"] = itk::simple::sitkVectorFloat32;
-  mapping["ac0228acc17038fd1f1ed28eb2841c73"] = itk::simple::sitkVectorFloat64;
-  mapping["sitkLabelUInt8"] = itk::simple::sitkLabelUInt8;
-  mapping["sitkLabelUInt16"] = itk::simple::sitkLabelUInt16;
-  mapping["sitkLabelUInt32"] = itk::simple::sitkLabelUInt32;
-  mapping["sitkLabelUInt64"] = itk::simple::sitkLabelUInt64;
+    MapType mapping = {
+            {"a963bd6a755b853103a2d195e01a50d3", itk::simple::sitkInt16},
+            {"6ceea0011178a955b5be2d545d107199", itk::simple::sitkInt32},
+            {"efa4c3b27349b97b02a64f3d2b5ca9ed", itk::simple::sitkInt64},
+            {"3ccccde44efaa3d688a86e94335c1f16", itk::simple::sitkFloat32},
+            {"ac0228acc17038fd1f1ed28eb2841c73", itk::simple::sitkFloat64},
+            {"226dabda8fc07f20e2b9e44ca1c83955", itk::simple::sitkComplexFloat32},
+            {"e92cbb187a92610068d7de0cb23364db", itk::simple::sitkComplexFloat64},
+            {"a963bd6a755b853103a2d195e01a50d3", itk::simple::sitkVectorInt16},
+            {"6ceea0011178a955b5be2d545d107199", itk::simple::sitkVectorInt32},
+            {"efa4c3b27349b97b02a64f3d2b5ca9ed", itk::simple::sitkVectorInt64},
+            {"3ccccde44efaa3d688a86e94335c1f16", itk::simple::sitkVectorFloat32},
+            {"ac0228acc17038fd1f1ed28eb2841c73", itk::simple::sitkVectorFloat64},
+            {"sitkLabelUInt8",                   itk::simple::sitkLabelUInt8},
+            {"sitkLabelUInt16",                  itk::simple::sitkLabelUInt16},
+            {"sitkLabelUInt32",                  itk::simple::sitkLabelUInt32},
+            {"sitkLabelUInt64",                  itk::simple::sitkLabelUInt64}};
 
   bool failed = false;
 
@@ -417,15 +407,11 @@ TEST(BasicFilters,Cast) {
     itk::simple::PixelIDValueEnum pixelID = it->second;
     std::string hash = it->first;
 
-    std::cerr << std::flush;
-    std::cerr << std::flush;
     if ( pixelID == itk::simple::sitkUnknown )
       {
       std::cerr << "Enum value: " << pixelID << " (" << hash << ") is unknown and not instantiated" << std::endl;
       continue;
       }
-
-    std::cerr << "Testing casting to pixelID: " << pixelID << " is " << itk::simple::GetPixelIDValueAsString ( pixelID ) << std::endl;
 
     try
       {
