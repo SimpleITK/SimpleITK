@@ -5,16 +5,12 @@ namespace itk {
   namespace simple {
 
 ElastixImageFilter
-::ElastixImageFilter() : m_Pimple( new ElastixImageFilterImpl )
+::ElastixImageFilter() : m_Pimple(std::make_unique<ElastixImageFilterImpl>())
 {
 }
 
 ElastixImageFilter
-::~ElastixImageFilter()
-{
-  delete m_Pimple;
-  m_Pimple = NULL;
-}
+::~ElastixImageFilter() = default;
 
 std::string
 ElastixImageFilter

@@ -5,16 +5,12 @@ namespace itk {
   namespace simple {
 
 TransformixImageFilter
-::TransformixImageFilter() : m_Pimple( new TransformixImageFilterImpl )
+::TransformixImageFilter() : m_Pimple(std::make_unique<TransformixImageFilterImpl>())
 {
 }
 
 TransformixImageFilter
-::~TransformixImageFilter()
-{
-  delete m_Pimple;
-  m_Pimple = NULL;
-}
+::~TransformixImageFilter() = default;
 
 std::string
 TransformixImageFilter
