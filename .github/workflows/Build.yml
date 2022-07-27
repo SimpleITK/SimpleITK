@@ -15,13 +15,16 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        os: [macos-12, ubuntu-18.04]
         include:
           - os: ubuntu-18.04
             cmake-build-type: "Release"
+            cmake-generator: "Ninja"
           - os: macos-12
             cmake-build-type: "Release"
-
+            cmake-generator: "Ninja"
+          - os: windows-2019
+            cmake-build-type: "Release"
+            cmake-generator: "Visual Studio 16 2019"
     steps:
     - uses: actions/checkout@v2
 
@@ -34,8 +37,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install ninja scikit-ci-addons cmake~=3.18.0
-
-    - name: Build SimpleITK
+    - name: Configure SimpleITK
+      shell: bash
       run: |
         mkdir sitk-bld
         cd sitk-bld
@@ -45,9 +48,13 @@ jobs:
               -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} \
               -DSimpleITK_USE_ELASTIX:BOOL=ON \
               -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF \
-              -G Ninja \
+              -G "${{ matrix.cmake-generator }}" \
               -v ${GITHUB_WORKSPACE}/SuperBuild
-        ninja
+    - name: Build SimpleITK
+      shell: bash
+      run: |
+        cd sitk-bld
+        cmake --build . --config ${{ matrix.cmake-build-type }}
 
     - name: Test SimpleITK
       run: |
