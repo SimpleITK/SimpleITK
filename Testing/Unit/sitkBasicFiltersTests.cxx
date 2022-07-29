@@ -444,6 +444,93 @@ TEST(BasicFilters,Cast_Float32) {
 
 }
 
+
+TEST(BasicFilters,Cast_UInt8) {
+    namespace sitk = itk::simple;
+
+    const unsigned int sz = 32;
+    sitk::Image image = sitk::Image( { sz, sz }, sitk::sitkUInt8);
+    for (int i = 0; i < 256; ++i)
+    {
+        image.SetPixelAsUInt8( { i%sz, i/ sz}, i );
+    }
+    ASSERT_NE ( image.GetITKBase(), nullptr );
+
+    sitk::HashImageFilter hasher;
+    hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+    EXPECT_EQ ( "7307320299fe31c5acc68bbd96853b90", hasher.Execute ( image ) );
+
+    EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkUInt8 );
+    EXPECT_EQ ( image.GetPixelIDTypeAsString(), itk::simple::GetPixelIDValueAsString (itk::simple::sitkUInt8) );
+
+    using MapType = std::map<std::string,itk::simple::PixelIDValueEnum>;
+    MapType mapping = {
+            {"7307320299fe31c5acc68bbd96853b90", itk::simple::sitkUInt8},
+            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkInt16},
+            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkUInt16},
+            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkInt32},
+            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkUInt32},
+            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkInt64},
+            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkUInt64},
+            {"e01ed55964104b42972053f7d24af9b6", itk::simple::sitkFloat32},
+            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkFloat64},
+            {"942a24b7048d8f41c8f7b9309758afdf", itk::simple::sitkComplexFloat32},
+            {"45f73c2c141598301ae9b73231102146", itk::simple::sitkComplexFloat64},
+            {"7307320299fe31c5acc68bbd96853b90", itk::simple::sitkVectorInt8},
+            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkVectorInt16},
+            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkVectorUInt16},
+            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkVectorInt32},
+            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkVectorUInt32},
+            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkVectorInt64},
+            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkVectorUInt64},
+            {"e01ed55964104b42972053f7d24af9b6", itk::simple::sitkVectorFloat32},
+            {"a5aa5992cec72b6a3c15f655f5681a15", itk::simple::sitkVectorFloat64}};
+
+    bool failed = false;
+
+    // Loop over the map, load each file, and compare the hash value
+    for ( auto it = mapping.begin(); it != mapping.end(); ++it )
+    {
+        itk::simple::PixelIDValueEnum pixelID = it->second;
+        std::string hash = it->first;
+
+        if ( pixelID == itk::simple::sitkUnknown )
+        {
+            std::cerr << "Enum value: " << pixelID << " (" << hash << ") is unknown and not instantiated" << std::endl;
+            continue;
+        }
+
+        try
+        {
+            itk::simple::CastImageFilter caster;
+            itk::simple::Image test = caster.SetOutputPixelType ( pixelID ).Execute ( image );
+
+            hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+            EXPECT_EQ ( hash, hasher.Execute ( test ) ) << "Cast to " << itk::simple::GetPixelIDValueAsString ( pixelID );
+
+        }
+        catch ( ::itk::simple::GenericException &e )
+        {
+
+            // hashing currently doesn't work for label images
+            if ( hash.find( "sitkLabel" ) == 0 )
+            {
+                std::cerr << "Hashing currently is not implemented for Label Images" << std::endl;
+            }
+            else
+            {
+                failed = true;
+                std::cerr << "Failed to hash: " << e.what() << std::endl;
+            }
+
+            continue;
+        }
+
+    }
+    EXPECT_FALSE ( failed ) << "Cast failed, or could not take the hash of the imoge";
+
+}
+
 TEST(BasicFilters,HashImageFilter) {
   itk::simple::HashImageFilter hasher;
   std::string out = hasher.ToString();
