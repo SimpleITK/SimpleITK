@@ -190,12 +190,11 @@ def _get_sitk_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
                 numpy.complex64: sitkComplexFloat32,
                 numpy.complex128: sitkComplexFloat64
                 }
-
     try:
-        return _np_sitk[numpy_array_type.dtype]
+        return _np_sitk[numpy_array_type.dtype.type]
     except KeyError:
         for key in _np_sitk:
-            if numpy.issubdtype(numpy_array_type.dtype, key):
+            if numpy.issubdtype(numpy_array_type.dtype.type, key):
                 return _np_sitk[key]
         raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
 
@@ -222,10 +221,10 @@ def _get_sitk_vector_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
                 }
 
     try:
-        return _np_sitk[numpy_array_type.dtype]
+        return _np_sitk[numpy_array_type.dtype.type]
     except KeyError:
         for key in _np_sitk:
-            if numpy.issubdtype(numpy_array_type.dtype, key):
+            if numpy.issubdtype(numpy_array_type.dtype.type, key):
                 return _np_sitk[key]
         raise TypeError('dtype: {0} is not supported as an array.'.format(numpy_array_type.dtype))
 
