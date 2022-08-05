@@ -137,7 +137,9 @@ def _get_numpy_dtype(sitkImage: Image) -> Type["numpy.number"]:
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    # this is a mapping from sitk's pixel id to numpy's dtype
+    np = numpy
+
+    # this is a mapping from sitk's pixel id to numpy's scalar types
     _sitk_np = {sitkUInt8: numpy.uint8,
                 sitkUInt16: numpy.uint16,
                 sitkUInt32: numpy.uint32,
@@ -175,27 +177,26 @@ def _get_sitk_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    # This is a Mapping from numpy array types to sitks pixel types.
-    _np_sitk = {numpy.character: sitkUInt8,
-                numpy.uint8: sitkUInt8,
-                numpy.uint16: sitkUInt16,
-                numpy.uint32: sitkUInt32,
-                numpy.uint64: sitkUInt64,
-                numpy.int8: sitkInt8,
-                numpy.int16: sitkInt16,
-                numpy.int32: sitkInt32,
-                numpy.int64: sitkInt64,
-                numpy.float32: sitkFloat32,
-                numpy.float64: sitkFloat64,
-                numpy.complex64: sitkComplexFloat32,
-                numpy.complex128: sitkComplexFloat64
+    np = numpy
+
+    # This is a Mapping from numpy dtypes to sitks pixel types.
+    _np_sitk = {np.dtype(np.character): sitkUInt8,
+                np.dtype(np.uint8): sitkUInt8,
+                np.dtype(np.uint16): sitkUInt16,
+                np.dtype(np.uint32): sitkUInt32,
+                np.dtype(np.uint64): sitkUInt64,
+                np.dtype(np.int8): sitkInt8,
+                np.dtype(np.int16): sitkInt16,
+                np.dtype(np.int32): sitkInt32,
+                np.dtype(np.int64): sitkInt64,
+                np.dtype(np.float32): sitkFloat32,
+                np.dtype(np.float64): sitkFloat64,
+                np.dtype(np.complex64): sitkComplexFloat32,
+                np.dtype(np.complex128): sitkComplexFloat64
                 }
     try:
-        return _np_sitk[numpy_array_type.dtype.type]
+        return _np_sitk[numpy_array_type.dtype]
     except KeyError:
-        for key in _np_sitk:
-            if numpy.issubdtype(numpy_array_type.dtype.type, key):
-                return _np_sitk[key]
         raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
 
 
@@ -205,27 +206,26 @@ def _get_sitk_vector_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    # This is a Mapping from numpy array types to sitks pixel types.
-    _np_sitk = {numpy.character: sitkVectorUInt8,
-                numpy.uint8: sitkVectorUInt8,
-                numpy.uint16: sitkVectorUInt16,
-                numpy.uint32: sitkVectorUInt32,
-                numpy.uint64: sitkVectorUInt64,
-                numpy.int8: sitkVectorInt8,
-                numpy.int16: sitkVectorInt16,
-                numpy.int32: sitkVectorInt32,
-                numpy.int64: sitkVectorInt64,
-                numpy.float32: sitkVectorFloat32,
-                numpy.float64: sitkVectorFloat64,
+    np = numpy
+
+    # This is a Mapping from numpy dtypes to sitks pixel types.
+    _np_sitk = {np.dtype(np.character): sitkVectorUInt8,
+                np.dtype(np.uint8): sitkVectorUInt8,
+                np.dtype(np.uint16): sitkVectorUInt16,
+                np.dtype(np.uint32): sitkVectorUInt32,
+                np.dtype(np.uint64): sitkVectorUInt64,
+                np.dtype(np.int8): sitkVectorInt8,
+                np.dtype(np.int16): sitkVectorInt16,
+                np.dtype(np.int32): sitkVectorInt32,
+                np.dtype(np.int64): sitkVectorInt64,
+                np.dtype(np.float32): sitkVectorFloat32,
+                np.dtype(np.float64): sitkVectorFloat64,
 
                 }
 
     try:
-        return _np_sitk[numpy_array_type.dtype.type]
+        return _np_sitk[numpy_array_type.dtype]
     except KeyError:
-        for key in _np_sitk:
-            if numpy.issubdtype(numpy_array_type.dtype.type, key):
-                return _np_sitk[key]
         raise TypeError('dtype: {0} is not supported as an array.'.format(numpy_array_type.dtype))
 
 
