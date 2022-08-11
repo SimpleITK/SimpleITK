@@ -39,18 +39,18 @@
       "type" : "bool",
       "default" : "false",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the maximum Feret diameter should be computed or not. The defaut value is false, because of the high computation time required.",
+      "detaileddescriptionSet" : "Set/Get whether the maximum Feret diameter should be computed or not. The default value is false, because of the high computation time required.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the maximum Feret diameter should be computed or not. The defaut value is false, because of the high computation time required."
+      "detaileddescriptionGet" : "Set/Get whether the maximum Feret diameter should be computed or not. The default value is false, because of the high computation time required."
     },
     {
       "name" : "ComputePerimeter",
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the perimeter should be computed or not. The defaut value is false, because of the high computation time required.",
+      "detaileddescriptionSet" : "Set/Get whether the perimeter should be computed or not. The default value is false, because of the high computation time required.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the perimeter should be computed or not. The defaut value is false, because of the high computation time required."
+      "detaileddescriptionGet" : "Set/Get whether the perimeter should be computed or not. The default value is false, because of the high computation time required."
     },
     {
       "name" : "NumberOfBins",

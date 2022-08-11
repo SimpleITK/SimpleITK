@@ -79,8 +79,8 @@
       "measurements_results" : [
         {
           "name" : "AverageResidual",
-            "value" : "0.160679",
-          "tolerance" : 1e-5
+          "value" : "0.160679",
+          "tolerance" : 1e-05
         }
       ]
     },
@@ -108,7 +108,7 @@
         {
           "name" : "AverageResidual",
           "value" : "0.709816",
-          "tolerance" : 1e-5
+          "tolerance" : 1e-05
         }
       ]
     },

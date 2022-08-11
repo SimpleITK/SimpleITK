@@ -112,7 +112,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get mask label value. If a binary mask image is specified and if UseMaskValue is true, only those input image voxels corresponding with mask image values equal to MaskLabel are used in estimating the bias field. If a MaskImage is specified and UseMaskLabel is false, all input image voxels corresponding to non-zero voxels in the MaskImage are used in estimating the bias field. Default = 1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "DeprecatedSet/Get mask label value. If a binary mask image is specified and if UseMaskValue is true, only those input image voxels corresponding with mask image values equal to MaskLabel are used in estimating the bias field. If a MaskImage is specified and UseMaskLabel is false, all input image voxels corresponding to non-zero voxels in the MaskImage are used in estimating the bias field. Default = 1."
+      "detaileddescriptionGet" : "Set/Get mask label value. If a binary mask image is specified and if UseMaskValue is true, only those input image voxels corresponding with mask image values equal to MaskLabel are used in estimating the bias field. If a MaskImage is specified and UseMaskLabel is false, all input image voxels corresponding to non-zero voxels in the MaskImage are used in estimating the bias field. Default = 1."
     }
   ],
   "measurements" : [
@@ -120,10 +120,15 @@
       "name" : "LogBiasFieldAsImage",
       "type" : "Image",
       "no_print" : true,
-        "active" : true,
-        "custom_cast" : "value",
-        "itk_get" : "BSplineLatticeToImage(f->GetLogBiasFieldControlPointLattice(), referenceImage, f->GetSplineOrder())",
-        "parameters" : [ { "name" : "referenceImage", "type" : "Image"} ],
+      "active" : true,
+      "custom_cast" : "value",
+      "itk_get" : "BSplineLatticeToImage(f->GetLogBiasFieldControlPointLattice(), referenceImage, f->GetSplineOrder())",
+      "parameters" : [
+        {
+          "name" : "referenceImage",
+          "type" : "Image"
+        }
+      ],
       "briefdescriptionGet" : "The computed log bias field correction.",
       "detaileddescriptionGet" : "Typically, a reduced size image is used as input to the N4 filter using something like itkShrinkImageFilter. Since the output is a corrected version of the input, the user will probably want to apply the bias field correction to the full resolution image. Returns the b-spline log bias field reconstructioned onto the space of the referenceImage parameter.\n   An input image can be corrected by: input/exp(bias_field). "
     }

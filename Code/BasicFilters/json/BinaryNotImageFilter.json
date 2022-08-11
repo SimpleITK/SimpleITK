@@ -23,9 +23,9 @@
       "default" : "0.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() ."
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() ."
     }
   ],
   "tests" : [

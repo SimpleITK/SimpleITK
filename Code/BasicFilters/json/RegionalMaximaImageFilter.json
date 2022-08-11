@@ -45,7 +45,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether a flat image must be considered as a maxima or not. Defaults to true.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get wether a flat image must be considered as a maxima or not. Defaults to true."
+      "detaileddescriptionGet" : "Set/Get whether a flat image must be considered as a maxima or not. Defaults to true."
     }
   ],
   "custom_methods" : [],

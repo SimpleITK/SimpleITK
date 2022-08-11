@@ -28,7 +28,8 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the false negative error over all labels."
+      "detaileddescriptionGet" : "Get the false negative error for the specified individual label.",
+      "briefdescriptionGet" : ""
     },
     {
       "name" : "FalsePositiveError",
@@ -49,7 +50,8 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the false positive error over all labels."
+      "detaileddescriptionGet" : "Get the false positive error for the specified individual label.",
+      "briefdescriptionGet" : ""
     },
     {
       "name" : "MeanOverlap",
@@ -72,7 +74,7 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) over all labels."
+      "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) for the specified individual label."
     },
     {
       "name" : "UnionOverlap",
@@ -95,7 +97,7 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the union overlap (Jaccard coefficient) over all labels."
+      "detaileddescriptionGet" : "Get the union overlap (Jaccard coefficient) for the specified individual label."
     },
     {
       "name" : "VolumeSimilarity",
@@ -118,7 +120,7 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the volume similarity over all labels."
+      "detaileddescriptionGet" : "Get the volume similarity for the specified individual label."
     },
     {
       "name" : "JaccardCoefficient",
@@ -141,7 +143,7 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the union overlap (Jaccard coefficient) over all labels."
+      "detaileddescriptionGet" : "Get the union overlap (Jaccard coefficient) for the specified individual label."
     },
     {
       "name" : "DiceCoefficient",
@@ -164,7 +166,7 @@
           "type" : "int64_t"
         }
       ],
-      "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) over all labels."
+      "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) for the specified individual label."
     }
   ],
   "tests" : [
