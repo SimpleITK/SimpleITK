@@ -1,0 +1,52 @@
+name: Package
+
+on:
+  push:
+    tag: [ 'latest', 'v*' ]
+
+
+jobs:
+  package-docker:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 4
+      matrix:
+        include:
+          - os: self-hosted-arm
+            dockerfile: Dockerfile-2014-aarch64
+          - os: ubuntu-latest
+            dockerfile: Dockerfile-2014-x86_64
+
+    env:
+      PYTHON_VERSIONS: "cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310"
+      BUILD_CSHARP: 0
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Docker Build Image
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux
+        run: |
+          docker build --pull=true --rm=true -t simpleitk_manylinux -f "${{ matrix.dockerfile }}"   .
+      - name: Build ${{ matrix.dockerfile }}
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux
+        run: |
+          docker run --rm \
+               --user "$(id -u):$(id -g)" \
+               --env SIMPLEITK_GIT_TAG=${{github.ref}} \
+               --env PYTHON_VERSIONS \
+               --env BUILD_CSHARP \
+                -v "$(pwd):/work/io" \
+                -t simpleitk_manylinux
+      - name: ls
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux
+        run: |
+          ls -lhR .
+      - name: Upload Wheels
+        uses: actions/upload-artifact@v2
+        with:
+          name: python-wheels
+          path: |
+            Utilities/Distribution/manylinux/wheelhouse/*.whl
