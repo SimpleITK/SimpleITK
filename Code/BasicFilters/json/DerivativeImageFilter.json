@@ -30,9 +30,9 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations. Use On to compute the derivatives in physical space; use Off to ignore the image spacing and to compute the derivatives in isotropic voxel space. Default is On.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations. Use On to compute the derivatives in physical space; use Off to ignore the image spacing and to compute the derivatives in isotropic voxel space. Default is On."
     }
   ],
   "tests" : [

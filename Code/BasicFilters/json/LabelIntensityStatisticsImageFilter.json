@@ -39,18 +39,18 @@
       "type" : "bool",
       "default" : "false",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the maximum Feret diameter should be computed or not. The defaut value is false, because of the high computation time required.",
+      "detaileddescriptionSet" : "Set/Get whether the maximum Feret diameter should be computed or not. The default value is false, because of the high computation time required.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the maximum Feret diameter should be computed or not. The defaut value is false, because of the high computation time required."
+      "detaileddescriptionGet" : "Set/Get whether the maximum Feret diameter should be computed or not. The default value is false, because of the high computation time required."
     },
     {
       "name" : "ComputePerimeter",
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the perimeter should be computed or not. The defaut value is false, because of the high computation time required.",
+      "detaileddescriptionSet" : "Set/Get whether the perimeter should be computed or not. The default value is false, because of the high computation time required.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the perimeter should be computed or not. The defaut value is false, because of the high computation time required."
+      "detaileddescriptionGet" : "Set/Get whether the perimeter should be computed or not. The default value is false, because of the high computation time required."
     },
     {
       "name" : "NumberOfBins",
@@ -745,7 +745,7 @@
     }
   ],
   "briefdescription" : "a convenient class to convert a label image to a label map and valuate the statistics attributes at once",
-  "detaileddescription" : "\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see StatisticsLabelObject , LabelStatisticsOpeningImageFilter , LabelStatisticsOpeningImageFilter",
+  "detaileddescription" : "\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\nThis implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176 \n\n\\see StatisticsLabelObject , LabelStatisticsOpeningImageFilter , LabelStatisticsOpeningImageFilter",
   "itk_module" : "ITKLabelMap",
   "itk_group" : "LabelMap",
   "in_place" : false

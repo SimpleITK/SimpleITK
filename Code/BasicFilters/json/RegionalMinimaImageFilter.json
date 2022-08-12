@@ -43,9 +43,9 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get wether a flat image must be considered as a minima or not. Defaults to true.",
+      "detaileddescriptionSet" : "Set/Get whether a flat image must be considered as a minima or not. Defaults to true.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get wether a flat image must be considered as a minima or not. Defaults to true."
+      "detaileddescriptionGet" : "Set/Get whether a flat image must be considered as a minima or not. Defaults to true."
     }
   ],
   "custom_methods" : [],
@@ -61,7 +61,7 @@
     }
   ],
   "briefdescription" : "Produce a binary image where foreground is the regional minima of the input image.",
-  "detaileddescription" : "Regional minima are flat zones surrounded by pixels of greater value.\n\nIf the input image is constant, the entire image can be considered as a minima or not. The SetFlatIsMinima() method let the user choose which behavior to use.\n\nThis class was contributed to the Insight Journal by \\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France. https://hdl.handle.net/1926/153 \n\n\n\\see RegionalMaximaImageFilter \n\n\n\\see ValuedRegionalMinimaImageFilter \n\n\n\\see HConcaveImageFilter",
+  "detaileddescription" : "Regional minima are flat zones surrounded by pixels of greater value.\n\nIf the input image is constant, the entire image can be considered as a minima or not. The SetFlatIsMinima() method let the user choose which behavior to use.\n\nThis class was contributed to the Insight Journal by \\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France. https://www.insight-journal.org/browse/publication/65 \n\n\n\\see RegionalMaximaImageFilter \n\n\n\\see ValuedRegionalMinimaImageFilter \n\n\n\\see HConcaveImageFilter",
   "itk_module" : "ITKMathematicalMorphology",
   "itk_group" : "MathematicalMorphology",
   "in_place" : false
