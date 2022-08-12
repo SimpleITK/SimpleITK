@@ -20,7 +20,7 @@ rFlag = 0
 
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hjr", [ "help", "java", "R" ] )
-except getopt.GetoptErr, err:
+except getopt.GetoptErr as err:
     print( str(err) )
     usage()
     sys.exit(1)

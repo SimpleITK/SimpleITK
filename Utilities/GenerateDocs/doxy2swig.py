@@ -180,7 +180,7 @@ class Doxy2SWIG:
 
         """
         if debug:
-            print "Generic parse: ", node, node.__class__.__name__, node.tagName, self.pieces[-5:]
+            print("Generic parse: ", node, node.__class__.__name__, node.tagName, self.pieces[-5:])
 
         npiece = 0
         if pad:
@@ -189,11 +189,11 @@ class Doxy2SWIG:
                 self.add_text('\n')
 
         if debug:
-            print len(node.childNodes), "children"
+            print(len(node.childNodes), "children")
             for n in node.childNodes:
-                print "child: ", n, n.__class__.__name__
+                print("child: ", n, n.__class__.__name__)
                 if n.__class__.__name__ == "Element":
-                    print n.tagName
+                    print(n.tagName)
 
         firstSee = True
         for n in node.childNodes:
@@ -202,7 +202,7 @@ class Doxy2SWIG:
                     kind = n.attributes['kind'].value
                     if kind == "see":
                         if debug:
-                            print "simplesect attributes:", n.attributes
+                            print("simplesect attributes:", n.attributes)
                         if firstSee:
                             n.setAttribute("PrintSee", "1")
                         firstSee = False
@@ -215,7 +215,7 @@ class Doxy2SWIG:
             if len(self.pieces) > npiece:
                 self.add_text('\n')
         if debug:
-            print ""
+            print("")
 
     def space_parse(self, node):
         """ Only output a space if the last character outputed was not a new line.
@@ -355,7 +355,7 @@ class Doxy2SWIG:
 
     def do_simplesect(self, node):
         if debug:
-            print "Simplesect"
+            print("Simplesect")
         kind = node.attributes['kind'].value
         if kind in ('date', 'rcs', 'version'):
             pass
@@ -365,7 +365,7 @@ class Doxy2SWIG:
         elif kind == 'see':
             if node.getAttribute("PrintSee"):
                 if debug:
-                    print "Printing See"
+                    print("Printing See")
                 self.add_text('\n')
                 self.add_text('See:')
             self.insideSee = True
@@ -842,20 +842,20 @@ def main(input, output):
     p.write(output)
 
 def usage():
-    print ""
+    print("")
     print ("doxy2swig.py [options] input.xml output.i")
-    print ""
+    print("")
     print ("  -h, --help                  This message")
     print ("  -d, --debug                 Debug")
-    print ""
+    print("")
 
 
 if __name__ == '__main__':
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "dh", [ "debug", "help" ] )
-    except getopt.GetoptError, err:
-        print (str(err))
+    except getopt.GetoptError as err:
+        print(str(err))
         usage()
         sys.exit(2)
 
