@@ -135,6 +135,11 @@ class Doxy2SWIG:
         txt = txt.replace("\\", r"\\\\")
         txt = txt.replace('"', r"\"")
 
+        if self.java:
+            txt = txt.replace("&", "&amp;")
+            txt = txt.replace("<", "&lt;")
+            txt = txt.replace(">", "&gt;")
+
         # ignore pure whitespace
         m = self.space_re.match(txt)
         if m and len(m.group()) == len(txt):
@@ -279,6 +284,10 @@ class Doxy2SWIG:
                 "includes",
             )
             first = self.get_specific_nodes(node, names)
+
+            if "compoundname" in first and "..." in first["compoundname"].firstChild.data:
+                return
+
             for n in names:
                 if n in first:
                     self.parse(first[n])
