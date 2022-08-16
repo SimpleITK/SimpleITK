@@ -88,6 +88,7 @@ jobs:
       - run:
           name: CCache initialization
           command: |
+            locale
             ccache --show-stats
             ccache --zero-stats
             ccache --max-size=2.0G
