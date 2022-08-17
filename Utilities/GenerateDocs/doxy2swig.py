@@ -148,7 +148,9 @@ class Doxy2SWIG:
             # if we're in a "See" node and starting a new line, indent one space
             if self.insideSee and len(self.pieces) and self.pieces[-1][-1] == "\n":
                 self.add_text(" ")
-            self.add_text(textwrap.fill(txt))
+            if node.parentNode.nodeName != "definition":
+                txt = textwrap.fill(txt)
+            self.add_text(txt)
 
     def parse_Element(self, node):
         """Parse an `ELEMENT_NODE`.  This calls specific
@@ -357,12 +359,14 @@ class Doxy2SWIG:
                 if ns_node:
                     ns = ns_node[0].firstChild.data
                     if self.java:
-                        self.add_text(' %s::%s "/**\n%s' % (ns, name, defn))
+                        self.add_text(' %s::%s "/**\n' % (ns, name))
+                        self.parse(first["definition"])
                     else:
                         self.add_text(' %s::%s "\n' % (ns, name))
                 else:
                     if self.java:
-                        self.add_text(' %s "/**\n%s' % (name, defn))
+                        self.add_text(' %s "/**\n' % (name))
+                        self.parse(first["definition"])
                     else:
                         self.add_text(' %s "\n' % (name))
             elif cdef_kind in ("class", "struct"):
@@ -370,7 +374,8 @@ class Doxy2SWIG:
                 anc_node = anc.getElementsByTagName("compoundname")
                 cname = anc_node[0].firstChild.data
                 if self.java:
-                    self.add_text(' %s::%s "/**\n%s' % (cname, name, defn))
+                    self.add_text(' %s::%s "/**\n' % (cname, name))
+                    self.parse(first["definition"])
                 else:
                     self.add_text(' %s::%s "\n' % (cname, name))
 
@@ -383,8 +388,7 @@ class Doxy2SWIG:
                 self.add_text(['";', "\n"])
 
     def do_definition(self, node):
-        data = node.firstChild.data
-        self.add_text('%s "\n%s' % (data, data))
+        self.generic_parse(node)
 
     def do_sectiondef(self, node):
         kind = node.attributes["kind"].value
