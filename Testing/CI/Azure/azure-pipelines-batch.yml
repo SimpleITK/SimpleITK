@@ -100,14 +100,11 @@ jobs:
           ctest.cache_extra: |
             SimpleITK_USE_ELASTIX:BOOL=ON
         XCode_12:
-          imageName: 'macos-10.15'
-          xcodeVersion: 12.4
-        XCode_11_2_1:
-          imageName: 'macos-10.15'
-          xcodeVersion: 11.2.1
-        XCode_10:
-          imageName: 'macos-10.15'
-          xcodeVersion: 10.3
+          imageName: 'macos-11'
+          xcodeVersion: 12.5.1
+        XCode_11:
+          imageName: 'macos-11'
+          xcodeVersion: 11.7
     pool:
       vmImage: $(imageName)
 
