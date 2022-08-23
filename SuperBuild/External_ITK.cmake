@@ -48,7 +48,7 @@ foreach (_varName ${_varNames})
 endforeach()
 
 list(APPEND ITK_VARS
-  PYTHON_EXECUTABLE
+  Python_EXECUTABLE
   )
 
 VariableListToCache( ITK_VARS  ep_itk_cache )

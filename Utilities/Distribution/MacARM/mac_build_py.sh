@@ -53,9 +53,7 @@ cmake \
     -D "SWIG_EXECUTABLE:FILEPATH=${COREBINARYDIRECTORY}/Swig/bin/swig" \
     -D "BUILD_EXAMPLES:BOOL=ON" \
     -D "BUILD_TESTING:BOOL=ON" \
-    -D "PYTHON_EXECUTABLE:FILEPATH=${PY_DIR}/bin/python${PY_MAJOR}" \
-    -D "PYTHON_INCLUDE_DIR:PATH=${PY_DIR}/include/python${PY_VERSION}" \
-    -D "PYTHON_LIBRARY:FILEPATH=${PY_DIR}/libpython${PY_VERSION}.dylib" \
+    -D "Python_EXECUTABLE:FILEPATH=${PY_DIR}/bin/python${PY_MAJOR}" \
     -D "SimpleITK_PYTHON_PLAT_NAME:STRING=macosx-11.0-arm64" \
     -D "SimpleITK_BUILD_DISTRIBUTE:BOOL=ON" \
     -D "SimpleITK_PYTHON_WHEEL:BOOL=1" \
