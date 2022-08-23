@@ -17,6 +17,7 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/../CMake/sitkCMakeInit.cmake")
 cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION})
 project ( SuperBuildSimpleITK )
 
+cmake_policy( VERSION ${SITK_CMAKE_POLICY_VERSION} )
 
 #-----------------------------------------------------------------------------
 # CMAKE_CXX_COMPILER_ARG1 is a CMake internal variable. It should not be
