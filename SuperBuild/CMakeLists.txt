@@ -19,6 +19,14 @@ project ( SuperBuildSimpleITK )
 
 cmake_policy( VERSION ${SITK_CMAKE_POLICY_VERSION} )
 
+
+foreach(p "CMP0135"
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
+
 #-----------------------------------------------------------------------------
 # CMAKE_CXX_COMPILER_ARG1 is a CMake internal variable. It should not be
 # used in SimpleITK Superbuild's configuration as it will not get
