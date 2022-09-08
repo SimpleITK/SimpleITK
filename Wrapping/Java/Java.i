@@ -75,7 +75,8 @@
    */
   public java.nio.Buffer getBufferAsBuffer()
     {
-      java.nio.ByteBuffer b = getBufferAsByteBuffer();
+      java.nio.ByteBuffer b = getBufferAsByteBuffer().order(java.nio.ByteOrder.nativeOrder());
+      
       if (getPixelID() == PixelIDValueEnum.sitkInt16 ||
           getPixelID() == PixelIDValueEnum.sitkVectorInt16)
         {
