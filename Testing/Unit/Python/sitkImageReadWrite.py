@@ -23,6 +23,7 @@ import shutil
 
 
 import SimpleITK as sitk
+from pathlib import Path
 
 
 class ImageReadWrite(unittest.TestCase):
@@ -54,6 +55,20 @@ class ImageReadWrite(unittest.TestCase):
             img[3,0] = -2**34
 
         return img
+
+    def test_write_pathlib(self):
+        """ Test writing with Path object """
+
+        img = sitk.Image([32,32], sitk.sitkUInt8)
+        img[10,10] = 13
+
+        path = Path(self.test_dir) / "write_pathlib.mha"
+
+        sitk.WriteImage(img, path)
+
+        out = sitk.ReadImage(path)
+        self.assertEqual(sitk.Hash(img), sitk.Hash(out))
+
 
     def test_write_procedure(self):
         """ Test basic functionality of the ImageRead and ImageWrite procedures."""
