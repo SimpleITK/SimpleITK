@@ -81,7 +81,7 @@ transformations include:
 * `AffineTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1AffineTransform.html>`_.
 * `BSplineTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BSplineTransform.html>`_.
 * `DisplacementFieldTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DisplacementFieldTransform.html>`_.
-* `Composite Transform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Transform.html>`_.
+* `CompositeTransform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1CompositeTransform.html>`_.
 
 The parameters modified by the registration framework are those returned by the
 transforms **GetParameters()** method. This requires special attention when the
@@ -220,8 +220,6 @@ Other metrics are more robust to small sample sizes (e.g. mean squares), but the
 In such cases it is better to use a cropped version of the image for registration, possibly the mask's bounding box,
 instead of the original image with a mask.
 
-
-
 Scaling in Parameter Space
 ==========================
 
@@ -234,6 +232,16 @@ The relevant methods are `SetOptimizerScalesFromPhysicalShift <https://simpleitk
 `SetOptimizerScalesFromJacobian <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#afe20311a9a425f312e3cefaaf683fab4>`_.
 In many cases this scaling is what determines if the the optimization converges to the
 correct optimum.
+
+Results
+======
+
+The `Execute <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#a3ba46dbf038828c8f2952875b8f6e0de>`_ method returns the generic
+`Transform <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1Transform.html>`_ type which holds an arbitrary transform, one of the types listed above. The actual transformation type held by the `Transform` depends on
+the boolean value of the `SetInitialTransform's <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ImageRegistrationMethod.html#a6f8d5b96434b73bc9d4c0afacfc2beaf>`_
+`inPlace` parameter. If `True` then the underlying type matches the type of the transformation given as input in the `SetInitialTransform` (e.g. `Euler3DTransform`), otherwise the underlying type is `CompositeTransform`.
+
+**Python Specific**: In Python the returned type is the underlying type. If `inPlace` is `True` it is one of the concrete transformation types listed above. If `inPlace` is `False` it is a `CompositeTransform`.
 
 Observing Registration Progress
 ================================
