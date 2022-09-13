@@ -10,7 +10,7 @@ set(proj GTest)
 set(GTEST_GIT_REPOSITORY "${git_protocol}://github.com/google/googletest.git" CACHE  STRING "Google Test repository")
 mark_as_advanced(GTEST_GIT_REPOSITORY)
 
-set(GTEST_GIT_TAG "release-1.11.0" CACHE STRING "Tag or hash for GTtest git repo")
+set(GTEST_GIT_TAG "release-1.12.1" CACHE STRING "Tag or hash for GTtest git repo")
 mark_as_advanced(GTEST_GIT_TAG)
 set(GTEST_TAG_COMMAND GIT_TAG "${GTEST_GIT_TAG}")
 
