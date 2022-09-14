@@ -18,7 +18,10 @@
       "type" : "bool",
       "default" : "true",
       "doc" : "",
-      "briefdescriptionSet" : "Interpret Lambda as voxel counts or world units"
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the image spacing is used or not - defaults to true.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the image spacing is used or not - defaults to true."
     },
     {
       "name" : "FullyConnected",
@@ -46,8 +49,8 @@
       ]
     }
   ],
-  "briefdescription" : "grayscale attribute opening of an image",
-  "detaileddescription" : "Attribute openings remove blobs according to criteria such as area.\n When applied to grayscale images it has the effect of trimming peaks based on area while leaving the rest of the image unchanged.\n It is possible to use attributes besides area, but no others are implemented yet",
+  "briefdescription" : "Morphological opening by attributes.",
+  "detaileddescription" : "An attribute opening removes blobs according to criteria such as area. When applied to grayscale images they have the effect of trimming peaks (regions brighter than their surrounings) based on area while leaving the rest of the image unchanged.\n\nThis code was contributed in the Insight Journal paper\n\n\"Grayscale morphological attribute operations\" by Beare R. https://hdl.handle.net/1926/1316 https://www.insight-journal.org/browse/publication/203 \n\n\\author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.",
   "itk_module" : "ITKReview",
   "itk_group" : "ITKReview",
   "in_place" : false
