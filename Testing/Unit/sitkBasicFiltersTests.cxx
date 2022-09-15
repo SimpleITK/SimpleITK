@@ -775,6 +775,10 @@ TEST(BasicFilters,LandmarkBasedTransformInitializer) {
   out = filter.Execute( sitk::VersorRigid3DTransform() );
   EXPECT_VECTOR_DOUBLE_NEAR(v6(0.0, 0.0, 0.0, 0.0, 0.0, 0.0), out.GetParameters(), 1e-15);
 
+
+  out = filter.Execute( sitk::Similarity3DTransform() );
+  EXPECT_VECTOR_DOUBLE_NEAR(v7(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0), out.GetParameters(), 1e-15);
+
   out = filter.Execute( sitk::ScaleVersor3DTransform() );
   EXPECT_VECTOR_DOUBLE_NEAR(v9(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0), out.GetParameters(), 1e-15);
 
