@@ -178,6 +178,29 @@
         }
       ],
       "detaileddescriptionGet" : "Get the mean overlap (Dice coefficient) for the specified individual label."
+    },
+    {
+      "name" : "FalseDiscoveryRate",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the false discovery rate for the specified individual label."
+    },
+    {
+      "name" : "FalseDiscoveryRate",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "",
+      "no_print" : true,
+      "active" : true,
+      "custom_cast" : "value",
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "detaileddescriptionGet" : "Get the false discovery rate for the specified individual label."
     }
   ],
   "tests" : [
@@ -193,7 +216,7 @@
         },
         {
           "name" : "FalsePositiveError",
-          "value" : 0.12807,
+          "value" : 0.0001327958723885671,
           "tolerance" : 1e-05
         },
         {
@@ -219,6 +242,11 @@
         {
           "name" : "DiceCoefficient",
           "value" : 0.82239,
+          "tolerance" : 1e-05
+        },
+        {
+          "name" : "FalseDiscoveryRate",
+          "value" : 0.12807158119658119,
           "tolerance" : 1e-05
         }
       ],
@@ -239,7 +267,7 @@
         },
         {
           "name" : "FalsePositiveError",
-          "value" : 0.0625,
+          "value" : 0.02165664044423878,
           "tolerance" : 1e-05
         },
         {
@@ -265,6 +293,11 @@
         {
           "name" : "DiceCoefficient",
           "value" : 0.8842423479027586,
+          "tolerance" : 1e-05
+        },
+        {
+          "name" : "FalseDiscoveryRate",
+          "value" : 0.0625,
           "tolerance" : 1e-05
         },
         {
@@ -277,7 +310,7 @@
         },
         {
           "name" : "FalsePositiveError",
-          "value" : 0.0625,
+          "value" : 0.02165664,
           "tolerance" : 1e-05,
           "parameters" : [
             "1"
@@ -318,6 +351,14 @@
         {
           "name" : "DiceCoefficient",
           "value" : 0.8842423479027586,
+          "tolerance" : 1e-05,
+          "parameters" : [
+            "1"
+          ]
+        },
+        {
+          "name" : "FalseDiscoveryRate",
+          "value" : 0.0625,
           "tolerance" : 1e-05,
           "parameters" : [
             "1"
