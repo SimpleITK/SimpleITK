@@ -293,7 +293,11 @@ public:
   /** \brief Writes a parameter map to the file, specified by \p filename. */
   SITK_RETURN_SELF_TYPE_HEADER WriteParameterFile( const std::map< std::string, std::vector< std::string > > parameterMap, const std::string filename );
 
-  /** \brief Executes the registration, and returns the result image. */
+  /** \brief Executes the registration, and returns the result image.
+   * \note Before executing, the number of moving images must equal the number of fixed images,
+   * the number of fixed masks must be either zero, or one, or equal to the number of fixed images,
+   * and the number of moving masks must be either zero, or one, or equal to the number of moving images
+   */
   Image Execute();
 
   /** \brief Returns all transform parameter maps. */
