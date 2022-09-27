@@ -91,24 +91,38 @@ OUT=[[
   const unsigned int dimension = ]]..inputName1..[[.GetDimension();
 ]]
 end
+
 local inputName2 = "image2"
-local input2_size_check = true
-if not (number_of_inputs >  1) and (inputs and (#inputs > 1)) then
-  inputName2 = inputs[2].name:sub(1,1):lower() .. inputs[2].name:sub(2,-1)
-  input2_size_check = not inputs[2].no_size_check
+
+
+for inum=2,number_of_inputs do
+  OUT= OUT .. [[
+  CheckImageMatchingDimension( ]] .. inputName .. [[, image]] .. inum .. [[, "image]] .. inum .. [[" );
+]]
 end
+
+if inputs then
+  for inum=2,#inputs do
+    if inum == 2 then
+      inputName2 = inputs[2].name:sub(1,1):lower() .. inputs[2].name:sub(2,-1)
+    end
+    if inputs[inum].type == "Image" and (not inputs[inum].optional or not no_optional) then
+      local currentInputName = inputs[inum].name:sub(1,1):lower()..inputs[inum].name:sub(2,-1)
+      OUT=OUT..[[
+  CheckImageMatchingDimension(  ]] .. inputName1 .. [[, ]] .. currentInputName .. [[, "]] .. currentInputName .. [[" );
+]]
+      if not inputs[inum].no_size_check then
+        OUT=OUT..[[
+  CheckImageMatchingSize(  ]] .. inputName1 .. [[, ]] .. currentInputName .. [[, "]] .. currentInputName .. [[" );
+]]
+      end
+    end
+  end
+end
+
 if number_of_inputs >= 2 or (inputs and (#inputs >= 2)) then
   OUT=OUT..[[
   const PixelIDValueType type2 = ]]..inputName2..[[.GetPixelIDValue();]]
-  OUT=OUT..[[
-
-  CheckImageMatchingDimension( ]]..inputName1 .. [[, ]] .. inputName2 .. [[, "]] .. inputName2 .. [[" );
-]]
-  if input2_size_check then
-       OUT=OUT..[[
-  CheckImageMatchingSize( ]]..inputName1 .. [[, ]] .. inputName2 .. [[, "]] .. inputName2 .. [[" );
-]]
-  end
 else
 OUT=OUT..[[
   ${custom_type2}]]
