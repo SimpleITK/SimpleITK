@@ -73,11 +73,8 @@ jobs:
       - template: templates/git-download-steps.yml
       - script: |
           mkdir -p ${PYTHONUSERBASE}
-          python --version
-          python -m site --user-site
-          python -m pip install --upgrade --user pip
-          python -m pip install --user setuptools
-          python -m pip install --user scikit-ci-addons
+          python3 --version
+          python3 -m site --user-site
         displayName: 'Install python tools and dependency'
       - bash: |
           set -x
@@ -87,7 +84,7 @@ jobs:
           ctest -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 4
         displayName: Build and test
         env:
-          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_CONFIGURATION_TYPE: Release
           CTEST_OUTPUT_ON_FAILURE: 1
           DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
@@ -102,10 +99,6 @@ jobs:
             WRAP_PYTHON:BOOL=ON
             WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
       - task: PublishTestResults@2
         inputs:
           testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
