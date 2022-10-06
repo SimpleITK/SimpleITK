@@ -14,11 +14,17 @@
 # directory.
 
 
+include(GoogleTest)
+
+if (TARGET GTest::Main AND TARGET GTest::GTest)
+    message(STATUS "GTest targets already defined.")
+#    return()
+endif()
+
 set(GTEST_ROOT "" CACHE PATH "Path to the root of a binary gtest \
 installation where GTEST_ROOT/include/gtest/gtest.h can be found OR \
 path to a Google Test source tree.")
 
-include(GoogleTest)
 
 function(_sitk_gtest_use_gtest_source)
 
