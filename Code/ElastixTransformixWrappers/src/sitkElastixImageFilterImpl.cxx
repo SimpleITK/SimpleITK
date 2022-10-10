@@ -928,7 +928,7 @@ ElastixImageFilter::ElastixImageFilterImpl::ParameterValueVectorType
 ElastixImageFilter::ElastixImageFilterImpl
 ::GetParameter( const ParameterKeyType key )
 {
-  if( this->m_ParameterMapVector.size() > 0 )
+  if( this->m_ParameterMapVector.size() > 1 )
   {
     sitkExceptionMacro( "An index is needed when more than one parameter map is present. Please specify the parameter map number as the first argument." );
   }

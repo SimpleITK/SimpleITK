@@ -350,5 +350,19 @@ TEST( ElastixImageFilter, SetNumberOfThreads )
   EXPECT_NO_THROW( silx.Execute() );
 }
 
+
+// Tests GetParameter(key) when exactly one parameter map is present.
+TEST(ElastixImageFilter, GetParameterWhenOneParameterMapIsPresent)
+{
+    const ElastixImageFilter::ParameterKeyType key = "key";
+    const ElastixImageFilter::ParameterValueVectorType values{ "1", "2", "3" };
+    const ElastixImageFilter::ParameterMapType parameterMap{ {key, values} };
+
+    ElastixImageFilter silx;
+    silx.SetParameterMap(parameterMap);
+
+    EXPECT_EQ(silx.GetParameter(key), values);
+}
+
 } // namespace simple
 } // namesapce itk
