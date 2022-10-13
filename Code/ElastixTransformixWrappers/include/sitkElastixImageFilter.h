@@ -266,7 +266,7 @@ public:
   /** \brief Adds a parameter specified by \p key, with the specified values to the parameter map at the specified (zero-based) \p index. */
   SITK_RETURN_SELF_TYPE_HEADER AddParameter( const unsigned int index, const std::string key, const std::vector< std::string > value );
 
-  /** \brief Intended to retrieve the values of the parameter specified by \p key, when there is only one parameter map. */
+  /** \brief Retrieves the values of the parameter specified by \p key, when there is only one parameter map. */
   std::vector< std::string > GetParameter( const std::string key );
 
   /** \brief Retrieves the values of the parameter specified by \p key, from the parameter map at the specified (zero-based) \p index. */
