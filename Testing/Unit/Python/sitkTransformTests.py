@@ -21,6 +21,7 @@ import tempfile
 import os.path
 import shutil
 from copy import deepcopy
+from pathlib import Path
 
 import SimpleITK as sitk
 try:
@@ -382,17 +383,19 @@ class TransformTests(unittest.TestCase):
         for ext in extensions:
             for k, v in transforms.items():
 
-                fname = os.path.join(self.test_dir, "test_readwrite_"+k+"."+tx_extension)
+                fname = Path(self.test_dir) / f"test_readwrite_{k}.{tx_extension}"
 
                 tx = getattr(sitk, k)(*v)
 
+                # test with concrete transform and Path object
                 sitk.WriteTransform(tx, fname)
                 read_tx = sitk.ReadTransform(fname)
                 self.assertEqual(tx, read_tx.Downcast(), msg=f"Testing I/O {k} with {ext}")
                 self.assertEqual(read_tx, read_tx.Downcast(), msg=f"Testing ReadTransform downcast")
 
-                sitk.WriteTransform(sitk.Transform(tx), fname)
-                read_tx = sitk.ReadTransform(fname)
+                # test with base transform class, and a regular string.
+                sitk.WriteTransform(sitk.Transform(tx), str(fname))
+                read_tx = sitk.ReadTransform(str(fname))
                 self.assertEqual(tx, read_tx.Downcast(), msg=f"Testing I/O Transform {k} with {ext}")
                 self.assertEqual(read_tx, read_tx.Downcast(), msg=f"Testing ReadTransform downcast")
 
