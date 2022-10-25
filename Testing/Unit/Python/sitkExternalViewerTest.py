@@ -20,6 +20,8 @@
 
 import unittest
 import os
+import sys
+from pathlib import Path
 
 import SimpleITK as sitk
 
@@ -32,9 +34,10 @@ class ExternalViewerTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         ExternalViewerTest.IMG = sitk.GaussianSource()
-        this_dir = os.path.dirname(os.path.abspath(__file__))
 
-        cmd = 'python ' + this_dir + '/dummy_viewer.py'
+        this_dir = Path(__file__).absolute().parent
+
+        cmd = f"{sys.executable} {this_dir/'dummy_viewer.py'}"
 
         os.environ['SITK_SHOW_COMMAND'] = cmd
 
