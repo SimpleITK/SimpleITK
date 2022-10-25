@@ -246,7 +246,6 @@ ElastixImageFilter::ElastixImageFilterImpl
     parameterObject->SetParameterMap( parameterMapVector );
     elastixFilter->SetParameterObject( parameterObject );
 
-    elastixFilter->GraftOutput( Cast( this->GetFixedImage( 0 ), sitkFloat32 ).GetITKBase() );
     elastixFilter->Update();
 
     this->m_ResultImage = Image( itkDynamicCastInDebugMode< TFixedImage* >( elastixFilter->GetOutput() ) );
