@@ -1,11 +1,10 @@
-if(SimpleITK_USE_ELASTIX)
-  # Add individual cxx executables
-  add_executable ( elx elx.cxx )
-  target_link_libraries ( elx ${SimpleITK_LIBRARIES} )
+# Add individual cxx executables
+add_executable ( elx elx.cxx )
+target_link_libraries ( elx ${SimpleITK_LIBRARIES} )
 
-  add_executable ( tfx tfx.cxx )
-  target_link_libraries ( tfx ${SimpleITK_LIBRARIES} )
-endif()
+add_executable ( tfx tfx.cxx )
+target_link_libraries ( tfx ${SimpleITK_LIBRARIES} )
+
 
 if ( NOT BUILD_TESTING )
   return ()

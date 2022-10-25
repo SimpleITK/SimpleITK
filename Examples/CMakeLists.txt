@@ -25,7 +25,10 @@ target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
-add_subdirectory(Elastix)
+
+if(SimpleITK_USE_ELASTIX)
+  add_subdirectory(Elastix)
+endif()
 
 # Test data directory
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
