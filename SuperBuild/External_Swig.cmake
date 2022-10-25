@@ -19,7 +19,7 @@ if(NOT SWIG_DIR)
   endif()
 
 
-  set(SWIG_TARGET_VERSION "4.0.2" )
+  set(SWIG_TARGET_VERSION "4.1.0" )
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
@@ -56,12 +56,12 @@ if(NOT SWIG_DIR)
     #------------------------------------------------------------------------------
 
     # Set dependency list
-    set(Swig_DEPENDENCIES "PCRE")
+    set(Swig_DEPENDENCIES "PCRE2")
 
     #
-    #  PCRE (Perl Compatible Regular Expressions)
+    #  PCRE2 (Perl Compatible Regular Expressions)
     #
-    include(External_PCRE)
+    include(External_PCRE2)
 
 
     #
@@ -104,6 +104,7 @@ if(NOT SWIG_DIR)
       set(SWIG_DOWNLOAD_STEP
         URL "${SWIG_URL}"
         URL_HASH "${SWIG_URL_HASH}"
+        ${External_Project_USE_ARCHIVE_TIMESTAMP}
         )
     endif()
 
@@ -112,7 +113,6 @@ if(NOT SWIG_DIR)
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
       DEPENDS "${Swig_DEPENDENCIES}"
       ${External_Project_USES_TERMINAL}
-      DOWNLOAD_EXTRACT_TIMESTAMP 1
       )
 
     if(NOT USE_SWIG_FROM_GIT)
