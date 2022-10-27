@@ -217,24 +217,29 @@ namespace simple
       #define UPPERBOUND  2 // 10
       #define BOTHBOUND   3 // 11
 
-      unsigned char flag = NOBOUND;
       const unsigned int sitkToITK[] = {0,1,3,2};
-      if ( this->m_OptimizerLowerBound != std::numeric_limits<double>::min() )
-        {
-        flag |= LOWERBOUND;
-        }
-      if ( this->m_OptimizerUpperBound != std::numeric_limits<double>::max() )
-        {
-        flag |= UPPERBOUND;
-        }
-
       _OptimizerType::BoundSelectionType boundSelection( numberOfTransformParameters );
-      _OptimizerType::BoundValueType lowerBound( numberOfTransformParameters );
-      _OptimizerType::BoundValueType upperBound( numberOfTransformParameters );
+      _OptimizerType::BoundValueType lowerBound(numberOfTransformParameters,
+                                                m_OptimizerLowerBound.size() != 1 ? std::numeric_limits<double>::min():  m_OptimizerLowerBound.front());
+      _OptimizerType::BoundValueType upperBound(numberOfTransformParameters,
+                                                m_OptimizerUpperBound.size() != 1 ? std::numeric_limits<double>::max():  m_OptimizerUpperBound.front());
 
-      boundSelection.Fill( sitkToITK[flag] );
-      lowerBound.Fill( this->m_OptimizerLowerBound );
-      upperBound.Fill( this->m_OptimizerUpperBound );
+      for (unsigned int i = 0; i < numberOfTransformParameters; ++i)
+         {
+         unsigned char flag = NOBOUND;
+
+         if ( i < m_OptimizerLowerBound.size() && m_OptimizerLowerBound[i] != std::numeric_limits<double>::min() )
+           {
+           lowerBound[i] = m_OptimizerLowerBound[i];
+           flag |= LOWERBOUND;
+           }
+         if (i < m_OptimizerUpperBound.size() &&  m_OptimizerUpperBound[i] != std::numeric_limits<double>::max() )
+           {
+           upperBound[i] = m_OptimizerUpperBound[i];
+           flag |= UPPERBOUND;
+           }
+         boundSelection[i] = sitkToITK[flag];
+         }
 
       optimizer->SetBoundSelection( boundSelection );
       optimizer->SetLowerBound( lowerBound  );

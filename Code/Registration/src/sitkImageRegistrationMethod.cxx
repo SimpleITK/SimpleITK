@@ -352,13 +352,13 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch( double learnin
 
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
+ImageRegistrationMethod::SetOptimizerAsLBFGSBPerParameter( double gradientConvergenceTolerance,
                                                unsigned int numberOfIterations,
                                                unsigned int maximumNumberOfCorrections,
                                                unsigned int maximumNumberOfFunctionEvaluations,
                                                double costFunctionConvergenceFactor,
-                                               double lowerBound,
-                                               double upperBound,
+                                               std::vector<double> lowerBound,
+                                               std::vector<double> upperBound,
                                                bool trace )
 {
   m_OptimizerType = LBFGSB;
@@ -372,6 +372,27 @@ ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceToleran
   m_OptimizerTrace = trace;
   return *this;
 }
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
+                                               unsigned int numberOfIterations,
+                                               unsigned int maximumNumberOfCorrections,
+                                               unsigned int maximumNumberOfFunctionEvaluations,
+                                               double costFunctionConvergenceFactor,
+                                               double lowerBound,
+                                               double upperBound,
+                                               bool trace )
+{
+  return this->SetOptimizerAsLBFGSBPerParameter(gradientConvergenceTolerance,
+                                                numberOfIterations,
+                                                maximumNumberOfCorrections,
+                                                maximumNumberOfFunctionEvaluations,
+                                                costFunctionConvergenceFactor,
+                                                {lowerBound},
+                                                {upperBound},
+                                               trace);
+}
+
 
 
 ImageRegistrationMethod::Self&

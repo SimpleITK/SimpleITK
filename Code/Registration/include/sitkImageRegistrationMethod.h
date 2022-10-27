@@ -310,7 +310,7 @@ namespace simple
                                                    EstimateLearningRateType estimateLearningRate = Once,
                                                    double maximumStepSizeInPhysicalUnits = 0.0 );
 
-    /** \brief Limited memory Broyden Fletcher Goldfarb Shannon minimization with simple bounds.
+    /** \brief Limited memory Broyden Fletcher Goldfarb Shannon minimization with uniform bounds.
      *
      * The default parameters utilize LBFGSB in unbounded mode.
      *
@@ -324,6 +324,31 @@ namespace simple
                                double lowerBound = std::numeric_limits<double>::min(),
                                double upperBound = std::numeric_limits<double>::max(),
                                bool trace = false );
+
+    /** \brief Limited memory Broyden Fletcher Goldfarb Shannon minimization with bounds per parameter
+     *
+     * The default parameters utilize LBFGSB in unbounded mode. If
+     * only a single value provided to a bound then all parameters
+     * will use that bounds.
+     *
+     * The size of the bounds array can be the number of parameter of
+     * the provide transform.Unspecified bounds ( when the bound
+     * parameter has fewer value ), default to being unbounded.
+     *
+     * This method may be removed and consolidated with the
+     * non-"PerParameter" method.
+     *
+     * \sa itk::LBFGSBOptimizerv4
+     */
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsLBFGSBPerParameter(double gradientConvergenceTolerance = 1e-5,
+                               unsigned int numberOfIterations = 500,
+                               unsigned int maximumNumberOfCorrections = 5,
+                               unsigned int maximumNumberOfFunctionEvaluations = 2000,
+                               double costFunctionConvergenceFactor = 1e+7,
+                               std::vector<double> lowerBound = {},
+                               std::vector<double> upperBound = {},
+                               bool trace = false );
+
 
     /** \brief Limited memory Broyden Fletcher Goldfarb Shannon minimization without bounds.
      *
@@ -764,8 +789,8 @@ namespace simple
     unsigned int m_OptimizerMaximumNumberOfCorrections;
     unsigned int m_OptimizerMaximumNumberOfFunctionEvaluations;
     double m_OptimizerCostFunctionConvergenceFactor;
-    double m_OptimizerLowerBound;
-    double m_OptimizerUpperBound;
+    std::vector<double> m_OptimizerLowerBound;
+    std::vector<double> m_OptimizerUpperBound;
     bool m_OptimizerTrace;
     std::vector<unsigned int> m_OptimizerNumberOfSteps;
     double m_OptimizerStepLength;
