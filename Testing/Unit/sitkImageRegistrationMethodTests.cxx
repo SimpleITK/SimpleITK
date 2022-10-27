@@ -760,6 +760,44 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB_unbounded)
 }
 
 
+TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSBPerParameter_bounded)
+{
+  sitk::Image image = MakeGaussianBlob( {64, 64, 64}, std::vector<unsigned int>(3,256) );
+
+  float tendegrees= 10*3.14/180;
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::Euler3DTransform tx({32,32,32}, .1, -.2, .3, {1.0, 2.0, 3.0});
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+  R.SetOptimizerAsLBFGSBPerParameter(1e-20,
+                         20,
+                         5,
+                         2000,
+                         1e5,
+                         {tendegrees, tendegrees, tendegrees, 15.0, 15.0, 15.0},
+                         {-tendegrees, -tendegrees, -tendegrees, -15.0, -15.0,-15.0},
+                         true);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v6(0.0,0.0,0.0,0.0,0.0,0.0), outTx.GetParameters(), 1e-3);
+
+}
+
 TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB_bounded)
 {
   sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
@@ -809,6 +847,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB_bounded)
   outTx = R.Execute(image, image);
   EXPECT_EQ(1u, R.GetOptimizerIteration()) << "Checking iteration.";
 }
+
 
 TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
 {
