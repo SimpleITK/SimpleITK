@@ -194,8 +194,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
     "${output_cxx}" CACHE INTERNAL "" )
 
   if (NOT "${itk_module}" STREQUAL "")
-    list(APPEND ${library_name}GeneratedSource_${itk_module}  ${output_cxx} )
-    set(${library_name}GeneratedSource_${itk_module} ${${library_name}GeneratedSource_${itk_module}} CACHE INTERNAL "")
+    cache_list_append(${library_name}GeneratedSource_${itk_module}  ${output_cxx} )
   endif()
 
 

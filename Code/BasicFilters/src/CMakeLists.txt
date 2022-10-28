@@ -52,8 +52,7 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
   sitk_install_exported_target( ${library_name} )
 
   # append this new library to the globaly cached list
-  list ( APPEND SimpleITK_LIBRARIES ${library_name} )
-  set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
+  cache_list_append(SimpleITK_LIBRARIES ${library_name} )
 
 endfunction()
 
@@ -89,11 +88,10 @@ target_compile_features( SimpleITKBasicFilters0 PUBLIC cxx_std_14 )
 sitk_install_exported_target( SimpleITKBasicFilters0 )
 
 # append this new library to the globally cached list
-list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
-set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
+cache_list_append(SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
 
 # manually written
-list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKCommon
+cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKCommon
   sitkCastImageFilter-2.cxx
   sitkCastImageFilter-2l.cxx
   sitkCastImageFilter-2v.cxx
@@ -103,28 +101,24 @@ list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKCommon
   sitkCastImageFilter.cxx
   sitkExtractImageFilter.cxx
   sitkHashImageFilter.cxx )
-set(SimpleITKBasicFiltersGeneratedSource_ITKCommon ${SimpleITKBasicFiltersGeneratedSource_ITKCommon} CACHE INTERNAL "")
 
-list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKTransform
+cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKTransform
   sitkBSplineTransformInitializerFilter.cxx )
-set(SimpleITKBasicFiltersGeneratedSource_ITKTransform ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL "")
 
-list(APPEND SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters
+cache_list_append( SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters
   sitkDICOMOrientImageFilter_Support.cxx
   sitkPasteImageFilter.cxx)
-set(SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters ${SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters} CACHE INTERNAL "")
 
-list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon
+cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon
   sitkCenteredTransformInitializerFilter.cxx
   sitkCenteredVersorTransformInitializerFilter.cxx
   sitkLandmarkBasedTransformInitializerFilter.cxx )
-set(SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon ${SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon} CACHE INTERNAL "")
 
 
 #
 # Module based libraries
 #
-get_cmake_property( _varNames VARIABLES )
+get_cmake_property( _varNames CACHE_VARIABLES )
 foreach (_varName ${_varNames})
   if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
     string(REGEX MATCH  "[A-Za-z0-9]+$"  itk_module ${_varName})
