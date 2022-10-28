@@ -128,6 +128,8 @@ class BasicFiltersTests(unittest.TestCase):
 
         self.assertEqual(tx_initializer.Execute(sitk.VersorRigid3DTransform()).__class__,
                          sitk.VersorRigid3DTransform)
+        self.assertEqual(tx_initializer.Execute(sitk.Similarity3DTransform()).__class__,
+                         sitk.Similarity3DTransform)
         self.assertEqual(tx_initializer.Execute(sitk.ScaleVersor3DTransform()).__class__,
                         sitk.ScaleVersor3DTransform)
         self.assertEqual(tx_initializer.Execute(sitk.AffineTransform(3)).__class__,

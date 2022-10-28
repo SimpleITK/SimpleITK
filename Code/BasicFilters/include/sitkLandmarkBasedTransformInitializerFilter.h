@@ -38,8 +38,11 @@ correspond, so point 1 in the first set will get mapped close to point
 1 in the second set, etc.
 
 Currently, the following transforms are supported by the class:
-VersorRigid3DTransform Rigid2DTransform AffineTransform
-BSplineTransform
+- VersorRigid3DTransform
+- Similarity3DTransform
+- Rigid2DTransform
+- AffineTransform
+- BSplineTransform
 
 An equal number of fixed and moving landmarks need to be specified
 using SetFixedLandmarks() and SetMovingLandmarks() . Any number of
