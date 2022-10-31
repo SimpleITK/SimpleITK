@@ -2,7 +2,12 @@ name: Package
 
 on:
   push:
-    tag: [ 'latest', 'v*' ]
+    tags:
+      - 'latest'
+      - 'v*'
+    branches-ignore:
+      - '**'
+
 
 
 jobs:
