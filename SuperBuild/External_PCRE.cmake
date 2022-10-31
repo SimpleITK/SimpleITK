@@ -46,6 +46,7 @@ if(NOT PCRE_DIR)
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
     DEPENDS "${PCRE_DEPENDENCIES}"
     ${External_Project_USES_TERMINAL}
+    DOWNLOAD_EXTRACT_TIMESTAMP 0
     )
 
   sitkSourceDownloadDependency(PCRE)
