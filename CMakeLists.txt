@@ -135,11 +135,11 @@ set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_BINARY_DIR}/Code/Common/include
       )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration CACHE INTERNAL "")
 
 if (SimpleITK_USE_ELASTIX)
   list (APPEND SimpleITK_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/Code/ElastixTransformixWrappers/include)
-  list (APPEND SimpleITK_LIBRARIES ElastixImageFilter TransformixImageFilter)
+  cache_list_append ( SimpleITK_LIBRARIES ElastixImageFilter TransformixImageFilter)
 endif()
 
 if (SimpleITK_EXPLICIT_INSTANTIATION)
@@ -149,19 +149,17 @@ if (SimpleITK_EXPLICIT_INSTANTIATION)
   #list ( APPEND SimpleITK_LIBRARIES  SimpleITKExplicit )
 endif()
 
-set( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES}  CACHE INTERNAL "" )
-
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
 # Create cached list of all template components
-file( GLOB template_components
+file( GLOB _template_components
       ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/[^.]*.h.in
       ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/[^.]*.cxx.in
     )
-set ( template_components ${template_components} CACHE INTERNAL "" )
+set ( template_components ${_template_components} CACHE INTERNAL "" )
 
 
 #------------------------------------------------------------------------------
