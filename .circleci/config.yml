@@ -23,7 +23,7 @@ referenced:
       name: Dependencies
       command: |
         sudo apt-get update
-        sudo apt-get install -y rsync lua5.3 ccache python3-dev
+        sudo apt-get install -y rsync lua5.3 ccache python3-dev file
         python -m pip install --upgrade pip
         python -m pip install scikit-ci-addons lxml # Provides "ctest_junit_formatter" add-on
         python -m pip install cmake==3.18.*
