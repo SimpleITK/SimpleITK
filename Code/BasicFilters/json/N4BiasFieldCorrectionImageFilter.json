@@ -117,6 +117,30 @@
   ],
   "measurements" : [
     {
+      "name" : "CurrentLevel",
+      "type" : "uint32_t",
+      "active" : true,
+      "default" : 0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the current fitting level. This is a helper function for reporting observations."
+    },
+    {
+      "name" : "ElapsedIterations",
+      "type" : "uint32_t",
+      "active" : true,
+      "default" : 0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the number of elapsed iterations. This is a helper function for reporting observations."
+    },
+    {
+      "name" : "CurrentConvergenceMeasurement",
+      "type" : "double",
+      "active" : true,
+      "default" : 0.0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the current convergence measurement. This is a helper function for reporting observations."
+    },
+    {
       "name" : "LogBiasFieldAsImage",
       "type" : "Image",
       "no_print" : true,
