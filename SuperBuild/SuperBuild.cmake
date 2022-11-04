@@ -304,6 +304,12 @@ if(NOT CMAKE_VERSION VERSION_LESS 3.4)
     USES_TERMINAL_INSTALL 1)
 endif()
 
+
+if(POLICY CMP0135)
+  set(External_Project_USE_ARCHIVE_TIMESTAMP DOWNLOAD_EXTRACT_TIMESTAMP 1)
+endif()
+
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 include(ExternalProject)
 
@@ -499,7 +505,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest Elastix ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE2 Lua GTest Elastix ${CMAKE_PROJECT_NAME})
 
 
 #-----------------------------------------------------------------------------
