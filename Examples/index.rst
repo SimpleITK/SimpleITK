@@ -31,6 +31,7 @@ Examples
   link_ImageRegistrationMethodBSpline3_docs
   link_ImageRegistrationMethodDisplacement1_docs
   link_ImageRegistrationMethodExhaustive_docs
+  link_ImageRegistrationMethodLandmark_docs
   link_ITKIntegration_docs
   link_N4BiasFieldCorrection_docs
   link_SimpleGaussian_docs
