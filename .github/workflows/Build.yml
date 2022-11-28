@@ -27,10 +27,10 @@ jobs:
             cmake-generator: "Visual Studio 16 2019"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       if: matrix.os != 'self-hosted-arm'
       with:
         python-version: 3.8
