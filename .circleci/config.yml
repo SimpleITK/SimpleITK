@@ -26,7 +26,6 @@ referenced:
         sudo apt-get install -y rsync lua5.3 ccache python3-dev file
         python -m pip install --upgrade pip
         python -m pip install scikit-ci-addons lxml # Provides "ctest_junit_formatter" add-on
-        python -m pip install cmake==3.18.*
   generate-hash-step: &generate-hash-step
     run:
       name: Generate external data hash
@@ -150,14 +149,23 @@ jobs:
           no_output_timeout: 20.0m
           command: |
             env
+            _python_include=$(python -c "import sysconfig; print(sysconfig.get_path('include'))")
             export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/lib"
             export CTEST_CACHE="
                         CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
-                        BUILD_EXAMPLES:BOOL=ON"
+                        BUILD_EXAMPLES:BOOL=ON
+                        PYTHON_INCLUDE_DIR:PATH=${_python_include}"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+      - run:
+          name: "CMake Cache Dump"
+          command: |
+            ls ${CTEST_BINARY_DIRECTORY}
+            cat ${CTEST_BINARY_DIRECTORY}/CMakeCache.txt
+          when: on_fail
       - *junit-formatting
       - *junit-store-test-results
+
   python3.10-and-test:
     <<: *defaults
     docker:
