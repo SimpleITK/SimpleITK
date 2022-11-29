@@ -286,8 +286,7 @@ Python! <https://docs.python-guide.org/en/latest/>`__:
     1.x but, Project Y needs 4.x” dilemma, and keeps your global
     site-packages directory clean and manageable.
 
-Programs for creating virtual environments include `virtualenv and
-pyvenv <https://packaging.python.org/en/latest/installing/#creating-virtual-environments>`__
+Programs for creating virtual environments include `venv <https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment>`__
 for generic Python distributions,
 `conda <https://conda.pydata.org/docs/using/envs.html>`__ for the
 anaconda distribution, and
