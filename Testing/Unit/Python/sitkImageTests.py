@@ -284,6 +284,21 @@ class ImageTests(unittest.TestCase):
         image1 %= (image2 + 4)
         self.assertEqual(image1[1, 1], 2)
 
+    def test_inplace_operators_exception(self):
+        """ Test exception generated during inplace operation"""
+
+        img = sitk.Image([1,1], sitk.sitkUInt32)
+        try:
+            img += sitk.Cast(img, sitk.sitkFloat32)
+        except RuntimeError:
+            pass
+        else:
+            assert(False) # Failed to throw exception
+        # img was C++ moved then an exception occurred, this is the state afterwards.
+        # This check ensure the image is still valid, the value does not matter.
+        self.assertEqual( img.GetSize(), (0,0))
+
+
     def test_inplace_operators_constants(self):
         """ Test in place operators with numeric constants"""
 

@@ -48,6 +48,8 @@ namespace itk
   Image::Image( Image && img ) noexcept
     : m_PimpleImage( std::move(img.m_PimpleImage) )
   {
+      img.m_PimpleImage = nullptr;
+      img.Allocate({0, 0}, this->GetPixelID(), this->GetNumberOfComponentsPerPixel());
   }
 
   Image& Image::operator=( const Image &img )

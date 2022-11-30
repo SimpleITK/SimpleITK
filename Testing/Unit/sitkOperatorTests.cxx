@@ -94,6 +94,24 @@ TEST(OperatorTests,BinaryLogic)
 }
 
 
+TEST(OperatorTests, InPlaceException)
+{
+
+    sitk::Image img1 ( 10, 10, sitk::sitkInt8 );
+    sitk::Image img2 ( 10, 10, sitk::sitkInt32 );
+
+    auto itkBasePtr1 = img1.GetITKBase();
+    auto itkBasePtr2 = img2.GetITKBase();
+
+    EXPECT_THROW( img1 += img2, sitk::GenericException);
+
+
+    EXPECT_EQ(static_cast<const sitk::Image&>(img2).GetITKBase(), itkBasePtr2);
+    EXPECT_NE(static_cast<const sitk::Image&>(img1).GetITKBase(), nullptr);
+    EXPECT_NE(static_cast<const sitk::Image&>(img1).GetITKBase(), itkBasePtr1);
+}
+
+
 TEST(OperatorTests, Arithmetic)
 {
 
