@@ -1751,13 +1751,15 @@ TEST_F(Image, MoveOperations)
 
   EXPECT_EQ(img3.GetSize()[0], 5);
   EXPECT_EQ(static_cast<const sitk::Image&>(img3).GetITKBase(), itkBasePtr);
-  EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), nullptr);
+  EXPECT_NE(static_cast<const sitk::Image&>(img).GetITKBase(), nullptr);
+  EXPECT_NE(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
 
   img = std::move(img3);
 
   EXPECT_EQ(img.GetSize()[0], 5);
   EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
-  EXPECT_EQ(static_cast<const sitk::Image&>(img3).GetITKBase(), nullptr);
+  EXPECT_NE(static_cast<const sitk::Image&>(img3).GetITKBase(), nullptr);
+  EXPECT_NE(static_cast<const sitk::Image&>(img3).GetITKBase(), itkBasePtr);
 
   img2 = img;
 
@@ -1771,7 +1773,8 @@ TEST_F(Image, MoveOperations)
   EXPECT_EQ(img4.GetSize()[0], 5);
   EXPECT_EQ(img4.GetITKBase(), itkBasePtr);
   EXPECT_EQ(static_cast<const sitk::Image&>(img).GetITKBase(), itkBasePtr);
-  EXPECT_EQ(static_cast<const sitk::Image&>(img2).GetITKBase(), nullptr);
+  EXPECT_NE(static_cast<const sitk::Image&>(img2).GetITKBase(), nullptr);
+  EXPECT_NE(static_cast<const sitk::Image&>(img2).GetITKBase(), itkBasePtr);
 
 }
 
