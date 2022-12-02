@@ -48,6 +48,10 @@ add_custom_command(
   COMMENT "Generating setup.py..."
   )
 
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml"
+  "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml" COPYONLY )
+
 
 foreach( _file ${SimpleITK_Py_Files})
 
@@ -93,6 +97,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
     COMMAND "${PYTHON_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
+    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "numpy"
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
@@ -100,10 +105,6 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
     COMMENT "Creating python virtual environment..."
     )
 
-  add_custom_command( TARGET PythonVirtualEnv
-    POST_BUILD
-    COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" -m pip --disable-pip-version-check install numpy wheel
-)
 endif()
 
 # Packaging for distribution
