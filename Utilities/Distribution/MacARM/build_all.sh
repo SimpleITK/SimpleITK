@@ -45,10 +45,10 @@ pushd $COREBINARYDIRECTORY
 sh $SCRIPT_DIR/mac_build_core.sh
 popd
 
-for version in 3.8 3.9 3.10
+for version in 3.8 3.9 3.10 3.11
 do
-    mkdir -p $Build_Root/py$version
-    pushd $Build_Root/py$version
+    mkdir -p $COREBINARYDIRECTORY/py$version
+    pushd $COREBINARYDIRECTORY/py$version
     COREBINARYDIRECTORY=$COREBINARYDIRECTORY sh $SCRIPT_DIR/mac_build_py.sh $version
 popd
 done
