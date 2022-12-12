@@ -30,4 +30,6 @@ sitk_add_test(NAME CXX.Example.Transformix
     ${SimpleITK_TEST_OUTPUT_DIR}/CXX.Example.elx.nii
     ${SimpleITK_TEST_OUTPUT_DIR}/CXXT.Example.tfx.nii
     40
-  )
+    )
+
+set_tests_properties(CXX.Example.Transformix PROPERTIES DEPENDS "CXX.Example.Elastix")
