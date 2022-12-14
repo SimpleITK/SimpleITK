@@ -56,8 +56,8 @@ set (LUA_CORE_SRCS src/lapi.c src/lcode.c src/lctype.c src/ldebug.c src/ldo.c sr
      src/lvm.c src/lzio.c)
 
 # define the lua lib source files
-set (LUA_LIB_SRCS src/lauxlib.c src/lbaselib.c src/lbitlib.c src/lcorolib.c src/ldblib.c src/liolib.c
-     src/lmathlib.c src/loslib.c src/ltablib.c src/lstrlib.c src/lutf8lib.c src/loadlib.c src/linit.c)
+set (LUA_LIB_SRCS src/lauxlib.c src/lbaselib.c src/lcorolib.c src/ldblib.c src/liolib.c
+     src/lmathlib.c src/loadlib.c src/loslib.c src/lstrlib.c src/ltablib.c  src/lutf8lib.c src/linit.c)
 
 # create the library
 add_library (lua ${LUA_LIB_SRCS} ${LUA_CORE_SRCS})
