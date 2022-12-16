@@ -6,7 +6,6 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "MaskedPixelIDTypeList",
-  "custom_register" : "this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();\n  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 > ();\n  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 > (); ",
   "include_files" : [
     "sitkToPixelType.hxx"
   ],

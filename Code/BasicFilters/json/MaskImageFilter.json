@@ -8,7 +8,8 @@
     "sitkToPixelType.hxx"
   ],
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "pixel_types2" : "IntegerPixelIDTypeList",
+
+  "pixel_types2" : "MaskedPixelIDTypeList",
   "inputs" : [
     {
       "name" : "Image",

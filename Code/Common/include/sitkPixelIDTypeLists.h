@@ -90,7 +90,7 @@ using UnsignedIntegerPixelIDTypeList = typelist2::typelist<BasicPixelID<uint8_t>
                                                            >;
 
 /** The conventional type used for a mask image as a list */
-using MaskedPixelIDTypeList = typelist2::typelist<uint8_t>;
+using MaskedPixelIDTypeList = typelist2::typelist<BasicPixelID<uint8_t>>;
 
 
 /** List of pixel ids which are real types for the itk::Image class.
