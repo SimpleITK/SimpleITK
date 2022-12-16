@@ -29,9 +29,9 @@
 #include "itkNumericTraitsVariableLengthVectorPixel.h"
 #include "itkVectorIndexSelectionCastImageFilter.h"
 #include "itkComposeImageFilter.h"
+#include "itkPasteImageFilter.h"
 
 #include "sitkPasteImageFilter.h"
-#include "itkNPasteImageFilter.h"
 
 #include "sitkToPixelType.hxx"
 
@@ -182,7 +182,7 @@ Image PasteImageFilter::ExecuteInternal(
 
   using OutputImageType = InputImageType;
 
-  using FilterType = itk::NPasteImageFilter< InputImageType, SourceImageType, OutputImageType >;
+  using FilterType = itk::PasteImageFilter< InputImageType, SourceImageType, OutputImageType >;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
@@ -243,7 +243,7 @@ Image PasteImageFilter::ExecuteInternal ( const Image * inDestinationImage, doub
   using OutputImageType = InputImageType;
 
 
-  using FilterType = itk::NPasteImageFilter< InputImageType, SourceImageType, OutputImageType >;
+  using FilterType = itk::PasteImageFilter< InputImageType, SourceImageType, OutputImageType >;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 

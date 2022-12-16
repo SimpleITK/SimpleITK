@@ -106,7 +106,9 @@ cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKTransform
   sitkBSplineTransformInitializerFilter.cxx )
 
 cache_list_append( SimpleITKBasicFiltersGeneratedSource_SimpleITKFilters
-  sitkDICOMOrientImageFilter_Support.cxx
+  sitkDICOMOrientImageFilter_Support.cxx)
+
+cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKImageGrid
   sitkPasteImageFilter.cxx)
 
 cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon
