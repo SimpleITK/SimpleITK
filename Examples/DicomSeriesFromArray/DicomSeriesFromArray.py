@@ -57,7 +57,7 @@ def writeSlices(series_tag_values, new_img, out_dir, i):
         "\\".join(map(str, new_img.TransformIndexToPhysicalPoint((0, 0, i)))),
     )
     #   Instance Number
-    image_slice.SetMetaData("0020,0013", str(i))
+    image_slice.SetMetaData("0020|0013", str(i))
 
     # Write to the output directory and add the extension dcm, to force
     # writing in DICOM format.
