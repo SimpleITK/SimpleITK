@@ -38,7 +38,7 @@ writeSlices <- function(series_tag_values, new_img, out_dir, i) {
 
     # (0020, 0032) image position patient determines the 3D spacing between slices.
     image_slice$SetMetaData("0020|0032", paste(new_img$TransformIndexToPhysicalPoint(c(0,0,i)), collapse='\\')) # Image Position (Patient)
-    image_slice$SetMetaData("0020,0013", i-1) # Instance Number
+    image_slice$SetMetaData("0020|0013", i-1) # Instance Number
 
     # Write to the output directory and add the extension dcm, to force writing in DICOM format.
     writer$SetFileName(file.path(out_dir, paste(i-1, '.dcm', sep="")))
