@@ -1,6 +1,6 @@
 parameters:
   downloadData: True  # defaults for any parameters that aren't specified
-  externalDataVersion: 2.0rc1
+  externalDataVersion: 2.2.1
 
 steps:
      - checkout: self
