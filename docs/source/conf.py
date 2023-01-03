@@ -44,7 +44,8 @@ release = u'2.0rc2'
 extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
-    'sphinx_tabs.tabs'
+    'sphinx_tabs.tabs',
+    'sphinx_exec_code'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

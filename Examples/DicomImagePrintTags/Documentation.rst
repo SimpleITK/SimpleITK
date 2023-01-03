@@ -32,3 +32,20 @@ Code
     .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.R
        :language: r
        :lines: 18-
+
+Sample Output
+-------------
+
+Running the above Python script with the image  "docs/images/Image0075.dcm" produces the following output:
+
+.. exec_code::
+
+    # --- hide: start ---
+    import sys
+    import subprocess
+
+    py_exec = sys.executable
+    code_file = '../Examples/DicomImagePrintTags/DicomImagePrintTags.py'
+    img = '../docs/images/Image0075.dcm'
+    result = subprocess.call([py_exec, code_file, img])
+    # --- hide: stop ---
