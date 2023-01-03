@@ -242,6 +242,11 @@ ElastixImageFilter::ElastixImageFilterImpl
         = ParameterValueVectorType( 1, "float" );
     }
 
+    // Always set WriteResultImage to true. If WriteResultImage is false, elastixFilter will not produce an output image,
+    // and the call to itk::simple::Image() below will throw a "LargestPossibleRegion != BufferedRegion" exception. We also
+    // need the output image to honor SimpleITK's convention of Execute() always returning an image.
+    parameterMapVector[ parameterMapVector.size() - 1 ][ "WriteResultImage" ] = ParameterValueVectorType( 1, "true" );
+
     ParameterObjectPointer parameterObject = ParameterObjectType::New();
     parameterObject->SetParameterMap( parameterMapVector );
     elastixFilter->SetParameterObject( parameterObject );

@@ -1,0 +1,72 @@
+// Description: elastixpaper, affine
+// https://github.com/SuperElastix/ElastixModelZoo/blob/f6bc11f690062924a855474c0f13d089e6ad3666/models/Par0001/Par0001affine.txt
+
+//ImageTypes
+(FixedInternalImagePixelType "float")
+(FixedImageDimension 3)
+(MovingInternalImagePixelType "float")
+(MovingImageDimension 3)
+
+//Components
+(Registration "MultiResolutionRegistration")
+(FixedImagePyramid "FixedSmoothingImagePyramid")
+(MovingImagePyramid "MovingSmoothingImagePyramid")
+(Interpolator "BSplineInterpolator")
+(Metric "AdvancedMattesMutualInformation")
+(Optimizer "StandardGradientDescent")
+(ResampleInterpolator "FinalBSplineInterpolator")
+(Resampler "DefaultResampler")
+(Transform "AffineTransform")
+
+(ErodeMask "false")
+
+(AutomaticScalesEstimation "true")
+(AutomaticTransformInitialization "false")
+
+(NumberOfResolutions 4)
+
+(HowToCombineTransforms "Compose")
+
+(WriteResultImage "false")
+(WriteResultImageAfterEachResolution "false")
+(WriteTransformParametersEachIteration "false")
+(WriteTransformParametersEachResolution "true")
+
+//Maximum number of iterations in each resolution level:
+(MaximumNumberOfIterations 2000)
+
+//Number of grey level bins in each resolution level:
+(NumberOfHistogramBins 32 )
+(FixedKernelBSplineOrder 3)
+(MovingKernelBSplineOrder 3)
+(FixedLimitRangeRatio 0.0)
+(MovingLimitRangeRatio 0.0)
+
+// sampler:
+(ImageSampler "RandomCoordinate")
+(FixedImageBSplineInterpolationOrder 1 )
+(UseRandomSampleRegion "true")
+(SampleRegionSize 50.0)
+(CheckNumberOfSamples "false")
+(NewSamplesEveryIteration "true" )
+
+//Number of spatial samples used to compute the mutual information in each resolution level:
+(NumberOfSpatialSamples 2000 )
+
+//Order of B-Spline interpolation used in each resolution level:
+(BSplineInterpolationOrder 1 )
+
+//Order of B-Spline interpolation used for applying the final deformation:
+(FinalBSplineInterpolationOrder 3)
+
+//Default pixel value for pixels that come from outside the picture:
+(DefaultPixelValue 0)
+
+//SP: Param_a in each resolution level. a_k = a/(A+k+1)^alpha
+(SP_a 2000.0)
+
+//SP: Param_A in each resolution level. a_k = a/(A+k+1)^alpha
+(SP_A 200.0)
+
+//SP: Param_alpha in each resolution level. a_k = a/(A+k+1)^alpha
+(SP_alpha 0.6)
