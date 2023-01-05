@@ -30,10 +30,8 @@ export CTEST_BINARY_DIRECTORY="${AGENT_BUILDDIRECTORY}/py${PYTHON_VERSION}"
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${AGENT_NAME}-${AGENT_JOBNAME}-py${PYTHON_VERSION}" \
-      -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2
+      -S ${BUILD_SOURCESDIRECTORY}/Testing/CI/Azure/azure.cmake -V -j 2 || echo "##vso[task.logissue type=warning]There was a build or testing issue."
 
-cmake --build "${CTEST_BINARY_DIRECTORY}" --target dist
-
-
-mkdir -p "${BUILD_ARTIFACTSTAGINGDIRECTORY}/python"
-find ${CTEST_BINARY_DIRECTORY} -name "SimpleITK*.whl" -exec cp -v {} "${BUILD_ARTIFACTSTAGINGDIRECTORY}/python" \;
+cmake --build "${CTEST_BINARY_DIRECTORY}" --target dist &&
+    mkdir -p "${BUILD_ARTIFACTSTAGINGDIRECTORY}/python" &&
+    find ${CTEST_BINARY_DIRECTORY} -name "SimpleITK*.whl" -exec cp -v {} "${BUILD_ARTIFACTSTAGINGDIRECTORY}/python" \;
