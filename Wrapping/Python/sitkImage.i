@@ -188,6 +188,19 @@
         paster.SetDestinationSkipAxes(std::move(destinationSkipAxes));
         return (*$self) = paster.Execute(std::move(*$self), constant);
         }
+        Image __imasked_assign(const Image &mask,  const Image &assign)
+        {
+          itk::simple::MaskedAssignImageFilter ma;
+          return (*$self) = ma.Execute(std::move(*$self), mask, assign);
+        }
+        Image __imasked_assign(const Image &mask,  double constant)
+        {
+          itk::simple::MaskNegatedImageFilter mn;
+          mn.SetMaskingValue(0);
+          mn.SetOutsideValue(constant);
+          return (*$self) = mn.Execute(std::move(*$self), mask);
+        }
+
 
 
         %pythoncode %{
@@ -653,6 +666,13 @@
             ( scalar or sequence for vector pixels). The value is assigned to
             the pixel.
 
+            If idx is an image, it is considered a binary mask of 0s and non-zeros.
+            The pixels corresponding to the non-zeros of the mask are assigned
+            values. If rvalue is a scalar constant the scalar value is assigned to
+            the pixel. If rvalue is an image then the corresponding pixel is
+            assigned. All images involved in the operation must have congruent
+            geometry.
+
             If the indices are slices or integers then, the PasteImageFilter is
             used to assign values to this image. The rvalue can be an image
             or a scalar constant value. When rvalue is an image it must be of
@@ -673,6 +693,9 @@
                 if not isinstance(rvalue, str):
                   raise TypeError("metadata item must be a string")
                 return self.SetMetaData(idx, rvalue)
+
+            if isinstance(idx, Image):
+               return self.__imasked_assign(idx, rvalue)
 
             if sys.version_info[0] < 3:
               def isint( i ):
