@@ -17,17 +17,6 @@ endif()
 option(SimpleITK_TESTING_NOSHOW "Disable the Show function in SimpleITK testing." ON)
 mark_as_advanced(SimpleITK_TESTING_NOSHOW)
 
-
-if(SimpleITK_USE_ELASTIX)
-  # Add individual cxx executables
-  add_executable ( elx elx.cxx )
-  target_link_libraries ( elx ${SimpleITK_LIBRARIES} )
-
-  add_executable ( tfx tfx.cxx )
-  target_link_libraries ( tfx ${SimpleITK_LIBRARIES} )
-endif()
-
-
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 
@@ -36,6 +25,10 @@ target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
+
+if(SimpleITK_USE_ELASTIX)
+  add_subdirectory(Elastix)
+endif()
 
 # Test data directory
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
