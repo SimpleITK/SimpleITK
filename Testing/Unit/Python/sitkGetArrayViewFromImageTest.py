@@ -119,11 +119,16 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
         self.assertEqual(h, sitk.Hash(img2))
 
     def test_arrayview_writable(self):
-        """Test correct behavior of writablity to the returned array view."""
+        """Test correct behavior of non-writablity to the returned array view."""
 
-        img = sitk.Image((9, 10), sitk.sitkFloat32, 1)
+        img = sitk.Image((3, 4), sitk.sitkFloat32, 1)
 
         a = sitk.GetArrayViewFromImage(img)
+
+        self.assertFalse(a.flags['WRITEABLE'])
+
+        with self.assertRaises(ValueError):
+            a[1, 2] = 1
 
         with self.assertRaises(ValueError):
             a.fill(0)
