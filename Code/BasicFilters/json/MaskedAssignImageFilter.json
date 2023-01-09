@@ -1,15 +1,14 @@
 {
   "name" : "MaskedAssignImageFilter",
-  "template_code_filename" : "DualImageFilter",
+  "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "filter_type" : "itk::MaskedAssignImageFilter<InputImageType, InputImageType2, OutputImageType>",
+  "filter_type" : "itk::MaskedAssignImageFilter<InputImageType, itk::Image<std::uint8_t, InputImageType::ImageDimension>, OutputImageType>",
   "number_of_inputs" : 0,
   "doc" : "",
   "include_files" : [
     "sitkToPixelType.hxx"
   ],
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "pixel_types2" : "MaskedPixelIDTypeList",
   "inputs" : [
     {
       "name" : "Image",
@@ -21,10 +20,22 @@
     },
     {
       "name" : "AssignImage",
-      "type" : "Image"
+      "type" : "Image",
+      "optional" : true
     }
   ],
-  "members" : [],
+  "members" : [
+    {
+      "name" : "AssignConstant",
+      "type" : "double",
+      "default" : 0,
+      "custom_itk_cast" : "if (inAssignImage == nullptr) {typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_AssignConstant, v ); filter->SetAssignConstant( v );}",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask when AssignImage is undefined. Defaults to 0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
   "tests" : [
     {
       "tag" : "2d",
@@ -42,7 +53,7 @@
       "tag" : "cthead1",
       "description" : "cthead with different types",
       "settings" : [],
-        "md5hash" : "815662daa2000a9d93ca0d025319809a",
+      "md5hash" : "815662daa2000a9d93ca0d025319809a",
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/cthead1-mask.png",
@@ -50,15 +61,46 @@
       ]
     },
     {
+      "tag" : "cthead1_constant",
+      "description" : "cthead with different types and constant assign",
+      "settings" : [
+        {
+          "parameter" : "AssignConstant",
+          "type" : "double",
+          "value" : "0.0"
+        }
+      ],
+        "md5hash" : "69e26fb7cc642621f4c6eaa037e9259a",
+      "inputs" : [
+        "Input/cthead1-Float.mha",
+        "Input/cthead1-mask.png"
+      ]
+    },
+    {
       "tag" : "rgb",
       "description" : "rgb",
-      "settings" : [
-      ],
-        "md5hash" : "25219307a68bebbe202040ea61c7687d",
+      "settings" : [],
+      "md5hash" : "25219307a68bebbe202040ea61c7687d",
       "inputs" : [
         "Input/VM1111Shrink-RGB.png",
         "Input/VM1111Shrink-mask.png",
         "Input/VM1111Shrink-RGB.png"
+      ]
+    },
+    {
+      "tag" : "rgb_constant",
+      "description" : "assign constant to rgb",
+      "settings" : [
+        {
+          "parameter" : "AssignConstant",
+          "type" : "double",
+          "value" : "0.0"
+        }
+      ],
+      "md5hash" : "e641fb5503d0ec3b6023fc80b9848500",
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png",
+        "Input/VM1111Shrink-mask.png"
       ]
     }
   ],
