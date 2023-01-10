@@ -458,7 +458,7 @@ class ImageTests(unittest.TestCase):
                            sitk.sitkUInt8, sitk.sitkInt8,
                            sitk.sitkUInt16, sitk.sitkInt16,
                            sitk.sitkUInt32, sitk.sitkInt32,
-                           sitk.sitkUInt64, sitk.sitkInt64):
+                           sitk.sitkUInt64, sitk.sitkInt64, ):
             image = sitk.Image([2, 2], pixel_type)
 
             image[mask_image] = 2
@@ -466,6 +466,21 @@ class ImageTests(unittest.TestCase):
             self.assertEqual(image[1,0], 2)
             self.assertEqual(image[0,1], 2)
             self.assertEqual(image[1,1], 0)
+
+
+        for pixel_type in (sitk.sitkVectorFloat32, sitk.sitkVectorFloat64,
+                           sitk.sitkVectorUInt8, sitk.sitkVectorInt8,
+                           sitk.sitkVectorUInt16, sitk.sitkVectorInt16,
+                           sitk.sitkVectorUInt32, sitk.sitkVectorInt32,
+                           sitk.sitkVectorUInt64, sitk.sitkVectorInt64, ):
+            image = sitk.Image([2, 2], pixel_type)
+
+            image[mask_image] = 2
+            self.assertTrue(all(i == 0 for i in image[0,0]))
+            self.assertTrue(all(i == 2 for i in image[1,0]), image[1,0])
+            self.assertTrue(all(i == 2 for i in image[0,1]))
+            self.assertTrue(all(i == 0 for i in image[1,1]))
+
 
     def test_legacy(self):
         """ This is old testing cruft before unittest"""

@@ -195,10 +195,9 @@
         }
         Image __imasked_assign(const Image &mask,  double constant)
         {
-          itk::simple::MaskNegatedImageFilter mn;
-          mn.SetMaskingValue(0);
-          mn.SetOutsideValue(constant);
-          return (*$self) = mn.Execute(std::move(*$self), mask);
+          itk::simple::MaskedAssignImageFilter ma;
+          ma.SetAssignConstant(constant);
+          return (*$self) = ma.Execute(std::move(*$self), mask);
         }
 
 
