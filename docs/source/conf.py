@@ -44,6 +44,7 @@ release = u'2.0rc2'
 extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
+    'sphinx_exec_code',
     'sphinx_tabs.tabs'
 ]
 

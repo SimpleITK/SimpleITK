@@ -25,10 +25,18 @@ Code
 
     .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.py
        :language: python
-       :lines: 1,19-
+       :lines: 20-21,24-41
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.R
        :language: r
        :lines: 18-
+
+Sample Output
+-------------
+
+Running the above Python script with the image  "docs/images/Image0075.dcm" produces the following output:
+
+.. exec_code::
+    :filename: ../../Examples/DicomImagePrintTags/DicomImagePrintTags_wrapper.py
