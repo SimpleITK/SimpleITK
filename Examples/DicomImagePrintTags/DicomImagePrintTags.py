@@ -20,20 +20,26 @@
 import SimpleITK as sitk
 import sys
 
-if len(sys.argv) < 2:
-    print("Usage: DicomImagePrintTags <input_file>")
-    sys.exit(1)
 
-reader = sitk.ImageFileReader()
+def main(args):
+    if len(args) < 2:
+        print("Usage: DicomImagePrintTags <input_file>")
+        sys.exit(1)
 
-reader.SetFileName(sys.argv[1])
-reader.LoadPrivateTagsOn()
+    reader = sitk.ImageFileReader()
 
-reader.ReadImageInformation()
+    reader.SetFileName(args[1])
+    reader.LoadPrivateTagsOn()
 
-for k in reader.GetMetaDataKeys():
-    v = reader.GetMetaData(k)
-    print(f'({k}) = = "{v}"')
+    reader.ReadImageInformation()
 
-print(f"Image Size: {reader.GetSize()}")
-print(f"Image PixelType: {sitk.GetPixelIDValueAsString(reader.GetPixelID())}")
+    for k in reader.GetMetaDataKeys():
+        v = reader.GetMetaData(k)
+        print(f'({k}) = = "{v}"')
+
+    print(f"Image Size: {reader.GetSize()}")
+    print(f"Image PixelType: {sitk.GetPixelIDValueAsString(reader.GetPixelID())}")
+
+
+if __name__ == "__main__":
+    main(sys.argv)
