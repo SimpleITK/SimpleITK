@@ -55,4 +55,4 @@ jobs:
 
     - name: Do spell checking
       run: |
-        python SimpleITKSpellChecking/codespell.py Code --exclude Ancillary
+        python SimpleITKSpellChecking/codespell.py Code --exclude Ancillary --dict .github/workflows/additional_dictionary.txt
