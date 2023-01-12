@@ -111,6 +111,65 @@
       "inputs" : [
         "Input/cthead1-Float.mha"
       ]
+    },
+    {
+      "tag" : "target_points",
+      "description" : "Setting TrialPoints and TargetPoints",
+      "settings" : [
+        {
+          "parameter" : "TrialPoints",
+          "point_vec" : 1,
+          "value" : [
+            "{70,70}",
+            "{200,180}"
+          ],
+          "tcl_value" : [
+            "70 70",
+            "200 180"
+          ],
+          "python_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "ruby_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "R_value" : "list(c(70,70), c(200,180))"
+        },
+        {
+          "parameter" : "NumberOfTargets",
+          "value" : 1
+        },
+        {
+          "parameter" : "NormalizationFactor",
+          "value" : 255.0
+        },
+        {
+          "parameter" : "TargetPoints",
+          "point_vec" : 1,
+          "type" : "unsigned int",
+          "value" : [
+            "{70,170}"
+          ],
+          "tcl_value" : [
+            "70 170"
+          ],
+          "python_value" : "[(70,170)]",
+          "ruby_value" : "[ [70,170] ]",
+          "R_value" : "list(c(70,170))"
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "TargetValue",
+          "value" : 50.567,
+          "tolerance" : 0.001
+        }
+      ]
     }
   ],
   "briefdescription" : "Generates the upwind gradient field of fast marching arrival times.",
