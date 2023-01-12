@@ -465,6 +465,20 @@ TEST(IO, DicomSeriesReader) {
   fileNames = reader.GetGDCMSeriesFileNames( dicomDir, "1.2.840.113619.2.133.1762890640.1886.1055165015.999" );
   EXPECT_EQ( 3u, fileNames.size() );
 
+  // Use the original seriesIDs, first series, and attempt to list the
+  // series files using the "decorated" series information
+  // (useSeriesDetails). They should not match and will result in an
+  // empty vector.
+  bool useSeriesDetails = true;
+  fileNames = reader.GetGDCMSeriesFileNames( dicomDir, seriesIDs[0], useSeriesDetails );
+  EXPECT_EQ( 0u, fileNames.size() );
+
+  //Now, get the "decorated" series information and it will match what
+  //is used in the GetGDCMSeriesFileNames method.
+  seriesIDs = reader.GetGDCMSeriesIDs( dicomDir, useSeriesDetails );
+  fileNames = reader.GetGDCMSeriesFileNames( dicomDir, seriesIDs[0], useSeriesDetails );
+  EXPECT_EQ( 3u, fileNames.size() );
+
   // When reading a series each slice has its own meta-data dictionary
   // so the user has to decide on how to combine them, our image will
   // return an empty dictionary.
