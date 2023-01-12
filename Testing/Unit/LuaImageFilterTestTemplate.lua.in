@@ -59,23 +59,11 @@ $(if parameter == "SeedList" and lua_value then
     idx = SimpleITK.VectorUInt32();\
     for _,v in ipairs(".. lua_value[i] ..") do idx:push_back(v) end\
     filter:AddSeed( idx );"end)]]
-elseif parameter == "SeedList" then
-    OUT=[[filter:ClearSeeds();
-    $(for i=1,#value do OUT=OUT .. "\
-    idx = SimpleITK.VectorUInt32();\
-    for _,v in ipairs(".. value[i] ..") do idx:push_back(v) end\
-    filter:AddSeed( idx );"end)]]
 elseif parameter == "TrialPoints" and lua_value then
     OUT=[[filter:ClearTrialPoints();
     $(for i=1,#lua_value do OUT=OUT .. "\
     idx = SimpleITK.VectorUInt32();\
     for _,v in ipairs(".. lua_value[i] ..") do idx:push_back(v) end\
-    filter:AddTrialPoint( idx );"end)]]
-elseif parameter == "TrialPoints" then
-    OUT=[[filter:ClearTrialPoints();
-    $(for i=1,#value do OUT=OUT .. "\
-    idx = SimpleITK.VectorUInt32();\
-    for _,v in ipairs(".. value[i] ..") do idx:push_back(v) end\
     filter:AddTrialPoint( idx );"end)]]
 elseif point_vec and point_vec == 1 then
     OUT=[[filter:Clear${parameter}();

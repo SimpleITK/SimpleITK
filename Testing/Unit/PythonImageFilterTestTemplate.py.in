@@ -55,15 +55,9 @@ $(foreach settings
 $(if parameter == "SeedList" and python_value then
     OUT=[[    filter.ClearSeeds()
     $(for i=1,#python_value do OUT=OUT .. "\n    filter.AddSeed( " .. python_value[i] .. " )\n" end)]]
-elseif parameter == "SeedList" then
-    OUT=[[  filter.ClearSeeds()
-    $(for i=1,#value do OUT=OUT .. "\n    filter.AddSeed( " .. value[i] .. " )\n" end)]]
 elseif parameter == "TrialPoints" and python_value then
     OUT=[[    filter.ClearTrialPoints()
     $(for i=1,#python_value do OUT=OUT .. "\n    filter.AddTrialPoint( " .. python_value[i] .. " )\n" end)]]
-elseif parameter == "TrialPoints" then
-    OUT=[[  filter.ClearTrialPoints()
-    $(for i=1,#value do OUT=OUT .. "\n    filter.AddTrialPoint( " .. value[i] .. " )" end)]]
 elseif python_value then
 OUT=[[
     filter.Set${parameter}( ${python_value} )]]
