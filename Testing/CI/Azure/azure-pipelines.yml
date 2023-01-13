@@ -237,3 +237,10 @@ jobs:
           call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 38
+      - script: |
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_csharp.sh
+        displayName: Build CSharp
+        continueOnError: true
+        env:
+          CSHARP_PLATFORM: '${{ variables.PYTHON_ARCH }}'
