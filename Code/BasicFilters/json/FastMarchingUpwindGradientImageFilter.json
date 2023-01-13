@@ -22,7 +22,7 @@
       "name" : "NumberOfTargets",
       "type" : "unsigned int",
       "default" : "0u",
-      "custom_itk_cast" : "if (this->m_NumberOfTargets==0) {filter->SetTargetReachedModeToNoTargets();}\n    else if (this->m_NumberOfTargets==1) {filter->SetTargetReachedModeToOneTarget();} else {filter->SetTargetReachedModeToSomeTargets(std::min<size_t>(this->m_TargetPoints.size(), this->m_NumberOfTargets));}",
+      "custom_itk_cast" : "",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
@@ -33,7 +33,7 @@
       "type" : "unsigned int",
       "point_vec" : 1,
       "default" : "std::vector< std::vector<unsigned int > >()",
-      "custom_itk_cast" : "using NodeType = typename FilterType::NodeType;\n  using NodeContainerType = typename FilterType::NodeContainer;\n\n  typename NodeContainerType::Pointer targetPoints = NodeContainerType::New();\n  targetPoints->reserve( m_TargetPoints.size() );\n\n  for (unsigned int i = 0; i < m_TargetPoints.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TargetPoints[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n\n    targetPoints->push_back( node );\n    }\n  filter->SetTargetPoints( targetPoints );",
+      "custom_itk_cast" : "using NodeType = typename FilterType::NodeType;\n  using NodeContainerType = typename FilterType::NodeContainer;\n\n  typename NodeContainerType::Pointer targetPoints = NodeContainerType::New();\n  targetPoints->reserve( m_TargetPoints.size() );\n\n  for (unsigned int i = 0; i < m_TargetPoints.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TargetPoints[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n\n    targetPoints->push_back( node );\n    }\n  filter->SetTargetPoints( targetPoints );\n  if (this->m_NumberOfTargets==0) {filter->SetTargetReachedModeToNoTargets();}\n  else if (this->m_NumberOfTargets==1) {filter->SetTargetReachedModeToOneTarget();}\n else {filter->SetTargetReachedModeToSomeTargets(std::min<size_t>(this->m_TargetPoints.size(), this->m_NumberOfTargets));}",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the container of Target Points. If a target point is reached, the propagation stops. Trial points are represented as a VectorContainer of LevelSetNodes.",
       "briefdescriptionGet" : "",
@@ -110,6 +110,65 @@
       ],
       "inputs" : [
         "Input/cthead1-Float.mha"
+      ]
+    },
+    {
+      "tag" : "target_points",
+      "description" : "Setting TrialPoints and TargetPoints",
+      "settings" : [
+        {
+          "parameter" : "TrialPoints",
+          "point_vec" : 1,
+          "value" : [
+            "{70,70}",
+            "{200,180}"
+          ],
+          "tcl_value" : [
+            "70 70",
+            "200 180"
+          ],
+          "python_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "ruby_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "R_value" : "list(c(70,70), c(200,180))"
+        },
+        {
+          "parameter" : "NumberOfTargets",
+          "value" : 1
+        },
+        {
+          "parameter" : "NormalizationFactor",
+          "value" : 255.0
+        },
+        {
+          "parameter" : "TargetPoints",
+          "point_vec" : 1,
+          "type" : "unsigned int",
+          "value" : [
+            "{70,170}"
+          ],
+          "tcl_value" : [
+            "70 170"
+          ],
+          "python_value" : "[(70,170)]",
+          "ruby_value" : "[ [70,170] ]",
+          "R_value" : "list(c(70,170))"
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "TargetValue",
+          "value" : 50.567,
+          "tolerance" : 0.001
+        }
       ]
     }
   ],
