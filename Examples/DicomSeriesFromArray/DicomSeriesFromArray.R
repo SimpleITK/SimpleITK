@@ -30,8 +30,8 @@ writeSlices <- function(series_tag_values, new_img, out_dir, i) {
       function(tag_index){image_slice$SetMetaData(series_tag_values[tag_index, 1], series_tag_values[tag_index, 2])})
 
     # Slice specific tags.
-    image_slice$SetMetaData("0008|0012", format(Sys.time(), "%H%M%S")) # Instance Creation Date
-    image_slice$SetMetaData("0008|0013", format(Sys.time(), "%Y%m%d")) # Instance Creation Time
+    image_slice$SetMetaData("0008|0012", format(Sys.time(), "%Y%m%d")) # Instance Creation Date
+    image_slice$SetMetaData("0008|0013", format(Sys.time(), "%H%M%S")) # Instance Creation Time
 
     # Setting the type to CT preserves the slice location.
     image_slice$SetMetaData("0008|0060", "CT")  # set the type to CT so the thickness is carried over
