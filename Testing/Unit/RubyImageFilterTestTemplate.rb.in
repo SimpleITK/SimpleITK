@@ -59,23 +59,11 @@ $(if parameter == "SeedList" and ruby_value then
     v = Simpleitk::VectorUInt32.new\
     for i in ".. ruby_value[i] .." do v << i end\
     filter.add_seed(v)" end)]]
-elseif parameter == "SeedList"then
-    OUT=[[  filter.clear_seeds()
-    $(for i=1,#value do OUT=OUT .. "\
-    v = Simpleitk::VectorUInt32.new\
-    for i in ".. value[i] .." do v << i end\
-    filter.add_seed(v)" end)]]
 elseif parameter == "TrialPoints" and ruby_value then
     OUT=[[  filter.clear_trial_points()
     $(for i=1,#ruby_value do OUT=OUT .. "\
     v = Simpleitk::VectorUInt32.new\
     for i in ".. ruby_value[i] .." do v << i end\
-    filter.add_trial_point(v)" end)]]
-elseif parameter == "TrialPoints"then
-    OUT=[[  filter.clear_trial_points()
-    $(for i=1,#value do OUT=OUT .. "\
-    v = Simpleitk::VectorUInt32.new\
-    for i in ".. value[i] .." do v << i end\
     filter.add_trial_point(v)" end)]]
 elseif dim_vec and dim_vec == 1 then 
 
