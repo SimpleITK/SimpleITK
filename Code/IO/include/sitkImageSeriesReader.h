@@ -99,7 +99,10 @@ namespace itk {
        * \param seriesID          Set the name that identifies a
        * particular series. Default value is an empty string which
        * will return the file names associated with the first series
-       * found in the directory.
+       * found in the directory. If the parameter value was obtained
+       * from a call to GDCMSeriesIDs, the value of the
+       * useSeriesDetails parameter must be the same here and in the
+       * call to GDCMSeriesIDs.
        * \param useSeriesDetails  Use additional series information
        * such as ProtocolName and SeriesName to identify when a single
        * SeriesUID contains multiple 3D volumes - as can occur with
@@ -117,9 +120,15 @@ namespace itk {
       /** \brief Get all the seriesIDs from a DICOM data set
        *
        * \param directory  The directory that contains the DICOM data set
+       * \param useSeriesDetails  Use additional series information
+       * such as ProtocolName and SeriesName to identify when a single
+       * SeriesUID contains multiple 3D volumes - as can occur with
+       * perfusion and DTI imaging. The parameter value must match the
+       * value used in the call to GDCMSeriesFileNames.
        * \sa itk::GDCMSeriesFileNames
        **/
-      static std::vector<std::string> GetGDCMSeriesIDs( const std::string &directory );
+      static std::vector<std::string> GetGDCMSeriesIDs( const std::string &directory,
+                                                        bool useSeriesDetails = false );
 
       SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<std::string> &fileNames );
       const std::vector<std::string> &GetFileNames() const;

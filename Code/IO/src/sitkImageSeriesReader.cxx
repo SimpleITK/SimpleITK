@@ -63,11 +63,13 @@ namespace itk {
     return gdcmSeries->GetFileNames(seriesID);
     }
 
-  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesIDs( const std::string &directory )
+  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesIDs( const std::string &directory,
+                                                                bool useSeriesDetails )
     {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
 
     gdcmSeries->SetInputDirectory( directory );
+    gdcmSeries->SetUseSeriesDetails( useSeriesDetails );
     return gdcmSeries->GetSeriesUIDs();
     }
 
