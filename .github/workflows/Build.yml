@@ -2,13 +2,13 @@ name: Build and Test
 
 on:
   push:
-    branches: [ master ]
+    branches: ['master', 'release']
   pull_request:
-    branches: [ master ]
+    branches: [ 'master', 'release' ]
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work a cross
+    # The CMake configure and build commands are platform-agnostic and should work a cross
     # platforms.
 
     runs-on: ${{ matrix.os }}
@@ -28,6 +28,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: "${{ github.event.pull_request.head.sha }}"
+    - uses: actions/checkout@v3
+      with:
+        path: SimpleITK-dashboard
+        ref: dashboard
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v4
@@ -40,29 +47,21 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install ninja scikit-ci-addons cmake~=3.18.0
-    - name: Configure SimpleITK
+    - name: Build and Test
       shell: bash
-      run: |
-        mkdir sitk-bld
-        cd sitk-bld
-        cmake -DWRAP_DEFAULT:BOOL=OFF \
-              -DBUILD_EXAMPLES:BOOL=OFF \
-              -DBUILD_TESTING:BOOL=ON \
-              -DCMAKE_BUILD_TYPE=${{ matrix.cmake-build-type }} \
-              -DSimpleITK_USE_ELASTIX:BOOL=ON \
-              -DSimpleITK_USE_SYSTEM_ITK:BOOL=OFF \
-              -G "${{ matrix.cmake-generator }}" \
-              -v ${GITHUB_WORKSPACE}/SuperBuild
-    - name: Build SimpleITK
-      shell: bash
-      run: |
-        cd sitk-bld
-        cmake --build . --config ${{ matrix.cmake-build-type }}
-
-    - name: Test SimpleITK
-      run: |
-        cd sitk-bld/SimpleITK-build
-        ctest -C Release
       env:
-        CTEST_OUTPUT_ON_FAILURE: 1
+        DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
         ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
+        CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
+        CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+        CTEST_OUTPUT_ON_FAILURE: 1
+        CTEST_CACHE: |
+          WRAP_DEFAULT:BOOL=OFF
+          BUILD_EXAMPLES:BOOL=OFF
+          BUILD_TESTING:BOOL=ON
+          SimpleITK_USE_ELASTIX:BOOL=ON
+      run: |
+        cmake --version
+        ninja --version
+        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -j 2
