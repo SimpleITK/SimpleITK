@@ -50,9 +50,8 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        git clone https://github.com/SimpleITK/SimpleITKSpellChecking.git
-        python -m pip install -r SimpleITKSpellChecking/requirements.txt
+        python -m pip install git+https://github.com/SimpleITK/SimpleITKSpellChecking
 
     - name: Do spell checking
       run: |
-        python SimpleITKSpellChecking/codespell.py Code --exclude Ancillary --dict .github/workflows/additional_dictionary.txt
+        codespell Code --exclude Ancillary --dict .github/workflows/additional_dictionary.txt
