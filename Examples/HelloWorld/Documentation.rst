@@ -42,7 +42,7 @@ Code
 
     .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.py
        :language: python
-       :lines: 1,19-
+       :lines: 20-64
 
   .. tab:: R
 
@@ -61,3 +61,11 @@ Code
     .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.tcl
        :language: tcl
        :lines: 18-
+
+
+Sample Output
+-------------
+
+Running the python code produces this image:
+
+.. plot:: ../../Examples/HelloWorld/HelloWorld_wrapper.py

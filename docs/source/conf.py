@@ -45,8 +45,13 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'sphinx_exec_code',
-    'sphinx_tabs.tabs'
+    'sphinx_tabs.tabs',
+    "matplotlib.sphinxext.plot_directive",
 ]
+
+# Suppress hyperlinks in the display of matplotlib.sphinxext.plot_directive plots
+plot_html_show_source_link = False
+plot_html_show_formats = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

@@ -4,3 +4,4 @@ sphinx_rtd_theme
 sphinx~=5.3.0
 sphinx_exec_code~=0.8
 simpleitk~=2.2.0
+matplotlib>=3.6
