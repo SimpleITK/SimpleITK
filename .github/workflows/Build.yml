@@ -5,6 +5,11 @@ on:
     branches: ['master', 'release']
   pull_request:
     branches: [ 'master', 'release' ]
+    paths-ignore:
+      - 'Testing/CI/**'
+      - 'docs/**'
+      - 'Documentation/**'
+      - 'Utilities/**'
 
 jobs:
   build:
