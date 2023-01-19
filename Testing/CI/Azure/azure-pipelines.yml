@@ -12,6 +12,8 @@ trigger:
       - docs/
       - Documentation/
       - Utilities/
+pr: none
+
 jobs:
   - job: Linux
     timeoutInMinutes: 0
