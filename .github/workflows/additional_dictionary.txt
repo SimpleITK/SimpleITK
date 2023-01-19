@@ -208,6 +208,7 @@ FreeSurferAsciiMeshIOFactory
 Friedrichs
 Frobenius
 Functors
+GDCMSeriesIDs
 GEAdwImageIO
 GEAdwImageIOFactory
 GIF
