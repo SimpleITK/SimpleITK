@@ -2,9 +2,16 @@
 # coverage for the common wrapped language and the SimpleITK core and examples.
 
 trigger:
-  - master
-  - next
-  - release
+  branches:
+    include:
+      - master
+      - release
+  paths:
+    exclude:
+      - .github/
+      - docs/
+      - Documentation/
+      - Utilities/
 jobs:
   - job: Linux
     timeoutInMinutes: 0
