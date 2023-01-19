@@ -16,10 +16,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
   build:
+
+
     # The CMake configure and build commands are platform-agnostic and should work a cross
     # platforms.
-
+    if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 4
