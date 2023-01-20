@@ -92,6 +92,11 @@ SET (_dashboard_cache "
 
 set_from_env(dashboard_cache "CTEST_CACHE" DEFAULT ${_dashboard_cache})
 
+if ( NOT $ENV{GITHUB_REPOSITORY} STREQUAL "SimpleITK/SimpleITK" )
+  message("Disabling CDash submit for repository $ENV{GITHUB_REPOSITORY}")
+  set( dashboard_no_submit 1 )
+endif()
+
 string(TIMESTAMP build_date "%Y-%m-%d")
 message("CDash Build Identifier: ${build_date} ${CTEST_BUILD_NAME}")
 
