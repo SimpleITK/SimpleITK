@@ -23,7 +23,7 @@ function(set_from_env var env_var)
 endfunction()
 
 set_from_env(CTEST_SITE "RUNNER_NAME" REQUIRED)
-set(CTEST_SITE "GA.${CTEST_SITE}")
+set(CTEST_SITE "${CTEST_SITE}")
 
 set_from_env(workspace "GITHUB_WORKSPACE" REQUIRED)
 file(TO_CMAKE_PATH "${workspace}" CTEST_DASHBOARD_ROOT)
@@ -59,6 +59,7 @@ set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
 
 
+set(dashboard_loop 0)
 
 if( "$ENV{GITHUB_REF_NAME}" STREQUAL "master" OR  "$ENV{GITHUB_REF_NAME}" STREQUAL "release ")
   set(dashboard_model "Continuous")
@@ -76,7 +77,7 @@ if(NOT CTEST_BUILD_NAME)
     set(_branch "$ENV{GITHUB_REF_NAME}")
   endif()
 
-  set(CTEST_BUILD_NAME "${CTEST_SITE}-$ENV{GITHUB_WORKFLOW}-$ENV{GITHUB_RUN_ID}-${_branch}")
+  set(CTEST_BUILD_NAME "${CTEST_SITE}-$ENV{RUNNER_OS}-$ENV{GITHUB_RUN_ID}-${_branch}")
 endif()
 
 
