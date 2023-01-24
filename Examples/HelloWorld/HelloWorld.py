@@ -65,6 +65,6 @@ def main():
 
 # Display the results
 if __name__ == "__main__":
+    img = main()
     if "SITK_NOSHOW" not in os.environ:
-        img = main()
         sitk.Show(img, title="Hello World: Python", debugOn=True)

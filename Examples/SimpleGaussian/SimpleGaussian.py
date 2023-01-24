@@ -23,27 +23,35 @@ import sys
 
 import SimpleITK as sitk
 
-if len(sys.argv) < 4:
-    print("Usage: SimpleGaussian <input> <sigma> <output>")
-    sys.exit(1)
 
-reader = sitk.ImageFileReader()
-reader.SetFileName(sys.argv[1])
-image = reader.Execute()
+def main(args):
+    if len(args) < 4:
+        print("Usage: SimpleGaussian <input> <sigma> <output>")
+        sys.exit(1)
 
-pixelID = image.GetPixelID()
+    reader = sitk.ImageFileReader()
+    reader.SetFileName(args[1])
+    input_image = reader.Execute()
 
-gaussian = sitk.SmoothingRecursiveGaussianImageFilter()
-gaussian.SetSigma(float(sys.argv[2]))
-image = gaussian.Execute(image)
+    pixelID = input_image.GetPixelID()
 
-caster = sitk.CastImageFilter()
-caster.SetOutputPixelType(pixelID)
-image = caster.Execute(image)
+    gaussian = sitk.SmoothingRecursiveGaussianImageFilter()
+    gaussian.SetSigma(float(args[2]))
+    blur_image = gaussian.Execute(input_image)
 
-writer = sitk.ImageFileWriter()
-writer.SetFileName(sys.argv[3])
-writer.Execute(image)
+    caster = sitk.CastImageFilter()
+    caster.SetOutputPixelType(pixelID)
+    blur_image = caster.Execute(blur_image)
 
-if "SITK_NOSHOW" not in os.environ:
-    sitk.Show(image, "Simple Gaussian")
+    writer = sitk.ImageFileWriter()
+    writer.SetFileName(args[3])
+    writer.Execute(blur_image)
+
+    return input_image, blur_image
+
+
+# Display the results
+if __name__ == "__main__":
+    in_image, out_image = main(sys.argv)
+    if "SITK_NOSHOW" not in os.environ:
+        sitk.Show(out_image, "Simple Gaussian")
