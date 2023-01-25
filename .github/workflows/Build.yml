@@ -33,12 +33,19 @@ jobs:
           - os: self-hosted-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
           - os: macos-12
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
           - os: windows-2019
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 16 2019"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
 
     steps:
     - uses: actions/checkout@v3
@@ -85,9 +92,9 @@ jobs:
         CTEST_OUTPUT_ON_FAILURE: 1
         CTEST_CACHE: |
           WRAP_DEFAULT:BOOL=OFF
-          BUILD_EXAMPLES:BOOL=OFF
+          BUILD_EXAMPLES:BOOL=ON
           BUILD_TESTING:BOOL=ON
-          SimpleITK_USE_ELASTIX:BOOL=ON
+          ${{ matrix.ctest-cache }}
       run: |
         cmake --version
         ninja --version
