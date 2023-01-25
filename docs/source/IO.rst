@@ -145,6 +145,29 @@ A more compact example using SimpleITK's procedural interface:
 Similarly, if the imageIO parameter is omitted, SimpleITK will determine
 which IO to use automatically.
 
+Finally, one can also specify the desired pixel type for the returned image,
+regardless of the underlying pixel type. This is done via the ``SetOutputPixelType`` of
+the ``ImageFileReader`` or setting the ``ReadImage``'s ``outputPixelType`` parameter.
+
+When reading a scalar image and specifying a different scalar type from the underlying one,
+the returned image's pixel type will be a simple casting of the actual type. This casting can result
+in loss of data when performing a narrowing conversion. For example, if
+the underlying pixel type is ``sitk.sitkFloat32`` and the specified pixel type
+is ``sitk.sitkUInt8``. Explicitly specifying a pixel type is commonly done in conjunction
+with the SimpleITK registration framework. This framework only accepts images with
+float pixel types. Therefore, it is common to read the images and specify their pixel type as
+``sitk.sitkFloat32`` or ``sitk.sitkFloat64``.
+
+When reading a vector image and specifying the pixel type as a scalar, the returned pixel
+values are computed based on the number of channels in the original image. This conversion makes
+several assumptions, three channels mean an RGB image, four channels an RGBA image. These assumptions are
+useful, but may not be what you need if the original image was not in these color-spaces (e.g. HSV).
+
+For those looking for further details, the ITK class which deals with these conversions is
+`ConvertPixelBuffer <https://itk.org/Doxygen/html/classitk_1_1ConvertPixelBuffer.html>`_.
+
+
+
 .. _transformation-io:
 
 Transformations
