@@ -5,6 +5,8 @@ on:
    branches: ['master', 'release']
   pull_request:
     paths: .github/workflows/BatchBuild.yml
+  # Enable manual running of workflow
+  workflow_dispatch:
 
 concurrency: batch-${{ github.ref }}
 
