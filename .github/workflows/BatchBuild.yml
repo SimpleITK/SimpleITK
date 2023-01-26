@@ -17,11 +17,14 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-          - os: windows-2019
+          - os: windows-2022
             cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 16 2019"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator-toolset: v143,host=x64
+            cmake-generator-platform: x64
             ctest-cache: |
-              SimpleITK_USE_ELASTIX:BOOL=ON
+              WRAP_CSHARP:BOOL=ON
+              WRAP_JAVA:BOOL=ON
 
           - os: windows-2019
             cmake-build-type: "Release"
@@ -29,7 +32,8 @@ jobs:
             cmake-generator-toolset: v141,host=x64
             cmake-generator-platform: x64
             ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
+              BUILD_EXAMPLES:BOOL=OFF
 
           - os: ubuntu-22.04
             cmake-build-type: "Release"
