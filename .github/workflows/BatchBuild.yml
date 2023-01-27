@@ -8,7 +8,9 @@ on:
   # Enable manual running of workflow
   workflow_dispatch:
 
-concurrency: batch-${{ github.ref }}
+concurrency:
+  group: '${{ github.workflow }}@${{ github.event.pull_request.head.sha || github.head_ref || github.ref }}'
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
