@@ -67,7 +67,7 @@ new_img$SetSpacing(c(2.5,3.5,4.5))
 
 # Write the 3D image as a series
 # IMPORTANT: There are many DICOM tags that need to be updated when you modify an
-#            original image. This is a delicate opration and requires knowlege of
+#            original image. This is a delicate operation and requires knowlege of
 #            the DICOM standard. This example only modifies some. For a more complete
 #            list of tags that need to be modified see:
 #                           http://gdcm.sourceforge.net/wiki/index.php/Writing_DICOM

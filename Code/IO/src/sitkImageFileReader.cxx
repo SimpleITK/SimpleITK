@@ -46,7 +46,7 @@ namespace itk {
 
           if ( idx[i] != 0 )
             {
-            // if any of the indcies are non-zero, then just fix it
+            // if any of the indicies are non-zero, then just fix it
             typename TImageType::PointType o;
             img->TransformIndexToPhysicalPoint( idx, o );
             img->SetOrigin( o );

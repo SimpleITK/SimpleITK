@@ -13,7 +13,7 @@ namespace itk {
 
               if (type == sitkUnknown)
               {
-                  // Unknow must be first because other enums may be -1 if they are
+                  // Unknown must be first because other enums may be -1 if they are
                   // not instantiated
                   return "Unknown pixel id";
               }
@@ -69,7 +69,7 @@ namespace itk {
 
               if (enumString == "sitkUnknown")
               {
-                  // Unknow must be first because other enums may be -1 if they are
+                  // Unknown must be first because other enums may be -1 if they are
                   // not instantiated
                   return sitkUnknown;
               }

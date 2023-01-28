@@ -68,7 +68,7 @@ def slice_by_slice_decorator(func):
             extractor.SetIndex(extract_index)
 
             # Sliced based indexing for setting image values internally uses
-            # the PasteImageFilter executed "inplace".  The lower 2 elements
+            # the PasteImageFilter executed "in place".  The lower 2 elements
             # are equivalent to ":". For a less general case the assignment
             # could be written as image[:,:,z] = ...
             paste_idx[iter_dim:] = high_idx
