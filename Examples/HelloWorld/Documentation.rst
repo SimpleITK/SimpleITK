@@ -10,6 +10,20 @@ image, draws a smiley face made of Gaussian blobs, and calls the Show function t
 display the image with Fiji.
 
 
+Sample Output
+-------------
+
+Running the python code produces this image:
+
+.. plot::
+   :align: center
+
+    from example_utils import run_example, plot_image
+    args = []
+    return_dict = run_example('HelloWorld', 'main', args)
+    plot_image(return_dict["output_image"])
+
+
 Code
 ----
 
@@ -61,11 +75,3 @@ Code
     .. literalinclude:: ../../Examples/HelloWorld/HelloWorld.tcl
        :language: tcl
        :lines: 18-
-
-
-Sample Output
--------------
-
-Running the python code produces this image:
-
-.. plot:: ../../Examples/HelloWorld/HelloWorld_wrapper.py
