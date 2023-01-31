@@ -10,43 +10,14 @@ jobs:
     strategy:
       maxParallel: 2
       matrix:
-        v142-64-shared:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
-          CTEST_CMAKE_GENERATOR_PLATFORM: x64
-          CTEST_CONFIGURATION_TYPE: Release
-          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
-          CXXFLAGS: /wd4251 /MP
-          ctest.cache_extra: |
-            BUILD_SHARED_LIBS:BOOL=ON
-          imageName: 'windows-2019'
-        v141-64:
+        v141-64-Elastix:
           CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
-          CTEST_CMAKE_GENERATOR_PLATFORM: x64
-          CTEST_CONFIGURATION_TYPE: Release
-          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
-          ctest.cache_extra: |
-            WRAP_CSHARP:BOOL=ON
-          imageName: 'windows-2019'
-        v142-64:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
-          CTEST_CMAKE_GENERATOR_PLATFORM: x64
-          CTEST_CONFIGURATION_TYPE: Release
-          CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
-          imageName: 'windows-2019'
-        v142-64-Elastix:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
           CTEST_CMAKE_GENERATOR_PLATFORM: x64
           CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
           imageName: 'windows-2019'
           ctest.cache_extra: |
             SimpleITK_USE_ELASTIX:BOOL=ON
-        v143-64:
-          CTEST_CMAKE_GENERATOR_TOOLSET: v143,host=x64
-          CTEST_CMAKE_GENERATOR_PLATFORM: x64
-          CTEST_CONFIGURATION_TYPE: Release
-          CTEST_CMAKE_GENERATOR: "Visual Studio 17 2022"
-          imageName: 'windows-2022'
         v141-32:
           CTEST_CMAKE_GENERATOR_TOOLSET: v141
           CTEST_CMAKE_GENERATOR_PLATFORM: Win32
@@ -88,23 +59,11 @@ jobs:
     strategy:
       maxParallel: 2
       matrix:
-        XCode_13.4:
-          imageName: 'macos-12'
-          xcodeVersion: '13.4.1'
-        XCode_13:
-          imageName: 'macos-11'
-          xcodeVersion: 13.2.1
         XCode_13-Elastix:
           imageName: 'macos-11'
-          xcodeVersion: 13.2.1
+          xcodeVersion: 13.4
           ctest.cache_extra: |
             SimpleITK_USE_ELASTIX:BOOL=ON
-        XCode_12:
-          imageName: 'macos-11'
-          xcodeVersion: 12.5.1
-        XCode_11:
-          imageName: 'macos-11'
-          xcodeVersion: 11.7
     pool:
       vmImage: $(imageName)
 
