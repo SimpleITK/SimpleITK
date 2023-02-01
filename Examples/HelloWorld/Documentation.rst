@@ -21,7 +21,7 @@ Running the python code produces this image:
     from example_utils import run_example, plot_image
     args = []
     return_dict = run_example('HelloWorld', 'main', args)
-    plot_image(return_dict["output_image"])
+    plot_image(return_dict["output_image"], title="Output")
 
 
 Code

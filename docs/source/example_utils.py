@@ -11,7 +11,7 @@ import importlib
 SCREEN_DPI = 96
 
 
-def plot_image(image: SimpleITK.Image, cmap: str='gray'):
+def plot_image(image: SimpleITK.Image, cmap: str='gray', title: str=None):
     """This takes a SimpleITK Image and plots it using Maptplotlib.
 
     This is needed for the Matplotlib Sphinx plot_directive so that
@@ -19,14 +19,18 @@ def plot_image(image: SimpleITK.Image, cmap: str='gray'):
 
     :param image: image to be displayed
     :param cmap: optional ColorMap to use; defaults to 'gray'
+    :param title: optional image title; defaults to None
     :return: None
     """
 
     size_pixels = image.GetSize()
 
     nda = SimpleITK.GetArrayFromImage(image)
-    plt.figure(figsize=(size_pixels[0] / SCREEN_DPI, size_pixels[1] / SCREEN_DPI))
+    # plt.figure(figsize=(size_pixels[1] / SCREEN_DPI, size_pixels[0] / SCREEN_DPI))
+    fig = plt.figure(figsize=(3,3))
     plt.axis('off')
+    if title:
+        plt.title(title, fontweight='bold')
     plt.imshow(nda, cmap=cmap)
 
 
