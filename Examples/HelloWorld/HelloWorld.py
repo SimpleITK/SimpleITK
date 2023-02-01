@@ -18,10 +18,11 @@
 # =========================================================================
 
 import os
+import sys
 import SimpleITK as sitk
 
 
-def main():
+def main(args):
     # Create an image
     pixelType = sitk.sitkUInt8
     imageSize = [128, 128]
@@ -59,12 +60,11 @@ def main():
 
     # Apply the face to the original image
     image = image + face
-
-    return image
+    return {"output_image":image}
 
 
 # Display the results
 if __name__ == "__main__":
-    img = main()
+    img = main(sys.argv)
     if "SITK_NOSHOW" not in os.environ:
         sitk.Show(img, title="Hello World: Python", debugOn=True)

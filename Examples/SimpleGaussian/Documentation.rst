@@ -31,9 +31,13 @@ Input Image
 .. plot::
    :align: center
 
-    from gaussian_utils import run_gaussian, plot_image
-    input_img, _ = run_gaussian()
-    plot_image(input_img)
+    from example_utils import run_example, plot_image
+    args = ['../../docs/images/BrainProtonDensitySlice.png',
+            2.0,
+            '/tmp/gaussian_out.png',
+            ]
+    return_dict = run_example('SimpleGaussian', 'main', args)
+    plot_image(return_dict["input_image"])
 
 Output Image
 ^^^^^^^^^^^^
@@ -41,9 +45,13 @@ Output Image
 .. plot::
    :align: center
 
-    from gaussian_utils import run_gaussian, plot_image
-    _, output_img = run_gaussian()
-    plot_image(output_img)
+    from example_utils import run_example, plot_image
+    args = ['../../docs/images/BrainProtonDensitySlice.png',
+            2.0,
+            '/tmp/gaussian_out.png',
+            ]
+    return_dict = run_example('SimpleGaussian', 'main', args)
+    plot_image(return_dict["blur_image"])
 
 Code
 ----
