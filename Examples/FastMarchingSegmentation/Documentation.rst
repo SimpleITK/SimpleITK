@@ -39,6 +39,30 @@ segmented object. A graphical interface can be constructed to show the
 contour propagation over time, enabling a user to select a the desired
 segmentation.
 
+Example Run
+-----------
+
+Running the Python code with the following inputs:
+
+``main('BrainProtonDensitySlice.png', 'fastMarchingOutput.mha', 81 114 1.0 -0.5 3.0 100 110)``
+
+produces the input & output images below.
+
+Input/Output Images
+^^^^^^^^^^^^^^^^^^^
+
+.. plot::
+   :align: center
+
+    from example_utils import run_example, plot_image
+    args = ['../../docs/images/BrainProtonDensitySlice.png',
+            'fastMarchingOutput.mha',
+            81, 114, 1.0, -0.5, 3.0, 100, 110,
+           ]
+    return_dict = run_example('FastMarchingSegmentation', 'main', args)
+    for key, value in return_dict.items():
+        plot_image(value, title=key)
+
 Code
 ----
 

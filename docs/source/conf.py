@@ -49,6 +49,10 @@ extensions = [
     "matplotlib.sphinxext.plot_directive",
 ]
 
+# Tell matplotlib.sphinxext.plot_directive to only produce PNG output
+# By default, hires.png and pdf are creating taking up a lot time to generate.
+plot_formats = ['png']
+
 # Suppress hyperlinks in the display of matplotlib.sphinxext.plot_directive plots
 plot_html_show_source_link = False
 plot_html_show_formats = False

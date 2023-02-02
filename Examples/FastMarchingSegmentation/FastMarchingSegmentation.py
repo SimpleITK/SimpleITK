@@ -21,65 +21,79 @@
 import SimpleITK as sitk
 import sys
 
-if len(sys.argv) < 10:
-    print(
-        "Usage:",
-        sys.argv[0],
-        " <inputImage> <outputImage> <seedX> <seedY> <Sigma>",
-        "<SigmoidAlpha> <SigmoidBeta> <TimeThreshold>",
-    )
-    sys.exit(1)
 
-inputFilename = sys.argv[1]
-outputFilename = sys.argv[2]
+def main(args):
+    if len(args) < 10:
+        print(
+            "Usage:",
+            "FastMarchingSegmentation",
+            "<inputImage> <outputImage> <seedX> <seedY> <Sigma>",
+            "<SigmoidAlpha> <SigmoidBeta> <TimeThreshold>",
+            "<StoppingTime>"
+        )
+        sys.exit(1)
 
-seedPosition = (int(sys.argv[3]), int(sys.argv[4]))
+    inputFilename = args[1]
+    outputFilename = args[2]
 
-sigma = float(sys.argv[5])
-alpha = float(sys.argv[6])
-beta = float(sys.argv[7])
-timeThreshold = float(sys.argv[8])
-stoppingTime = float(sys.argv[9])
+    seedPosition = (int(args[3]), int(args[4]))
 
-inputImage = sitk.ReadImage(inputFilename, sitk.sitkFloat32)
+    sigma = float(args[5])
+    alpha = float(args[6])
+    beta = float(args[7])
+    timeThreshold = float(args[8])
+    stoppingTime = float(args[9])
 
-print(inputImage)
+    inputImage = sitk.ReadImage(inputFilename, sitk.sitkFloat32)
 
-smoothing = sitk.CurvatureAnisotropicDiffusionImageFilter()
-smoothing.SetTimeStep(0.125)
-smoothing.SetNumberOfIterations(5)
-smoothing.SetConductanceParameter(9.0)
-smoothingOutput = smoothing.Execute(inputImage)
+    # print(inputImage)
 
-gradientMagnitude = sitk.GradientMagnitudeRecursiveGaussianImageFilter()
-gradientMagnitude.SetSigma(sigma)
-gradientMagnitudeOutput = gradientMagnitude.Execute(smoothingOutput)
+    smoothing = sitk.CurvatureAnisotropicDiffusionImageFilter()
+    smoothing.SetTimeStep(0.125)
+    smoothing.SetNumberOfIterations(5)
+    smoothing.SetConductanceParameter(9.0)
+    smoothingOutput = smoothing.Execute(inputImage)
 
-sigmoid = sitk.SigmoidImageFilter()
-sigmoid.SetOutputMinimum(0.0)
-sigmoid.SetOutputMaximum(1.0)
-sigmoid.SetAlpha(alpha)
-sigmoid.SetBeta(beta)
-sigmoid.DebugOn()
-sigmoidOutput = sigmoid.Execute(gradientMagnitudeOutput)
+    gradientMagnitude = sitk.GradientMagnitudeRecursiveGaussianImageFilter()
+    gradientMagnitude.SetSigma(sigma)
+    gradientMagnitudeOutput = gradientMagnitude.Execute(smoothingOutput)
 
-fastMarching = sitk.FastMarchingImageFilter()
+    sigmoid = sitk.SigmoidImageFilter()
+    sigmoid.SetOutputMinimum(0.0)
+    sigmoid.SetOutputMaximum(1.0)
+    sigmoid.SetAlpha(alpha)
+    sigmoid.SetBeta(beta)
+    # sigmoid.DebugOn()
+    sigmoidOutput = sigmoid.Execute(gradientMagnitudeOutput)
 
-seedValue = 0
-trialPoint = (seedPosition[0], seedPosition[1], seedValue)
+    fastMarching = sitk.FastMarchingImageFilter()
 
-fastMarching.AddTrialPoint(trialPoint)
+    seedValue = 0
+    trialPoint = (seedPosition[0], seedPosition[1], seedValue)
 
-fastMarching.SetStoppingValue(stoppingTime)
+    fastMarching.AddTrialPoint(trialPoint)
 
-fastMarchingOutput = fastMarching.Execute(sigmoidOutput)
+    fastMarching.SetStoppingValue(stoppingTime)
 
-thresholder = sitk.BinaryThresholdImageFilter()
-thresholder.SetLowerThreshold(0.0)
-thresholder.SetUpperThreshold(timeThreshold)
-thresholder.SetOutsideValue(0)
-thresholder.SetInsideValue(255)
+    fastMarchingOutput = fastMarching.Execute(sigmoidOutput)
 
-result = thresholder.Execute(fastMarchingOutput)
+    thresholder = sitk.BinaryThresholdImageFilter()
+    thresholder.SetLowerThreshold(0.0)
+    thresholder.SetUpperThreshold(timeThreshold)
+    thresholder.SetOutsideValue(0)
+    thresholder.SetInsideValue(255)
 
-sitk.WriteImage(result, outputFilename)
+    result = thresholder.Execute(fastMarchingOutput)
+
+    sitk.WriteImage(result, outputFilename)
+
+    image_dict = {"InputImage": inputImage,
+                  "SpeedImage": sigmoidOutput,
+                  "TimeCrossingMap": fastMarchingOutput,
+                  "Segmentation": result,
+                  }
+    return image_dict
+
+
+if __name__ == "__main__":
+    return_dict = main(sys.argv)
