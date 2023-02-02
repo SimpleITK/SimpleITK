@@ -46,8 +46,6 @@ def main(args):
 
     inputImage = sitk.ReadImage(inputFilename, sitk.sitkFloat32)
 
-    # print(inputImage)
-
     smoothing = sitk.CurvatureAnisotropicDiffusionImageFilter()
     smoothing.SetTimeStep(0.125)
     smoothing.SetNumberOfIterations(5)
@@ -63,7 +61,6 @@ def main(args):
     sigmoid.SetOutputMaximum(1.0)
     sigmoid.SetAlpha(alpha)
     sigmoid.SetBeta(beta)
-    # sigmoid.DebugOn()
     sigmoidOutput = sigmoid.Execute(gradientMagnitudeOutput)
 
     fastMarching = sitk.FastMarchingImageFilter()
