@@ -138,7 +138,7 @@ jobs:
       PYTHON_ARCH: x64
       CMAKE_PLATFORM: x64
       VCVAR_OPTIONS: amd64
-      CTEST_CONFIGURATION_TYPE: MinSizeRel
+      CTEST_CONFIGURATION_TYPE: Release
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
     steps:
