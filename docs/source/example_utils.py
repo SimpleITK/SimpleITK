@@ -7,8 +7,8 @@ import SimpleITK
 import matplotlib.pyplot as plt
 import importlib
 
-# Hard-coding a screen dpi of 96: calculating it appears to be difficult
-SCREEN_DPI = 96
+# The Matplotlib plot_directive dpi default for png
+DPI = 80
 
 
 def plot_image(image: SimpleITK.Image, cmap: str='gray', title: str=None):
@@ -26,12 +26,9 @@ def plot_image(image: SimpleITK.Image, cmap: str='gray', title: str=None):
     size_pixels = image.GetSize()
 
     nda = SimpleITK.GetArrayFromImage(image)
-    # plt.figure(figsize=(size_pixels[1] / SCREEN_DPI, size_pixels[0] / SCREEN_DPI))
-    fig = plt.figure(figsize=(3,3))
-    plt.axis('off')
-    if title:
-        plt.title(title, fontweight='bold')
-    plt.imshow(nda, cmap=cmap)
+    fig = plt.figure(figsize=(size_pixels[0]/DPI, size_pixels[1]/DPI), dpi=DPI)
+    fig.figimage(nda, cmap=cmap)
+    plt.show()
 
 
 def run_example(module_name: str, func_name: str, args: list) -> dict:

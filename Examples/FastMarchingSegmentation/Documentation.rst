@@ -48,11 +48,9 @@ Running the Python code with the following inputs:
 
 produces the input & output images below.
 
-Input/Output Images
-^^^^^^^^^^^^^^^^^^^
-
 .. plot::
    :align: center
+   :nofigs:
 
     from example_utils import run_example, plot_image
     args = ['../../docs/images/BrainProtonDensitySlice.png',
@@ -62,6 +60,31 @@ Input/Output Images
     return_dict = run_example('FastMarchingSegmentation', 'main', args)
     for key, value in return_dict.items():
         plot_image(value, title=key)
+
+Input/Output Images
+^^^^^^^^^^^^^^^^^^^
+
+.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_00.png
+   :scale: 100%
+
+   **Input Image**
+
+
+.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_01.png
+   :scale: 100%
+
+   **Speed Image**
+
+
+.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_02.png
+   :scale: 100%
+
+   **Time Crossing Map**
+
+.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_03.png
+   :scale: 100%
+
+   **Final Segmentation**
 
 Code
 ----
