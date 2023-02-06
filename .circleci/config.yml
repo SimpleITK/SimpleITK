@@ -18,7 +18,7 @@ referenced:
       DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
       ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
       CCACHE_NODIRECT: 1
-  dependencies: &dependencies
+  cc-dependencies: &cc-dependencies
     run:
       name: Dependencies
       command: |
@@ -69,7 +69,7 @@ jobs:
       - *restore-data-step
       - *restore-ccache-step
       - *clone-dashboard-step
-      - *dependencies
+      - *cc-dependencies
       - *env-step
       - run:
           name: CCache initialization
@@ -127,7 +127,6 @@ jobs:
       - *generate-hash-step
       - *restore-data-step
       - *clone-dashboard-step
-      - *dependencies
       - *env-step
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
@@ -165,7 +164,6 @@ jobs:
       - *generate-hash-step
       - *restore-data-step
       - *clone-dashboard-step
-      - *dependencies
       - *env-step
       - attach_workspace:
           at: /home/circleci/SimpleITK-build
@@ -194,7 +192,6 @@ jobs:
       - *generate-hash-step
       - *restore-data-step
       - *clone-dashboard-step
-      - *dependencies
       - *env-step
       - run:
           name: Additional Dependencies
@@ -227,7 +224,6 @@ jobs:
       - *generate-hash-step
       - *restore-data-step
       - *clone-dashboard-step
-      - *dependencies
       - run:
           name: Prerequisite Dependencies
           command: |
