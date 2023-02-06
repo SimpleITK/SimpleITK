@@ -213,7 +213,7 @@ jobs:
   java-and-test:
     <<: *defaults
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/openjdk:19.0.2
     resource_class: medium
     environment:
       <<: *default_environment_keys
@@ -224,10 +224,6 @@ jobs:
       - *generate-hash-step
       - *restore-data-step
       - *clone-dashboard-step
-      - run:
-          name: Prerequisite Dependencies
-          command: |
-            sudo apt-get install default-jdk
       - *env-step
       - run:
           name: Additional Dependencies
