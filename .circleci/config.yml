@@ -189,11 +189,13 @@ jobs:
           no_output_timeout: 20.0m
           command: |
             env
+            _python_include=$(python -c "import sysconfig; print(sysconfig.get_path('include'))")
             export LD_LIBRARY_PATH="${ROOT_BINARY_DIRECTORY}/ITK-prefix/lib/:${ROOT_BINARY_DIRECTORY}/lib"
             export CTEST_CACHE="
                         CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
-                        BUILD_EXAMPLES:BOOL=ON"
+                        BUILD_EXAMPLES:BOOL=ON
+                        PYTHON_INCLUDE_DIR:PATH=${_python_include}"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - *junit-formatting
       - *junit-store-test-results
