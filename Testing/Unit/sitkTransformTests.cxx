@@ -162,7 +162,7 @@ TEST(TransformTest, Construction) {
 
 TEST(TransformTest, Copy) {
 
-  // Test the copy constructor and asignment operators
+  // Test the copy constructor and assignment operators
 
   sitk::Transform tx1( 2, sitk::sitkTranslation);
   sitk::Transform tx2( tx1 );

@@ -249,7 +249,7 @@ TEST_F(sitkRegistrationMethodTest, Metric_Evaluate)
 
 TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
 {
-  // This test is to check the inplace operation of the initial
+  // This test is to check the in-place operation of the initial
   // transform
   sitk::ImageRegistrationMethod R;
   EXPECT_TRUE(R.GetInitialTransformInPlace());
@@ -295,7 +295,7 @@ TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), tx.GetParameters(), 1e-4);
 
 
-  // set with const method, with inplace constant
+  // set with const method, with in-place constant
   const sitk::Transform &ctx =  sitk::TranslationTransform(fixed.GetDimension(),v2(0.1,-0.2));
   R.SetInitialTransform(ctx);
   EXPECT_TRUE(R.GetInitialTransformInPlace());
@@ -385,7 +385,7 @@ TEST_F(sitkRegistrationMethodTest, Transform_Initial)
 
 TEST_F(sitkRegistrationMethodTest, Mask_Test0)
 {
-  // This test is to check some excpetional cases for using masks
+  // This test is to check some exceptional cases for using masks
   sitk::ImageRegistrationMethod R;
 
   R.SetOptimizerAsGradientDescent(1.0, 100);
@@ -1273,7 +1273,7 @@ TEST_F(sitkRegistrationMethodTest, BSpline_adaptor)
   EXPECT_EQ( outTx.GetNumberOfParameters(), 72u);
   EXPECT_EQ( outTx.GetFixedParameters(), tx.GetFixedParameters() );
 
-  // Check defaul AsBSpline does not change resolution
+  // Check default AsBSpline does not change resolution
 
   R.SetInitialTransformAsBSpline(tx, false);
 
@@ -1397,7 +1397,7 @@ TEST_F(sitkRegistrationMethodTest, BSpline_adaptor_inplace)
   unsigned int numberOfIterations=10;
   R.SetOptimizerAsGradientDescent(1.0,
                                   numberOfIterations);
-  // Check [1,2,4] inplace
+  // Check [1,2,4] in-place
   std::vector<unsigned int> bsplineScaleFactors(3);
   bsplineScaleFactors[0] = 1;
   bsplineScaleFactors[1] = 2;
@@ -1454,7 +1454,7 @@ TEST_F(sitkRegistrationMethodTest, BSpline_adaptor_non_inplace2)
   unsigned int numberOfIterations=10;
   R.SetOptimizerAsGradientDescent(1.0,
                                   numberOfIterations);
-  // Check [1,2,4] inplace
+  // Check [1,2,4] in-place
   std::vector<unsigned int> bsplineScaleFactors(3);
   bsplineScaleFactors[0] = 1;
   bsplineScaleFactors[1] = 2;

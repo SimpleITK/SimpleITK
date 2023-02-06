@@ -54,4 +54,4 @@ jobs:
 
     - name: Do spell checking
       run: |
-        codespell Code --exclude Ancillary --dict .github/workflows/additional_dictionary.txt
+        codespell . --suffix ".py" --suffix ".cxx" --dict .github/workflows/additional_dictionary.txt

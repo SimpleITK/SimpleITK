@@ -32,7 +32,7 @@ extern "C"
 {
 #endif
 
-/** An internal function that returns a memoryview object to the
+/** An internal function that returns a memory-view object to the
  * SimpleITK Image's buffer (shallow). The correct copy and writing
  * policies need to be done by the end-user method.
  */

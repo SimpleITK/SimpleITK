@@ -24,8 +24,8 @@
 namespace sitk = itk::simple;
 
 
-/** This example shows hour to import abuffer from an array into a
-* simpleITK Image, perform some manipulation, then get access to that
+/** This example shows how to import a buffer from an array into a
+* SimpleITK Image, perform some manipulation, then get access to that
 * buffer again. This technique is useful for integrating into external
 * applications.
 */
@@ -60,7 +60,7 @@ int main( int , char *[] )
 
   sitk::Show( img );
 
-  // The output type of the morpholgy will be the same pixel type as
+  // The output type of the morphology will be the same pixel type as
   // the input. But we place the assert to clarify and verify out
   // logic.
   assert( img.GetPixelID() == sitk::sitkUInt8 );

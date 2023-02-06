@@ -25,9 +25,9 @@
 
 // This test verifies the principle that the SliceImageFilter should
 // not change the physical location of the signal. This is done by
-// constructing an image of points, each corresponding to the phycical
+// constructing an image of points, each corresponding to the physical
 // location of the center of the voxel, then verifying that the value
-// still matches the physcial location.
+// still matches the physical location.
 
 namespace
 {
@@ -91,7 +91,7 @@ TEST(SliceImageFilterTests, PhysicalPoint1)
   SourceType::Pointer source = SourceType::New();
 
 
-  // these size are chossen as a power of two and a prime number.
+  // these size are chosen as a power of two and a prime number.
   SourceType::SizeValueType size[] = {128,127};
   source->SetSize( size );
 
@@ -130,7 +130,7 @@ TEST(SliceImageFilterTests, PhysicalPoint2)
   SourceType::Pointer source = SourceType::New();
 
 
-  // these size are chossen as a power of two and a prime number.
+  // these size are chosen as a power of two and a prime number.
   SourceType::SizeValueType size[] = {128,127};
   source->SetSize( size );
 
@@ -172,7 +172,7 @@ TEST(SliceImageFilterTests, PhysicalPoint3)
   SourceType::Pointer source = SourceType::New();
 
 
-  // these size are chossen as a power of two and a prime number.
+  // these size are chosen as a power of two and a prime number.
   SourceType::SizeValueType size[] = {16,17};
   source->SetSize( size );
 
@@ -209,7 +209,7 @@ TEST(SliceImageFilterTests,Empty)
   SourceType::Pointer source = SourceType::New();
 
 
-  // these size are chossen as a power of two and a prime number.
+  // these size are chosen as a power of two and a prime number.
   SourceType::SizeValueType size[] = {32,32};
   source->SetSize( size );
 

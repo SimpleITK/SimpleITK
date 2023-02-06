@@ -77,7 +77,7 @@ TEST_F(sitkExceptionsTest, Test3) {
   itk::simple::GenericException e3( e2 );
 
 
-  // asignment
+  // assignment
   e0 = e2;
   e0 = e1;
   e0 = empty;
