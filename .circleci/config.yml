@@ -23,9 +23,7 @@ referenced:
       name: Dependencies
       command: |
         sudo apt-get update
-        sudo apt-get install -y rsync lua5.3 ccache python3-dev file
-        python -m pip install --upgrade pip
-        python -m pip install scikit-ci-addons lxml # Provides "ctest_junit_formatter" add-on
+        sudo apt-get install -y lua5.3 ccache
   generate-hash-step: &generate-hash-step
     run:
       name: Generate external data hash
@@ -54,17 +52,6 @@ referenced:
        command: |
          echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
          echo 'export PATH=/usr/lib/ccache:${PATH}' >> $BASH_ENV
-  junit-formatting: &junit-formatting
-     run:
-       name: Formatting CTest for JUnit
-       when: always
-       command: |
-         mkdir -p /tmp/test-results
-         python -m ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > /tmp/test-results/JUnit-${CIRCLE_NODE_INDEX}.xml
-  junit-store-test-results: &junit-store-test-results
-    store_test_results:
-          path: /tmp/test-results
-          destination: ctest
 
 version: 2
 jobs:
@@ -109,8 +96,6 @@ jobs:
           when: always
           command: |
             ccache --show-stats
-      - *junit-formatting
-      - *junit-store-test-results
       - save_cache:
           key: 'ccache-{{ arch }}-{{ .Branch }}-{{ epoch }}'
           paths: [ "/home/circleci/.ccache" ]
@@ -163,8 +148,6 @@ jobs:
             ls ${CTEST_BINARY_DIRECTORY}
             cat ${CTEST_BINARY_DIRECTORY}/CMakeCache.txt
           when: on_fail
-      - *junit-formatting
-      - *junit-store-test-results
 
   python3.11-and-test:
     <<: *defaults
@@ -197,8 +180,6 @@ jobs:
                         BUILD_EXAMPLES:BOOL=ON
                         PYTHON_INCLUDE_DIR:PATH=${_python_include}"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Python" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-formatting
-      - *junit-store-test-results
   r-and-test:
     <<: *defaults
     resource_class: medium
@@ -230,8 +211,6 @@ jobs:
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
                         BUILD_EXAMPLES:BOOL=ON"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/R" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-formatting
-      - *junit-store-test-results
   java-and-test:
     <<: *defaults
     docker:
@@ -268,8 +247,6 @@ jobs:
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
                         BUILD_EXAMPLES:BOOL=ON"
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Java" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
-      - *junit-formatting
-      - *junit-store-test-results
 workflows:
   version: 2
   build_and_test:
