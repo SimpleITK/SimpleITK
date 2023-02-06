@@ -74,9 +74,11 @@ jobs:
       - run:
           name: CCache initialization
           command: |
+            mkdir -p /home/circleci/.ccache
             ccache --show-stats
             ccache --zero-stats
             ccache --max-size=2.0G
+            ccache --show-config
       - run:
           name: Build and Testing with CTest
           no_output_timeout: 20.0m
