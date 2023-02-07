@@ -314,7 +314,7 @@ TEST_F(Image4D,Transforms) {
     std::vector<double> pt = shortImage->TransformContinuousIndexToPhysicalPoint(idx);
     EXPECT_EQ(v4(20.0, 23.1, 26.2, 29.3), pt);
 
-    // Physical Point to Coninuous Index
+    // Physical Point to Continuous Index
     idx = shortImage->TransformPhysicalPointToContinuousIndex(pt);
     EXPECT_VECTOR_NEAR(v4(2.0, 2.0, 2.0, 2.0), idx, 1e-20);
   }
@@ -420,7 +420,7 @@ TEST_F(Image4D, CopyInformation)
 TEST_F(Image4D, CopyOnWrite)
 {
   std::vector<unsigned int> s4d(4,10);
-  // test that a just constructed image only have 1 referecne
+  // test that a just constructed image only have 1 reference
   sitk::Image img( s4d, sitk::sitkUInt8 );
   EXPECT_EQ(static_cast<const sitk::Image *>(&img)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for just constructed Image";

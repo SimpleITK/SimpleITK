@@ -78,7 +78,7 @@ int main( int argc, char *argv[])
 
   //
   // First, define the type alias that correspond to the types of the input
-  // image. This requires foreknowlege of the data type of the input image.
+  // image. This requires foreknowledge of the data type of the input image.
   //
   const unsigned int                                 Dimension = 2;
   using InternalPixelType = float;

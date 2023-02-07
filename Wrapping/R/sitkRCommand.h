@@ -36,7 +36,7 @@ namespace simple
  * With this class, arbitrary R functions
  * can be associated with an instance to be used in AddObserver calls.
  *
- * Written by Richard Beare <richard.beare |AT| ieee.org, based on
+ * Written by Richard Beare <Richard.Beare |AT| ieee.org, based on
  * sitkPyCommand,
  * which was based on the WrapITK itkPyCommand class originally contributed by
  * Charl P. Botha <cpbotha |AT| ieee.org>.

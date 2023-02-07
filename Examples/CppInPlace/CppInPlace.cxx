@@ -56,7 +56,7 @@ sitk::Image DifferenceOfGaussian(sitk::Image image, double sigma1, double sigma2
   // moved and made invalid.
   sitk::Image &&temp = g1.Execute(image);
 
-  // Both Subtract and g2 are executed inplace.
+  // Both Subtract and g2 are executed in-place.
   return sitk::Subtract(temp, g2.Execute(std::move(image)));
 }
 

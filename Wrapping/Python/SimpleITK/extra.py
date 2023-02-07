@@ -179,7 +179,7 @@ def _get_sitk_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
 
     np = numpy
 
-    # This is a Mapping from numpy dtypes to sitks pixel types.
+    # This is a Mapping from numpy dtypes to sitk's pixel types.
     _np_sitk = {np.dtype(np.uint8): sitkUInt8,
                 np.dtype(np.uint16): sitkUInt16,
                 np.dtype(np.uint32): sitkUInt32,
@@ -207,7 +207,7 @@ def _get_sitk_vector_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
 
     np = numpy
 
-    # This is a Mapping from numpy dtypes to sitks pixel types.
+    # This is a Mapping from numpy dtypes to sitk's pixel types.
     _np_sitk = {np.dtype(np.uint8): sitkVectorUInt8,
                 np.dtype(np.uint16): sitkVectorUInt16,
                 np.dtype(np.uint32): sitkVectorUInt32,

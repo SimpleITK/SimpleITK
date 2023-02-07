@@ -365,4 +365,4 @@ TEST(ElastixImageFilter, GetParameterWhenOneParameterMapIsPresent)
 }
 
 } // namespace simple
-} // namesapce itk
+} // namespace itk

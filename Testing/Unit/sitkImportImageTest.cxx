@@ -66,7 +66,7 @@ namespace sitk = itk::simple;
 
 TEST_F(Import,Required) {
   // the purpose of this test is to verify that the filter has certain
-  // methods, and to imporve coverage
+  // methods, and to improve coverage
 
   // Check has Self
   using ImportFilterType = itk::simple::ImportImageFilter::Self;

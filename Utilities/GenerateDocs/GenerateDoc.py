@@ -12,7 +12,7 @@ from collections import OrderedDict
 
 #
 #  This script updates the documentation of a SimpleITK class in its
-#  JSON file.  The documentation is pulled from the correpsonding ITK
+#  JSON file.  The documentation is pulled from the corresponding ITK
 #  class XML file.  The SimpleITKClass.json file is modified in place.
 #
 #  The script is a re-write of the GenerateDocumentation.groovy script in python.
@@ -86,7 +86,7 @@ def process_xml(root, debug=False):
 
 
 #
-# Recursively traverse an XML subtree to produced a formated description string
+# Recursively traverse an XML subtree to produced a formatted description string
 #
 def traverse_xml(xml_node, depth=0, debug=False):
     result = ""
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     detaileddesc = root.find('./compounddef/detaileddescription')
 
     #
-    # Set the class detailed description in the JSON to the formated text from the XML tree
+    # Set the class detailed description in the JSON to the formatted text from the XML tree
     #
     json_obj['detaileddescription'] = format_description(detaileddesc, debug)
     print (
@@ -243,7 +243,7 @@ if __name__ == '__main__':
             json_obj['detaileddescription']))
 
     #
-    # Set the class brief description in the JSON to the formated text from the XML tree
+    # Set the class brief description in the JSON to the formatted text from the XML tree
     #
     json_obj['briefdescription'] = format_description(briefdesc, debug)
     print (
