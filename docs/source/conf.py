@@ -12,9 +12,11 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+# These path additions are for the Matplotlib Sphinx plot extension
+import os
+import sys
+sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../../Examples'))
 
 import cmake
 import subprocess
@@ -46,7 +48,8 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx_exec_code',
     'sphinx_tabs.tabs',
-    "matplotlib.sphinxext.plot_directive",
+    'matplotlib.sphinxext.plot_directive',
+    'sphinx_toolbox.collapse',
 ]
 
 # Tell matplotlib.sphinxext.plot_directive to only produce PNG output

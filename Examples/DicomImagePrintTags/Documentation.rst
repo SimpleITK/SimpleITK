@@ -16,6 +16,16 @@ For efficiency, the default DICOM reader settings will only load public tags (ev
 
 See also :ref:`lbl_dicom_series_read_modify_write`, :ref:`lbl_dicom_series_reader`.
 
+Sample Output
+-------------
+Running the above Python script with the image  "docs/images/Image0075.dcm" produces the following output:
+
+.. collapse:: DICOM Output (click triangle to collapse)
+    :open:
+
+    .. exec_code::
+        :filename: ../../Examples/DicomImagePrintTags/DicomImagePrintTags_wrapper.py
+
 Code
 ----
 
@@ -32,11 +42,3 @@ Code
     .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.R
        :language: r
        :lines: 18-
-
-Sample Output
--------------
-
-Running the above Python script with the image  "docs/images/Image0075.dcm" produces the following output:
-
-.. exec_code::
-    :filename: ../../Examples/DicomImagePrintTags/DicomImagePrintTags_wrapper.py

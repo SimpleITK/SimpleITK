@@ -20,7 +20,6 @@
 
 import os
 import sys
-
 import SimpleITK as sitk
 
 
