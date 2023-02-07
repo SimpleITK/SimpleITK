@@ -120,7 +120,7 @@ jobs:
     environment:
       <<: *default_environment_keys
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
-    resource_class: medium
+      PARALLEL_LEVEL: 1
     steps:
       - checkout:
           path : ~/SimpleITK
@@ -157,7 +157,7 @@ jobs:
     environment:
       <<: *default_environment_keys
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
-    resource_class: medium
+      PARALLEL_LEVEL: 1
     steps:
       - checkout:
           path : ~/SimpleITK
