@@ -17,6 +17,9 @@ jobs:
     # The CMake configure and build commands are platform-agnostic and should work a cross
     # platforms.
     runs-on: ${{ matrix.os }}
+    env:
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -131,7 +134,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
-
+      - name: Update Path for shared libraries
+        shell: bash
+        if: contains( ${{ matrix.ctest-cache }}, 'BUILD_SHARED_LIBS:BOOL=ON' ) && contains( ${{ matrix.os }}, 'windows' )
+        run: |
+          echo "${{ env.CTEST_BINARY_DIRECTORY }}\ITK-prefix\bin" >> $GITHUB_PATH
+          echo "${{ env.CTEST_BINARY_DIRECTORY }}\SimpleITK-build\bin\${{ matrix.cmake-build-type }}" >> $GITHUB_PATH
       - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
@@ -150,7 +158,6 @@ jobs:
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
           CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
-          CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
           CTEST_CMAKE_GENERATOR_TOOLSET: "${{ matrix.cmake-generator-toolset }}"
           CTEST_CMAKE_GENERATOR_PLATFORM: "${{ matrix.cmake-generator-platform }}"
           CTEST_OUTPUT_ON_FAILURE: 1
