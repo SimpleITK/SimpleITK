@@ -99,7 +99,7 @@ jobs:
     - name: Install Monarch self-hosted build dependencies
       if: matrix.os == 'self-hosted-x64'
       run: |
-        apt install -y \
+        apt-get install -y \
           mono-devel \
           r-base \
           r-base-dev \
