@@ -59,7 +59,7 @@ produces the input & output images below.
            ]
     return_dict = run_example('FastMarchingSegmentation', 'main', args)
     for key, value in return_dict.items():
-        plot_image(value, title=key)
+        plot_image(value)
 
 Input/Output Images
 ^^^^^^^^^^^^^^^^^^^

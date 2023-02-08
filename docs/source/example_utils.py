@@ -2,7 +2,6 @@
 # This utility file hides most of the Example-specific code. The main() routine
 # now returns both the input and output SITK images so they can be displayed
 # individually.
-import sys
 import SimpleITK
 import matplotlib.pyplot as plt
 import importlib
@@ -11,7 +10,7 @@ import importlib
 DPI = 80
 
 
-def plot_image(image: SimpleITK.Image, cmap: str='gray', title: str=None):
+def plot_image(image: SimpleITK.Image, cmap: str = 'gray'):
     """This takes a SimpleITK Image and plots it using Maptplotlib.
 
     This is needed for the Matplotlib Sphinx plot_directive so that
@@ -19,7 +18,6 @@ def plot_image(image: SimpleITK.Image, cmap: str='gray', title: str=None):
 
     :param image: image to be displayed
     :param cmap: optional ColorMap to use; defaults to 'gray'
-    :param title: optional image title; defaults to None
     :return: None
     """
 
@@ -31,7 +29,9 @@ def plot_image(image: SimpleITK.Image, cmap: str='gray', title: str=None):
     plt.show()
 
 
-def run_example(module_name: str, func_name: str, args: list) -> dict:
+def run_example(module_name: str,
+                func_name: str,
+                args: list) -> dict:
     """Generic method of calling a SimpleITK Example 'main' routine
 
     Run the specified func_name on the module_name Example and
@@ -43,9 +43,8 @@ def run_example(module_name: str, func_name: str, args: list) -> dict:
     :return: A dictionary of keywords to Images
     """
 
-    sys.path.append(f'../../Examples/' + module_name)
     try:
-        example_module = importlib.import_module(f"{module_name}")
+        example_module = importlib.import_module(f"{module_name}.{module_name}")
     except (ImportError, AttributeError) as ex:
         raise ValueError(f"Unknown module: {module_name}") from ex
 
