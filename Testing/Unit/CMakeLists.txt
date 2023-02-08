@@ -322,6 +322,7 @@ ExternalData_Expand_Arguments(  SimpleITKData
   DATA{${SimpleITK_DATA_ROOT}/Input/RA-Slice-Short.png}
   DATA{${SimpleITK_DATA_ROOT}/Input/VM1111Shrink-RGB.png}
   DATA{${SimpleITK_DATA_ROOT}/Input/WhiteDots.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
   )
 
 add_subdirectory(Python)
