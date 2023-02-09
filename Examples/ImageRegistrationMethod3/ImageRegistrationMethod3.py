@@ -32,56 +32,54 @@ def command_iteration(method):
     )
 
 
-if len(sys.argv) < 4:
-    print(
-        "Usage:",
-        sys.argv[0],
-        "<fixedImageFilter> <movingImageFile>  <outputTransformFile>",
+def main(args):
+    if len(args) < 3:
+        print(
+            "Usage:",
+            "ImageRegistrationMethod3"
+            "<fixedImageFilter> <movingImageFile>  <outputTransformFile>",
+        )
+        sys.exit(1)
+
+    fixed = sitk.ReadImage(args[1], sitk.sitkFloat32)
+
+    moving = sitk.ReadImage(args[2], sitk.sitkFloat32)
+
+    R = sitk.ImageRegistrationMethod()
+
+    R.SetMetricAsCorrelation()
+
+    R.SetOptimizerAsRegularStepGradientDescent(
+        learningRate=2.0,
+        minStep=1e-4,
+        numberOfIterations=500,
+        gradientMagnitudeTolerance=1e-8,
     )
-    sys.exit(1)
+    R.SetOptimizerScalesFromIndexShift()
 
-pixelType = sitk.sitkFloat32
+    tx = sitk.CenteredTransformInitializer(
+        fixed, moving, sitk.Similarity2DTransform()
+    )
+    R.SetInitialTransform(tx)
 
-fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
+    R.SetInterpolator(sitk.sitkLinear)
 
-moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
+    R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R))
 
-R = sitk.ImageRegistrationMethod()
+    outTx = R.Execute(fixed, moving)
 
-R.SetMetricAsCorrelation()
+    print("-------")
+    print(outTx)
+    print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
+    print(f" Iteration: {R.GetOptimizerIteration()}")
+    print(f" Metric value: {R.GetMetricValue()}")
 
-R.SetOptimizerAsRegularStepGradientDescent(
-    learningRate=2.0,
-    minStep=1e-4,
-    numberOfIterations=500,
-    gradientMagnitudeTolerance=1e-8,
-)
-R.SetOptimizerScalesFromIndexShift()
+    sitk.WriteTransform(outTx, args[3])
 
-tx = sitk.CenteredTransformInitializer(
-    fixed, moving, sitk.Similarity2DTransform()
-)
-R.SetInitialTransform(tx)
-
-R.SetInterpolator(sitk.sitkLinear)
-
-R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R))
-
-outTx = R.Execute(fixed, moving)
-
-print("-------")
-print(outTx)
-print(f"Optimizer stop condition: {R.GetOptimizerStopConditionDescription()}")
-print(f" Iteration: {R.GetOptimizerIteration()}")
-print(f" Metric value: {R.GetMetricValue()}")
-
-sitk.WriteTransform(outTx, sys.argv[3])
-
-if "SITK_NOSHOW" not in os.environ:
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed)
     resampler.SetInterpolator(sitk.sitkLinear)
-    resampler.SetDefaultPixelValue(1)
+    resampler.SetDefaultPixelValue(100)
     resampler.SetTransform(outTx)
 
     out = resampler.Execute(moving)
@@ -89,4 +87,13 @@ if "SITK_NOSHOW" not in os.environ:
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
     cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
-    sitk.Show(cimg, "ImageRegistration2 Composition")
+
+    return {"fixed": fixed,
+            "moving": moving,
+            "composition": cimg}
+
+
+if __name__ == "__main__":
+    return_dict = main(sys.argv)
+    if "SITK_NOSHOW" not in os.environ:
+        sitk.Show(return_dict["composition"], "ImageRegistration3 Composition")
