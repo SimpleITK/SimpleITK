@@ -65,13 +65,17 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               CXXFLAGS:STRING= /wd4251 /MP
 
-
-
           - os: ubuntu-22.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
+
+          - os: ubuntu-22.04
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              ITK_GIT_TAG:STRING=master
 
           - os: macos-12
             cmake-build-type: "Release"
