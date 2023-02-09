@@ -58,18 +58,23 @@ Output Text
         plot_image(value)
 
 
-Input/Output Images
-^^^^^^^^^^^^^^^^^^^
+Input Images
+^^^^^^^^^^^^
 
-.. figure:: ../build/html/link_ImageRegistrationMethod1_docs-1_00.png
-   :scale: 100%
+.. list-table::
 
-   **Fixed Image**
+    * - .. figure:: ../build/html/link_ImageRegistrationMethod1_docs-1_00.png
+           :scale: 100%
 
-.. figure:: ../build/html/link_ImageRegistrationMethod1_docs-1_01.png
-   :scale: 100%
+        **Fixed Image**
 
-   **Moving Image**
+      - .. figure:: ../build/html/link_ImageRegistrationMethod1_docs-1_01.png
+           :scale: 100%
+
+        **Moving Image**
+
+Output Image
+^^^^^^^^^^^^
 
 .. figure:: ../build/html/link_ImageRegistrationMethod1_docs-1_02.png
    :scale: 100%
