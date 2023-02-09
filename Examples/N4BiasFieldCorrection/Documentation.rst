@@ -37,6 +37,55 @@ the limit of iterations per resolution level, thereby setting both the
 iterations and the number of scales ( from the length of the array
 ). The output of the filter is the bias corrected input image.
 
+Example Run
+-----------
+Running the Python code with the following inputs:
+
+``main("BrainProtonDensitySlice.png", "N4_corrected.nrrd", 1)``
+
+produces the images below.
+
+.. plot::
+   :align: center
+   :nofigs:
+
+    import os
+    import sys
+
+    from example_utils import run_example, plot_image
+    args = ['../../docs/images/BrainProtonDensitySlice.png',
+            'N4BiasCorrected.nrrd',
+            1,
+           ]
+    return_dict = run_example('N4BiasFieldCorrection', 'main', args)
+    for key, value in return_dict.items():
+        plot_image(value)
+
+Input Images
+^^^^^^^^^^^^^^^^^^^
+
+.. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_00.png
+   :scale: 100%
+
+   **Original Input**
+
+Output Images
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+
+    * - .. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_01.png
+
+           **Default Mask Image**
+
+      - .. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_02.png
+
+           **Log Bias Image**
+
+      - .. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_03.png
+
+           **N4 Bias Corrected Image**
+
 Code
 ----
 
@@ -58,7 +107,7 @@ Code
 
     .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,20-83
 
   .. tab:: R
 

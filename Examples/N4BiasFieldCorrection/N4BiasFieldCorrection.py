@@ -17,63 +17,75 @@
 #
 # =========================================================================
 
-
 import SimpleITK as sitk
 import sys
 import os
 
-if len(sys.argv) < 2:
-    print(
-        "Usage: N4BiasFieldCorrection inputImage "
-        + "outputImage [shrinkFactor] [maskImage] [numberOfIterations] "
-        + "[numberOfFittingLevels]"
-    )
-    sys.exit(1)
 
-inputImage = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
-image = inputImage
+def main(args):
+    if len(args) < 2:
+        print(
+            "Usage: N4BiasFieldCorrection inputImage "
+            + "outputImage [shrinkFactor] [maskImage] [numberOfIterations] "
+            + "[numberOfFittingLevels]"
+        )
+        sys.exit(1)
 
-if len(sys.argv) > 4:
-    maskImage = sitk.ReadImage(sys.argv[4], sitk.sitkUInt8)
-else:
-    maskImage = sitk.OtsuThreshold(inputImage, 0, 1, 200)
+    inputImage = sitk.ReadImage(args[1], sitk.sitkFloat32)
+    image = inputImage
 
-shrinkFactor = 1
-if len(sys.argv) > 3:
-    shrinkFactor = int(sys.argv[3])
+    if len(args) > 4:
+        maskImage = sitk.ReadImage(args[4], sitk.sitkUInt8)
+    else:
+        maskImage = sitk.OtsuThreshold(inputImage, 0, 1, 200)
+
+    shrinkFactor = 1
+    if len(args) > 3:
+        shrinkFactor = int(args[3])
+        if shrinkFactor > 1:
+            image = sitk.Shrink(
+                inputImage, [shrinkFactor] * inputImage.GetDimension()
+            )
+            maskImage = sitk.Shrink(
+                maskImage, [shrinkFactor] * inputImage.GetDimension()
+            )
+
+    corrector = sitk.N4BiasFieldCorrectionImageFilter()
+
+    numberFittingLevels = 4
+
+    if len(args) > 6:
+        numberFittingLevels = int(args[6])
+
+    if len(args) > 5:
+        corrector.SetMaximumNumberOfIterations(
+            [int(args[5])] * numberFittingLevels
+        )
+
+    corrected_image = corrector.Execute(image, maskImage)
+
+    log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage)
+
+    corrected_image_full_resolution = inputImage / sitk.Exp(log_bias_field)
+
+    sitk.WriteImage(corrected_image_full_resolution, args[2])
+
     if shrinkFactor > 1:
-        image = sitk.Shrink(
-            inputImage, [shrinkFactor] * inputImage.GetDimension()
-        )
-        maskImage = sitk.Shrink(
-            maskImage, [shrinkFactor] * inputImage.GetDimension()
+        sitk.WriteImage(
+            corrected_image, "Python-Example-N4BiasFieldCorrection-shrunk.nrrd"
         )
 
-corrector = sitk.N4BiasFieldCorrectionImageFilter()
-
-numberFittingLevels = 4
-
-if len(sys.argv) > 6:
-    numberFittingLevels = int(sys.argv[6])
-
-if len(sys.argv) > 5:
-    corrector.SetMaximumNumberOfIterations(
-        [int(sys.argv[5])] * numberFittingLevels
-    )
-
-corrected_image = corrector.Execute(image, maskImage)
+    return_images = {"input_image": inputImage,
+                     "mask_image": maskImage,
+                     "log_bias_field": log_bias_field,
+                     "corrected_image": corrected_image}
+    return return_images
 
 
-log_bias_field = corrector.GetLogBiasFieldAsImage(inputImage)
-
-corrected_image_full_resolution = inputImage / sitk.Exp(log_bias_field)
-
-sitk.WriteImage(corrected_image_full_resolution, sys.argv[2])
-
-if shrinkFactor > 1:
-    sitk.WriteImage(
-        corrected_image, "Python-Example-N4BiasFieldCorrection-shrunk.nrrd"
-    )
-
-if "SITK_NOSHOW" not in os.environ:
-    sitk.Show(corrected_image, "N4 Corrected")
+if __name__ == "__main__":
+    images = main(sys.argv)
+    if "SITK_NOSHOW" not in os.environ:
+        sitk.Show(images["input_image"], "Input Image 20")
+        sitk.Show(images["mask_image"], "Mask Image")
+        sitk.Show(images["log_bias_field"], "Log Bias Image")
+        sitk.Show(images["corrected_image"], "N4 Corrected")
