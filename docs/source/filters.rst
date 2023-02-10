@@ -123,7 +123,7 @@ SimpleITK Filters
    * - `ComplexToRealImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ComplexToRealImageFilter.html>`_
      - Computes pixel-wise the real(x) part of a complex image.
    * - `ComposeImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ComposeImageFilter.html>`_
-     - ComposeImageFilter combine several scalar images into a multicomponent image.
+     - ComposeImageFilter combine several scalar images into a multi-component image.
    * - `ConfidenceConnectedImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ConfidenceConnectedImageFilter.html>`_
      - Segment pixels with similar statistics using connectivity.
    * - `ConnectedComponentImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ConnectedComponentImageFilter.html>`_
@@ -443,7 +443,7 @@ SimpleITK Filters
    * - `RankImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1RankImageFilter.html>`_
      - Rank filter of a greyscale image.
    * - `RealAndImaginaryToComplexImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ComposeImageFilter.html>`_
-     - ComposeImageFilter combine several scalar images into a multicomponent image.
+     - ComposeImageFilter combine several scalar images into a multi-component image.
    * - `RealToHalfHermitianForwardFFTImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1RealToHalfHermitianForwardFFTImageFilter.html>`_
      - Base class for specialized real-to-complex forward Fast Fourier Transform .
    * - `ReconstructionByDilationImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ReconstructionByDilationImageFilter.html>`_
@@ -479,7 +479,7 @@ SimpleITK Filters
    * - `SaltAndPepperNoiseImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1SaltAndPepperNoiseImageFilter.html>`_
      - Alter an image with fixed value impulse noise, often called salt and pepper noise.
    * - `ScalarChanAndVeseDenseLevelSetImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScalarChanAndVeseDenseLevelSetImageFilter.html>`_
-     - Dense implementation of the Chan and Vese multiphase level set image filter.
+     - Dense implementation of the Chan and Vese multi-phase level set image filter.
    * - `ScalarConnectedComponentImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScalarConnectedComponentImageFilter.html>`_
      - A connected components filter that labels the objects in an arbitrary image. Two pixels are similar if they are within threshold of each other. Uses ConnectedComponentFunctorImageFilter .
    * - `ScalarImageKmeansImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScalarImageKmeansImageFilter.html>`_
@@ -593,7 +593,7 @@ SimpleITK Filters
    * - `YenThresholdImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1YenThresholdImageFilter.html>`_
      - Threshold an image using the Yen Threshold.
    * - `ZeroCrossingBasedEdgeDetectionImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ZeroCrossingBasedEdgeDetectionImageFilter.html>`_
-     - This filter implements a zero-crossing based edge detecor.
+     - This filter implements a zero-crossing based edge detector.
    * - `ZeroCrossingImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ZeroCrossingImageFilter.html>`_
      - This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image .
    * - `ZeroFluxNeumannPadImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ZeroFluxNeumannPadImageFilter.html>`_

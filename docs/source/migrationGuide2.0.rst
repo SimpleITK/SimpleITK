@@ -106,7 +106,7 @@ Behavior Changes
 ITKv5
 +++++
 
-SimpelITK 2.0 uses ITK version 5.0. This major version change to ITK includes numerous changes to the usage and behavior of ITK. The `ITK v5 Migration Guide <https://github.com/InsightSoftwareConsortium/ITK/blob/master/Documentation/ITK5MigrationGuide.md>`_ contains valuable information documenting changes.
+SimpleITK 2.0 uses ITK version 5.0. This major version change to ITK includes numerous changes to the usage and behavior of ITK. The `ITK v5 Migration Guide <https://github.com/InsightSoftwareConsortium/ITK/blob/master/Documentation/ITK5MigrationGuide.md>`_ contains valuable information documenting changes.
 
 
 Show Environment Variables
@@ -129,7 +129,7 @@ Images support sub-image left assignment of constants and matching image regions
 DICOM MOCHOROME1
 ++++++++++++++++
 
-Changes to DICOM reading, due to SimpleITK's move from ITK 4.x to 5.x. Photomertic interpretation, tag 0028|0004, is now taken into account when reading the image.
+Changes to DICOM reading, due to SimpleITK's move from ITK 4.x to 5.x. Photometric interpretation, tag 0028|0004, is now taken into account when reading the image.
 
    1. MOCHOROME1: previously intensity values loaded as is, now they are inverted. Code that previously inverted the intensities explicitly needs to be removed.
    2. Color images (e.g. YBR_FULL_422): Previously channels loaded as is, now they are converted to RGB. If previous code used the photometric interpretation tag value to perform color space conversions outside of SimpleITK it will need to be  modified. For example, previously the first channel for an image with photometric interpretation of YBR_FULL was luminance and could be used as the grayscale version of the image. Now all three channels are used to compute the image luminance:
@@ -158,7 +158,7 @@ Multi-threading
 
 The upgrade to ITKv5 contains a major refactoring of ITK's threading model. Details on the behavior of the new default PoolMultiThreader can be found in the `ITK v5 Multi-Threading Section <https://github.com/InsightSoftwareConsortium/ITK/blob/master/Documentation/ITK5MigrationGuide.md#multithreading-refactored>`_.
 
-The SimpelITK `ProcessObject class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html>`_ contains the methods to configure the ITK Threader used and the number of threads and number of work units used for an algorithm.
+The SimpleITK `ProcessObject class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html>`_ contains the methods to configure the ITK Threader used and the number of threads and number of work units used for an algorithm.
 
 
 Registration Smoothing

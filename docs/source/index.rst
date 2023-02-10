@@ -44,7 +44,7 @@ If you find SimpleITK useful in your research, support our efforts by citing
 the relevant publication(s):
 
 R. Beare, B. C. Lowekamp, Z. Yaniv, "Image Segmentation, Registration and
-Characterization in R with SimpleITK", *J Stat Softw*, 86(8),
+Characterization in R with SimpleITK", *J Stat Software*, 86(8),
 https://doi.org/10.18637/jss.v086.i08, 2018.
 
 Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis

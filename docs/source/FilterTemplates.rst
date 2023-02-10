@@ -155,7 +155,7 @@ Top Level Fields
 -  [OPTIONAL] **include_files**: (*list*) This list of strings specifies
    additional header files to include in the cxx file for this filter.
 
--  [OPTIONAL] **custom_set_intput**: (*string*) Code which is used to
+-  [OPTIONAL] **custom_set_input**: (*string*) Code which is used to
    set input or multiple inputs to the filter. This overrides the
    standard setting of the inputs.
 

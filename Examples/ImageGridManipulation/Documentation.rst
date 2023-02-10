@@ -9,7 +9,7 @@ There are numerous SimpleITK filters that have similar functions, but very
 important differences. The filters that will be compared are:
 
  - ``JoinSeriesImageFilter()`` - Joins multiple N-D images into an (N+1)-D image
- - ``ComposeImageFilter()`` - Combines several scalar images into a multicomponent vector image
+ - ``ComposeImageFilter()`` - Combines several scalar images into a multi-component vector image
  - ``VectorIndexSelectionCastImageFilter()`` - Extracts the selected index of the input pixel
    type vector (the input image pixel type must be a vector and the output a scalar). Additionally,
    this filter can cast the output pixel type (SetOutputPixelType method).
