@@ -47,7 +47,7 @@ Python
    :lines: 1,19-
 
 
-.. literalinclude:: ../../Examples/Python/GeodesicActiceContourSegmentation.py
+.. literalinclude:: ../../Examples/Python/GeodesicActiveContourSegmentation.py
    :language: python
    :lines: 1,19-
 

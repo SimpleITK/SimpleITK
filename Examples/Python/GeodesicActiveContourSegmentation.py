@@ -27,7 +27,7 @@ if len(sys.argv) < 8:
         "Usage:",
         sys.argv[0],
         "<inputImage> <outputImage> <sigma> <InitialDistance>",
-        "<PropagationScaling> <seedX> <seedY> <?seedZ>",
+        "<PropagationScaling> <seedX> <seedY> <seedZ>",
     )
     sys.exit(1)
 
