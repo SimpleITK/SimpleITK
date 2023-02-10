@@ -33,6 +33,7 @@ execute_process(
     --prefix=@swig_install_dir@
     --with-pcre2-prefix=@pcre2_install_dir@
     --without-octave
+    --without-guile
     --with-python=@PYTHON_EXECUTABLE@
   WORKING_DIRECTORY @swig_binary_dir@
 )
