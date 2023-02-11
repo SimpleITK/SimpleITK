@@ -48,7 +48,7 @@ If you found SimpleITK useful in your research, support our efforts by citing
 the relevant publication(s):
 
 R. Beare, B. C. Lowekamp, Z. Yaniv, "Image Segmentation, Registration and
-Characterization in R with SimpleITK", *J Stat Softw*, 86(8), https://doi.org/10.18637/jss.v086.i08, 2018.
+Characterization in R with SimpleITK", *J Stat Software*, 86(8), https://doi.org/10.18637/jss.v086.i08, 2018.
 
 Z. Yaniv, B. C. Lowekamp, H. J. Johnson, R. Beare, "SimpleITK Image-Analysis Notebooks: a Collaborative Environment for Education and Reproducible Research", *J Digit Imaging.*, 31(3): 290-303, https://doi.org/10.1007/s10278-017-0037-8, 2018.
 
@@ -60,7 +60,7 @@ With massive libraries like SimpleITK, good documentation is a must. The documen
 1. [API Documentation](https://simpleitk.org/doxygen/latest/html/) - This contains class and function documentation. The descriptions for functions and classes are primarily borrowed from the original ITK C++ classes.
 2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/master/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages. [This site replaced the
 [SimpleITK Wiki](https://itk.org/Wiki/SimpleITK)  which is mostly of interest for historical reasons.]
-3. [Juypyter Notebook Repository](http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/) - This repository contains a collection of Jupyter Notebooks illustrating the use of SimpleITK for educational and research activities. The notebooks demonstrate the use of SimpleITK for interactive image analysis using the Python and R programming languages. Recommended reading, if you are starting with SimpleITK.
+3. [Jupyter Notebook Repository](http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/) - This repository contains a collection of Jupyter Notebooks illustrating the use of SimpleITK for educational and research activities. The notebooks demonstrate the use of SimpleITK for interactive image analysis using the Python and R programming languages. Recommended reading, if you are starting with SimpleITK.
 
 
 Support

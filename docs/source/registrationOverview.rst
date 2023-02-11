@@ -215,7 +215,7 @@ Combining a mask with sampling is done using a rejection approach. First a sampl
 then it is accepted or rejected if it is inside or outside the mask. This may cause
 problems when the mask region occupies a very small region in the original image. Because the sampling
 only discards data,the sample rate may be reduced from the requested one. For some similarity metrics (e.g. mutual information)
-this can result in an insufficient number of samples for metric value computation, leading to registraiton failure.
+this can result in an insufficient number of samples for metric value computation, leading to registration failure.
 Other metrics are more robust to small sample sizes (e.g. mean squares), but they all suffer from it.
 In such cases it is better to use a cropped version of the image for registration, possibly the mask's bounding box,
 instead of the original image with a mask.

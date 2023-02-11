@@ -9,13 +9,13 @@ In some, hopefully rare, cases you may only have the image information in raw pi
 
 To read such an image you are required to know three things:
 
-  1. Image size (number of pixels per dimenssion).
+  1. Image size (number of pixels per dimension).
   2. Pixel type (e.g. sitkUInt16).
   3. The byte order ( or `endianness <https://en.wikipedia.org/wiki/Endianness>`__) where little endian is most common.
 
 If the byte order in unknown since it only has two options and we can try both. The one resulting in a visually correct image is the correct byte order.
 
-As a SimpleITK image is a spatial object, we may also need to provide its origin, spacing, and directon cosine matrix. Without explicit information we can make reasonable assumptions that often work, as shown in the code below.
+As a SimpleITK image is a spatial object, we may also need to provide its origin, spacing, and direction cosine matrix. Without explicit information we can make reasonable assumptions that often work, as shown in the code below.
 
 
 Code

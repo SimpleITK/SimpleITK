@@ -116,7 +116,7 @@ Once the :code:`SimpleITK_DIR` and :code:`ITK_DIR` variables have been set, we c
   :width: 90%
   :alt: Visual Studio
 
-After opening :code:`ALL_BUILD.vcvproj` in Visual Studio, the user should
+After opening :code:`ALL_BUILD.vcxproj` in Visual Studio, the user should
 select a build type in Visual Studio.  We recommend choosing **Release** for
 performance reasons.  Then the user should select the **x64** build platform,
 not the unsupported default, x86.  Many man-hours and cpu cycles have been

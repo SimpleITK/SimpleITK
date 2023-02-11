@@ -36,10 +36,10 @@ sitk_add_python_test( Example.ReadAndShow
   "${CMAKE_CURRENT_SOURCE_DIR}/ReadAndShow.py"
   DATA{${SimpleITK_DATA_ROOT}/Input/VM1111Shrink-RGB.png} )
 
-sitk_add_python_test( Example.GeodesicActiceContourSegmentation
-  "${CMAKE_CURRENT_SOURCE_DIR}/GeodesicActiceContourSegmentation.py"
+sitk_add_python_test( Example.GeodesicActiveContourSegmentation
+  "${CMAKE_CURRENT_SOURCE_DIR}/GeodesicActiveContourSegmentation.py"
   DATA{${SimpleITK_DATA_ROOT}/Input/cthead1.png}
-  "${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.GeodesicActiceContourSegmentation.nrrd"
+  "${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.GeodesicActiveContourSegmentation.nrrd"
   .3 10 .9 50 55
   )
 

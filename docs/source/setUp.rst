@@ -75,7 +75,7 @@ In the *Properties* dialog, click on *Java Build Path* and *Add External JARs...
    :align: center
    :alt: Build Path Configuration
 
-The three options of interest are: *Source attachment*, *Javdoc location* and *Native library location*. The *Source attachment* specifies where the source code for the SimpleITK jar file resides. In our case, it is distributed as *simpleitk-source.x.x.x.jar* where *x.x.x* is the version number of SimpleITK. The source attachment is useful for debugging the SimpleITK library, if necessary, because it allows the debugger to step through classes provided in the SimpleITK jar file. This setting is optional.
+The three options of interest are: *Source attachment*, *Javadoc location* and *Native library location*. The *Source attachment* specifies where the source code for the SimpleITK jar file resides. In our case, it is distributed as *simpleitk-source.x.x.x.jar* where *x.x.x* is the version number of SimpleITK. The source attachment is useful for debugging the SimpleITK library, if necessary, because it allows the debugger to step through classes provided in the SimpleITK jar file. This setting is optional.
 
 The *Javadoc location* is also optional, but extremely helpful in developing with Java. Having Javadoc available provides Eclipse with in-line documentation for each function, if provided. We highly recommend supplying the Javadoc location to Eclipse.
 

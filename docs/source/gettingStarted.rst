@@ -164,7 +164,7 @@ SimpleITK has a built in function,
 which can be used for viewing images in an interactive session.
 By default this Show function searches for an installed
 `Fiji <https://fiji.sc>`__ to display images.  If Fiji is not found,
-then it searches for `ImageJ <http://rsbweb.nih.gov/ij/>`__. Fiji/ImageJ were
+then it searches for `ImageJ <http://imagej.nih.gov/ij/>`__. Fiji/ImageJ were
 chosen because they can handle all the image types that SimpleITK
 supports, including 3D vector images with n components per pixel.
 
