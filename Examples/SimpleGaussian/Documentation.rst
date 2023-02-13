@@ -41,12 +41,12 @@ modifies the input image to the output image below.
 Input/Output Images
 ^^^^^^^^^^^^^^^^^^^
 
-.. figure:: ../build/html/link_SimpleGaussian_docs-1_00.png
+.. figure:: link_SimpleGaussian_docs-1_00.png
    :scale: 100%
 
    **Input Image**
 
-.. figure:: ../build/html/link_SimpleGaussian_docs-1_01.png
+.. figure:: link_SimpleGaussian_docs-1_01.png
    :scale: 100%
 
    **Output Image**

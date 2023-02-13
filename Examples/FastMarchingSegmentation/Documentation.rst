@@ -64,24 +64,24 @@ produces the input & output images below.
 Input/Output Images
 ^^^^^^^^^^^^^^^^^^^
 
-.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_00.png
+.. figure:: link_FastMarchingSegmentation_docs-1_00.png
    :scale: 100%
 
    **Input Image**
 
 
-.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_01.png
+.. figure:: link_FastMarchingSegmentation_docs-1_01.png
    :scale: 100%
 
    **Speed Image**
 
 
-.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_02.png
+.. figure:: link_FastMarchingSegmentation_docs-1_02.png
    :scale: 100%
 
    **Time Crossing Map**
 
-.. figure:: ../build/html/link_FastMarchingSegmentation_docs-1_03.png
+.. figure:: link_FastMarchingSegmentation_docs-1_03.png
    :scale: 100%
 
    **Final Segmentation**

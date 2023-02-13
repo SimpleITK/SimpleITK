@@ -64,7 +64,7 @@ produces the images below.
 Input Images
 ^^^^^^^^^^^^^^^^^^^
 
-.. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_00.png
+.. figure:: link_N4BiasFieldCorrection_docs-1_00.png
    :scale: 100%
 
    **Original Input**
@@ -74,15 +74,15 @@ Output Images
 
 .. list-table::
 
-    * - .. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_01.png
+    * - .. figure:: link_N4BiasFieldCorrection_docs-1_01.png
 
            **Default Mask Image**
 
-      - .. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_02.png
+      - .. figure:: link_N4BiasFieldCorrection_docs-1_02.png
 
            **Log Bias Image**
 
-      - .. figure:: ../build/html/link_N4BiasFieldCorrection_docs-1_03.png
+      - .. figure:: link_N4BiasFieldCorrection_docs-1_03.png
 
            **N4 Bias Corrected Image**
 
