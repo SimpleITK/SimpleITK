@@ -60,6 +60,9 @@ plot_formats = ['png']
 plot_html_show_source_link = False
 plot_html_show_formats = False
 
+# The working directory where the code will be executed from the source directory.
+exec_code_working_dir = '.'
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

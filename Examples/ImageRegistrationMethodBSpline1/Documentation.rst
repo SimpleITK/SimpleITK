@@ -26,17 +26,9 @@ Output Text
     .. exec_code::
 
         # --- hide: start ---
-        import os
-        import sys
-
-        # The exec_code extension isn't looking at the sys.path set in conf.py
-        # and for some reason is running in docs instead of docs/source.
-        sys.path.insert(0,os.path.abspath('./source'))
-        sys.path.insert(0,os.path.abspath('../Examples'))
-
         from example_utils import run_example, plot_image
-        args = ['../docs/images/BrainProtonDensitySliceBorder20.png',
-                '../docs/images/BrainProtonDensitySliceBSplined10.png',
+        args = ['../images/BrainProtonDensitySliceBorder20.png',
+                '../images/BrainProtonDensitySliceBSplined10.png',
                 'ImageRegistrationMethodBSpline1.hdf5',
                ]
         return_dict = run_example('ImageRegistrationMethodBSpline1', 'main', args)
@@ -47,12 +39,9 @@ Output Text
    :align: center
    :nofigs:
 
-    import os
-    import sys
-
     from example_utils import run_example, plot_image
-    args = ['../../docs/images/BrainProtonDensitySliceBorder20.png',
-            '../../docs/images/BrainProtonDensitySliceBSplined10.png',
+    args = ['../images/BrainProtonDensitySliceBorder20.png',
+            '../images/BrainProtonDensitySliceBSplined10.png',
             'ImageRegistrationMethodBSpline1.hdf5',
            ]
     return_dict = run_example('ImageRegistrationMethodBSpline1', 'main', args)

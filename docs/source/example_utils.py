@@ -7,7 +7,29 @@ import matplotlib.pyplot as plt
 import importlib
 
 # The Matplotlib plot_directive dpi default for png
+
+from pathlib import Path
+import os
+
+
 DPI = 80
+
+
+class set_directory(object):
+    """Sets the cwd within the context
+
+    Args:
+        path (Path): The path to the cwd
+        """
+    def __init__(self, path: Path):
+        self.path = path
+        self.origin = Path().absolute()
+
+    def __enter__(self):
+        os.chdir(self.path)
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        os.chdir(self.origin)
 
 
 def plot_image(image: SimpleITK.Image, cmap: str = 'gray'):
@@ -43,12 +65,18 @@ def run_example(module_name: str,
     :return: A dictionary of keywords to Images
     """
 
-    try:
-        example_module = importlib.import_module(f"{module_name}.{module_name}")
-    except (ImportError, AttributeError) as ex:
-        raise ValueError(f"Unknown module: {module_name}") from ex
+    with set_directory(f"../../Examples/"):
+        try:
+            example_module = importlib.import_module(f"{module_name}.{module_name}")
+        except (ImportError,) as ex:
+            raise ValueError(f"Unknown module: {module_name}.{module_name} current directory {os.getcwd()}") from ex
 
-    main_func = getattr(example_module, func_name)
+        try:
+            main_func = getattr(example_module, func_name)
+        except AttributeError:
+            raise RuntimeError(f"Unknown attribute: {func_name} in {example_module} --- {example_module.__path__}")
+
     args.insert(0, module_name)
     return_dict = main_func(args)
+
     return return_dict

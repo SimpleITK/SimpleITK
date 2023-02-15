@@ -53,7 +53,7 @@ produces the input & output images below.
    :nofigs:
 
     from example_utils import run_example, plot_image
-    args = ['../../docs/images/BrainProtonDensitySlice.png',
+    args = ['../images/BrainProtonDensitySlice.png',
             'fastMarchingOutput.mha',
             81, 114, 1.0, -0.5, 3.0, 100, 110,
            ]
