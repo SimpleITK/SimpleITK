@@ -77,6 +77,18 @@ jobs:
             ctest-cache: |
               ITK_GIT_TAG:STRING=master
 
+          - os: self-hosted-arm
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              WRAP_CSHARP:BOOL=ON
+              WRAP_R:BOOL=ON
+              WRAP_TCL:BOOL=ON
+              WRAP_RUBY:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
+
           - os: macos-12
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -135,6 +147,7 @@ jobs:
           restore-keys: |
             external-data-v1-
       - name: Set up Python 3.8
+        if: matrix.os != 'self-hosted-arm'
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
@@ -145,6 +158,7 @@ jobs:
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\ITK-prefix\bin" >> $GITHUB_PATH
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\SimpleITK-build\bin\${{ matrix.cmake-build-type }}" >> $GITHUB_PATH
       - name: Install build dependencies
+        if: matrix.os != 'self-hosted-arm'
         run: |
           python -m pip install --upgrade pip
           python -m pip install ninja cmake~=3.24.0
