@@ -1921,6 +1921,7 @@ specialised
 sphinxexample
 sphinxext
 spie
+splined
 splitlines
 splitter
 splweb

@@ -86,7 +86,7 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
   typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
 
   // Unlike an image of Vectors a VectorImage's container is a
-  // container of TPixelType, whos size is the image's number of
+  // container of TPixelType, whose size is the image's number of
   // pixels * number of pixels per component
   numberOfElements *= NLength;
 
@@ -131,7 +131,7 @@ GetVectorImageFromImage( itk::Image< itk::CovariantVector< TPixelType, NLength>,
   typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
 
   // Unlike an image of Vectors a VectorImage's container is a
-  // container of TPixelType, whos size is the image's number of
+  // container of TPixelType, whose size is the image's number of
   // pixels * number of pixels per component
   numberOfElements *= NLength;
 
@@ -189,7 +189,7 @@ GetVectorImageFromImage( itk::Image< itk::Offset< NLength >, NImageDimension> *i
   typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
 
   // Unlike an image of Vectors a VectorImage's container is a
-  // container of TPixelType, whos size is the image's number of
+  // container of TPixelType, whose size is the image's number of
   // pixels * number of pixels per component
   numberOfElements *= NLength;
 
