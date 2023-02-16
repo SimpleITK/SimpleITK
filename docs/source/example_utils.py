@@ -52,25 +52,6 @@ def save_image(image: SimpleITK.Image, name: str, is_label: bool = False):
     SimpleITK.WriteImage(output_img, Path('..')/"images"/f"{name}.png")
 
 
-def plot_image(image: SimpleITK.Image, cmap: str = 'gray'):
-    """This takes a SimpleITK Image and plots it using Maptplotlib.
-
-    This is needed for the Matplotlib Sphinx plot_directive so that
-    images can be displayed in the documentation.
-
-    :param image: image to be displayed
-    :param cmap: optional ColorMap to use; defaults to 'gray'
-    :return: None
-    """
-
-    size_pixels = image.GetSize()
-
-    nda = SimpleITK.GetArrayFromImage(image)
-    fig = plt.figure(figsize=(size_pixels[0]/DPI, size_pixels[1]/DPI), dpi=DPI)
-    fig.figimage(nda, cmap=cmap)
-    plt.show()
-
-
 def run_example(module_name: str,
                 func_name: str,
                 args: list) -> dict:
