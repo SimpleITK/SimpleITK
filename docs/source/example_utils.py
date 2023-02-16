@@ -32,6 +32,26 @@ class set_directory(object):
         os.chdir(self.origin)
 
 
+def save_image(image: SimpleITK.Image, name):
+
+    do_rescale = image.GetPixelID() not in [SimpleITK.sitkUInt8, SimpleITK.sitkVectorUInt8]
+
+    if do_rescale:
+        stats = SimpleITK.StatisticsImageFilter()
+        stats.Execute(image)
+
+        shift_scale = SimpleITK.ShiftScaleImageFilter()
+        shift_scale.SetOutputPixelType(SimpleITK.sitkUInt8)
+        shift_scale.SetShift(-stats.GetMinimum())
+        shift_scale.SetScale(255.0/(stats.GetMaximum()-stats.GetMinimum()))
+
+        output_img = shift_scale.Execute(image)
+    else:
+        output_img = image
+
+    SimpleITK.WriteImage(output_img, Path('..')/"images"/f"{name}.png")
+
+
 def plot_image(image: SimpleITK.Image, cmap: str = 'gray'):
     """This takes a SimpleITK Image and plots it using Maptplotlib.
 
