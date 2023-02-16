@@ -24,7 +24,12 @@ Running the above Python script with the image  "docs/images/Image0075.dcm" prod
     :open:
 
     .. exec_code::
-        :filename: ../../Examples/DicomImagePrintTags/DicomImagePrintTags_wrapper.py
+
+        # --- hide: start ---
+        from example_utils import run_example
+        args = ['../images/Image0075.dcm']
+        run_example('DicomImagePrintTags', 'main', args)
+        # --- hide: stop ---
 
 Code
 ----
