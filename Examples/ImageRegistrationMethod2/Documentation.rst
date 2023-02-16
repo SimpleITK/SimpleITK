@@ -24,27 +24,16 @@ Output Text
     .. exec_code::
 
         # --- hide: start ---
-        from example_utils import run_example, plot_image
+        from example_utils import run_example, save_image
         args = ['../images/BrainProtonDensitySliceBorder20.png',
                 '../images/BrainProtonDensitySliceShifted13x17y.png',
                 'displaceMeth2.hdf5',
                ]
         return_dict = run_example('ImageRegistrationMethod2', 'main', args)
+
+        for key, value in return_dict.items():
+            save_image(value, f"ImageRegistrationMethod2_{key}")
         # --- hide: stop ---
-
-
-.. plot::
-   :align: center
-   :nofigs:
-
-    from example_utils import run_example, plot_image
-    args = ['../images/BrainProtonDensitySliceBorder20.png',
-            '../images/BrainProtonDensitySliceShifted13x17y.png',
-            'displaceMeth2.hdf5',
-           ]
-    return_dict = run_example('ImageRegistrationMethod2', 'main', args)
-    for key, value in return_dict.items():
-        plot_image(value)
 
 
 Input Images
@@ -52,12 +41,12 @@ Input Images
 
 .. list-table::
 
-    * - .. figure:: link_ImageRegistrationMethod2_docs-1_00.png
+    * - .. figure:: ../images/ImageRegistrationMethod2_fixed.png
            :scale: 100%
 
            **Fixed Image**
 
-      - .. figure:: link_ImageRegistrationMethod2_docs-1_01.png
+      - .. figure:: ../images/ImageRegistrationMethod2_moving.png
            :scale: 100%
 
            **Moving Image**
@@ -65,7 +54,7 @@ Input Images
 Output Image
 ^^^^^^^^^^^^
 
-.. figure:: link_ImageRegistrationMethod2_docs-1_02.png
+.. figure:: ../images/ImageRegistrationMethod2_composition.png
    :scale: 100%
 
    **Composition Image**

@@ -45,26 +45,24 @@ Running the Python code with the following inputs:
 
 produces the images below.
 
-.. plot::
-   :align: center
-   :nofigs:
+.. exec_code::
+    :hide_output:
 
-    import os
-    import sys
+    # --- hide: start ---
 
-    from example_utils import run_example, plot_image
+    from example_utils import run_example, save_image
     args = ['../../docs/images/BrainProtonDensitySlice.png',
             'N4BiasCorrected.nrrd',
             1,
            ]
     return_dict = run_example('N4BiasFieldCorrection', 'main', args)
     for key, value in return_dict.items():
-        plot_image(value)
+        save_image(value, f"N4BiasFieldCorrection_{key}", is_label="mask" in key)
 
 Input Images
 ^^^^^^^^^^^^^^^^^^^
 
-.. figure:: link_N4BiasFieldCorrection_docs-1_00.png
+.. figure:: ../images/N4BiasFieldCorrection_input_image.png
    :scale: 100%
 
    **Original Input**
@@ -74,15 +72,15 @@ Output Images
 
 .. list-table::
 
-    * - .. figure:: link_N4BiasFieldCorrection_docs-1_01.png
+    * - .. figure:: ../images/N4BiasFieldCorrection_mask_image.png
 
            **Default Mask Image**
 
-      - .. figure:: link_N4BiasFieldCorrection_docs-1_02.png
+      - .. figure:: ../images/N4BiasFieldCorrection_log_bias_field.png
 
            **Log Bias Image**
 
-      - .. figure:: link_N4BiasFieldCorrection_docs-1_03.png
+      - .. figure:: ../images/N4BiasFieldCorrection_corrected_image.png
 
            **N4 Bias Corrected Image**
 

@@ -15,13 +15,22 @@ Sample Output
 
 Running the python code produces this image:
 
-.. plot::
-   :align: center
 
-    from example_utils import run_example, plot_image
+.. exec_code::
+    :hide_output:
+
+    # --- hide: start ---
+    from example_utils import run_example, save_image
     args = []
     return_dict = run_example('HelloWorld', 'main', args)
-    plot_image(return_dict["output_image"])
+    save_image(return_dict["output_image"], f"HelloWorld_output_image")
+    # --- hide: stop ---
+
+
+.. figure:: ../images/HelloWorld_output_image.png
+   :scale: 100%
+
+   **Input Image**
 
 Code
 ----

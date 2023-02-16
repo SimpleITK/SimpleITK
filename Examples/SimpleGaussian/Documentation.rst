@@ -25,28 +25,30 @@ Running the Python code as follows:
 
 modifies the input image to the output image below.
 
-.. plot::
-   :align: center
-   :nofigs:
+.. exec_code::
+    :hide_output:
 
-    from example_utils import run_example, plot_image
+    # --- hide: start ---
+    from example_utils import run_example, save_image
     args = ['../../docs/images/BrainProtonDensitySlice.png',
             2.0,
             '/tmp/gaussian_out.png',
             ]
     return_dict = run_example('SimpleGaussian', 'main', args)
-    for image in return_dict.values():
-        plot_image(image)
+    for key, value in return_dict.items():
+        save_image(value, f"SimpleGaussian_{key}")
+
+    # --- hide: stop ---
 
 Input/Output Images
 ^^^^^^^^^^^^^^^^^^^
 
-.. figure:: link_SimpleGaussian_docs-1_00.png
+.. figure:: ../images/SimpleGaussian_input_image.png
    :scale: 100%
 
    **Input Image**
 
-.. figure:: link_SimpleGaussian_docs-1_01.png
+.. figure:: ../images/SimpleGaussian_blur_image.png
    :scale: 100%
 
    **Output Image**
