@@ -1,12 +1,5 @@
-# gaussian_utils.py
-# This utility file hides most of the Example-specific code. The main() routine
-# now returns both the input and output SITK images so they can be displayed
-# individually.
 import SimpleITK
-import matplotlib.pyplot as plt
 import importlib
-
-# The Matplotlib plot_directive dpi default for png
 
 from pathlib import Path
 import os
