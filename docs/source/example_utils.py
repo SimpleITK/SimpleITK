@@ -32,11 +32,13 @@ class set_directory(object):
         os.chdir(self.origin)
 
 
-def save_image(image: SimpleITK.Image, name):
+def save_image(image: SimpleITK.Image, name: str, is_label: bool = False):
 
-    do_rescale = image.GetPixelID() not in [SimpleITK.sitkUInt8, SimpleITK.sitkVectorUInt8]
-
-    if do_rescale:
+    if is_label:
+        output_img = SimpleITK.LabelToRGB(image)
+    elif image.GetPixelID() in [SimpleITK.sitkUInt8, SimpleITK.sitkVectorUInt8]:
+        output_img = image
+    else:
         stats = SimpleITK.StatisticsImageFilter()
         stats.Execute(image)
 
@@ -46,8 +48,6 @@ def save_image(image: SimpleITK.Image, name):
         shift_scale.SetScale(255.0/(stats.GetMaximum()-stats.GetMinimum()))
 
         output_img = shift_scale.Execute(image)
-    else:
-        output_img = image
 
     SimpleITK.WriteImage(output_img, Path('..')/"images"/f"{name}.png")
 

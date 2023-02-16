@@ -59,7 +59,7 @@ produces the input & output images below.
            ]
     return_dict = run_example('FastMarchingSegmentation', 'main', args)
     for key, value in return_dict.items():
-        save_image(value, f"FastMarchingSegmentation_{key}")
+        save_image(value, f"FastMarchingSegmentation_{key}", is_label= "Segmentation"==key)
 
     # --- hide: stop ---
 

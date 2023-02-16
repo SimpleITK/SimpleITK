@@ -57,7 +57,7 @@ produces the images below.
            ]
     return_dict = run_example('N4BiasFieldCorrection', 'main', args)
     for key, value in return_dict.items():
-        save_image(value, f"N4BiasFieldCorrection_{key}")
+        save_image(value, f"N4BiasFieldCorrection_{key}", is_label="mask" in key)
 
 Input Images
 ^^^^^^^^^^^^^^^^^^^
