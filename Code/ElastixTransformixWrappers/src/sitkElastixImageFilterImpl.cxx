@@ -14,7 +14,7 @@ ElastixImageFilter::ElastixImageFilterImpl
   this->m_DualMemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, FloatPixelIDTypeList, 2 >();
   this->m_DualMemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, FloatPixelIDTypeList, 3 >();
 
-#ifdef SITK_4D_IMAGES
+#if SITK_MAX_DIMENSION >= 4
   this->m_DualMemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, FloatPixelIDTypeList, 4 >();
 #endif
 
