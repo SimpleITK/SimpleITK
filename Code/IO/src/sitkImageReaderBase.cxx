@@ -82,7 +82,7 @@ ImageReaderBase
   itk::ImageIOBase::Pointer iobase;
   if (this->m_ImageIOName.empty())
     {
-    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeEnum::ReadMode);
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::IOFileModeEnum::ReadMode);
     }
   else
     {
@@ -188,7 +188,7 @@ ImageReaderBase
   itk::ImageIOBase::Pointer iobase;
   try
     {
-    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::FileModeEnum::ReadMode);
+    iobase = itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::IOFileModeEnum::ReadMode);
     }
   catch(...)
     {
@@ -225,32 +225,32 @@ ImageReaderBase
 
   // get output information about input image
   unsigned int dimension = iobase->GetNumberOfDimensions();
-  itk::ImageIOBase::IOComponentType componentType = iobase->GetComponentType();
-  itk::ImageIOBase::IOPixelType pixelType = iobase->GetPixelType();
+  itk::IOComponentEnum componentType = iobase->GetComponentType();
+  itk::IOPixelEnum pixelType = iobase->GetPixelType();
   unsigned int numberOfComponents = iobase->GetNumberOfComponents();
 
   outDimensions = dimension;
 
 
   if (numberOfComponents == 1 &&
-      ( pixelType == itk::ImageIOBase::SCALAR || pixelType == itk::ImageIOBase::COMPLEX ) )
+      ( pixelType == itk::IOPixelEnum::SCALAR || pixelType == itk::IOPixelEnum::COMPLEX ) )
     {
     outPixelType = this->ExecuteInternalReadScalar( static_cast<int>(componentType) );
     return;
     }
   // we try to load anything else into a VectorImage
-  else if  (pixelType == itk::ImageIOBase::RGB ||
-            pixelType == itk::ImageIOBase::RGBA ||
-            pixelType == itk::ImageIOBase::VECTOR ||
-            pixelType == itk::ImageIOBase::COVARIANTVECTOR ||
-            pixelType == itk::ImageIOBase::FIXEDARRAY ||
-            pixelType == itk::ImageIOBase::POINT ||
-            pixelType == itk::ImageIOBase::OFFSET )
+  else if  (pixelType == itk::IOPixelEnum::RGB ||
+            pixelType == itk::IOPixelEnum::RGBA ||
+            pixelType == itk::IOPixelEnum::VECTOR ||
+            pixelType == itk::IOPixelEnum::COVARIANTVECTOR ||
+            pixelType == itk::IOPixelEnum::FIXEDARRAY ||
+            pixelType == itk::IOPixelEnum::POINT ||
+            pixelType == itk::IOPixelEnum::OFFSET )
     {
     outPixelType = this->ExecuteInternalReadVector( static_cast<int>(componentType) );
     return;
     }
-  else if ( pixelType == itk::ImageIOBase::COMPLEX )
+  else if ( pixelType == itk::IOPixelEnum ::COMPLEX )
     {
     outPixelType = this->ExecuteInternalReadComplex( static_cast<int>(componentType) );
     return;
@@ -289,51 +289,51 @@ ImageReaderBase
 {
   const unsigned int UnusedDimension = 2;
 
-  switch(static_cast<ImageIOBase::IOComponentType>(componentType))
+  switch(static_cast<itk::IOComponentEnum>(componentType))
     {
-    case itk::ImageIOBase::CHAR:
+    case itk::IOComponentEnum::CHAR:
       return ImageTypeToPixelIDValue< itk::Image<int8_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UCHAR:
+    case itk::IOComponentEnum::UCHAR:
       return ImageTypeToPixelIDValue< itk::Image<uint8_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::SHORT:
+    case itk::IOComponentEnum::SHORT:
       return ImageTypeToPixelIDValue< itk::Image<int16_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::USHORT:
+    case itk::IOComponentEnum::USHORT:
       return ImageTypeToPixelIDValue< itk::Image<uint16_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::INT:
+    case itk::IOComponentEnum::INT:
       return ImageTypeToPixelIDValue< itk::Image<int32_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UINT:
+    case itk::IOComponentEnum::UINT:
       return ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::LONG:
+    case itk::IOComponentEnum::LONG:
       if (sizeof(long) == 4 )
         return ImageTypeToPixelIDValue< itk::Image<int32_t, UnusedDimension> >::Result;
       else
         return ImageTypeToPixelIDValue< itk::Image<int64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::ULONG:
+    case itk::IOComponentEnum::ULONG:
       if (sizeof(unsigned long) == 4 )
         return ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
       else
         return ImageTypeToPixelIDValue< itk::Image<uint64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::LONGLONG:
+    case itk::IOComponentEnum::LONGLONG:
       return ImageTypeToPixelIDValue< itk::Image<int64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::ULONGLONG:
+    case itk::IOComponentEnum::ULONGLONG:
       return ImageTypeToPixelIDValue< itk::Image<uint64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::FLOAT:
+    case itk::IOComponentEnum::FLOAT:
       return ImageTypeToPixelIDValue< itk::Image<float, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::DOUBLE:
+    case itk::IOComponentEnum::DOUBLE:
       return ImageTypeToPixelIDValue< itk::Image<double, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
+    case itk::IOComponentEnum::UNKNOWNCOMPONENTTYPE:
     default:
       assert( false ); // should never get here unless we forgot a type
       sitkExceptionMacro( "Logic error!" );
@@ -347,15 +347,15 @@ ImageReaderBase
 {
   const unsigned int UnusedDimension = 2;
 
-  switch(static_cast<ImageIOBase::IOComponentType>(componentType))
+  switch(static_cast<itk::IOComponentEnum>(componentType))
     {
-    case itk::ImageIOBase::FLOAT:
+    case itk::IOComponentEnum::FLOAT:
       return ImageTypeToPixelIDValue< itk::Image<std::complex<float>, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::DOUBLE:
+    case itk::IOComponentEnum::DOUBLE:
       return ImageTypeToPixelIDValue< itk::Image<std::complex<double>, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
+    case itk::IOComponentEnum::UNKNOWNCOMPONENTTYPE:
     default:
       sitkExceptionMacro( "Only Complex image with float and double are supported!" );
     }
@@ -367,51 +367,51 @@ ImageReaderBase
 {
   const unsigned int UnusedDimension = 2;
 
-  switch(static_cast<ImageIOBase::IOComponentType>(componentType))
+  switch(static_cast<ImageIOBase::IOComponentEnum>(componentType))
     {
-    case itk::ImageIOBase::CHAR:
+    case itk::IOComponentEnum::CHAR:
       return ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UCHAR:
+    case itk::IOComponentEnum::UCHAR:
       return ImageTypeToPixelIDValue< itk::VectorImage<uint8_t , UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::SHORT:
+    case itk::IOComponentEnum::SHORT:
       return ImageTypeToPixelIDValue< itk::VectorImage<int16_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::USHORT:
+    case itk::IOComponentEnum::USHORT:
       return ImageTypeToPixelIDValue< itk::VectorImage<uint16_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::INT:
+    case itk::IOComponentEnum::INT:
       return ImageTypeToPixelIDValue< itk::VectorImage<int32_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UINT:
+    case itk::IOComponentEnum::UINT:
       return ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::LONG:
+    case itk::IOComponentEnum::LONG:
       if (sizeof(long) == 4 )
         return ImageTypeToPixelIDValue< itk::VectorImage<int32_t, UnusedDimension> >::Result;
       else
         return ImageTypeToPixelIDValue< itk::VectorImage<int64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::ULONG:
+    case itk::IOComponentEnum::ULONG:
       if (sizeof(unsigned long) == 4 )
         return ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
       else
         return ImageTypeToPixelIDValue< itk::VectorImage<uint64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::LONGLONG:
+    case itk::IOComponentEnum::LONGLONG:
       return ImageTypeToPixelIDValue< itk::VectorImage<int64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::ULONGLONG:
+    case itk::IOComponentEnum::ULONGLONG:
       return ImageTypeToPixelIDValue< itk::VectorImage<uint64_t, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::FLOAT:
+    case itk::IOComponentEnum::FLOAT:
       return ImageTypeToPixelIDValue< itk::VectorImage<float, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::DOUBLE:
+    case itk::IOComponentEnum::DOUBLE:
       return ImageTypeToPixelIDValue< itk::VectorImage<double, UnusedDimension> >::Result;
       break;
-    case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
+    case itk::IOComponentEnum::UNKNOWNCOMPONENTTYPE:
     default:
       assert( false ); // should never get here unless we forgot a type
       sitkExceptionMacro( "Logic error!" );

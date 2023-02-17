@@ -50,7 +50,7 @@
       ],
       "default" : "itk::simple::FastMarchingBaseImageFilter::Nothing",
       "doc" : "",
-      "itk_type" : "typename FilterType::TopologyCheckType"
+      "itk_type" : "typename FilterType::TopologyCheckEnum"
     }
   ],
   "tests" : [
