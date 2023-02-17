@@ -167,6 +167,7 @@ private:
   void RegisterMemberFactory3();
   void RegisterMemberFactory3v();
   void RegisterMemberFactory3l();
+  void RegisterMemberFactory4();
   /** @} */
 
   typedef Image (Self::*MemberFunctionType)( const Image& );

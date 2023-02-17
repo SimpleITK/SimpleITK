@@ -45,6 +45,7 @@ CastImageFilter::CastImageFilter()
   this->RegisterMemberFactory3v();
   this->RegisterMemberFactory3l();
 
+  this->RegisterMemberFactory4();
 
 }
 

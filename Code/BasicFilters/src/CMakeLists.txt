@@ -98,6 +98,7 @@ cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKCommon
   sitkCastImageFilter-3.cxx
   sitkCastImageFilter-3l.cxx
   sitkCastImageFilter-3v.cxx
+  sitkCastImageFilter-4.cxx
   sitkCastImageFilter.cxx
   sitkExtractImageFilter.cxx
   sitkHashImageFilter.cxx )
