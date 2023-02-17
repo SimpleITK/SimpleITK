@@ -115,7 +115,7 @@ TEST( TransformixImageFilter, ComputeDeformationField )
   EXPECT_GT( deformationVector[1], 1.0);
 }
 
-#ifdef SITK_4D_IMAGES
+#if SITK_MAX_DIMENSIONS >= 4
 
 TEST( TransformixImageFilter, Transformation4D )
 {
@@ -141,7 +141,7 @@ TEST( TransformixImageFilter, Transformation4D )
   resultImage2 = stfx.Execute();
 }
 
-#endif // SITK_4D_IMAGES
+#endif
 
 } // namespace simple
 } // namespace itk
