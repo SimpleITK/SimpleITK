@@ -52,10 +52,10 @@ namespace itk
 namespace simple
 {
 
-// This is a base class of the private implementatino of the transform
+// This is a base class of the private implementation of the transform
 // class.
 //
-// The interface provide virutal method and other generic methods to
+// The interface provide virtual method and other generic methods to
 // the concrete ITK transform type, there by provide encapsulation and
 // a uniform interface
 class SITKCommon_HIDDEN PimpleTransformBase
@@ -146,7 +146,7 @@ public:
   // Tries to construct an inverse of the transform, if true is returned
   // the inverse was successful, and outputTransform is modified to
   // the new class and ownership it passed to the caller.  Otherwise
-  // outputTranform is not changed.
+  // outputTransform is not changed.
   virtual bool GetInverse( PimpleTransformBase * &outputTransform ) const = 0;
 
   virtual bool IsLinear() const

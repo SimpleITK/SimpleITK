@@ -1308,6 +1308,7 @@ ggplot
 gh
 gimble
 gipl
+github
 gitlab
 globals
 gmail
@@ -1666,6 +1667,7 @@ num
 numarray
 numfocus
 numpy
+nrrd
 objectness
 oct
 octree
@@ -1921,6 +1923,7 @@ specialised
 sphinxexample
 sphinxext
 spie
+splined
 splitlines
 splitter
 splweb
@@ -1928,6 +1931,7 @@ springgreen
 sprintf
 sqr
 sqrt
+src
 srcRegion
 ss
 sse
@@ -1980,6 +1984,7 @@ supersampling
 superset
 sv
 svd
+svg
 swapaxes
 sweepline
 switch
@@ -2052,6 +2057,7 @@ typelist
 typelists
 typename
 tz
+ubuntu
 ubyte
 uchar
 uchars
@@ -2177,6 +2183,7 @@ xyz
 xz
 ymax
 ymin
+yml
 yn
 yy
 yyy
