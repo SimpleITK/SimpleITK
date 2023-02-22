@@ -85,10 +85,7 @@ else()
 endif()
 
 
-if( ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG )
-  # Unable to use ITK_LEGACY_REMOVE due to change in the enum types.
-  # list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
-endif()
+list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
 

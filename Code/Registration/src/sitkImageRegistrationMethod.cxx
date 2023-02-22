@@ -878,7 +878,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   // set sampling
 
   // todo test enum match
-  typename RegistrationType::MetricSamplingStrategyType itkSamplingStrategy = static_cast<typename RegistrationType::MetricSamplingStrategyType>(int(m_MetricSamplingStrategy));
+  typename RegistrationType::MetricSamplingStrategyEnum itkSamplingStrategy = static_cast<typename RegistrationType::MetricSamplingStrategyEnum>(int(m_MetricSamplingStrategy));
   registration->SetMetricSamplingStrategy(itkSamplingStrategy);
 
   if (m_MetricSamplingPercentage.size()==1)

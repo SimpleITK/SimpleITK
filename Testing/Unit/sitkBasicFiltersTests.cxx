@@ -90,7 +90,7 @@
 TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
   using ImageType = itk::Image<float,3>;
   using DisplacementType = itk::Image<itk::Vector<float,3>,3>;
-  using ITKType = itk::FastSymmetricForcesDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType;
+  using ITKType = itk::FastSymmetricForcesDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::GradientType;
 
   EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Symmetric);
   EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Fixed);
@@ -102,7 +102,7 @@ TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
 TEST(BasicFilter,DiffeomorphicDemonsRegistrationFilter_ENUMCHECK) {
   using ImageType = itk::Image<float,3>;
   using DisplacementType = itk::Image<itk::Vector<float,3>,3>;
-  using ITKType = itk::DiffeomorphicDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType;
+  using ITKType = itk::DiffeomorphicDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::GradientType;
 
   EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Symmetric);
   EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Fixed);
@@ -111,36 +111,34 @@ TEST(BasicFilter,DiffeomorphicDemonsRegistrationFilter_ENUMCHECK) {
 }
 
 TEST(BasicFilters,MergeLabelMap_ENUMCHECK) {
-  using ITKType = itk::MergeLabelMapFilter< itk::LabelMap< itk::LabelObject<int, 3> > >;
-  EXPECT_EQ( (int)ITKType::MethodChoice::KEEP, (int)itk::simple::MergeLabelMapFilter::Keep);
-  EXPECT_EQ( (int)ITKType::MethodChoice::AGGREGATE, (int)itk::simple::MergeLabelMapFilter::Aggregate);
-  EXPECT_EQ( (int)ITKType::MethodChoice::PACK, (int)itk::simple::MergeLabelMapFilter::Pack);
-  EXPECT_EQ( (int)ITKType::MethodChoice::STRICT, (int)itk::simple::MergeLabelMapFilter::Strict);
+  EXPECT_EQ( (int)itk::ChoiceMethodEnum::KEEP, (int)itk::simple::MergeLabelMapFilter::Keep);
+  EXPECT_EQ( (int)itk::ChoiceMethodEnum::AGGREGATE, (int)itk::simple::MergeLabelMapFilter::Aggregate);
+  EXPECT_EQ( (int)itk::ChoiceMethodEnum::PACK, (int)itk::simple::MergeLabelMapFilter::Pack);
+  EXPECT_EQ( (int)itk::ChoiceMethodEnum::STRICT, (int)itk::simple::MergeLabelMapFilter::Strict);
 }
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   using ITKType = itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> >;
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Red, (int)itk::simple::ScalarToRGBColormapImageFilter::Red);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Green, (int)itk::simple::ScalarToRGBColormapImageFilter::Green);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Blue, (int)itk::simple::ScalarToRGBColormapImageFilter::Blue);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Grey, (int)itk::simple::ScalarToRGBColormapImageFilter::Grey);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Hot, (int)itk::simple::ScalarToRGBColormapImageFilter::Hot);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Cool, (int)itk::simple::ScalarToRGBColormapImageFilter::Cool);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Spring, (int)itk::simple::ScalarToRGBColormapImageFilter::Spring);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Summer, (int)itk::simple::ScalarToRGBColormapImageFilter::Summer);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Autumn, (int)itk::simple::ScalarToRGBColormapImageFilter::Autumn);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Winter, (int)itk::simple::ScalarToRGBColormapImageFilter::Winter);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Copper, (int)itk::simple::ScalarToRGBColormapImageFilter::Copper);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::Jet, (int)itk::simple::ScalarToRGBColormapImageFilter::Jet);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::HSV, (int)itk::simple::ScalarToRGBColormapImageFilter::HSV);
-  EXPECT_EQ( (int)ITKType::ColormapEnumType::OverUnder, (int)itk::simple::ScalarToRGBColormapImageFilter::OverUnder);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum ::Red, (int)itk::simple::ScalarToRGBColormapImageFilter::Red);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Green, (int)itk::simple::ScalarToRGBColormapImageFilter::Green);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Blue, (int)itk::simple::ScalarToRGBColormapImageFilter::Blue);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Grey, (int)itk::simple::ScalarToRGBColormapImageFilter::Grey);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Hot, (int)itk::simple::ScalarToRGBColormapImageFilter::Hot);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Cool, (int)itk::simple::ScalarToRGBColormapImageFilter::Cool);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Spring, (int)itk::simple::ScalarToRGBColormapImageFilter::Spring);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Summer, (int)itk::simple::ScalarToRGBColormapImageFilter::Summer);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Autumn, (int)itk::simple::ScalarToRGBColormapImageFilter::Autumn);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Winter, (int)itk::simple::ScalarToRGBColormapImageFilter::Winter);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Copper, (int)itk::simple::ScalarToRGBColormapImageFilter::Copper);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::Jet, (int)itk::simple::ScalarToRGBColormapImageFilter::Jet);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::HSV, (int)itk::simple::ScalarToRGBColormapImageFilter::HSV);
+  EXPECT_EQ( (int)ITKType::RGBColormapFilterEnum::OverUnder, (int)itk::simple::ScalarToRGBColormapImageFilter::OverUnder);
 }
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
-  using ITKRecursiveGausianType = itk::RecursiveGaussianImageFilter< itk::Image<float,3> >;
-  EXPECT_EQ( (int)ITKRecursiveGausianType::OrderEnumType::ZeroOrder, (int)itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
-  EXPECT_EQ( (int)ITKRecursiveGausianType::OrderEnumType::FirstOrder, (int)itk::simple::RecursiveGaussianImageFilter::FirstOrder );
-  EXPECT_EQ( (int)ITKRecursiveGausianType::OrderEnumType::SecondOrder, (int)itk::simple::RecursiveGaussianImageFilter::SecondOrder );
+  EXPECT_EQ( (int)itk::GaussianOrderEnum::ZeroOrder, (int)itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
+  EXPECT_EQ( (int)itk::GaussianOrderEnum::FirstOrder, (int)itk::simple::RecursiveGaussianImageFilter::FirstOrder );
+  EXPECT_EQ( (int)itk::GaussianOrderEnum::SecondOrder, (int)itk::simple::RecursiveGaussianImageFilter::SecondOrder );
 }
 
 TEST(BasicFilters,Extract_ENUMCHECK) {
@@ -153,9 +151,9 @@ TEST(BasicFilters,Extract_ENUMCHECK) {
 
 TEST(BasicFilters,FastMarching_ENUMCHECK) {
   using ITKType = itk::FastMarchingImageFilterBase< itk::Image<float,3>, itk::Image<float,3> >;
-  EXPECT_EQ( (int) ITKType::Nothing, (int) itk::simple::FastMarchingBaseImageFilter::Nothing );
-  EXPECT_EQ( (int) ITKType::NoHandles, (int) itk::simple::FastMarchingBaseImageFilter::NoHandles );
-  EXPECT_EQ( (int) ITKType::Strict, (int) itk::simple::FastMarchingBaseImageFilter::Strict );
+  EXPECT_EQ( (int) ITKType::TopologyCheckEnum::Nothing, (int) itk::simple::FastMarchingBaseImageFilter::Nothing );
+  EXPECT_EQ( (int) ITKType::TopologyCheckEnum::NoHandles, (int) itk::simple::FastMarchingBaseImageFilter::NoHandles );
+  EXPECT_EQ( (int) ITKType::TopologyCheckEnum::Strict, (int) itk::simple::FastMarchingBaseImageFilter::Strict );
 }
 
 TEST(BasicFilters,InverseDeconvolution_ENUMCHECK) {
@@ -208,17 +206,17 @@ TEST(BasicFilters,LabelMapContourOverlay_ENUMCHECK) {
 
 TEST(BasicFilters,PatchBasedBaseDenoising_ENUMCHECK) {
   using ITKType = itk::PatchBasedDenoisingImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
-  EXPECT_EQ( (int) ITKType::NOMODEL, (int) itk::simple::PatchBasedDenoisingImageFilter::NOMODEL );
-  EXPECT_EQ( (int) ITKType::GAUSSIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::GAUSSIAN );
-  EXPECT_EQ( (int) ITKType::RICIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::RICIAN );
-  EXPECT_EQ( (int) ITKType::POISSON, (int) itk::simple::PatchBasedDenoisingImageFilter::POISSON );
+  EXPECT_EQ( (int) ITKType::NoiseModelEnum::NOMODEL, (int) itk::simple::PatchBasedDenoisingImageFilter::NOMODEL );
+  EXPECT_EQ( (int) ITKType::NoiseModelEnum::GAUSSIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::GAUSSIAN );
+  EXPECT_EQ( (int) ITKType::NoiseModelEnum::RICIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::RICIAN );
+  EXPECT_EQ( (int) ITKType::NoiseModelEnum::POISSON, (int) itk::simple::PatchBasedDenoisingImageFilter::POISSON );
 }
 
 
 TEST(BasicFilters,ConnectedThreshold_ENUMCHECK) {
   using ITKType = itk::ConnectedThresholdImageFilter< itk::Image<float,3>, itk::Image<float,3> >;
-  EXPECT_EQ( (int) ITKType::FaceConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FaceConnectivity );
-  EXPECT_EQ( (int) ITKType::FullConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FullConnectivity );
+  EXPECT_EQ( (int) ITKType::ConnectivityEnum::FaceConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FaceConnectivity );
+  EXPECT_EQ( (int) ITKType::ConnectivityEnum::FullConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FullConnectivity );
 }
 
 TEST(BasicFilter,GradientAnisotropicDiffusion_EstimateOptimalTimeStep) {

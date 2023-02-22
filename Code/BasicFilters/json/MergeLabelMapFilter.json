@@ -14,9 +14,9 @@
         "Pack",
         "Strict"
       ],
-      "itk_type" : "typename FilterType::MethodChoice",
+      "itk_type" : "typename itk::ChoiceMethodEnum",
       "default" : "itk::simple::MergeLabelMapFilter::Keep",
-      "custom_itk_cast" : "filter->SetMethod ( typename FilterType::MethodChoice ( int( this->m_Method ) ) );\n  filter->InPlaceOff();",
+      "custom_itk_cast" : "filter->SetMethod ( typename itk::ChoiceMethodEnum ( int( this->m_Method ) ) );\n  filter->InPlaceOff();",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the method used to merge the label maps",
       "briefdescriptionGet" : "",
