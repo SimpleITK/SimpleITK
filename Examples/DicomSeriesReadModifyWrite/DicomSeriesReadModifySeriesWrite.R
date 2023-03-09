@@ -84,13 +84,18 @@ modification_date <- format(Sys.time(), "%Y%m%d")
 # by the Filter.
 # For the series instance UID (0020|000e), each of the components is a number, cannot start
 # with zero, and separated by a '.' We create a unique series ID using the date and time.
-# tags of interest:
+# NOTE: DICOM tags represent hexadecimal numbers, so 0020|000D and 0020|000d
+#       are equivalent. The ITK/SimpleITK dictionary is string based, so these
+#       are two different keys, case sensitive. When read from a DICOM file the
+#       hexadecimal string representations are in lower case, so we check for
+#       existence and get the value after converting to lower case.
+# Tags of interest:
 direction <- filtered_image$GetDirection()
 series_tag_values <- c(Filter(Negate(is.null),
                              lapply(tags_to_copy,
                              function(k) {
-                               if(series_reader$HasMetaDataKey(0,k)) {
-                                 list(k, series_reader$GetMetaData(0,k))
+                               if(series_reader$HasMetaDataKey(0,tolower(k))) {
+                                 list(k, series_reader$GetMetaData(0,tolower(k)))
                                 }
                              })),
                         list(list("0008|0031",modification_time), # Series Time
@@ -99,7 +104,7 @@ series_tag_values <- c(Filter(Negate(is.null),
                              list("0020|000e", paste0("1.2.826.0.1.3680043.2.1125.",modification_date,".1",modification_time)), # Series Instance UID
                              list("0020|0037", paste(c(direction[1], direction[4], direction[7],
                                                        direction[2],direction[5],direction[8]), collapse="\\")), # Image Orientation (Patient)
-                             list("0008|103e", paste0(series_reader$GetMetaData(0,"0008|103e"), " Processed-SimpleITK")))) # Series Description
+                             list("0008|103e", paste0(if(series_reader$HasMetaDataKey(0,"0008|103e")) series_reader$GetMetaData(0,"0008|103e") else "", " Processed-SimpleITK")))) # Series Description is an optional tag, so may not exist
 
 for(i in 1:filtered_image$GetDepth()) {
   image_slice <- filtered_image[,,i]

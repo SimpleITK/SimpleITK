@@ -94,22 +94,24 @@ modification_date = time.strftime("%Y%m%d")
 # For the series instance UID (0020|000e), each of the components is a number,
 # cannot start with zero, and separated by a '.' We create a unique series ID
 # using the date and time.
+# NOTE: DICOM tags represent hexadecimal numbers, so 0020|000D and 0020|000d
+#       are equivalent. The ITK/SimpleITK dictionary is string based, so these
+#       are two different keys, case sensitive. When read from a DICOM file the
+#       hexadecimal string representations are in lower case, so we check for
+#       existence and get the value after converting to lower case.
 # Tags of interest:
 direction = filtered_image.GetDirection()
 series_tag_values = [
-    (k, series_reader.GetMetaData(0, k))
+    (k, series_reader.GetMetaData(0, k.lower()))
     for k in tags_to_copy
-    if series_reader.HasMetaDataKey(0, k)
+    if series_reader.HasMetaDataKey(0, k.lower())
 ] + [
     ("0008|0031", modification_time),  # Series Time
     ("0008|0021", modification_date),  # Series Date
     ("0008|0008", "DERIVED\\SECONDARY"),  # Image Type
     (
         "0020|000e",
-        "1.2.826.0.1.3680043.2.1125."
-        + modification_date
-        + ".1"
-        + modification_time,
+        "1.2.826.0.1.3680043.2.1125." + modification_date + ".1" + modification_time,
     ),
     # Series Instance UID
     (
@@ -121,19 +123,20 @@ series_tag_values = [
                     direction[0],
                     direction[3],
                     direction[6],
-                    # Image Orientation (Patient)
                     direction[1],
                     direction[4],
                     direction[7],
-                ),
+                ),  # Image Orientation (Patient)
             )
         ),
     ),
     (
         "0008|103e",
-        series_reader.GetMetaData(0, "0008|103e") + " Processed-SimpleITK",
-    ),
-]  # Series Description
+        series_reader.GetMetaData(0, "0008|103e")
+        if series_reader.HasMetaDataKey(0, "0008|103e")
+        else "" + " Processed-SimpleITK",
+    ),  # Series Description is an optional tag, so may not exist
+]
 
 for i in range(filtered_image.GetDepth()):
     image_slice = filtered_image[:, :, i]
@@ -148,9 +151,7 @@ for i in range(filtered_image.GetDepth()):
     #   Image Position (Patient)
     image_slice.SetMetaData(
         "0020|0032",
-        "\\".join(
-            map(str, filtered_image.TransformIndexToPhysicalPoint((0, 0, i)))
-        ),
+        "\\".join(map(str, filtered_image.TransformIndexToPhysicalPoint((0, 0, i)))),
     )
     #   Instance Number
     image_slice.SetMetaData("0020|0013", str(i))
