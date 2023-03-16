@@ -2,16 +2,41 @@
   "name" : "FFTNormalizedCorrelationImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
   "filter_type" : "itk::FFTNormalizedCorrelationImageFilter<InputImageType, OutputImageType>",
-  "custom_set_input" : "filter->SetFixedImage( image1 ); filter->SetMovingImage(image2 );",
+  "inputs" : [
+    {
+      "name" : "FixedImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::InputImageType>(*inFixedImage) );"
+    },
+    {
+      "name" : "MovingImage",
+      "type" : "Image",
+      "no_size_check" : 0,
+      "custom_itk_cast" : "filter->SetMovingImage( this->CastImageToITK<typename FilterType::InputImageType>(*inMovingImage) );"
+    }
+  ],
   "members" : [
     {
       "name" : "RequiredNumberOfOverlappingPixels",
       "type" : "uint64_t",
-      "default" : "0u"
+      "default" : "0u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set and get the required number of overlapping pixels",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set and get the required number of overlapping pixels"
+    },
+    {
+      "name" : "RequiredFractionOfOverlappingPixels",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set and get the required fraction of overlapping pixels",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set and get the required fraction of overlapping pixels"
     }
   ],
   "tests" : [
@@ -44,6 +69,21 @@
           "type" : "uint64_t",
           "cxx_value" : "15000u",
           "value" : "15000"
+        }
+      ],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/OAS1_0001_MR1_mpr-1_anon.nrrd",
+        "Input/OAS1_0002_MR1_mpr-1_anon.nrrd"
+      ]
+    },
+    {
+      "tag" : "3D_number_pixels",
+      "description" : "Basic xcorr with an even kernel",
+      "settings" : [
+        {
+          "parameter" : "RequiredFractionOfOverlappingPixels",
+          "value" : 0.9
         }
       ],
       "tolerance" : "0.0001",
