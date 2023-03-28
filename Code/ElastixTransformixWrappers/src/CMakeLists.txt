@@ -19,7 +19,7 @@ target_link_libraries( ElastixImageFilter
     SimpleITK_ITKCommon
     transformix_lib )
 target_compile_options( ElastixImageFilter PUBLIC ${SimpleITK_PUBLIC_COMPILE_OPTIONS} PRIVATE ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
-target_compile_features( ElastixImageFilter PUBLIC cxx_std_14 )
+target_compile_features( ElastixImageFilter PUBLIC cxx_std_17 )
 sitk_install_exported_target( ElastixImageFilter )
 
 
@@ -37,5 +37,5 @@ target_link_libraries( TransformixImageFilter
     SimpleITK_ITKCommon
     transformix_lib )
 target_compile_options( TransformixImageFilter PUBLIC ${SimpleITK_PUBLIC_COMPILE_OPTIONS} PRIVATE ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
-target_compile_features( TransformixImageFilter PUBLIC cxx_std_14 )
+target_compile_features( TransformixImageFilter PUBLIC cxx_std_17 )
 sitk_install_exported_target( TransformixImageFilter )
