@@ -114,7 +114,7 @@ in space, we need to answer two questions:
 
 1. How do you access the pixel values in an image?
 
-   a. In dynamically typed typed languages such as Python and R use a type agnostic function:
+   a. In dynamically typed languages such as Python and R use a type agnostic function:
 
       .. code-block:: python
 
