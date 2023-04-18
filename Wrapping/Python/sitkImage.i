@@ -76,90 +76,96 @@
 
         Image __iadd__ ( const Image &i )
         {
-          return (*$self) += i;
+          return *$self += i;
         }
         Image __iadd__ ( double c )
         {
-          return (*$self) += c;
+          return *$self += c;
         }
         Image __isub__ ( const Image &i )
         {
-          return (*$self) -= i;
+          return *$self -= i;
         }
         Image __isub__ ( double c )
         {
-          return (*$self) -= c;
+          return *$self -= c;
         }
         Image __imul__ ( const Image &i )
         {
-          return (*$self) *=  i;
+          return *$self *=  i;
         }
         Image __imul__ ( double c )
         {
-          return (*$self) *=  c;
+          return *$self *=  c;
         }
         Image __imod__ ( const Image &i )
         {
-          return (*$self) %=  i;
+          return *$self %=  i;
         }
         Image __imod__ ( int c )
         {
-          return (*$self) %=  c;
+          return *$self %=  c;
         }
 
 
 
         Image __ifloordiv__ ( const Image &i )
         {
-          return ((*$self) = DivideFloor(std::move(*$self), i));
+          DivideFloor($self->ProxyForInPlaceOperation(), i);
+          return *$self;
         }
         Image __ifloordiv__ ( double c )
         {
-          return ((*$self) = DivideFloor(std::move(*$self), c));
+          DivideFloor($self->ProxyForInPlaceOperation(), c);
+          return *$self;
         }
         Image __itruediv__ ( const Image &i )
         {
-          return ((*$self) = DivideReal(std::move(*$self), i));
+          DivideReal($self->ProxyForInPlaceOperation(), i);
+          return *$self;
         }
         Image __itruediv__ ( double c )
         {
-          return ((*$self) = DivideReal(std::move(*$self), c));
+          DivideReal($self->ProxyForInPlaceOperation(), c);
+          return *$self;
         }
 
 
         Image __ipow__ ( const Image &i )
         {
-          return ((*$self) = Pow(std::move(*$self), i));
+          Pow($self->ProxyForInPlaceOperation(), i);
+          return *$self;
         }
         Image __ipow__ ( double c)
         {
-          return ((*$self) = Pow(std::move(*$self), c));
+          Pow($self->ProxyForInPlaceOperation(), c);
+          return *$self;
         }
 
 
         Image __ior__ ( const Image &i )
         {
-          return (*$self) |=  i;
+          return *$self |=  i;
         }
         Image __ior__ ( int c )
         {
-          return (*$self) |=  c;
+          return *$self |=  c;
         }
         Image __ixor__ ( const Image &i )
         {
-          return (*$self) ^=  i;
+          return *$self ^=  i;
         }
         Image __ixor__ ( int c )
         {
-          return (*$self) ^=  c;
+          return *$self ^=  c;
         }
         Image __iand__ ( const Image &i )
         {
-          return (*$self) &=  i;
+          return *$self &=  i;
         }
         Image __iand__ ( int c )
         {
-          return (*$self) &=  c;
+          return *$self &=  c;
         }
         // A wrapper for performing the paste operation in place
         Image __ipaste(const Image & sourceImage,
@@ -173,7 +179,8 @@
         paster.SetSourceIndex(std::move(sourceIndex));
         paster.SetDestinationIndex(std::move(destinationIndex));
         paster.SetDestinationSkipAxes(std::move(destinationSkipAxes));
-        return (*$self) = paster.Execute(std::move(*$self), sourceImage);
+        paster.Execute($self->ProxyForInPlaceOperation(), sourceImage);
+        return *$self;
         }
         Image __ipaste(double constant,
                    std::vector< unsigned int > sourceSize,
@@ -186,18 +193,21 @@
         paster.SetSourceIndex(std::move(sourceIndex));
         paster.SetDestinationIndex(std::move(destinationIndex));
         paster.SetDestinationSkipAxes(std::move(destinationSkipAxes));
-        return (*$self) = paster.Execute(std::move(*$self), constant);
+        paster.Execute($self->ProxyForInPlaceOperation(), constant);
+        return *$self;
         }
         Image __imasked_assign(const Image &mask,  const Image &assign)
         {
           itk::simple::MaskedAssignImageFilter ma;
-          return (*$self) = ma.Execute(std::move(*$self), mask, assign);
+          ma.Execute($self->ProxyForInPlaceOperation(), mask, assign);
+          return *$self;
         }
         Image __imasked_assign(const Image &mask,  double constant)
         {
           itk::simple::MaskedAssignImageFilter ma;
           ma.SetAssignConstant(constant);
-          return (*$self) = ma.Execute(std::move(*$self), mask);
+          ma.Execute($self->ProxyForInPlaceOperation(), mask);
+          return *$self;
         }
 
 

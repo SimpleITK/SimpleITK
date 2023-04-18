@@ -94,6 +94,29 @@ namespace itk
 
     PimpleImageBase *ShallowCopy( ) const override { return new Self(this->m_Image.GetPointer()); }
     PimpleImageBase *DeepCopy( ) const override { return this->DeepCopy<TImageType>(); }
+    std::unique_ptr<PimpleImageBase> ProxyCopy( ) override { return this->ProxyCopy<TImageType>(); }
+
+    template <typename UImageType>
+    typename std::enable_if<!IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
+    ProxyCopy() {
+        auto oldBuffer = this->m_Image->GetPixelContainer();
+
+        auto itkImage = TImageType::New();
+        itkImage->CopyInformation(this->m_Image);
+        itkImage->SetBufferedRegion(this->m_Image->GetBufferedRegion());
+        itkImage->SetLargestPossibleRegion(this->m_Image->GetLargestPossibleRegion());
+        {
+            auto buffer = TImageType::PixelContainer::New();
+            buffer->SetImportPointer(oldBuffer->GetImportPointer(), oldBuffer->Capacity(), false);
+            itkImage->SetPixelContainer(buffer);
+        }
+        return std::make_unique<Self>( itkImage.GetPointer() );
+    }
+    template <typename UImageType>
+    typename std::enable_if<IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
+    ProxyCopy() {
+       sitkExceptionMacro("ProxyCopy for inplace operations is not supported for label pixel types.");
+    }
 
     template <typename UImageType>
     typename std::enable_if<!IsLabel<UImageType>::Value, PimpleImageBase*>::type
