@@ -96,10 +96,12 @@ TEST(OperatorTests,BinaryLogic)
 
 TEST(OperatorTests, InPlaceException)
 {
-
+    const std::string img1_hash = "ed4a77d1b56a118938788fc53037759b6c501e3d";
     sitk::Image img1 ( 10, 10, sitk::sitkInt8 );
+    img1.SetMetaData("test", "value");
     sitk::Image img2 ( 10, 10, sitk::sitkInt32 );
 
+    EXPECT_EQ( img1_hash, sitk::Hash( img1));
     auto itkBasePtr1 = img1.GetITKBase();
     auto itkBasePtr2 = img2.GetITKBase();
 
@@ -107,8 +109,9 @@ TEST(OperatorTests, InPlaceException)
 
 
     EXPECT_EQ(static_cast<const sitk::Image&>(img2).GetITKBase(), itkBasePtr2);
-    EXPECT_NE(static_cast<const sitk::Image&>(img1).GetITKBase(), nullptr);
-    EXPECT_NE(static_cast<const sitk::Image&>(img1).GetITKBase(), itkBasePtr1);
+    EXPECT_EQ(static_cast<const sitk::Image&>(img1).GetITKBase(), itkBasePtr1);
+    EXPECT_EQ( img1_hash, sitk::Hash( img1));
+    EXPECT_EQ( "value", img1.GetMetaData("test"));
 }
 
 
