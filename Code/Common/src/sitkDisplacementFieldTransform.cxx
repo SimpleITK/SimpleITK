@@ -236,9 +236,9 @@ DisplacementFieldTransform::SetSmoothingBSplineOnUpdate( const std::vector<unsig
 }
 
 
-void DisplacementFieldTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void DisplacementFieldTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 
@@ -363,7 +363,7 @@ void DisplacementFieldTransform::InternalSetSmoothingOff( TDisplacementFieldTran
     itkNewDisplacement->SetInterpolator( itkDisplacement->GetModifiableInterpolator() );
     itkNewDisplacement->SetInverseInterpolator( itkDisplacement->GetModifiableInverseInterpolator() );
 
-    this->SetPimpleTransform( new PimpleTransform<NewTransformType>(itkNewDisplacement));
+    this->SetPimpleTransform( std::make_unique<PimpleTransform<NewTransformType>>(itkNewDisplacement));
     }
 }
 
@@ -390,7 +390,7 @@ void DisplacementFieldTransform::InternalSetSmoothingGaussianOnUpdate( TDisplace
     itkNewDisplacement->SetInterpolator( itkDisplacement->GetModifiableInterpolator() );
     itkNewDisplacement->SetInverseInterpolator( itkDisplacement->GetModifiableInverseInterpolator() );
 
-    this->SetPimpleTransform( new PimpleTransform<NewTransformType>(itkNewDisplacement));
+    this->SetPimpleTransform( std::make_unique<PimpleTransform<NewTransformType>>(itkNewDisplacement));
     }
   else
     {
@@ -428,7 +428,7 @@ void DisplacementFieldTransform::InternalSetSmoothingBSplineOnUpdate( TDisplacem
     itkNewDisplacement->SetInterpolator( itkDisplacement->GetModifiableInterpolator() );
     itkNewDisplacement->SetInverseInterpolator( itkDisplacement->GetModifiableInverseInterpolator() );
 
-    this->SetPimpleTransform( new PimpleTransform<NewTransformType>(itkNewDisplacement));
+    this->SetPimpleTransform( std::make_unique<PimpleTransform<NewTransformType>>(itkNewDisplacement));
     }
   else
     {

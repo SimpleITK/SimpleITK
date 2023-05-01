@@ -207,9 +207,9 @@ unsigned int BSplineTransform::GetOrder() const
 }
 
 
-void BSplineTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void BSplineTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

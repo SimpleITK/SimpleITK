@@ -88,9 +88,9 @@ std::vector<double> ScaleTransform::GetMatrix( ) const
   return this->m_pfGetMatrix();
 }
 
-void ScaleTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void ScaleTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

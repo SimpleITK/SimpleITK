@@ -149,7 +149,7 @@ public:
 
 protected:
 
-  void SetPimpleTransform( PimpleTransformBase * ) override;
+  void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> &&) override;
 
 private:
 

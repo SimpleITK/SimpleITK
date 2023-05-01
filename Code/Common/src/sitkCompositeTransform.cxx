@@ -66,9 +66,9 @@ CompositeTransform &CompositeTransform::operator=( const CompositeTransform &arg
   return *this;
 }
 
-void CompositeTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void CompositeTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 
@@ -214,7 +214,7 @@ void CompositeTransform::InternalInitialization(itk::Transform<double, NDimensio
   ctx->AddTransform(tx);
 
   // Call InternalInitialization again with a CompositeTransform the second time.
-  Self::SetPimpleTransform(new PimpleTransform<CompositeTransformType >(ctx));
+  Self::SetPimpleTransform(std::make_unique<PimpleTransform<CompositeTransformType >>(ctx));
 }
 
 

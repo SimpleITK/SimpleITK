@@ -85,7 +85,7 @@ SITK_RETURN_SELF_TYPE_HEADER SetMatrix(const std::vector<double> &matrix, double
 
 protected:
 
-void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
+void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform ) override;
 
 private:
 

@@ -255,9 +255,9 @@ protected:
   explicit Transform( PimpleTransformBase *pimpleTransform );
 
   // this method is called to set the private pimpleTransform outside
-  // of the constructor, derived classes can override it of update the
+  // the constructor, derived classes can override it of update the
   // state.
-  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+  virtual void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform );
 
 private:
 

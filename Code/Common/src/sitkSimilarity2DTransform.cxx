@@ -132,9 +132,9 @@ Similarity2DTransform::Self &Similarity2DTransform::SetMatrix(const std::vector<
   return *this;
 }
 
-void Similarity2DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void Similarity2DTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

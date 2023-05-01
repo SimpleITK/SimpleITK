@@ -151,9 +151,9 @@ std::vector<double> ScaleVersor3DTransform::GetMatrix( ) const
   return this->m_pfGetMatrix();
 }
 
-void ScaleVersor3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void ScaleVersor3DTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

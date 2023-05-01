@@ -85,7 +85,7 @@ SITK_RETURN_SELF_TYPE_HEADER ComputeZYXOff () {return this->SetComputeZYX(false)
 
 protected:
 
-void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
+void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform ) override;
 
 private:
 
