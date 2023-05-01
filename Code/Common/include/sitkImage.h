@@ -115,7 +115,7 @@ namespace simple
      * filter.Execute( img.ProxyForInPlaceOperation() );
      * \endcode
      *
-     * The meta-data dictionary is not copies to the returned proxy image.
+     * The meta-data dictionary is not copied to the returned proxy image.
      */
     Image ProxyForInPlaceOperation();
 #endif
@@ -549,8 +549,6 @@ namespace simple
     AllocateInternal ( const std::vector<unsigned int > &size, unsigned int numberOfComponents );
     /**@}*/
 
-    Image(std::unique_ptr<PimpleImageBase> &&pimpleImage );
-
   private:
 
    /** Method called by certain constructors to convert ITK images
@@ -562,6 +560,10 @@ namespace simple
      * chosen carefully to flexibly enable this.
      */
     void InternalInitialization( PixelIDValueType type, unsigned  int dimension, itk::DataObject *image );
+
+
+    Image( std::unique_ptr<PimpleImageBase> pimpleImage );
+
 
     template <typename TImageType>
     PimpleImageBase * DispatchedInternalInitialization(itk::DataObject *image);

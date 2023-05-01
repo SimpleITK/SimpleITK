@@ -1724,6 +1724,36 @@ TEST_F(Image,MetaDataDictionary)
 
 }
 
+TEST_F(Image, ProxyForInPlaceOperation)
+{
+    sitk::Image img{ 10,10, sitk::sitkFloat32 };
+
+    img.SetPixelAsFloat({0,0}, 1.0f);
+
+    auto proxyImage = img.ProxyForInPlaceOperation();
+    EXPECT_EQ(proxyImage.GetPixelAsFloat({0,0}), 1.0f);
+    EXPECT_TRUE(proxyImage.IsUnique());
+    EXPECT_TRUE(img.IsUnique());
+
+    proxyImage.SetPixelAsFloat({0,1}, 2.0f);
+    EXPECT_EQ(proxyImage.GetPixelAsFloat({0,1}), 2.0f);
+    EXPECT_EQ(img.GetPixelAsFloat({0,1}), 2.0f);
+
+    sitk::Image img2{ {10,10}, sitk::sitkVectorUInt8, 3};
+
+    img2.SetPixelAsVectorUInt8({0,0}, {1,1,1});
+
+    proxyImage = img2.ProxyForInPlaceOperation();
+    ASSERT_EQ(proxyImage.GetPixelID(), sitk::sitkVectorUInt8);
+    EXPECT_EQ(proxyImage.GetPixelAsVectorUInt8({0,0}), std::vector<uint8_t>({1,1,1}));
+    EXPECT_TRUE(proxyImage.IsUnique());
+    EXPECT_TRUE(img2.IsUnique());
+
+    proxyImage.SetPixelAsVectorUInt8({0,1}, {3,2,1});
+    EXPECT_EQ(proxyImage.GetPixelAsVectorUInt8({0,1}), std::vector<uint8_t>({3,2,1}));
+    EXPECT_EQ(img2.GetPixelAsVectorUInt8({0,1}), std::vector<uint8_t>({3,2,1}));
+}
+
 TEST_F(Image, MoveOperations)
 {
   sitk::Image img;

@@ -40,7 +40,7 @@ namespace itk
     Allocate ( {0, 0}, sitkUInt8, 1 );
   }
 
-  Image::Image( std::unique_ptr<PimpleImageBase> &&pimpleImage )
+  Image::Image( std::unique_ptr<PimpleImageBase> pimpleImage )
   : m_PimpleImage( std::move(pimpleImage) )
   {
       if (!this->m_PimpleImage)
