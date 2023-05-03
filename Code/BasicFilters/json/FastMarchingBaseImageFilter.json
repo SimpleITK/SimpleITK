@@ -51,6 +51,16 @@
       "default" : "itk::simple::FastMarchingBaseImageFilter::Nothing",
       "doc" : "",
       "itk_type" : "typename FilterType::TopologyCheckEnum"
+    },
+    {
+      "name" : "InitialTrialValues",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "auto nodes = filter->GetTrialPoints();\n  for( size_t i = 0; i < nodes->Size(); ++i )\n  {\n   if ( i < m_InitialTrialValues.size()) nodes->ElementAt(i).SetValue(m_InitialTrialValues[i]);\n  }",
+      "briefdescriptionSet" : "Set the initial seed values for corresponding trial point.",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     }
   ],
   "tests" : [
