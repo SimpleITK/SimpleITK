@@ -69,9 +69,9 @@
       "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::SizeType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the boder added to the mask before the crop. The default is 0 on all the axes.",
+      "detaileddescriptionSet" : "Set/Get the border added to the mask before the crop. The default is 0 on all the axes.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the boder added to the mask before the crop. The default is 0 on all the axes."
+      "detaileddescriptionGet" : "Set/Get the border added to the mask before the crop. The default is 0 on all the axes."
     }
   ],
   "tests" : [

@@ -28,9 +28,9 @@
       "default" : 0.5,
       "doc" : "Value assigned to pixels outside of the mask",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1",
+      "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1"
+      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1."
     },
     {
       "name" : "BackgroundValue",
@@ -39,8 +39,8 @@
       "custom_itk_cast" : "filter->SetBackgroundValue(static_cast< typename InputImageType2::PixelType>( m_BackgroundValue ) );",
       "briefdescriptionSet" : "",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the background value",
-      "detaileddescriptionSet" : "Set/Get the background value"
+      "detaileddescriptionGet" : "Set/Get the background value.",
+      "detaileddescriptionSet" : "Set/Get the background value."
     },
     {
       "name" : "Colormap",

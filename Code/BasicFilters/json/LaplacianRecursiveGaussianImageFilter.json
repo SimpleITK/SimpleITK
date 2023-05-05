@@ -13,9 +13,9 @@
       "default" : "1.0",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.",
+      "detaileddescriptionSet" : "Set/Get Sigma value. Sigma is measured in the units of image spacing.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing."
+      "detaileddescriptionGet" : "Set/Get Sigma value. Sigma is measured in the units of image spacing."
     },
     {
       "name" : "NormalizeAcrossScale",
