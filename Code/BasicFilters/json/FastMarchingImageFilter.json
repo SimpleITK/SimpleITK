@@ -36,6 +36,16 @@
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the Fast Marching algorithm Stopping Value.",
       "briefdescriptionSet" : ""
+    },
+    {
+      "name" : "InitialTrialValues",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "auto nodes = filter->GetTrialPoints();\n  for( size_t i = 0; i < nodes->Size(); ++i )\n  {\n   if ( i < m_InitialTrialValues.size()) nodes->ElementAt(i).SetValue(m_InitialTrialValues[i]);\n  }",
+      "briefdescriptionSet" : "Set the initial seed values for corresponding trial points.",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     }
   ],
   "tests" : [
@@ -73,6 +83,55 @@
         {
           "parameter" : "StoppingValue",
           "value" : 50.0
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ]
+    },
+    {
+      "tag" : "initial_values",
+      "description" : "With initial seed values",
+      "tolerance" : 1e-10,
+      "settings" : [
+        {
+          "parameter" : "TrialPoints",
+          "dim" : 2,
+          "point_vec" : 1,
+          "value" : [
+            "{70,70}",
+            "{200,180}"
+          ],
+          "tcl_value" : [
+            "70 70",
+            "200 180"
+          ],
+          "python_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "ruby_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "R_value" : "list(c(70,70), c(200,180))"
+        },
+        {
+          "parameter" : "NormalizationFactor",
+          "value" : 255.0
+        },
+        {
+          "parameter" : "StoppingValue",
+          "value" : 50.0
+        },
+        {
+          "parameter" : "InitialTrialValues",
+          "dim_vec" : 1,
+          "type" : "double",
+          "value" : [
+            1.1,
+            -1.1
+          ]
         }
       ],
       "inputs" : [
