@@ -97,6 +97,27 @@ namespace simple
      */
     Image( Image &&img ) noexcept;
     Image& operator=( Image &&img ) noexcept;
+
+    /** \brief Advanced method not commonly needed
+     *
+     * This method is designed to support implementations "in-place" object behavior for methods which operate on
+     * r-value references. The returned image is a new image which has a low level pointer to this object's image
+     * buffer, without the SimpleITK or ITK reference counting. This is implemented by setting the new ITK Image's
+     * buffer to the same as this objects without ownership.
+     *
+     * \warning This method bypasses the SimpleITK reference counting, and the reference needs to be manually maintained
+     *  in the scope. The resulting object is designed only to be a temporary.
+     *
+     * In the following example this method is used instead of an `std::move` call when the filter's first argument
+     * takes an r-value reference. The `img` object will container the results of the filter execution, and the `img`
+     * image buffer will be preserved in case of exceptions, and the meta-data will remain in the img object.
+     * \code
+     * filter.Execute( img.ProxyForInPlaceOperation() );
+     * \endcode
+     *
+     * The meta-data dictionary is not copied to the returned proxy image.
+     */
+    Image ProxyForInPlaceOperation();
 #endif
 
 
@@ -528,7 +549,6 @@ namespace simple
     AllocateInternal ( const std::vector<unsigned int > &size, unsigned int numberOfComponents );
     /**@}*/
 
-
   private:
 
    /** Method called by certain constructors to convert ITK images
@@ -540,6 +560,10 @@ namespace simple
      * chosen carefully to flexibly enable this.
      */
     void InternalInitialization( PixelIDValueType type, unsigned  int dimension, itk::DataObject *image );
+
+
+    Image( std::unique_ptr<PimpleImageBase> pimpleImage );
+
 
     template <typename TImageType>
     PimpleImageBase * DispatchedInternalInitialization(itk::DataObject *image);

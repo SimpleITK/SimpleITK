@@ -93,22 +93,22 @@ inline Image operator^( Image &&img, int s ) { return Xor(std::move(img), s ); }
 inline Image operator^( int s, const Image &img ) { return Xor(s, img ); }
 
 
-inline Image &operator+=( Image &img1, const Image &img2 ) { return img1 = Add(std::move(img1), img2 ); }
-inline Image &operator+=( Image &img1, double s ) { return img1 = Add(std::move(img1), s ); }
-inline Image &operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(std::move(img1), img2 ); }
-inline Image &operator-=( Image &img1, double s ) { return img1 = Subtract(std::move(img1), s ); }
-inline Image &operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(std::move(img1), img2 ); }
-inline Image &operator*=( Image &img1, double s ) { return img1 = Multiply(std::move(img1), s ); }
-inline Image &operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(std::move(img1), img2 ); }
-inline Image &operator/=( Image &img1, double s ) { return img1 = Divide(std::move(img1), s ); }
-inline Image &operator%=( Image &img1, const Image &img2 ) { return img1 = Modulus(std::move(img1), img2 ); }
-inline Image &operator%=( Image &img1, uint32_t s ) { return img1 = Modulus(std::move(img1), s ); }
-inline Image &operator&=( Image &img1, const Image &img2 ) { return img1 = And(std::move(img1), img2 ); }
-inline Image &operator&=( Image &img1, int s ) { return img1 = And(std::move(img1), s ); }
-inline Image &operator|=( Image &img1, const Image &img2 ) { return img1 = Or(std::move(img1), img2 ); }
-inline Image &operator|=( Image &img1, int s ) { return img1 = Or(std::move(img1), s ); }
-inline Image &operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(std::move(img1), img2 ); }
-inline Image &operator^=( Image &img1, int s ) { return img1 = Xor(std::move(img1), s ); }
+inline Image &operator+=( Image &img1, const Image &img2 ) { Add(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator+=( Image &img1, double s ) { Add(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator-=( Image &img1, const Image &img2 ) { Subtract(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator-=( Image &img1, double s ) { Subtract(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator*=( Image &img1, const Image &img2 ) { Multiply(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator*=( Image &img1, double s ) { Multiply(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator/=( Image &img1, const Image &img2 ) { Divide(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator/=( Image &img1, double s ) { Divide(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator%=( Image &img1, const Image &img2 ) { Modulus(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator%=( Image &img1, uint32_t s ) { Modulus(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator&=( Image &img1, const Image &img2 ) { And(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator&=( Image &img1, int s ) { And(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator|=( Image &img1, const Image &img2 ) { Or(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator|=( Image &img1, int s ) { Or(img1.ProxyForInPlaceOperation(), s ); return img1;}
+inline Image &operator^=( Image &img1, const Image &img2 ) { Xor(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
+inline Image &operator^=( Image &img1, int s ) { Xor(img1.ProxyForInPlaceOperation(), s ); return img1;}
 /**@} */
 }
 }

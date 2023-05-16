@@ -50,6 +50,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         nda = np.linspace(0, 14, 15 ).reshape(3,5)
 
         img = sitk.GetImageFromArray( nda )
+        img["test"] = "value"
 
         self.assertEqual( img.GetSize(), (5,3) )
 
@@ -59,11 +60,13 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertEqual( img[[2,0]], 2.0 )
         self.assertEqual( img[1,2], 11.0 )
         self.assertEqual( img[-1,-2], 9.0 )
+        self.assertEqual(img["test"], "value")
 
         # check default slice indexing
         self.assertImageNDArrayEquals(img[:,:],nda)
         self.assertImageNDArrayEquals(img[:],nda)
         self.assertImageNDArrayEquals(img[::-1,::-1],nda[::-1,::-1])
+        self.assertEqual(img["test"], "value")
 
         # out of bounds cases and empty
         self.assertEqual(len(img[:,5:6]), 0)
@@ -71,6 +74,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertEqual(len(img[-6:0,:]), 0)
         self.assertEqual(len(img[0:0,:]), 0)
         self.assertEqual(len(img[-4:-1:-2,-2:-1:1]), 0)
+        self.assertEqual(img["test"], "value")
 
 
 
@@ -82,6 +86,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertImageNDArrayEquals(img[1:4:2,0:2:2],nda[0:2:2,1:4:2])
         self.assertImageNDArrayEquals(img[1::2,0::2],nda[0::2,1::2])
         self.assertImageNDArrayEquals(img[:3:2,:2:2],nda[:2:2,:3:2])
+        self.assertEqual(img["test"], "value")
 
         # check step size indexing
         self.assertImageNDArrayEquals(img[::2,:],nda[:,::2])
@@ -92,6 +97,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertImageNDArrayEquals(img[::3,::3],nda[::3,::3])
         self.assertImageNDArrayEquals(img[::2,::3],nda[::3,::2])
         self.assertImageNDArrayEquals(img[::3,::2],nda[::2,::3])
+        self.assertEqual(img["test"], "value")
 
 
 
@@ -115,6 +121,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertImageNDArrayEquals(img[...], nda[...])
         self.assertImageNDArrayEquals(img[...,1:3], nda[1:3,...])
         self.assertImageNDArrayEquals(img[-2:0,...], nda[...,-2:0])
+        self.assertEqual(img["test"], "value")
 
     def test_setitem(self):
         """ testing __setitem__ with pasting to roi"""
@@ -122,6 +129,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         nda = np.linspace(0, 59, 60).reshape(3, 4, 5)
 
         img = sitk.GetImageFromArray(nda)
+        img["test"] = "value"
 
         img[1:3, 2:4, 0:2] = sitk.Image([2, 2, 2], sitk.sitkFloat64) + 1
         self.assertTrue(all([px == 1 for px in img[1:3, 2:4, 0:2]]))
@@ -133,6 +141,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertTrue(all([px == 4 for px in img[0:2, 0:1, 0:3]]))
         img[0:2, 0:3, 0:1] = sitk.Image([2, 3], sitk.sitkFloat64) + 5
         self.assertTrue(all([px == 5 for px in img[0:2, 0:3, 0:1]]))
+        self.assertEqual(img["test"], "value")
 
         img[-1, 0:1, 0:3] = sitk.Image([1, 3], sitk.sitkFloat64) + 6
         self.assertTrue(all([px == 6 for px in img[-1, 0:1, 0:3]]))
@@ -140,6 +149,7 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertTrue(all([px == 7 for px in img[1:2, 1, 0:3]]))
         img[2:3, 0:3, 1] = sitk.Image([1, 3], sitk.sitkFloat64) + 8
         self.assertTrue(all([px == 8 for px in img[2:3, 0:3, 1]]))
+        self.assertEqual(img["test"], "value")
 
         img[..., 2:4, 2:3] = sitk.Image([5, 2, 1], sitk.sitkFloat64) + 9
         self.assertTrue(all([px == 9 for px in img[:, 2:4, 2:3]]))
@@ -149,18 +159,23 @@ class TestImageIndexingInterface(unittest.TestCase):
         self.assertTrue(all([px == 11 for px in img]))
         img[2, 3:4, 1:2, ...] = sitk.Image([1, 1], sitk.sitkFloat64) + 12
         self.assertTrue(all([px == 12 for px in img[2, 3:4, 1:2]]))
+        self.assertEqual(img["test"], "value")
 
         with self.assertRaises(IndexError):
             img[1:3, 2:4] = sitk.Image([2, 2, 2], sitk.sitkFloat64)
+        self.assertEqual(img["test"], "value")
 
         self.assertRaises(IndexError,
                           lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([2, 2], sitk.sitkFloat64)))
+        self.assertEqual(img["test"], "value")
         self.assertRaises(IndexError,
                           lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([2, 2, 1], sitk.sitkFloat64)))
         self.assertRaises(IndexError,
                           lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([2, 1, 2], sitk.sitkFloat64)))
         self.assertRaises(IndexError,
                           lambda: self.doImageAssign(img, (slice(0, 2),) * 3, sitk.Image([1, 2, 2], sitk.sitkFloat64)))
+
+        self.assertEqual(img["test"], "value")
 
     def test_5d_setitem(self):
         """ testing __setitem__ with pasting to 5D roi"""
@@ -173,21 +188,26 @@ class TestImageIndexingInterface(unittest.TestCase):
 
         size = [19, 17, 13, 2, 3]
         img = sitk.Image(size, sitk.sitkFloat64)
+        img["test"] = "value"
 
         img[0, 0, 0, 0, 0] = 1
         self.assertEqual(1, img.GetPixel([0, 0, 0, 0, 0]))
+        self.assertEqual(img["test"], "value")
 
         img[-19, -17, -13, -2, -3] = 2
         self.assertEqual(2, img.GetPixel([0, 0, 0, 0, 0]))
+        self.assertEqual(img["test"], "value")
 
         img[:, :, :, 0, 0] = sitk.Image(size[:3], sitk.sitkFloat64) + 3
         self.assertEqual(3, img.GetPixel([0, 0, 0, 0, 0]))
         self.assertTrue(all([px == 3 for px in img[:, :, :, 0, 0]]))
+        self.assertEqual(img["test"], "value")
 
         img[:, 1, 1, :, 2] = sitk.Image((size[0], size[3]), sitk.sitkFloat64) + 4
         self.assertEqual(4, img.GetPixel([0, 1, 1, 0, 2]))
         self.assertEqual(4, img[0, 1, 1, 0, 2])
         self.assertTrue(all([px == 4 for px in img[:, 1, 1, :, 2]]))
+        self.assertEqual(img["test"], "value")
 
         img = sitk.Image(size, sitk.sitkUInt8)
         img[..., 0] = 1
