@@ -31,7 +31,9 @@ namespace simple
 {
 
 
-/** \brief A utility method to help convert between itk image types efficiently.
+/** \brief A utility methods to  convert between itk image types efficiently by
+ * sharing the buffer between the input and output.
+ *
  *
  */
 template< typename TPixelType, unsigned int ImageDimension >
@@ -39,6 +41,17 @@ SITKCommon_HIDDEN
 typename itk::Image< itk::Vector< TPixelType, ImageDimension >, ImageDimension>::Pointer
 GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bool transferOwnership = false );
 
+
+template< typename TPixelType, unsigned int ImageDimension >
+SITKCommon_HIDDEN
+typename itk::Image< TPixelType, ImageDimension+1>::Pointer
+GetScalarImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img);
+
+// method to convert a scalar image to a VectorImage changing the first dimension to the vector components
+template< typename TPixelType, unsigned int ImageDimension >
+SITKCommon_HIDDEN
+typename itk::VectorImage< TPixelType, ImageDimension-1>::Pointer
+GetVectorImageFromScalarImage( itk::Image< TPixelType, ImageDimension > *img);
 
 template< class TPixelType, unsigned int NImageDimension, unsigned int NLength >
 SITKCommon_HIDDEN

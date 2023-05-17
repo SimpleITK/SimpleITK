@@ -31,8 +31,17 @@ void CastImageFilter::RegisterMemberFactory3v()
   // cast between vector images
   m_DualMemberFactory->RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 3, CastAddressor<MemberFunctionType> > ();
 
-  // basic to vector
-  m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 3, ToVectorAddressor<MemberFunctionType> > ();
+
+  // vector to basic
+  // Instantiating 3d to 3d CastImageFilter, similar to the functions above
+  m_DualMemberFactory->RegisterMemberFunctions<VectorPixelIDTypeList, BasicPixelIDTypeList, 2, VectorToImageAddressor<MemberFunctionType> > ();
+
+
+#if SITK_MAX_DIMENSION >= 4
+  // basic to vector reducing a dimension
+  // Instantiating 3d to 3d CastImageFilter, similar to the functions above
+  m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 4, ToVectorAddressor<MemberFunctionType> > ();
+#endif
 }
 
 } // end namespace simple

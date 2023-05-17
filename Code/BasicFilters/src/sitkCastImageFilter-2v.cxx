@@ -31,8 +31,9 @@ void CastImageFilter::RegisterMemberFactory2v()
   // cast between vector images
   m_DualMemberFactory->RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 2, CastAddressor<MemberFunctionType> > ();
 
-  // basic to vector
-  m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 2, ToVectorAddressor<MemberFunctionType> > ();
+  // basic to vector reducing a dimension
+  // Instantiating 2d to 2d CastImageFilter, similar to the functions above
+  m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 3, ToVectorAddressor<MemberFunctionType> > ();
 
 }
 

@@ -22,6 +22,7 @@
 #include <itkCastImageFilter.h>
 
 #include "sitkCastImageFilter.h"
+#include "sitkImageConvert.hxx"
 
 #include <itkComposeImageFilter.h>
 #include <itkLabelImageToLabelMapFilter.h>
@@ -67,25 +68,50 @@ Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
 
   typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
-  using FilterType = itk::ComposeImageFilter<InputImageType>;
-  typename FilterType::Pointer filter = FilterType::New();
-  filter->SetInput ( image );
+  // shallow conversion
+  auto out = GetVectorImageFromScalarImage(const_cast<InputImageType*>(image.GetPointer()));
 
-  this->PreUpdate( filter.GetPointer() );
-
-  using CastFilterType = itk::CastImageFilter< typename FilterType::OutputImageType, OutputImageType >;
+  // perform a deep copy of the image and cast the pixel type.
+  using CastFilterType = itk::CastImageFilter< typename decltype(out)::ObjectType, OutputImageType >;
   typename CastFilterType::Pointer caster = CastFilterType::New();
-  caster->SetInput( filter->GetOutput() );
-  caster->InPlaceOn();
+  caster->SetInput( out );
 
   sitkDebugMacro( << "Executing ITK filters:" << std::endl
-                  << filter
                   << caster );
 
+  this->PreUpdate(caster);
   caster->Update();
 
   return Image( caster->GetOutput() );
 }
+
+
+
+template<typename TImageType, typename TOutputImageType>
+Image CastImageFilter::ExecuteInternalVectorToImage( const Image& inImage )
+{
+
+    using InputImageType = TImageType;
+
+    using OutputImageType = itk::Image<typename TOutputImageType::PixelType, TOutputImageType::ImageDimension>;
+
+    auto image = this->CastImageToITK<InputImageType>( inImage );
+
+    auto out = GetScalarImageFromVectorImage(const_cast<InputImageType*>(image.GetPointer()));
+
+    using CastFilterType = itk::CastImageFilter<typename decltype(out)::ObjectType, OutputImageType >;
+    typename CastFilterType::Pointer caster = CastFilterType::New();
+    caster->SetInput( out );
+
+    sitkDebugMacro( << "Executing ITK filters:" << std::endl
+                            << caster );
+
+    this->PreUpdate( caster.GetPointer() );
+    caster->Update();
+
+    return Image( caster->GetOutput() );
+}
+
 
 
 template<typename TImageType, typename TOutputImageType>

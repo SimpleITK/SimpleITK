@@ -27,6 +27,19 @@ namespace simple
 
 void CastImageFilter::RegisterMemberFactory4()
 {
+
+#if SITK_MAX_DIMENSION >= 4
+  // vector to basic
+  // Instantiating 4d to 4d CastImageFilter
+  m_DualMemberFactory->RegisterMemberFunctions<VectorPixelIDTypeList, BasicPixelIDTypeList, 3, VectorToImageAddressor<MemberFunctionType> > ();
+
+#endif
+
+#if SITK_MAX_DIMENSION >= 5
+  // vector to basic
+  m_DualMemberFactory->RegisterMemberFunctions<VectorPixelIDTypeList, BasicPixelIDTypeList, 4, VectorToImageAddressor<MemberFunctionType> > ();
+  m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 5, ToVectorAddressor<MemberFunctionType> > ();
+#endif
 #if SITK_MAX_DIMENSION >= 4 && defined(SITK_USE_ELASTIX)
     m_DualMemberFactory->RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType> > ();
     m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType> > ();

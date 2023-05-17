@@ -36,7 +36,7 @@ CastImageFilter::CastImageFilter()
 {
   this->m_OutputPixelType = sitkFloat32;
 
-  m_DualMemberFactory.reset( new  detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
+  m_DualMemberFactory = std::make_unique<detail::DualMemberFunctionFactory<MemberFunctionType>>( this );
 
   this->RegisterMemberFactory2();
   this->RegisterMemberFactory2v();

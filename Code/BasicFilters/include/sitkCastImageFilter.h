@@ -85,6 +85,9 @@ private:
   Image ExecuteInternalToVector( const Image& inImage );
 
   template<typename TImageType, typename TOutputImageType>
+  Image ExecuteInternalVectorToImage( const Image& inImage );
+
+  template<typename TImageType, typename TOutputImageType>
   Image ExecuteInternalToLabel( const Image& inImage );
 
   template<typename TImageType, typename TOutputImageType>
@@ -120,9 +123,27 @@ private:
     template< typename TImageType1, typename TImageType2 >
     TMemberFunctionPointer operator() ( ) const
     {
-      return &ObjectType::template ExecuteInternalToVector< TImageType1, TImageType2 >;
+      using OutputImageType = typename TImageType2::template Rebind<typename TImageType2::PixelType, TImageType1::ImageDimension-1>::Type;
+      return &ObjectType::template ExecuteInternalToVector< TImageType1, OutputImageType >;
     }
   };
+
+  /** An addressor of ExecuteInternalVectorToImage to be utilized with
+   * registering member functions with the factory.
+   */
+  template < class TMemberFunctionPointer >
+  struct VectorToImageAddressor
+  {
+    using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
+
+    template< typename TImageType1, typename TImageType2 >
+    TMemberFunctionPointer operator() ( ) const
+    {
+      using OutputImageType = typename TImageType2::template Rebind<typename TImageType2::PixelType, TImageType1::ImageDimension+1>::Type;
+      return &ObjectType::template ExecuteInternalVectorToImage< TImageType1, OutputImageType >;
+    }
+  };
+
 
   /** An addressor of ExecuteInternalToLabel to be utilized with
    * registering member functions with the factory.
