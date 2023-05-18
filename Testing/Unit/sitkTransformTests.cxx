@@ -399,14 +399,14 @@ TEST(TransformTest, ReadTransformResample) {
 
 TEST(TransformTest, ReadTransformConvert) {
 
-  EXPECT_NO_THROW(sitk::AffineTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/affine_i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::CompositeTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/composite_i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::ScaleTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/scale_i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::TranslationTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/translation_i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/quaternion_rigid_i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/scale_logarithmic_i_3.txt" ) ) ) );
-  EXPECT_NO_THROW(sitk::VersorTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/versor_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::AffineTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/affine_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::CompositeTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/composite_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::ScaleTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/scale_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::TranslationTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/translation_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/quaternion_rigid_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/scale_logarithmic_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW((void)sitk::VersorTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/versor_i_3.txt" ) ) ) );
 
   std::string filename = dataFinder.GetOutputFile ( "TransformTest.ReadTransformConvert.txt" );
   {
