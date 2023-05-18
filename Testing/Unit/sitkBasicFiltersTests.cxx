@@ -525,7 +525,69 @@ TEST(BasicFilters,Cast_UInt8) {
         }
 
     }
-    EXPECT_FALSE ( failed ) << "Cast failed, or could not take the hash of the imoge";
+    EXPECT_FALSE ( failed ) << "Cast failed, or could not take the hash of the image";
+
+}
+
+TEST(BasicFilters, Cast_Vector){
+    // construct a 2D image with 3 components
+    itk::simple::Image image = itk::simple::Image( { 32, 32 }, itk::simple::sitkVectorFloat32, 3 );
+
+    image.SetOrigin( { 1.0, 2.0 } );
+    image.SetSpacing( { 3.0, 4.0 } );
+
+    // set the pixel values
+    std::vector<float> pixel(3);
+    for (unsigned int i = 0; i < 32; ++i)
+    {
+        image.SetPixelAsVectorFloat32( { i, i }, {i+1.0f, i+2.0f, i+3.0f} );
+    }
+
+    const std::string orig_hash = itk::simple::Hash( image );
+
+    // cast to a 3D image with 1 component
+    itk::simple::CastImageFilter caster;
+    caster.SetOutputPixelType( itk::simple::sitkFloat32 );
+    itk::simple::Image casted = caster.Execute( image );
+
+
+    EXPECT_EQ(casted.GetDimension(), 3);
+    EXPECT_EQ(casted.GetSize(), std::vector<unsigned int>({3, 32, 32}));
+    EXPECT_EQ(casted.GetPixelID(), itk::simple::sitkFloat32);
+    EXPECT_EQ(casted.GetNumberOfComponentsPerPixel(), 1);
+    EXPECT_EQ(casted.GetOrigin(), std::vector<double>({0.0, 1.0, 2.0}));
+    EXPECT_EQ(casted.GetSpacing(), std::vector<double>({1.0, 3.0, 4.0}));
+    EXPECT_EQ(casted.GetDirection(), std::vector<double>({1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0, 0, 1.0}));
+    EXPECT_EQ(casted.GetPixelAsFloat( { 0, 0, 0 } ), 1.0f);
+    EXPECT_EQ(casted.GetPixelAsFloat( { 1, 0, 0 } ), 2.0f);
+    EXPECT_EQ(casted.GetPixelAsFloat( { 2, 0, 0 } ), 3.0f);
+    EXPECT_EQ(casted.GetPixelAsFloat( { 0, 1, 0 } ), 0.0f);
+
+    // check that the original image is a different buffer than the casted image
+    EXPECT_EQ(itk::simple::Hash(casted), "ca88264fb0783e78c124e7cf24a4357dbec28a7d");
+    EXPECT_TRUE(image.IsUnique());
+    EXPECT_TRUE(casted.IsUnique());
+    casted.SetPixelAsFloat( { 0, 0, 0 }, 99.0f);
+    EXPECT_EQ(itk::simple::Hash(image), orig_hash);
+    casted.SetPixelAsFloat( { 0, 0, 0 }, 1.0f);
+
+    // cast back to a 2D image with 3 components
+    caster.SetOutputPixelType( itk::simple::sitkVectorFloat32 );
+    itk::simple::Image casted_back = caster.Execute( casted );
+
+    EXPECT_EQ(casted_back.GetDimension(), 2);
+    EXPECT_EQ(casted_back.GetSize(), std::vector<unsigned int>({32, 32}));
+    EXPECT_EQ(casted_back.GetPixelID(), itk::simple::sitkVectorFloat32);
+    EXPECT_EQ(casted_back.GetNumberOfComponentsPerPixel(), 3);
+    EXPECT_EQ(casted_back.GetOrigin(), std::vector<double>({1.0, 2.0}));
+    EXPECT_EQ(casted_back.GetSpacing(), std::vector<double>({3.0, 4.0}));
+    EXPECT_EQ(casted_back.GetDirection(), std::vector<double>({1.0, 0.0, 0.0, 1.0}));
+
+    EXPECT_EQ(casted_back.GetPixelAsVectorFloat32( { 0, 0 } ), std::vector<float>({1.0f, 2.0f, 3.0f}));
+    EXPECT_EQ(casted_back.GetPixelAsVectorFloat32( { 1, 1 } ), std::vector<float>({2.0f, 3.0f, 4.0f}));
+    EXPECT_EQ(casted_back.GetPixelAsVectorFloat32( { 1, 0 } ), std::vector<float>({0.0f, 0.0f, 0.0f}));
+
+    EXPECT_EQ(itk::simple::Hash(casted_back), orig_hash);
 
 }
 
@@ -539,7 +601,6 @@ TEST(BasicFilters,HashImageFilter) {
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
-
 
 TEST(BasicFilters,BSplineTransformInitializer) {
   namespace sitk = itk::simple;
