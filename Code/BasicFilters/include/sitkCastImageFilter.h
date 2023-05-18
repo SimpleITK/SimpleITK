@@ -183,11 +183,7 @@ private:
   * @{
   */
   void RegisterMemberFactory2();
-  void RegisterMemberFactory2v();
-  void RegisterMemberFactory2l();
   void RegisterMemberFactory3();
-  void RegisterMemberFactory3v();
-  void RegisterMemberFactory3l();
   void RegisterMemberFactory4();
   /** @} */
 

@@ -39,12 +39,7 @@ CastImageFilter::CastImageFilter()
   m_DualMemberFactory = std::make_unique<detail::DualMemberFunctionFactory<MemberFunctionType>>( this );
 
   this->RegisterMemberFactory2();
-  this->RegisterMemberFactory2v();
-  this->RegisterMemberFactory2l();
   this->RegisterMemberFactory3();
-  this->RegisterMemberFactory3v();
-  this->RegisterMemberFactory3l();
-
   this->RegisterMemberFactory4();
 
 }
