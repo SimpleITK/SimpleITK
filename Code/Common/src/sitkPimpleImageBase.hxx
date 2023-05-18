@@ -226,8 +226,7 @@ namespace itk
         }
 
 
-        typename ImageType::IndexType index;
-        this->m_Image->TransformPhysicalPointToIndex( sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
+        typename ImageType::IndexType index = this->m_Image->TransformPhysicalPointToIndex( sitkSTLVectorToITK< typename ImageType::PointType> ( pt ) );
 
         return sitkITKVectorToSTL<int64_t>( index );
       }
@@ -248,8 +247,7 @@ namespace itk
           }
 
 
-        typename ImageType::PointType point;
-        this->m_Image->TransformIndexToPhysicalPoint( index, point );
+        typename ImageType::PointType point = this->m_Image->template TransformIndexToPhysicalPoint<double>( index );
         return sitkITKVectorToSTL<double>( point );
       }
 
@@ -261,8 +259,7 @@ namespace itk
         sitkExceptionMacro("vector dimension mismatch");
         }
 
-        typename itk::ContinuousIndex<double, ImageType::ImageDimension> index;
-        this->m_Image->TransformPhysicalPointToContinuousIndex(sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
+        auto index = this->m_Image->template TransformPhysicalPointToContinuousIndex<double>(sitkSTLVectorToITK< typename ImageType::PointType> ( pt ));
 
         return sitkITKVectorToSTL<double>( index );
       }
@@ -282,8 +279,7 @@ namespace itk
           index[i] = idx[i];
           }
 
-      typename ImageType::PointType point;
-      this->m_Image->TransformContinuousIndexToPhysicalPoint(index, point);
+      typename ImageType::PointType point = this->m_Image->template TransformContinuousIndexToPhysicalPoint<double>(index);
 
       return sitkITKVectorToSTL<double>( point );
       }
