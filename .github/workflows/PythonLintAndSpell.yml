@@ -55,4 +55,5 @@ jobs:
     - name: Do spell checking
       run: |
         codespell . --miss --suffix ".py" --suffix ".cxx" --suffix ".md" --suffix ".rst" \
-          --suffix ".hxx" --dict .github/workflows/additional_dictionary.txt
+          --suffix ".hxx" --dict .github/workflows/additional_dictionary.txt \
+          --exclude Ancillary
