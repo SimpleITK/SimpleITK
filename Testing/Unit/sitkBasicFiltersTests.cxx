@@ -378,7 +378,7 @@ TEST(BasicFilters,Cast_Float32) {
   EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkFloat32 );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), itk::simple::GetPixelIDValueAsString (itk::simple::sitkFloat32) );
 
-  using MapType = std::map<std::string,itk::simple::PixelIDValueEnum>;
+  using MapType = std::multimap<std::string,itk::simple::PixelIDValueEnum>;
     MapType mapping = {
             {"a963bd6a755b853103a2d195e01a50d3", itk::simple::sitkInt16},
             {"6ceea0011178a955b5be2d545d107199", itk::simple::sitkInt32},
@@ -400,10 +400,10 @@ TEST(BasicFilters,Cast_Float32) {
   bool failed = false;
 
   // Loop over the map, load each file, and compare the hash value
-  for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it )
+  for ( auto && iter : mapping)
     {
-    itk::simple::PixelIDValueEnum pixelID = it->second;
-    std::string hash = it->first;
+    std::string hash = iter.first;
+    itk::simple::PixelIDValueEnum pixelID = iter.second;
 
     if ( pixelID == itk::simple::sitkUnknown )
       {
@@ -447,51 +447,52 @@ TEST(BasicFilters,Cast_UInt8) {
     namespace sitk = itk::simple;
 
     const unsigned int sz = 32;
-    sitk::Image image = sitk::Image( { sz, sz }, sitk::sitkUInt8);
-    for (int i = 0; i < 256; ++i)
-    {
-        image.SetPixelAsUInt8( { i%sz, i/ sz}, i );
-    }
+    sitk::Image image = sitk::Image( { sz, sz, sz }, sitk::sitkUInt8);
+    for (unsigned int i = 0; i < sz; ++i)
+        for (unsigned  int j = 0; j < sz; ++j)
+            for (unsigned  int k = 0; k < sz; ++k)
+            {
+                image.SetPixelAsUInt8( { i, j, k }, i + j + k );
+            }
     ASSERT_NE ( image.GetITKBase(), nullptr );
 
     sitk::HashImageFilter hasher;
     hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
-    EXPECT_EQ ( "7307320299fe31c5acc68bbd96853b90", hasher.Execute ( image ) );
+    EXPECT_EQ ( "5f4e3198de74666e38a2405a07f5925d", hasher.Execute ( image ) );
 
     EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkUInt8 );
     EXPECT_EQ ( image.GetPixelIDTypeAsString(), itk::simple::GetPixelIDValueAsString (itk::simple::sitkUInt8) );
 
-    using MapType = std::map<std::string,itk::simple::PixelIDValueEnum>;
+    using MapType = std::multimap<std::string,itk::simple::PixelIDValueEnum>;
     MapType mapping = {
-            {"7307320299fe31c5acc68bbd96853b90", itk::simple::sitkUInt8},
-            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkInt16},
-            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkUInt16},
-            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkInt32},
-            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkUInt32},
-            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkInt64},
-            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkUInt64},
-            {"e01ed55964104b42972053f7d24af9b6", itk::simple::sitkFloat32},
-            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkFloat64},
-            {"942a24b7048d8f41c8f7b9309758afdf", itk::simple::sitkComplexFloat32},
-            {"45f73c2c141598301ae9b73231102146", itk::simple::sitkComplexFloat64},
-            {"7307320299fe31c5acc68bbd96853b90", itk::simple::sitkVectorInt8},
-            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkVectorInt16},
-            {"0440cef5008ffc46b069407c32ede2b9", itk::simple::sitkVectorUInt16},
-            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkVectorInt32},
-            {"67fee9288469e62211a32df4c0678475", itk::simple::sitkVectorUInt32},
-            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkVectorInt64},
-            {"e9af40a4213b0f3602b53f1c4c9e4509", itk::simple::sitkVectorUInt64},
-            {"e01ed55964104b42972053f7d24af9b6", itk::simple::sitkVectorFloat32},
-            {"a5aa5992cec72b6a3c15f655f5681a15", itk::simple::sitkVectorFloat64}};
+            {"5f4e3198de74666e38a2405a07f5925d", itk::simple::sitkUInt8},
+            {"36c514948ce7a45d585417a5024543d9", itk::simple::sitkInt16},
+            {"36c514948ce7a45d585417a5024543d9", itk::simple::sitkUInt16},
+            {"9ae340e0d5f24a6026c7f2f8ca521c1b", itk::simple::sitkInt32},
+            {"9ae340e0d5f24a6026c7f2f8ca521c1b", itk::simple::sitkUInt32},
+            {"db7f6be880c30bcde45bf3eaeab078f7", itk::simple::sitkInt64},
+            {"db7f6be880c30bcde45bf3eaeab078f7", itk::simple::sitkUInt64},
+            {"c296cb10179a071c9b9c9afa72473efa", itk::simple::sitkFloat32},
+            {"7aa1f6d722c407fc9a59092b17050e9f", itk::simple::sitkFloat64},
+            {"aeaf38bcb89eb6a353ec6b9a1e84bb59", itk::simple::sitkComplexFloat32},
+            {"0260201a419882430a1625fe7221b423", itk::simple::sitkComplexFloat64},
+            {"5f4e3198de74666e38a2405a07f5925d", itk::simple::sitkVectorInt8},
+            {"36c514948ce7a45d585417a5024543d9", itk::simple::sitkVectorInt16},
+            {"36c514948ce7a45d585417a5024543d9", itk::simple::sitkVectorUInt16},
+            {"9ae340e0d5f24a6026c7f2f8ca521c1b", itk::simple::sitkVectorInt32},
+            {"9ae340e0d5f24a6026c7f2f8ca521c1b", itk::simple::sitkVectorUInt32},
+            {"db7f6be880c30bcde45bf3eaeab078f7", itk::simple::sitkVectorInt64},
+            {"db7f6be880c30bcde45bf3eaeab078f7", itk::simple::sitkVectorUInt64},
+            {"c296cb10179a071c9b9c9afa72473efa", itk::simple::sitkVectorFloat32},
+            {"7aa1f6d722c407fc9a59092b17050e9f", itk::simple::sitkVectorFloat64}};
 
     bool failed = false;
 
     // Loop over the map, load each file, and compare the hash value
-    for ( auto it = mapping.begin(); it != mapping.end(); ++it )
+    for ( auto && iter : mapping)
     {
-        itk::simple::PixelIDValueEnum pixelID = it->second;
-        std::string hash = it->first;
-
+        std::string hash = iter.first;
+        itk::simple::PixelIDValueEnum pixelID = iter.second;
         if ( pixelID == itk::simple::sitkUnknown )
         {
             std::cerr << "Enum value: " << pixelID << " (" << hash << ") is unknown and not instantiated" << std::endl;
@@ -501,7 +502,8 @@ TEST(BasicFilters,Cast_UInt8) {
         try
         {
             itk::simple::CastImageFilter caster;
-            itk::simple::Image test = caster.SetOutputPixelType ( pixelID ).Execute ( image );
+            caster.SetOutputPixelType ( pixelID );
+            itk::simple::Image test = caster.Execute ( image );
 
             hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
             EXPECT_EQ ( hash, hasher.Execute ( test ) ) << "Cast to " << itk::simple::GetPixelIDValueAsString ( pixelID );
