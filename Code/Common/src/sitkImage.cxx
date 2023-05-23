@@ -831,7 +831,7 @@ namespace itk
       assert( m_PimpleImage );
       if ( this->m_PimpleImage->GetReferenceCountOfImage() > 1 )
         {
-        this->m_PimpleImage.reset( this->m_PimpleImage->DeepCopy() );
+        this->m_PimpleImage = this->m_PimpleImage->DeepCopy();
         }
 
     }
