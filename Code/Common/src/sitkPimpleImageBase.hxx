@@ -92,10 +92,16 @@ namespace itk
           }
       }
 
-    PimpleImageBase *ShallowCopy( ) const override { return new Self(this->m_Image.GetPointer()); }
-    PimpleImageBase *DeepCopy( ) const override { return this->DeepCopy<TImageType>(); }
-    std::unique_ptr<PimpleImageBase> ProxyCopy( ) override { return this->ProxyCopy<TImageType>(); }
+    std::unique_ptr<PimpleImageBase> ShallowCopy( ) const override
+    {
+      return std::make_unique<Self>(this->m_Image.GetPointer());
+    }
+    std::unique_ptr<PimpleImageBase> DeepCopy( ) const override
+    {
+      return this->DeepCopy<TImageType>();
+    }
 
+    std::unique_ptr<PimpleImageBase> ProxyCopy( ) override { return this->ProxyCopy<TImageType>(); }
     template <typename UImageType>
     typename std::enable_if<!IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
     ProxyCopy() {
@@ -119,7 +125,7 @@ namespace itk
     }
 
     template <typename UImageType>
-    typename std::enable_if<!IsLabel<UImageType>::Value, PimpleImageBase*>::type
+    typename std::enable_if<!IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
     DeepCopy( void ) const
       {
         using ImageDuplicatorType = itk::ImageDuplicator< ImageType >;
@@ -129,10 +135,10 @@ namespace itk
         dup->Update();
         ImagePointer output = dup->GetOutput();
 
-        return new Self( output.GetPointer() );
+        return std::make_unique<Self>( output.GetPointer() );
       }
     template <typename UImageType>
-    typename std::enable_if<IsLabel<UImageType>::Value, PimpleImageBase*>::type
+    typename std::enable_if<IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
     DeepCopy( void ) const
       {
         using FilterType = itk::ConvertLabelMapFilter<UImageType, UImageType>;
@@ -141,7 +147,7 @@ namespace itk
         filter->UpdateLargestPossibleRegion();
         ImagePointer output = filter->GetOutput();
 
-        return new Self( output.GetPointer() );
+        return std::make_unique<Self>( output.GetPointer() );
       }
 
     itk::DataObject* GetDataBase( ) override { return this->m_Image.GetPointer(); }
