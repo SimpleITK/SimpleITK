@@ -74,6 +74,109 @@ GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bo
 }
 
 
+template< typename TPixelType, unsigned int ImageDimension >
+SITKCommon_HIDDEN
+typename itk::Image< TPixelType, ImageDimension+1>::Pointer
+GetScalarImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img)
+{
+    using ImageType = itk::Image< TPixelType, ImageDimension+1>;
+
+    typename ImageType::Pointer outImg = ImageType::New();
+    outImg->SetPixelContainer(img->GetPixelContainer());
+
+    auto inRegion = img->GetBufferedRegion();
+    typename ImageType::RegionType region;
+
+    region.SetSize(0, img->GetNumberOfComponentsPerPixel() );
+
+    for (unsigned int d = 1; d < ImageDimension+1; d++)
+    {
+        region.SetIndex(d, inRegion.GetIndex(d-1));
+        region.SetSize(d, inRegion.GetSize(d-1));
+    }
+    outImg->SetRegions(region);
+
+    auto inSpace = img->GetSpacing();
+    typename ImageType::SpacingType space;
+    space[0] = 1.0;
+    for (unsigned int d = 1; d < ImageDimension+1; d++)
+    {
+        space[d] = inSpace[d-1];
+    }
+    outImg->SetSpacing(space);
+
+    auto inOrigin = img->GetOrigin();
+    typename ImageType::PointType origin;
+    origin[0] = 0.0;
+    for (unsigned int d = 1; d < ImageDimension+1; d++)
+    {
+        origin[d] = inOrigin[d-1];
+    }
+    outImg->SetOrigin(origin);
+
+    auto inDirection = img->GetDirection();
+    typename ImageType::DirectionType direction;
+    direction.SetIdentity();
+    for (unsigned int i = 0; i < ImageDimension; i++)
+    {
+        for (unsigned int j = 0; j < ImageDimension; j++)
+        {
+            direction(i + 1, j + 1) = inDirection(i, j);
+        }
+    }
+    outImg->SetDirection(direction);
+
+    return outImg;
+
+}
+
+template< typename TPixelType, unsigned int ImageDimension >
+SITKCommon_HIDDEN
+typename itk::VectorImage< TPixelType, ImageDimension-1>::Pointer
+GetVectorImageFromScalarImage( itk::Image< TPixelType, ImageDimension > *img) {
+    using VectorImageType = itk::VectorImage<TPixelType, ImageDimension - 1>;
+
+    typename VectorImageType::Pointer outImg = VectorImageType::New();
+    outImg->SetPixelContainer(img->GetPixelContainer());
+
+    auto inRegion = img->GetBufferedRegion();
+    typename VectorImageType::RegionType region;
+
+    for (unsigned int d = 0; d < ImageDimension - 1; d++) {
+        region.SetIndex(d, inRegion.GetIndex(d + 1));
+        region.SetSize(d, inRegion.GetSize(d + 1));
+    }
+
+    outImg->SetNumberOfComponentsPerPixel(img->GetBufferedRegion().GetSize(0));
+    outImg->SetRegions(region);
+
+    auto inSpace = img->GetSpacing();
+    typename VectorImageType::SpacingType space;
+    for (unsigned int d = 0; d < ImageDimension - 1; d++) {
+        space[d] = inSpace[d + 1];
+    }
+    outImg->SetSpacing(space);
+
+    auto inOrigin = img->GetOrigin();
+    typename VectorImageType::PointType origin;
+    for (unsigned int d = 0; d < ImageDimension - 1; d++) {
+        origin[d] = inOrigin[d + 1];
+    }
+    outImg->SetOrigin(origin);
+
+    auto inDirection = img->GetDirection();
+    typename VectorImageType::DirectionType direction;
+    direction.SetIdentity();
+    for (unsigned int i = 0; i < ImageDimension - 1; i++) {
+        for (unsigned int j = 0; j < ImageDimension - 1; j++) {
+            direction(i, j) = inDirection(i + 1, j + 1);
+        }
+    }
+    outImg->SetDirection(direction);
+
+    return outImg;
+}
+
 template< class TPixelType, unsigned int NImageDimension, unsigned int NLength >
 SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer

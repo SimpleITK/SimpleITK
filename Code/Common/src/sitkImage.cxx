@@ -222,6 +222,7 @@ namespace itk
       return this->m_PimpleImage->ToString();
     }
 
+
     std::vector< unsigned int > Image::GetSize( ) const
     {
       assert( m_PimpleImage );

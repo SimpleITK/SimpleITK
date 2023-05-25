@@ -22,6 +22,7 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkConditional.h"
 #include "sitkCreateInterpolator.hxx"
+#include "sitkImageConvert.hxx"
 
 #include "itkImage.h"
 #include "itkVectorImage.h"
@@ -152,7 +153,6 @@ namespace itk
 
     itk::DataObject* GetDataBase( ) override { return this->m_Image.GetPointer(); }
     const itk::DataObject* GetDataBase( ) const override { return this->m_Image.GetPointer(); }
-
 
     PixelIDValueEnum GetPixelID() const noexcept override
       {
@@ -326,7 +326,8 @@ namespace itk
         return out.str();
       }
 
-    int GetReferenceCountOfImage() const override
+      int
+      GetReferenceCountOfImage() const override
       {
         return this->m_Image->GetReferenceCount();
       }
