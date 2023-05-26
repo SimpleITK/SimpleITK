@@ -18,7 +18,7 @@ include(GoogleTest)
 
 if (TARGET GTest::Main AND TARGET GTest::GTest)
     message(STATUS "GTest targets already defined.")
-#    return()
+    return()
 endif()
 
 set(GTEST_ROOT "" CACHE PATH "Path to the root of a binary gtest \
