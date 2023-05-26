@@ -378,6 +378,9 @@ namespace simple
      * dimension. If the image is already a vector image then the
      * image is returned.
      *
+     * The components of the direction cosine matrix for the first dimension must be the identity matrix, or else an
+     * exception is thrown.
+     *
      * An exception is thrown if the image is 2D or if the pixel type is a label or complex pixel type.
      *
      * \param inPlace If true then the image is made unique and converted in place updating this image,
@@ -394,7 +397,11 @@ namespace simple
      * components. If the image is already a scalar image then the
      * image is returned.
      *
-     * An exception is thrown if the image is has SITK_MAX_DIMENSION dimensions or if the pixel type is a label or complex pixel type.
+     * For the additional dimension the origin is set to zero, the spacing to one, and the new components of the
+     * direction cosine to the identity matrix.
+     *
+     * An exception is thrown if the image is has SITK_MAX_DIMENSION dimensions or if the pixel type is a label or
+     * complex pixel type.
      *
      * \param inPlace If true then the image is made unique and converted in place updating this image,
      * otherwise a copy of the image is made and returned.

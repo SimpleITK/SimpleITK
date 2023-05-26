@@ -135,6 +135,7 @@ namespace itk
   std::enable_if_t<IsBasic<TImageType>::Value, Image>
   Image::ToVectorInternal(bool inPlace)
   {
+    static_assert(TImageType::ImageDimension > 2, "Image dimension must be greater than 2");
 
     typename TImageType::Pointer itkImage;
 
@@ -152,6 +153,20 @@ namespace itk
     if (itkImage.GetPointer() == nullptr)
     {
       sitkExceptionMacro(<< "Unexpected template dispatch error");
+    }
+
+
+    auto direction = itkImage->GetDirection();
+    for (unsigned int i = 1; i < TImageType::ImageDimension; ++i)
+    {
+      if (direction[i][0] != 0.0 || direction[0][i] != 0.0)
+      {
+        sitkExceptionMacro(<< "Cannot convert image with non-identity direction in first dimension to a vector image");
+      }
+    }
+    if (direction[0][0] != 1.0)
+    {
+      sitkExceptionMacro(<< "Cannot convert image with non-identity direction in first dimension to a vector image");
     }
 
     auto itkVectorImage = GetVectorImageFromScalarImage(itkImage.GetPointer());

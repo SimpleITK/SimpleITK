@@ -2025,6 +2025,9 @@ TEST_F(Image, ToVector)
     sitk::Image img = sitk::Image(3, 10, 10, pixelType);
     img.SetSpacing({ 1.0, 2.0, 3.0 });
     img.SetOrigin({ 1.0, 2.0, 3.0 });
+    img.SetDirection({1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0,
+      0.0, 1.0, 0.0 });
 
     const std::string hash = sitk::Hash(img);
 
@@ -2034,7 +2037,7 @@ TEST_F(Image, ToVector)
     EXPECT_EQ(converted.GetNumberOfComponentsPerPixel(), 3);
     EXPECT_EQ(converted.GetSpacing(), std::vector<double>({ 2.0, 3.0 }));
     EXPECT_EQ(converted.GetOrigin(), std::vector<double>({ 2.0, 3.0 }));
-    EXPECT_EQ(converted.GetDirection(), std::vector<double>({ 1.0, 0.0, 0.0, 1.0 }));
+    EXPECT_EQ(converted.GetDirection(), std::vector<double>({ 0.0, 1.0, 1.0, 0.0 }));
     EXPECT_TRUE(converted.IsUnique());
     EXPECT_TRUE(img.IsUnique());
 
@@ -2046,7 +2049,7 @@ TEST_F(Image, ToVector)
     EXPECT_EQ(img.GetNumberOfComponentsPerPixel(), 3);
     EXPECT_EQ(img.GetSpacing(), std::vector<double>({ 2.0, 3.0 }));
     EXPECT_EQ(img.GetOrigin(), std::vector<double>({ 2.0, 3.0 }));
-    EXPECT_EQ(img.GetDirection(), std::vector<double>({ 1.0, 0.0, 0.0, 1.0 }));
+    EXPECT_EQ(img.GetDirection(), std::vector<double>({ 0.0, 1.0, 1.0, 0.0 }));
     EXPECT_TRUE(img.IsUnique());
 
     img = sitk::Image( std::vector<unsigned int>(SITK_MAX_DIMENSION, 5), pixelType);
@@ -2054,6 +2057,23 @@ TEST_F(Image, ToVector)
 
     img = sitk::Image( std::vector<unsigned int>(2, 5), pixelType);
     EXPECT_ANY_THROW(img.ToVectorImage(false));
+
+    sitk::Image img2 = sitk::Image( 5, 16, 16, pixelType);
+
+    img2.SetDirection({-1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0,
+      0.0, 1.0, 0.0 });
+    EXPECT_ANY_THROW(img2.ToVectorImage(false));
+
+    img2.SetDirection({0.0, 1.0, 0.0,
+      0.0, 0.0, 1.0,
+      1.0, 0.0, 0.0 });
+    EXPECT_ANY_THROW(img2.ToVectorImage(false));
+
+    img2.SetDirection({0.0, 0.0, 1.0,
+      1.0, 0.0, 0.0,
+      0.0, 1.0, 0.0 });
+    EXPECT_ANY_THROW(img2.ToVectorImage(false));
 
   }
 
