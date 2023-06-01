@@ -58,7 +58,7 @@ std::vector<double> GetOffset( ) const;
 
 protected:
 
-void SetPimpleTransform( PimpleTransformBase *pimpleTransform ) override;
+void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform ) override;
 
 private:
 

@@ -139,9 +139,9 @@ AffineTransform::Self &AffineTransform::Rotate(int axis1, int axis2, double angl
   return *this;
 }
 
-void AffineTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void AffineTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

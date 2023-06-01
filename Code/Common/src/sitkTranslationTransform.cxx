@@ -71,9 +71,9 @@ std::vector<double> TranslationTransform::GetOffset( ) const
 {
   return this->m_pfGetOffset();
 }
-void TranslationTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void TranslationTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

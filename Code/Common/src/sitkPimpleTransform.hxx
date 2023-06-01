@@ -136,8 +136,8 @@ public:
     }
 
 
-  virtual PimpleTransformBase *ShallowCopy( ) const = 0;
-  virtual PimpleTransformBase *DeepCopy( ) const = 0;
+  virtual std::unique_ptr<PimpleTransformBase> ShallowCopy( ) const = 0;
+  virtual std::unique_ptr<PimpleTransformBase> DeepCopy( ) const = 0;
 
   virtual int GetReferenceCount( ) const = 0;
 
@@ -221,15 +221,14 @@ public:
   unsigned int GetOutputDimension( ) const override { return OutputDimension; }
 
 
-  PimpleTransformBase *ShallowCopy( ) const override
+  std::unique_ptr<PimpleTransformBase> ShallowCopy( ) const override
     {
-      return new Self( this->m_Transform.GetPointer() );
+      return std::make_unique<Self>( this->m_Transform.GetPointer() );
     }
 
-  PimpleTransformBase *DeepCopy( ) const override
+  std::unique_ptr<PimpleTransformBase> DeepCopy( ) const override
     {
-      PimpleTransformBase *copy( new Self( this->m_Transform->Clone() ) );
-      return copy;
+      return std::make_unique<Self>( this->m_Transform->Clone() );
     }
 
   int GetReferenceCount( ) const override

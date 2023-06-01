@@ -119,9 +119,9 @@ VersorTransform::Self &VersorTransform::SetMatrix(const std::vector<double> &par
   return *this;
 }
 
-void VersorTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void VersorTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 

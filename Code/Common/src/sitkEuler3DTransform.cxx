@@ -140,9 +140,9 @@ Euler3DTransform::Self &Euler3DTransform::SetMatrix(const std::vector<double> &p
   return *this;
 }
 
-void Euler3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void Euler3DTransform::SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform )
 {
-  Superclass::SetPimpleTransform(pimpleTransform);
+  Superclass::SetPimpleTransform(std::move(pimpleTransform));
   Self::InternalInitialization(this->GetITKBase());
 }
 
