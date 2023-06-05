@@ -123,6 +123,21 @@ public:
   std::vector<double> directionI2D{1.0, 0.0, 0.0, 1.0 };
   std::vector<double> directionI3D{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 };
 
+
+  const std::list<sitk::PixelIDValueEnum> labelTypes = {
+    sitk::sitkLabelUInt8, sitk::sitkLabelUInt16, sitk::sitkLabelUInt32, sitk::sitkLabelUInt64
+  };
+  const std::list<sitk::PixelIDValueEnum> basicTypes = { sitk::sitkUInt8,  sitk::sitkUInt16, sitk::sitkUInt32,
+                                                        sitk::sitkUInt64, sitk::sitkInt8,   sitk::sitkInt16,
+                                                        sitk::sitkInt32,  sitk::sitkInt64,  sitk::sitkFloat32,
+                                                        sitk::sitkFloat64 };
+  const std::list<sitk::PixelIDValueEnum> complexTypes = { sitk::sitkComplexFloat32, sitk::sitkComplexFloat64 };
+  const std::list<sitk::PixelIDValueEnum> vectorTypes = { sitk::sitkVectorUInt8,   sitk::sitkVectorUInt16,
+                                                          sitk::sitkVectorUInt32,  sitk::sitkVectorUInt64,
+                                                          sitk::sitkVectorInt8,    sitk::sitkVectorInt16,
+                                                          sitk::sitkVectorInt32,   sitk::sitkVectorInt64,
+                                                          sitk::sitkVectorFloat32, sitk::sitkVectorFloat64 };
+
 };
 
 
@@ -433,9 +448,6 @@ TEST_F(Image,Properties) {
   ASSERT_ANY_THROW( shortImage->SetDirection( std::vector<double>( adir, adir + 4 ) ) );
   ASSERT_ANY_THROW( shortImage->SetDirection( std::vector<double>( adir, adir + 8 ) ) );
 }
-
-namespace sitk = itk::simple;
-
 
 TEST_F(Image, CopyInformation)
 {
@@ -2003,5 +2015,206 @@ TEST_F(Image, Evaluate_boundary) {
 
     EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({-5.1, 0}));
     EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({95.01, 9.5}));
+  }
+}
+
+TEST_F(Image, ToVector)
+{
+  for (auto pixelType : basicTypes)
+  {
+    sitk::Image img = sitk::Image(3, 10, 10, pixelType);
+    img.SetSpacing({ 1.0, 2.0, 3.0 });
+    img.SetOrigin({ 1.0, 2.0, 3.0 });
+    img.SetDirection({1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0,
+      0.0, 1.0, 0.0 });
+
+    const std::string hash = sitk::Hash(img);
+
+    sitk::Image converted = img.ToVectorImage(false);
+    EXPECT_EQ(converted.GetDimension(), 2u);
+    EXPECT_EQ(converted.GetSize(), std::vector<unsigned int>({ 10, 10 }));
+    EXPECT_EQ(converted.GetNumberOfComponentsPerPixel(), 3);
+    EXPECT_EQ(converted.GetSpacing(), std::vector<double>({ 2.0, 3.0 }));
+    EXPECT_EQ(converted.GetOrigin(), std::vector<double>({ 2.0, 3.0 }));
+    EXPECT_EQ(converted.GetDirection(), std::vector<double>({ 0.0, 1.0, 1.0, 0.0 }));
+    EXPECT_TRUE(converted.IsUnique());
+    EXPECT_TRUE(img.IsUnique());
+
+    EXPECT_EQ(sitk::Hash(converted), hash);
+
+    img.ToVectorImage(true);
+    EXPECT_EQ(img.GetDimension(), 2u);
+    EXPECT_EQ(img.GetSize(), std::vector<unsigned int>({ 10, 10 }));
+    EXPECT_EQ(img.GetNumberOfComponentsPerPixel(), 3);
+    EXPECT_EQ(img.GetSpacing(), std::vector<double>({ 2.0, 3.0 }));
+    EXPECT_EQ(img.GetOrigin(), std::vector<double>({ 2.0, 3.0 }));
+    EXPECT_EQ(img.GetDirection(), std::vector<double>({ 0.0, 1.0, 1.0, 0.0 }));
+    EXPECT_TRUE(img.IsUnique());
+
+    img = sitk::Image( std::vector<unsigned int>(SITK_MAX_DIMENSION, 5), pixelType);
+    EXPECT_NO_THROW(img.ToVectorImage(false));
+
+    img = sitk::Image( std::vector<unsigned int>(2, 5), pixelType);
+    EXPECT_ANY_THROW(img.ToVectorImage(false));
+
+    sitk::Image img2 = sitk::Image( 5, 16, 16, pixelType);
+
+    img2.SetDirection({-1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0,
+      0.0, 1.0, 0.0 });
+    EXPECT_ANY_THROW(img2.ToVectorImage(false));
+
+    img2.SetDirection({0.0, 1.0, 0.0,
+      0.0, 0.0, 1.0,
+      1.0, 0.0, 0.0 });
+    EXPECT_ANY_THROW(img2.ToVectorImage(false));
+
+    img2.SetDirection({0.0, 0.0, 1.0,
+      1.0, 0.0, 0.0,
+      0.0, 1.0, 0.0 });
+    EXPECT_ANY_THROW(img2.ToVectorImage(false));
+
+  }
+
+  for (auto pixelType : vectorTypes)
+  {
+    sitk::Image img = sitk::Image({ 10u, 10u }, pixelType, 3);
+
+    sitk::Image converted;
+    EXPECT_NO_THROW(converted = img.ToVectorImage(false));
+    EXPECT_EQ(converted.GetDimension(), 2u);
+    EXPECT_EQ(converted.GetSize(), std::vector<unsigned int>({ 10, 10 }));
+    EXPECT_EQ(converted.GetNumberOfComponentsPerPixel(), 3);
+    EXPECT_EQ(converted.GetPixelID(), pixelType);
+    EXPECT_FALSE(converted.IsUnique());
+    EXPECT_FALSE(img.IsUnique());
+
+    EXPECT_NO_THROW(converted = img.ToVectorImage(true));
+    EXPECT_EQ(img.GetDimension(), 2u);
+    EXPECT_EQ(img.GetSize(), std::vector<unsigned int>({ 10, 10 }));
+    EXPECT_EQ(img.GetNumberOfComponentsPerPixel(), 3);
+    EXPECT_FALSE(img.IsUnique());
+    EXPECT_FALSE(img.IsUnique());
+
+    img = sitk::Image(std::vector<unsigned int>(SITK_MAX_DIMENSION, 5u), pixelType, 3);
+
+
+    EXPECT_NO_THROW(converted = img.ToVectorImage(false));
+    EXPECT_EQ(converted.GetDimension(), SITK_MAX_DIMENSION);
+    EXPECT_EQ(converted.GetNumberOfComponentsPerPixel(), 3);
+
+    EXPECT_NO_THROW(converted = img.ToVectorImage(true));
+
+  }
+
+  for (auto pixelType : labelTypes)
+  {
+
+    for (unsigned int d = 2; d <= SITK_MAX_DIMENSION; ++d)
+    {
+      sitk::Image img = sitk::Image(std::vector<unsigned int>(d, 5), pixelType);
+
+      EXPECT_ANY_THROW(img.ToVectorImage(false));
+      EXPECT_ANY_THROW(img.ToVectorImage(true));
+    }
+  }
+
+  for (auto pixelType : complexTypes)
+  {
+    for (unsigned int d = 2; d <= SITK_MAX_DIMENSION; ++d)
+    {
+      sitk::Image img = sitk::Image(std::vector<unsigned int>(d, 5), pixelType);
+
+      EXPECT_ANY_THROW(img.ToVectorImage(false));
+      EXPECT_ANY_THROW(img.ToVectorImage(true));
+    }
+  }
+}
+
+TEST_F(Image, ToScalar)
+{
+  for( auto pixelType: vectorTypes)
+  {
+    sitk::Image img({10u, 10u}, pixelType, 3);
+    img.SetOrigin({1.0, 2.0});
+    img.SetSpacing({3.0, 4.0});
+    img.SetDirection({0.0, 1.0, 1.0, 0.0});
+
+
+    sitk::Image converted = img.ToScalarImage(false);
+    EXPECT_EQ(converted.GetDimension(), 3u);
+    EXPECT_EQ(converted.GetSize(), std::vector<unsigned int>({3, 10, 10}));
+    EXPECT_EQ(converted.GetNumberOfComponentsPerPixel(), 1u);
+    EXPECT_EQ(converted.GetSpacing(), std::vector<double>({1.0, 3.0, 4.0}));
+    EXPECT_EQ(converted.GetOrigin(), std::vector<double>({0.0, 1.0, 2.0}));
+    EXPECT_EQ(converted.GetDirection(), std::vector<double>({1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0}));
+    EXPECT_TRUE(converted.IsUnique());
+    EXPECT_TRUE(img.IsUnique());
+
+    converted = img.ToScalarImage(true);
+    EXPECT_EQ(img.GetDimension(), 3u);
+    EXPECT_EQ(img.GetSize(), std::vector<unsigned int>({3, 10, 10}));
+    EXPECT_EQ(img.GetNumberOfComponentsPerPixel(), 1u);
+    EXPECT_FALSE(img.IsUnique());
+    EXPECT_FALSE(converted.IsUnique());
+
+    img = sitk::Image(std::vector<unsigned int>(SITK_MAX_DIMENSION, 5u), pixelType, 3);
+    EXPECT_ANY_THROW(img.ToScalarImage(false));
+
+    img = sitk::Image(std::vector<unsigned int>(2, 5u), pixelType, 3);
+    EXPECT_NO_THROW(img.ToScalarImage(false));
+  }
+
+  for( auto pixelType: basicTypes)
+  {
+    sitk::Image img({ 10u, 10u }, pixelType);
+
+    sitk::Image converted = img.ToScalarImage(false);
+    EXPECT_EQ(converted.GetDimension(), 2u);
+    EXPECT_EQ(converted.GetSize(), std::vector<unsigned int>({ 10, 10 }));
+    EXPECT_EQ(converted.GetNumberOfComponentsPerPixel(), 1u);
+    EXPECT_EQ(converted.GetPixelID(), pixelType);
+    EXPECT_FALSE(converted.IsUnique());
+    EXPECT_FALSE(img.IsUnique());
+
+    converted = img.ToScalarImage(true);
+    EXPECT_EQ(img.GetDimension(), 2u);
+    EXPECT_EQ(img.GetSize(), std::vector<unsigned int>({ 10, 10 }));
+    EXPECT_EQ(img.GetNumberOfComponentsPerPixel(), 1u);
+    EXPECT_EQ(img.GetPixelID(), pixelType);
+    EXPECT_FALSE(img.IsUnique());
+    EXPECT_FALSE(converted.IsUnique());
+
+    img = sitk::Image(std::vector<unsigned int>(SITK_MAX_DIMENSION, 5u), pixelType);
+    EXPECT_NO_THROW(img.ToScalarImage(false));
+
+    img = sitk::Image(std::vector<unsigned int>(2, 5u), pixelType);
+    EXPECT_NO_THROW(img.ToScalarImage(false));
+
+  }
+
+
+  for (auto pixelType : labelTypes)
+  {
+
+    for (unsigned int d = 2; d <= SITK_MAX_DIMENSION; ++d)
+    {
+      sitk::Image img = sitk::Image(std::vector<unsigned int>(d, 5), pixelType);
+
+      EXPECT_ANY_THROW(img.ToScalarImage(false));
+      EXPECT_ANY_THROW(img.ToScalarImage(true));
+    }
+  }
+
+  for (auto pixelType : complexTypes)
+  {
+    for (unsigned int d = 2; d <= SITK_MAX_DIMENSION; ++d)
+    {
+      sitk::Image img = sitk::Image(std::vector<unsigned int>(d, 5), pixelType);
+
+      EXPECT_ANY_THROW(img.ToScalarImage(false));
+      EXPECT_ANY_THROW(img.ToScalarImage(true));
+    }
   }
 }

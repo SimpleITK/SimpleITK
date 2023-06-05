@@ -61,6 +61,26 @@ namespace itk
     }
   };
 
+  struct ToVectorAddressor
+  {
+    template <typename TImageType>
+    auto
+    operator()() const
+    {
+      return &Image::template ToVectorInternal<TImageType>;
+    }
+  };
+
+  struct ToScalarAddressor
+  {
+    template <typename TImageType>
+    auto
+    operator()() const
+    {
+      return &Image::template ToScalarInternal<TImageType>;
+    }
+  };
+
   void
   Image::InternalInitialization(PixelIDValueType type, unsigned int dimension, itk::DataObject * image)
   {
@@ -104,5 +124,58 @@ namespace itk
 
       allocateMemberFactory.GetMemberFunction( ValueEnum, _size.size() )( _size, numberOfComponents );
     }
+
+
+    Image Image::ToVectorImage(bool inPlace)
+    {
+      assert( m_PimpleImage );
+
+      using PixelIDTypeList = typelist2::append<ScalarPixelIDTypeList, VectorPixelIDTypeList>::type;
+
+      typedef Image ( Self::*MemberFunctionType )( bool );
+
+      detail::MemberFunctionFactory<MemberFunctionType> toVectorMemberFactory(this);
+
+      toVectorMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3, SITK_MAX_DIMENSION, ToVectorAddressor>();
+      toVectorMemberFactory.RegisterMemberFunctions<VectorPixelIDTypeList, 2, 2, ToVectorAddressor>();
+
+      if (!toVectorMemberFactory.HasMemberFunction(this->GetPixelID(), this->GetDimension()))
+        {
+        sitkExceptionMacro( "Unable to convert an image with pixel type: " << this->GetPixelID()
+                                                                            << " and dimension: "
+                                                                            << this->GetDimension()
+                                                                            << " to a vector image!" );
+        }
+
+      return toVectorMemberFactory.GetMemberFunction(this->GetPixelID(), this->GetDimension())(inPlace);
+
+    }
+
+    Image Image::ToScalarImage(bool inPlace)
+    {
+      assert(m_PimpleImage);
+
+      using PixelIDTypeList = typelist2::append<ScalarPixelIDTypeList, VectorPixelIDTypeList>::type;;
+
+      typedef Image (Self::*MemberFunctionType)(bool);
+
+      detail::MemberFunctionFactory<MemberFunctionType> toScalarMemberFactory(this);
+
+      toScalarMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION-1, ToScalarAddressor>();
+      toScalarMemberFactory.RegisterMemberFunctions<ScalarPixelIDTypeList, SITK_MAX_DIMENSION, SITK_MAX_DIMENSION, ToScalarAddressor>();
+
+      if (!toScalarMemberFactory.HasMemberFunction(this->GetPixelID(), this->GetDimension()))
+        {
+        sitkExceptionMacro( "Unable to convert an image with pixel type: " << this->GetPixelID()
+                                                                            << " and dimension: "
+                                                                            << this->GetDimension()
+                                                                            << " to a scalar image!" );
+        }
+
+      return toScalarMemberFactory.GetMemberFunction(this->GetPixelID(), this->GetDimension())(inPlace);
+
+
+    }
+
   }
 }
