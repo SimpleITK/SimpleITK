@@ -30,6 +30,12 @@ jobs:
       max-parallel: 4
       matrix:
         include:
+          - os: macos-12
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
+              CMAKE_OSX_ARCHITECTURES:STRING=arm64
           - os: self-hosted-x64
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
