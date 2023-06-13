@@ -54,7 +54,7 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
-            SimpleITK_USE_ELASTIX:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=OFF
             WRAP_DEFAULT:BOOL=OFF
             WRAP_R:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
@@ -113,7 +113,7 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
-            SimpleITK_USE_ELASTIX:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=OFF
             WRAP_DEFAULT:BOOL=OFF
             WRAP_PYTHON:BOOL=ON
             WRAP_JAVA:BOOL=ON
@@ -172,7 +172,7 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_SHARED_LIBS:BOOL=OFF
             BUILD_TESTING:BOOL=ON
-            SimpleITK_USE_ELASTIX:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=OFF
             WRAP_DEFAULT:BOOL=OFF
         workingDirectory: $(Agent.BuildDirectory)
       - script: |
