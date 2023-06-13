@@ -42,6 +42,14 @@ jobs:
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
+          - os: macos-13
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
+              BUILD_EXAMPLES:BOOL=OFF
+              BUILD_TESTING:BOOL=ON
+              CMAKE_OSX_ARCHITECTURES:STRING=arm64
           - os: self-hosted-x64
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
