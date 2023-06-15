@@ -4,6 +4,12 @@ on:
   push:
     branches: [ master, release ]
 
+  tags:
+    - 'latest'
+    - 'v*'
+  workflow_dispatch:
+
+
 jobs:
   build:
 
@@ -32,3 +38,9 @@ jobs:
           path: |
             artifacts/SimpleITKDoxygenXML-*.tar.gz
             artifacts/SimpleITKDoxygen-*.tar.gz
+      - name: Upload Doxygen Artifacts to Release
+        if: startsWith(github.ref, 'refs/tags/latest')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ github.ref_name }} --repo ${{ github.repository }} artifacts/SimpleITKDoxygen-*.tar.gz artifacts/SimpleITKDoxygenXML-*.tar.gz
