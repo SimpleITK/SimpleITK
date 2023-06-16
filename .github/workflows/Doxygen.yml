@@ -2,11 +2,12 @@ name: Doxygen
 
 on:
   push:
-    branches: [ master, release ]
-
-  tags:
-    - 'latest'
-    - 'v*'
+    branches:
+      - master
+      - release
+    tags:
+      - 'latest'
+      - 'v*'
   workflow_dispatch:
 
 
