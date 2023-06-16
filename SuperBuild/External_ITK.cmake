@@ -84,6 +84,9 @@ else()
     "-DITK_TEMPLATE_VISIBILITY_DEFAULT:BOOL=OFF" )
 endif()
 
+if (NOT DEFINED CMAKE_CXX_STANDARD)
+  list( APPEND ep_itk_args "-DCMAKE_CXX_STANDARD:STRING=17")
+endif()
 
 list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
 
