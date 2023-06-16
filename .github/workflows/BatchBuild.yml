@@ -25,6 +25,49 @@ jobs:
       max-parallel: 4
       matrix:
         include:
+
+          - os: ubuntu-22.04
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
+
+          - os: ubuntu-22.04
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            CXX: "g++-10"
+            CC: "gcc-10"
+            ctest-cache: |
+              ITK_GIT_TAG:STRING=master
+
+          - os: ubuntu-22.04
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            CXX: "g++-11"
+            CC: "gcc-11"
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
+          - os: ubuntu-22.04
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            CXX: "g++-12"
+            CC: "gcc-12"
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
+
+          - os: self-hosted-arm
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              WRAP_CSHARP:BOOL=ON
+              WRAP_R:BOOL=ON
+              WRAP_TCL:BOOL=ON
+              WRAP_RUBY:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
+
           - os: windows-2022
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Visual Studio 17 2022"
@@ -64,30 +107,6 @@ jobs:
               WRAP_CSHARP:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               CXXFLAGS:STRING= /wd4251 /MP
-
-          - os: ubuntu-22.04
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-
-          - os: ubuntu-22.04
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              ITK_GIT_TAG:STRING=master
-
-          - os: self-hosted-arm
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
-              WRAP_R:BOOL=ON
-              WRAP_TCL:BOOL=ON
-              WRAP_RUBY:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
 
           - os: macos-12
             cmake-build-type: "Release"
@@ -159,16 +178,21 @@ jobs:
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\SimpleITK-build\bin\${{ matrix.cmake-build-type }}" >> $GITHUB_PATH
       - name: Install build dependencies
         if: matrix.os != 'self-hosted-arm'
+        shell: bash
         run: |
           python -m pip install --upgrade pip
           python -m pip install ninja cmake~=3.24.0
-      - name: Setup XCode
-        if: contains(matrix.os,  'macos')
-        shell: bash
-        run: |
-          xcode-select -p
-          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
-          xcode-select -p
+
+          if [  ! -z "${{ matrix.xcode-version }}" ]; then
+            sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
+            xcode-select -p
+          fi
+
+          if [ ! -z "${{ matrix.apt-get-dependencies }}" ]; then
+            sudo apt-get update
+            sudo apt-get install -y ${{ matrix.apt-get-dependencies }}
+          fi
+
       - name: Build and Test
         shell: bash
         env:
@@ -185,6 +209,13 @@ jobs:
             BUILD_TESTING:BOOL=ON
             ${{ matrix.ctest-cache }}
         run: |
+          if [ ! -z "${{ matrix.GCC }} ]; then
+            export CC=${{ matrix.CC }}
+          fi
+          if [ ! -z "${{ matrix.CXX }} ]; then
+            export CXX=${{ matrix.CXX }}
+          fi
+
           cmake --version
           ninja --version
           ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -j 2
