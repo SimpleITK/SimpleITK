@@ -36,6 +36,14 @@
       "detaileddescriptionSet" : "Set/Get threshold for enhancement. Default: 0.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get threshold for enhancement. Default: 0."
+    },
+    {
+      "name" : "Clamp",
+      "type" : "bool",
+      "default" : "true",
+        "briefdescriptionSet" : "Set/Get whether to clamp values to supported range of output type",
+        "detaileddescriptionSet" : ""
+
     }
   ],
   "tests" : [
