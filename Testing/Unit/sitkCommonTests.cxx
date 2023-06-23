@@ -885,3 +885,42 @@ TEST(Logger, MockLogger)
   EXPECT_EQ( testing::internal::GetCapturedStderr(), expectedLogOutput);
 
 }
+
+#define FROM_STRING_CHECK(pixel_id) \
+{                                   \
+  std::string str( #pixel_id );                                 \
+  EXPECT_EQ(itk::simple::pixel_id, itk::simple::GetPixelIDValueFromString( str )); \
+}
+
+TEST(PixelID, FromString)
+{
+  FROM_STRING_CHECK(sitkUInt8);
+  FROM_STRING_CHECK(sitkInt8);
+  FROM_STRING_CHECK(sitkUInt16);
+  FROM_STRING_CHECK(sitkInt16);
+  FROM_STRING_CHECK(sitkUInt32);
+  FROM_STRING_CHECK(sitkInt32);
+  FROM_STRING_CHECK(sitkUInt64);
+  FROM_STRING_CHECK(sitkInt64);
+  FROM_STRING_CHECK(sitkFloat32);
+  FROM_STRING_CHECK(sitkFloat64);
+  FROM_STRING_CHECK(sitkComplexFloat32);
+  FROM_STRING_CHECK(sitkComplexFloat64);
+  FROM_STRING_CHECK(sitkVectorUInt8);
+  FROM_STRING_CHECK(sitkVectorInt8);
+  FROM_STRING_CHECK(sitkVectorUInt16);
+  FROM_STRING_CHECK(sitkVectorInt16);
+  FROM_STRING_CHECK(sitkVectorUInt32);
+  FROM_STRING_CHECK(sitkVectorInt32);
+  FROM_STRING_CHECK(sitkVectorUInt64);
+  FROM_STRING_CHECK(sitkVectorInt64);
+  FROM_STRING_CHECK(sitkVectorFloat32);
+  FROM_STRING_CHECK(sitkVectorFloat64);
+
+  FROM_STRING_CHECK(sitkLabelUInt8);
+  FROM_STRING_CHECK(sitkLabelUInt16);
+  FROM_STRING_CHECK(sitkLabelUInt32);
+  FROM_STRING_CHECK(sitkLabelUInt64);
+
+  FROM_STRING_CHECK(sitkUnknown);
+}
