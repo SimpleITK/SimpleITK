@@ -26,14 +26,26 @@ jobs:
       matrix:
         include:
 
-          - os: ubuntu-22.04
+          - os: self-hosted-arm
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              WRAP_CSHARP:BOOL=ON
+              WRAP_R:BOOL=ON
+              WRAP_TCL:BOOL=ON
+              WRAP_RUBY:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
+
+          - os: self-hosted-x64
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
-          - os: ubuntu-22.04
+          - os: self-hosted-x64
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             CXX: "g++-10"
@@ -55,18 +67,6 @@ jobs:
             CC: "gcc-12"
             ctest-cache: |
               WRAP_DEFAULT:BOOL=OFF
-
-          - os: self-hosted-arm
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
-              WRAP_R:BOOL=ON
-              WRAP_TCL:BOOL=ON
-              WRAP_RUBY:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
 
           - os: windows-2022
             cmake-build-type: "MinSizeRel"
