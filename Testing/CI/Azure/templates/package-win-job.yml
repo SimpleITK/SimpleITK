@@ -107,16 +107,6 @@ jobs:
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 38
         continueOnError: true
-      - task: UsePythonVersion@0
-        displayName: Enable Python
-        inputs:
-          versionSpec: '3.7'
-          architecture: '${{ parameters.PYTHON_ARCH }}'
-      - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ parameters.VCVAR_OPTIONS }}
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
-        displayName: Build Python 37
-        continueOnError: true
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/python
