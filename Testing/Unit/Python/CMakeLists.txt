@@ -26,6 +26,10 @@ sitk_add_python_test( Test.FlatStaticMethod
    "${CMAKE_CURRENT_SOURCE_DIR}/sitkFlatStaticMethod.py"
    )
 
+sitk_add_python_test( Test.GetGDCMSeriesIDs
+  "${CMAKE_CURRENT_SOURCE_DIR}/sitkGetGDCMSeriesIDs.py"
+  )
+
 # Numpy test.
 sitk_add_python_test( Test.Numpy
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkNumpyArrayConversionTest.py"
