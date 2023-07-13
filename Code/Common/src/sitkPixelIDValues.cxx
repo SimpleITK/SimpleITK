@@ -153,8 +153,6 @@ PixelIDValueType GetPixelIDValueFromString(const std::string &enumString )
 
   if ( enumString == "sitkUnknown" )
     {
-    // Unknown must be first because other enums may be -1 if they are
-    // not instantiated
       return sitkUnknown;
     }
   else if ( enumString == "sitkUInt8" )

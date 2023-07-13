@@ -17,6 +17,8 @@ include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 #
 # Options
 #
+option ( SimpleITK_PYTHON_FLATSTATICMETHOD "Enable object_method functions for static class members. \
+This feature will be removed in the future. To disable requires SWIG>=4.1.0" ON )
 option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." ON )
 mark_as_advanced( SimpleITK_PYTHON_THREADS )
 option ( SimpleITK_PYTHON_EGG "Add building of python eggs to the dist target." OFF )
@@ -31,6 +33,9 @@ set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword )
 if( SimpleITK_PYTHON_THREADS )
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
+endif()
+if (SimpleITK_PYTHON_FLATSTATICMETHOD AND SWIG_VERSION VERSION_GREATER_EQUAL "4.1.0")
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -flatstaticmethod )
 endif()
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
