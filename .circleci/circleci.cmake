@@ -41,7 +41,7 @@ set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
 # Construct build name based on what is being built
 string(SUBSTRING $ENV{CIRCLE_SHA1} 0 7 commit_sha1)
-set(CTEST_BUILD_NAME "CircleCI-$ENV{CIRCLE_BRANCH}-$ENV{CIRCLE_STAGE}-${commit_sha1}")
+set(CTEST_BUILD_NAME "CircleCI-$ENV{CIRCLE_BRANCH}-$ENV{CIRCLE_JOB}-${commit_sha1}")
 
 set_from_env(dashboard_git_branch "CIRCLE_BRANCH")
 set_from_env(dashboard_model "DASHBOARD_MODEL" DEFAULT "Experimental" )
