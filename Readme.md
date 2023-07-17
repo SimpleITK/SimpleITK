@@ -6,8 +6,7 @@ SimpleITK
 | release | [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/release.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/release) | [![Batch Build and Test](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml/badge.svg?branch=release)](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=release)](http://simpleitk.readthedocs.io/en/release/) |
 | master  |  [![CircleCI](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master.svg?style=shield)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master)  | [![Batch Build and Test](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml/badge.svg?branch=master)](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml)  |  [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=master)](http://simpleitk.readthedocs.io/en/master/)  |
 
-
-SimpleITK is an image analysis toolkit with a large number of components supporting general filtering operations, image segmentation and registration. It is built on top of the Insight Segmentation and Registration Toolkit [ITK](https://www.itk.org) with the intent of providing a simplified interface to ITK. SimpleITK itself is written in C++ but is available for a large number of programming languages. Currently these include:
+SimpleITK is an image analysis toolkit with a large number of components supporting general filtering operations, image segmentation and registration. It is built on top of the Insight Segmentation and Registration Toolkit [ITK](https://www.itk.org) with the intent of providing a simplified interface to ITK. SimpleITK itself is written in C++ but is available for a large number of programming languages. Currently, these include:
 
 * [Python](http://www.python.org)
 * [R](https://www.r-project.org)
@@ -71,9 +70,9 @@ SimpleITK provides access to most of the ITK components, but not all. If you are
 Report an Issue
 ---------------
 
-Help us improve SimpleITK by reporting issues you encounter. When you report an error, you allow us to address your specific problem, but more importantly you are helping all of the SimpleITK community.
+Help us improve SimpleITK by reporting issues you encounter. When you report an error, you allow us to address your specific problem, but more importantly you are helping the entire SimpleITK community.
 
-**Thank you for helping making SimpleITK better!**
+**Thank you for helping to make SimpleITK better!**
 
 All issues are reported and managed on the [project's GitHub issue tracker](https://github.com/SimpleITK/SimpleITK/issues). When reporting an issue, please provide as much information as possible to enable us to reproduce the problem.
 
@@ -84,4 +83,4 @@ The following information will allow us to address your issue in a timely manner
 4. Version of SimpleITK (e.g. 1.1.0), just invoke the SimpleITK Version() function.
 5. How did you install SimpleITK, binary distribution (e.g. conda install -c simpleitk simpleitk), or built it from source (e.g. devtools::install_github("SimpleITK/SimpleITKRInstaller")).
 6. A minimal working example which causes the error.
-7. If your code requires input, possibly point to a minimal sized input image.
+7. If your code requires input data, possibly point to a minimal sized input image.
