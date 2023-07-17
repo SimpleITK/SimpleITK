@@ -213,7 +213,7 @@ jobs:
   java-and-test:
     <<: *defaults
     docker:
-      - image: cimg/openjdk:19.0.2
+      - image: cimg/openjdk:8.0
     resource_class: medium
     environment:
       <<: *default_environment_keys
