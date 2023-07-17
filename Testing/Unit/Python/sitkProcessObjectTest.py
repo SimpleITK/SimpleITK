@@ -44,6 +44,11 @@ class ProcessObjectTest(unittest.TestCase):
         self.assertTrue(issubclass(sitk.GaussianImageSource,sitk.ProcessObject))
         self.assertTrue(issubclass(sitk.JoinSeriesImageFilter,sitk.ProcessObject))
 
+    def test_ProcessObject_static(self):
+        """Test wrapping of static methods"""
+
+        sitk.ProcessObject.SetGlobalDefaultThreader("PLATFORM")
+
 
     def test_ProcessObject_lambda_Command(self):
         """Check that the lambda Command on event works"""
