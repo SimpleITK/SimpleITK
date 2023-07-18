@@ -2,12 +2,12 @@ name: Package
 
 on:
   push:
+    branches: ['gha_package']
     tags:
       - 'latest'
       - 'v*'
-    branches-ignore:
-      - '**'
-
+  # Enable manual running of workflow
+  workflow_dispatch:
 
 
 jobs:
@@ -55,3 +55,108 @@ jobs:
           name: python-wheels
           path: |
             Utilities/Distribution/manylinux/wheelhouse/*.whl
+  package-windows:
+    runs-on: windows-2022
+    env:
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          path: SimpleITK-dashboard
+          ref: dashboard
+      - name: Generate External Data Hash
+        shell: bash
+        run: |
+          git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: ${{ runner.temp }}/.ExternalData
+          key: external-data-v1-${{ hashFiles( format( '{0}/{1}', github.workspace, 'external-data.hashable') ) }}
+          enableCrossOsArchive: true
+          restore-keys: |
+            external-data-v1-
+      - name: Build and Test
+        shell: bash
+        env:
+          DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CONFIGURATION_TYPE: "Release"
+          CTEST_CMAKE_GENERATOR: "Visual Studio 17 2022"
+          CTEST_CMAKE_GENERATOR_TOOLSET: v143,host=x64
+          CTEST_CMAKE_GENERATOR_PLATFORM: x64
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CACHE: |
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            ITK_C_OPTIMIZATION_FLAGS:STRING=
+            ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+              CXXFLAGS:STRING= /wd4251 /MP
+        run: |
+          cmake --version
+          ctest -D "dashboard_track:STRING=Package" -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -V -j 2
+  package-macosx:
+    runs-on: macos-11
+    env:
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          path: SimpleITK-dashboard
+          ref: dashboard
+      - name: Generate External Data Hash
+        shell: bash
+        run: |
+          git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: ${{ runner.temp }}/.ExternalData
+          key: external-data-v1-${{ hashFiles( format( '{0}/{1}', github.workspace, 'external-data.hashable') ) }}
+          enableCrossOsArchive: true
+          restore-keys: |
+            external-data-v1-
+      - name: Set up Python 3.8
+        if: matrix.os != 'self-hosted-arm'
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Build and Test
+        shell: bash
+        env:
+          xcodeversion: 12.4
+          DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CONFIGURATION_TYPE: "Release"
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CMAKE_GENERATOR: "Ninja"
+          CXXFLAGS: /MP
+          CTEST_CACHE: |
+            CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+            CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+            CMAKE_OSX_DEPLOYMENT_TARGET=10.9
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            ITK_C_OPTIMIZATION_FLAGS:STRING=
+            ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+        run: |
+          python -m pip install ninja cmake~=3.26.0
+          ninja --version
+          sudo xcode-select -s /Applications/Xcode_${xcodeversion}.app/Contents/Developer/
+          xcode-select -p
+          cmake --version
+          ctest -D "dashboard_track:STRING=Package" -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -V -j 2
