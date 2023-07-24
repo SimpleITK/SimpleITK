@@ -162,7 +162,7 @@ jobs:
         env:
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_CMAKE_GENERATOR: "Visual Studio 16 2019"
-          CTEST_CMAKE_GENERATOR_TOOLSET: v141,host=x64
+          CTEST_CMAKE_GENERATOR_TOOLSET: v142,host=x64
           CTEST_BINARY_DIRECTORY: $(coreBinaryDirectory)
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CXXFLAGS: /MP
