@@ -26,9 +26,8 @@ jobs:
       - script: |
           python --version
           python -m pip install --upgrade pip
-          python -m pip install setuptools
-          python -m pip install scikit-ci-addons ninja
-        displayName: 'Install python tools and dependency'
+          sudo python -m pip install ninja
+        displayName: 'Install ninja dependency'
       - bash: |
           set -x
           c++ --version
@@ -52,16 +51,6 @@ jobs:
             WRAP_PYTHON:BOOL=ON
             WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
 
   - job: macOS
     timeoutInMinutes: 0
@@ -82,8 +71,7 @@ jobs:
       - script: |
           python --version
           python -m pip install --upgrade pip
-          sudo python -m pip install setuptools wheel
-          sudo python -m pip install ninja scikit-ci-addons lxml
+          sudo python -m pip install ninja
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
@@ -111,16 +99,6 @@ jobs:
             WRAP_JAVA:BOOL=ON
             WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
 
   - job: Windows
     timeoutInMinutes: 0
@@ -145,7 +123,7 @@ jobs:
           python --version
           python -m pip install --upgrade pip
           python -m pip install setuptools wheel
-          python -m pip install ninja scikit-ci-addons lxml
+          python -m pip install ninja
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
@@ -167,16 +145,6 @@ jobs:
             SimpleITK_USE_ELASTIX:BOOL=OFF
             WRAP_DEFAULT:BOOL=OFF
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
       - bash : |
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build ${COREBINARYDIRECTORY}/Elastix ${COREBINARYDIRECTORY}/Elastix-build
         displayName: Cleanup build
