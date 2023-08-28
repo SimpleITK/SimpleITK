@@ -137,7 +137,7 @@ jobs:
     variables:
       PYTHON_ARCH: x64
       CMAKE_PLATFORM: x64
-      VCVAR_OPTIONS: amd64
+      VCVAR_OPTIONS: amd64 -vcvars_ver=14.2
       CTEST_CONFIGURATION_TYPE: Release
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
@@ -189,8 +189,7 @@ jobs:
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build ${COREBINARYDIRECTORY}/Elastix ${COREBINARYDIRECTORY}/Elastix-build
         displayName: Cleanup build
       - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.1
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_java.sh
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }}
         displayName: Build Java
       - task: UsePythonVersion@0
         displayName: Enable Python
@@ -198,11 +197,11 @@ jobs:
           versionSpec: '3.8'
           architecture: '${{ variables.PYTHON_ARCH }}'
       - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.1
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }}
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 38
       - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }}
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_csharp.sh
         displayName: Build CSharp
         continueOnError: true
