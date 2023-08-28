@@ -18,26 +18,17 @@ jobs:
   - job: Linux
     timeoutInMinutes: 0
     pool:
-      name: 'Default'
-      demands:
-      - Agent.OS -equals Linux
-    variables:
-      PYTHONUSERBASE: $(Agent.BuildDirectory)/.pypkgs
-      env_file: '/opt/rh/devtoolset-7/enable'
+      vmImage: ubuntu-22.04
     workspace:
       clean: all
     steps:
       - template: templates/git-download-steps.yml
       - script: |
-          mkdir -p ${PYTHONUSERBASE}
           python --version
-          python -m site --user-site
-          python -m pip install --upgrade --user pip
-          python -m pip install --user setuptools
-          python -m pip install --user scikit-ci-addons
-        displayName: 'Install python tools and dependency'
+          python -m pip install --upgrade pip
+          sudo python -m pip install ninja
+        displayName: 'Install ninja dependency'
       - bash: |
-          [[ ! -z "$(env_file)" ]] && source $(env_file)
           set -x
           c++ --version
           cmake --version
@@ -60,16 +51,6 @@ jobs:
             WRAP_PYTHON:BOOL=ON
             WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
 
   - job: macOS
     timeoutInMinutes: 0
@@ -90,8 +71,7 @@ jobs:
       - script: |
           python --version
           python -m pip install --upgrade pip
-          sudo python -m pip install setuptools wheel
-          sudo python -m pip install ninja scikit-ci-addons lxml
+          sudo python -m pip install ninja
         displayName: 'Install ninja dependency'
       - bash: |
           set -x
@@ -119,16 +99,6 @@ jobs:
             WRAP_JAVA:BOOL=ON
             WRAP_CSHARP:BOOL=ON
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
 
   - job: Windows
     timeoutInMinutes: 0
@@ -137,7 +107,7 @@ jobs:
     variables:
       PYTHON_ARCH: x64
       CMAKE_PLATFORM: x64
-      VCVAR_OPTIONS: amd64
+      VCVAR_OPTIONS: amd64 -vcvars_ver=14.2
       CTEST_CONFIGURATION_TYPE: Release
       DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
       COREBINARYDIRECTORY: $(Build.SourcesDirectory)-build
@@ -153,7 +123,7 @@ jobs:
           python --version
           python -m pip install --upgrade pip
           python -m pip install setuptools wheel
-          python -m pip install ninja scikit-ci-addons lxml
+          python -m pip install ninja
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
@@ -175,22 +145,11 @@ jobs:
             SimpleITK_USE_ELASTIX:BOOL=OFF
             WRAP_DEFAULT:BOOL=OFF
         workingDirectory: $(Agent.BuildDirectory)
-      - script: |
-          python -m ci_addons ctest_junit_formatter $(Build.SourcesDirectory)-build > $(Agent.BuildDirectory)/JUnitTestResults.xml
-        condition: succeededOrFailed()
-        displayName: 'Format CTest output in JUnit format'
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: "$(Agent.BuildDirectory)/JUnitTestResults.xml"
-          testRunTitle: 'CTest $(Agent.OS)'
-        condition: succeededOrFailed()
-        displayName: 'Publish test results'
       - bash : |
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build ${COREBINARYDIRECTORY}/SimpleITK-build ${COREBINARYDIRECTORY}/Elastix ${COREBINARYDIRECTORY}/Elastix-build
         displayName: Cleanup build
       - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.1
-          bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_java.sh
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ variables.VCVAR_OPTIONS }}
         displayName: Build Java
       - task: UsePythonVersion@0
         displayName: Enable Python
@@ -198,11 +157,11 @@ jobs:
           versionSpec: '3.8'
           architecture: '${{ variables.PYTHON_ARCH }}'
       - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.1
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }}
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_python.sh
         displayName: Build Python 38
       - script: |
-          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }} -vcvars_ver=14.0
+          call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ variables.VCVAR_OPTIONS }}
           bash $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_build_csharp.sh
         displayName: Build CSharp
         continueOnError: true

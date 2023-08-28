@@ -1,7 +1,7 @@
 parameters:
   PYTHON_ARCH: x64
   CMAKE_PLATFORM: x64
-  VCVAR_OPTIONS: amd64 -vcvars_ver=14.1
+  VCVAR_OPTIONS: amd64 -vcvars_ver=14.2
 jobs:
   - job: VS2019
     dependsOn: Configure
