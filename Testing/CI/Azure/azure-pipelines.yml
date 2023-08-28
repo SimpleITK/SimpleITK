@@ -18,26 +18,18 @@ jobs:
   - job: Linux
     timeoutInMinutes: 0
     pool:
-      name: 'Default'
-      demands:
-      - Agent.OS -equals Linux
-    variables:
-      PYTHONUSERBASE: $(Agent.BuildDirectory)/.pypkgs
-      env_file: '/opt/rh/devtoolset-7/enable'
+      vmImage: ubuntu-22.04
     workspace:
       clean: all
     steps:
       - template: templates/git-download-steps.yml
       - script: |
-          mkdir -p ${PYTHONUSERBASE}
           python --version
-          python -m site --user-site
-          python -m pip install --upgrade --user pip
-          python -m pip install --user setuptools
-          python -m pip install --user scikit-ci-addons
+          python -m pip install --upgrade pip
+          python -m pip install setuptools
+          python -m pip install scikit-ci-addons ninja
         displayName: 'Install python tools and dependency'
       - bash: |
-          [[ ! -z "$(env_file)" ]] && source $(env_file)
           set -x
           c++ --version
           cmake --version
