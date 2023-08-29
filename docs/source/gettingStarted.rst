@@ -33,7 +33,9 @@ right away!
 
 Currently, **Python** binaries are available on Microsoft Windows, GNU
 Linux and Mac OS X. **C# and Java** binaries are available for
-Windows. We are also working towards supporting **R** packaging.
+Windows. **R** binaries are not available but a convenient
+`devtools based installer <https://github.com/SimpleITK/SimpleITKRInstaller>`__  for
+Linux and Mac is.
 
 Python binary files
 -------------------
@@ -76,14 +78,21 @@ From the command line prompt, execute:
 
 .. code-block :: bash
 
- conda install -c simpleitk simpleitk
+ conda install -c conda-forge simpleitk
 
-Beta and release candidate packages are also available on Anaconda cloud
-under the dev label:
+This will install the latest version of SimpleITK that is compatible
+with the package versions already installed in your environment. To install
+the latest version of SimpleITK and update all version dependencies, execute:
 
 .. code-block :: bash
 
- conda install -c simpleitk/label/dev simpleitk
+ conda install --update-deps -c conda-forge simpleitk
+
+Finally, to install a specific version, for example 2.2.1, execute:
+
+.. code-block :: bash
+
+ conda install -c conda-forge simpleitk=2.2.1
 
 
 C# binary files

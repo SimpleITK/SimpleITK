@@ -33,12 +33,16 @@ SimpleITK tutorials and courses have been given in the following venues:
    :target: https://imagej.net/Conference
    :alt: ImageJ User and Developer Conference Logo
 
-Upcoming
+Virtual
 ++++++++
-* Virtual tutorial, online 2020: `SimpleITK: A Simplified Path to Insight <https://simpleitk.org/TUTORIAL/>`__ [`git repository <https://github.com/SimpleITK/TUTORIAL>`__].
 
-Past
-++++
+`SimpleITK: A Simplified Path to Insight <https://simpleitk.org/TUTORIAL/>`__ [`git repository <https://github.com/SimpleITK/TUTORIAL>`__].
+
+Upcoming (in person)
+++++++++++++++++++++
+
+Past (in person)
+++++++++++++++++
 .. admonition:: Canceled by ISBI organizers due to COVID-19
 
   * International Symposium on Biomedical Imaging (ISBI)2020 Tutorial, Iowa City IA, USA: `SimpleITK: image analysis for all levels of programming expertise <https://simpleitk.org/ISBI2020_TUTORIAL/>`__ [`git repository <https://github.com/SimpleITK/ISBI2020_TUTORIAL>`__].

@@ -96,8 +96,9 @@ the intensity values and pixel spacing are the same.
    system. In SimpleITK these are not considered the same image, because they occupy
    different spatial locations. The image on the left
    has its origin at (-136.3, -20.5) with a direction cosine matrix, in row
-   major order, of (0.7, -0.7, 0.7, 0.7). The image on the right's origin is
-   (16.9, 21.4) with a direction cosine matrix of (1,0,0,1).
+   major order, of (0.7, -0.7, 0.7, 0.7), :math:`\left[\begin{array}{cc}0.7&-0.7\\0.7&0.7\end{array}\right]`.
+   The image on the right's origin is
+   (16.9, 21.4) with a direction cosine matrix of (1,0,0,1), :math:`\left[\begin{array}{cc}1&0\\0&1\end{array}\right]`.
 
 .. _lbl_metric_units:
 
