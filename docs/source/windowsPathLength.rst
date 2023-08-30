@@ -42,7 +42,7 @@ Building SimpleITK with long path names
 ---------------------------------------
 If SimpleITK must be built with long path names, two things need to be done:
 
-    1. `Enable Long Paths in Windows 10, Version 1607, and Layer <https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=cmd#enable-long-paths-in-windows-10-version-1607-and-later>`__
+    1. `Enable Long Paths in Windows 10, Version 1607, and Later <https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=cmd#enable-long-paths-in-windows-10-version-1607-and-later>`__
     2.  Set the ITK_SKIP_PATH_LENGTH_CHECKS cmake variable to ON in the External_ITK.cmake
 
 
