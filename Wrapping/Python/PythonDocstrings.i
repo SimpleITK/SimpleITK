@@ -1082,8 +1082,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::GetOutsideValue "
 
-Set/Get intensity value representing the interior of objects in the
-mask.
+Set/Get intensity value representing non-objects in the mask.
 
 ";
 
@@ -1107,6 +1106,214 @@ Print ourselves out
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::~ApproximateSignedDistanceMapImageFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::AreaClosingImageFilter "
+
+Morphological closing by attributes.
+
+
+An attribute closing removes blobs according to criteria such as area.
+When applied to grayscale images they have the effect of filling
+valleys (regions darker than their surroundings) based on area while
+leaving the rest of the image unchanged.
+
+This code was contributed in the Insight Journal paper
+
+\"Grayscale morphological attribute operations\" by Beare R. https://hdl.handle.net/1926/1316 https://www.insight-journal.org/browse/publication/203
+
+
+Richard Beare. Department of Medicine, Monash University, Melbourne,
+Australia.
+
+See:
+ itk::simple::AreaClosing for the procedural interface
+
+ itk::AreaClosingImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkAreaClosingImageFilter.h
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::AreaClosingImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::FullyConnectedOff "
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::FullyConnectedOn "
+
+Set the value of FullyConnected to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::GetFullyConnected "
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::GetLambda "
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::GetUseImageSpacing "
+
+Set/Get whether the image spacing is used or not - defaults to true.
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::SetFullyConnected "
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::SetLambda "
+
+The size of the area opening.
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::SetUseImageSpacing "
+
+Set/Get whether the image spacing is used or not - defaults to true.
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::UseImageSpacingOff "
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::UseImageSpacingOn "
+
+Set the value of UseImageSpacing to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::AreaClosingImageFilter::~AreaClosingImageFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::AreaOpeningImageFilter "
+
+Morphological opening by attributes.
+
+
+An attribute opening removes blobs according to criteria such as area.
+When applied to grayscale images they have the effect of trimming
+peaks (regions brighter than their surroundings) based on area while
+leaving the rest of the image unchanged.
+
+This code was contributed in the Insight Journal paper
+
+\"Grayscale morphological attribute operations\" by Beare R. https://hdl.handle.net/1926/1316 https://www.insight-journal.org/browse/publication/203
+
+
+Richard Beare. Department of Medicine, Monash University, Melbourne,
+Australia.
+
+See:
+ itk::simple::AreaOpening for the procedural interface
+
+ itk::AreaOpeningImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkAreaOpeningImageFilter.h
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::AreaOpeningImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::FullyConnectedOff "
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::FullyConnectedOn "
+
+Set the value of FullyConnected to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::GetFullyConnected "
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::GetLambda "
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::GetUseImageSpacing "
+
+Set/Get whether the image spacing is used or not - defaults to true.
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::SetFullyConnected "
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::SetLambda "
+
+The size of the area opening.
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::SetUseImageSpacing "
+
+Set/Get whether the image spacing is used or not - defaults to true.
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::UseImageSpacingOff "
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::UseImageSpacingOn "
+
+Set the value of UseImageSpacing to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::AreaOpeningImageFilter::~AreaOpeningImageFilter "
 
 Destructor
 
@@ -2303,7 +2510,7 @@ Remove holes not connected to the boundary of the image.
 BinaryFillholeImageFilter fills holes in a binary image.
 
 Geodesic morphology and the Fillhole algorithm is described in Chapter
-6 of Pierre Soille's book \"Morphological Image Analysis:  Principles
+6 of Pierre Soille's book \"Morphological Image Analysis: Principles
 and Applications\", Second Edition, Springer, 2003.
 
 
@@ -2401,7 +2608,7 @@ Destructor
 Remove the objects not connected to the boundary of the image.
 
 
-BinaryGrindPeakImageFilter ginds peaks in a grayscale image.
+BinaryGrindPeakImageFilter grinds peaks in a grayscale image.
 
 Geodesic morphology and the grind peak algorithm is described in
 Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:
@@ -4370,7 +4577,7 @@ Destructor
 Computes 1/(1+x) for each pixel in the image.
 
 
-The filter expect both the input and output images to have the same
+The filter expects both the input and output images to have the same
 number of dimensions, and both of a scalar image type.
 See:
  itk::simple::BoundedReciprocal for the procedural interface
@@ -4552,7 +4759,7 @@ This filter is an implementation of a Canny edge detector for scalar-
 valued images.
 
 
-Based on John Canny's paper \"A Computational Approach  to Edge
+Based on John Canny's paper \"A Computational Approach to Edge
 Detection\"(IEEE Transactions on Pattern Analysis and Machine
 Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major
 steps used in the edge-detection scheme: (1) Smooth the input image
@@ -4637,6 +4844,9 @@ Set/Get the variance of the Gaussian smoothing filter.
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetLowerThreshold "
+
+Set the lower threshold value for detected edges.
+
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetMaximumError "
@@ -4654,8 +4864,8 @@ filter in this algorithm
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetUpperThreshold "
 
-Set the Threshold value for detected edges. TODO: Document in the
-ITKv4 migration guide that the SetThreshold member function was
+Set the upper threshold value for detected edges. TODO: Document in
+the ITKv4 migration guide that the SetThreshold member function was
 removed from the CannyEdgeDetectionImageFilter , and that both UpperThreshold and LowerThreshold need to be set. To
 get the same results as with the SetThreshold method change
 \"myfilter->SetThrehsold\" to \"myfilter->SetUpperThreshold\", and add
@@ -4707,7 +4917,7 @@ used to try to segment a region by itself. Like all other level-set
 based segmentation filters (see SegmentationLevelSetImageFilter ), it works by first constructing a scalar speed term and a vector
 advection field based on edge features in the image. The level set
 front is then moved according to these two terms with the addition of
-a third curvature term to contol the smoothness of the solution.
+a third curvature term to control the smoothness of the solution.
 
 The speed term is constructed as the Danielsson distance transform of
 the Canny edge image, as calculated by the CannyEdgeDetectionImageFilter . This scalar speed can be tuned in and out of the final evolution
@@ -8733,7 +8943,7 @@ Name of this class
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations. Use On to take the image spacing
 information into account and to specify the Gaussian variance in real
-world units; use Off to gnore the image spacing and to specify the
+world units; use Off to ignore the image spacing and to specify the
 Gaussian variance in voxel units. Default is On.
 
 ";
@@ -8768,7 +8978,7 @@ MaximumError demands it. The default is 32 pixels.
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations. Use On to take the image spacing
 information into account and to specify the Gaussian variance in real
-world units; use Off to gnore the image spacing and to specify the
+world units; use Off to ignore the image spacing and to specify the
 Gaussian variance in voxel units. Default is On.
 
 ";
@@ -9534,66 +9744,109 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddFixedImage "
+
+Adds an image to the end of the container of fixed images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddFixedMask "
+
+Adds an image to the end of the container of fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddMovingImage "
+
+Adds an image to the end of the container of moving images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddMovingMask "
+
+Adds an image to the end of the container of moving masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
+
+Adds a parameter specified by key, with the specified value to all parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
+
+Adds a parameter specified by key, with the specified values to all parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
+
+Adds a parameter specified by key, with the specified value to the parameter map at the specified
+(zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
+
+Adds a parameter specified by key, with the specified values to the parameter map at the specified
+(zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameterMap "
+
+Adds a parameter map to the container of parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::DualExecuteInternal "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilter "
+
+Default-constructor.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::Execute "
+
+Executes the registration, and returns the result image.
+
+
+
+Before executing, the number of moving images must equal the number of
+fixed images, the number of fixed masks must be either zero, or one,
+or equal to the number of fixed images, and the number of moving masks
+must be either zero, or one, or equal to the number of moving images
+
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::Execute "
@@ -9603,87 +9856,138 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetDefaultParameterMap "
+
+Returns the default parameter map for the specified function arguments
+( transformName may be \"translation\", \"rigid\" , \"affine\", \"nonrigid\", or
+\"bspline\").
+
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
+
+Retrieves a reference to the container of fixed images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
-";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
+Retrieves a reference to the fixed image at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
+
+Retrieves a reference to the container of fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
+
+Retrieves a reference to the fixed mask at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedPointSetFileName "
+
+Returns the name of the current point set file of points from the
+fixed image.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedPointSetFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetInitialTransformParameterFileName "
+
+Returns the initial transform parameter file name.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetInitialTransformParameterFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogFileName "
+
+Returns the name of the current log file.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogToConsole "
+
+Returns whether logging to console is switched on.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogToConsole "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogToFile "
+
+Returns whether logging to file is switched on.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogToFile "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
+
+Retrieves a reference to the moving image at the specified (zero-
+based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
+
+Retrieves a reference to the moving image at the specified (zero-
+based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
+
+Retrieves a reference to the container of moving masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
+
+Retrieves a reference to the moving mask at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingPointSetFileName "
+
+Returns the name of the current point set file of points from the
+moving image.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingPointSetFileName "
@@ -9699,39 +10003,60 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedImages "
+
+Returns the number of fixed images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedMasks "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedMasks "
+
+Returns the number of fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingImages "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingImages "
+
+Returns the number of moving images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingMasks "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingMasks "
+
+Returns the number of moving masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfParameterMaps "
+
+Returns the number of parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfParameterMaps "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfThreads "
+
+Returns the current maximum number of threads.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfThreads "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetOutputDirectory "
+
+Returns the current output directory.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetOutputDirectory "
@@ -9741,33 +10066,51 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
+
+Retrieves the values of the parameter specified by key, when there is only one parameter map.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
+
+Retrieves the values of the parameter specified by key, from the parameter map at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameterMap "
+
+Returns a copy of the parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetResultImage "
+
+Returns the result image.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetResultImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
+
+Returns all transform parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
+
+Returns the transform parameter map at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
@@ -9780,39 +10123,60 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOff "
+
+Switches logging to console off.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOn "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOn "
+
+Switches logging to console on.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOff "
+
+Switches logging to file off.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOff "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOn "
+
+Switches logging to file on.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOn "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
+
+Prints all parameter maps to standard output.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
+
+Prints the specified parameter map to standard output.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
+
+Prints the specified parameter maps to standard output.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
@@ -9822,81 +10186,125 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::ReadParameterFile "
+
+Reads the parameter file specified by filename, and returns its content as a parameter map.
+
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
+
+Removes all fixed images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
-";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
+Removes an image at the specified (zero-based) index from the container of fixed images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
+
+Removes all fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
+
+Removes an image at the specified (zero-based) index from the container of fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedPointSetFileName "
+
+Clears the current point set file name of points from the fixed image.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedPointSetFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveInitialTransformParameterFileName "
+
+Clears the initial transform parameter file name.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveInitialTransformParameterFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveLogFileName "
+
+Clears the name of the current log file.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveLogFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
+
+Removes all moving images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
+
+Removes an image at the specified (zero-based) index from the container of moving images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
+
+Removes all moving masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
+
+Removes an image at the specified (zero-based) index from the container of moving masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingPointSetFileName "
+
+Clears the current point set file name of points from the moving
+image.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingPointSetFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveOutputDirectory "
+
+Clears the name of the current output directory. (Does not remove the
+actual directory.)
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveOutputDirectory "
@@ -9906,33 +10314,63 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
+
+Removes the parameter specified by key from all parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
+
+Removes the parameter specified by key from the parameter map at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
+
+Sets a fixed image. Stores the image into the container of fixed
+images.
+
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
+
+Sets multiple fixed images. Stores the images into the container of
+fixed images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
+
+Sets a fixed mask. Stores the image into the container of fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
+
+Sets multiple fixed masks. Stores the images into the container of
+fixed masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedPointSetFileName "
+
+Specifies a set of points from the fixed image by a point set file, fixedPointSetFileName.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedPointSetFileName "
@@ -9942,117 +10380,188 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetInitialTransformParameterFileName "
+
+Specifies the initial transformation by the specified transform
+parameter file name.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogFileName "
+
+Sets the name of the current log file.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogToConsole "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogToConsole "
+
+Switches logging to console on ( true) or off ( false), as specified by its function argument.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogToFile "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogToFile "
+
+Switches logging to file on ( true) or off ( false), as specified by its function argument.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
+
+Sets a moving image. Stores the image into the container of moving
+images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
+
+Sets multiple moving images. Stores the images into the container of
+moving images.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
+
+Sets a moving mask. Stores the image into the container of moving
+masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
+
+Sets multiple moving masks. Stores the images into the container of
+moving masks.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingPointSetFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingPointSetFileName "
+
+Specifies a set of points from the moving image by a point set file, movingPointSetFileName.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetNumberOfThreads "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetNumberOfThreads "
+
+Sets the maximum number of threads to the specified number n.
+
+
+
+As a side effect, it may modify the global maximum number of threads, as it internally calls ITK's  MultiThreaderBase.SetGlobalMaximumNumberOfThreads.
+
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetOutputDirectory "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetOutputDirectory "
+
+Sets the output directory.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
+
+Sets the value of the parameter specified by key, in all parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
+
+Sets the values of the parameter specified by key, in all parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
+
+Sets the value of the parameter specified by key, in the parameter map at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
+
+Sets the values of the parameter specified by key, in the parameter map at the specified (zero-based) index.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
+
+Specifies a single parameter map.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
+
+Specifies the parameter map by a transformName (\"translation\", \"rigid\" , \"affine\", \"nonrigid\", or
+\"bspline\"), and optionally numberOfResolutions and finalGridSpacingInPhysicalUnits.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
+
+Specifies multiple parameter maps.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::WriteParameterFile "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::WriteParameterFile "
+
+Writes a parameter map to the file, specified by filename.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::~ElastixImageFilter "
+
+Destructor.
+
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::~ElastixImageFilterImpl "
@@ -10957,7 +11466,7 @@ C++ includes: sitkFFTNormalizedCorrelationImageFilter.h
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::Execute "
 
-Execute the filter on the input images
+Execute the filter on the input image
 
 ";
 
@@ -10974,10 +11483,28 @@ Name of this class
 
 ";
 
+%feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::GetRequiredFractionOfOverlappingPixels "
+
+Set and get the required fraction of overlapping pixels
+
+";
+
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::GetRequiredNumberOfOverlappingPixels "
+
+Set and get the required number of overlapping pixels
+
+";
+
+%feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::SetRequiredFractionOfOverlappingPixels "
+
+Set and get the required fraction of overlapping pixels
+
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::SetRequiredNumberOfOverlappingPixels "
+
+Set and get the required number of overlapping pixels
+
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::ToString "
@@ -11186,7 +11713,7 @@ Medians aren't separable, but if you want a large robust smoother to
 be relatively quick then it is worthwhile pretending that they are.
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 https://www.insight-journal.org/browse/publication/160
 
 
 Richard Beare
@@ -11340,6 +11867,9 @@ parameters
 
 ";
 
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetInitialTrialValues "
+";
+
 %feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetName "
 
 Name of this class
@@ -11365,6 +11895,12 @@ Get the Fast Marching algorithm Stopping Value.
 %feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetTrialPoints "
 
 Get the container of Trial Points representing the initial front.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::SetInitialTrialValues "
+
+Set the initial seed values for corresponding trial point.
 
 ";
 
@@ -11515,6 +12051,9 @@ parameters
 
 ";
 
+%feature("docstring")  itk::simple::FastMarchingImageFilter::GetInitialTrialValues "
+";
+
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetName "
 
 Name of this class
@@ -11537,6 +12076,12 @@ Get the Fast Marching algorithm Stopping Value.
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetTrialPoints "
 
 Get the container of Trial Points representing the initial front.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingImageFilter::SetInitialTrialValues "
+
+Set the initial seed values for corresponding trial points.
 
 ";
 
@@ -11665,6 +12210,9 @@ the value will only be valid after an execution.
 
 ";
 
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetInitialTrialValues "
+";
+
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetName "
 
 Name of this class
@@ -11708,6 +12256,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTrialPoints "
+";
+
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetInitialTrialValues "
+
+Set the initial seed values for corresponding trial point.
+
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetNormalizationFactor "
@@ -11948,6 +12502,9 @@ Set/Get the desired limits of the Gaussian kernel width.
 ";
 
 %feature("docstring")  itk::simple::FastSymmetricForcesDemonsRegistrationFilter::SetMaximumUpdateStepLength "
+
+Set/Get the maximum update step length.
+
 ";
 
 %feature("docstring")  itk::simple::FastSymmetricForcesDemonsRegistrationFilter::SetNumberOfIterations "
@@ -12671,7 +13228,7 @@ inwards (NEGATIVE scaling parameter).
  This implementation allows the user to set the weights between the
 propagation, advection and curvature term using methods SetPropagationScaling() , SetAdvectionScaling() , SetCurvatureScaling() . In general, the larger the CurvatureScaling, the smoother the
 resulting contour. To follow the implementation in Caselles et al
-paper, set the PropagationScaling to $ c $ (the inflation or ballon force) and AdvectionScaling and
+paper, set the PropagationScaling to $ c $ (the inflation or balloon force) and AdvectionScaling and
 CurvatureScaling both to 1.0.
 
 OUTPUTS
@@ -13145,7 +13702,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetNormalizeAcrossScale "
 
-Define which normalization factor will be used for the Gaussian
+Set/Get the normalization factor that will be used for the Gaussian.
 See:
  RecursiveGaussianImageFilter::SetNormalizeAcrossScale
 
@@ -13154,7 +13711,7 @@ See:
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetSigma "
 
-Set Sigma value. Sigma is measured in the units of image spacing.
+Set/Get Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
@@ -13176,7 +13733,7 @@ Set the value of NormalizeAcrossScale to true or false respectfully.
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetNormalizeAcrossScale "
 
-Define which normalization factor will be used for the Gaussian
+Set/Get the normalization factor that will be used for the Gaussian.
 See:
  RecursiveGaussianImageFilter::SetNormalizeAcrossScale
 
@@ -13185,7 +13742,7 @@ See:
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetSigma "
 
-Set Sigma value. Sigma is measured in the units of image spacing.
+Set/Get Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
@@ -13243,6 +13800,9 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GetSigma "
+
+Get the value of Sigma along the first dimension.
+
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GetUseImageDirection "
@@ -13285,7 +13845,8 @@ See:
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::SetSigma "
 
-Set Sigma value. Sigma is measured in the units of image spacing.
+Set/Get the Sigma value. Sigma is measured in the units of image
+spacing.
 
 ";
 
@@ -13330,9 +13891,9 @@ Enhance pixels associated with a dark object (identified by a seed
 pixel) where the dark object is surrounded by a brighter object.
 
 
-GrayscaleConnectedClosingImagefilter is useful for enhancing dark
-objects that are surrounded by bright borders. This filter makes it
-easier to threshold the image and extract just the object of interest.
+GrayscaleConnectedClosingImageFilter is useful for enhancing dark objects that are surrounded by bright
+borders. This filter makes it easier to threshold the image and
+extract just the object of interest.
 
 Geodesic morphology and the connected closing algorithm are described
 in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:
@@ -13429,9 +13990,9 @@ Enhance pixels associated with a bright object (identified by a seed
 pixel) where the bright object is surrounded by a darker object.
 
 
-GrayscaleConnectedOpeningImagefilter is useful for enhancing bright
-objects that are surrounded by dark borders. This filter makes it
-easier to threshold the image and extract just the object of interest.
+GrayscaleConnectedOpeningImageFilter is useful for enhancing bright objects that are surrounded by dark
+borders. This filter makes it easier to threshold the image and
+extract just the object of interest.
 
 Geodesic morphology and the connected opening algorithm is described
 in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:
@@ -13820,9 +14381,7 @@ Geodesic morphology is described in Chapter 6 of Pierre Soille's book
 Edition, Springer, 2003.
 
 A noniterative version of this algorithm can be found in the ReconstructionByDilationImageFilter . This noniterative solution is much faster than the implementation
-provided here. All ITK filters that previously used
-GrayscaleGeodesicDiliateImageFilter as part of their implementation
-have been converted to use the ReconstructionByDilationImageFilter . The GrayscaleGeodesicDilateImageFilter is maintained for backward compatibility.
+provided here. All ITK filters that previously used GrayscaleGeodesicDilateImageFilter as part of their implementation have been converted to use the ReconstructionByDilationImageFilter . The GrayscaleGeodesicDilateImageFilter is maintained for backward compatibility.
 
 
 See:
@@ -15897,6 +16456,29 @@ make sure that coping actually happens to the itk::Image pointed to is only poin
 
 ";
 
+%feature("docstring")  itk::simple::Image::ProxyForInPlaceOperation "
+
+Advanced method not commonly needed.
+
+
+This method is designed to support implementations \"in-place\" object
+behavior for methods which operate on r-value references. The returned
+image is a new image which has a low level pointer to this object's
+image buffer, without the SimpleITK or ITK reference counting. This is
+implemented by setting the new ITK Image's buffer to the same as this objects without ownership.
+
+
+WARNING:
+This method bypasses the SimpleITK reference counting, and the
+reference needs to be manually maintained in the scope. The resulting
+object is designed only to be a temporary.
+ In the following example this method is used instead of an std::move call when the filter's first argument takes an r-value reference. The img object will container the results of the filter execution, and the img image buffer will be preserved in case of exceptions, and the meta-
+data will remain in the img object.
+
+The meta-data dictionary is not copied to the returned proxy image.
+
+";
+
 %feature("docstring")  itk::simple::Image::SetMetaData "
 
 Set an entry in the meta-data dictionary.
@@ -15906,7 +16488,70 @@ Replaces or creates an entry in the image's meta-data dictionary.
 
 ";
 
+%feature("docstring")  itk::simple::Image::ToScalarImage "
+
+Convert a image of vector pixel type to a scalar image with N+1
+dimensions.
+
+
+This method will convert a vector image to a scalar image with the
+size of the first dimension equal to the number of components. If the
+image is already a scalar image then the image is returned.
+
+For the additional dimension the origin is set to zero, the spacing to
+one, and the new components of the direction cosine to the identity
+matrix.
+
+An exception is thrown if the image is has SITK_MAX_DIMENSION
+dimensions or if the pixel type is a label or complex pixel type.
+
+
+
+Parameters:
+
+inPlace:
+If true then the image is made unique and converted in place updating
+this image, otherwise a copy of the image is made and returned.
+
+
+See:
+ ToVectorImage
+
+
+";
+
 %feature("docstring")  itk::simple::Image::ToString "
+";
+
+%feature("docstring")  itk::simple::Image::ToVectorImage "
+
+Convert the first dimension to the components for image with vector
+pixel type.
+
+
+This method will convert a scalar image to a vector image with the
+number of components equal to the size of the first dimension. If the
+image is already a vector image then the image is returned.
+
+The components of the direction cosine matrix for the first dimension
+must be the identity matrix, or else an exception is thrown.
+
+An exception is thrown if the image is 2D or if the pixel type is a
+label or complex pixel type.
+
+
+
+Parameters:
+
+inPlace:
+If true then the image is made unique and converted in place updating
+this image, otherwise a copy of the image is made and returned.
+
+
+See:
+ ToScalarImage
+
+
 ";
 
 %feature("docstring")  itk::simple::Image::TransformContinuousIndexToPhysicalPoint "
@@ -19524,7 +20169,7 @@ or not.
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::GetCropBorder "
 
-Set/Get the boder added to the mask before the crop. The default is 0
+Set/Get the border added to the mask before the crop. The default is 0
 on all the axes.
 
 ";
@@ -19580,7 +20225,7 @@ or not.
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::SetCropBorder "
 
-Set/Get the boder added to the mask before the crop. The default is 0
+Set/Get the border added to the mask before the crop. The default is 0
 on all the axes.
 
 ";
@@ -19930,7 +20575,7 @@ C++ includes: sitkLabelOverlapMeasuresImageFilter.h
 
 %feature("docstring")  itk::simple::LabelOverlapMeasuresImageFilter::Execute "
 
-Execute the filter on the input images
+Execute the filter on the input image
 
 ";
 
@@ -19948,6 +20593,25 @@ the value will only be valid after an execution.
 
 Get the mean overlap (Dice coefficient) for the specified individual
 label.
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelOverlapMeasuresImageFilter::GetFalseDiscoveryRate "
+
+Get the false discovery rate for the specified individual label.
+
+This is a measurement. Its value is updated in the Execute methods, so
+the value will only be valid after an execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelOverlapMeasuresImageFilter::GetFalseDiscoveryRate "
+
+Get the false discovery rate for the specified individual label.
 
 This is an active measurement. It may be accessed while the filter is
 being executing in command call-backs and can be accessed after
@@ -20144,7 +20808,7 @@ Execute the filter on the input image
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::GetBackgroundValue "
 
-Set/Get the background value
+Set/Get the background value.
 
 ";
 
@@ -20160,7 +20824,7 @@ Name of this class
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::GetOpacity "
 
 Set/Get the opacity of the colored label image. The value must be
-between 0 and 1
+between 0 and 1.
 
 ";
 
@@ -20173,7 +20837,7 @@ parameters
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::SetBackgroundValue "
 
-Set/Get the background value
+Set/Get the background value.
 
 ";
 
@@ -20183,7 +20847,7 @@ Set/Get the background value
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::SetOpacity "
 
 Set/Get the opacity of the colored label image. The value must be
-between 0 and 1
+between 0 and 1.
 
 ";
 
@@ -21050,7 +21714,17 @@ images in a least squares sense. The indices are taken to correspond,
 so point 1 in the first set will get mapped close to point 1 in the
 second set, etc.
 
-Currently, the following transforms are supported by the class: VersorRigid3DTransform Rigid2DTransform AffineTransform BSplineTransform
+Currently, the following transforms are supported by the class:
+VersorRigid3DTransform
+
+Similarity3DTransform
+
+Rigid2DTransform
+
+AffineTransform
+
+BSplineTransform
+
 
 An equal number of fixed and moving landmarks need to be specified
 using SetFixedLandmarks() and SetMovingLandmarks() . Any number of landmarks may be specified. In the case of using
@@ -21068,7 +21742,7 @@ solution of absolute orientation using unit quaternions,\" http://people.csail.m
 The Affine Transform initializer is based on an algorithm by H Spaeth, and is described in
 the Insight Journal Article \"Affine Transformation for Landmark Based
 Registration Initializer in ITK\" by Kim E.Y., Johnson H., Williams N.
-available at http://midasjournal.com/browse/publication/825
+available at https://www.midasjournal.org/browse/publication/825
 
 Wiki Examples:
 
@@ -21441,7 +22115,7 @@ See:
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::GetSigma "
 
-Set Sigma value. Sigma is measured in the units of image spacing.
+Set/Get Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
@@ -21472,7 +22146,7 @@ See:
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::SetSigma "
 
-Set Sigma value. Sigma is measured in the units of image spacing.
+Set/Get Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
@@ -22847,6 +23521,93 @@ Print ourselves out
 ";
 
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::~MaskNegatedImageFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::MaskedAssignImageFilter "
+
+Mask an image with a mask.
+
+
+This class is templated over the types of the input image type, the
+mask image type and the type of the output image. Numeric conversions
+(castings) are done by the C++ defaults.
+
+The pixel type of the input 2 image must have a valid definition of
+the operator != with zero. This condition is required because
+internally this filter will perform the operation
+
+
+The pixel from the input 1 is cast to the pixel type of the output
+image.
+
+Note that the input and the mask images must be of the same size.
+
+
+WARNING:
+Any pixel value other than masking value (0 by default) will not be
+masked out.
+
+See:
+ MaskNegatedImageFilter
+
+ itk::simple::MaskedAssign for the procedural interface
+
+ itk::MaskedAssignImageFilter for the Doxygen on the original ITK
+class.
+
+
+C++ includes: sitkMaskedAssignImageFilter.h
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::GetAssignConstant "
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::MaskedAssignImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::SetAssignConstant "
+
+Method to explicitly set the outside value of the mask when
+AssignImage is undefined. Defaults to 0
+
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::MaskedAssignImageFilter::~MaskedAssignImageFilter "
 
 Destructor
 
@@ -24664,7 +25425,7 @@ The algorithm is based on the binary STAPLE algorithm by Warfield et
 al. as published originally in
 
 S. Warfield, K. Zou, W. Wells, \"Validation of image segmentation and
-expert  quality with an expectation-maximization algorithm\" in MICCAI
+expert quality with an expectation-maximization algorithm\" in MICCAI
 2002: Fifth International Conference on Medical Image Computing and Computer-Assisted Intervention, Springer-Verlag,
 Heidelberg, Germany, 2002, pp. 298-306
 
@@ -25008,6 +25769,39 @@ coefficient of variation of the difference image between the current
 bias field estimate and the previous estimate. If this value is less
 than the specified threshold, the algorithm proceeds to the next
 fitting level or terminates if it is at the last level.
+
+";
+
+%feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetCurrentConvergenceMeasurement "
+
+Get the current convergence measurement. This is a helper function for
+reporting observations.
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetCurrentLevel "
+
+Get the current fitting level. This is a helper function for reporting
+observations.
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetElapsedIterations "
+
+Get the number of elapsed iterations. This is a helper function for
+reporting observations.
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
 
 ";
 
@@ -27485,6 +28279,9 @@ C++ includes: sitkPimpleImageBase.h
 %feature("docstring")  itk::simple::PimpleImageBase::GetWidth "
 ";
 
+%feature("docstring")  itk::simple::PimpleImageBase::ProxyCopy "
+";
+
 %feature("docstring")  itk::simple::PimpleImageBase::SetDirection "
 ";
 
@@ -27942,6 +28739,12 @@ Execute the filter on the input image
 
 ";
 
+%feature("docstring")  itk::simple::RankImageFilter::GetKernelType "
+
+Get the kernel or structuring element .
+
+";
+
 %feature("docstring")  itk::simple::RankImageFilter::GetName "
 
 Name of this class
@@ -27961,13 +28764,13 @@ parameters
 
 ";
 
-%feature("docstring")  itk::simple::RankImageFilter::SetRadius "
+%feature("docstring")  itk::simple::RankImageFilter::SetKernelType "
+
+Set the kernel or structuring element.
+
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::SetRadius "
-
-Set the values of the Radius vector all to value
-
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::SetRank "
@@ -28333,7 +29136,7 @@ Deriche, \"Recursively Implementing The Gaussian and Its
 Derivatives\", INRIA, 1993, ftp://ftp.inria.fr/INRIA/tech-reports/RR/RR-1893.ps.gz
 
 Further improvements of the algorithm are described in: G. Farnebäck &
-C.-F. Westin, \"Improving Deriche-style Recursive Gaussian  Filters\".
+C.-F. Westin, \"Improving Deriche-style Recursive Gaussian Filters\".
 J Math Imaging Vis 26, 293–299 (2006). https://doi.org/10.1007/s10851-006-8464-z
 
 As compared to itk::DiscreteGaussianImageFilter , this filter tends to be faster for large kernels, and it can take
@@ -28879,7 +29682,7 @@ relabeling.
 
 RelabelComponentImageFilter is typically used on the output of the ConnectedComponentImageFilter for those applications that want to extract the largest object or the
 \"k\" largest objects. Any particular object can be extracted from the
-relabeled output using a BinaryThresholdImageFilter . A group of objects can be extracted from the relabled output using
+relabeled output using a BinaryThresholdImageFilter . A group of objects can be extracted from the relabeled output using
 a ThresholdImageFilter .
 
 Once all the objects are relabeled, the application can query the
@@ -29917,7 +30720,7 @@ of each pixel being in the object targeted by the segmentation.
 The STAPLE algorithm is described in
 
 S. Warfield, K. Zou, W. Wells, \"Validation of image segmentation and
-expert  quality with an expectation-maximization algorithm\" in MICCAI
+expert quality with an expectation-maximization algorithm\" in MICCAI
 2002: Fifth International Conference on Medical Image Computing and Computer-Assisted Intervention, Springer-Verlag,
 Heidelberg, Germany, 2002, pp. 298-306
 
@@ -30233,12 +31036,12 @@ without edges\" T. Chan and L. Vese. In Scale-Space Theories in
 Computer Vision, pages 141-151, 1999.
 Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.
  This code was taken from the Insight Journal paper: \"Cell Tracking
-using Coupled Active Surfaces for Nuclei and Membranes\" http://www.insight-journal.org/browse/publication/642 https://hdl.handle.net/10380/3055 That is based on the papers: \"Level Set Segmentation: Active
-Contours without edge\" http://www.insight-journal.org/browse/publication/322 https://hdl.handle.net/1926/1532
+using Coupled Active Surfaces for Nuclei and Membranes\" https://www.insight-journal.org/browse/publication/642 https://hdl.handle.net/10380/3055 That is based on the papers: \"Level Set Segmentation: Active
+Contours without edge\" https://www.insight-journal.org/browse/publication/322 https://hdl.handle.net/1926/1532
 
 and
 
-\"Level set segmentation using coupled active surfaces\" http://www.insight-journal.org/browse/publication/323 https://hdl.handle.net/1926/1533
+\"Level set segmentation using coupled active surfaces\" https://www.insight-journal.org/browse/publication/323 https://hdl.handle.net/1926/1533
 See:
  itk::simple::ScalarChanAndVeseDenseLevelSet for the procedural interface
 
@@ -31083,7 +31886,7 @@ a combination of PropagationScaling and CurvatureScaling parameters.
 The larger the CurvatureScaling parameter, the smoother the resulting
 contour. The CurvatureScaling parameter should be non-negative for
 proper operation of this algorithm. To follow the implementation in
-Malladi et al paper, set the PropagtionScaling to $\\\\pm 1.0$ and CurvatureScaling to $ \\\\epsilon $ .
+Malladi et al paper, set the PropagationScaling to $\\\\pm 1.0$ and CurvatureScaling to $ \\\\epsilon $ .
 
 Note that there is no advection term for this filter. Setting the
 advection scaling will have no effect.
@@ -32084,7 +32887,7 @@ The measure is derived from a reliability measure known as the kappa
 statistic. $S$ is sensitive to both differences in size and in location and have
 been in the literature for comparing two segmentation masks. For more
 information see: \"Morphometric Analysis of White Matter Lesions in MR
-Images: Method and  Validation\", A. P. Zijdenbos, B. M. Dawant, R. A.
+Images: Method and Validation\", A. P. Zijdenbos, B. M. Dawant, R. A.
 Margolin and A. C. Palmer, IEEE Trans. on Medical Imaging, 13(4) pp
 716-724,1994
 
@@ -32969,7 +33772,7 @@ Compute min, max, variance and mean of an Image .
 StatisticsImageFilter computes the minimum, maximum, sum, sum of squares, mean, variance
 sigma of an image. The filter needs all of its input image. It behaves
 as a filter with an input and output. Thus it can be inserted in a
-pipline with other filters and the statistics will only be recomputed
+pipeline with other filters and the statistics will only be recomputed
 if a downstream filter changes.
 
 This filter is automatically multi-threaded and can stream its input
@@ -33079,9 +33882,9 @@ This filter computes the stochastic fractal dimension of the input
 image.
 
 
-The methodology is based on Madelbrot's fractal theory and the concept
-of fractional Brownian motion and yields images which have been used
-for classification and edge enhancement.
+The methodology is based on Mandelbrot's fractal theory and the
+concept of fractional Brownian motion and yields images which have
+been used for classification and edge enhancement.
 
 This class which is templated over the input and output images as well
 as a mask image type. The input is a scalar image, an optional
@@ -33093,7 +33896,7 @@ This filter was contributed by Nick Tustison and James Gee from the
 PICSL lab, at the University of Pennsylvania as an paper to the
 Insight Journal:
 
-\"Stochastic Fractal Dimension Image\" https://hdl.handle.net/1926/1525 http://www.insight-journal.org/browse/publication/318
+\"Stochastic Fractal Dimension Image\" https://hdl.handle.net/1926/1525 https://www.insight-journal.org/browse/publication/318
 
 
 Nick Tustison
@@ -33949,7 +34752,7 @@ Thresholding works well on images with a large number of objects to be
 counted.
 References:
 1) Urish KL, August J, Huard J. \"Unsupervised segmentation for
-myofiber counting in immunoflourescent microscopy images\". Insight
+myofiber counting in immunofluorescent microscopy images\". Insight
 Journal. ISC/NA-MIC/MICCAI Workshop on Open-Source Software (2005) https://insight-journal.org/browse/publication/40 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
 topological stable-state\". Pattern Recognition, 29(5): 829-843, 1996.
 
@@ -34710,8 +35513,11 @@ extent.
 
 
 The TransformGeometryImageFilter \"physically\" changes the image in space using the given
-transformation. The specific transformation type can be any type
-derived from the MatrixOffsetTransformBase and the TranslationTransform . The modification of the geometric meta-data is an alternative to
+transformation. The resulting image is an image with the same voxel
+values as the input, but with different physical space representation
+as affected by the transform.
+
+The specific transformation type can be any type derived from the MatrixOffsetTransformBase and the TranslationTransform . The modification of the geometric meta-data is an alternative to
 resampling the moving image onto the fixed image grid, after
 registration. The advantages of using this approach over resampling
 are two-fold, it does not introduce artifacts into the result because
@@ -34724,13 +35530,7 @@ used with an affine transformation the resulting image should be saved
 in a format that supports a non ortho-normal direction cosine matrix
 (e.g. nrrd).
 
-c Transform Any transform derived from MatrixOffsetTransformBase or TranslationTransform .
-
-c InputImage The image to be duplicated and modified to incorporate
-the transform.
-An image with the same voxel values as the input, but with different
-physical space representation affected by the transform.
- Let us call the transform operation from the fixed image to moving
+Let us call the transform operation from the fixed image to moving
 image TfmF2M . Given a set of points from the fixed image in physical
 space (i.e. physicalFixedImagePoints ), the aim is to convert those
 points into the moving image physical space as
@@ -35597,6 +36397,15 @@ See:
 C++ includes: sitkUnsharpMaskImageFilter.h
 ";
 
+%feature("docstring")  itk::simple::UnsharpMaskImageFilter::ClampOff "
+";
+
+%feature("docstring")  itk::simple::UnsharpMaskImageFilter::ClampOn "
+
+Set the value of Clamp to true or false respectfully.
+
+";
+
 %feature("docstring")  itk::simple::UnsharpMaskImageFilter::Execute "
 
 Execute the filter on the input image
@@ -35607,6 +36416,9 @@ Execute the filter on the input image
 
 Set/Get amount of enhancement. Usual range: 0.1 to 2.0. Default: 0.5.
 
+";
+
+%feature("docstring")  itk::simple::UnsharpMaskImageFilter::GetClamp "
 ";
 
 %feature("docstring")  itk::simple::UnsharpMaskImageFilter::GetName "
@@ -35631,6 +36443,12 @@ Set/Get threshold for enhancement. Default: 0.
 %feature("docstring")  itk::simple::UnsharpMaskImageFilter::SetAmount "
 
 Set/Get amount of enhancement. Usual range: 0.1 to 2.0. Default: 0.5.
+
+";
+
+%feature("docstring")  itk::simple::UnsharpMaskImageFilter::SetClamp "
+
+Set/Get whether to clamp values to supported range of output type.
 
 ";
 
@@ -35866,7 +36684,7 @@ After this initial segmentation is calculated, the mean and variance
 are re-calculated. All the pixels in the previous segmentation are
 used to calculate the mean the standard deviation (as opposed to using
 the pixels in the neighborhood of the seed point). The segmentation is
-then recalculted using these refined estimates for the mean and
+then recalculated using these refined estimates for the mean and
 variance of the pixel values. This process is repeated for the
 specified number of iterations. Setting the \"NumberOfIterations\" to
 zero stops the algorithm after the initial segmentation from the seed
@@ -36424,7 +37242,7 @@ Execute the filter on the input image
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
 neighborhood of a pixel has 124 pixels (excluding itself), the 50%
-will be 62, and if you set upd a Majority threshold of 5, that means
+will be 62, and if you set up a Majority threshold of 5, that means
 that the filter will require 67 or more neighbor pixels to be ON in
 order to switch the current OFF pixel to ON. The default value is 1.
 
@@ -36450,7 +37268,7 @@ Name of this class
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
 neighborhood of a pixel has 124 pixels (excluding itself), the 50%
-will be 62, and if you set upd a Majority threshold of 5, that means
+will be 62, and if you set up a Majority threshold of 5, that means
 that the filter will require 67 or more neighbor pixels to be ON in
 order to switch the current OFF pixel to ON. The default value is 1.
 
@@ -36686,7 +37504,7 @@ binary input image and the Background .
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
 neighborhood of a pixel has 124 pixels (excluding itself), the 50%
-will be 62, and if you set upd a Majority threshold of 5, that means
+will be 62, and if you set up a Majority threshold of 5, that means
 that the filter will require 67 or more neighbor pixels to be ON in
 order to switch the current OFF pixel to ON. The default value is 1.
 
@@ -36731,7 +37549,7 @@ binary input image and the Background .
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
 neighborhood of a pixel has 124 pixels (excluding itself), the 50%
-will be 62, and if you set upd a Majority threshold of 5, that means
+will be 62, and if you set up a Majority threshold of 5, that means
 that the filter will require 67 or more neighbor pixels to be ON in
 order to switch the current OFF pixel to ON. The default value is 1.
 
@@ -36807,7 +37625,7 @@ interpolation typed used is the LinearInterpolateImageFunction . The user can sp
 Position mapped to outside of the input image buffer are assigned a
 edge padding value.
 
-The LargetPossibleRegion for the output is inherited from the input
+The LargestPossibleRegion for the output is inherited from the input
 displacement field. The output image spacing, origin and orientation
 may be set via SetOutputSpacing, SetOutputOrigin and
 SetOutputDirection. The default are respectively a vector of 1's, a
@@ -37465,7 +38283,7 @@ Destructor
 
 %feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter "
 
-This filter implements a zero-crossing based edge detecor.
+This filter implements a zero-crossing based edge detector.
 
 
 The zero-crossing based edge detector looks for pixels in the
@@ -38111,6 +38929,9 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 %feature("docstring")  itk::Accessor::HDF5TransformIOFactoryRegister__Private "
 ";
 
+%feature("docstring")  itk::Accessor::ImageBufferRange "
+";
+
 %feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
 ";
 
@@ -38151,6 +38972,15 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
 %feature("docstring")  itk::Accessor::ImageIOFactoryRegisterManagerInstance "
+";
+
+%feature("docstring")  itk::Accessor::ImageRegionRange "
+";
+
+%feature("docstring")  itk::Accessor::ImageScanlineConstIterator "
+";
+
+%feature("docstring")  itk::Accessor::ImageScanlineIterator "
 ";
 
 %feature("docstring")  itk::Accessor::Int2EigenValueOrderEnum "
@@ -38340,6 +39170,9 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
 %feature("docstring")  itk::Accessor::LSMImageIOFactoryRegister__Private "
+";
+
+%feature("docstring")  itk::Accessor::make_unique_for_overwrite "
 ";
 
 %feature("docstring")  itk::Accessor::MakeChainCodeTracePath "
@@ -38756,12 +39589,6 @@ See:
 %feature("docstring")  itk::simple::GetDefaultParameterMap "
 ";
 
-%feature("docstring")  itk::simple::GetImageFromVectorImage "
-
-A utility method to help convert between itk image types efficiently.
-
-";
-
 %feature("docstring")  itk::simple::GetPixelIDValueAsString "
 ";
 
@@ -38787,15 +39614,6 @@ The idea is to provide a warning (via the R package) if this function
 needs to be updated to match changes to PixelIDValueEnum - i.e. if a
 new pixel type is added.
 
-";
-
-%feature("docstring")  itk::simple::GetVectorImageFromImage "
-";
-
-%feature("docstring")  itk::simple::GetVectorImageFromImage "
-";
-
-%feature("docstring")  itk::simple::GetVectorImageFromImage "
 ";
 
 %feature("docstring")  itk::simple::Greater "
