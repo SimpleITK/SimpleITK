@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: SimpleITK Community Support
+    url: https://discourse.itk.org
+    about: Please ask and answer general questions here.
+  - name: ITK Issues
+    url: https://github.com/InsightSoftwareConsortium/ITK/issues
+    about: Some underlying behavior with algorithms or file input/output may be from ITK.

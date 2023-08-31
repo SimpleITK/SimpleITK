@@ -67,20 +67,7 @@ Support
 
 SimpleITK provides access to most of the ITK components, but not all. If you are looking for something specific and can't find it, open an issue on GitHub or ask for support on the [forum](https://discourse.itk.org).
 
-Report an Issue
----------------
+Report and Issue or Request a Feature
+-------------------------------------
 
-Help us improve SimpleITK by reporting issues you encounter. When you report an error, you allow us to address your specific problem, but more importantly you are helping the entire SimpleITK community.
-
-**Thank you for helping to make SimpleITK better!**
-
-All issues are reported and managed on the [project's GitHub issue tracker](https://github.com/SimpleITK/SimpleITK/issues). When reporting an issue, please provide as much information as possible to enable us to reproduce the problem.
-
-The following information will allow us to address your issue in a timely manner:
-1. Error message (copy & pasted) and focused description of the problem.
-2. Operating system, and version (e.g. OSX 10.11.6).
-3. Programming language, and version (e.g. Python 2.7.14, R 3.2.3).
-4. Version of SimpleITK (e.g. 1.1.0), just invoke the SimpleITK Version() function.
-5. How did you install SimpleITK, binary distribution (e.g. conda install -c simpleitk simpleitk), or built it from source (e.g. devtools::install_github("SimpleITK/SimpleITKRInstaller")).
-6. A minimal working example which causes the error.
-7. If your code requires input data, possibly point to a minimal sized input image.
+Please use the [issue tracker](https://github.com/SimpleITK/SimpleITK/issues) to report problems or request features.
