@@ -10,7 +10,7 @@ Building SimpleITK on Windows
   windowsPathLength.rst
 
 
-This page describes how to build a SimpleITK Superbuild on
+This page describes how to build a SimpleITK **SuperBuild** on
 Windows.  To build SimpleITK we use CMake to generate a Visual Studio project,
 and Visual Studio to compile the C/C++ code.  To obtain the SimpleITK source
 code see :ref:`source_code`.
@@ -26,7 +26,7 @@ the CMake GUI looks like:
   :width: 400
   :alt: Windows CMake GUI
 
-In the above example, the source directory is :code:`C:/SimpleITK`, and the
+In the above example, the source directory is :code:`C:/SimpleITK/SuperBuild`, and the
 build directory is :code:`C:/SimpleITK-build`.  It is best to place the source
 and build directories at the root of a volume to minimize path name lengths.
 Windows has a `default max path length <https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=cmd>`_
