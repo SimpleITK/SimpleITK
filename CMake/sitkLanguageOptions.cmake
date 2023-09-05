@@ -120,6 +120,12 @@ if( _do_find_package )
     set( _find_package_extra_args "QUIET" )
   endif()
 
+  if (NOT DEFINED Python_FIND_UNVERSIONED_NAMES)
+    # Addressed issue with using rename python executables on windows with venv
+    # https://github.com/msys2/MINGW-packages/issues/5001
+    set( Python_FIND_UNVERSIONED_NAMES "FIRST")
+  endif()
+
   find_package( Python ${_find_package_extra_args} COMPONENTS Development Interpreter)
   if ( Python_Interpreter_FOUND AND Python_Development_FOUND )
     set( WRAP_PYTHON_DEFAULT ON )
