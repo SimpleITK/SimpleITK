@@ -121,8 +121,6 @@ if( _do_find_package )
   endif()
 
   find_package( Python ${_find_package_extra_args} COMPONENTS Development Interpreter)
-  message("Python_Interpreter_FOUND: ${Python_Interpreter_FOUND}")
-  message("Python_Development_FOUND: ${Python_Development_FOUND}")
   if ( Python_Interpreter_FOUND AND Python_Development_FOUND )
     set( WRAP_PYTHON_DEFAULT ON )
   endif()
