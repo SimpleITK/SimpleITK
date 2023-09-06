@@ -62,15 +62,16 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   # Setup Python Virtual Environment for testing and packaging
   #
   set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/pyvenv" )
+  get_filename_component(_Python_EXECUTABLE_NAME ${Python_EXECUTABLE} NAME)
 
   # virtualenv places the python executable in different
   # locations. Also note than on windows installations where python is
   # installed only for a single user the may be a missing dll issue.
   if( WIN32 )
     set( VIRTUAL_PYTHON_EXECUTABLE
-      "${PythonVirtualenvHome}/Scripts/python")
+      "${PythonVirtualenvHome}/Scripts/${_Python_EXECUTABLE_NAME}")
   else( )
-    set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
+    set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/${_Python_EXECUTABLE_NAME}" )
   endif()
   set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
     CACHE INTERNAL "Python executable for testing." FORCE )
@@ -84,7 +85,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
     DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}" )
 
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
-    COMMAND "${PYTHON_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
+    COMMAND "${Python_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
     COMMAND "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "wheel" "numpy!=1.24.1,!=1.24.0" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"

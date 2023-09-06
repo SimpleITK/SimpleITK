@@ -55,7 +55,7 @@ if (BUILD_DOXYGEN)
     )
 
   add_custom_command( OUTPUT "${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox"
-    COMMAND ${PYTHON_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py -d ${PROJECT_SOURCE_DIR}/Utilities/filters.csv ${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox
+    COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py -d ${PROJECT_SOURCE_DIR}/Utilities/filters.csv ${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/Utilities"
     DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/filters.csv" "${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py"
     )
@@ -73,7 +73,7 @@ if (BUILD_DOXYGEN)
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 
-  execute_process(COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_LIST_DIR}/datetime.py"
+  execute_process(COMMAND ${Python_EXECUTABLE} "${CMAKE_CURRENT_LIST_DIR}/datetime.py"
     RESULT_VARIABLE CMD_RESULT
     OUTPUT_VARIABLE _DATETIME)
 

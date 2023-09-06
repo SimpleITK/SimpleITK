@@ -4,14 +4,7 @@ cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION})
 project( SimpleITK_Python )
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
-
-if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
-  set( _QUIET_LIBRARY "QUIET" )
-else()
-  set( _QUIET_LIBRARY "REQUIRED" )
-endif()
-find_package ( PythonInterp REQUIRED )
-find_package ( PythonLibs ${_QUIET_LIBRARY} )
+find_package( Python REQUIRED COMPONENTS Interpreter Development )
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #
@@ -47,18 +40,18 @@ SWIG_add_module ( SimpleITK python
   sitkPyCommand.cxx )
 set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 target_link_libraries( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
-if(NOT PYTHON_DEBUG_LIBRARIES AND MSVC)
+if(NOT Python_DEBUG_LIBRARY AND MSVC)
   # If there is not a specified debug library use the release library,
   # via a special sitkPython.h header.
   target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     PRIVATE
     $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>)
 endif()
-sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${PYTHON_LIBRARIES} )
+sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${Python_LIBRARIES} )
 
 target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
-    ${PYTHON_INCLUDE_DIR} )
+    ${Python_INCLUDE_DIRS} )
 target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
@@ -92,7 +85,7 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 set( SimpleITK_PYTHON_PACKAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}" )
 file( TO_NATIVE_PATH "${SimpleITK_PYTHON_PACKAGE_DIR}" SimpleITK_PYTHON_PACKAGE_DIR )
 
-set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
+set(SimpleITK_PYTHON_TEST_EXECUTABLE "${Python_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
 
 
 configure_file(

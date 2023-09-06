@@ -85,6 +85,7 @@ jobs:
     - name: Set up Python 3.8
       uses: actions/setup-python@v4
       if: matrix.os != 'self-hosted-arm'
+      id: cpy
       with:
         python-version: 3.8
 
@@ -106,6 +107,7 @@ jobs:
           WRAP_DEFAULT:BOOL=OFF
           BUILD_EXAMPLES:BOOL=ON
           BUILD_TESTING:BOOL=ON
+          Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           ${{ matrix.ctest-cache }}
       run: |
         cmake --version

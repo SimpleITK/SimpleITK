@@ -168,6 +168,7 @@ jobs:
       - name: Set up Python 3.8
         if: matrix.os != 'self-hosted-arm'
         uses: actions/setup-python@v4
+        id: cpy
         with:
           python-version: 3.8
       - name: Update Path for shared libraries
@@ -207,6 +208,7 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
             BUILD_TESTING:BOOL=ON
+            Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
             ${{ matrix.ctest-cache }}
         run: |
           if [ ! -z "${{ matrix.GCC }} ]; then

@@ -63,8 +63,6 @@ function build_simpleitk_python {
 
     echo ""
     echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
-    echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
-    echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
 
     rm -rf ${BLD_DIR}-${PYTHON} &&
     mkdir -p ${BLD_DIR}-${PYTHON} &&
@@ -81,8 +79,7 @@ function build_simpleitk_python {
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
         -DSimpleITK_PYTHON_EGG:BOOL=OFF \
-        -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
-        -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
+        -DPython_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         ${SRC_DIR}/Wrapping/Python &&
     make &&
     make dist
