@@ -1,5 +1,4 @@
-# These pipelines are executed on every PR, and merge. They should provide quick
-# coverage for the common wrapped language and the SimpleITK core and examples.
+# The pipelines should provide quick coverage for the common wrapped language and the SimpleITK core and examples.
 
 trigger:
   branches:
@@ -12,7 +11,14 @@ trigger:
       - docs/
       - Documentation/
       - Utilities/
-pr: none
+pr:
+  branches:
+    include:
+      - master
+      - release
+  paths:
+    include:
+      - Testing/CI/Azure
 
 jobs:
   - job: Linux
@@ -122,8 +128,6 @@ jobs:
       - script: |
           python --version
           python -m pip install --upgrade pip
-          python -m pip install setuptools wheel
-          python -m pip install ninja
         displayName: 'Install ninja dependency'
       - script: |
           cmake --version
