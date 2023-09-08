@@ -47,7 +47,7 @@ if(NOT Python_DEBUG_LIBRARY AND MSVC)
     PRIVATE
     $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>)
 endif()
-sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${Python_LIBRARIES} )
+sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module )
 
 target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
