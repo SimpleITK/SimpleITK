@@ -93,7 +93,7 @@ jobs:
       if: matrix.os != 'self-hosted-arm'
       run: |
         python -m pip install --upgrade pip
-        python -m pip install ninja cmake~=3.18.0
+        python -m pip install ninja cmake~=3.22.0
     - name: Build and Test
       shell: bash
       env:

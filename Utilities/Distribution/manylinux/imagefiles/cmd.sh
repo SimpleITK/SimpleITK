@@ -80,6 +80,7 @@ function build_simpleitk_python {
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
         -DSimpleITK_PYTHON_EGG:BOOL=OFF \
         -DPython_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
+        -DPython_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
         ${SRC_DIR}/Wrapping/Python &&
     make &&
     make dist

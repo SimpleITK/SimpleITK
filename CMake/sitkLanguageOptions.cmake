@@ -126,8 +126,12 @@ if( _do_find_package )
     set( Python_FIND_UNVERSIONED_NAMES "FIRST")
   endif()
 
-  find_package( Python ${_find_package_extra_args} COMPONENTS Development Interpreter)
-  if ( Python_Interpreter_FOUND AND Python_Development_FOUND )
+  if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.19)
+    set(_Python_VERSION_REQUIREMENT "3.7.0...<4")
+  endif()
+
+  find_package( Python ${_Python_VERSION_REQUIREMENT} ${_find_package_extra_args} COMPONENTS Development.Module Interpreter)
+  if ( Python_Interpreter_FOUND AND Python_Development.Module_FOUND )
     set( WRAP_PYTHON_DEFAULT ON )
   endif()
 endif()
@@ -136,10 +140,6 @@ option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 
 
 if ( WRAP_PYTHON )
-  set (_Python_MINIMUM_VERSION "3.7")
-  if ( Python_VERSION VERSION_LESS ${_Python_MINIMUM_VERSION} )
-    message( WARNING "Python version less than ${_Python_MINIMUM_VERSION}: \"${Python_VERSION}\"." )
-  endif()
 
   list( APPEND SITK_LANGUAGES_VARS
     Python_ROOT_DIR

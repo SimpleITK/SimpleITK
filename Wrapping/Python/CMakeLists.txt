@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION})
 project( SimpleITK_Python )
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
-find_package( Python REQUIRED COMPONENTS Interpreter Development )
+find_package( Python REQUIRED COMPONENTS Interpreter Development.Module )
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #
