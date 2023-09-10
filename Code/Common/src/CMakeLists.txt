@@ -52,7 +52,6 @@ target_compile_options( SimpleITKCommon
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 target_compile_features( SimpleITKCommon PUBLIC cxx_std_17 )
 
-
 sitk_install_exported_target( SimpleITKCommon )
 
 # Add custom command that will delete java files which need to be rebuilt when changes

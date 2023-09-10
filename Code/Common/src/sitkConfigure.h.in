@@ -39,6 +39,8 @@
 
 #cmakedefine SITK_USE_ELASTIX
 
+#cmakedefine SITK_GENERIC_LABEL_INTERPOLATOR
+
 // Include ITK version reported in CMake with SITK prefix, so that
 // SimpleITK doesn't need ITK header in our headers.
 #define SITK_ITK_VERSION_MAJOR @ITK_VERSION_MAJOR@

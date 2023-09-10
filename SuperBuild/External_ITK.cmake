@@ -27,6 +27,10 @@ if (NOT DEFINED Module_ITKIOTransformMINC)
   set(Module_ITKIOTransformMINC ON)
 endif()
 
+if (NOT DEFINED Module_GenericLabelInterpolator)
+  set(Module_GenericLabelInterpolator ON)
+endif()
+
 if (NOT DEFINED ITK_DEFAULT_THREADER)
   set( ITK_DEFAULT_THREADER "Platform")
 endif()
