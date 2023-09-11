@@ -80,6 +80,13 @@ enum InterpolatorEnum {
    */
   sitkLabelGaussian = 5,
 
+  /** \brief Linear interpolation for multi-label images
+   *
+   * \sa itk:LabelImageGenericInterpolateImageFunction
+   * \sa itk:LinearInterpolateImageFunction
+   */
+  sitkLabelLinear = 26,
+
   /** \brief Windowed sinc interpolation
    *
    * \f[ w(x) = 0.54 + 0.46 cos(\frac{\pi x}{m} ) \f]

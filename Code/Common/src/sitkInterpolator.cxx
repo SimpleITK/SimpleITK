@@ -50,6 +50,7 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
     sitkInterpolatorToStringCaseMacro(BSpline3);
     sitkInterpolatorToStringCaseMacro(BSpline4);
     sitkInterpolatorToStringCaseMacro(BSpline5);
+    sitkInterpolatorToStringCaseMacro(LabelLinear);
     }
   return os;
 }

@@ -20,13 +20,16 @@
 
 
 #include "sitkInterpolator.h"
-#include <itkNearestNeighborInterpolateImageFunction.h>
-#include <itkLinearInterpolateImageFunction.h>
 #include <itkBSplineInterpolateImageFunction.h>
+#include <itkBSplineResampleImageFunction.h>
 #include <itkGaussianInterpolateImageFunction.h>
 #include <itkLabelImageGaussianInterpolateImageFunction.h>
+#ifdef SITK_GENERIC_LABEL_INTERPOLATOR
+#include <itkLabelImageGenericInterpolateImageFunction.h>
+#endif
+#include <itkLinearInterpolateImageFunction.h>
+#include <itkNearestNeighborInterpolateImageFunction.h>
 #include <itkWindowedSincInterpolateImageFunction.h>
-#include <itkBSplineResampleImageFunction.h>
 
 namespace itk
 {
@@ -183,6 +186,16 @@ CreateInterpolator(const TImageType *image, InterpolatorEnum itype) {
     p->SetSigma(sigma);
     p->SetAlpha(1.0);
     return RType(p);
+  }
+  case sitkLabelLinear: {
+#ifdef SITK_GENERIC_LABEL_INTERPOLATOR
+    using InterpolatorType = itk::LabelImageGenericInterpolateImageFunction<TImageType, itk::LinearInterpolateImageFunction, double>;
+
+    typename InterpolatorType::Pointer p = InterpolatorType::New();
+    return RType(p);
+#else
+      sitkExceptionMacro( "sitkLabelLinear is not supported in this build. Compile ITK with Module_GenericLabelInterpolator=ON." );
+#endif
   }
   case sitkHammingWindowedSinc: {
 

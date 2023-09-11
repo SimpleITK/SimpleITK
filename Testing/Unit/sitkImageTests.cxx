@@ -1886,7 +1886,8 @@ TEST_F(Image, Evaluate)
                       sitk::sitkBSplineResamplerOrder2,
                       sitk::sitkBSplineResamplerOrder3,
                       sitk::sitkBSplineResamplerOrder4,
-                      sitk::sitkBSplineResamplerOrder5
+                      sitk::sitkBSplineResamplerOrder5,
+                      sitk::sitkLabelLinear
        })
   {
     std::vector<double> result;
@@ -1921,7 +1922,8 @@ TEST_F(Image, Evaluate)
            sitk::sitkBSplineResamplerOrder2,
            sitk::sitkBSplineResamplerOrder3,
            sitk::sitkBSplineResamplerOrder4,
-           sitk::sitkBSplineResamplerOrder5})
+           sitk::sitkBSplineResamplerOrder5,
+           sitk::sitkLabelLinear})
   {
      EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({0.0,0.0}, interp));
   }
@@ -1950,7 +1952,8 @@ TEST_F(Image, Evaluate)
            sitk::sitkBSplineResamplerOrder2,
            sitk::sitkBSplineResamplerOrder3,
            sitk::sitkBSplineResamplerOrder4,
-           sitk::sitkBSplineResamplerOrder5})
+           sitk::sitkBSplineResamplerOrder5,
+           sitk::sitkLabelLinear})
   {
     EXPECT_ANY_THROW(img.EvaluateAtPhysicalPoint({0.0,0.0}, interp));
   }
@@ -1974,7 +1977,8 @@ TEST_F(Image, Evaluate)
                       sitk::sitkBSplineResamplerOrder2,
                       sitk::sitkBSplineResamplerOrder3,
                       sitk::sitkBSplineResamplerOrder4,
-                      sitk::sitkBSplineResamplerOrder5
+                      sitk::sitkBSplineResamplerOrder5,
+                      sitk::sitkLabelLinear
        }) {
     EXPECT_ANY_THROW(img.EvaluateAtContinuousIndex({0.0, 0.0}, interp));
   }

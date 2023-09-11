@@ -739,6 +739,9 @@ TEST( Interpolator, Test1 )
   ss.str("");
   ss << sitk::sitkBlackmanWindowedSinc;
   EXPECT_EQ("BlackmanWindowedSinc", ss.str());
+  ss.str("");
+  ss << sitk::sitkLabelLinear;
+  EXPECT_EQ("LabelLinear", ss.str());
 
 }
 
