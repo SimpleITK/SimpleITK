@@ -23,7 +23,7 @@ mkdir -p ${BLD_DIR} && \
     cmake -G Ninja\
           -DBUILD_DOXYGEN=ON\
           -DWRAP_DEFAULT=OFF\
-          -DPYTHON_EXECUTABLE=$(which python)\
+          -DPython_EXECUTABLE=$(which python)\
           -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON\
           ${SRC_DIR}/SuperBuild/ && \
     cmake --build . --target SimpleITK-doc && \
