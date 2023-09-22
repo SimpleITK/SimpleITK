@@ -167,6 +167,9 @@ add_filter_library(SimpleITKBasicFilters1 SimpleITKBasicFilters1Source no_itk_de
 target_link_libraries ( SimpleITKBasicFilters1
   PRIVATE ${PREV_SimpleITK_LIBRARIES} )
 
+# Manual dependecy needed for to run the Cast filter
+target_link_libraries ( SimpleITK_ITKImageIntensity PRIVATE SimpleITK_ITKImageFilterBase )
+
 sitk_target_use_itk_factory( SimpleITK_ITKFFT FFTImageFilterInit )
 sitk_target_use_itk_factory( SimpleITK_ITKConvolution FFTImageFilterInit )
 sitk_target_use_itk_factory( SimpleITK_ITKDeconvolution FFTImageFilterInit )

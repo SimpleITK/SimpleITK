@@ -120,7 +120,6 @@ enum PixelIDValueEnum {
   sitkLabelUInt64 = PixelIDToPixelIDValue< LabelPixelID<uint64_t> >::value, ///< RLE label of unsigned 64 bit integers
 };
 
-
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueType type );
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueEnum type );
 
@@ -141,6 +140,37 @@ const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueEnum ty
 PixelIDValueType SITKCommon_EXPORT GetPixelIDValueFromString(const std::string &enumString );
 
 #ifndef SWIG
+
+namespace detail
+{
+template <typename PixelIDTypeList>
+struct TypeListHasPixelIDValue;
+template <typename... Ts>
+struct TypeListHasPixelIDValue<typelist2::typelist<Ts...>>
+{
+  static bool
+  op(PixelIDValueEnum match)
+  {
+    if (match == sitkUnknown)
+      return false;
+
+    bool result = false;
+    ((void)[&match, &result]() { result = result || (PixelIDToPixelIDValue<Ts>::value == match); }(), ...);
+    return result;
+  }
+};
+}
+
+
+/** \brief Check if the runtime PixelID is contained in a template parameter typelist
+ */
+template <typename TPixelIDTypeList = InstantiatedPixelIDTypeList>
+bool
+TypeListHasPixelIDValue(PixelIDValueEnum match)
+{
+  return detail::TypeListHasPixelIDValue<TPixelIDTypeList>::op(match);
+}
+
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const PixelIDValueEnum id);
 #endif
 
