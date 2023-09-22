@@ -927,3 +927,22 @@ TEST(PixelID, FromString)
 
   FROM_STRING_CHECK(sitkUnknown);
 }
+
+
+TEST(PixelID, TypeListHasPixelIDValue)
+{
+  namespace sitk = itk::simple;
+
+  EXPECT_FALSE(sitk::TypeListHasPixelIDValue(sitk::sitkUnknown));
+  for (auto id : {sitk::sitkUInt8, sitk::sitkFloat32,
+       sitk::sitkLabelUInt16, sitk::sitkComplexFloat64,
+       sitk::sitkVectorInt16, sitk::sitkVectorFloat64})
+  EXPECT_TRUE(sitk::TypeListHasPixelIDValue(id) );
+
+
+  EXPECT_TRUE(sitk::TypeListHasPixelIDValue<sitk::IntegerPixelIDTypeList>(sitk::sitkInt16));
+  for (auto id : {sitk::sitkLabelUInt8, sitk::sitkComplexFloat32, sitk::sitkFloat32, sitk::sitkVectorInt16})
+  {
+    EXPECT_FALSE(sitk::TypeListHasPixelIDValue<sitk::IntegerPixelIDTypeList>(id));
+  };
+}

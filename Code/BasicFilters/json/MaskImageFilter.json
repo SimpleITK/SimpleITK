@@ -5,10 +5,12 @@
   "number_of_inputs" : 0,
   "doc" : "Some global documentation\n",
   "include_files" : [
-    "sitkToPixelType.hxx"
+    "sitkToPixelType.hxx",
+    "sitkNotEqualImageFilter.h"
   ],
   "pixel_types" : "NonLabelPixelIDTypeList",
   "pixel_types2" : "MaskedPixelIDTypeList",
+  "custom_type2" : "PixelIDValueEnum type2 = maskImage.GetPixelID();\n  if (!this->m_DualMemberFactory->HasMemberFunction( type1, type2, dimension ) && TypeListHasPixelIDValue<IntegerPixelIDTypeList>(type2)) { type2 = sitkUInt8; }",
   "inputs" : [
     {
       "name" : "Image",
@@ -16,7 +18,10 @@
     },
     {
       "name" : "MaskImage",
-      "type" : "Image"
+      "type" : "Image",
+      "custom_itk_cast" : "auto maskingValue = this->m_MaskingValue;\n  typename FilterType::MaskImageType::ConstPointer image2;\n  if (inMaskImage->GetPixelID() != sitkUInt8) {\n   sitkWarningMacro( \"Support for pixel type \" << GetPixelIDValueAsString(inMaskImage->GetPixelID()) << \" for the MaskImage input has been deprecated and will be removed in future versions. Implicitly casting input to support \\'sitkUInt8\\' type. \" );   Image temp = NotEqual(*inMaskImage, this->m_MaskingValue);image2 = this->CastImageToITK<typename FilterType::MaskImageType>( temp );\n  } else {\n   image2 = this->CastImageToITK<typename FilterType::MaskImageType>( *inMaskImage );\n}\n  filter->SetMaskImage( image2 );"
+
+
     }
   ],
   "members" : [
@@ -37,7 +42,8 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Method to explicitly set the masking value of the mask. Defaults to 0",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Method to get the masking value of the mask."
+      "detaileddescriptionGet" : "Method to get the masking value of the mask.",
+      "custom_itk_cast" : "filter->SetMaskingValue(maskingValue);"
     }
   ],
   "tests" : [
