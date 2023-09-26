@@ -140,11 +140,7 @@ protected:
    */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
-
-      // this is really only needed because std::bind1st does not work
-      // with tr1::function... that is with tr1::bind, we need to
-      // specify the other arguments, and can't just bind the first
-      return std::bind( pfunc,objectPointer );
+      return [pfunc, objectPointer]{ return std::invoke(pfunc, objectPointer); };
     }
 
   using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
@@ -194,15 +190,12 @@ protected:
    *  object.
    */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
-    {
-      // needed for _1 place holder
-      using namespace std::placeholders;
+  {
 
-      // this is really only needed because std::bind1st does not work
-      // with tr1::function... that is with tr1::bind, we need to
-      // specify the other arguments, and can't just bind the first
-      return std::bind( pfunc,objectPointer, _1 );
-    }
+    return [pfunc, objectPointer](auto && PH1) -> MemberFunctionResultType {
+      return std::invoke(pfunc, objectPointer, std::forward<decltype(PH1)>(PH1));
+    };
+  }
 
 
   using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
@@ -248,13 +241,9 @@ protected:
    */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
-      // needed for _1 place holder
-      using namespace std::placeholders;
-
-      // this is really only needed because std::bind1st does not work
-      // with tr1::function... that is with tr1::bind, we need to
-      // specify the other arguments, and can't just bind the first
-      return std::bind( pfunc, objectPointer, _1, _2 );
+      return [pfunc, objectPointer] (auto &&PH1, auto &&PH2){
+        return std::invoke(pfunc, objectPointer, std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2));
+      };
     }
 
   using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
@@ -299,15 +288,15 @@ protected:
    *  object
    */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
-    {
-      // needed for _1 place holder
-      using namespace std::placeholders;
-
-      // this is really only needed because std::bind1st does not work
-      // with tr1::function... that is with tr1::bind, we need to
-      // specify the other arguments, and can't just bind the first
-      return std::bind( pfunc, objectPointer, _1, _2, _3 );
-    }
+  {
+    return [pfunc, objectPointer](auto && PH1, auto && PH2, auto && PH3) {
+      return std::invoke(pfunc,
+                         objectPointer,
+                         std::forward<decltype(PH1)>(PH1),
+                         std::forward<decltype(PH2)>(PH2),
+                         std::forward<decltype(PH3)>(PH3));
+    };
+  }
 
   using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
 
@@ -353,14 +342,15 @@ protected:
    */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
-      // needed for _1 place holder
-      using namespace std::placeholders;
-
-      // this is really only needed because std::bind1st does not work
-      // with tr1::function... that is with tr1::bind, we need to
-      // specify the other arguments, and can't just bind the first
-      return std::bind( pfunc, objectPointer, _1, _2, _3, _4 );
-    }
+    return [pfunc, objectPointer](auto && PH1, auto && PH2, auto && PH3, auto && PH4) {
+      return std::invoke(pfunc,
+                         objectPointer,
+                         std::forward<decltype(PH1)>(PH1),
+                         std::forward<decltype(PH2)>(PH2),
+                         std::forward<decltype(PH3)>(PH3),
+                         std::forward<decltype(PH4)>(PH4));
+    };
+  }
 
   using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
 
@@ -412,14 +402,16 @@ protected:
    */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
-      // needed for _1 place holder
-      using namespace std::placeholders;
-
-      // this is really only needed because std::bind1st does not work
-      // with tr1::function... that is with tr1::bind, we need to
-      // specify the other arguments, and can't just bind the first
-      return std::bind( pfunc, objectPointer, _1, _2, _3, _4, _5 );
-    }
+    return [pfunc, objectPointer](auto && PH1, auto && PH2, auto && PH3, auto && PH4, auto && PH5) {
+      return std::invoke(pfunc,
+                         objectPointer,
+                         std::forward<decltype(PH1)>(PH1),
+                         std::forward<decltype(PH2)>(PH2),
+                         std::forward<decltype(PH3)>(PH3),
+                         std::forward<decltype(PH4)>(PH4),
+                         std::forward<decltype(PH5)>(PH5));
+    };
+  }
 
 
   using FunctionMapType = std::unordered_map< TKey, FunctionObjectType, hash<TKey> >;
