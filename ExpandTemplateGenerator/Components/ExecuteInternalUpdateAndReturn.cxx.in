@@ -36,19 +36,39 @@ end
 $(if measurements then
 for i = 1,#measurements do
   if measurements[i].active then
-    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = std::bind('
-    if measurements[i].custom_cast or measurements[i].label_map or measurements[i].itk_get then
-      OUT=OUT..'&'..measurements[i].name..'CustomCast<FilterType>::CustomCast'
-    else
-      OUT=OUT..'&FilterType::Get'..measurements[i].name
-    end
-    OUT=OUT..', filter.GetPointer()'
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = [filter = filter.GetPointer()] '
     if measurements[i].parameters then
+      OUT=OUT..'( '
       for inum=1,#measurements[i].parameters do
-        OUT=OUT..", std::placeholders::_"..inum
+        if (inum ~= 1) then
+          OUT=OUT..', '
+        end
+        OUT=OUT.."auto && PH"..inum
+      end
+      OUT=OUT..') '
+    end
+    OUT=OUT..' { '
+    if measurements[i].custom_cast or measurements[i].label_map or measurements[i].itk_get then
+      OUT=OUT..'return '..measurements[i].name..'CustomCast<FilterType>::CustomCast'
+    else
+      OUT=OUT..'return filter->Get'..measurements[i].name
+    end
+    OUT=OUT..'( '
+    if measurements[i].custom_cast or measurements[i].label_map or measurements[i].itk_get then
+      OUT=OUT..'filter '
+      if measurements[i].parameters then
+        OUT=OUT..', '
       end
     end
-    OUT=OUT..' );\
+    if measurements[i].parameters then
+      for inum=1,#measurements[i].parameters do
+        if (inum ~= 1) then
+          OUT=OUT..', '
+        end
+        OUT=OUT.."std::forward<decltype(PH"..inum..")>(PH"..inum..")"
+      end
+    end
+    OUT=OUT..'); };\
 '
   end
 end
