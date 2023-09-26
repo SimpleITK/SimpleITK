@@ -50,7 +50,7 @@ public:
   template <class T>
     void SetCallbackFunction ( T *object, void(T::* pMemberFunction )() )
   {
-    m_Function = std::bind(pMemberFunction, object);
+    m_Function = [object, pMemberFunction] { std::invoke(pMemberFunction, object); };
   }
 
   /** Set a C-Style function to be called in the Execute method */

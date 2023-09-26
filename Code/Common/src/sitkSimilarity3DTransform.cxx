@@ -215,8 +215,8 @@ void Similarity3DTransform::InternalInitialization(TransformType *t)
     return sitkITKVersorToSTL<double>(t->GetVersor());
   };
 
-  this->m_pfSetScale = std::bind(&TransformType::SetScale,t,std::placeholders::_1);
-  this->m_pfGetScale = std::bind(&TransformType::GetScale,t);
+  this->m_pfSetScale = [t](auto && PH1) { t->SetScale(std::forward<decltype(PH1)>(PH1)); };
+  this->m_pfGetScale = [t] {return t->GetScale(); };
 
   // pre argument has no effect
   // pre argument has no effect

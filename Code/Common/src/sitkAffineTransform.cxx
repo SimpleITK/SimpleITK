@@ -199,11 +199,11 @@ void AffineTransform::InternalInitialization(TransformType *t)
 
   this->m_pfScale2 = [t](double v, bool b) { t->Scale(v, b); };
 
-  this->m_pfShear = std::bind(&TransformType::Shear,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
+  this->m_pfShear = [t](auto && PH1, auto && PH2, auto && PH3, auto && PH4) { t->Shear(std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2), std::forward<decltype(PH3)>(PH3), std::forward<decltype(PH4)>(PH4)); };
   this->m_pfTranslate = [t] (const std::vector<double> &v, bool b) {
     t->Translate(sitkSTLVectorToITK<typename TransformType::OutputVectorType>(v),b);
   };
-  this->m_pfRotate = std::bind(&TransformType::Rotate,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
+  this->m_pfRotate = [t](auto && PH1, auto && PH2, auto && PH3, auto && PH4) { t->Rotate(std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2), std::forward<decltype(PH3)>(PH3), std::forward<decltype(PH4)>(PH4)); };
 }
 
 }

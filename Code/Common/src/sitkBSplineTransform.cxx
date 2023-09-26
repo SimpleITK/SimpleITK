@@ -272,7 +272,7 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   this->m_pfGetCoefficientImages = [t] () {
     return sitkImageArrayConvert(t->GetCoefficientImages());
   };
-  this->m_pfSetCoefficientImages = std::bind(SetCoefficientImages<TransformType>, t, std::placeholders::_1);
+  this->m_pfSetCoefficientImages = [t](auto && PH1) { return SetCoefficientImages<TransformType>(t, std::forward<decltype(PH1)>(PH1)); };
 
   this->m_pfGetOrder =  &sitkGetOrder<TransformType>;
 }

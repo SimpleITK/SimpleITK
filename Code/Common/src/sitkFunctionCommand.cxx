@@ -45,7 +45,7 @@ void FunctionCommand::SetCallbackFunction ( void(* pFunction )() )
 
 void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *clientData )
 {
-  m_Function = std::bind(pFunction, clientData);
+  m_Function = [clientData, pFunction] {pFunction(clientData); };
 }
 
 void FunctionCommand::SetCallbackFunction(const std::function<void()> &func)
