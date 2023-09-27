@@ -24,6 +24,8 @@
 #include <itkImageIOBase.h>
 #include <itkImageSeriesReader.h>
 
+#include <memory>
+
 #include "itkGDCMSeriesFileNames.h"
 #include "sitkMetaDataDictionaryCustomCast.hxx"
 
@@ -81,7 +83,7 @@ namespace itk::simple {
     // list of pixel types supported
     using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-    this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+    this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
     }

@@ -21,6 +21,8 @@
  * Please look at sitkImageFilterTemplate.cxx.in to make changes.
  */
 
+#include <memory>
+
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkLabelMap.h"
@@ -46,11 +48,11 @@ namespace itk::simple {
 //
 PasteImageFilter::PasteImageFilter ()
 {
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
 
-  this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type>( this ) );
+  this->m_MemberFactory2 = std::make_unique<detail::MemberFunctionFactory<MemberFunction2Type>>( this );
   this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
 
 

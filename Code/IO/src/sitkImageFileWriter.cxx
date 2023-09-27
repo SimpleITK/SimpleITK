@@ -24,6 +24,8 @@
 #include <itkImageRegionIterator.h>
 #include <itkGDCMImageIO.h>
 
+#include <memory>
+
 namespace itk::simple {
 
 void WriteImage ( const Image& image, const std::string &inFileName, bool useCompression, int compressionLevel )
@@ -41,7 +43,7 @@ ImageFileWriter::ImageFileWriter()
   this->m_KeepOriginalImageUID = false;
   this->m_CompressionLevel = -1;
 
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 1, SITK_MAX_DIMENSION > ();
 
