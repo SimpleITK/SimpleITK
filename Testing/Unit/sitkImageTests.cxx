@@ -37,6 +37,7 @@
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkMetaDataObject.h"
+#include <memory>
 #include <type_traits>
 
 const double adir[] = {0.0, 0.0, 1.0,
@@ -80,7 +81,7 @@ public:
     im->Allocate();
     im->FillBuffer ( 100 );
     itkShortImage = im;
-    shortImage = sitkAutoImagePointer( new sitk::Image( im.GetPointer() ) );
+    shortImage = std::make_unique<sitk::Image>( im.GetPointer() );
 
     itk::Image<float,3>::Pointer fim = itk::Image<float,3>::New();
     fim->SetRegions ( region );
@@ -89,13 +90,13 @@ public:
     fim->Allocate();
     fim->FillBuffer ( 0 );
     itkFloatImage = fim;
-    floatImage = sitkAutoImagePointer( new sitk::Image( fim.GetPointer() ) );
+    floatImage = std::make_unique<sitk::Image>( fim.GetPointer() );
 
     itkFloatVectorImage = FloatVectorImageType::New();
-    floatVectorImage = sitkAutoImagePointer( new sitk::Image( itkFloatVectorImage.GetPointer() ) );
+    floatVectorImage = std::make_unique<sitk::Image>( itkFloatVectorImage.GetPointer() );
 
     itkFloatVector2DImage = FloatVector2DImageType::New();
-    floatVector2DImage = sitkAutoImagePointer( new sitk::Image( itkFloatVector2DImage ) );
+    floatVector2DImage = std::make_unique<sitk::Image>( itkFloatVector2DImage );
 
   }
 

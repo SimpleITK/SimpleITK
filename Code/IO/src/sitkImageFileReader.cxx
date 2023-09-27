@@ -24,6 +24,8 @@
 #include <itkImageFileReader.h>
 #include <itkExtractImageFilter.h>
 
+#include <memory>
+
 #include "sitkMetaDataDictionaryCustomCast.hxx"
 
 namespace itk {
@@ -86,7 +88,7 @@ namespace itk {
     // list of pixel types supported
     using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-    this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+    this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
   }
@@ -156,7 +158,7 @@ namespace itk {
         this->m_pfGetMetaData =  nullptr;
         }
 
-      this->m_MetaDataDictionary.reset(new MetaDataDictionary(iobase->GetMetaDataDictionary()));
+      this->m_MetaDataDictionary = std::make_unique<MetaDataDictionary>(iobase->GetMetaDataDictionary());
 
       m_PixelType = static_cast<PixelIDValueEnum>(pixelType);
 

@@ -1,4 +1,4 @@
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+  this->m_MemberFactory =  std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
 $(if custom_register then
   OUT='  ${custom_register}'
