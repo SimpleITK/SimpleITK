@@ -23,8 +23,7 @@
 
 #include <functional>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 /** \class FunctionCommand
  * \brief A Command class which allows setting an external function,
@@ -73,7 +72,6 @@ private:
 
 };
 
-} // end namespace simple
 } // end namespace itk
 
 #endif

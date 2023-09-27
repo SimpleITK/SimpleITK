@@ -20,8 +20,7 @@ $(include DoNotEditWarning.cxx.in)
 $(include StandardIncludes.cxx.in)
 $(include AddExtraIncludes.cxx.in)
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
@@ -174,5 +173,4 @@ OUT=OUT .. [[
 
 ]] end)
 
-} // end namespace simple
-} // end namespace itk
+}

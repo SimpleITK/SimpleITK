@@ -20,9 +20,7 @@
 
 #include "itkAffineTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 AffineTransform::~AffineTransform() = default;
@@ -206,5 +204,4 @@ void AffineTransform::InternalInitialization(TransformType *t)
   this->m_pfRotate = std::bind(&TransformType::Rotate,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3,std::placeholders::_4);
 }
 
-}
 }

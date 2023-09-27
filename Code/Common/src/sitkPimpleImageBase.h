@@ -22,9 +22,7 @@
 #include "sitkPixelIDTokens.h"
 #include "sitkTemplateFunctions.h"
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
   /** \class PimpleImageBase
@@ -158,8 +156,7 @@ namespace itk
     virtual const void     *GetBufferAsVoid( ) const = 0;
   };
 
-  } // end namespace simple
-} // end namespace itk
+  } // end namespace itk
 
 
 #endif // sitkPimpleImageBase_h

@@ -41,9 +41,7 @@ itk::Array<TValue> sitkSTLVectorToITKArray( const std::vector< TType > & in )
   return out;
 }
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 namespace
 {
@@ -1229,5 +1227,4 @@ void ImageRegistrationMethod::OnActiveProcessDelete( ) noexcept
 }
 
 
-}
 }

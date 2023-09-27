@@ -33,8 +33,7 @@
 #include "sitkTransform.h"
 // Done with additional include files
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
@@ -177,5 +176,4 @@ BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::v
 }
 
 
-} // end namespace simple
 } // end namespace itk

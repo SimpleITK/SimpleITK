@@ -18,9 +18,7 @@
 #include "sitkCommand.h"
 #include "sitkProcessObject.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 Command::Command( )
@@ -59,5 +57,4 @@ size_t Command::RemoveProcessObject(const itk::simple::ProcessObject *co)
 }
 
 
-} // end namespace simple
 } // end namespace itk

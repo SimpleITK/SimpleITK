@@ -33,8 +33,7 @@
 #include "sitkBSplineTransform.h"
 // Done with additional include files
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
@@ -215,5 +214,4 @@ Transform LandmarkBasedTransformInitializer ( const Transform & transform,
 }
 
 
-} // end namespace simple
 } // end namespace itk

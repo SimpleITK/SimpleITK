@@ -25,8 +25,7 @@ $(include DoNotEditWarning.h.in)
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 $(include ClassDeclaration.h.in)
 $(include PublicDeclarations.h.in)
@@ -61,6 +60,5 @@ end)
      * \sa itk::simple::${name} for the object oriented interface
      */
 SITKBasicFilters_EXPORT Image ${name:gsub("ImageSource$", "Source"):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParametersWithDefaults.in) );
-  }
 }
 #endif

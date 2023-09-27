@@ -32,8 +32,7 @@
 #include "sitkTransform.h"
 // Done with additional include files
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
@@ -158,5 +157,4 @@ Transform CenteredTransformInitializer ( const Image & fixedImage, const Image &
   return filter.Execute( fixedImage, movingImage, transform );
 }
 
-} // end namespace simple
 } // end namespace itk

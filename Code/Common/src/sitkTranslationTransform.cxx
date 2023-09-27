@@ -20,9 +20,7 @@
 
 #include "itkTranslationTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 TranslationTransform::~TranslationTransform() = default;
@@ -109,5 +107,4 @@ void TranslationTransform::InternalInitialization(TransformType *t)
 
 }
 
-}
 }

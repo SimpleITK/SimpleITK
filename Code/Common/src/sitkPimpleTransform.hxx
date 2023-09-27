@@ -47,9 +47,7 @@
 
 #include <type_traits>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 // This is a base class of the private implementation of the transform
@@ -377,7 +375,6 @@ private:
   TransformPointer m_Transform;
 };
 
-}
 }
 
 

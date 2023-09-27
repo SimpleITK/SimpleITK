@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class Euler2DTransform
@@ -94,7 +92,6 @@ private:
 
 };
 
-}
 }
 
 #endif // sitkEuler2DTransform_h

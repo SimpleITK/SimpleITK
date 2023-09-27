@@ -22,9 +22,7 @@
 #include "itkOutputWindow.h"
 #include "itkObjectFactory.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 namespace
@@ -298,5 +296,4 @@ ITKLogger::SetAsGlobalITKLogger()
   return oldLogger;
 }
 
-} // namespace simple
 } // namespace itk

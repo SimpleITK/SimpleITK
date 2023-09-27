@@ -27,9 +27,7 @@
 #include <itkLabelImageToLabelMapFilter.h>
 #include <itkLabelMapToLabelImageFilter.h>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 //----------------------------------------------------------------------------
@@ -129,7 +127,6 @@ Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
   return Image( filter->GetOutput() );
 }
 
-} // end namespace simple
 } // end namespace itk
 
 #endif // sitkCastImageFilter_hxx

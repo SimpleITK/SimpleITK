@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -110,7 +108,6 @@ private:
   std::function<std::vector<double>()> m_pfGetMatrix;
 };
 
-}
 }
 
 #endif // sitkVersorTransform_h

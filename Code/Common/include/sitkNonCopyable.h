@@ -20,9 +20,7 @@
 
 #include "sitkCommon.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class NonCopyable
@@ -58,7 +56,6 @@ public:
 };
 
 
-} // end namespace simple
 } // end namespace itk
 
 #endif //  sitkNonCopyable_h

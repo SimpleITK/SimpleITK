@@ -21,8 +21,7 @@
 #include "itkVariableLengthVector.h"
 
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 
 namespace
@@ -40,7 +39,6 @@ static void ToPixelType( TValueType inPixel, itk::VariableLengthVector<TComponen
   outPixel.Fill( static_cast<TComponent>( inPixel ) );
 }
 
-}
 }
 }
 

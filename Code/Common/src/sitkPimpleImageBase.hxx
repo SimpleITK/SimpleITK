@@ -33,9 +33,7 @@
 
 #include <type_traits>
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
 ///
@@ -972,7 +970,6 @@ namespace itk
 
   }
 
-  } // end namespace simple
-} // end namespace itk
+  } // end namespace itk
 
 #endif // sitkPimpleImageBase_hxx

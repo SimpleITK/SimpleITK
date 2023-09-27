@@ -22,9 +22,7 @@
 #include "sitkTransform.h"
 #include "sitkInterpolator.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class DisplacementFieldTransform
@@ -168,7 +166,6 @@ private:
 
 };
 
-}
 }
 
 #endif // sitkDisplacementFieldTransform_h

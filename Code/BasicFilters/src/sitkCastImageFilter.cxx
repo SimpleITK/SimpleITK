@@ -18,9 +18,7 @@
 #include "sitkCastImageFilter.h"
 
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -108,5 +106,4 @@ Image Cast ( const Image& image, PixelIDValueEnum pixelID ) {
 }
 
 
-} // end namespace simple
 } // end namespace itk

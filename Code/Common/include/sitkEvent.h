@@ -21,8 +21,7 @@
 #include "sitkCommon.h"
 #include <ostream>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 /** \brief Events which can be observed from ProcessObject.
  *
@@ -66,7 +65,6 @@ enum EventEnum {
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const EventEnum k);
 #endif
 
-} // end namespace simple
 } // end namespace itk
 
 #endif

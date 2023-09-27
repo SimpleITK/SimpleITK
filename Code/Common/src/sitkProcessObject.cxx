@@ -29,8 +29,7 @@
 #include <cstring>
 #include <functional>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 namespace
 {
@@ -592,5 +591,4 @@ void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
 
  }
 
-} // end namespace simple
 } // end namespace itk

@@ -23,8 +23,7 @@
 #include "sitkImageReaderBase.h"
 #include "sitkMemberFunctionFactory.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /** \class ImportImageFilter
      * \brief Compose a 2D or 3D image and return a smart pointer to a SimpleITK
@@ -211,6 +210,5 @@ namespace itk {
     );
 
   }
-}
 
 #endif

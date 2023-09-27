@@ -37,8 +37,7 @@
 
 
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
@@ -317,5 +316,4 @@ Image Paste ( Image && destinationImage, const Image & sourceImage, std::vector<
   return filter.Execute ( std::move(destinationImage), sourceImage );
 }
 
-} // end namespace simple
 } // end namespace itk

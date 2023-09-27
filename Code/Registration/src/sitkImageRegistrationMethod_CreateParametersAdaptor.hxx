@@ -28,9 +28,7 @@
 #include "itkBSplineTransform.h"
 #include "itkBSplineTransformParametersAdaptor.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 template<typename TTransformBase,
@@ -210,6 +208,5 @@ ImageRegistrationMethod::CreateTransformParametersAdaptor(TRegistrationMethod* m
 
 
 
-}
 }
 #endif // sitkImageRegistrationMethod_CreateParametersAdaptor_hxx

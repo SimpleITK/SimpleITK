@@ -22,9 +22,7 @@
 #include <sstream>
 #include <list>
 
-namespace itk {
-namespace simple {
-namespace ioutils {
+namespace itk::simple::ioutils {
 
 void PrintRegisteredImageIOs(std::ostream &out)
 {
@@ -97,6 +95,4 @@ itk::SmartPointer<ImageIOBase> CreateImageIOByName(const std::string & ioname)
   return iobase;
 }
 
-}
-}
 }

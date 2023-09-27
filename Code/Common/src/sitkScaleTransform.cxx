@@ -19,9 +19,7 @@
 #include "sitkTransformHelper.hxx"
 #include "itkScaleTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 ScaleTransform::~ScaleTransform() = default;
@@ -129,5 +127,4 @@ void ScaleTransform::InternalInitialization(TransformType *t)
 
 }
 
-}
 }

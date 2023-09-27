@@ -22,12 +22,7 @@
 #include "sitkMemberFunctionFactoryBase.h"
 #include "sitkPixelIDValues.h"
 
-namespace itk
-{
-namespace simple
-{
-// this namespace is internal classes not part of the external simple ITK interface
-namespace detail {
+namespace itk::simple::detail {
 
 /** \class MemberFunctionFactory
  * \brief A class used to instantiate and generate function object to
@@ -189,8 +184,6 @@ protected:
 
 };
 
-} // end namespace detail
-} // end namespace simple
 } // end namespace itk
 
 #include "sitkMemberFunctionFactory.hxx"

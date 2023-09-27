@@ -25,8 +25,7 @@ $(include DoNotEditWarning.h.in)
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
    /**\class ${name}
 
@@ -116,6 +115,5 @@ $(for inum=1,5 do
 end)
      /** @{ */
 
-}
 }
 #endif

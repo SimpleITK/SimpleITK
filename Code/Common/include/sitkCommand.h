@@ -24,8 +24,7 @@
 
 #include <set>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 class ProcessObject;
 
@@ -77,7 +76,6 @@ protected:
 #endif
 };
 
-} // end namespace simple
 } // end namespace itk
 
 #endif

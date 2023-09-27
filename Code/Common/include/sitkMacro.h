@@ -62,9 +62,7 @@
 #define SITK_RETURN_SELF_TYPE_HEADER Self &
 #endif
 
-namespace itk {
-
-namespace simple {
+namespace itk::simple {
 
 class GenericException;
 
@@ -98,7 +96,6 @@ class GenericException;
 #define sitkDoMacroJoin( X, Y ) sitkDoMacroJoin2(X,Y)
 #define sitkDoMacroJoin2( X, Y ) X##Y
 
-}
 }
 
 #define sitkPragma(x) _Pragma (#x)

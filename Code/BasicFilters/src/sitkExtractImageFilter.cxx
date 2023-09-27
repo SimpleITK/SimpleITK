@@ -30,8 +30,7 @@
 
 
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
@@ -204,5 +203,4 @@ Image Extract ( Image&& image1, std::vector<unsigned int> size, std::vector<int>
   return filter.Execute ( std::move(image1) );
 }
 
-} // end namespace simple
 } // end namespace itk

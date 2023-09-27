@@ -27,8 +27,7 @@
 #include "itkGDCMSeriesFileNames.h"
 #include "sitkMetaDataDictionaryCustomCast.hxx"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
   Image ReadImage ( const std::vector<std::string> &filenames,
                     PixelIDValueEnum outputPixelType,
@@ -221,4 +220,3 @@ namespace itk {
     }
 
   }
-}

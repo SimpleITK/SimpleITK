@@ -20,9 +20,7 @@
 
 #include "itkSimilarity2DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 Similarity2DTransform::~Similarity2DTransform() = default;
@@ -183,5 +181,4 @@ void Similarity2DTransform::InternalInitialization(TransformType *t)
   this->m_pfGetScale = std::bind(&TransformType::GetScale,t);
 }
 
-}
 }

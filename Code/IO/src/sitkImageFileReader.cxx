@@ -26,8 +26,7 @@
 
 #include "sitkMetaDataDictionaryCustomCast.hxx"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
   constexpr unsigned int SITK_IO_INPUT_MAX_DIMENSION = 5 > SITK_MAX_DIMENSION ? 5 : SITK_MAX_DIMENSION;
   namespace {
@@ -458,4 +457,3 @@ namespace itk {
   }
 
   }
-}

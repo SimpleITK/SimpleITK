@@ -30,8 +30,7 @@
 #include "sitkProcessObject.h"
 #include "sitkMemberFunctionFactory.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /**\class CenteredVersorTransformInitializerFilter
 \brief CenteredVersorTransformInitializerFilter is a helper class
@@ -113,5 +112,4 @@ Versor representing rotation.
   SITKBasicFilters_EXPORT Transform CenteredVersorTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, bool computeRotation = false );
 
   }
-}
 #endif

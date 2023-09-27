@@ -27,8 +27,7 @@
 
 #include <iterator>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 // private namespace
 namespace
@@ -537,5 +536,4 @@ ImportImageFilter::SetNumberOfComponentsOnImage ( TFilterType*image )
   image->SetNumberOfComponentsPerPixel( m_NumberOfComponentsPerPixel );
 }
 
-}
 }

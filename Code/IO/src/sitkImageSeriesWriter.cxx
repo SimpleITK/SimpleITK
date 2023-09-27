@@ -29,8 +29,7 @@
 
 #include <cctype>
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
   void WriteImage ( const Image& inImage, const std::vector<std::string> &filenames, bool useCompression, int compressionLevel )
   {
@@ -268,4 +267,3 @@ namespace itk {
   }
 
   }
-}

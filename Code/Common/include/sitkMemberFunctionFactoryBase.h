@@ -31,13 +31,7 @@
 #include <functional>
 #include <tuple>
 
-namespace itk
-{
-namespace simple
-{
-
-// this namespace is internal and not part of the external simple ITK interface
-namespace detail {
+namespace itk::simple::detail {
 
 // make hash function available in current name space to take priority
 
@@ -430,8 +424,6 @@ protected:
 
 };
 
-} // end namespace detail
-} // end namespace simple
 } // end namespace itk
 
 #endif // sitkMemberFunctionFactoryBase_h

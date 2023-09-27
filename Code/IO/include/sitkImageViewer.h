@@ -22,9 +22,7 @@
 #include "sitkIO.h"
 #include "sitkProcessObject.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class ImageViewer
@@ -239,6 +237,5 @@ private:
   static std::string FindViewingApplication();
 };
 
-}
 }
 #endif

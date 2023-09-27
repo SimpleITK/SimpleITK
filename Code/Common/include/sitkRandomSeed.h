@@ -20,9 +20,7 @@
 
 #include "sitkCommon.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 enum SeedEnum {
@@ -31,7 +29,6 @@ enum SeedEnum {
   sitkWallClock = 0
 };
 
-} // end namespace simple
 } // end namespace itk
 
 

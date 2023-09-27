@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class AffineTransform
@@ -120,7 +118,6 @@ private:
 
 };
 
-}
 }
 
 #endif // sitkAffineTransform_h

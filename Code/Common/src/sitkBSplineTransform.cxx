@@ -21,9 +21,7 @@
 
 #include "itkBSplineTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 namespace
 {
@@ -308,5 +306,4 @@ PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int
     }
 }
 
-}
 }

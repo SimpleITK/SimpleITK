@@ -22,9 +22,7 @@
 #include <ostream>
 
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 enum InterpolatorEnum {
@@ -168,7 +166,6 @@ enum InterpolatorEnum {
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i);
 #endif
 
-} // end namespace simple
 } // end namespace itk
 
 

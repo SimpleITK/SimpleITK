@@ -67,9 +67,7 @@ struct CurrentIterationCustomCast
 }
 
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
   template< typename TValue, typename TType>
@@ -406,5 +404,4 @@ namespace simple
       }
   }
 
-}
 }

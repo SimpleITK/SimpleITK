@@ -22,9 +22,7 @@
 #include "sitkIO.h"
 #include "sitkProcessObject.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
   /** Display an image in an external viewer (Fiji by default)
@@ -34,7 +32,6 @@ namespace simple
    *
    **/
    void SITKIO_EXPORT Show ( const Image &image, const std::string& title = "", const bool debugOn=ProcessObject::GetGlobalDefaultDebug() );
-}
 }
 
 #endif

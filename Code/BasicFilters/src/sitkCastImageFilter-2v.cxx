@@ -19,9 +19,7 @@
 #include "sitkCastImageFilter.hxx"
 
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -36,5 +34,4 @@ void CastImageFilter::RegisterMemberFactory2v()
 
 }
 
-} // end namespace simple
 } // end namespace itk

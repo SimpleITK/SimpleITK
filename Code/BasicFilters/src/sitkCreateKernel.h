@@ -22,10 +22,7 @@
 #include "sitkKernel.h"
 #include <itkFlatStructuringElement.h>
 
-namespace itk
-{
-
-namespace simple
+namespace itk::simple
 {
 
 #define sitkKernelPolygonCreateMacro(n) \
@@ -66,7 +63,6 @@ CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
 }
 
 
-} // end namespace simple
 } // end namespace itk
 
 

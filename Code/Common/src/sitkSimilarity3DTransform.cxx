@@ -20,9 +20,7 @@
 
 #include "itkSimilarity3DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 Similarity3DTransform::~Similarity3DTransform() = default;
@@ -225,5 +223,4 @@ void Similarity3DTransform::InternalInitialization(TransformType *t)
   };
 }
 
-}
 }

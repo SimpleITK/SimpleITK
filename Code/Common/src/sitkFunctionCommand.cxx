@@ -18,9 +18,7 @@
 #include "sitkFunctionCommand.h"
 #include "sitkProcessObject.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 FunctionCommand::~FunctionCommand( ) = default;
@@ -53,5 +51,4 @@ void FunctionCommand::SetCallbackFunction(const std::function<void()> &func)
   m_Function = func;
 }
 
-} // end namespace simple
 } // end namespace itk

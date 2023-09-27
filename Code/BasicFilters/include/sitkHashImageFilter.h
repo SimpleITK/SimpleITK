@@ -25,8 +25,7 @@
 #include "sitkImageFilter.h"
 #include "sitkProcessObject.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /** \class HashImageFilter
      * \brief Compute the sha1 or md5 hash of an image
@@ -76,5 +75,4 @@ namespace itk {
 
     SITKBasicFilters_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
-}
 #endif

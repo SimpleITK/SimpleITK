@@ -63,9 +63,7 @@
 #define IMAGEJ_OPEN_MACRO "open(\"%f\"); rename(\"%t\");"
 #define NIFTI_COLOR_MACRO " run(\"Make Composite\", \"display=Composite\");"
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
 namespace
@@ -877,5 +875,4 @@ std::string BuildFullFileName(const std::string & name, const std::string & exte
 
 }
 
-  } // namespace simple
-} // namespace itk
+  } // namespace itk

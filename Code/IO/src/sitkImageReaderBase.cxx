@@ -36,8 +36,7 @@
 #include <itkGDCMImageIO.h>
 
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 ImageReaderBase
 ::~ImageReaderBase() = default;
@@ -419,5 +418,4 @@ ImageReaderBase
 }
 
 
-}
 }
