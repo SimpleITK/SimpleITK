@@ -19,7 +19,7 @@ if(NOT PCRE2_DIR)
   #  PCRE2 (Perl Compatible Regular Expressions)
   #
 
-  set(PCRE2_TARGET_VERSION 10.40)
+  set(PCRE2_TARGET_VERSION 10.42)
   sitkSourceDownload(PCRE2_URL "pcre2-${PCRE2_TARGET_VERSION}.tar.gz")
 
 
