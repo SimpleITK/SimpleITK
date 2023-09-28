@@ -20,9 +20,7 @@
 
 #include "itkScaleSkewVersor3DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 ScaleSkewVersor3DTransform::~ScaleSkewVersor3DTransform() = default;
@@ -230,5 +228,4 @@ void ScaleSkewVersor3DTransform::InternalInitialization(TransformType *t)
   };
 }
 
-}
 }

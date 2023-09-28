@@ -18,9 +18,7 @@
 
 #include "sitkImageRegistrationMethod_CreateMetric.hxx"
 #include "itkImage.h"
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 template SITKRegistration_EXPORT
 itk::ImageToImageMetricv4<itk::Image<float, 2>,
@@ -57,5 +55,4 @@ itk::ImageToImageMetricv4<itk::Image<double, 3>,
                           DefaultImageToImageMetricTraitsv4< itk::Image<double, 3>, itk::Image<double, 3>, itk::Image<double, 3>, double >
                           >*ImageRegistrationMethod::CreateMetric<itk::Image<double, 3> >( );
 
-}
 }

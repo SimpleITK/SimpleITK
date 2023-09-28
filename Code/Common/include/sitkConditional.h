@@ -20,9 +20,7 @@
 
 #include <type_traits>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /* \brief An object for selecting an integer value at compile-time.
@@ -50,7 +48,6 @@ public:
 };
 
 
-}
 }
 
 #endif // sitkConditional_h

@@ -20,9 +20,7 @@
 
 #include "itkEuler2DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 Euler2DTransform::~Euler2DTransform() = default;
@@ -165,5 +163,4 @@ void Euler2DTransform::InternalInitialization(TransformType *t)
   this->m_pfGetAngle = std::bind(&TransformType::GetAngle,t);
 }
 
-}
 }

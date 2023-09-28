@@ -32,9 +32,7 @@
 
 
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
 
@@ -236,7 +234,6 @@ namespace itk
   }
 
 
-  } // namespace simple
-} // namespace itk
+  } // namespace itk
 
 #endif // sitkImage_h

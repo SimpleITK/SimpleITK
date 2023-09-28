@@ -33,9 +33,7 @@
 #include "sitkImage.hxx"
 #include "sitkMemberFunctionFactory.h"
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
   /** An addressor of AllocateInternal to be utilized with
@@ -178,4 +176,3 @@ namespace itk
     }
 
   }
-}

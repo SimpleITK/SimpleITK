@@ -33,8 +33,7 @@ class ImageIOBase;
 template<class T>
 class SmartPointer;
 
-namespace simple {
-namespace ioutils {
+namespace simple::ioutils {
 
 /* Internal method which prints all registered ImageIO names and the
  * file extensions they report as supporting.
@@ -49,7 +48,6 @@ SITKIO_HIDDEN std::vector<std::string> GetRegisteredImageIOs();
 
 SITKIO_HIDDEN itk::SmartPointer<ImageIOBase> CreateImageIOByName(const std::string & ioname);
 
-}
 }
 }
 

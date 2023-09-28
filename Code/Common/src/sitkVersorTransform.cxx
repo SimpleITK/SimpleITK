@@ -20,9 +20,7 @@
 
 #include "itkVersorTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 VersorTransform::~VersorTransform() = default;
@@ -172,5 +170,4 @@ void VersorTransform::InternalInitialization(TransformType *t)
   };
 }
 
-}
 }

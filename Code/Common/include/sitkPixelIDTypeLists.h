@@ -27,9 +27,7 @@
 
 #include <complex>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -206,6 +204,5 @@ using AllPixelIDTypeList =
  */
 using InstantiatedPixelIDTypeList = AllPixelIDTypeList;
 
-}
 }
 #endif // _sitkPixelIDTypeLists_h

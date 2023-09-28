@@ -30,8 +30,7 @@
 #include "sitkProcessObject.h"
 #include "sitkMemberFunctionFactory.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /**\class  CenteredTransformInitializerFilter
 \brief  CenteredTransformInitializerFilter is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.
@@ -132,5 +131,4 @@ assumption will probably not hold in multi-modality registration.
                                                                       CenteredTransformInitializerFilter::OperationModeType operationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS );
 
   }
-}
 #endif

@@ -20,9 +20,7 @@
 
 #include "itkBSplineControlPointImageFilter.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 namespace {
 
@@ -53,7 +51,6 @@ Image BSplineLatticeToImage(const TBiasFieldType *bsplineLattice, const Image &r
   caster->Update();
 
   return Image(caster->GetOutput());
-}
 }
 }
 }

@@ -23,9 +23,7 @@
 #include "sitkBasicFilters.h"
 #include "sitkProcessObject.h"
 
-namespace itk {
-
-  namespace simple {
+namespace itk::simple {
 
   /** \class ImageFilter
    * \brief The base interface for SimpleITK filters that take one input image
@@ -107,5 +105,4 @@ namespace itk {
       void CheckImageMatchingSize(const Image &image1, const Image& image2, const std::string &image2Name );
   };
   }
-}
 #endif

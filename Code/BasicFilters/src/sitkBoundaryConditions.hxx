@@ -23,8 +23,7 @@
 #include <itkPeriodicBoundaryCondition.h>
 #include <itkZeroFluxNeumannBoundaryCondition.h>
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
   namespace {
 
   /** Creates a boundary condition object from an enum. Uses an
@@ -56,6 +55,5 @@ namespace itk {
     }
   }
   }
-}
 
 #endif

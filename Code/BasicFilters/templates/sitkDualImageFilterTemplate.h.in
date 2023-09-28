@@ -26,8 +26,7 @@ $(include DoNotEditWarning.h.in)
 #include "sitkDualMemberFunctionFactory.h"
 #include "sitkBasicFilters.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 $(include ClassDeclaration.h.in)
 $(include PublicDeclarations.h.in)
@@ -58,6 +57,5 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 $(if (not no_procedure) or (no_procedure == 1) then
 OUT=[[$(include ProceduralAPI.h.in)]]
 end)
-  }
 }
 #endif

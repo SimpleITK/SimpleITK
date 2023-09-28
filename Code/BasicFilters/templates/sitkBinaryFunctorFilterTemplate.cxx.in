@@ -21,8 +21,7 @@ $(include StandardIncludes.cxx.in)
 $(include AddExtraIncludes.cxx.in)
 #include "sitkToPixelType.hxx"
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 
 //-----------------------------------------------------------------------------
@@ -229,5 +228,4 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} co
                             end) );
 }
 $(if not #members==0 then OUT=[[#error BinaryFunctorTemplate does not support members, yet]]end)
-} // end namespace simple
 } // end namespace itk

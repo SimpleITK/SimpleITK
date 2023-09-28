@@ -30,8 +30,7 @@
 #include "sitkImageFilter.h"
 #include "sitkBSplineTransform.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /**\class BSplineTransformInitializerFilter
 \brief BSplineTransformInitializerFilter is a helper class intended to
@@ -125,5 +124,4 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
                                                                             unsigned int order=3u );
 
   }
-}
 #endif

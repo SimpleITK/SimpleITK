@@ -20,9 +20,7 @@
 
 #define sitkInterpolatorToStringCaseMacro(n) case sitk##n: return ( os << #n )
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
@@ -55,5 +53,4 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
   return os;
 }
 
-} // end namespace simple
 } // end namespace itk

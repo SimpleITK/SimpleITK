@@ -41,9 +41,7 @@
 #include "itkImage.h"
 #include "itkVectorNearestNeighborInterpolateImageFunction.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 namespace
@@ -443,5 +441,4 @@ void DisplacementFieldTransform::InternalSetSmoothingBSplineOnUpdate( TDisplacem
 }
 
 
-}
 }

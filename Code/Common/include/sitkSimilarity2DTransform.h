@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class Similarity2DTransform
@@ -99,7 +97,6 @@ private:
   std::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 };
 
-}
 }
 
 #endif // sitkSimilarity2DTransform_h

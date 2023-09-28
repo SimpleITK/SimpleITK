@@ -21,10 +21,7 @@
 #include "sitkImageConvert.h"
 #include "itkHolderCommand.h"
 
-namespace itk
-{
-
-namespace simple
+namespace itk::simple
 {
 
 
@@ -327,7 +324,6 @@ GetVectorImageFromImage( itk::Image< itk::Offset< NLength >, NImageDimension> *i
 
 
 
-}
 }
 
 #endif // sitkImageConvert_hxx

@@ -22,8 +22,7 @@
 #include <itkImageKernelOperator.h>
 #include <itkConstantPadImageFilter.h>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 namespace {
 
 /** \brief Convert an itk Image to an itk ImageKernelOperator
@@ -84,7 +83,6 @@ return kernelOperator;
 }
 
 }
-} // end namespace simple
 } // end namespace itk
 
 #endif

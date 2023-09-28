@@ -57,9 +57,7 @@
 
 #include <memory>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 namespace
@@ -728,5 +726,4 @@ void Transform::InternalInitialization(TransformType *t)
 
   }
 
-}
 }

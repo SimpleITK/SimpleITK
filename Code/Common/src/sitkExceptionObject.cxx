@@ -24,9 +24,7 @@
 #endif
 
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 GenericException::GenericException() noexcept
@@ -156,5 +154,4 @@ unsigned int GenericException::GetLine() const
   return 0;
 }
 
-}
 }

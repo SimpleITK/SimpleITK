@@ -27,9 +27,7 @@
 #include "itkMeanSquaresImageToImageMetricv4.h"
 #include "itkMattesMutualInformationImageToImageMetricv4.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 namespace
@@ -123,6 +121,5 @@ ImageRegistrationMethod::CreateMetric( )
 
 }
 
-}
 }
 #endif  // sitkImageRegistrationMethod_CreateMetric_hxx

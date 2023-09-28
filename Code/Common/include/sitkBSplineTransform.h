@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class BSplineTransform
@@ -135,7 +133,6 @@ private:
 
 };
 
-}
 }
 
 #endif // sitkBSplineTransform_h

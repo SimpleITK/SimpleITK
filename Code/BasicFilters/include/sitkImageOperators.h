@@ -29,8 +29,7 @@
 #include "sitkOrImageFilter.h"
 #include "sitkXorImageFilter.h"
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 /**
 * \brief Performs the operator on a per pixel basis.
@@ -110,7 +109,6 @@ inline Image &operator|=( Image &img1, int s ) { Or(img1.ProxyForInPlaceOperatio
 inline Image &operator^=( Image &img1, const Image &img2 ) { Xor(img1.ProxyForInPlaceOperation(), img2 ); return img1;}
 inline Image &operator^=( Image &img1, int s ) { Xor(img1.ProxyForInPlaceOperation(), s ); return img1;}
 /**@} */
-}
 }
 
 #endif // sitkImageOperators_h

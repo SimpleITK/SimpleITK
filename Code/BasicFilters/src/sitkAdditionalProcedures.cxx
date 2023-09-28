@@ -22,8 +22,7 @@
 #include "sitkDiscreteGaussianImageFilter.h"
 #include "sitkSmoothingRecursiveGaussianImageFilter.h"
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 //
 // Function to run the Execute method of this filter after custom
@@ -177,5 +176,4 @@ Image SmoothingRecursiveGaussian ( const Image& image1,
 }
 
 
-}
 }

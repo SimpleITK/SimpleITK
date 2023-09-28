@@ -18,9 +18,7 @@
 #ifndef sitkLabelFunctorUtils_hxx
 #define sitkLabelFunctorUtils_hxx
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 namespace {
 
@@ -92,7 +90,6 @@ GetRLEIndexesFromLabelObject( const TLabelObject &lo )
     *(iter++) = line.GetLength();
     }
   return rle;
-}
 }
 }
 }

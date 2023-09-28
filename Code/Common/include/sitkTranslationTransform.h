@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -87,7 +85,6 @@ std::function<std::vector<double>()> m_pfGetOffset;
 
 };
 
-}
 }
 
 #endif // sitkTranslationTransform_h

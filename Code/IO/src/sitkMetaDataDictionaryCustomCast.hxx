@@ -25,8 +25,7 @@
 #include <itkMetaDataObject.h>
 
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 
 //
@@ -81,7 +80,6 @@ struct GetMetaDataCustomCast
     }
 };
 
-}
 }
 }
 

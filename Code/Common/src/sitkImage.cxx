@@ -28,9 +28,7 @@
 #include <utility>
 
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
   Image::~Image( ) = default;
@@ -842,5 +840,4 @@ namespace itk
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetReferenceCountOfImage() == 1;
     }
-  } // end namespace simple
-} // end namespace itk
+  } // end namespace itk

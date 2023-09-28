@@ -31,10 +31,7 @@
 #include <itkNearestNeighborInterpolateImageFunction.h>
 #include <itkWindowedSincInterpolateImageFunction.h>
 
-namespace itk
-{
-
-namespace simple
+namespace itk::simple
 {
 namespace {
 template <typename TInterpolatorType>
@@ -297,7 +294,6 @@ CreateInterpolator(const TImageType *image, InterpolatorEnum itype) {
 }
 
 }
-} // end namespace simple
 } // end namespace itk
 
 

@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include <ostream>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 enum KernelEnum {
@@ -66,7 +64,6 @@ enum KernelEnum {
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const KernelEnum k);
 #endif
 
-} // end namespace simple
 } // end namespace itk
 
 

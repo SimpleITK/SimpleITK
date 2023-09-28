@@ -21,9 +21,7 @@
 
 #include "itkCompositeTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 CompositeTransform::~CompositeTransform() = default;
@@ -218,5 +216,4 @@ void CompositeTransform::InternalInitialization(itk::Transform<double, NDimensio
 }
 
 
-}
 }

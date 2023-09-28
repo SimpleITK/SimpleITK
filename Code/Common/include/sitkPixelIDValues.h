@@ -24,9 +24,7 @@
 #include <string>
 #include <ostream>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 using PixelIDValueType = int;
@@ -145,6 +143,5 @@ SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const PixelIDValueE
 #endif
 
 
-}
 }
 #endif // sitkPixelIDValues_h

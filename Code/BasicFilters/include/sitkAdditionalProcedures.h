@@ -25,8 +25,7 @@
 #include "sitkInterpolator.h"
 #include "sitkPatchBasedDenoisingImageFilter.h"
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 
 /**
@@ -133,6 +132,5 @@ SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
                                                                 double sigma,
                                                                 bool normalizeAcrossScale = false );
 
-}
 }
 #endif

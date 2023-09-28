@@ -19,9 +19,7 @@
 #include "sitkMacro.h"
 #include "sitkImageViewer.h"
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
   void Show( const Image &image, const std::string& title, const bool debugOn)
@@ -43,5 +41,4 @@ namespace itk
       viewer.Execute(image);
     }
 
-  } // namespace simple
-}
+  }

@@ -24,8 +24,7 @@
 // It may also contain other member declarations, or other useful
 // items that could be specified here, as opposed to the JSON.
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
   std::string DICOMOrientImageFilter::GetOrientationFromDirectionCosines( const std::vector<double> &direction )
   {
@@ -47,4 +46,3 @@ namespace itk {
   }
 
   }
-}

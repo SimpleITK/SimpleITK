@@ -23,10 +23,7 @@
 #include <vector>
 
 
-namespace itk
-{
-
-namespace simple
+namespace itk::simple
 {
 
   /** \class Version
@@ -62,7 +59,6 @@ namespace simple
     std::string ToString() { return Version::ExtendedVersionString(); }
   };
 
-}
 }
 
 #endif

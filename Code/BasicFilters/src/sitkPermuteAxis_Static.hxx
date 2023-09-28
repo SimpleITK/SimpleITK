@@ -25,8 +25,7 @@
 // It may also contain other member declarations, or other useful
 // items that could be specified here, as opposed to the JSON.
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
   namespace
   {
   // Return a vector containing 0 to len.
@@ -45,6 +44,5 @@ namespace itk {
   const std::vector<unsigned int> PermuteAxesImageFilter::DefaultOrder = init(SITK_MAX_DIMENSION);
 
   }
-}
 
 #endif

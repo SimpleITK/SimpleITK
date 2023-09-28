@@ -23,8 +23,7 @@
 #include "sitkImageReaderBase.h"
 #include "sitkMemberFunctionFactory.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /** \class ImageSeriesReader
      * \brief Read series of image files into a SimpleITK image.
@@ -221,6 +220,5 @@ namespace itk {
                                   PixelIDValueEnum outputPixelType=sitkUnknown,
                                   const std::string &imageIO="");
   }
-}
 
 #endif

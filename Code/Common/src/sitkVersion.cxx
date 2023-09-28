@@ -40,9 +40,7 @@ static const std::string extendedVersionString = MakeExtendedVersionString();
 static const char * itkModulesEnabled = ITK_MODULES_ENABLED;
 }
 
-namespace itk
-{
-  namespace simple
+namespace itk::simple
   {
 
   unsigned int Version::MajorVersion()
@@ -120,4 +118,3 @@ namespace itk
     return extendedVersionString;
   }
   }
-}

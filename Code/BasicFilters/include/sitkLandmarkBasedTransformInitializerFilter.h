@@ -23,8 +23,7 @@
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /**\class LandmarkBasedTransformInitializerFilter
 
@@ -185,5 +184,4 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at https://www.midasjourn
                                                                            unsigned int numberOfControlPoints = 4u );
 
   }
-}
 #endif

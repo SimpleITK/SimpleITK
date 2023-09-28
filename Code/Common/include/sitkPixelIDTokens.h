@@ -23,9 +23,7 @@
 
 #include <type_traits>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 using TrueType = std::true_type;
@@ -113,7 +111,6 @@ struct IsInstantiated< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimen
   : public IsInstantiated< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType, VImageDimension >
 {};
 
-}
 }
 
 #endif // _sitkPixelIDTokens_h

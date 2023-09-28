@@ -21,9 +21,7 @@
 
 #include "itkScaleVersor3DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 ScaleVersor3DTransform::~ScaleVersor3DTransform() = default;
@@ -213,5 +211,4 @@ void ScaleVersor3DTransform::InternalInitialization(TransformType *t)
   };
 }
 
-}
 }

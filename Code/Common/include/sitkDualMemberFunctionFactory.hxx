@@ -23,12 +23,7 @@
 #include "sitkPixelIDTokens.h"
 #include "sitkExceptionObject.h"
 
-namespace itk
-{
-namespace simple
-{
-// this namespace is internal classes not part of the external simple ITK interface
-namespace detail
+namespace itk::simple::detail
 {
 
 // a privately declared predicate for use with the typelist2::visit
@@ -195,8 +190,6 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
 }
 
 
-} // end namespace detail
-} // end namespace simple
 } // end namespace itk
 
 

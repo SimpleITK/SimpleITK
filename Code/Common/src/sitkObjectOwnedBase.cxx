@@ -20,9 +20,7 @@
 #include "sitkExceptionObject.h"
 #include "itkObject.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -125,5 +123,4 @@ void ObjectOwnedBase::ExecuteCallbacks()
   }
 }
 
-} // namespace simple
 } // namespace itk

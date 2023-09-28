@@ -23,8 +23,7 @@
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     /**\class ExtractImageFilter
      * \brief Decrease the image size by cropping the image to the selected region bounds.
@@ -195,5 +194,4 @@ namespace itk {
 
      /** @} */
   }
-}
 #endif

@@ -26,8 +26,7 @@
 #include <typeinfo>
 #include <string>
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
     HashImageFilter::~HashImageFilter ()
     = default;
@@ -131,4 +130,3 @@ namespace itk {
       return filter.Execute ( image );
     }
   }
-}

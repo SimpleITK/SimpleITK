@@ -20,9 +20,7 @@
 
 #include "itkVersorRigid3DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 VersorRigid3DTransform::~VersorRigid3DTransform() = default;
@@ -204,5 +202,4 @@ void VersorRigid3DTransform::InternalInitialization(TransformType *t)
   };
 }
 
-}
 }

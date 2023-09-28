@@ -21,9 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class ComposeScaleSkewVersor3DTransform
@@ -121,7 +119,6 @@ private:
   std::function<std::vector<double>()> m_pfGetMatrix;
 };
 
-}
 }
 
 #endif // sitkComposeScaleSkewVersor3DTransform_h

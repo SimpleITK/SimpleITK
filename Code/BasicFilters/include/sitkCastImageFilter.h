@@ -24,9 +24,7 @@
 
 #include <memory>
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 /** \class CastImageFilter
@@ -177,6 +175,5 @@ private:
 
   SITKBasicFilters_EXPORT Image Cast ( const Image& image, PixelIDValueEnum pixelID );
 
-}
 }
 #endif

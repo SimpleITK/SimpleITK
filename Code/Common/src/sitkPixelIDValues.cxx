@@ -17,9 +17,7 @@
 *=========================================================================*/
 #include "sitkPixelIDValues.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 
@@ -272,5 +270,4 @@ std::ostream& operator<<(std::ostream& os, const PixelIDValueEnum id)
 }
 
 
-}
 }

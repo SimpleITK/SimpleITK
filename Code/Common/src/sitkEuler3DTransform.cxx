@@ -20,9 +20,7 @@
 
 #include "itkEuler3DTransform.h"
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 Euler3DTransform::~Euler3DTransform() = default;
@@ -196,5 +194,4 @@ void Euler3DTransform::InternalInitialization(TransformType *t)
 
 }
 
-}
 }

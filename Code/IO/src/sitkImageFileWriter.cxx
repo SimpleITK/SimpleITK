@@ -24,8 +24,7 @@
 #include <itkImageRegionIterator.h>
 #include <itkGDCMImageIO.h>
 
-namespace itk {
-namespace simple {
+namespace itk::simple {
 
 void WriteImage ( const Image& image, const std::string &inFileName, bool useCompression, int compressionLevel )
 {
@@ -247,5 +246,4 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
   return *this;
 }
 
-} // end namespace simple
 } // end namespace itk

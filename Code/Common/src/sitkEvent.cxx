@@ -20,9 +20,7 @@
 
 #define sitkEventToStringCaseMacro(n) case sitk##n##Event: return ( os << #n << "Event" )
 
-namespace itk
-{
-namespace simple
+namespace itk::simple
 {
 
 std::ostream& operator<<(std::ostream& os, const EventEnum k)
@@ -42,5 +40,4 @@ std::ostream& operator<<(std::ostream& os, const EventEnum k)
   return os;
 }
 
-} // end namespace simple
 } // end namespace itk

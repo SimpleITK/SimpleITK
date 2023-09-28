@@ -29,8 +29,7 @@
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 /** \class PasteImageFilter
  * \brief Paste an image (or a constant value) into another image.
@@ -182,5 +181,4 @@ namespace itk {
 
      /** @} */
   }
-}
 #endif
