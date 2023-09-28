@@ -40,4 +40,4 @@ std::ostream& operator<<(std::ostream& os, const EventEnum k)
   return os;
 }
 
-} // end namespace itk
+}

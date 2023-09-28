@@ -83,6 +83,6 @@ return kernelOperator;
 }
 
 }
-} // end namespace itk
+}
 
 #endif

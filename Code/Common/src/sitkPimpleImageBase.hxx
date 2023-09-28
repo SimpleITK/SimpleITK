@@ -970,6 +970,6 @@ namespace itk::simple
 
   }
 
-  } // end namespace itk
+  }
 
 #endif // sitkPimpleImageBase_hxx

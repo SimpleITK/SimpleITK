@@ -29,7 +29,7 @@ enum SeedEnum {
   sitkWallClock = 0
 };
 
-} // end namespace itk
+}
 
 
 #endif // RandomSeed_h

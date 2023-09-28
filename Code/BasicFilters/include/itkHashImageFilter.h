@@ -109,7 +109,7 @@ private:
 };
 
 
-} // end namespace itk
+}
 
 
 #include "itkHashImageFilter.hxx"

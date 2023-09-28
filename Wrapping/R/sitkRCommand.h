@@ -93,7 +93,7 @@ private:
   SEXP m_FunctionClosure;
 };
 
-} // namespace simple
-} // namespace itk
+}
+}
 
 #endif // _sitkRCommand_h

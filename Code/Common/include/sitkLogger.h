@@ -146,7 +146,7 @@ private:
   itk::OutputWindow * m_OutputWindow{ nullptr };
 };
 
-} // namespace simple
-} // namespace itk
+}
+}
 
 #endif

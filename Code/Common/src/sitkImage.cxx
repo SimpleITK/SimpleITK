@@ -840,4 +840,4 @@ namespace itk::simple
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetReferenceCountOfImage() == 1;
     }
-  } // end namespace itk
+  }

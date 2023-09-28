@@ -89,4 +89,4 @@ void ImageFilter::CheckImageMatchingSize(const Image &image1, const Image& image
   return itk::simple::CheckImageMatchingSize(image1, image2, image2Name, this->GetName());
 }
 
-} // end namespace itk
+}

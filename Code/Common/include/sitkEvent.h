@@ -65,6 +65,6 @@ enum EventEnum {
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const EventEnum k);
 #endif
 
-} // end namespace itk
+}
 
 #endif

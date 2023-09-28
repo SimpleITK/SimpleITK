@@ -93,7 +93,7 @@ protected:
   ~SimpleAdaptorCommand() override = default;
 };
 
-} // end anonymous namespace
+}
 
 //----------------------------------------------------------------------------
 
@@ -591,4 +591,4 @@ void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
 
  }
 
-} // end namespace itk
+}

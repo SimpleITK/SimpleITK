@@ -64,7 +64,7 @@ enum KernelEnum {
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const KernelEnum k);
 #endif
 
-} // end namespace itk
+}
 
 
 #endif // sitkKernel_h

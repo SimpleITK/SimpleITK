@@ -138,5 +138,5 @@ void PyCommand::Execute()
 }
 
 
-} // namespace simple
-} // namespace itk
+}
+}

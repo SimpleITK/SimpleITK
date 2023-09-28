@@ -101,6 +101,6 @@ private:
 
 };
 
-} // end namespace
+}
 
 #endif

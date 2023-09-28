@@ -190,7 +190,7 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
 }
 
 
-} // end namespace itk
+}
 
 
 #endif //  sitkDualMemberFunctionFactory_hxx

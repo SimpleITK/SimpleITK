@@ -119,5 +119,5 @@ void RCommand::Execute()
 }
 
 
-} // namespace simple
-} // namespace itk
+}
+}

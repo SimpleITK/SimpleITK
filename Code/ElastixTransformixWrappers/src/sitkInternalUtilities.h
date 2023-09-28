@@ -12,7 +12,7 @@ namespace itk {
 */
 using FloatPixelIDTypeList = typelist2::typelist<BasicPixelID<float>>;
 
-} // end namespace simple
-} // end namespace itk
+}
+}
 
 #endif

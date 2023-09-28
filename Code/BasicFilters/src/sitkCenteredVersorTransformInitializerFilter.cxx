@@ -149,4 +149,4 @@ Transform CenteredVersorTransformInitializer ( const Image & fixedImage, const I
   return filter.Execute( fixedImage, movingImage, transform  );
 }
 
-} // end namespace itk
+}

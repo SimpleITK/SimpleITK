@@ -1077,5 +1077,5 @@ ElastixImageFilter::ElastixImageFilterImpl
   return isEmpty;
 }
 
-} // end namespace simple
-} // end namespace itk
+}
+}

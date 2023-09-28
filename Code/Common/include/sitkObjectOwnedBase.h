@@ -119,6 +119,6 @@ private:
   std::string                                         m_Name;
 };
 
-} // namespace simple
-} // namespace itk
+}
+}
 #endif

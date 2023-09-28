@@ -179,7 +179,7 @@ protected:
 
 };
 
-} // end namespace itk
+}
 
 #include "sitkDualMemberFunctionFactory.hxx"
 

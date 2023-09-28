@@ -795,5 +795,5 @@ Elastix( const Image& fixedImage, const Image& movingImage, ElastixImageFilter::
   return selx.Execute();
 }
 
-} // end namespace simple
-} // end namespace itk
+}
+}

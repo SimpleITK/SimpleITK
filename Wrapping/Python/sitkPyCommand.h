@@ -75,7 +75,7 @@ private:
   PyObject *m_Object;
 };
 
-} // namespace simple
-} // namespace itk
+}
+}
 
 #endif // _sitkPyCommand_h

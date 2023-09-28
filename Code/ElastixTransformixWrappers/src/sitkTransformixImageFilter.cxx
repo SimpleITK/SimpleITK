@@ -467,5 +467,5 @@ Transformix( const Image& movingImage, const TransformixImageFilter::ParameterMa
   return stfx.Execute();
 }
 
-} // end namespace simple
-} // end namespace itk
+}
+}

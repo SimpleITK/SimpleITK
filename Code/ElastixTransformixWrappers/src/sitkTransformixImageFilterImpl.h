@@ -130,7 +130,7 @@ public:
   bool                    m_LogToFile;
 };
 
-} // end namespace simple
-} // end namespace itk
+}
+}
 
 #endif // sitktransformiximagefilterimpl_h

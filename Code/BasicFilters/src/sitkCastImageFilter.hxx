@@ -127,6 +127,6 @@ Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
   return Image( filter->GetOutput() );
 }
 
-} // end namespace itk
+}
 
 #endif // sitkCastImageFilter_hxx

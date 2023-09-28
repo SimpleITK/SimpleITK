@@ -34,4 +34,4 @@ void CastImageFilter::RegisterMemberFactory2v()
 
 }
 
-} // end namespace itk
+}

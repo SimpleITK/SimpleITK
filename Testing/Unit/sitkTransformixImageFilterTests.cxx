@@ -143,5 +143,5 @@ TEST( TransformixImageFilter, Transformation4D )
 
 #endif
 
-} // namespace simple
-} // namespace itk
+}
+}

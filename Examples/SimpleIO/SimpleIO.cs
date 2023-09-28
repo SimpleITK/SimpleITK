@@ -72,5 +72,5 @@ static void Main(string[] args) {
   }
 }
 
-    } // class SimpleIO
-} // namespace itk.simple.examples
+    }
+}

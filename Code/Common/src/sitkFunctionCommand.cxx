@@ -51,4 +51,4 @@ void FunctionCommand::SetCallbackFunction(const std::function<void()> &func)
   m_Function = func;
 }
 
-} // end namespace itk
+}
