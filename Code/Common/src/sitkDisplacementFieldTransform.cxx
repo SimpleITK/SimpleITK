@@ -16,20 +16,6 @@
 *
 *=========================================================================*/
 
-
-#if defined(_MSC_VER) && _MSC_VER == 1700
-// VS11 (Visual Studio 2012) has limited variadic argument support for
-// std::bind, the following increases the number of supported
-// arguments.
-// https://connect.microsoft.com/VisualStudio/feedback/details/723448/very-few-function-arguments-for-std-bind
-
- #if defined(_VARIADIC_MAX) && _VARIADIC_MAX < 10
-  #error "_VARIADIC_MAX already defined. Some STL classes may have insufficient number of template parameters."
- #else
-  #define _VARIADIC_MAX 10
- #endif
-#endif
-
 #include "sitkDisplacementFieldTransform.h"
 #include "sitkPimpleTransform.hxx"
 #include "sitkImageConvert.hxx"
@@ -278,27 +264,17 @@ void DisplacementFieldTransform::InternalInitialization(itk::TransformBase *tran
 template<class TransformType>
 void DisplacementFieldTransform::InternalInitialization(TransformType *t)
 {
-  this->m_pfSetDisplacementField = std::bind(&InternalSetDisplacementField<TransformType>, t, std::placeholders::_1);
-  this->m_pfGetDisplacementField = std::bind(&DisplacementFieldTransform::InternalGetDisplacementField<TransformType>, t);
+  this->m_pfSetDisplacementField = [t](auto && PH1) { return InternalSetDisplacementField<TransformType>(t, std::forward<decltype(PH1)>(PH1)); };
+  this->m_pfGetDisplacementField = [t] { return DisplacementFieldTransform::InternalGetDisplacementField<TransformType>(t); };
 
-  this->m_pfSetInverseDisplacementField = std::bind(&InternalSetInverseDisplacementField<TransformType>, t, std::placeholders::_1);
-  this->m_pfGetInverseDisplacementField = std::bind(&DisplacementFieldTransform::InternalGetInverseDisplacementField<TransformType>, t);
+  this->m_pfSetInverseDisplacementField = [t](auto && PH1) { return InternalSetInverseDisplacementField<TransformType>(t, std::forward<decltype(PH1)>(PH1)); };
+  this->m_pfGetInverseDisplacementField = [t] { return DisplacementFieldTransform::InternalGetInverseDisplacementField<TransformType>(t); };
 
-  this->m_pfSetInterpolator = std::bind(&InternalSetInterpolator<TransformType>, t, std::placeholders::_1);
+  this->m_pfSetInterpolator = [t](auto && PH1) { return InternalSetInterpolator<TransformType>(t, std::forward<decltype(PH1)>(PH1)); };
 
-  m_pfSetSmoothingOff = std::bind(&Self::InternalSetSmoothingOff<TransformType>, this, t);
-  m_pfSetSmoothingGaussianOnUpdate = std::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>,
-                                                 this,
-                                                 t,
-                                                 std::placeholders::_1,
-                                                 std::placeholders::_2 );
-  m_pfSetSmoothingBSplineOnUpdate = std::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>,
-                                                this,
-                                                t,
-                                                std::placeholders::_1,
-                                                std::placeholders::_2,
-                                                std::placeholders::_3,
-                                                std::placeholders::_4 );
+  m_pfSetSmoothingOff = [this, t] { this->InternalSetSmoothingOff(t); };
+  m_pfSetSmoothingGaussianOnUpdate = [this, t](auto && PH1, auto && PH2) { this->InternalSetSmoothingGaussianOnUpdate(t, std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2)); };
+  m_pfSetSmoothingBSplineOnUpdate = [this, t](auto && PH1, auto && PH2, auto && PH3, auto && PH4) { this->InternalSetSmoothingBSplineOnUpdate(t, std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2), std::forward<decltype(PH3)>(PH3), std::forward<decltype(PH4)>(PH4)); };
 }
 
 PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTransform(unsigned int dimension)

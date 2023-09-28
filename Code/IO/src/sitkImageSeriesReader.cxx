@@ -209,9 +209,9 @@ namespace itk::simple {
       {
       this->m_Filter = reader;
       this->m_Filter->Register();
-      this->m_pfGetMetaDataKeys = std::bind(&GetMetaDataKeysCustomCast<Reader>::CustomCast, reader.GetPointer(), std::placeholders::_1 );
-      this->m_pfHasMetaDataKey = std::bind(&HasMetaDataKeyCustomCast<Reader>::CustomCast, reader.GetPointer(), std::placeholders::_1, std::placeholders::_2 );
-      this->m_pfGetMetaData = std::bind(&GetMetaDataCustomCast<Reader>::CustomCast, reader.GetPointer(), std::placeholders::_1, std::placeholders::_2 );
+      this->m_pfGetMetaDataKeys = [capture0 = reader.GetPointer()](auto && PH1) { return GetMetaDataKeysCustomCast<Reader>::CustomCast(capture0, std::forward<decltype(PH1)>(PH1)); };
+      this->m_pfHasMetaDataKey = [capture0 = reader.GetPointer()](auto && PH1, auto && PH2) { return HasMetaDataKeyCustomCast<Reader>::CustomCast(capture0, std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2)); };
+      this->m_pfGetMetaData = [capture0 = reader.GetPointer()](auto && PH1, auto && PH2) { return GetMetaDataCustomCast<Reader>::CustomCast(capture0, std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2)); };
       }
 
     reader->Update();

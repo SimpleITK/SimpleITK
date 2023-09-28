@@ -185,12 +185,12 @@ void Euler3DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF_GetMatrix();
   SITK_TRANSFORM_SET_MPF_SetMatrix();
 
-  this->m_pfSetRotation = std::bind(&TransformType::SetRotation,t,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3);
-  this->m_pfGetAngleX = std::bind(&TransformType::GetAngleX,t);
-  this->m_pfGetAngleY = std::bind(&TransformType::GetAngleY,t);
-  this->m_pfGetAngleZ = std::bind(&TransformType::GetAngleZ,t);
-  this->m_pfSetComputeZYX = std::bind(&TransformType::SetComputeZYX,t,std::placeholders::_1);
-  this->m_pfGetComputeZYX = std::bind(&TransformType::GetComputeZYX,t);
+  this->m_pfSetRotation = [t](auto && PH1, auto && PH2, auto && PH3) { t->SetRotation(std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2), std::forward<decltype(PH3)>(PH3)); };
+  this->m_pfGetAngleX = [t] { return t->GetAngleX(); };
+  this->m_pfGetAngleY = [t] { return t->GetAngleY(); };
+  this->m_pfGetAngleZ = [t] { return t->GetAngleZ(); };
+  this->m_pfSetComputeZYX = [t](auto && PH1) { t->SetComputeZYX(std::forward<decltype(PH1)>(PH1)); };
+  this->m_pfGetComputeZYX = [t] { return t->GetComputeZYX(); };
 
 }
 
