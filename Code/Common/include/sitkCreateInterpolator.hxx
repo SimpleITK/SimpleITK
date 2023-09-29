@@ -294,7 +294,7 @@ CreateInterpolator(const TImageType *image, InterpolatorEnum itype) {
 }
 
 }
-} // end namespace itk
+}
 
 
 #endif // sitkCreateInterpolator_hxx

@@ -57,4 +57,4 @@ size_t Command::RemoveProcessObject(const itk::simple::ProcessObject *co)
 }
 
 
-} // end namespace itk
+}

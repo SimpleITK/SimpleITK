@@ -123,4 +123,4 @@ void ObjectOwnedBase::ExecuteCallbacks()
   }
 }
 
-} // namespace itk
+}

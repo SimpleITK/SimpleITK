@@ -106,4 +106,4 @@ Image Cast ( const Image& image, PixelIDValueEnum pixelID ) {
 }
 
 
-} // end namespace itk
+}

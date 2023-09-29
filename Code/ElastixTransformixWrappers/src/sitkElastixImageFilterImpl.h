@@ -170,7 +170,7 @@ public:
 
 };
 
-} // end namespace simple
-} // end namespace itk
+}
+}
 
 #endif // sitkelastiximagefilterimpl_h

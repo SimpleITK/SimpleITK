@@ -234,6 +234,6 @@ namespace itk::simple
   }
 
 
-  } // namespace itk
+  }
 
 #endif // sitkImage_h

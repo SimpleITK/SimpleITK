@@ -33,4 +33,4 @@ void CastImageFilter::RegisterMemberFactory3v()
   m_DualMemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 3, ToVectorAddressor<MemberFunctionType> > ();
 }
 
-} // end namespace itk
+}

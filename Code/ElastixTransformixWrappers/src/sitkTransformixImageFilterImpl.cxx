@@ -700,5 +700,5 @@ TransformixImageFilter::TransformixImageFilterImpl
   return isEmpty;
 }
 
-} // end namespace simple
-} // end namespace itk
+}
+}

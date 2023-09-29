@@ -416,6 +416,6 @@ protected:
 
 };
 
-} // end namespace itk
+}
 
 #endif // sitkMemberFunctionFactoryBase_h

@@ -53,4 +53,4 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
   return os;
 }
 
-} // end namespace itk
+}

@@ -166,7 +166,7 @@ enum InterpolatorEnum {
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i);
 #endif
 
-} // end namespace itk
+}
 
 
 #endif // sitkInterpolator_h

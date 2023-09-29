@@ -228,4 +228,4 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} co
                             end) );
 }
 $(if not #members==0 then OUT=[[#error BinaryFunctorTemplate does not support members, yet]]end)
-} // end namespace itk
+}

@@ -154,7 +154,7 @@ MemberFunctionFactory<TMemberFunctionPointer>
 }
 
 
-} // end namespace itk
+}
 
 
 #endif //  sitkMemberFunctionFactory_h

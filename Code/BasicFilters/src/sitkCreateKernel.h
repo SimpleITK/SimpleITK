@@ -63,7 +63,7 @@ CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
 }
 
 
-} // end namespace itk
+}
 
 
 #endif // sitkCreateKernel_h

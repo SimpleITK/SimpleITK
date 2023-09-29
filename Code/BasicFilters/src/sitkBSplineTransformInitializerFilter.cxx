@@ -176,4 +176,4 @@ BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::v
 }
 
 
-} // end namespace itk
+}

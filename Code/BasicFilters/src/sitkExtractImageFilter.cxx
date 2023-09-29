@@ -203,4 +203,4 @@ Image Extract ( Image&& image1, std::vector<unsigned int> size, std::vector<int>
   return filter.Execute ( std::move(image1) );
 }
 
-} // end namespace itk
+}

@@ -251,5 +251,5 @@ private:
 };
 
 
-} // namespace typelist2
+}
 #endif // typelist_h_

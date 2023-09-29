@@ -76,6 +76,6 @@ protected:
 #endif
 };
 
-} // end namespace itk
+}
 
 #endif

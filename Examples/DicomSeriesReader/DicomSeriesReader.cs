@@ -57,5 +57,5 @@ static void Main(string[] args) {
   }
 }
 
-    } // class DicomSeriesReader
-} // namespace itk.simple.examples
+    }
+}

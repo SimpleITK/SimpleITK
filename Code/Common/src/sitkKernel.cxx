@@ -42,4 +42,4 @@ std::ostream& operator<<(std::ostream& os, const KernelEnum k)
   return os;
 }
 
-} // end namespace itk
+}

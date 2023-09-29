@@ -56,6 +56,6 @@ public:
 };
 
 
-} // end namespace itk
+}
 
 #endif //  sitkNonCopyable_h

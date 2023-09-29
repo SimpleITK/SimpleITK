@@ -364,5 +364,5 @@ TEST(ElastixImageFilter, GetParameterWhenOneParameterMapIsPresent)
     EXPECT_EQ(silx.GetParameter(key), values);
 }
 
-} // namespace simple
-} // namespace itk
+}
+}

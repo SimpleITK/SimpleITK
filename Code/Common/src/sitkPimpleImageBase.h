@@ -156,7 +156,7 @@ namespace itk::simple
     virtual const void     *GetBufferAsVoid( ) const = 0;
   };
 
-  } // end namespace itk
+  }
 
 
 #endif // sitkPimpleImageBase_h

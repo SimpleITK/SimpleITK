@@ -184,7 +184,7 @@ protected:
 
 };
 
-} // end namespace itk
+}
 
 #include "sitkMemberFunctionFactory.hxx"
 

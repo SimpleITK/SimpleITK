@@ -246,4 +246,4 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
   return *this;
 }
 
-} // end namespace itk
+}

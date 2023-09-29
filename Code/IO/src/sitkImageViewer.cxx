@@ -875,4 +875,4 @@ std::string BuildFullFileName(const std::string & name, const std::string & exte
 
 }
 
-  } // namespace itk
+  }

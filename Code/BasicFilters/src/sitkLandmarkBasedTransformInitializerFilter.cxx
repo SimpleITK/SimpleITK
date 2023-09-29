@@ -214,4 +214,4 @@ Transform LandmarkBasedTransformInitializer ( const Transform & transform,
 }
 
 
-} // end namespace itk
+}
