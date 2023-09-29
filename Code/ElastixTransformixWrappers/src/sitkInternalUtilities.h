@@ -3,8 +3,7 @@
 
 #include "Ancillary/type_list2.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 /** SimpleElastix and SimpleTransformix is compiled with float pixel type only. This
 * saves compile time and reduces binary size. Images are automatically casted to and
@@ -12,7 +11,6 @@ namespace itk {
 */
 using FloatPixelIDTypeList = typelist2::typelist<BasicPixelID<float>>;
 
-}
 }
 
 #endif

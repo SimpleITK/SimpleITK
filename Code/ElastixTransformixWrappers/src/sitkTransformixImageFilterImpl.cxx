@@ -1,11 +1,12 @@
+#include <memory>
+
 #include "sitkTransformixImageFilter.h"
 #include "sitkTransformixImageFilterImpl.h"
 #include "sitkCastImageFilter.h"
 #include "sitkImageConvert.h"
 #include "sitkInternalUtilities.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
       namespace {
           const std::string GetPixelIDValueAsElastixParameter(PixelIDValueType type)
@@ -117,7 +118,7 @@ TransformixImageFilter::TransformixImageFilterImpl
 ::TransformixImageFilterImpl()
 {
   // Register this class with SimpleITK
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory< MemberFunctionType >( this ) );
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory< MemberFunctionType >>( this );
   this->m_MemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, 2 >();
   this->m_MemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, 3 >();
 
@@ -700,5 +701,4 @@ TransformixImageFilter::TransformixImageFilterImpl
   return isEmpty;
 }
 
-}
 }

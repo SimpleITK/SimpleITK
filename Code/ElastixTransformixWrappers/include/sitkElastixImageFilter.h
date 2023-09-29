@@ -27,8 +27,7 @@
 #include <string>
 #include <vector>
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 /** \class ElastixImageFilter
 * \brief The class that wraps the elastix registration library.
@@ -340,7 +339,6 @@ SITKElastix_EXPORT Image Elastix( const Image& fixedImage, const Image& movingIm
 SITKElastix_EXPORT Image Elastix( const Image& fixedImage, const Image& movingImage, const std::map< std::string, std::vector< std::string > >, const Image& fixedMask, const Image& movingMask, const bool logToConsole = false, const bool logToFile = false, const std::string outputDirectory = "." );
 SITKElastix_EXPORT Image Elastix( const Image& fixedImage, const Image& movingImage, std::vector< std::map< std::string, std::vector< std::string > > > parameterMapVector, const Image& fixedMask, const Image& movingMask, const bool logToConsole = false, const bool logToFile = false, const std::string outputDirectory = "." );
 
-}
 }
 
 #endif // sitkElastixImageFilter_h
