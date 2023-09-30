@@ -37,6 +37,8 @@
 
 #include <itkIntTypes.h>
 
+#include <memory>
+
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkMetaDataObject.h"
@@ -85,7 +87,7 @@ public:
     im->Allocate();
     im->FillBuffer( 100 );
     itkShortImage = im;
-    shortImage = sitkAutoImagePointer( new itk::simple::Image( im.GetPointer() ) );
+    shortImage = std::make_unique<itk::simple::Image>( im.GetPointer() );
 
     itk::Image<float,4>::Pointer fim = itk::Image<float,4>::New();
     fim->SetRegions( region );
@@ -94,10 +96,10 @@ public:
     fim->Allocate();
     fim->FillBuffer( 0 );
     itkFloatImage = fim;
-    floatImage = sitkAutoImagePointer( new itk::simple::Image( fim.GetPointer() ) );
+    floatImage = std::make_unique<itk::simple::Image>( fim.GetPointer() );
 
     itkFloatVectorImage = FloatVectorImageType::New();
-    floatVectorImage = sitkAutoImagePointer( new itk::simple::Image( itkFloatVectorImage.GetPointer() ) );
+    floatVectorImage = std::make_unique<itk::simple::Image>( itkFloatVectorImage.GetPointer() );
 
     directionI4D = std::vector<double>(16, 0.0 );
     directionI4D[0] = directionI4D[5] = directionI4D[10] = directionI4D[15] = 1.0;

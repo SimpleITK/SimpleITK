@@ -16,6 +16,8 @@
 *
 *=========================================================================*/
 
+#include <memory>
+
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkLabelMap.h"
@@ -49,7 +51,7 @@ LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter
     this->m_ReferenceImage = Image();
     this->m_BSplineNumberOfControlPoints = 4u;
 
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();

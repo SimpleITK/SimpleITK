@@ -26,6 +26,7 @@
 #include <itkVectorImage.h>
 
 #include <iterator>
+#include <memory>
 
 namespace itk::simple {
 
@@ -219,7 +220,7 @@ ImportImageFilter::ImportImageFilter()
   // list of pixel types supported
   using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();

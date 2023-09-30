@@ -15,6 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
+#include <memory>
+
 #include "sitkImageRegistrationMethod.h"
 
 #include "sitkCreateInterpolator.hxx"
@@ -75,9 +77,9 @@ ImageRegistrationMethod::ImageRegistrationMethod()
     m_SmoothingSigmasAreSpecifiedInPhysicalUnits(true),
     m_ActiveOptimizer(NULL)
 {
-  m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+  m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( this );
 
-  m_EvaluateMemberFactory.reset( new detail::MemberFunctionFactory<EvaluateMemberFunctionType>(this) );
+  m_EvaluateMemberFactory = std::make_unique<detail::MemberFunctionFactory<EvaluateMemberFunctionType>>( this );
 
   // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 3 > ();
   // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 2 > ();
