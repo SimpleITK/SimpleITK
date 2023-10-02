@@ -9,8 +9,7 @@
 #include "itkTransformixFilter.h"
 #include "elxParameterObject.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 class SITKElastix_HIDDEN TransformixImageFilter::TransformixImageFilterImpl
 {
@@ -130,7 +129,6 @@ public:
   bool                    m_LogToFile;
 };
 
-}
 }
 
 #endif // sitktransformiximagefilterimpl_h

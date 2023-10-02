@@ -1,16 +1,17 @@
+#include <memory>
+
 #include "sitkElastixImageFilter.h"
 #include "sitkElastixImageFilterImpl.h"
 #include "sitkCastImageFilter.h"
 #include "sitkInternalUtilities.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 ElastixImageFilter::ElastixImageFilterImpl
 ::ElastixImageFilterImpl( void )
 {
   // Register this class with SimpleITK
-  this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory< MemberFunctionType >( this ) );
+  this->m_DualMemberFactory = std::make_unique<detail::DualMemberFunctionFactory< MemberFunctionType >>( this );
   this->m_DualMemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, FloatPixelIDTypeList, 2 >();
   this->m_DualMemberFactory->RegisterMemberFunctions< FloatPixelIDTypeList, FloatPixelIDTypeList, 3 >();
 
@@ -1077,5 +1078,4 @@ ElastixImageFilter::ElastixImageFilterImpl
   return isEmpty;
 }
 
-}
 }

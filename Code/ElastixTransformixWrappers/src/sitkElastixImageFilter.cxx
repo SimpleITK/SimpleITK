@@ -1,8 +1,7 @@
 #include "sitkElastixImageFilter.h"
 #include "sitkElastixImageFilterImpl.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 ElastixImageFilter
 ::ElastixImageFilter() : m_Pimple(std::make_unique<ElastixImageFilterImpl>())
@@ -795,5 +794,4 @@ Elastix( const Image& fixedImage, const Image& movingImage, ElastixImageFilter::
   return selx.Execute();
 }
 
-}
 }

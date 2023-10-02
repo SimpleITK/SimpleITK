@@ -10,8 +10,7 @@
 #include "itkElastixRegistrationMethod.h"
 #include "elxParameterObject.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 class SITKElastix_HIDDEN ElastixImageFilter::ElastixImageFilterImpl
 {
@@ -170,7 +169,6 @@ public:
 
 };
 
-}
 }
 
 #endif // sitkelastiximagefilterimpl_h

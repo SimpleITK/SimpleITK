@@ -1,8 +1,7 @@
 #include "sitkTransformixImageFilter.h"
 #include "sitkTransformixImageFilterImpl.h"
 
-namespace itk {
-  namespace simple {
+namespace itk::simple {
 
 TransformixImageFilter
 ::TransformixImageFilter() : m_Pimple(std::make_unique<TransformixImageFilterImpl>())
@@ -467,5 +466,4 @@ Transformix( const Image& movingImage, const TransformixImageFilter::ParameterMa
   return stfx.Execute();
 }
 
-}
 }
