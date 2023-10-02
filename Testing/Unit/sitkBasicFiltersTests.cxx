@@ -227,7 +227,8 @@ TEST(BasicFilters,MaskImageFilter_deprecated_1)
 
   namespace sitk = itk::simple;
 
-  testing::internal::CaptureStderr();
+  MockLogger logger;
+  logger.SetAsGlobalITKLogger();
 
   EXPECT_TRUE(sitk::TypeListHasPixelIDValue<sitk::IntegerPixelIDTypeList>(sitk::sitkUInt32));
 
@@ -243,36 +244,19 @@ TEST(BasicFilters,MaskImageFilter_deprecated_1)
   EXPECT_EQ(out.GetPixelAsFloat({ 0, 1 }), 0);
   EXPECT_EQ(out.GetPixelAsFloat({ 1, 1 }), 99);
 
-  EXPECT_TRUE( testing::internal::GetCapturedStderr().find("has been deprecated") != std::string::npos );
+  EXPECT_TRUE(logger.m_DisplayWarningText.str().find("has been deprecated") != std::string::npos );
 
-
-}
-
-
-TEST(BasicFilters,MaskImageFilter_deprecated_2)
-{
-  // test deprecated support for pixel types in the mask image filter
-
-  namespace sitk = itk::simple;
-
-  testing::internal::CaptureStderr();
-
-
-  sitk::Image img({ 100, 100 }, sitk::sitkFloat32);
-  img.SetPixelAsFloat({ 0, 0 }, 99);
-  img.SetPixelAsFloat({ 1, 1 }, 99);
-  sitk::Image mask({ 100, 100 }, sitk::sitkUInt32);
-  mask.SetPixelAsUInt32({ 1, 1 }, 1);
+  logger.Clear();
 
 
   mask.SetPixelAsUInt32({ 1, 1 }, 255);
-  auto out = sitk::Mask(img, mask);
+  out = sitk::Mask(img, mask);
   EXPECT_EQ(out.GetPixelID(), sitk::sitkFloat32);
   EXPECT_EQ(out.GetPixelAsFloat({ 0, 0 }), 0);
   EXPECT_EQ(out.GetPixelAsFloat({ 0, 1 }), 0);
   EXPECT_EQ(out.GetPixelAsFloat({ 1, 1 }), 99);
 
-  EXPECT_TRUE( testing::internal::GetCapturedStderr().find("has been deprecated") != std::string::npos );
+    EXPECT_TRUE(logger.m_DisplayWarningText.str().find("has been deprecated") != std::string::npos );
 
 }
 
