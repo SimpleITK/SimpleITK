@@ -818,33 +818,6 @@ TEST(Logger, Logger)
   EXPECT_EQ( testing::internal::GetCapturedStderr(), expectedOutput);
 }
 
-namespace {
-// A mockup of a logger which saves messages to strings.
-class MockLogger
-:public itk::simple::LoggerBase {
-public:
-
-  MockLogger() = default;
-
-  ~MockLogger() override = default;
-
-  void DisplayText(const char * t) override {m_DisplayText << t;}
-
-  void DisplayErrorText(const char * t) override {m_DisplayErrorText << t;}
-
-  void DisplayWarningText(const char * t) override {m_DisplayWarningText << t;}
-
-  void DisplayGenericOutputText(const char * t) override {m_DisplayGenericOutputText << t;}
-
-  void DisplayDebugText(const char * t) override {m_DisplayDebugText << t;}
-
-  std::stringstream m_DisplayText;
-  std::stringstream m_DisplayErrorText;
-  std::stringstream m_DisplayWarningText;
-  std::stringstream m_DisplayGenericOutputText;
-  std::stringstream m_DisplayDebugText;
-};
-}
 
 
 TEST(Logger, MockLogger)
