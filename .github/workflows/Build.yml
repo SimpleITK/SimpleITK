@@ -30,6 +30,13 @@ jobs:
       max-parallel: 4
       matrix:
         include:
+          - os: macos-latest-xlarge
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=OFF
+              WRAP_CSHARP:BOOL=OFF
           - os: self-hosted-x64
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
