@@ -1,0 +1,58 @@
+name: Nightly Build
+
+on:
+  push: { branches: [ master ] }
+  schedule:
+    # Every day at 9:11 AM UTC or 5:11 AM EST
+    - cron: '11 9 * * *'
+  pull_request:
+    paths: .github/workflows/Daily.yml
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    runs-on: coverage-x64
+    env:
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/checkout@v3
+        with:
+          path: SimpleITK-dashboard
+          ref: dashboard
+      - name: Generate External Data Hash
+        shell: bash
+        run: |
+          git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: ${{ runner.temp }}/.ExternalData
+          key: external-data-v1-${{ hashFiles( format( '{0}/{1}', github.workspace, 'external-data.hashable') ) }}
+          enableCrossOsArchive: true
+          restore-keys: |
+            external-data-v1-
+      - name: Build and Test
+        shell: bash
+        env:
+          DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
+          CTEST_CMAKE_GENERATOR: "Ninja"
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CACHE: |
+            WRAP_DEFAULT:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_TESTING:BOOL=ON
+            CMAKE_CXX_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+            CMAKE_C_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+            CMAKE_EXE_LINKER_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
+
+        run: |
+          cmake --version
+          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -- \
+             -Ddashboard_do_coverage=1 -Ddashboard_track="Nightly"
