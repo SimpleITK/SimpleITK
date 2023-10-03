@@ -45,6 +45,7 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
 
 #include "sitkImage.h"
 #include "sitkCommand.h"
+#include "sitkLogger.h"
 
 // Class to help us find test data
 //
@@ -92,6 +93,39 @@ protected:
 extern DataFinder dataFinder;
 
 
+// A mockup of a logger which saves messages to strings.
+class MockLogger
+  :public itk::simple::LoggerBase {
+public:
+
+  MockLogger() = default;
+
+  ~MockLogger() override = default;
+
+  void DisplayText(const char * t) override {m_DisplayText << t;}
+
+  void DisplayErrorText(const char * t) override {m_DisplayErrorText << t;}
+
+  void DisplayWarningText(const char * t) override {m_DisplayWarningText << t;}
+
+  void DisplayGenericOutputText(const char * t) override {m_DisplayGenericOutputText << t;}
+
+  void DisplayDebugText(const char * t) override {m_DisplayDebugText << t;}
+
+  void Clear() {
+    m_DisplayText.str("");
+    m_DisplayErrorText.str("");
+    m_DisplayWarningText.str("");
+    m_DisplayGenericOutputText.str("");
+    m_DisplayDebugText.str("");
+  }
+
+  std::stringstream m_DisplayText;
+  std::stringstream m_DisplayErrorText;
+  std::stringstream m_DisplayWarningText;
+  std::stringstream m_DisplayGenericOutputText;
+  std::stringstream m_DisplayDebugText;
+};
 
 /** Base Command Class which holds onto a process object
  */
