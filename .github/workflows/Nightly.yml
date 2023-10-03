@@ -1,16 +1,15 @@
 name: Nightly Build
 
 on:
-  push: { branches: [ master ] }
   schedule:
-    # Every day at 9:11 AM UTC or 5:11 AM EST
-    - cron: '11 9 * * *'
+    # Every day at 6:11 AM UTC or 2:11 AM EST
+    - cron: '11 6 * * *'
   pull_request:
-    paths: .github/workflows/Daily.yml
+    paths: .github/workflows/Nightly.yml
   workflow_dispatch:
 
 jobs:
-  coverage:
+  valgrind:
     runs-on: coverage-x64
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
@@ -24,6 +23,9 @@ jobs:
         with:
           path: SimpleITK-dashboard
           ref: dashboard
+      - name: Install Dependencies
+        run: |
+          apt-get install -y valgrind
       - name: Generate External Data Hash
         shell: bash
         run: |
@@ -41,12 +43,12 @@ jobs:
         env:
           DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-          CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
+          CTEST_CONFIGURATION_TYPE: Release
           CTEST_CMAKE_GENERATOR: "Ninja"
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_CACHE: |
             WRAP_DEFAULT:BOOL=OFF
-            BUILD_EXAMPLES:BOOL=ON
+            BUILD_EXAMPLES:BOOL=OFF
             BUILD_TESTING:BOOL=ON
             CMAKE_CXX_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
             CMAKE_C_FLAGS:STRING=-g -O0 -fprofile-arcs -ftest-coverage
@@ -55,4 +57,8 @@ jobs:
         run: |
           cmake --version
           ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -- \
-             -Ddashboard_do_coverage=1 -Ddashboard_track="Nightly"
+            -Ddashboard_do_memcheck=1 \
+            -Ddashboard_track="Nightly" \
+            -DCTEST_MEMORYCHECK_COMMAND="$(type -p valgrind)" \
+            -DCTEST_MEMORYCHECK_COMMAND_OPTIONS="--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes" \
+            -DCTEST_MEMORYCHECK_SUPPRESSIONS_FILE="${CTEST_SOURCE_DIRECTORY}/CMake/Valgrind-Ubuntu2004.supp"

@@ -60,13 +60,18 @@ set_from_env(DASHBOARD_BRANCH_DIRECTORY "DASHBOARD_BRANCH_DIRECTORY" REQUIRED)
 
 
 set(dashboard_loop 0)
-
-if( "$ENV{GITHUB_REF_NAME}" STREQUAL "master" OR  "$ENV{GITHUB_REF_NAME}" STREQUAL "release ")
-  set(dashboard_model "Continuous")
-else()
-  set(dashboard_model "Experimental")
+if ( NOT DEFINED dashboard_model)
+  if( "$ENV{GITHUB_REF_NAME}" STREQUAL "master" OR  "$ENV{GITHUB_REF_NAME}" STREQUAL "release ")
+    set(dashboard_model "Continuous")
+  else()
+    set(dashboard_model "Experimental")
+  endif()
 endif()
+message("dashboard_model: ${dashboard_model}")
 
+if (DEFINED dashboard_do_memcheck)
+  message("dashboard_do_memcheck: ${dashboard_do_memcheck}")
+endif()
 
 # Construct build name based on what is being built
 if(NOT CTEST_BUILD_NAME)

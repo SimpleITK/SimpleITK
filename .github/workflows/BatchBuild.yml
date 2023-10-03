@@ -204,6 +204,7 @@ jobs:
           CTEST_CMAKE_GENERATOR_TOOLSET: "${{ matrix.cmake-generator-toolset }}"
           CTEST_CMAKE_GENERATOR_PLATFORM: "${{ matrix.cmake-generator-platform }}"
           CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_TEST_TIMEOUT: 10000
           CTEST_CACHE: |
             WRAP_DEFAULT:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
