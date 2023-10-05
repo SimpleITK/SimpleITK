@@ -57,7 +57,7 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
 endfunction()
 
 
-find_package(ITK COMPONENTS ITKCommon REQUIRED OPTIONAL_COMPONENTS ITKFFT )
+find_package(ITK REQUIRED COMPONENTS ITKCommon OPTIONAL_COMPONENTS ITKFFT )
 
 
 # common source which all basic filter libraries need to be linked against
@@ -167,8 +167,12 @@ add_filter_library(SimpleITKBasicFilters1 SimpleITKBasicFilters1Source no_itk_de
 target_link_libraries ( SimpleITKBasicFilters1
   PRIVATE ${PREV_SimpleITK_LIBRARIES} )
 
-# Manual dependecy needed for to run the Cast filter
+# Manual dependency needed to run the Cast filter
 target_link_libraries ( SimpleITK_ITKImageIntensity PRIVATE SimpleITK_ITKImageFilterBase )
+
+if (GenericLabelInterpolator IN_LIST ITK_MODULES_ENABLED)
+  sitk_target_use_itk( SimpleITK_ITKImageGrid PRIVATE GenericLabelInterpolator )
+endif()
 
 sitk_target_use_itk_factory( SimpleITK_ITKFFT FFTImageFilterInit )
 sitk_target_use_itk_factory( SimpleITK_ITKConvolution FFTImageFilterInit )
