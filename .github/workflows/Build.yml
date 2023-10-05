@@ -112,4 +112,4 @@ jobs:
       run: |
         cmake --version
         ninja --version
-        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -j 2
+        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V
