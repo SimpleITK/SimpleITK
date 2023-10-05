@@ -57,6 +57,8 @@
 #include <sitkDICOMOrientImageFilter.h>
 #include <sitkPasteImageFilter.h>
 #include <sitkN4BiasFieldCorrectionImageFilter.h>
+#include <sitkMaskImageFilter.h>
+#include <sitkLogger.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -218,6 +220,47 @@ TEST(BasicFilters,ConnectedThreshold_ENUMCHECK) {
   EXPECT_EQ( (int) ITKType::ConnectivityEnum::FaceConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FaceConnectivity );
   EXPECT_EQ( (int) ITKType::ConnectivityEnum::FullConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FullConnectivity );
 }
+
+TEST(BasicFilters,MaskImageFilter_deprecated_1)
+{
+  // test deprecated support for pixel types in the mask image filter
+
+  namespace sitk = itk::simple;
+
+  MockLogger logger;
+  logger.SetAsGlobalITKLogger();
+
+  EXPECT_TRUE(sitk::TypeListHasPixelIDValue<sitk::IntegerPixelIDTypeList>(sitk::sitkUInt32));
+
+  sitk::Image img({ 100, 100 }, sitk::sitkFloat32);
+  img.SetPixelAsFloat({ 0, 0 }, 99);
+  img.SetPixelAsFloat({ 1, 1 }, 99);
+  sitk::Image mask({ 100, 100 }, sitk::sitkUInt32);
+  mask.SetPixelAsUInt32({ 1, 1 }, 1);
+
+  auto out = sitk::Mask(img, mask);
+  EXPECT_EQ(out.GetPixelID(), sitk::sitkFloat32);
+  EXPECT_EQ(out.GetPixelAsFloat({ 0, 0 }), 0);
+  EXPECT_EQ(out.GetPixelAsFloat({ 0, 1 }), 0);
+  EXPECT_EQ(out.GetPixelAsFloat({ 1, 1 }), 99);
+
+  EXPECT_TRUE(logger.m_DisplayWarningText.str().find("has been deprecated") != std::string::npos );
+
+  logger.Clear();
+
+
+  mask.SetPixelAsUInt32({ 1, 1 }, 255);
+  out = sitk::Mask(img, mask);
+  EXPECT_EQ(out.GetPixelID(), sitk::sitkFloat32);
+  EXPECT_EQ(out.GetPixelAsFloat({ 0, 0 }), 0);
+  EXPECT_EQ(out.GetPixelAsFloat({ 0, 1 }), 0);
+  EXPECT_EQ(out.GetPixelAsFloat({ 1, 1 }), 99);
+
+    EXPECT_TRUE(logger.m_DisplayWarningText.str().find("has been deprecated") != std::string::npos );
+
+}
+
+
 
 TEST(BasicFilter,GradientAnisotropicDiffusion_EstimateOptimalTimeStep) {
   // This test is to check the correctness of the

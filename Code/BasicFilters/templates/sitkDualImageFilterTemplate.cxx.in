@@ -120,7 +120,7 @@ if inputs then
   end
 end
 
-if number_of_inputs >= 2 or (inputs and (#inputs >= 2)) then
+if not custom_type2 and (number_of_inputs >= 2 or (inputs and (#inputs >= 2))) then
   OUT=OUT..[[
   const PixelIDValueType type2 = ]]..inputName2..[[.GetPixelIDValue();]]
 else
