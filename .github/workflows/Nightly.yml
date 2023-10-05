@@ -28,6 +28,17 @@ jobs:
               -Ddashboard_track="Nightly" \
               -DCTEST_COVERAGE_COMMAND="$(which gcov)"
 
+          - os: coverage-x64
+            name: valgrind
+            cmake-build-type: "RelWithDebInfo"
+            ctest-test-timeout: 10000
+            ctest-extra-args: |
+              -Ddashboard_do_memcheck=1 \
+              -Ddashboard_track="Nightly" \
+              -DCTEST_MEMORYCHECK_COMMAND="$(type -p valgrind)" \
+              -DCTEST_MEMORYCHECK_COMMAND_OPTIONS="--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes" \
+              -DCTEST_MEMORYCHECK_SUPPRESSIONS_FILE="${CTEST_SOURCE_DIRECTORY}/CMake/Valgrind-Ubuntu2004.supp"
+
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
@@ -60,6 +71,7 @@ jobs:
           CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
           CTEST_CMAKE_GENERATOR: "Ninja"
           CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_TEST_TIMEOUT: ${{ matrix.ctest-test-timeout }}
           CTEST_CACHE: |
             WRAP_DEFAULT:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
