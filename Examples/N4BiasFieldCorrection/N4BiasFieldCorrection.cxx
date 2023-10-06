@@ -50,8 +50,7 @@ int main ( int argc, char* argv[] ) {
     maskImage = sitk::Shrink( maskImage, shrink );
   }
 
-  sitk::N4BiasFieldCorrectionImageFilter *corrector
-    = new sitk::N4BiasFieldCorrectionImageFilter();
+  sitk::N4BiasFieldCorrectionImageFilter corrector;
 
   unsigned int numFittingLevels = 4;
 
@@ -62,12 +61,12 @@ int main ( int argc, char* argv[] ) {
   if ( argc > 5 ) {
     unsigned int it = atoi( argv[5] );
     std::vector<unsigned int> iterations( numFittingLevels, it );
-    corrector->SetMaximumNumberOfIterations( iterations );
+    corrector.SetMaximumNumberOfIterations( iterations );
   }
 
-  sitk::Image corrected_image = corrector->Execute( image, maskImage );
+  sitk::Image corrected_image = corrector.Execute( image, maskImage );
 
-  sitk::Image log_bias_field = corrector->GetLogBiasFieldAsImage( inputImage );
+  sitk::Image log_bias_field = corrector.GetLogBiasFieldAsImage( inputImage );
 
   sitk::Image corrected_image_full_resolution = sitk::Divide( inputImage, sitk::Exp( log_bias_field ) );
 
