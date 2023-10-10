@@ -11,6 +11,11 @@ some platforms."
   mark_as_advanced(ITK_USE_64BITS_IDS)
 endif()
 
+
+option(ITK_USE_BUILD_DIR "When ON, ITK will not be installed and SimpleITK built against the ITK build
+directory." OFF)
+mark_as_advanced(ITK_USE_BUILD_DIR)
+
 if(NOT DEFINED ITK_BUILD_DEFAULT_MODULES)
   set(ITK_BUILD_DEFAULT_MODULES ON)
 endif()
@@ -92,6 +97,10 @@ if (NOT DEFINED CMAKE_CXX_STANDARD)
   list( APPEND ep_itk_args "-DCMAKE_CXX_STANDARD:STRING=17")
 endif()
 
+if (ITK_USE_BUILD_DIR)
+  set( ITK_INSTALL_COMMAND INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Skipping install step.")
+endif()
+
 list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
@@ -100,6 +109,7 @@ ExternalProject_Add(${proj}
   GIT_REPOSITORY ${ITK_GIT_REPOSITORY}
   ${ITK_TAG_COMMAND}
   UPDATE_COMMAND ""
+  ${ITK_INSTALL_COMMAND}
   SOURCE_DIR ${proj}
   BINARY_DIR ${proj}-build
   CMAKE_GENERATOR ${gen}
@@ -124,6 +134,11 @@ ExternalProject_Add(${proj}
   ${External_Project_USES_TERMINAL}
   )
 
+if (ITK_USE_BUILD_DIR)
+  ExternalProject_Get_Property(${proj} BINARY_DIR)
 
-ExternalProject_Get_Property(${proj} install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK")
+  set(ITK_DIR "${BINARY_DIR}")
+else()
+  ExternalProject_Get_Property(${proj} install_dir)
+  set(ITK_DIR "${install_dir}/lib/cmake/ITK")
+endif()
