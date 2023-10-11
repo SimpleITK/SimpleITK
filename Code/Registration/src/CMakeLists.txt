@@ -10,6 +10,11 @@ find_package(ITK COMPONENTS ${use_itk_modules} REQUIRED)
 
 add_library ( SimpleITKRegistration ${SimpleITKRegistrationSource} )
 sitk_target_use_itk ( SimpleITKRegistration PRIVATE ${use_itk_modules} )
+
+if (GenericLabelInterpolator IN_LIST ITK_MODULES_ENABLED)
+  sitk_target_use_itk( SimpleITKRegistration PRIVATE GenericLabelInterpolator)
+endif()
+
 # The BasicFiltersLibrary is needed of the Cast filter
 target_link_libraries ( SimpleITKRegistration
   PUBLIC SimpleITKCommon SimpleITK_ITKCommon )
