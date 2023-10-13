@@ -5,6 +5,9 @@ find_package(Elastix REQUIRED)
 include(${ELASTIX_CONFIG_TARGETS_FILE})
 
 
+set(use_itk_modules ITKCommon ITKImageGrid ITKImageIO)
+find_package(ITK COMPONENTS REQUIRED ${use_itk_modules} )
+
 add_library( ElastixImageFilter sitkElastixImageFilter.cxx  sitkElastixImageFilterImpl.cxx )
 target_include_directories( ElastixImageFilter
   PUBLIC
@@ -20,6 +23,7 @@ target_link_libraries( ElastixImageFilter
     transformix_lib )
 target_compile_options( ElastixImageFilter PUBLIC ${SimpleITK_PUBLIC_COMPILE_OPTIONS} PRIVATE ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 target_compile_features( ElastixImageFilter PUBLIC cxx_std_17 )
+sitk_target_use_itk ( ElastixImageFilter PRIVATE ${use_itk_modules} )
 sitk_install_exported_target( ElastixImageFilter )
 
 
@@ -38,4 +42,5 @@ target_link_libraries( TransformixImageFilter
     transformix_lib )
 target_compile_options( TransformixImageFilter PUBLIC ${SimpleITK_PUBLIC_COMPILE_OPTIONS} PRIVATE ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 target_compile_features( TransformixImageFilter PUBLIC cxx_std_17 )
+sitk_target_use_itk ( TransformixImageFilter PRIVATE ${use_itk_modules} )
 sitk_install_exported_target( TransformixImageFilter )
