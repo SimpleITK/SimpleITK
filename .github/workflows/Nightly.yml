@@ -102,6 +102,7 @@ jobs:
               CMAKE_C_FLAGS:STRING=-O0
             ctest-extra-args: |
               -Ddashboard_do_memcheck=1 \
+              -DCTEST_TEST_ARGS="EXCLUDE_LABEL;RUNS_LONG" \
               -DCTEST_MEMORYCHECK_COMMAND="$(type -p valgrind)" \
               -DCTEST_MEMORYCHECK_COMMAND_OPTIONS="--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes" \
               -DCTEST_MEMORYCHECK_SUPPRESSIONS_FILE="${CTEST_SOURCE_DIRECTORY}/ITK/CMake/InsightValgrind-Ubuntu2004.supp"
