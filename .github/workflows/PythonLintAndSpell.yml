@@ -50,7 +50,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install comment-spell-check~=0.2.1
+        python -m pip install comment-spell-check~=0.2.2
 
     - name: Do spell checking
       run: |
