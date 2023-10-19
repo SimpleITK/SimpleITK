@@ -68,7 +68,7 @@ include(sitkCheckForITKModuleDependencies)
 if(ITK_FOUND)
 
   # NOTE: We are purposely not calling UseITK yet. However, we must make
-  # sure the requred compilation and linker flags are set. Since, we
+  # sure the required compilation and linker flags are set. Since, we
   # are trying to encapsulate ITK, we need to very carefully control
   # in access to the headers and libraries, hence each SimpleITK
   # library will call UseITK.
