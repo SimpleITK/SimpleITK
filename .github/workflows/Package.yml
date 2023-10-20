@@ -7,6 +7,8 @@ on:
       - 'v*'
     branches-ignore:
       - '**'
+    pull_request:
+      paths: .github/workflows/Package.yml
 
 
 
@@ -23,7 +25,7 @@ jobs:
             dockerfile: Dockerfile-2014-x86_64
 
     env:
-      PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311"
+      PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312"
       BUILD_CSHARP: 0
 
     steps:
