@@ -2,8 +2,8 @@ name: Nightly Build
 
 on:
   schedule:
-    # Every day at 4:11 AM UTC or 12:11 AM EST
-    - cron: '11 4 * * *'
+    # Every day at 6:11 AM UTC or 2:11 AM EST
+    - cron: '11 6 * * *'
   pull_request:
     paths: .github/workflows/Nightly.yml
   workflow_dispatch:
