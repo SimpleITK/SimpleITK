@@ -135,6 +135,41 @@ class BasicFiltersTests(unittest.TestCase):
         self.assertEqual(tx_initializer.Execute(sitk.AffineTransform(3)).__class__,
                         sitk.AffineTransform)
 
+
+    def test_centered_transfrom_initializer(self):
+        """Test CenteredTransformInitializer to check that return Transform is downcasted"""
+
+        transforms_3d = {
+            'AffineTransform': (3,),
+            'Euler3DTransform': (),
+            'ScaleSkewVersor3DTransform': (),
+            'ScaleTransform': (3,),
+            'ScaleVersor3DTransform': (),
+            'Similarity3DTransform': (),
+            'VersorRigid3DTransform': (),
+            'VersorTransform': (),
+        }
+
+        fixed = sitk.Image([16, 16, 16], sitk.sitkFloat32)
+        fixed.SetOrigin([32, 32, 32])
+        moving = sitk.Image([16, 16, 16], sitk.sitkFloat32)
+
+        tx_initializer = sitk.CenteredTransformInitializerFilter()
+        tx_initializer.SetOperationMode(sitk.CenteredTransformInitializerFilter.GEOMETRY)
+
+        for transform_name, parameters in transforms_3d.items():
+            tx = getattr(sitk, transform_name)(*parameters)
+
+            result_tx = tx_initializer.Execute(fixed, moving, tx)
+            self.assertEqual(result_tx.__class__,
+                             tx.__class__)
+
+            result_tx = sitk.CenteredTransformInitializer(fixed,
+                                                        moving, tx,
+                                                        sitk.CenteredTransformInitializerFilter.GEOMETRY)
+            self.assertEqual(result_tx.__class__,
+                             tx.__class__)
+
     def test_minimum_maximum(self):
         """
         Test the manual written MinimumMaximum procedural method

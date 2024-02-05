@@ -101,4 +101,14 @@
   val = val.Downcast()
 };
 
+%pythonappend itk::simple::CenteredTransformInitializerFilter::Execute
+{
+  val = val.Downcast()
+};
+
+%pythonappend itk::simple::CenteredTransformInitializer
+{
+  val = val.Downcast()
+};
+
 #endif
