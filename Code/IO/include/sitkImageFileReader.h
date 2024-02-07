@@ -55,6 +55,18 @@ namespace itk {
      * when multiple ImageIOs "can read" the file and the user wants
      * to select a specific IO (not the first).
      *
+     * \note DICOM tags are represented as strings in the meta-data
+     * dictionary(s), therefore "0020|000D" and "0020|000d" are
+     * different when accessing the tag value. This differs from
+     * the hexadecimal numbers they represent, 0020|000D and 0020|000d
+     * are equivalent. The ITK meta-data dictionary is string based
+     * and uses lower case to represent the hexadecimal number read
+     * from disk, so 0020|000d will work as a key and 0020|000D will
+     * not be found in the dictionary (results in an exception if
+     * attempting to access).
+     * It is recommended to use lower case when setting and accessing
+     * DICOM tags.
+     *
      * \sa itk::simple::ReadImage for the procedural interface
      */
     class SITKIO_EXPORT ImageFileReader
