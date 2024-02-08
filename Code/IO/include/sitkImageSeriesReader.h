@@ -39,6 +39,18 @@ namespace itk::simple {
      * Once the image series is read the meta-data is directly
      * accessible from the reader.
      *
+     * \note DICOM tags are represented as strings in the meta-data
+     * dictionary(s), therefore "0020|000D" and "0020|000d" are
+     * different when accessing the tag value. This differs from
+     * the hexadecimal numbers they represent, 0020|000D and 0020|000d
+     * are equivalent. The ITK meta-data dictionary is string based
+     * and uses lower case to represent the hexadecimal number read
+     * from disk, so 0020|000d will work as a key and 0020|000D will
+     * not be found in the dictionary (results in an exception if
+     * attempting to access).
+     * It is recommended to use lower case when setting and accessing
+     * DICOM tags.
+     *
      * \note If the pixel type for the returned image is not specified
      * it is deduced from the first image in the series. This approach
      * is computationally efficient and assumes that all images in a
