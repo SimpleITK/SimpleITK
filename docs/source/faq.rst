@@ -23,6 +23,14 @@ Simple in the name. The main ITK
 elements omitted from SimpleITK are the pipeline architecture,
 spatial objects framework, point sets, and the mesh framework.
 
+What is the toolkit's Python version support policy?
+----------------------------------------------------
+
+For the Python programming language, SimpleITK stops providing binary packages when
+the Python version has reached end-of-life status. Extensions may be made such as
+when the EOL Python version is included as part of a long-term support
+operating system version. If you need a newer SimpleITK binary than the one available
+for your Python version you can :ref:`build it on your own<building_simpleitk>`.
 
 Installation
 ============
