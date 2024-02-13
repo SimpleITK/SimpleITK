@@ -145,11 +145,11 @@ jobs:
             ctest-cache: |
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.sha }}"
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -157,7 +157,7 @@ jobs:
         shell: bash
         run: |
           git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: cache
         with:
           path: ${{ runner.temp }}/.ExternalData
@@ -167,7 +167,7 @@ jobs:
             external-data-v1-
       - name: Set up Python 3.8
         if: matrix.os != 'self-hosted-arm'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         id: cpy
         with:
           python-version: 3.8

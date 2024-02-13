@@ -29,7 +29,7 @@ jobs:
       BUILD_CSHARP: 0
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Docker Build Image
         shell: bash
         working-directory: Utilities/Distribution/manylinux
@@ -52,7 +52,7 @@ jobs:
         run: |
           ls -lhR .
       - name: Upload Wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: python-wheels
           path: |

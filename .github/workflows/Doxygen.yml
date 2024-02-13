@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Build Docker Image for Doxygen
@@ -33,7 +33,7 @@ jobs:
           docker cp sitk-dox:/SimpleITKDoxygen.tar.gz artifacts/SimpleITKDoxygen-${GITHUB_SHA}.tar.gz
           docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz artifacts/SimpleITKDoxygenXML-${GITHUB_SHA}.tar.gz
       - name: Archive Doxygen Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: doxygen-xml
           path: |
