@@ -43,11 +43,11 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.sha }}"
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -55,7 +55,7 @@ jobs:
         shell: bash
         run: |
           git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: cache
         with:
           path: ${{ runner.temp }}/.ExternalData
@@ -124,7 +124,7 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/ITK-dashboard"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: InsightSoftwareConsortium/ITK
           path: ITK-dashboard
