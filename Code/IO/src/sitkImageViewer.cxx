@@ -27,6 +27,7 @@
 #include <iterator>
 #include <string>
 #include <algorithm>
+#include <mutex>
 #include <ctype.h>
 
 #ifdef _WIN32
@@ -227,21 +228,24 @@ GlobalConfig::GlobalConfig()
   m_DefaultApplication = FindViewingApplication();
   }
 
+std::once_flag gc_once_flag;
+
 GlobalConfig& GlobalConfig::getInstance()
   {
   static GlobalConfig instance;
-  static bool first_time = true;
 
-  if (first_time)
+  std::call_once(gc_once_flag, []()
     {
     if (instance.m_DefaultDebug)
       {
+      fprintf(stderr, "Call once?\n");
       std::ostringstream msg;
       msg << instance;
       ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );
       }
-    first_time = false;
     }
+  );
+
   return instance;
   }
 
