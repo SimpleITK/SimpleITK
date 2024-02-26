@@ -47,14 +47,9 @@ bool compare_word_lists(std::vector<std::string> a, std::vector<std::string> b)
 
 TEST(ImageViewerTest,Methods)
   {
-  std::string cmd( "SITK_SHOW_COMMAND=testpath" );
-  itksys::SystemTools::PutEnv( cmd );
-
   itk::simple::ImageViewer iv;
 
   std::cout << iv.ToString() << std::endl;
-
-  EXPECT_EQ( iv.GetCommand(), "testpath" );
 
   iv.SetTitle("ImageViewerTest");
   EXPECT_EQ( iv.GetTitle(), "ImageViewerTest" );
@@ -112,6 +107,12 @@ TEST(ImageViewerTest,GlobalDefaults)
 
   iv.SetGlobalDefaultApplication( "testapp" );
   EXPECT_EQ( iv.GetGlobalDefaultApplication(), "testapp" );
+
+  itk::simple::ImageViewer::SetGlobalDefaultFileExtension( ".nrrd" );
+  itk::simple::ImageViewer  iv2;
+  EXPECT_EQ( iv2.GetFileExtension(), ".nrrd" );
+  EXPECT_EQ( iv.GetFileExtension(), ".mha" );
+
   }
 
 TEST(ImageViewerTest,Execute)

@@ -27,6 +27,7 @@
 #include <iterator>
 #include <string>
 #include <algorithm>
+#include <mutex>
 #include <ctype.h>
 
 #ifdef _WIN32
@@ -82,31 +83,49 @@ namespace
 #endif
 
   void ExecuteCommand( const std::vector<std::string> & cmdLine, const unsigned int timeout=500 );
-}
+
+/** \class GlobalConfig
+  * \brief Default Image Viewer configuration singleton class.
+  *
+  * The GlobalConfig class is a singleton that stores all the default
+  * settings for the ImageViewer instances.  The GlobalConfig variables
+  * are set at program start.  They can be changed via static methods
+  * in the ImageViewer class, which is a friend class.
+  */
+class GlobalConfig {
+  public:
+    static GlobalConfig& getInstance();
+
+  private:
+    int  m_ViewerCount = 0;
+
+    std::vector<std::string> m_DefaultSearchPath;
+    std::vector<std::string> m_DefaultExecutableNames;
+    unsigned int             m_ProcessDelay;
+
+    std::string m_DefaultViewCommand;
+    std::string m_DefaultFileExtension;
+    std::string m_DefaultApplication;
+
+    bool m_DefaultDebug = false;
+    GlobalConfig();
+
+  public:
+    GlobalConfig(GlobalConfig const&)     = delete;
+    void operator=(GlobalConfig const&)   = delete;
+
+    std::string FindViewingApplication(bool debug=false);
+
+    friend std::ostream& operator<<(std::ostream& os, const GlobalConfig& gc);
+
+    friend ImageViewer;
+};
 
 
-int ImageViewer::m_GlobalViewerImageCount=0;
-bool ImageViewer::m_GlobalAreDefaultsInitialized=false;
-unsigned int ImageViewer::m_GlobalProcessDelay;
-
-std::vector<std::string> ImageViewer::m_GlobalDefaultSearchPath;
-std::vector<std::string> ImageViewer::m_GlobalDefaultExecutableNames;
-
-std::string ImageViewer::m_GlobalDefaultViewCommand;
-
-std::string ImageViewer::m_GlobalDefaultApplication;
-std::string ImageViewer::m_GlobalDefaultFileExtension;
-
-bool ImageViewer::m_GlobalDefaultDebug=false;
-
+// GlobalConfig constructor
 //
-// this is an ugly mess
-//
-void ImageViewer::initializeDefaults()
+GlobalConfig::GlobalConfig()
   {
-  if (m_GlobalAreDefaultsInitialized)
-    return;
-
   std::string Extension;
   std::string cmd;
 
@@ -116,29 +135,28 @@ void ImageViewer::initializeDefaults()
   itksys::SystemTools::GetEnv ( "SITK_SHOW_EXTENSION", Extension );
   if (Extension.length()>0)
     {
-    m_GlobalDefaultFileExtension = Extension;
+    m_DefaultFileExtension = Extension;
     }
   else
     {
-    m_GlobalDefaultFileExtension = ".mha";
+    m_DefaultFileExtension = ".mha";
     }
 
   // Show command
   itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", cmd );
   if (cmd.length()>0)
     {
-    m_GlobalDefaultViewCommand = cmd;
+    m_DefaultViewCommand = cmd;
     }
   else
     {
 #if defined(__APPLE__)
-    m_GlobalDefaultViewCommand = "open -a %a -n --args -eval \'" IMAGEJ_OPEN_MACRO "\'";
+    m_DefaultViewCommand = "open -a %a -n --args -eval \'" IMAGEJ_OPEN_MACRO "\'";
 #else
     // Linux & Windows
-    m_GlobalDefaultViewCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+    m_DefaultViewCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
 #endif
     }
-
 
   //
   // Build the SearchPath
@@ -152,107 +170,130 @@ void ImageViewer::initializeDefaults()
     {
     if ( itksys::SystemTools::GetEnv ( win_dirs[i], ProgramFiles ) )
       {
-      m_GlobalDefaultSearchPath.push_back ( ProgramFiles + "\\" );
+      m_DefaultSearchPath.push_back ( ProgramFiles + "\\" );
       }
     }
 
   if ( itksys::SystemTools::GetEnv ( "USERPROFILE", ProgramFiles ) )
     {
-    m_GlobalDefaultSearchPath.push_back ( ProgramFiles + "\\" );
-    m_GlobalDefaultSearchPath.push_back ( ProgramFiles + "\\Desktop\\" );
+    m_DefaultSearchPath.push_back ( ProgramFiles + "\\" );
+    m_DefaultSearchPath.push_back ( ProgramFiles + "\\Desktop\\" );
     }
 
 #elif defined(__APPLE__)
 
   // Common places on the Mac to look
-  m_GlobalDefaultSearchPath = { "/Applications/", "/Developer/", "/opt/", "/usr/local/" };
+  m_DefaultSearchPath = { "/Applications/", "/Developer/", "/opt/", "/usr/local/" };
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
-    m_GlobalDefaultSearchPath.push_back( homedir + "/Applications/" );
+    m_DefaultSearchPath.push_back( homedir + "/Applications/" );
     }
 
 
 #else
 
   // linux and other systems
-  m_GlobalDefaultSearchPath = { "./" };
+  m_DefaultSearchPath = { "./" };
   std::string homedir;
   if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
     {
-    m_GlobalDefaultSearchPath.push_back( homedir + "/bin/" );
+    m_DefaultSearchPath.push_back( homedir + "/bin/" );
     }
 
-  m_GlobalDefaultSearchPath.emplace_back("/opt/" );
-  m_GlobalDefaultSearchPath.emplace_back("/usr/local/" );
+  m_DefaultSearchPath.emplace_back("/opt/" );
+  m_DefaultSearchPath.emplace_back("/usr/local/" );
 
 #endif
-
-  localDebugMacro( << "Default search path: " << m_GlobalDefaultSearchPath << std::endl );
 
   //
   //  Set the ExecutableNames
   //
 #if defined(_WIN32)
-  m_GlobalDefaultExecutableNames = { "Fiji.app/ImageJ-win64.exe", "Fiji.app/ImageJ-win32.exe" };
+  m_DefaultExecutableNames = { "Fiji.app/ImageJ-win64.exe", "Fiji.app/ImageJ-win32.exe" };
 #elif defined(__APPLE__)
-  m_GlobalDefaultExecutableNames = { "Fiji.app" };
+  m_DefaultExecutableNames = { "Fiji.app" };
 #else
   // Linux
-  m_GlobalDefaultExecutableNames = { "Fiji.app/ImageJ-linux64", "Fiji.app/ImageJ-linux32" };
+  m_DefaultExecutableNames = { "Fiji.app/ImageJ-linux64", "Fiji.app/ImageJ-linux32" };
 #endif
 
 #ifdef _WIN32
-  m_GlobalProcessDelay = 1;
+  m_ProcessDelay = 1;
 #else
-  m_GlobalProcessDelay = 500;
+  m_ProcessDelay = 500;
 #endif
 
-  ImageViewer::m_GlobalDefaultApplication = ImageViewer::FindViewingApplication();
 
-  m_GlobalViewerImageCount = 0;
-  m_GlobalAreDefaultsInitialized = true;
+  m_DefaultApplication = FindViewingApplication();
   }
 
+std::once_flag gc_once_flag;
 
-//
-// Constructor
-//
-ImageViewer::ImageViewer()
+GlobalConfig& GlobalConfig::getInstance()
   {
+  static GlobalConfig instance;
 
-  if (!m_GlobalAreDefaultsInitialized)
+  std::call_once(gc_once_flag, []()
     {
-    initializeDefaults();
+    if (instance.m_DefaultDebug)
+      {
+      fprintf(stderr, "Call once?\n");
+      std::ostringstream msg;
+      msg << instance;
+      ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );
+      }
     }
+  );
 
-  m_ViewCommand = m_GlobalDefaultViewCommand;
+  return instance;
+  }
 
-  m_Application = m_GlobalDefaultApplication;
+std::ostream& operator<<(std::ostream& os, const GlobalConfig& gc)
+  {
+  std::vector<std::string>::const_iterator it;
 
-  m_FileExtension = "";
+  os << "\nImageViewer GlobalConfig\n";
 
-  m_CustomCommand = "";
+  os << "    Search path: ";
+  for (it = gc.m_DefaultSearchPath.begin(); it != gc.m_DefaultSearchPath.end(); it++)
+    {
+    os << *it << ", ";
+    }
+  os << std::endl;
+
+  os << "    Executable names: ";
+  for (it = gc.m_DefaultExecutableNames.begin(); it != gc.m_DefaultExecutableNames.end(); it++)
+    {
+    os << *it << ", ";
+    }
+  os << std::endl;
+
+  os << "    View command: " << gc.m_DefaultViewCommand << std::endl;
+  os << "    File extension: " << gc.m_DefaultFileExtension << std::endl;
+  os << "    Application: " << gc.m_DefaultApplication << std::endl;
+  os << "    Process delay: " << gc.m_ProcessDelay << std::endl;
+  return os;
   }
 
 
-std::string ImageViewer::FindViewingApplication()
+std::string GlobalConfig::FindViewingApplication(bool debug)
   {
   std::string result;
   std::vector<std::string>::iterator name_it;
 
 
-  for(name_it = m_GlobalDefaultExecutableNames.begin(); name_it != m_GlobalDefaultExecutableNames.end(); name_it++)
+  for(name_it = m_DefaultExecutableNames.begin(); name_it != m_DefaultExecutableNames.end(); name_it++)
     {
 #ifdef __APPLE__
-      result = itksys::SystemTools::FindDirectory ( (*name_it).c_str(), m_GlobalDefaultSearchPath );
+      result = itksys::SystemTools::FindDirectory ( (*name_it).c_str(), m_DefaultSearchPath );
       if (!result.length())
         {
         // try looking for a file if no directory
-        result = itksys::SystemTools::FindFile ( (*name_it).c_str(), m_GlobalDefaultSearchPath );
+        result = itksys::SystemTools::FindFile ( (*name_it).c_str(), m_DefaultSearchPath );
         }
 #else
-      result = itksys::SystemTools::FindFile ( (*name_it).c_str(), m_GlobalDefaultSearchPath );
+      result = itksys::SystemTools::FindFile ( (*name_it).c_str(), m_DefaultSearchPath );
 #endif
       if (result.length())
         {
@@ -270,59 +311,91 @@ std::string ImageViewer::FindViewingApplication()
     bool ImageJScriptFlag = itksys::SystemTools::FileHasSignature( result.c_str(), "#!" );
     if (ImageJScriptFlag)
       {
-      m_GlobalDefaultViewCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+      m_DefaultViewCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
       }
 #endif
 
-  localDebugMacro( << "FindViewingApplication: " << result << std::endl );
+    if (debug)
+      {
+      std::ostringstream msg;
+      msg << "Debug: In " __FILE__ ", line " << __LINE__ << ": "
+        "FindViewApplication: " << result << std::endl
+        << "\n\n";
+        ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );
+      }
   return result;
+  }
+}
+
+//
+// Constructor
+//
+ImageViewer::ImageViewer()
+  {
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  m_ViewCommand = gc.m_DefaultViewCommand;
+
+  m_Application = GetGlobalDefaultApplication();
+
+  m_FileExtension = GetGlobalDefaultFileExtension();
+
+  m_CustomCommand = "";
   }
 
 
-//
-// A bunch of Set/Get methods for the class static variables
-//
 
-const std::vector<std::string>& ImageViewer::GetGlobalDefaultSearchPath()
-  {
-  return ImageViewer::m_GlobalDefaultSearchPath;
+  //
+  // A bunch of Set/Get methods for the class static variables
+  //
+
+  const std::vector<std::string>& ImageViewer::GetGlobalDefaultSearchPath()
+    {
+    GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_DefaultSearchPath;
   }
 
 void ImageViewer::SetGlobalDefaultSearchPath( const std::vector<std::string> & path )
   {
-  ImageViewer::m_GlobalDefaultSearchPath = path;
-  ImageViewer::m_GlobalDefaultApplication = FindViewingApplication();
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultSearchPath = path;
+  gc.m_DefaultApplication = gc.FindViewingApplication();
   }
 
 const std::vector<std::string>& ImageViewer::GetGlobalDefaultExecutableNames()
   {
-  return ImageViewer::m_GlobalDefaultExecutableNames;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_DefaultExecutableNames;
   }
 
 void ImageViewer::SetGlobalDefaultExecutableNames( const std::vector<std::string> & names )
   {
-  ImageViewer::m_GlobalDefaultExecutableNames = names;
-  ImageViewer::m_GlobalDefaultApplication = FindViewingApplication();
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultExecutableNames = names;
+  gc.m_DefaultApplication = gc.FindViewingApplication();
   }
 
 void ImageViewer::SetGlobalDefaultFileExtension( const std::string & ext )
   {
-  ImageViewer::m_GlobalDefaultFileExtension = ext;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultFileExtension = ext;
   }
 
 const std::string & ImageViewer::GetGlobalDefaultFileExtension()
   {
-  return ImageViewer::m_GlobalDefaultFileExtension;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_DefaultFileExtension;
   }
 
 void ImageViewer::SetGlobalDefaultApplication( const std::string & app )
   {
-  ImageViewer::m_GlobalDefaultApplication = app;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultApplication = app;
   }
 
 const std::string & ImageViewer::GetGlobalDefaultApplication()
   {
-  return ImageViewer::m_GlobalDefaultApplication;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_DefaultApplication;
   }
 
 
@@ -357,37 +430,50 @@ const std::string & ImageViewer::GetFileExtension() const
     {
     return m_FileExtension;
     }
-  return m_GlobalDefaultFileExtension;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_DefaultFileExtension;
   }
 
 void ImageViewer::SetGlobalDefaultDebug( const bool dbg )
   {
-  m_GlobalDefaultDebug = dbg;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultDebug = dbg;
+  if (dbg)
+    {
+    std::ostringstream msg;
+    msg << gc;
+    ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );
+    }
   }
 
 bool ImageViewer::GetGlobalDefaultDebug()
   {
-  return m_GlobalDefaultDebug;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_DefaultDebug;
   }
 
 void ImageViewer::SetGlobalDefaultDebugOn()
   {
-  m_GlobalDefaultDebug = true;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultDebug = true;
   }
 
 void ImageViewer::SetGlobalDefaultDebugOff()
   {
-  m_GlobalDefaultDebug = false;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_DefaultDebug = false;
   }
 
 void ImageViewer::SetProcessDelay( const unsigned int d )
   {
-  m_GlobalProcessDelay = d;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  gc.m_ProcessDelay = d;
   }
 
 unsigned int ImageViewer::GetProcessDelay()
   {
-  return m_GlobalProcessDelay;
+  GlobalConfig& gc = GlobalConfig::getInstance();
+  return gc.m_ProcessDelay;
   }
 
 void ImageViewer::SetTitle(const std::string & t )
@@ -445,6 +531,7 @@ void ImageViewer::Execute( const Image & image )
   std::string Macro = "";
   std::vector<std::string> CommandLine;
   std::string ext;
+  GlobalConfig& gc = GlobalConfig::getInstance();
 
   if (m_FileExtension.length())
     {
@@ -452,10 +539,10 @@ void ImageViewer::Execute( const Image & image )
     }
   else
     {
-    ext = m_GlobalDefaultFileExtension;
+    ext = gc.m_DefaultFileExtension;
     }
 
-  TempFile = BuildFullFileName(m_Title, ext, m_GlobalViewerImageCount++);
+  TempFile = BuildFullFileName(m_Title, ext, gc.m_ViewerCount++);
 
   // write out the image
   WriteImage ( image, TempFile );
