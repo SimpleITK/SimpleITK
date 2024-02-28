@@ -154,7 +154,7 @@ From a coordinate system standpoint ITKv4 introduced the
 images are treated similarly. As a consequence the ImageRegistrationMethod
 has methods for setting **three transformations**:
 
-1. SetInitialTransform :math:`T_o` - composed with the moving initial transform, maps
+1. SetInitialTransform :math:`T_opt` - composed with the moving initial transform, maps
 points from the virtual image domain to the moving image domain, modified
 during optimization.
 
@@ -167,7 +167,7 @@ the moving image domain, never modified.
 The transformation that maps points from the fixed to moving image domains is thus:
 
 .. math::
-   p_{moving}=T_o(T_m(T_f^{-1}(p_{fixed})))
+   p_{moving}=T_m(T_opt(T_f^{-1}(p_{fixed})))
 
 Multi Resolution Framework
 ===========================
