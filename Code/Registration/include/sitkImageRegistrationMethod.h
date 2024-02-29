@@ -369,6 +369,11 @@ namespace simple
 
     /** \brief Set optimizer to Nelder-Mead downhill simplex algorithm.
      *
+     * The simplexDelta is the value that is added and subtracted to the initial parameters to create the initial
+     * simplex. The simplexDelta can be indirectly set per parameter by the optimizer parameter scaling either manually
+     * or by using an estimator.
+     *
+     * \sa ImageRegistrationMethod::SetOptimizerScales
      * \sa itk::AmoebaOptimizerv4
      */
     SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsAmoeba(double simplexDelta,
