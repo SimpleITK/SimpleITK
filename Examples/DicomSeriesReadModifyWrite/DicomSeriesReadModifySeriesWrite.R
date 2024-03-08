@@ -67,7 +67,7 @@ writer$KeepOriginalImageUIDOn()
 tags_to_copy <- c("0010|0010", # Patient Name
                 "0010|0020", # Patient ID
                 "0010|0030", # Patient Birth Date
-                "0020|000D", # Study Instance UID, for machine consumption
+                "0020|000d", # Study Instance UID, for machine consumption
                 "0020|0010", # Study ID, for human consumption
                 "0008|0020", # Study Date
                 "0008|0030", # Study Time
@@ -84,18 +84,19 @@ modification_date <- format(Sys.time(), "%Y%m%d")
 # by the Filter.
 # For the series instance UID (0020|000e), each of the components is a number, cannot start
 # with zero, and separated by a '.' We create a unique series ID using the date and time.
-# NOTE: DICOM tags represent hexadecimal numbers, so 0020|000D and 0020|000d
+# NOTE: Always represent DICOM tags using lower case hexadecimals.
+#       DICOM tags represent hexadecimal numbers, so 0020|000D and 0020|000d
 #       are equivalent. The ITK/SimpleITK dictionary is string based, so these
 #       are two different keys, case sensitive. When read from a DICOM file the
-#       hexadecimal string representations are in lower case, so we check for
-#       existence and get the value after converting to lower case.
+#       hexadecimal string representations are in lower case. To ensure consistency,
+#       always use lower case for the tags.
 # Tags of interest:
 direction <- filtered_image$GetDirection()
 series_tag_values <- c(Filter(Negate(is.null),
                              lapply(tags_to_copy,
                              function(k) {
-                               if(series_reader$HasMetaDataKey(0,tolower(k))) {
-                                 list(k, series_reader$GetMetaData(0,tolower(k)))
+                               if(series_reader$HasMetaDataKey(0,k)) {
+                                 list(k, series_reader$GetMetaData(0,k))
                                 }
                              })),
                         list(list("0008|0031",modification_time), # Series Time
