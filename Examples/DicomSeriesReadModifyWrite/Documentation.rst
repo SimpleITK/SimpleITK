@@ -13,6 +13,9 @@ Modifying the 3D image can involve changes to its physical characteristics (spac
 
 Writing the 3D image as a DICOM series is done by configuring the meta-data dictionary for each of the slices and then writing it in DICOM format. In our case we copy some of the meta-data from the original dictionaries which are available from the series reader. We then set some additional meta-data values to indicate that this series is derived from the original acquired data. Note that we write the intensity values as is and thus do not set the rescale slope (0028|1053), rescale intercept (0028|1052) meta-data dictionary values.
 
+Always represent DICOM tags using lower case hexadecimals. DICOM tags represent hexadecimal numbers, so 0020|000D and 0020|000d are equivalent. The ITK/SimpleITK dictionary is string based, so these are two different keys, case sensitive. When read from a DICOM file the hexadecimal string representations are in lower case. To ensure consistency, always use lower case for the tags.
+
+
 See also :ref:`lbl_print_image_meta_data_dictionary`, :ref:`lbl_dicom_series_reader`.
 
 
