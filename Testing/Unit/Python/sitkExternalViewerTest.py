@@ -39,34 +39,32 @@ class ExternalViewerTest(unittest.TestCase):
 
         cmd = f"{sys.executable} {this_dir/'dummy_viewer.py'}"
 
-        os.environ['SITK_SHOW_COMMAND'] = cmd
+        os.environ["SITK_SHOW_COMMAND"] = cmd
 
     def test_show(self):
         print("\n\nFirst Show Test")
-        print("Trying command: ", os.environ['SITK_SHOW_COMMAND'])
+        print("Trying command: ", os.environ["SITK_SHOW_COMMAND"])
         fail = False
         try:
             sitk.Show(ExternalViewerTest.IMG, debugOn=True)
         except BaseException:
             fail = True
         if fail:
-            self.fail("Show failed for command " +
-                      os.environ['SITK_SHOW_COMMAND'])
+            self.fail("Show failed for command " + os.environ["SITK_SHOW_COMMAND"])
 
     def test_show2(self):
         """Show2 test should work even though we set SITK_SHOW_COMMAND to
         something else, since that var is only read at the beginning.  This set
         is ignored."""
         print("\n\nSecond Show Test")
-        os.environ['SITK_SHOW_COMMAND'] = 'none'
+        os.environ["SITK_SHOW_COMMAND"] = "none"
         fail = False
         try:
             sitk.Show(ExternalViewerTest.IMG, debugOn=True)
         except BaseException:
             fail = True
         if fail:
-            self.fail("Show failed for command " +
-                      os.environ['SITK_SHOW_COMMAND'])
+            self.fail("Show failed for command " + os.environ["SITK_SHOW_COMMAND"])
 
     def test_image_viewer(self):
         print("\n\nBasic Image Viewer Test")
@@ -74,7 +72,7 @@ class ExternalViewerTest(unittest.TestCase):
         try:
             viewer = sitk.ImageViewer()
             # Some funky characters in the title to test the temp file name filter
-            viewer.SetTitle("Basic Image Viewer Test/:\'")
+            viewer.SetTitle("Basic Image Viewer Test/:'")
             viewer.Execute(ExternalViewerTest.IMG)
 
             print("\nImageViewer parameters")
@@ -83,10 +81,11 @@ class ExternalViewerTest(unittest.TestCase):
             print("    Extension: ", viewer.GetFileExtension())
 
             print("\nGlobal ImageViewer parameters")
-            print("    Search path: ",
-                  sitk.ImageViewer.GetGlobalDefaultSearchPath())
-            print("    Default executable names: ",
-                  sitk.ImageViewer.GetGlobalDefaultExecutableNames())
+            print("    Search path: ", sitk.ImageViewer.GetGlobalDefaultSearchPath())
+            print(
+                "    Default executable names: ",
+                sitk.ImageViewer.GetGlobalDefaultExecutableNames(),
+            )
             print("    Process delay: ", sitk.ImageViewer.GetProcessDelay())
             print("    Debug flag: ", sitk.ImageViewer.GetGlobalDefaultDebug())
         except BaseException:
@@ -96,12 +95,12 @@ class ExternalViewerTest(unittest.TestCase):
         print("\n\nBad Image Viewer Test")
         try:
             viewer = sitk.ImageViewer()
-            viewer.SetCommand('none')
+            viewer.SetCommand("none")
             viewer.SetTitle("BAD Image Viewer Test")
             viewer.Execute(ExternalViewerTest.IMG)
         except BaseException:
             print("Exception triggered, as expected")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

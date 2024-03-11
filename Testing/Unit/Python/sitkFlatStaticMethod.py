@@ -40,21 +40,25 @@ class FlatStatic(unittest.TestCase):
     def test_ProcessObject(self):
         sitk.ProcessObject_GlobalDefaultDebugOff()
         sitk.ProcessObject_GlobalDefaultDebugOn()
-        assert (sitk.ProcessObject_GetGlobalDefaultDebug())
+        assert sitk.ProcessObject_GetGlobalDefaultDebug()
         sitk.ProcessObject_SetGlobalDefaultDebug(False)
-        assert (not sitk.ProcessObject_GetGlobalDefaultDebug())
+        assert not sitk.ProcessObject_GetGlobalDefaultDebug()
 
         sitk.ProcessObject_GlobalWarningDisplayOff()
         sitk.ProcessObject_GlobalWarningDisplayOn()
-        assert (sitk.ProcessObject_GetGlobalWarningDisplay())
+        assert sitk.ProcessObject_GetGlobalWarningDisplay()
         sitk.ProcessObject_SetGlobalWarningDisplay(False)
-        assert (not sitk.ProcessObject_GetGlobalWarningDisplay())
+        assert not sitk.ProcessObject_GetGlobalWarningDisplay()
 
         sitk.ProcessObject_SetGlobalDefaultCoordinateTolerance(2.0e-6)
-        self.assertEqual(sitk.ProcessObject_GetGlobalDefaultCoordinateTolerance(), 2.0e-6)
+        self.assertEqual(
+            sitk.ProcessObject_GetGlobalDefaultCoordinateTolerance(), 2.0e-6
+        )
 
         sitk.ProcessObject_SetGlobalDefaultDirectionTolerance(2.2e-6)
-        self.assertEqual(sitk.ProcessObject_GetGlobalDefaultDirectionTolerance(), 2.2e-6)
+        self.assertEqual(
+            sitk.ProcessObject_GetGlobalDefaultDirectionTolerance(), 2.2e-6
+        )
 
         sitk.ProcessObject_SetGlobalDefaultNumberOfThreads(2)
         self.assertEqual(sitk.ProcessObject_GetGlobalDefaultNumberOfThreads(), 2)
@@ -69,5 +73,5 @@ class FlatStatic(unittest.TestCase):
         sitk.Version_VersionString()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
