@@ -32,9 +32,7 @@ def writeSlices(series_tag_values, new_img, out_dir, i):
     # Tags shared by the series.
     list(
         map(
-            lambda tag_value: image_slice.SetMetaData(
-                tag_value[0], tag_value[1]
-            ),
+            lambda tag_value: image_slice.SetMetaData(tag_value[0], tag_value[1]),
             series_tag_values,
         )
     )
@@ -115,10 +113,7 @@ series_tag_values = [
     ("0008|0008", "DERIVED\\SECONDARY"),  # Image Type
     (
         "0020|000e",
-        "1.2.826.0.1.3680043.2.1125."
-        + modification_date
-        + ".1"
-        + modification_time,
+        "1.2.826.0.1.3680043.2.1125." + modification_date + ".1" + modification_time,
     ),  # Series Instance UID
     (
         "0020|0037",

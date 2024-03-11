@@ -24,9 +24,7 @@ import os
 
 # verify that we have the correct number of arguments
 if len(sys.argv) != 5:
-    sys.stderr.write(
-        "Usage: prog inputFile outputFile replaceValue upperThreshold\n"
-    )
+    sys.stderr.write("Usage: prog inputFile outputFile replaceValue upperThreshold\n")
     exit(1)
 
 # copy the arguments in to variables
@@ -41,9 +39,7 @@ image = sitk.ReadImage(inputFileName)
 # Threshold the value [0,2), results in values inside the range 1, 0 otherwise
 boundary = sitk.BinaryThreshold(image, 0, upperThreshold, 1, 0)
 
-boundary = sitk.BinaryMorphologicalClosing(
-    boundary, [1] * image.GetDimension()
-)
+boundary = sitk.BinaryMorphologicalClosing(boundary, [1] * image.GetDimension())
 
 # Remove any label pixel not connected to the boarder
 boundary = sitk.BinaryGrindPeak(boundary)

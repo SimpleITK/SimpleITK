@@ -87,9 +87,7 @@ del sub_image2
 # Check that our iterative approach is equivalent to reading the whole images.
 if np.any(
     sitk.GetArrayViewFromImage(
-        result_img
-        - sitk.ReadImage(image1_file_name)
-        + sitk.ReadImage(image2_file_name)
+        result_img - sitk.ReadImage(image1_file_name) + sitk.ReadImage(image2_file_name)
     )
 ):
     print("Subtraction error.")

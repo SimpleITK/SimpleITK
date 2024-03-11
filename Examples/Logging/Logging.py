@@ -43,9 +43,7 @@ class SimpleITKLogger(sitk.LoggerBase):
     ProcessObject:GlobalWarningDisplayOff.
     """
 
-    def __init__(
-        self, logger: logging.Logger = logging.getLogger("SimpleITK")
-    ):
+    def __init__(self, logger: logging.Logger = logging.getLogger("SimpleITK")):
         """
         Initializes with a Logger object to handle the messages emitted from
         SimpleITK/ITK.
@@ -97,9 +95,7 @@ sitkLogger = SimpleITKLogger()
 sitkLogger.SetAsGlobalITKLogger()
 
 # Configure the Python root logger, enabling debug and info level messages.
-logging.basicConfig(
-    format="%(name)s (%(levelname)s): %(message)s", level=logging.DEBUG
-)
+logging.basicConfig(format="%(name)s (%(levelname)s): %(message)s", level=logging.DEBUG)
 
 
 img = sitk.GaborSource(size=[64, 64, 64], frequency=4.0 / 64)

@@ -43,9 +43,7 @@ def main(args):
     if len(args) > 3:
         shrinkFactor = int(args[3])
         if shrinkFactor > 1:
-            image = sitk.Shrink(
-                inputImage, [shrinkFactor] * inputImage.GetDimension()
-            )
+            image = sitk.Shrink(inputImage, [shrinkFactor] * inputImage.GetDimension())
             maskImage = sitk.Shrink(
                 maskImage, [shrinkFactor] * inputImage.GetDimension()
             )
@@ -58,9 +56,7 @@ def main(args):
         numberFittingLevels = int(args[6])
 
     if len(args) > 5:
-        corrector.SetMaximumNumberOfIterations(
-            [int(args[5])] * numberFittingLevels
-        )
+        corrector.SetMaximumNumberOfIterations([int(args[5])] * numberFittingLevels)
 
     corrected_image = corrector.Execute(image, maskImage)
 
@@ -75,10 +71,12 @@ def main(args):
             corrected_image, "Python-Example-N4BiasFieldCorrection-shrunk.nrrd"
         )
 
-    return_images = {"input_image": inputImage,
-                     "mask_image": maskImage,
-                     "log_bias_field": log_bias_field,
-                     "corrected_image": corrected_image}
+    return_images = {
+        "input_image": inputImage,
+        "mask_image": maskImage,
+        "log_bias_field": log_bias_field,
+        "corrected_image": corrected_image,
+    }
     return return_images
 
 

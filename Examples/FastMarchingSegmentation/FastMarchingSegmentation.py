@@ -29,7 +29,7 @@ def main(args):
             "FastMarchingSegmentation",
             "<inputImage> <outputImage> <seedX> <seedY> <Sigma>",
             "<SigmoidAlpha> <SigmoidBeta> <TimeThreshold>",
-            "<StoppingTime>"
+            "<StoppingTime>",
         )
         sys.exit(1)
 
@@ -84,11 +84,12 @@ def main(args):
 
     sitk.WriteImage(result, outputFilename)
 
-    image_dict = {"InputImage": inputImage,
-                  "SpeedImage": sigmoidOutput,
-                  "TimeCrossingMap": fastMarchingOutput,
-                  "Segmentation": result,
-                  }
+    image_dict = {
+        "InputImage": inputImage,
+        "SpeedImage": sigmoidOutput,
+        "TimeCrossingMap": fastMarchingOutput,
+        "Segmentation": result,
+    }
     return image_dict
 
 

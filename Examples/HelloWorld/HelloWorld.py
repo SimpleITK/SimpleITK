@@ -60,7 +60,7 @@ def main(args):
 
     # Apply the face to the original image
     image = image + face
-    return {"output_image":image}
+    return {"output_image": image}
 
 
 # Display the results

@@ -133,9 +133,11 @@ series_tag_values = [
     ),
     (
         "0008|103e",
-        series_reader.GetMetaData(0, "0008|103e")
-        if series_reader.HasMetaDataKey(0, "0008|103e")
-        else "" + " Processed-SimpleITK",
+        (
+            series_reader.GetMetaData(0, "0008|103e")
+            if series_reader.HasMetaDataKey(0, "0008|103e")
+            else "" + " Processed-SimpleITK"
+        ),
     ),  # Series Description is an optional tag, so may not exist
 ]
 

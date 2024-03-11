@@ -23,10 +23,7 @@ import os
 
 
 def command_iteration(method):
-    print(
-        f"{method.GetOptimizerIteration():3} "
-        + f"= {method.GetMetricValue():10.5f}"
-    )
+    print(f"{method.GetOptimizerIteration():3} " + f"= {method.GetMetricValue():10.5f}")
     print("\t#: ", len(method.GetOptimizerPosition()))
 
 
@@ -66,9 +63,7 @@ R.SetShrinkFactorsPerLevel([6, 2, 1])
 R.SetSmoothingSigmasPerLevel([6, 2, 1])
 
 R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R))
-R.AddCommand(
-    sitk.sitkMultiResolutionIterationEvent, lambda: command_multi_iteration(R)
-)
+R.AddCommand(sitk.sitkMultiResolutionIterationEvent, lambda: command_multi_iteration(R))
 
 outTx = R.Execute(fixed, moving)
 

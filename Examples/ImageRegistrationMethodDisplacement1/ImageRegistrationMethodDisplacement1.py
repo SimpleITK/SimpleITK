@@ -30,10 +30,7 @@ def command_iteration(method):
     print(f"\tMetric Value: {method.GetMetricValue():10.5f}")
     print(f"\tLearningRate: {method.GetOptimizerLearningRate():10.5f}")
     if method.GetOptimizerConvergenceValue() != sys.float_info.max:
-        print(
-            "\tConvergence Value: "
-            + f"{method.GetOptimizerConvergenceValue():.5e}"
-        )
+        print("\tConvergence Value: " + f"{method.GetOptimizerConvergenceValue():.5e}")
 
 
 def command_multiresolution_iteration(method):

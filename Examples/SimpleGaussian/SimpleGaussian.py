@@ -46,8 +46,7 @@ def main(args):
     writer.SetFileName(args[3])
     writer.Execute(blur_image)
 
-    return_dict = {"input_image": input_image,
-                   "blur_image": blur_image}
+    return_dict = {"input_image": input_image, "blur_image": blur_image}
     return return_dict
 
 

@@ -57,9 +57,7 @@ def main(args):
     )
     R.SetOptimizerScalesFromIndexShift()
 
-    tx = sitk.CenteredTransformInitializer(
-        fixed, moving, sitk.Similarity2DTransform()
-    )
+    tx = sitk.CenteredTransformInitializer(fixed, moving, sitk.Similarity2DTransform())
     R.SetInitialTransform(tx)
 
     R.SetInterpolator(sitk.sitkLinear)
@@ -88,9 +86,7 @@ def main(args):
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
     cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
 
-    return {"fixed": fixed,
-            "moving": moving,
-            "composition": cimg}
+    return {"fixed": fixed, "moving": moving, "composition": cimg}
 
 
 if __name__ == "__main__":
