@@ -287,7 +287,10 @@ class Doxy2SWIG:
             )
             first = self.get_specific_nodes(node, names)
 
-            if "compoundname" in first and "..." in first["compoundname"].firstChild.data:
+            if (
+                "compoundname" in first
+                and "..." in first["compoundname"].firstChild.data
+            ):
                 return
 
             for n in names:
