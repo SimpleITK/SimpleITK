@@ -1,0 +1,20 @@
+# .pre-commit-config.yaml
+# for details see https://pre-commit.com
+# for list of available hooks see https://pre-commit.com/hooks.html
+#
+# Preclude commits that do not conform to various criteria.
+
+fail_fast: true
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+   - id: detect-private-key
+   - id: check-json
+   - id: check-yaml
+- repo: https://github.com/psf/black
+  rev: 24.2.0
+  hooks: # check conformance to black formatting
+   - id: black
+     args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
