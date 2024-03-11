@@ -50,8 +50,8 @@ class ProcessClassFromFile:
         self.FileClassToMakeExplicit=os.path.basename(self.inputHeaderFullPath)
         self.BaseClassName=self.FileClassToMakeExplicit.replace('itk','').replace('.h','')
         self.basePath=os.path.dirname(os.path.dirname(self.inputHeaderFullPath))
-        print "basePath: ",self.basePath
-        print "BaseClassName: ",self.BaseClassName
+        print("basePath: ",self.basePath)
+        print("BaseClassName: ",self.BaseClassName)
 
         self.ExplicitHeaderFileName = os.path.join(self.basePath,"include","sitkExplicitITK{0}.h".format(self.BaseClassName))
         self.CodeFileName = os.path.join(self.basePath,"src","sitkExplicitITK{0}.cxx".format(self.BaseClassName))
@@ -88,7 +88,7 @@ class ProcessClassFromFile:
                 pass
 
         ## Remove low frequency items
-        for key in self.SymbolsMapping.keys():
+        for key in list(self.SymbolsMapping.keys()):
             if self.SymbolsMapping[key] < minRepeats:
                 self.SymbolsMapping.pop(key, None)
 
@@ -182,7 +182,7 @@ so that build times are minimized."""
         HeaderString += "#endif // sitkExplicitITK{0}_h__\n".format(self.BaseClassName)
 
         CodeString=""
-        if len(self.SymbolsMapping.keys()) >= 1:
+        if len(list(self.SymbolsMapping.keys())) >= 1:
             CodeString=self.header
             CodeString+="""#define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK\n"""
             CodeString+="""#include "sitkExplicitITK{0}.h"\n""".format(self.BaseClassName)
@@ -194,7 +194,7 @@ so that build times are minimized."""
 
         self.CodeString = CodeString
         self.HeaderString = HeaderString
-        print "="*90
+        print("="*90)
         for key in  sorted(self.SymbolsMapping.keys()):
             print("Found {0:4} instantiations of {1}.".format(self.SymbolsMapping[key],key))
 
@@ -246,7 +246,7 @@ if __name__ == '__main__':
     print(arguments)
     headFileName=arguments['<pathToITKTemplateHeader>']
     minRepeats=int(arguments['--minRepeats'])
-    print "minRepeats:",minRepeats
+    print("minRepeats:",minRepeats)
 
     myProcessor=ProcessClassFromFile(headFileName,minRepeats)
     #SymbolsMapping = myProcessor.GetSymbolsMapping()

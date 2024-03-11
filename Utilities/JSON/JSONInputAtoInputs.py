@@ -31,7 +31,7 @@ import collections
 
 fname = sys.argv[1]
 
-print "Processing ", fname
+print("Processing ", fname)
 
 fp = file( fname, "r" )
 j = json.load( fp,object_pairs_hook=collections.OrderedDict )
@@ -53,5 +53,5 @@ for test in j["tests"]:
 
 fp = file( fname, "w" )
 json.dump( j, fp, indent=2, separators=(',',' : ') )
-print  >>fp, ""
+print("", file=fp)
 fp.close()

@@ -71,14 +71,14 @@ pathsToGroups = FindGroups(pathToITK+"/Modules")
 
 # Test to see if ITK source is provided
 if len(pathsToModules) == 0:
-    print program + ": " + pathToITK + " is not an ITK source directory. It does not contain any itk-module.cmake files."
+    print(program + ": " + pathToITK + " is not an ITK source directory. It does not contain any itk-module.cmake files.")
     exit(1)
 
 
 
 for fname in sys.argv[1:]:
 
-  print "Processing ", fname
+  print("Processing ", fname)
 
   fp = file( fname, "r" )
   j = json.load( fp,object_pairs_hook=collections.OrderedDict )
@@ -98,6 +98,6 @@ for fname in sys.argv[1:]:
 
     with file( fname, "w" ) as fp:
       json.dump( j, fp, indent=2, separators=(',',' : ') )
-      print  >>fp, ""
+      print("", file=fp)
   else:
-    print "Unable to find include:",inc
+    print("Unable to find include:",inc)

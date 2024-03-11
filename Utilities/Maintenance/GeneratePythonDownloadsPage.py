@@ -35,7 +35,7 @@ for f in args.files:
     name = os.path.basename(f.name)
     #version="1.1.0"
     version = re.match(r'SimpleITK-([0-9]+\.[0-9]+(\.[0-9]+)?(rc[0-9]+)?)', name ).group(1)
-    print("version:{0}".format(version))
+    print(("version:{0}".format(version)))
     if args.hash == "md5":
        hash_value = hashlib.md5(f.read()).hexdigest()
     elif args.hash == "sha256":
@@ -53,8 +53,8 @@ for f in args.files:
     url = "https://github.com/SimpleITK/SimpleITK/releases/download/{0}/{1}#{2}={3}".format(tag,name,args.hash,hash_value)
 
     if args.format == 'html':
-        print "<li><a href=\"{0}\" title=\"Click to download {1}\">{1} (hosted at {2})</a></li>".format(url,name,host)
+        print("<li><a href=\"{0}\" title=\"Click to download {1}\">{1} (hosted at {2})</a></li>".format(url,name,host))
     elif args.format == 'md':
-        print "[{1}]({0})".format(url,name)
+        print("[{1}]({0})".format(url,name))
 
     f.close()
