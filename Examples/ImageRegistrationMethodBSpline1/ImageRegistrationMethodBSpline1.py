@@ -23,10 +23,7 @@ import os
 
 
 def command_iteration(method):
-    print(
-        f"{method.GetOptimizerIteration():3} "
-        + f"= {method.GetMetricValue():10.5f}"
-    )
+    print(f"{method.GetOptimizerIteration():3} " + f"= {method.GetMetricValue():10.5f}")
 
 
 def main(args):
@@ -85,13 +82,13 @@ def main(args):
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
     cimg = sitk.Compose(simg1, simg2, simg1 // 2.0 + simg2 // 2.0)
 
-    return_images = {"fixed": fixed,
-                     "moving": moving,
-                     "composition": cimg}
+    return_images = {"fixed": fixed, "moving": moving, "composition": cimg}
     return return_images
 
 
 if __name__ == "__main__":
     return_dict = main(sys.argv)
     if "SITK_NOSHOW" not in os.environ:
-        sitk.Show(return_dict["composition"], "ImageRegistrationMethodBSpline1 Composition")
+        sitk.Show(
+            return_dict["composition"], "ImageRegistrationMethodBSpline1 Composition"
+        )

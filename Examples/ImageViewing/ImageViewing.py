@@ -38,16 +38,12 @@ image_viewer.SetTitle("grid using ImageViewer class")
 image_viewer.Execute(grid_image)
 
 # Change viewer, and display again.
-image_viewer.SetApplication(
-    "/Applications/ITK-SNAP.app/Contents/MacOS/ITK-SNAP"
-)
+image_viewer.SetApplication("/Applications/ITK-SNAP.app/Contents/MacOS/ITK-SNAP")
 image_viewer.Execute(grid_image)
 
 # Change the viewer command, (use ITK-SNAP's -z option to open the image in
 # zoomed mode)
-image_viewer.SetCommand(
-    "/Applications/ITK-SNAP.app/Contents/MacOS/ITK-SNAP -z 2"
-)
+image_viewer.SetCommand("/Applications/ITK-SNAP.app/Contents/MacOS/ITK-SNAP -z 2")
 image_viewer.Execute(grid_image)
 
 sys.exit(0)

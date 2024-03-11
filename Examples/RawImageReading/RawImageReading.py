@@ -74,9 +74,7 @@ def read_raw(
     header = [
         "ObjectType = Image\n".encode(),
         (f"NDims = {dim}\n").encode(),
-        (
-            "DimSize = " + " ".join([str(v) for v in image_size]) + "\n"
-        ).encode(),
+        ("DimSize = " + " ".join([str(v) for v in image_size]) + "\n").encode(),
         (
             "ElementSpacing = "
             + (
@@ -99,9 +97,7 @@ def read_raw(
         "BinaryData = True\n".encode(),
         ("BinaryDataByteOrderMSB = " + str(big_endian) + "\n").encode(),
         # ElementDataFile must be the last entry in the header
-        (
-            "ElementDataFile = " + os.path.abspath(binary_file_name) + "\n"
-        ).encode(),
+        ("ElementDataFile = " + os.path.abspath(binary_file_name) + "\n").encode(),
     ]
     fp = tempfile.NamedTemporaryFile(suffix=".mhd", delete=False)
 

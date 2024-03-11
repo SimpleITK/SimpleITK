@@ -29,10 +29,7 @@ def command_iteration(method, bspline_transform):
         # to show the adapted BSpline transform.
         print(bspline_transform)
 
-    print(
-        f"{method.GetOptimizerIteration():3} "
-        + f"= {method.GetMetricValue():10.5f}"
-    )
+    print(f"{method.GetOptimizerIteration():3} " + f"= {method.GetMetricValue():10.5f}")
 
 
 def command_multi_iteration(method):
@@ -41,8 +38,7 @@ def command_multi_iteration(method):
     # the status of the optimizer from the previous registration level.
     if R.GetCurrentLevel() > 0:
         print(
-            "Optimizer stop condition: "
-            + f"{R.GetOptimizerStopConditionDescription()}"
+            "Optimizer stop condition: " + f"{R.GetOptimizerStopConditionDescription()}"
         )
         print(f" Iteration: {R.GetOptimizerIteration()}")
         print(f" Metric value: {R.GetMetricValue()}")
@@ -82,9 +78,7 @@ R.SetShrinkFactorsPerLevel([4, 2, 1])
 R.SetSmoothingSigmasPerLevel([4, 2, 1])
 
 R.AddCommand(sitk.sitkIterationEvent, lambda: command_iteration(R, tx))
-R.AddCommand(
-    sitk.sitkMultiResolutionIterationEvent, lambda: command_multi_iteration(R)
-)
+R.AddCommand(sitk.sitkMultiResolutionIterationEvent, lambda: command_multi_iteration(R))
 
 outTx = R.Execute(fixed, moving)
 

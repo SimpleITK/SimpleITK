@@ -41,9 +41,7 @@ channel3_image = select.Execute(joined_image, 2, sitk.sitkUInt8)
 
 # Recompose image (should be same as joined_image)
 compose = sitk.ComposeImageFilter()
-composed_image = compose.Execute(
-    channel1_image, channel2_image, channel3_image
-)
+composed_image = compose.Execute(channel1_image, channel2_image, channel3_image)
 
 # Select same subregion using image slicing operator
 sliced_image = composed_image[100:400, 100:400, 0]

@@ -27,9 +27,7 @@ from typing import Iterable, List, Optional, Type, Union, Tuple
 PathType = Union[str, Path, Iterable[str], Iterable[Path]]
 
 
-def MinimumMaximum(
-        image: Image
-) -> Tuple[float, float]:
+def MinimumMaximum(image: Image) -> Tuple[float, float]:
     """
     Computes the minimum and the maximum intensity values of an image.
 
@@ -41,7 +39,7 @@ def MinimumMaximum(
 
      :param image:
      :return:
-     """
+    """
     f = MinimumMaximumImageFilter()
     f.Execute(image)
     return f.GetMinimum(), f.GetMaximum()
@@ -55,46 +53,48 @@ def Resample(
     **kwargs,
 ) -> Image:
     """
-     Resample ( Image image1,
-                Transform transform = itk::simple::Transform(),
-                InterpolatorEnum interpolator = itk::simple::sitkLinear,
-                double defaultPixelValue = 0.0,
-                PixelIDValueEnum outputPixelType = itk::simple::sitkUnknown,
-                bool useNearestNeighborExtrapolator = false);
+    Resample ( Image image1,
+               Transform transform = itk::simple::Transform(),
+               InterpolatorEnum interpolator = itk::simple::sitkLinear,
+               double defaultPixelValue = 0.0,
+               PixelIDValueEnum outputPixelType = itk::simple::sitkUnknown,
+               bool useNearestNeighborExtrapolator = false);
 
-     Resample ( Image image1,
-                Image referenceImage,
-                Transform transform = itk::simple::Transform(),
-                InterpolatorEnum interpolator = itk::simple::sitkLinear,
-                double defaultPixelValue = 0.0,
-                PixelIDValueEnum outputPixelType = sitkUnknown,
-                bool useNearestNeighborExtrapolator = false);
+    Resample ( Image image1,
+               Image referenceImage,
+               Transform transform = itk::simple::Transform(),
+               InterpolatorEnum interpolator = itk::simple::sitkLinear,
+               double defaultPixelValue = 0.0,
+               PixelIDValueEnum outputPixelType = sitkUnknown,
+               bool useNearestNeighborExtrapolator = false);
 
-     Resample ( const Image& image1,
-                VectorUInt32 size,
-                Transform transform = itk::simple::Transform(),
-                InterpolatorEnum interpolator = itk::simple::sitkLinear,
-                VectorDouble outputOrigin = std::vector<double>(3, 0.0),
-                VectorDouble outputSpacing = std::vector<double>(3, 1.0),
-                VectorDouble outputDirection = std::vector<double>(),
-                double defaultPixelValue = 0.0,
-                PixelIDValueEnum outputPixelType = sitkUnknown,
-                bool useNearestNeighborExtrapolator = false);
+    Resample ( const Image& image1,
+               VectorUInt32 size,
+               Transform transform = itk::simple::Transform(),
+               InterpolatorEnum interpolator = itk::simple::sitkLinear,
+               VectorDouble outputOrigin = std::vector<double>(3, 0.0),
+               VectorDouble outputSpacing = std::vector<double>(3, 1.0),
+               VectorDouble outputDirection = std::vector<double>(),
+               double defaultPixelValue = 0.0,
+               PixelIDValueEnum outputPixelType = sitkUnknown,
+               bool useNearestNeighborExtrapolator = false);
 
-     itk::simple::ResampleImageFilter procedural interface.
+    itk::simple::ResampleImageFilter procedural interface.
 
-     This is a custom overloaded python method, which fully supports the 3 signatures with positional and keyword
-      arguments. The second positional parameters without a default value are used to determine which overloaded
-      procedure signature to invoke.
+    This is a custom overloaded python method, which fully supports the 3 signatures with positional and keyword
+     arguments. The second positional parameters without a default value are used to determine which overloaded
+     procedure signature to invoke.
 
     """
 
-    def _r_image(referenceImage,
-                 transform=Transform(),
-                 interpolator=sitkLinear,
-                 defaultPixelValue=0.0,
-                 outputPixelType=sitkUnknown,
-                 useNearestNeighborExtrapolator=False):
+    def _r_image(
+        referenceImage,
+        transform=Transform(),
+        interpolator=sitkLinear,
+        defaultPixelValue=0.0,
+        outputPixelType=sitkUnknown,
+        useNearestNeighborExtrapolator=False,
+    ):
         resampler = ResampleImageFilter()
         resampler.SetReferenceImage(referenceImage)
         resampler.SetTransform(transform)
@@ -104,15 +104,17 @@ def Resample(
         resampler.SetUseNearestNeighborExtrapolator(useNearestNeighborExtrapolator)
         return resampler.Execute(image1)
 
-    def _r(size,
-           transform=Transform(),
-           interpolator=sitkLinear,
-           outputOrigin=(0.0, 0.0, 0.0),
-           outputSpacing=(1.0, 1.0, 1.0),
-           outputDirection=(),
-           defaultPixelValue=0.0,
-           outputPixelType=sitkUnknown,
-           useNearestNeighborExtrapolator=False):
+    def _r(
+        size,
+        transform=Transform(),
+        interpolator=sitkLinear,
+        outputOrigin=(0.0, 0.0, 0.0),
+        outputSpacing=(1.0, 1.0, 1.0),
+        outputDirection=(),
+        defaultPixelValue=0.0,
+        outputPixelType=sitkUnknown,
+        useNearestNeighborExtrapolator=False,
+    ):
         resampler = ResampleImageFilter()
         resampler.SetSize(size)
         resampler.SetTransform(transform)
@@ -155,38 +157,39 @@ def _get_numpy_dtype(sitkImage: Image) -> Type["numpy.number"]:
     """Given a SimpleITK image, returns the numpy.dtype which describes the data"""
 
     if not HAVE_NUMPY:
-        raise ImportError('Numpy not available.')
+        raise ImportError("Numpy not available.")
 
     np = numpy
 
     # this is a mapping from sitk's pixel id to numpy's scalar types
-    _sitk_np = {sitkUInt8: numpy.uint8,
-                sitkUInt16: numpy.uint16,
-                sitkUInt32: numpy.uint32,
-                sitkUInt64: numpy.uint64,
-                sitkInt8: numpy.int8,
-                sitkInt16: numpy.int16,
-                sitkInt32: numpy.int32,
-                sitkInt64: numpy.int64,
-                sitkFloat32: numpy.float32,
-                sitkFloat64: numpy.float64,
-                sitkComplexFloat32: numpy.complex64,
-                sitkComplexFloat64: numpy.complex128,
-                sitkVectorUInt8: numpy.uint8,
-                sitkVectorInt8: numpy.int8,
-                sitkVectorUInt16: numpy.uint16,
-                sitkVectorInt16: numpy.int16,
-                sitkVectorUInt32: numpy.uint32,
-                sitkVectorInt32: numpy.int32,
-                sitkVectorUInt64: numpy.uint64,
-                sitkVectorInt64: numpy.int64,
-                sitkVectorFloat32: numpy.float32,
-                sitkVectorFloat64: numpy.float64,
-                sitkLabelUInt8: numpy.uint8,
-                sitkLabelUInt16: numpy.uint16,
-                sitkLabelUInt32: numpy.uint32,
-                sitkLabelUInt64: numpy.uint64,
-                }
+    _sitk_np = {
+        sitkUInt8: numpy.uint8,
+        sitkUInt16: numpy.uint16,
+        sitkUInt32: numpy.uint32,
+        sitkUInt64: numpy.uint64,
+        sitkInt8: numpy.int8,
+        sitkInt16: numpy.int16,
+        sitkInt32: numpy.int32,
+        sitkInt64: numpy.int64,
+        sitkFloat32: numpy.float32,
+        sitkFloat64: numpy.float64,
+        sitkComplexFloat32: numpy.complex64,
+        sitkComplexFloat64: numpy.complex128,
+        sitkVectorUInt8: numpy.uint8,
+        sitkVectorInt8: numpy.int8,
+        sitkVectorUInt16: numpy.uint16,
+        sitkVectorInt16: numpy.int16,
+        sitkVectorUInt32: numpy.uint32,
+        sitkVectorInt32: numpy.int32,
+        sitkVectorUInt64: numpy.uint64,
+        sitkVectorInt64: numpy.int64,
+        sitkVectorFloat32: numpy.float32,
+        sitkVectorFloat64: numpy.float64,
+        sitkLabelUInt8: numpy.uint8,
+        sitkLabelUInt16: numpy.uint16,
+        sitkLabelUInt32: numpy.uint32,
+        sitkLabelUInt64: numpy.uint64,
+    }
 
     return _sitk_np[sitkImage.GetPixelIDValue()]
 
@@ -195,59 +198,63 @@ def _get_sitk_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
     """Returns a SimpleITK PixelID given a numpy array."""
 
     if not HAVE_NUMPY:
-        raise ImportError('Numpy not available.')
+        raise ImportError("Numpy not available.")
 
     np = numpy
 
     # This is a Mapping from numpy dtypes to sitk's pixel types.
-    _np_sitk = {np.dtype(np.uint8): sitkUInt8,
-                np.dtype(np.uint16): sitkUInt16,
-                np.dtype(np.uint32): sitkUInt32,
-                np.dtype(np.uint64): sitkUInt64,
-                np.dtype(np.int8): sitkInt8,
-                np.dtype(np.int16): sitkInt16,
-                np.dtype(np.int32): sitkInt32,
-                np.dtype(np.int64): sitkInt64,
-                np.dtype(np.float32): sitkFloat32,
-                np.dtype(np.float64): sitkFloat64,
-                np.dtype(np.complex64): sitkComplexFloat32,
-                np.dtype(np.complex128): sitkComplexFloat64
-                }
+    _np_sitk = {
+        np.dtype(np.uint8): sitkUInt8,
+        np.dtype(np.uint16): sitkUInt16,
+        np.dtype(np.uint32): sitkUInt32,
+        np.dtype(np.uint64): sitkUInt64,
+        np.dtype(np.int8): sitkInt8,
+        np.dtype(np.int16): sitkInt16,
+        np.dtype(np.int32): sitkInt32,
+        np.dtype(np.int64): sitkInt64,
+        np.dtype(np.float32): sitkFloat32,
+        np.dtype(np.float64): sitkFloat64,
+        np.dtype(np.complex64): sitkComplexFloat32,
+        np.dtype(np.complex128): sitkComplexFloat64,
+    }
     try:
         return _np_sitk[numpy_array_type.dtype]
     except KeyError:
-        raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
+        raise TypeError("dtype: {0} is not supported.".format(numpy_array_type.dtype))
 
 
 def _get_sitk_vector_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
     """Returns a SimpleITK vector PixelID given a numpy array."""
 
     if not HAVE_NUMPY:
-        raise ImportError('Numpy not available.')
+        raise ImportError("Numpy not available.")
 
     np = numpy
 
     # This is a Mapping from numpy dtypes to sitk's pixel types.
-    _np_sitk = {np.dtype(np.uint8): sitkVectorUInt8,
-                np.dtype(np.uint16): sitkVectorUInt16,
-                np.dtype(np.uint32): sitkVectorUInt32,
-                np.dtype(np.uint64): sitkVectorUInt64,
-                np.dtype(np.int8): sitkVectorInt8,
-                np.dtype(np.int16): sitkVectorInt16,
-                np.dtype(np.int32): sitkVectorInt32,
-                np.dtype(np.int64): sitkVectorInt64,
-                np.dtype(np.float32): sitkVectorFloat32,
-                np.dtype(np.float64): sitkVectorFloat64,
-
-                }
+    _np_sitk = {
+        np.dtype(np.uint8): sitkVectorUInt8,
+        np.dtype(np.uint16): sitkVectorUInt16,
+        np.dtype(np.uint32): sitkVectorUInt32,
+        np.dtype(np.uint64): sitkVectorUInt64,
+        np.dtype(np.int8): sitkVectorInt8,
+        np.dtype(np.int16): sitkVectorInt16,
+        np.dtype(np.int32): sitkVectorInt32,
+        np.dtype(np.int64): sitkVectorInt64,
+        np.dtype(np.float32): sitkVectorFloat32,
+        np.dtype(np.float64): sitkVectorFloat64,
+    }
 
     try:
         return _np_sitk[numpy_array_type.dtype]
     except KeyError:
-        raise TypeError('dtype: {0} is not supported as an array.'.format(numpy_array_type.dtype))
+        raise TypeError(
+            "dtype: {0} is not supported as an array.".format(numpy_array_type.dtype)
+        )
 
 
 # SimplyITK <-> Numpy Array conversion support.
+
 
 def GetArrayViewFromImage(image: Image) -> "numpy.ndarray":
     """Get a NumPy ndarray view of a SimpleITK Image.
@@ -257,16 +264,18 @@ def GetArrayViewFromImage(image: Image) -> "numpy.ndarray":
     """
 
     if not HAVE_NUMPY:
-        raise ImportError('NumPy not available.')
+        raise ImportError("NumPy not available.")
 
     pixel_id = image.GetPixelIDValue()
-    assert pixel_id != sitkUnknown, "An SimpleITK image of Unknown pixel type should not exists!"
+    assert (
+        pixel_id != sitkUnknown
+    ), "An SimpleITK image of Unknown pixel type should not exists!"
 
     dtype = _get_numpy_dtype(image)
 
     shape = image.GetSize()
     if image.GetNumberOfComponentsPerPixel() > 1:
-        shape = (image.GetNumberOfComponentsPerPixel(), ) + shape
+        shape = (image.GetNumberOfComponentsPerPixel(),) + shape
 
     image.MakeUnique()
 
@@ -291,15 +300,15 @@ def GetArrayFromImage(image: Image) -> "numpy.ndarray":
 
 
 def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> Image:
-    """ Get a SimpleITK Image from a numpy array.
+    """Get a SimpleITK Image from a numpy array.
 
-     If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be
-     considered the component index. By default when isVector is None, 4D arrays
-     are automatically considered 3D vector images, but 3D arrays are 3D images.
+    If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be
+    considered the component index. By default when isVector is None, 4D arrays
+    are automatically considered 3D vector images, but 3D arrays are 3D images.
     """
 
     if not HAVE_NUMPY:
-        raise ImportError('Numpy not available.')
+        raise ImportError("Numpy not available.")
 
     z = numpy.asarray(arr)
 
@@ -427,7 +436,7 @@ def WriteImage(
 
 def SmoothingRecursiveGaussian(
     image1: Image,
-    sigma: List[float] = [1]*3,
+    sigma: List[float] = [1] * 3,
     normalizeAcrossScale: bool = False,
 ) -> Image:
     """Computes the smoothing of an image by convolution with
@@ -474,12 +483,14 @@ def DiscreteGaussian(
     return f.Execute(image1)
 
 
-__all__ = ["MinimumMaximum",
-           "Resample",
-           "GetArrayViewFromImage",
-           "GetArrayFromImage",
-           "GetImageFromArray",
-           "ReadImage",
-           "WriteImage",
-           "SmoothingRecursiveGaussian",
-           "DiscreteGaussian"]
+__all__ = [
+    "MinimumMaximum",
+    "Resample",
+    "GetArrayViewFromImage",
+    "GetArrayFromImage",
+    "GetImageFromArray",
+    "ReadImage",
+    "WriteImage",
+    "SmoothingRecursiveGaussian",
+    "DiscreteGaussian",
+]

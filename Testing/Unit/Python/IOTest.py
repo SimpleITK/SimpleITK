@@ -1,4 +1,4 @@
-#==========================================================================
+# ==========================================================================
 #
 #   Copyright NumFOCUS
 #
@@ -14,24 +14,23 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#==========================================================================*/
+# ==========================================================================*/
 
 import SimpleITK as sitk
 import sys
 
 # this test is suppose to test the python interface to the IO classes
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    if len ( sys.argv ) != 2:
-        print( "Usage: %s outputPath" % ( sys.argv[0] ) )
+    if len(sys.argv) != 2:
+        print("Usage: %s outputPath" % (sys.argv[0]))
 
     outputPath = sys.argv[1]
 
-    image = sitk.Image( 10, 10, sitk.sitkInt32 )
-
+    image = sitk.Image(10, 10, sitk.sitkInt32)
 
     try:
-        sitk.WriteImage( image, "this.isafilenamewithnoimageio" )
+        sitk.WriteImage(image, "this.isafilenamewithnoimageio")
     except RuntimeError as e:
-        print( "Caught expected error" )
+        print("Caught expected error")

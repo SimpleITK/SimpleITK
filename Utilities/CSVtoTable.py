@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#=========================================================================
+# =========================================================================
 #
 #  Copyright NumFOCUS
 #
@@ -15,7 +15,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-#=========================================================================
+# =========================================================================
 import sys, csv, getopt, re
 import os, os.path
 
@@ -25,10 +25,17 @@ By default it reads in filters.csv (the default file produced by CompareITKandSI
 and writes out filters.html.
 """
 
+
 class bcolors:
     """A class to print colored text."""
-    HEADER='\033[95m';  OKBLUE='\033[94m'; OKGREEN='\033[92m';
-    WARNING='\033[93m'; FAIL='\033[91m';   ENDC='\033[0m';
+
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+
 
 def usage():
     """How to use this script"""
@@ -39,13 +46,14 @@ def usage():
     print("    -d    Make a Doxygen file")
     print("")
 
+
 #   Variables
 #
-inname   = "filters.csv"
-outname   = "filters.html"
+inname = "filters.csv"
+outname = "filters.html"
 doxyFlag = False
 
-fieldnames      = ( 'Filter', 'ITK', 'SITK', 'Remark', 'ToDo' )    # fields in the CSV file
+fieldnames = ("Filter", "ITK", "SITK", "Remark", "ToDo")  # fields in the CSV file
 
 
 #
@@ -53,8 +61,7 @@ fieldnames      = ( 'Filter', 'ITK', 'SITK', 'Remark', 'ToDo' )    # fields in t
 #
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hd",
-        [ "help", "doxygen" ] )
+    opts, args = getopt.getopt(sys.argv[1:], "hd", ["help", "doxygen"])
 except getopt.GetoptError as err:
     print(str(err))
     usage()
@@ -72,35 +79,35 @@ for o, a in opts:
 #  get the input and output file names
 if len(args):
     inname = args[0]
-    if len(args)>1:
+    if len(args) > 1:
         outname = args[1]
 
 
-print( inname, outname )
+print(inname, outname)
 
 # if outname includes a path that doesn't exist, create that path
-if not os.path.isdir( os.path.dirname( outname ) ):
+if not os.path.isdir(os.path.dirname(outname)):
     if len(os.path.dirname(outname)):
-        os.makedirs( os.path.dirname( outname ) )
+        os.makedirs(os.path.dirname(outname))
 
 outfile = open(outname, "w")
 color = "FFFFFF"
 
 try:
     if doxyFlag:
-        outfile.write( "/** \page Filter_Coverage Filter Coverage\n" )
-        outfile.write( "\n" )
+        outfile.write("/** \page Filter_Coverage Filter Coverage\n")
+        outfile.write("\n")
 
-    outfile.write( "<table>\n" )
-    outfile.write( "<tr>\n" )
-    outfile.write( "<th>Filter name</th>\n" )
-    outfile.write( "<th>ITK</th>\n" )
-    outfile.write( "<th>SimpleITK</th>\n" )
-    outfile.write( "<th>Remarks</th>\n" )
-    outfile.write( "<th>ToDo</th>\n" )
-    outfile.write( "</tr>\n" )
+    outfile.write("<table>\n")
+    outfile.write("<tr>\n")
+    outfile.write("<th>Filter name</th>\n")
+    outfile.write("<th>ITK</th>\n")
+    outfile.write("<th>SimpleITK</th>\n")
+    outfile.write("<th>Remarks</th>\n")
+    outfile.write("<th>ToDo</th>\n")
+    outfile.write("</tr>\n")
 
-    with open(inname,"rU") as fp:
+    with open(inname, "rU") as fp:
         reader = csv.DictReader(fp)
         for row in reader:
 
@@ -121,70 +128,69 @@ try:
 
             # Get the ToDo flag
             if len(row[fieldnames[4]]):
-                todo =  row[fieldnames[4]].lower() == "true"
+                todo = row[fieldnames[4]].lower() == "true"
 
             if sflag:
                 if iflag:
-                    color = "20FF20"    # Green
+                    color = "20FF20"  # Green
                 else:
-                    color = "C0FFC0"    # Light Green
+                    color = "C0FFC0"  # Light Green
             else:
                 if todo:
-                    color = "FFFFFF"    # White
+                    color = "FFFFFF"  # White
                 else:
-                    color = "FF7070"    # Red
+                    color = "FF7070"  # Red
 
-
-            outfile.write( "<tr bgcolor="+color+">\n" )
-            outfile.write( "<td>"+filt+"</td>\n" )
-            outfile.write( "<td>"+str(iflag)+"</td>\n" )
-            outfile.write( "<td>"+str(sflag)+"</td>\n" )
-            outfile.write( "<td>"+remark+"</td>\n" )
+            outfile.write("<tr bgcolor=" + color + ">\n")
+            outfile.write("<td>" + filt + "</td>\n")
+            outfile.write("<td>" + str(iflag) + "</td>\n")
+            outfile.write("<td>" + str(sflag) + "</td>\n")
+            outfile.write("<td>" + remark + "</td>\n")
             if not sflag:
-                outfile.write( "<td>"+str(todo)+"</td>\n" )
+                outfile.write("<td>" + str(todo) + "</td>\n")
             else:
-                outfile.write( "<td></td>\n" )
-            outfile.write( "</tr>\n" )
+                outfile.write("<td></td>\n")
+            outfile.write("</tr>\n")
 
 except:
     print("Failed to read input file ", inname)
     print(sys.exc_info()[0])
     sys.exit(1)
 
-outfile.write( "</table>\n" )
+outfile.write("</table>\n")
 
 # Legend table
-outfile.write( "<p style=\"font-size:20px; margin-bottom:0px;\"><b>Legend</b></p>\n" )
+outfile.write('<p style="font-size:20px; margin-bottom:0px;"><b>Legend</b></p>\n')
 
-outfile.write( "<table border=1>\n" )
+outfile.write("<table border=1>\n")
 
-outfile.write( "<tr>\n" )
-outfile.write( "<th>Color</th>\n" )
-outfile.write( "<th>Meaning</th>\n" )
-outfile.write( "</tr>\n" )
+outfile.write("<tr>\n")
+outfile.write("<th>Color</th>\n")
+outfile.write("<th>Meaning</th>\n")
+outfile.write("</tr>\n")
 
-outfile.write( "<tr>\n" )
-outfile.write( "<td bgcolor=20FF20> </th>\n" )
-outfile.write( "<td>Supported by SimpleITK and ITK</td>\n" )
-outfile.write( "</tr>\n" )
+outfile.write("<tr>\n")
+outfile.write("<td bgcolor=20FF20> </th>\n")
+outfile.write("<td>Supported by SimpleITK and ITK</td>\n")
+outfile.write("</tr>\n")
 
-outfile.write( "<tr>\n" )
-outfile.write( "<td bgcolor=C0FFC0> </th>\n" )
-outfile.write( "<td>SimpleITK only filter</td>\n" )
-outfile.write( "</tr>\n" )
+outfile.write("<tr>\n")
+outfile.write("<td bgcolor=C0FFC0> </th>\n")
+outfile.write("<td>SimpleITK only filter</td>\n")
+outfile.write("</tr>\n")
 
-outfile.write( "<tr>\n" )
-outfile.write( "<td bgcolor=FFFFFF> </th>\n" )
-outfile.write( "<td>ITK filter that we plan to support in the future</td>\n" )
-outfile.write( "</tr>\n" )
+outfile.write("<tr>\n")
+outfile.write("<td bgcolor=FFFFFF> </th>\n")
+outfile.write("<td>ITK filter that we plan to support in the future</td>\n")
+outfile.write("</tr>\n")
 
-outfile.write( "<tr>\n" )
-outfile.write( "<td bgcolor=FF7070> </th>\n" )
-outfile.write( "<td>ITK filter that we will not support</td>\n" )
-outfile.write( "</tr>\n" )
-outfile.write( "</table>\n" )
+outfile.write("<tr>\n")
+outfile.write("<td bgcolor=FF7070> </th>\n")
+outfile.write("<td>ITK filter that we will not support</td>\n")
+outfile.write("</tr>\n")
+outfile.write("</table>\n")
 
 if doxyFlag:
-    outfile.write( "*/\n" )
+    outfile.write("*/\n")
 
 outfile.close()

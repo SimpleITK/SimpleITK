@@ -90,8 +90,6 @@ adaptive_histogram_equalization_2d = slice_by_slice_decorator(
     sitk.AdaptiveHistogramEqualization
 )
 
-adaptive_histogram_equalization_2d(
-    inputImage, radius=[20] * 2, alpha=0.3, beta=0.3
-)
+adaptive_histogram_equalization_2d(inputImage, radius=[20] * 2, alpha=0.3, beta=0.3)
 
 sitk.WriteImage(inputImage, sys.argv[2])

@@ -31,27 +31,27 @@ import collections
 
 fname = sys.argv[1]
 
-print "Processing ", fname
+print("Processing ", fname)
 
-fp = file( fname, "r" )
-j = json.load( fp,object_pairs_hook=collections.OrderedDict )
+fp = file(fname, "r")
+j = json.load(fp, object_pairs_hook=collections.OrderedDict)
 fp.close()
 
 for test in j["tests"]:
     inputs = []
     if "inputA" in test:
-        inputs.append( test["inputA"] )
+        inputs.append(test["inputA"])
         del test["inputA"]
 
     if "inputB" in test:
-        inputs.append( test["inputB"] )
+        inputs.append(test["inputB"])
         del test["inputB"]
 
-    if( len( inputs ) ):
-       test["inputs"] = inputs
+    if len(inputs):
+        test["inputs"] = inputs
 
 
-fp = file( fname, "w" )
-json.dump( j, fp, indent=2, separators=(',',' : ') )
-print  >>fp, ""
+fp = file(fname, "w")
+json.dump(j, fp, indent=2, separators=(",", " : "))
+print("", file=fp)
 fp.close()

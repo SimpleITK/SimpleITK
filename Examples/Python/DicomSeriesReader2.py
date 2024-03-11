@@ -37,8 +37,7 @@ output_image = ""
 
 def usage():
     print(
-        "\nUsage: %s [-s series_name] input_directory [output_image]\n"
-        % (sys.argv[0])
+        "\nUsage: %s [-s series_name] input_directory [output_image]\n" % (sys.argv[0])
     )
 
 

@@ -1,4 +1,4 @@
-#==========================================================================
+# ==========================================================================
 #
 #   Copyright NumFOCUS
 #
@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-#==========================================================================*/
+# ==========================================================================*/
 import sys
 import os
 import unittest
@@ -48,8 +48,8 @@ class ConcurrentImageRead(unittest.TestCase):
 
         files = []
 
-        for i in range(0,n):
-            img = sitk.GaussianSource(t, [s,s], mean=[256*(i+1)]*2)
+        for i in range(0, n):
+            img = sitk.GaussianSource(t, [s, s], mean=[256 * (i + 1)] * 2)
             fname = "g_{0}.{1}".format(i, img_extension)
             fname = os.path.join(self.test_dir, fname)
             files.append(fname)
@@ -66,7 +66,8 @@ class ConcurrentImageRead(unittest.TestCase):
 
     @staticmethod
     def generate_test(img_extension, expected_hash, img_type=sitk.sitkUInt32):
-        """Generate additional test by adding a generated member function """
+        """Generate additional test by adding a generated member function"""
+
         def do_test(self):
             files = self._create_data(img_extension, img_type)
             files *= 64
@@ -78,13 +79,15 @@ class ConcurrentImageRead(unittest.TestCase):
 
 
 # Programmatically generate tests for different file formats
-for p_ext_hash in [("jpg", "44fac4bedde4df04b9572ac665d3ac2c5cd00c7d", sitk.sitkUInt8),
-                   ("tiff", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
-                   ("png", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
-                   ("nii", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75"),
-                   ("mha", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75")]:
+for p_ext_hash in [
+    ("jpg", "44fac4bedde4df04b9572ac665d3ac2c5cd00c7d", sitk.sitkUInt8),
+    ("tiff", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
+    ("png", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
+    ("nii", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75"),
+    ("mha", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75"),
+]:
     ConcurrentImageRead.generate_test(*p_ext_hash)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

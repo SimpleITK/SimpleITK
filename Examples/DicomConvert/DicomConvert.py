@@ -47,11 +47,7 @@ def convert_image(input_file_name, output_file_name, new_width=None):
             ] * 2
             new_size = [
                 new_width,
-                int(
-                    (original_size[1] - 1)
-                    * original_spacing[1]
-                    / new_spacing[1]
-                ),
+                int((original_size[1] - 1) * original_spacing[1] / new_spacing[1]),
             ]
             image = sitk.Resample(
                 image1=image,
@@ -72,10 +68,7 @@ def convert_image(input_file_name, output_file_name, new_width=None):
         # which always assumes MONOCHROME2.
         if image.GetNumberOfComponentsPerPixel() == 1:
             image = sitk.RescaleIntensity(image, 0, 255)
-            if (
-                image_file_reader.GetMetaData("0028|0004").strip()
-                == "MONOCHROME1"
-            ):
+            if image_file_reader.GetMetaData("0028|0004").strip() == "MONOCHROME1":
                 image = sitk.InvertIntensity(image, maximum=255)
             image = sitk.Cast(image, sitk.sitkUInt8)
         sitk.WriteImage(image, output_file_name)
@@ -96,17 +89,13 @@ def convert_images(input_file_names, output_file_names, new_width):
 def positive_int(int_str):
     value = int(int_str)
     if value <= 0:
-        raise argparse.ArgumentTypeError(
-            int_str + " is not a positive integer value"
-        )
+        raise argparse.ArgumentTypeError(int_str + " is not a positive integer value")
     return value
 
 
 def directory(dir_name):
     if not os.path.isdir(dir_name):
-        raise argparse.ArgumentTypeError(
-            dir_name + " is not a valid directory name"
-        )
+        raise argparse.ArgumentTypeError(dir_name + " is not a valid directory name")
     return dir_name
 
 
@@ -121,22 +110,16 @@ def main(argv=None):
     )
     parser.add_argument(
         "output_file_extension",
-        help="Image file extension, this determines output file type "
-        "(e.g. png) .",
+        help="Image file extension, this determines output file type " "(e.g. png) .",
     )
-    parser.add_argument(
-        "--w", type=positive_int, help="Width of converted images."
-    )
+    parser.add_argument("--w", type=positive_int, help="Width of converted images.")
     parser.add_argument("--od", type=directory, help="Output directory.")
     args = parser.parse_args(argv)
 
     input_file_names = []
-    for dir_name, subdir_names, file_names in os.walk(
-        args.root_of_data_directory
-    ):
+    for dir_name, subdir_names, file_names in os.walk(args.root_of_data_directory):
         input_file_names += [
-            os.path.join(os.path.abspath(dir_name), fname)
-            for fname in file_names
+            os.path.join(os.path.abspath(dir_name), fname) for fname in file_names
         ]
     if args.od:
         # if all output files are written to the same directory we need them
@@ -148,8 +131,7 @@ def main(argv=None):
     else:
         file_names = input_file_names
     output_file_names = [
-        file_name + "." + args.output_file_extension
-        for file_name in file_names
+        file_name + "." + args.output_file_extension for file_name in file_names
     ]
 
     res = convert_images(input_file_names, output_file_names, args.w)
