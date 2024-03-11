@@ -23,6 +23,7 @@ jobs:
               CMAKE_CXX_FLAGS:STRING=-g -O0 --coverage
               CMAKE_C_FLAGS:STRING=-g -O0 --coverage
               CMAKE_EXE_LINKER_FLAGS:STRING=-g -O0 -lgcov
+              CTEST_CUSTOM_COVERAGE_EXCLUDE:STRING=".*/ITK-prefix/.*" ".*/GTest-prefix/.*"
             ctest-extra-args: |
               -Ddashboard_do_coverage=1 \
               -Ddashboard_track="Nightly" \
