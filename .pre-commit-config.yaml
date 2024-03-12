@@ -14,6 +14,7 @@ repos:
   rev: v4.5.0
   hooks:
    - id: detect-private-key
+   - id: forbid-submodules
    - id: check-json
    - id: check-yaml
    - id: check-added-large-files
