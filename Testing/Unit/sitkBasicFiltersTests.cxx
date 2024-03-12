@@ -44,6 +44,7 @@
 #include <sitkMergeLabelMapFilter.h>
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
+#include <sitkThresholdImageFilter.h>
 #include <sitkOtsuThresholdImageFilter.h>
 #include <sitkBSplineTransformInitializerFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
@@ -1064,6 +1065,44 @@ TEST(BasicFilters,ResampleImageFilter_DefaultParameters)
   EXPECT_EQ ( 0u, result.GetHeight() );
 }
 
+TEST(BasicFilters, Threshod)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image input(10,10,sitk::sitkInt32);
+  for (unsigned int y = 0; y < input.GetSize()[1]; ++y)
+  {
+    for (unsigned int x = 0; x < input.GetSize()[0]; ++x)
+    {
+      input.SetPixelAsInt32({x,y}, x + y*input.GetSize()[0]);
+    }
+  }
+
+  sitk::ThresholdImageFilter filter;
+
+  filter.ThresholdOutside(10,20);
+  sitk::Image output = filter.Execute(input);
+  EXPECT_EQ(0u, output.GetPixelAsInt32({1,0}));
+  EXPECT_EQ(0u, output.GetPixelAsInt32({9,0}));
+  EXPECT_EQ(10u, output.GetPixelAsInt32({0,1}));
+  EXPECT_EQ(20u, output.GetPixelAsInt32({0,2}));
+  EXPECT_EQ(0u, output.GetPixelAsInt32({1,2}));
+
+  filter.ThresholdAbove(10);
+  output = filter.Execute(input);
+  EXPECT_EQ(1u, output.GetPixelAsInt32({1,0}));
+  EXPECT_EQ(9u, output.GetPixelAsInt32({9,0}));
+  EXPECT_EQ(10u, output.GetPixelAsInt32({0,1}));
+  EXPECT_EQ(0u, output.GetPixelAsInt32({1,1}));
+
+  filter.ThresholdBelow(10);
+  output = filter.Execute(input);
+  EXPECT_EQ(0u, output.GetPixelAsInt32({1,0}));
+  EXPECT_EQ(0u, output.GetPixelAsInt32({9,0}));
+  EXPECT_EQ(10u, output.GetPixelAsInt32({0,1}));
+  EXPECT_EQ(20, output.GetPixelAsInt32({0,2}));
+
+}
 
 TEST(BasicFilters,OtsuThreshold_CheckNamesInputCompatibility)
 {
