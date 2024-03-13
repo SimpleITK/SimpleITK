@@ -9,6 +9,6 @@ $(if vector_pixel_types_by_component then
       throw 'number_of_inputs must be 1 to use vector_pixel_types_by_component'
    end
 OUT=[[
-      /** Dispatched methods which calls ExecuteInteral on each component */
+      /** Dispatched methods which calls ExecuteInternal on each component */
       template <class TImageType> ]] if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end OUT=OUT..[[ ExecuteInternalVectorImage ( const Image& image );]]
 end)
