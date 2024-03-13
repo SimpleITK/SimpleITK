@@ -58,14 +58,6 @@ bad=$(
 )
 test -z "$bad" || die "$bad"
 
-# Do not allow addition of submodules.
-bad=$(
-  test -n "$added_module" &&
-  echo "Submodules may not be added to SimpleITK at this time:" &&
-  echo "$added_module" | awk '{printf("  %s\n",$6)}'
-)
-test -z "$bad" || die "$bad"
-
 #-----------------------------------------------------------------------------
 # Style hooks.
 . "${BASH_SOURCE%/*}/pre-commit-style.bash"
