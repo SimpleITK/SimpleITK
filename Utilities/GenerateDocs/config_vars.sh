@@ -1,5 +1,3 @@
-#! /bin/sh
-
 SIMPLEITK="${HOME}/src/SimpleITK"
 
 ITK_XML="${HOME}/temp/xml"
