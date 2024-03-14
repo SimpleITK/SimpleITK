@@ -31,3 +31,25 @@ repos:
   hooks: # check conformance to black formatting
    - id: black
      args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
+- repo: local
+  hooks:
+    - id: local prepare-commit-msg
+      name: 'local prepare-commit-msg'
+      entry: 'Utilities/Hooks/prepare-commit-msg'
+      language: system
+      stages: [prepare-commit-msg]
+    - id: local pre-commit
+      name: 'local pre-commit'
+      entry: 'Utilities/Hooks/pre-commit'
+      language: system
+      stages: [pre-commit]
+    - id: kw-commit-msg
+      name: 'kw commit-msg'
+      entry: 'Utilities/Hooks/kw-commit-msg'
+      language: system
+      stages: [commit-msg]
+    - id: kw-pre-commit
+      name: 'kw-pre-commit'
+      entry: 'Utilities/Hooks/kw-pre-commit'
+      language: system
+      stages: [pre-commit]

@@ -31,7 +31,7 @@ die() {
 
 #-----------------------------------------------------------------------------
 
-# Check that developmer setup is up-to-date.
+# Check that developer setup is up-to-date.
 lastSetupForDevelopment=$(git config --get hooks.SetupForDevelopment || echo 0)
 eval $(grep '^SetupForDevelopment_VERSION=' "${BASH_SOURCE%/*}/../SetupForDevelopment.sh")
 test -n "$SetupForDevelopment_VERSION" || SetupForDevelopment_VERSION=0
