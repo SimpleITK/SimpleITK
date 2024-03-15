@@ -44,30 +44,7 @@ jobs:
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
           - os: self-hosted-x64
             cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
-          - os: self-hosted-arm
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
-              WRAP_R:BOOL=ON
-              WRAP_RUBY:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
-              ITK_USE_BUILD_DIR:BOOL=ON
-          - os: macos-13
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
-          - os: windows-2019
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 16 2019"
+            cmake-generator: "Unix Makefiles"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
@@ -113,6 +90,7 @@ jobs:
         DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
         ExternalData_OBJECT_STORES: "${{ runner.temp }}/.ExternalData"
         ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+        PARALLEL_LEVEL: 2
         CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
         CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
         CTEST_OUTPUT_ON_FAILURE: 1
