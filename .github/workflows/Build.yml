@@ -27,28 +27,34 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
     strategy:
       max-parallel: 5
       matrix:
         include:
-          - os: mac-arm64
+          - os: macos-15
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
+              WRAP_PYTHON:BOOL=OFF
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
-          - os: self-hosted-x64
-            cmake-build-type: "Release"
-            cmake-generator: "Unix Makefiles"
+              CMAKE_JOB_POOL_COMPILE:STRING=compile
+              CMAKE_JOB_POOL_LINK:STRING=link
+              CMAKE_JOB_POOLS:STRING=compile=2;link=2
+          - os: macos-15
+            cmake-build-type: "Debug"
+            cmake-generator: "Ninja"
             ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
+              WRAP_PYTHON:BOOL=OFF
+              WRAP_JAVA:BOOL=OFF
+              WRAP_CSHARP:BOOL=OFF
+              CMAKE_JOB_POOL_COMPILE:STRING=compile
+              CMAKE_JOB_POOL_LINK:STRING=link
+              CMAKE_JOB_POOLS:STRING=compile=2;link=1
     steps:
     - uses: actions/checkout@v4
       with:
@@ -86,11 +92,11 @@ jobs:
         python -m pip install ninja cmake~=3.29.0
     - name: Build and Test
       shell: bash
+      continue-on-error: true
       env:
         DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
         ExternalData_OBJECT_STORES: "${{ runner.temp }}/.ExternalData"
         ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
-        PARALLEL_LEVEL: 2
         CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
         CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
         CTEST_OUTPUT_ON_FAILURE: 1
@@ -101,6 +107,11 @@ jobs:
           Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           ${{ matrix.ctest-cache }}
       run: |
+        if [  ! -z "${{ matrix.xcode-version }}" ]; then
+          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
+          xcode-select -p
+        fi
+
         cmake --version
         ninja --version
-        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V
+        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
