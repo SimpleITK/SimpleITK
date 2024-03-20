@@ -108,18 +108,18 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               CXXFLAGS:STRING= /wd4251 /MP
 
-          - os: macos-12
+          - os: macos-13
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            xcode-version: 13.1
+            xcode-version: 15.2
             ctest-cache: |
               SimpleITK_USE_ELASTIX:BOOL=ON
               WRAP_PYTHON:BOOL=ON
 
-          - os: macos-12
+          - os: macos-13
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            xcode-version: 14.2
+            xcode-version: 14.3.1
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
 
@@ -136,12 +136,6 @@ jobs:
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
             xcode-version: 12.5.1
-            ctest-cache: |
-
-          - os: macos-11
-            cmake-build-type: "MinSizeRel"
-            cmake-generator: "Ninja"
-            xcode-version: 11.7
             ctest-cache: |
 
     steps:

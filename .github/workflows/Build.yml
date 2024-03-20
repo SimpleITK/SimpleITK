@@ -10,6 +10,7 @@ on:
       - 'docs/**'
       - 'Documentation/**'
       - 'Utilities/**'
+      -  '*.rst'
 
 concurrency:
   group: ci-${{ github.head_ref || github.ref }}
