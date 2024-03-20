@@ -36,15 +36,19 @@ Use the commands
 
 to introduce yourself to Git before committing.'
 
-# Ensure name and email are available.
-git var GIT_AUTHOR_IDENT > /dev/null ||
-die 'Identity not configured!' "$advice"
 
-# Validate the name and email.
-git var GIT_AUTHOR_IDENT | cut -d "<" -f1 | sed 's,\s$,,' | grep ' '  > /dev/null ||
-die 'Set user.name to your Real Name (with a space), not a userid.' "$advice"
-git var GIT_AUTHOR_IDENT | cut -d ">" -f1 | cut -d "<" -f2 | grep '^[^@]*@[^@]*$' > /dev/null ||
-die 'Set user.email to an email address (userid@validdomain.com).' "$advice"
+if test -z "$CI";then
+
+  # Ensure name and email are available.
+  git var GIT_AUTHOR_IDENT > /dev/null ||
+  die 'Identity not configured!' "$advice"
+
+  # Validate the name and email.
+  git var GIT_AUTHOR_IDENT | cut -d "<" -f1 | sed 's,\s$,,' | grep ' '  > /dev/null ||
+  die 'Set user.name to your Real Name (with a space), not a userid.' "$advice"
+  git var GIT_AUTHOR_IDENT | cut -d ">" -f1 | cut -d "<" -f2 | grep '^[^@]*@[^@]*$' > /dev/null ||
+  die 'Set user.email to an email address (userid@validdomain.com).' "$advice"
+fi
 
 #-----------------------------------------------------------------------------
 # Check content that will be added by this commit.

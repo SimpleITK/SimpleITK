@@ -24,14 +24,14 @@ repos:
      args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
 - repo: local
   hooks:
-    - id: local prepare-commit-msg
+    - id: local-prepare-commit-msg
       name: 'local prepare-commit-msg'
       entry: 'Utilities/Hooks/prepare-commit-msg'
       language: system
       stages: [prepare-commit-msg]
-    - id: local pre-commit
-      name: 'local pre-commit'
-      entry: 'Utilities/Hooks/pre-commit'
+    - id: check-setup-for-development
+      name: 'Check version of SetupForDevelopment'
+      entry: 'Utilities/Hooks/check-setup-for-development'
       language: system
       stages: [pre-commit]
     - id: kw-commit-msg
@@ -43,4 +43,10 @@ repos:
       name: 'kw-pre-commit'
       entry: 'Utilities/Hooks/kw-pre-commit'
       language: system
+      stages: [pre-commit]
+    - id: forbid-txx
+      name: 'forbid txx extensions'
+      entry: Files with the .txx extension are deprecated -- please use .hxx instead
+      files: '\.txx$'
+      language: fail
       stages: [pre-commit]
