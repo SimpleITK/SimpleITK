@@ -1,0 +1,271 @@
+#!/usr/bin/env bash
+#=============================================================================
+# Copyright 2010-2012 Kitware, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=============================================================================
+
+
+die() {
+	echo 'pre-commit hook failure' 1>&2
+	echo '-----------------------' 1>&2
+	echo '' 1>&2
+	echo "$@" 1>&2
+	exit 1
+}
+
+zero='0000000000000000000000000000000000000000'
+
+#-----------------------------------------------------------------------------
+# Check for committer identity.
+advice='
+Use the commands
+
+	git config --global user.name '\''Your Name'\''
+	git config --global user.email '\''you@yourdomain.com'\''
+
+to introduce yourself to Git before committing.'
+
+
+if test -z "$CI";then
+
+  # Ensure name and email are available.
+  git var GIT_AUTHOR_IDENT > /dev/null ||
+  die 'Identity not configured!' "$advice"
+
+  # Validate the name and email.
+  git var GIT_AUTHOR_IDENT | cut -d "<" -f1 | sed 's,\s$,,' | grep ' '  > /dev/null ||
+  die 'Set user.name to your Real Name (with a space), not a userid.' "$advice"
+  git var GIT_AUTHOR_IDENT | cut -d ">" -f1 | cut -d "<" -f2 | grep '^[^@]*@[^@]*$' > /dev/null ||
+  die 'Set user.email to an email address (userid@validdomain.com).' "$advice"
+fi
+
+#-----------------------------------------------------------------------------
+# Check content that will be added by this commit.
+
+if git rev-parse --verify -q HEAD > /dev/null; then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+# Merge ("git commit" after "git merge" with conflicts or --no-commit)
+merge_head=$(git rev-parse -q --verify MERGE_HEAD) || merge_head=''
+
+# Disallow non-ascii file names.  The printable range starts at the
+# space character and ends with tilde.
+if test "$(git diff --cached --name-only --diff-filter=A -z $against |
+	   LC_ALL=C tr -d '[ -~]\0')"; then
+	die 'Non-ascii file names may not be added:
+'"$(git diff --cached --name-only --diff-filter=A $against)"
+fi
+
+#-----------------------------------------------------------------------------
+# Builtin whitespace checks.
+bad=$(git diff-index --check --cached $against --) || die "$bad"
+
+# Approximate whitespace=tab-in-indent check with Git < 1.7.2.
+git --version | grep -q " \(1\.[0-6]\|1\.7\.[01]\)" &&
+approx_tab_in_indent=true || approx_tab_in_indent=false
+check_tab() {
+	lines=$(git diff-index -p --cached $against -- "$1" |
+	        grep '^+	') &&
+	echo "$lines" |
+	while read line; do
+		echo "$1: tab in indent." &&
+		echo "$line"
+	done
+}
+
+# Reject addition of a line without a newline at end-of-file.
+check_no_lf_at_eof() {
+	lines=$(git diff-index -p --cached $against -- "$1" | tail -2)
+	if echo "$lines" | head -1 | grep -q '^+' &&
+	   echo "$lines" | tail -1 | grep -q '^\\ No newline'; then
+		echo "$1: No newline at end of file"
+	fi
+}
+
+# Custom whitespace checks.
+check_whitespace() {
+	ws=$(git check-attr whitespace -- "$file" |
+	     sed 's/^[^:]*: whitespace: //')
+	if $approx_tab_in_indent; then
+		case ",$ws," in
+			*,tab-in-indent,*) check_tab "$1" ;;
+		esac
+	fi
+	case ",$ws," in
+		*,no-lf-at-eof,*) check_no_lf_at_eof "$1" ;;
+	esac
+}
+bad=$(git diff-index --name-only --cached $against -- |
+while read file; do
+	check_whitespace "$file"
+done)
+test -z "$bad" || die "$bad"
+
+#-----------------------------------------------------------------------------
+# Check file modes and sizes.
+mode_looks_exe() {
+	case "$1" in
+		*.bat) return 0 ;;
+		*.cmd) return 0 ;;
+		*.exe) return 0 ;;
+		*.com) return 0 ;;
+	esac
+	git cat-file blob "$2" | head -1 | grep "^#!/" > /dev/null
+}
+mode_not_exe () {
+	echo "The file '$file' looks executable but does not have an executable mode.
+On UNIX, run:
+
+  $ chmod u+x '$file' && git add -u '$file'
+
+On Windows, run:
+
+  $ git update-index --chmod=+x '$file'
+"
+}
+mode_bad_exe () {
+	echo "The file '$file' has executable mode but does not look executable.
+On UNIX, run:
+
+  $ chmod u-x '$file' && git add -u '$file'
+
+On Windows, run:
+
+  $ git update-index --chmod=-x '$file'
+"
+}
+mode_non_file () {
+	echo "The path '$file' has a non-file mode."
+}
+check_mode() {
+	case "$dst_mode" in
+		100755) mode_looks_exe "$file" "$dst_obj" || mode_bad_exe ;;
+		100644) mode_looks_exe "$file" "$dst_obj" && mode_not_exe ;;
+		160000) ;;
+		*)	mode_non_file ;;
+	esac
+}
+
+size_max_KiB=$(git config hooks.MaxObjectKiB)
+test -n "$size_max_KiB" || size_max_KiB=1024
+size_max_bytes=$(git config hooks.max-size)
+test -n "$size_max_bytes" || size_max_bytes=$((${size_max_KiB} * 1024))
+size_too_large_once=""
+size_too_large_once() {
+	test -z "$size_too_large_once" || return ; size_too_large_once=done
+	echo 'At least one file is staged for commit with size larger than its limit.
+We prefer to keep large files out of the main source tree, especially
+binary files that do not compress well.  This hook disallows large files
+by default but can be configured.  A limit for specific files or patterns
+may be set in ".gitattributes" with the "hooks-max-size" attribute.
+For example, the line
+
+  *.c              hooks-max-size=1500000
+
+sets a limit of 1500000 bytes for C source files.  See "git help attributes"
+for details on the .gitattributes format.  If no attribute has been set
+for a given file then its size is limited by the local default.  Run
+
+  git config hooks.max-size $bytes
+
+to set the local default limit (0 to disable).
+'
+}
+size_too_large() {
+	size_too_large_once
+	echo "The path '$file' has size $file_bytes bytes, greater than allowed $max_bytes bytes."
+}
+size_validate_max_KiB() {
+	test "$max_KiB" -ge "0" 2>/dev/null && return 0
+	echo "The path '$file' has invalid attribute \"hooks.MaxObjectKiB=$max_KiB\"."
+	return 1
+}
+size_validate_max_bytes() {
+	test "$max_bytes" -ge "0" 2>/dev/null && return 0
+	echo "The path '$file' has invalid attribute \"hooks-max-size=$max_bytes\"."
+	return 1
+}
+check_size() {
+	test "$dst_obj" != "$zero" || return
+	max_KiB=$(git check-attr hooks.MaxObjectKiB -- "$file" | sed 's/^[^:]*: hooks.MaxObjectKiB: //')
+	case "$max_KiB" in
+		'unset') ;;
+		'set') ;;
+		'unspecified') ;;
+		*) size_validate_max_KiB || return ;;
+	esac
+	max_bytes=$(git check-attr hooks-max-size -- "$file" | sed 's/^[^:]*: hooks-max-size: //')
+	case "$max_bytes" in
+		'unset')       return ;; # No maximum for this object.
+		'set')         max_bytes="$size_max_bytes" ;; # Use local default.
+		'unspecified')
+			# Fall back to max KiB setting.
+			case "$max_KiB" in
+				'unset')       return ;; # No maximum for this object.
+				'set')         max_bytes=$(("${size_max_KiB}" * 1024)) ;; # Use local default.
+				'unspecified') max_bytes="$size_max_bytes" ;; # Use local default.
+				*) max_bytes=$(("${max_KiB}" * 1024)) ;;
+			esac
+			;;
+		*) size_validate_max_bytes || return ;;
+	esac
+	if test "$max_bytes" -gt "0"; then
+		file_bytes=$(git cat-file -s "$dst_obj")
+		test "$file_bytes" -le "$max_bytes" || size_too_large
+	fi
+}
+
+short_commit() {
+	git rev-parse --short "$1" 2>/dev/null || echo "$1"
+}
+
+
+diffs=$(git diff-index --cached $against -- |
+        sed -n '/^:[^:]/ {s/^://;p;}')
+diffs_normal=$(echo "$diffs" | grep -v '^...... 160000')
+bad=$(
+test -n "$diffs_normal" && echo "$diffs_normal" |
+while read src_mode dst_mode src_obj dst_obj status file; do
+	if test "$src_mode" != "$dst_mode" -a "$dst_mode" != "000000"; then
+		check_mode
+	fi
+	if test "$dst_mode" != "160000" -a "$dst_mode" != '000000'; then
+		check_size
+	fi
+done
+)
+test -z "$bad" || die "$bad"
+
+#-----------------------------------------------------------------------------
+# Merge checks.
+if test -n "$merge_head"; then
+	merge_diffs=$(git diff-index --cached $merge_head -- |
+	              sed -n '/^:[^:]/ {s/^://;p;}')
+else
+	merge_diffs=''
+fi
+merge_diffs_normal=$(echo "$merge_diffs" | grep -v '^...... 160000')
+merge_diffs_module=$(echo "$merge_diffs" | grep    '^...... 160000')
+bad=$(
+test -n "$merge_diffs_module" && echo "$merge_diffs_module" |
+while read src_mode dst_mode src_obj dst_obj status file; do
+	check_module_rewind MERGE_HEAD "$merge_head" ||
+	break
+done
+)
+test -z "$bad" || die "$bad"

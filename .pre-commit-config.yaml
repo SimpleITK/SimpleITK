@@ -17,17 +17,36 @@ repos:
    - id: forbid-submodules
    - id: check-json
    - id: check-yaml
-   - id: check-shebang-scripts-are-executable
-   - id: check-added-large-files
-     args: ['--maxkb=200']
-     exclude: |
-       (
-       Wrapping/Python/PythonDocstrings.i|
-       Wrapping/Java/JavaDoc.i|
-       Wrapping/R/Packaging/SimpleITK/inst/doc/SimpleITK_tutorial.pdf
-       )
 - repo: https://github.com/psf/black
   rev: 24.2.0
   hooks: # check conformance to black formatting
    - id: black
      args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
+- repo: local
+  hooks:
+    - id: local-prepare-commit-msg
+      name: 'local prepare-commit-msg'
+      entry: 'Utilities/Hooks/prepare-commit-msg'
+      language: system
+      stages: [prepare-commit-msg]
+    - id: check-setup-for-development
+      name: 'Check version of SetupForDevelopment'
+      entry: 'Utilities/Hooks/check-setup-for-development'
+      language: system
+      stages: [pre-commit]
+    - id: kw-commit-msg
+      name: 'kw commit-msg'
+      entry: 'Utilities/Hooks/kw-commit-msg'
+      language: system
+      stages: [commit-msg]
+    - id: kw-pre-commit
+      name: 'kw-pre-commit'
+      entry: 'Utilities/Hooks/kw-pre-commit'
+      language: system
+      stages: [pre-commit]
+    - id: forbid-txx
+      name: 'forbid txx extensions'
+      entry: Files with the .txx extension are deprecated -- please use .hxx instead
+      files: '\.txx$'
+      language: fail
+      stages: [pre-commit]
