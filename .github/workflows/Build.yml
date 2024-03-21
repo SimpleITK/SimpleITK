@@ -47,7 +47,7 @@ jobs:
               WRAP_RUBY:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
               ITK_USE_BUILD_DIR:BOOL=ON
-          - os: macos-12
+          - os: macos-13
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
