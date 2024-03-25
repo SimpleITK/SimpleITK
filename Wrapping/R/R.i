@@ -196,10 +196,11 @@ itk::simple::Image ArrayAsIm(SEXP arr,
 // Finer control will require putting swig code in the right
 // scope.
 
-%typemap("rtype") SEXP "function";
 %{
 #include "sitkRCommand.h"
 %}
+
+%ignore itk::simple::ProcessObject::AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);
 
 %extend itk::simple::ProcessObject {
   int AddCommand( itk::simple::EventEnum e, SEXP obj )
@@ -226,8 +227,6 @@ itk::simple::Image ArrayAsIm(SEXP arr,
      }
  }
 };
-
-//#define %rcode %insert("sinit")
 
 %Rruntime %{
 
