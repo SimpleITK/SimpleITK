@@ -25,3 +25,6 @@ sitk_add_r_test( Image2Array2Image
 sitk_add_r_test( MethodExceptions
   "${CMAKE_CURRENT_SOURCE_DIR}/Rmethodexceptions.R"
   )
+sitk_add_r_test( Commands
+  "${CMAKE_CURRENT_SOURCE_DIR}/RCommands.R"
+  )
