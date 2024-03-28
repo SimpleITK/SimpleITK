@@ -56,6 +56,15 @@ foreach (_varName ${_varNames})
   endif()
 endforeach()
 
+foreach (_varName ${_varNames})
+   if(_varName MATCHES "^EXTERNAL_ITK_")
+      string(REGEX REPLACE "^EXTERNAL_ITK_" "" _itkVarName "${_varName}")
+      set(${_itkVarName} ${${_varName}})
+      message( STATUS "Passing variables \"${_itkVarName}=${${_itkVarName}}\" to itk via EXTERNAL_ITK.")
+      list(APPEND ITK_VARS ${_itkVarName})
+   endif()
+endforeach()
+
 list(APPEND ITK_VARS
   Python_EXECUTABLE
   )
