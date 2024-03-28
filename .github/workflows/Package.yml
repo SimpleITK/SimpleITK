@@ -7,53 +7,98 @@ on:
       - 'v*'
     branches-ignore:
       - '**'
-    pull_request:
-      paths: .github/workflows/Package.yml
+  pull_request:
+      paths:
+        - .github/workflows/Package.yml
 
 
 
 jobs:
-  package-docker:
+  package-mac:
+    if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
+    env:
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      COREBINARYDIRECTORY: "${{ github.workspace }}/sitk-build"
     strategy:
       max-parallel: 4
       matrix:
         include:
-          - os: self-hosted-arm
-            dockerfile: Dockerfile-2014-aarch64
-          - os: ubuntu-latest
-            dockerfile: Dockerfile-2014-x86_64
-
-    env:
-      PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312"
-      BUILD_CSHARP: 0
-
+          - os: macos-14
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            python_version: "3.10"
     steps:
       - uses: actions/checkout@v4
-      - name: Docker Build Image
-        shell: bash
-        working-directory: Utilities/Distribution/manylinux
-        run: |
-          docker build --pull=true --rm=true -t simpleitk_manylinux -f "${{ matrix.dockerfile }}"   .
-      - name: Build ${{ matrix.dockerfile }}
-        shell: bash
-        working-directory: Utilities/Distribution/manylinux
-        run: |
-          docker run --rm \
-               --user "$(id -u):$(id -g)" \
-               --env SIMPLEITK_GIT_TAG=${{github.ref}} \
-               --env PYTHON_VERSIONS \
-               --env BUILD_CSHARP \
-                -v "$(pwd):/work/io" \
-                -t simpleitk_manylinux
-      - name: ls
-        shell: bash
-        working-directory: Utilities/Distribution/manylinux
-        run: |
-          ls -lhR .
-      - name: Upload Wheels
-        uses: actions/upload-artifact@v4
         with:
-          name: python-wheels
-          path: |
-            Utilities/Distribution/manylinux/wheelhouse/*.whl
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          path: SimpleITK-dashboard
+          ref: dashboard
+      - name: Generate External Data Hash
+        shell: bash
+        run: |
+          mkdir -p ${{ runner.temp }}/.ExternalData
+          ls -la "${{ github.workspace }}/Testing/Data/"
+          git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: ${{ runner.temp }}/.ExternalData
+          key: external-data-v1-${{ hashFiles( format( '{0}/{1}', github.workspace, 'external-data.hashable') ) }}
+          enableCrossOsArchive: true
+          restore-keys: |
+            external-data-v1-
+      - name: Set up ${{ matrix.python_version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python_version }}
+
+      - name: Install build dependencies
+        if: matrix.os != 'self-hosted-arm'
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ninja cmake~=3.22.0
+      - name: Configuration
+        run: |
+          cmake --version
+          ninja --version
+          set -x
+          xcode-select -p
+
+      - name: Build and Test
+        shell: bash
+        env:
+          DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
+          ExternalData_OBJECT_STORES: "${{ runner.temp }}/.ExternalData"
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
+          CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
+          CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/sitk-build"
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CACHE: |
+            CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+            CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+            CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+            ITK_C_OPTIMIZATION_FLAGS:STRING=
+            ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=OFF
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=ON
+            WRAP_DEFAULT:BOOL=OFF
+            SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+            ${{ matrix.ctest-cache }}
+        run: |
+          ctest  -D "dashboard_track:STRING=Package" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V
+      - name: Set up 3.12
+        uses: actions/setup-python@v5
+        id: cpy
+        with:
+          python-version: '3.12'
+      - name: Build Pyhon 3.12
+        continue-on-error: true
+        run: |
+          echo "Python: ${{ steps.cpy.outputs.python-path }}
+          ${CTEST_SOURCE_DIRECTORY}/.github/workflows/scripts/mac_build_python.sh
