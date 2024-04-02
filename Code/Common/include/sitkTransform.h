@@ -21,6 +21,7 @@
 #include "sitkCommon.h"
 #include "sitkExceptionObject.h"
 #include "sitkImage.h"
+#include "sitkPathType.h"
 #include <vector>
 
 
@@ -311,10 +312,10 @@ private:
 
 
 // read
-SITKCommon_EXPORT Transform ReadTransform( const std::string &filename );
+SITKCommon_EXPORT Transform ReadTransform( const PathType &filename );
 
 // write
-SITKCommon_EXPORT void WriteTransform( const Transform &transform, const std::string &filename);
+SITKCommon_EXPORT void WriteTransform( const Transform &transform, const PathType &filename);
 
 }
 }

@@ -19,6 +19,7 @@
 #define sitkImageViewer_h
 
 #include "sitkImage.h"
+#include "sitkPathType.h"
 #include "sitkIO.h"
 #include "sitkProcessObject.h"
 
@@ -60,15 +61,15 @@ public:
   /** \brief Set/Get the search path used to find the viewing application
    * @{
    */
-  static void SetGlobalDefaultSearchPath( const std::vector<std::string> & path );
-  static const std::vector<std::string> & GetGlobalDefaultSearchPath();
+  static void SetGlobalDefaultSearchPath( const std::vector<PathType> & path );
+  static const std::vector<PathType> & GetGlobalDefaultSearchPath();
   /**@}*/
 
   /** \brief Set/Get name list used to find the viewing application
    * @{
    */
-  static void SetGlobalDefaultExecutableNames( const std::vector<std::string> & names );
-  static const std::vector<std::string> & GetGlobalDefaultExecutableNames();
+  static void SetGlobalDefaultExecutableNames( const std::vector<PathType> & names );
+  static const std::vector<PathType> & GetGlobalDefaultExecutableNames();
   /**@}*/
 
   /** \brief Set/Get the default file extension
@@ -84,8 +85,8 @@ public:
   /** \brief Set/Get the default application used in the command string.
    * @{
    */
-  static void SetGlobalDefaultApplication( const std::string & app );
-  static const std::string & GetGlobalDefaultApplication();
+  static void SetGlobalDefaultApplication( const PathType & app );
+  static const PathType & GetGlobalDefaultApplication();
   /**@}*/
 
   /** \brief Set the full path to the viewing application used in the command string.
@@ -106,10 +107,10 @@ public:
    * set to `"%a %f"` which simply means *the application path*
    * followed by *the temporary image file*.
    */
-  void SetApplication( const std::string & app, const std::string & command = "%a %f" );
+  void SetApplication( const PathType & app, const std::string & command = "%a %f" );
 
   /** \brief Get the full path to the viewing application used in the command string.  */
-  const std::string & GetApplication() const;
+  const PathType & GetApplication() const;
 
   /** \brief Set the command string used to launch the viewing application
    *
@@ -210,7 +211,7 @@ private:
   std::string m_ViewCommand;
   std::string m_CustomCommand;
 
-  std::string m_Application;
+  PathType m_Application;
 
   std::string m_FileExtension;
 

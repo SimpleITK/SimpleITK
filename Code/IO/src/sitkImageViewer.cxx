@@ -99,13 +99,13 @@ class GlobalConfig {
   private:
     int  m_ViewerCount = 0;
 
-    std::vector<std::string> m_DefaultSearchPath;
-    std::vector<std::string> m_DefaultExecutableNames;
+    std::vector<PathType> m_DefaultSearchPath;
+    std::vector<PathType> m_DefaultExecutableNames;
     unsigned int             m_ProcessDelay;
 
     std::string m_DefaultViewCommand;
     std::string m_DefaultFileExtension;
-    std::string m_DefaultApplication;
+    PathType m_DefaultApplication;
 
     bool m_DefaultDebug = false;
     GlobalConfig();
@@ -251,21 +251,19 @@ GlobalConfig& GlobalConfig::getInstance()
 
 std::ostream& operator<<(std::ostream& os, const GlobalConfig& gc)
   {
-  std::vector<std::string>::const_iterator it;
-
   os << "\nImageViewer GlobalConfig\n";
 
   os << "    Search path: ";
-  for (it = gc.m_DefaultSearchPath.begin(); it != gc.m_DefaultSearchPath.end(); it++)
+  for (auto v : gc.m_DefaultSearchPath)
     {
-    os << *it << ", ";
+    os << v << ", ";
     }
   os << std::endl;
 
   os << "    Executable names: ";
-  for (it = gc.m_DefaultExecutableNames.begin(); it != gc.m_DefaultExecutableNames.end(); it++)
+  for( auto v : gc.m_DefaultExecutableNames )
     {
-    os << *it << ", ";
+    os << v << ", ";
     }
   os << std::endl;
 
@@ -280,20 +278,18 @@ std::ostream& operator<<(std::ostream& os, const GlobalConfig& gc)
 std::string GlobalConfig::FindViewingApplication(bool debug)
   {
   std::string result;
-  std::vector<std::string>::iterator name_it;
 
-
-  for(name_it = m_DefaultExecutableNames.begin(); name_it != m_DefaultExecutableNames.end(); name_it++)
+  for( auto name: m_DefaultExecutableNames )
     {
 #ifdef __APPLE__
-      result = itksys::SystemTools::FindDirectory ( (*name_it).c_str(), m_DefaultSearchPath );
+      result = itksys::SystemTools::FindDirectory ( name.c_str(), std::vector<std::string>(m_DefaultSearchPath.begin(), m_DefaultSearchPath.end()) );
       if (!result.length())
         {
         // try looking for a file if no directory
-        result = itksys::SystemTools::FindFile ( (*name_it).c_str(), m_DefaultSearchPath );
+        result = itksys::SystemTools::FindFile ( name.c_str(), std::vector<std::string>(m_DefaultSearchPath.begin(), m_DefaultSearchPath.end()) );
         }
 #else
-      result = itksys::SystemTools::FindFile ( (*name_it).c_str(), m_DefaultSearchPath );
+      result = itksys::SystemTools::FindFile ( name.c_str(), std::vector<std::string>(m_DefaultSearchPath.begin(), m_DefaultSearchPath.end()) );
 #endif
       if (result.length())
         {
@@ -348,26 +344,26 @@ ImageViewer::ImageViewer()
   // A bunch of Set/Get methods for the class static variables
   //
 
-  const std::vector<std::string>& ImageViewer::GetGlobalDefaultSearchPath()
+  const std::vector<PathType>& ImageViewer::GetGlobalDefaultSearchPath()
     {
     GlobalConfig& gc = GlobalConfig::getInstance();
   return gc.m_DefaultSearchPath;
   }
 
-void ImageViewer::SetGlobalDefaultSearchPath( const std::vector<std::string> & path )
+void ImageViewer::SetGlobalDefaultSearchPath( const std::vector<PathType > & path )
   {
   GlobalConfig& gc = GlobalConfig::getInstance();
   gc.m_DefaultSearchPath = path;
   gc.m_DefaultApplication = gc.FindViewingApplication();
   }
 
-const std::vector<std::string>& ImageViewer::GetGlobalDefaultExecutableNames()
+const std::vector<PathType>& ImageViewer::GetGlobalDefaultExecutableNames()
   {
   GlobalConfig& gc = GlobalConfig::getInstance();
   return gc.m_DefaultExecutableNames;
   }
 
-void ImageViewer::SetGlobalDefaultExecutableNames( const std::vector<std::string> & names )
+void ImageViewer::SetGlobalDefaultExecutableNames( const std::vector<PathType> & names )
   {
   GlobalConfig& gc = GlobalConfig::getInstance();
   gc.m_DefaultExecutableNames = names;
@@ -386,13 +382,13 @@ const std::string & ImageViewer::GetGlobalDefaultFileExtension()
   return gc.m_DefaultFileExtension;
   }
 
-void ImageViewer::SetGlobalDefaultApplication( const std::string & app )
+void ImageViewer::SetGlobalDefaultApplication( const PathType & app )
   {
   GlobalConfig& gc = GlobalConfig::getInstance();
   gc.m_DefaultApplication = app;
   }
 
-const std::string & ImageViewer::GetGlobalDefaultApplication()
+const PathType & ImageViewer::GetGlobalDefaultApplication()
   {
   GlobalConfig& gc = GlobalConfig::getInstance();
   return gc.m_DefaultApplication;
@@ -486,13 +482,13 @@ const std::string & ImageViewer::GetTitle() const
   return m_Title;
   }
 
-void ImageViewer::SetApplication( const std::string & app, const std::string & command )
+void ImageViewer::SetApplication( const PathType & app, const std::string & command )
   {
   m_Application = app;
   this->SetCommand( command );
   }
 
-const std::string & ImageViewer::GetApplication() const
+const PathType & ImageViewer::GetApplication() const
   {
   return m_Application;
   }
@@ -533,7 +529,7 @@ void ImageViewer::Execute( const Image & image )
   std::string ext;
   GlobalConfig& gc = GlobalConfig::getInstance();
 
-  if (m_FileExtension.length())
+  if (!m_FileExtension.empty())
     {
     ext = m_FileExtension;
     }

@@ -122,7 +122,7 @@ namespace itk::simple {
        *
        * \sa itk::GDCMSeriesFileNames
        **/
-      static std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
+      static std::vector<PathType> GetGDCMSeriesFileNames( const PathType &directory,
                                                               const std::string &seriesID = "",
                                                               bool useSeriesDetails = false,
                                                               bool recursive = false,
@@ -138,11 +138,11 @@ namespace itk::simple {
        * value used in the call to GDCMSeriesFileNames.
        * \sa itk::GDCMSeriesFileNames
        **/
-      static std::vector<std::string> GetGDCMSeriesIDs( const std::string &directory,
+      static std::vector<std::string> GetGDCMSeriesIDs( const PathType &directory,
                                                         bool useSeriesDetails = false );
 
-      SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<std::string> &fileNames );
-      const std::vector<std::string> &GetFileNames() const;
+      SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<PathType> &fileNames );
+      const std::vector<PathType> &GetFileNames() const;
 
       Image Execute() override;
 
@@ -199,7 +199,7 @@ namespace itk::simple {
       itk::ProcessObject *m_Filter;
 
 
-      std::vector<std::string> m_FileNames;
+      std::vector<PathType> m_FileNames;
 
       bool m_MetaDataDictionaryArrayUpdate;
     };
@@ -228,7 +228,7 @@ namespace itk::simple {
    * \sa itk::simple::ImageFileReader for reading a single file.
    * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
    */
-  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames,
+  SITKIO_EXPORT Image ReadImage ( const std::vector<PathType> &fileNames,
                                   PixelIDValueEnum outputPixelType=sitkUnknown,
                                   const std::string &imageIO="");
   }

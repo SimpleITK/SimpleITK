@@ -27,24 +27,6 @@
 
 namespace sitk = itk::simple;
 
-// returns true of two word lists are the same
-//
-bool compare_word_lists(std::vector<std::string> a, std::vector<std::string> b)
-  {
-  if ( a.size() != b.size() )
-    {
-    return false;
-    }
-
-  unsigned int i;
-  for (i=0; i< a.size(); i++)
-    {
-    if (a[i].compare(b[i]))
-      return false;
-    }
-  return true;
-  }
-
 TEST(ImageViewerTest,Methods)
   {
   itk::simple::ImageViewer iv;
@@ -79,19 +61,19 @@ TEST(ImageViewerTest,GlobalDefaults)
   {
   itk::simple::ImageViewer iv;
 
-  std::vector<std::string> words;
+  std::vector<itk::simple::PathType> words;
   words.emplace_back("alpha" );
   words.emplace_back("beta" );
 
-  std::vector<std::string> path;
+  std::vector<itk::simple::PathType> path;
   iv.SetGlobalDefaultSearchPath( words );
   path = iv.GetGlobalDefaultSearchPath();
-  EXPECT_EQ( compare_word_lists(words, path), true );
+  EXPECT_EQ( words, path);
 
-  std::vector<std::string> names;
+  std::vector<itk::simple::PathType> names;
   iv.SetGlobalDefaultExecutableNames( words );
   names = iv.GetGlobalDefaultExecutableNames();
-  EXPECT_EQ( compare_word_lists(words, names), true );
+  EXPECT_EQ( words, names);
 
   //
   iv.SetGlobalDefaultDebug( true );

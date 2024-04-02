@@ -650,7 +650,7 @@ void Transform::InternalInitialization(TransformType *t)
   Self::SetPimpleTransform(std::make_unique<PimpleTransform<TransformType>>(t));
 }
 
-  Transform ReadTransform( const std::string &filename )
+  Transform ReadTransform( const PathType &filename )
   {
     TransformFileReader::Pointer reader = TransformFileReader::New();
     reader->SetFileName(filename.c_str() );
@@ -717,7 +717,7 @@ void Transform::InternalInitialization(TransformType *t)
   }
 
   // write
-  void WriteTransform( const Transform &transform, const std::string &filename)
+  void WriteTransform( const Transform &transform, const PathType &filename)
   {
     itk::TransformFileWriter::Pointer writer = itk::TransformFileWriter::New();
     writer->SetFileName(filename.c_str());

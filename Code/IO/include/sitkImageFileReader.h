@@ -85,8 +85,8 @@ namespace itk {
       /** return user readable name of the filter */
       std::string GetName() const override { return std::string("ImageFileReader"); }
 
-      SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const std::string &fn );
-      std::string GetFileName() const;
+      SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const PathType &fn);
+      PathType GetFileName() const;
 
       Image Execute() override;
 
@@ -220,7 +220,7 @@ namespace itk {
       std::function<bool(const std::string &)> m_pfHasMetaDataKey;
       std::function<std::string(const std::string &)> m_pfGetMetaData;
 
-      std::string m_FileName;
+      PathType m_FileName;
 
       std::unique_ptr<MetaDataDictionary> m_MetaDataDictionary;
 
@@ -248,7 +248,7 @@ namespace itk {
    * \sa itk::simple::ImageFileReader for reading a single file.
    * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
    */
-  SITKIO_EXPORT Image ReadImage ( const std::string &filename,
+  SITKIO_EXPORT Image ReadImage ( const PathType &filename,
                                   PixelIDValueEnum outputPixelType = sitkUnknown,
                                   const std::string &imageIO = "");
   }

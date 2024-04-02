@@ -20,6 +20,7 @@
 
 #include "sitkProcessObject.h"
 #include "sitkPixelIDValues.h"
+#include "sitkPathType.h"
 #include "sitkIO.h"
 
 namespace itk {
@@ -104,20 +105,20 @@ class SmartPointer;
        * encountered such as the file does not exist, then an empty
        * string ("") will be returned.
        */
-      static std::string GetImageIOFromFileName(const std::string &fileName);
+      static std::string GetImageIOFromFileName(const PathType &fileName);
 
     protected:
 
-      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const PathType &fileName);
 
-      void GetPixelIDFromImageIO( const std::string &fileName,
+      void GetPixelIDFromImageIO( const PathType &fileName,
                                   PixelIDValueType &outPixelType,
                                   unsigned int & outDimensions );
       void GetPixelIDFromImageIO( const itk::ImageIOBase* iobase,
                                   PixelIDValueType &outPixelType,
                                   unsigned int & outDimensions );
 
-      unsigned int GetDimensionFromImageIO( const std::string &fileName, unsigned int i );
+      unsigned int GetDimensionFromImageIO( const PathType &filename, unsigned int i );
       unsigned int GetDimensionFromImageIO( const itk::ImageIOBase* iobase, unsigned int i );
 
 
