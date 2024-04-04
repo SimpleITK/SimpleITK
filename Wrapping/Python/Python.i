@@ -26,6 +26,7 @@
 %}
 
 %include "PythonDocstrings.i"
+%include "sitkPathType.i"
  //%feature("autodoc", "1");
 
 // ignore overload methods of int type when there is an enum
