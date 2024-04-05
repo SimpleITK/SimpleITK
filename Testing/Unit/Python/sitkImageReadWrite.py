@@ -92,6 +92,30 @@ class ImageReadWrite(unittest.TestCase):
         ]
         sitk.WriteImage(img, fns, compressionLevel=90)
         img = sitk.ReadImage(fns, imageIO="TIFFImageIO")
+    def test_path_type(self):
+        """
+        Test functionality of wrapping the PathType object.
+        """
+
+        img = sitk.Image([32, 32], sitk.sitkUInt8)
+
+        writer = sitk.ImageFileWriter()
+        out_path = Path(self.test_dir) / "test_path_type.mha"
+
+        self.assertFalse(out_path.exists())
+        writer.SetFileName(out_path)
+        self.assertTrue(isinstance(writer.GetFileName(), str))
+        writer.Execute(img)
+        self.assertTrue(out_path.exists())
+
+        out_path = Path(self.test_dir) / "test_path_type_str.mha"
+        writer.SetFileName(str(out_path))
+        self.assertTrue(isinstance(writer.GetFileName(), str))
+        writer.Execute(img)
+        self.assertTrue(out_path.exists())
+
+
+
 
     def _read_write_test(self, img, tmp_filename):
         """ """

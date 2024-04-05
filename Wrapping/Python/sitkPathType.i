@@ -50,6 +50,8 @@ SWIG_sitk_PathType_isPathInstance(PyObject * obj)
   }
 
 }
+%typemap(freearg) itk::simple::Path {}
+
 
 %typemap(freearg) itk::simple::PathType {}
 
