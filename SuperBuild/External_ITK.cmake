@@ -72,7 +72,7 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 # Along 5.3.0 release branch
-set(_DEFAULT_ITK_GIT_TAG "fc8ee74bde4669d5688dc5114b99790bd711c814")
+set(_DEFAULT_ITK_GIT_TAG "v5.4rc03")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
