@@ -21,7 +21,8 @@ repos:
   rev: 24.2.0
   hooks: # check conformance to black formatting
    - id: black
-     args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
+     args: ['--check'] # if run without arguments, will fail and will format the files
+     exclude: 'docs/source/conf.py'
 - repo: local
   hooks:
     - id: local-prepare-commit-msg
