@@ -22,6 +22,42 @@ SWIG_sitk_PathType_isPathInstance(PyObject * obj)
   Py_DECREF(cls);
   return is_instance;
 }
+
+// converts a Python iterable of string or libpath.Path to a std::vector<std::string>
+struct SWIG_sitk_PathType_IteratorProtocol {
+  using type = std::vector<std::string, std::allocator< std::string>>;
+  using value_type = typename type::value_type;
+  static void assign(PyObject *obj, type *seq) {
+    swig::SwigVar_PyObject iter = PyObject_GetIter(obj);
+    if (iter) {
+      swig::SwigVar_PyObject item = PyIter_Next(iter);
+      while (item) {
+        if (SWIG_sitk_PathType_isPathInstance(item))
+        {
+          item = PyObject_Str(item);
+        }
+
+        seq->insert(seq->end(), swig::as<value_type>(item));
+        item = PyIter_Next(iter);
+      }
+    }
+  }
+
+  static bool check(PyObject *obj) {
+    bool ret = false;
+    swig::SwigVar_PyObject iter = PyObject_GetIter(obj);
+    if (iter) {
+      swig::SwigVar_PyObject item = PyIter_Next(iter);
+      ret = true;
+      while (item) {
+        ret = SWIG_sitk_PathType_isPathInstance(item) || swig::check<value_type>(item);
+        item = ret ? PyIter_Next(iter) : 0;
+      }
+    }
+    return ret;
+  }
+};
+
 }
 
 %typemap(in, fragment="SWIG_sitk_PathType", fragment="<type_traits>") itk::simple::PathType {
@@ -54,7 +90,6 @@ SWIG_sitk_PathType_isPathInstance(PyObject * obj)
 
 
 %typemap(freearg) itk::simple::PathType {}
-
 
 
 %typemap(in, fragment="SWIG_sitk_PathType", fragment="<type_traits>") const itk::simple::PathType &(itk::simple::PathType temp_path) {
@@ -94,3 +129,25 @@ SWIG_sitk_PathType_isPathInstance(PyObject * obj)
 //%typemap(out, fragment="SWIG_sitk_PathType", fragment="<type_traits>") const itk::simple::PathType & {
 //  $result = SWIG_From_std_string(*$1);
 //}
+
+
+%typemap(in, fragement="SWIG_sitk_PathType", fragment="<type_traits>") const std::vector<itk::simple::PathType> &(std::vector<itk::simple::PathType> temp_path, int res) {
+ if (SWIG_sitk_PathType_IteratorProtocol::check($input))
+ {
+  SWIG_sitk_PathType_IteratorProtocol::assign($input, &temp_path);
+  $1 = &temp_path;
+  res = SWIG_OK;
+ } else {
+  std::vector<std::string> * ptr = nullptr;
+  res = swig::asptr($input, &ptr);
+  if (!SWIG_IsOK(res))
+  {
+    %argument_fail(res, "$type", $symname, $argnum);
+  }
+  $1 = ptr;
+  if (SWIG_IsNewObj(res))
+  {
+    delete ptr;
+  }
+ }
+}
