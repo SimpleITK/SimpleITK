@@ -13,7 +13,8 @@ class set_directory(object):
 
     Args:
         path (Path): The path to the cwd
-        """
+    """
+
     def __init__(self, path: Path):
         self.path = path
         self.origin = Path().absolute()
@@ -38,16 +39,14 @@ def save_image(image: SimpleITK.Image, name: str, is_label: bool = False):
         shift_scale = SimpleITK.ShiftScaleImageFilter()
         shift_scale.SetOutputPixelType(SimpleITK.sitkUInt8)
         shift_scale.SetShift(-stats.GetMinimum())
-        shift_scale.SetScale(255.0/(stats.GetMaximum()-stats.GetMinimum()))
+        shift_scale.SetScale(255.0 / (stats.GetMaximum() - stats.GetMinimum()))
 
         output_img = shift_scale.Execute(image)
 
-    SimpleITK.WriteImage(output_img, Path('..')/"images"/f"{name}.png")
+    SimpleITK.WriteImage(output_img, Path("..") / "images" / f"{name}.png")
 
 
-def run_example(module_name: str,
-                func_name: str,
-                args: list) -> dict:
+def run_example(module_name: str, func_name: str, args: list) -> dict:
     """Generic method of calling a SimpleITK Example 'main' routine
 
     Run the specified func_name on the module_name Example and
@@ -63,12 +62,16 @@ def run_example(module_name: str,
         try:
             example_module = importlib.import_module(f"{module_name}.{module_name}")
         except (ImportError,) as ex:
-            raise ValueError(f"Unknown module: {module_name}.{module_name} current directory {os.getcwd()}") from ex
+            raise ValueError(
+                f"Unknown module: {module_name}.{module_name} current directory {os.getcwd()}"
+            ) from ex
 
         try:
             main_func = getattr(example_module, func_name)
         except AttributeError:
-            raise RuntimeError(f"Unknown attribute: {func_name} in {example_module} --- {example_module.__path__}")
+            raise RuntimeError(
+                f"Unknown attribute: {func_name} in {example_module} --- {example_module.__path__}"
+            )
 
     args.insert(0, module_name)
     return_dict = main_func(args)
