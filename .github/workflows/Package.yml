@@ -8,8 +8,8 @@ on:
     branches-ignore:
       - '**'
   pull_request:
-    paths: .github/workflows/Package.yml
-
+    paths:
+      - .github/workflows/Package.yml
 
 
 jobs:
@@ -57,3 +57,114 @@ jobs:
           name: python-wheels-${{ matrix.os }}
           path: |
             Utilities/Distribution/manylinux/wheelhouse/*.whl
+
+  build:
+
+
+    # The CMake configure and build commands are platform-agnostic and should work a cross
+    # platforms.
+    if: github.repository == 'SimpleITK/SimpleITK'
+    runs-on: ${{ matrix.os }}
+    env:
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_CONFIGURATION_TYPE: "${{ matrix.cmake-build-type }}"
+      COREBINARYDIRECTORY:  "${{ github.workspace }}/bld"
+      ExternalData_OBJECT_STORES: "${{ github.workspace }}/.ExternalData"
+      DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
+    strategy:
+      max-parallel: 4
+      matrix:
+        include:
+          - os: macos-13
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_OSX_DEPLOYMENT_TARGET=10.9
+              ITK_C_OPTIMIZATION_FLAGS:STRING=
+              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          path: SimpleITK-dashboard
+          ref: dashboard
+      - name: Generate External Data Hash
+        shell: bash
+        run: |
+          mkdir -p ${ExternalData_OBJECT_STORES}
+          ls -la "${{ github.workspace }}/Testing/Data/"
+          git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: ${{ env.ExternalData_OBJECT_STORES }}
+          key: external-data-v1-${{ hashFiles( format( '{0}/{1}', github.workspace, 'external-data.hashable') ) }}
+          enableCrossOsArchive: true
+          restore-keys: |
+            external-data-v1-
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        id: cpy
+        with:
+          python-version: 3.11
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ninja cmake~=3.22.0
+
+          if [  ! -z "${{ matrix.xcode-version }}" ]; then
+            sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
+            xcode-select -p
+          fi
+
+      - name: Build and Test
+        shell: bash
+        env:
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_BINARY_DIRECTORY: "${{ env.COREBINARYDIRECTORY }}"
+          CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CACHE: |
+            WRAP_DEFAULT:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_TESTING:BOOL=ON
+            ${{ matrix.ctest-cache }}
+        run: |
+          cmake --version
+          ninja --version
+          ctest -D "dashboard_track:STRING=Package" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
+
+      - name: Package Python 3.12
+        uses: ./.github/actions/package_python
+        with:
+          python-version: 3.12
+
+      - name: Package Python 3.11
+        uses: ./.github/actions/package_python
+        with:
+          python-version: 3.11
+
+      - name: Package Python 3.10
+        uses: ./.github/actions/package_python
+        with:
+          python-version: "3.10"
+
+      - name: Package Python 3.9
+        uses: ./.github/actions/package_python
+        with:
+          python-version: 3.9
+
+      - name: Package Python 3.8
+        uses: ./.github/actions/package_python
+        with:
+          python-version: 3.8
+
+      - name: Upload Wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-wheels-${{ matrix.os }}
+          path: |
+            ${{ github.workspace }}/artifacts/*.whl

@@ -1,0 +1,29 @@
+name: "Build Python Package"
+description: "Use script to build python package of SimpleITK"
+inputs:
+  python-version:
+    description: "Python version to build"
+    required: true
+    default: "3.8"
+  continue-on-error:
+    description: "Continue on error"
+    required: false
+    default: false
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python ${{ inputs.python-version }}
+      uses: actions/setup-python@v5
+      id: cpy
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Build Pyhon 3.10
+      continue-on-error: ${{ inputs.continue-on-error }}
+      shell: bash
+      run: |
+        echo "Python: ${{ steps.cpy.outputs.python-path }}"
+        if [ $RUNNER_OS == "macOS" ]; then
+          ${CTEST_SOURCE_DIRECTORY}/.github/workflows/scripts/mac_build_python.sh
+        elif [ $RUNNER_OS == "Windows" ]; then
+          ${CTEST_SOURCE_DIRECTORY}/.github/workflows/scripts/win_build_python.sh
+        fi
