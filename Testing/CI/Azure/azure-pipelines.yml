@@ -21,6 +21,60 @@ pr:
       - Testing/CI/Azure
 
 jobs:
+  - job: WindowsR
+    timeoutInMinutes: 0
+    cancelTimeoutInMinutes: 300
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - template: templates/git-download-steps.yml
+      - pwsh: |
+          Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
+          choco install -y rtools
+          choco install -y r.project --params "'/AddToPath'"
+          #choco install -y ninja
+          refreshenv
+          # Set the timezone
+          tzutil /s "GMT Standard Time"
+        displayName: 'Installing R and rtools'
+      - pwsh: |
+          Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
+          refreshenv
+          c:\rtools40\usr\bin\bash -login $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_rtools_setup.sh
+        displayName: 'pacman stuff - tbb'
+        env:
+          MSYS2_PATH_TYPE: inherit
+          MSYSTEM: MSYS
+      - pwsh: |
+          Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1"
+          refreshenv
+          c:\rtools40\usr\bin\bash -login $(Build.SourcesDirectory)/Testing/CI/Azure/scripts/win_rtools_build.sh
+          echo "Done"
+        displayName: 'RTools build and test'
+        env:
+          MSYS2_PATH_TYPE: inherit
+          MSYSTEM: MINGW64
+          CTEST_CONFIGURATION_TYPE: MinSizeRel
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CMAKE_GENERATOR: MSYS Makefiles
+          CTEST_BUILD_FLAGS: -j2
+          DASHBOARD_BRANCH_DIRECTORY: $(Agent.BuildDirectory)/SimpleITK-dashboard
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_CACHE: |
+            CMAKE_MODULE_LINKER_FLAGS:STRING=-Wl,--hash-size=31
+            CMAKE_VERBOSE_MAKEFILE:BOOL=ON
+            EXTERNAL_ITK_Module_ITKTBB:BOOL=ON
+            BUILD_DOCUMENTS:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=OFF
+            BUILD_SHARED_LIBS:BOOL=OFF
+            BUILD_TESTING:BOOL=OFF
+            ITK_GIT_TAG=8307a0b784c0271d45256cdf9626452eef37ab0b
+            WRAP_DEFAULT:BOOL=OFF
+            WRAP_R:BOOL=ON
+            WRAP_TCL:BOOL=OFF
+            WRAP_PYTHON:BOOL=OFF
+        workingDirectory: $(Agent.BuildDirectory)
+
   - job: Linux
     timeoutInMinutes: 0
     pool:
