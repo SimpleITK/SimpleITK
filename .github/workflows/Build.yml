@@ -11,6 +11,8 @@ on:
       - 'Documentation/**'
       - 'Utilities/**'
       -  '*.rst'
+      -  '.github/**'
+      -  '!.github/workflows/Build.yml'
 
 concurrency:
   group: ci-${{ github.head_ref || github.ref }}
