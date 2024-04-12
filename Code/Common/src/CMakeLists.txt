@@ -32,14 +32,13 @@ set ( SimpleITKCommonSource
   )
 
 set(use_itk_modules ITKCommon ITKImageCompose ITKImageIntensity
-  ITKLabelMap ITKTransform ITKIOTransformBase ITKDisplacementField )
-if (GenericLabelInterpolator IN_LIST ITK_MODULES_ENABLED)
-  list(APPEND use_itk_modules GenericLabelInterpolator)
-endif()
-find_package(ITK COMPONENTS  REQUIRED ${use_itk_modules} )
+                    ITKLabelMap ITKTransform ITKIOTransformBase ITKDisplacementField )
+find_package(ITK REQUIRED
+        COMPONENTS ${use_itk_modules}
+        OPTIONAL_COMPONENTS GenericLabelInterpolator)
 
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
-sitk_target_use_itk (SimpleITKCommon PRIVATE ${use_itk_modules} )
+sitk_target_use_itk (SimpleITKCommon PRIVATE ${ITK_MODULES_REQUESTED} )
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKCommon PRIVATE SimpleITKExplicit )
 endif()
