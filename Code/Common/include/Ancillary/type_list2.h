@@ -143,7 +143,7 @@ struct has_type;
 // note the following causes a syntax error with MS VS 16
 template <typename... Ts, typename T>
 struct has_type<typelist<Ts...>, T>
-  : std::integral_constant<bool, std::max<bool>(std::initializer_list<bool>{ std::is_same<Ts, T>::value... })>
+  : std::integral_constant<bool, ((std::is_same<Ts, T>::value ) || ...) >
 {};
 #else
 template <typename... Ts, typename T>
