@@ -152,9 +152,7 @@ struct TypeListHasPixelIDValue<typelist2::typelist<Ts...>>
     if (match == sitkUnknown)
       return false;
 
-    bool result = false;
-    ((void)[&match, &result]() { result = result || (PixelIDToPixelIDValue<Ts>::value == match); }(), ...);
-    return result;
+    return ((PixelIDToPixelIDValue<Ts>::value == match) || ...);
   }
 };
 }

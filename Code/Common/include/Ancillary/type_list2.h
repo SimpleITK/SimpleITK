@@ -139,25 +139,10 @@ struct index_of<typelist<t0, Ts...>, T>
  */
 template <typename Typelist, typename T>
 struct has_type;
-#if !defined(_MSC_VER) || _MSC_VER >= 1930
-// note the following causes a syntax error with MS VS 16
 template <typename... Ts, typename T>
 struct has_type<typelist<Ts...>, T>
-  : std::integral_constant<bool, std::max<bool>(std::initializer_list<bool>{ std::is_same<Ts, T>::value... })>
+  : std::integral_constant<bool, ((std::is_same<Ts, T>::value ) || ...) >
 {};
-#else
-template <typename... Ts, typename T>
-struct has_type<typelist<T, Ts...>, T> : std::true_type
-{};
-
-template <typename T>
-struct has_type<typelist<>, T> : std::false_type
-{};
-
-template <typename... Ts, typename T0, typename T>
-struct has_type<typelist<T0, Ts...>, T> : has_type<typelist<Ts...>, T>
-{};
-#endif
 
 /**\class visit
  * \brief Runs a templated predicate on each type in the typelist
@@ -183,19 +168,11 @@ template <typename... Ts>
 struct visit<typelist<Ts...>>
 {
 
-  template <typename T, typename Predicate>
-  static int
-  _f(Predicate && visitor)
-  {
-    visitor.CLANG_TEMPLATE operator()<T>();
-    return 0;
-  }
-
   template <typename Predicate>
   void
   operator()(Predicate && visitor)
   {
-    (void)std::initializer_list<int>{ _f<Ts>(visitor)... };
+    ((visitor.CLANG_TEMPLATE operator()<Ts>()), ...);
   };
 };
 
@@ -229,23 +206,16 @@ struct dual_visit<typelist<Tls...>, typelist<Trs...>>
   void
   operator()(Visitor && visitor) const
   {
-    (void)std::initializer_list<int>{ right_visit<Tls>(visitor)... };
+    ((right_visit<Tls>(visitor)), ...);
   }
 
 private:
-  template <typename tl, typename tr, typename Predicate>
-  static int
-  visit_value(Predicate && visitor)
-  {
-    visitor.CLANG_TEMPLATE operator()<tl, tr>();
-    return 0;
-  }
 
   template <typename tl, typename Predicate>
   static int
   right_visit(Predicate && visitor)
   {
-    (void)std::initializer_list<int>{ visit_value<tl, Trs>(visitor)... };
+    ((visitor.CLANG_TEMPLATE operator()<tl, Trs>()), ...);
     return 0;
   }
 };
