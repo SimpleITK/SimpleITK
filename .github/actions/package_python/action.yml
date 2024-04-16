@@ -9,6 +9,10 @@ inputs:
     description: "Continue on error"
     required: false
     default: false
+  VCVAR_OPTIONS:
+    description: "Visual Studio vcvarsall.bat options"
+    required: false
+    default: amd64 -vcvars_ver=14.2
 runs:
   using: "composite"
   steps:
@@ -17,13 +21,16 @@ runs:
       id: cpy
       with:
         python-version: ${{ inputs.python-version }}
-    - name: Build Pyhon 3.10
+    - name: Build Python ${{ steps.cpy.outputs.python-version }}
       continue-on-error: ${{ inputs.continue-on-error }}
       shell: bash
+      if: runner.os == 'macOS'
       run: |
-        echo "Python: ${{ steps.cpy.outputs.python-path }}"
-        if [ $RUNNER_OS == "macOS" ]; then
-          ${CTEST_SOURCE_DIRECTORY}/.github/workflows/scripts/mac_build_python.sh
-        elif [ $RUNNER_OS == "Windows" ]; then
-          ${CTEST_SOURCE_DIRECTORY}/.github/workflows/scripts/win_build_python.sh
-        fi
+        ${{ github.action_path }}/scripts/mac_build_python.sh
+    - name: Build Python ${{ steps.cpy.outputs.python-version }}
+      continue-on-error: ${{ inputs.continue-on-error }}
+      shell: cmd
+      if: runner.os == 'Windows'
+      run: |
+        call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
+        bash  ${{ github.action_path }}/scripts//win_build_python.sh
