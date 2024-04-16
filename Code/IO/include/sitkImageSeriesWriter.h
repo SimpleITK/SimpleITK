@@ -21,6 +21,7 @@
 #include "sitkMacro.h"
 #include "sitkImage.h"
 #include "sitkProcessObject.h"
+#include "sitkPathType.h"
 #include "sitkIO.h"
 #include "sitkMemberFunctionFactory.h"
 
@@ -120,13 +121,13 @@ class ImageIOBase;
         * The number of filenames must match the number of slices in
         * the image.
         * @{ */
-      SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<std::string> &fileNames );
-      const std::vector<std::string> &GetFileNames() const;
+      SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<PathType> &fileNames );
+      const std::vector<PathType> &GetFileNames() const;
       /** @} */
 
 
       SITK_RETURN_SELF_TYPE_HEADER Execute( const Image& );
-      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<std::string> &inFileNames, bool useCompression, int compressionLevel );
+      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<PathType> &inFileNames, bool useCompression, int compressionLevel );
 
     protected:
 
@@ -134,7 +135,7 @@ class ImageIOBase;
 
     private:
 
-      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const PathType &fileName);
 
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
@@ -147,7 +148,7 @@ class ImageIOBase;
       int         m_CompressionLevel;
       std::string m_Compressor;
 
-      std::vector<std::string> m_FileNames;
+      std::vector<PathType> m_FileNames;
 
       std::string m_ImageIOName;
     };
@@ -168,7 +169,7 @@ class ImageIOBase;
    * \sa itk::simple::ImageFileWriter for writing a single file.
    */
   SITKIO_EXPORT void WriteImage(const Image &                    image,
-                                const std::vector<std::string> & fileNames,
+                                const std::vector<PathType> & fileNames,
                                 bool                             useCompression = false,
                                 int                              compressionLevel = -1);
   }

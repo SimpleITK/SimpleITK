@@ -64,7 +64,7 @@ namespace itk::simple {
       }
   }
 
-  Image ReadImage ( const std::string &filename,
+  Image ReadImage ( const PathType &filename,
                     PixelIDValueEnum outputPixelType,
                     const std::string &imageIO )
     {
@@ -116,12 +116,12 @@ namespace itk::simple {
       return out.str();
     }
 
-    ImageFileReader& ImageFileReader::SetFileName ( const std::string &fn ) {
+    ImageFileReader& ImageFileReader::SetFileName ( const PathType &fn ) {
       this->m_FileName = fn;
       return *this;
     }
 
-    std::string ImageFileReader::GetFileName() const {
+    PathType ImageFileReader::GetFileName() const {
       return this->m_FileName;
     }
 

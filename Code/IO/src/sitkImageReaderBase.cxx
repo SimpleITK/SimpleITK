@@ -76,7 +76,7 @@ ImageReaderBase
 
 itk::SmartPointer<ImageIOBase>
 ImageReaderBase
-::GetImageIOBase(const std::string &fileName)
+::GetImageIOBase(const PathType &fileName)
 {
   itk::ImageIOBase::Pointer iobase;
   if (this->m_ImageIOName.empty())
@@ -182,7 +182,7 @@ ImageReaderBase
 
 std::string
 ImageReaderBase
-::GetImageIOFromFileName( const std::string &fileName )
+::GetImageIOFromFileName( const PathType &fileName )
 {
   itk::ImageIOBase::Pointer iobase;
   try
@@ -205,7 +205,7 @@ ImageReaderBase
 
 void
 ImageReaderBase
-::GetPixelIDFromImageIO( const std::string &fileName,
+::GetPixelIDFromImageIO( const PathType &fileName,
                          PixelIDValueType &outPixelType,
                          unsigned int & outDimensions )
 {
@@ -274,7 +274,7 @@ ImageReaderBase
 
 unsigned int
 ImageReaderBase
-::GetDimensionFromImageIO(const std::string &filename, unsigned int i)
+::GetDimensionFromImageIO(const PathType  &filename, unsigned int i)
 {
   itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(filename);
 

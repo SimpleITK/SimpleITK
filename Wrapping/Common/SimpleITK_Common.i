@@ -95,8 +95,10 @@
 %{
 #include <SimpleITK.h>
 #include <sitkImageOperators.h>
+
 %}
 
+%apply std::string { itk::simple::PathType };
 
 // Help SWIG handle std vectors
 namespace std
@@ -170,6 +172,7 @@ namespace std
 // Common
 %include "sitkConfigure.h"
 %include "sitkVersion.h"
+%include "sitkPathType.h"
 %include "sitkPixelIDValues.h"
 %include "sitkInterpolator.h"
 %include "sitkImage.h"

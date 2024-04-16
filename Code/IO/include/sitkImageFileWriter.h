@@ -19,6 +19,7 @@
 #define sitkImageFileWriter_h
 
 #include "sitkMacro.h"
+#include "sitkPathType.h"
 #include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkIO.h"
@@ -135,15 +136,15 @@ class SmartPointer;
       SITK_RETURN_SELF_TYPE_HEADER KeepOriginalImageUIDOff( ) { return this->SetKeepOriginalImageUID(false); }
       /** @} */
 
-      SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const std::string &fileName );
-      std::string GetFileName() const;
+      SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const PathType &fileName );
+      PathType GetFileName() const;
 
       SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& );
-      SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& , const std::string &inFileName, bool useCompression, int compressionLevel );
+      SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& , const PathType &inFileName, bool useCompression, int compressionLevel );
 
     private:
 
-      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const PathType &fileName);
 
       template <class T> Self& ExecuteInternal ( const Image& );
 
@@ -151,7 +152,7 @@ class SmartPointer;
       int         m_CompressionLevel;
       std::string m_Compressor;
 
-      std::string m_FileName;
+      PathType m_FileName;
       bool        m_KeepOriginalImageUID;
       std::string m_ImageIOName;
 
@@ -178,7 +179,7 @@ class SmartPointer;
    * \sa itk::simple::ImageFileWriter for writing a single file.
    */
   SITKIO_EXPORT void WriteImage (const Image& image,
-                                 const std::string &fileName,
+                                 const PathType &fileName,
                                  bool useCompression=false,
                                  int compressionLevel=-1);
   }

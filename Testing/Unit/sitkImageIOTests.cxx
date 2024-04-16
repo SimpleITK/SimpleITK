@@ -350,7 +350,7 @@ namespace sitk = itk::simple;
 
 TEST(IO, SeriesReader) {
 
-  std::vector< std::string > fileNames;
+  std::vector< sitk::PathType > fileNames;
   fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
   fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
   fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
@@ -443,7 +443,7 @@ TEST(IO,Write_BadName) {
 
 TEST(IO, DicomSeriesReader) {
 
-  std::vector< std::string > fileNames;
+  std::vector< sitk::PathType > fileNames;
   std::vector< std::string > seriesIDs;
   std::string dicomDir;
 
@@ -528,7 +528,7 @@ TEST(IO, ImageSeriesWriter )
 
 
 
-  std::vector< std::string > fileNames;
+  std::vector< sitk::PathType > fileNames;
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_1.png" );
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_2.png" );
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_3.png" );
@@ -589,7 +589,7 @@ TEST(IO, VectorImageSeriesWriter )
 {
 
 
-  std::vector< std::string > fileNames;
+  std::vector< sitk::PathType > fileNames;
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/VectorImageSeriesWriter_1.png" );
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/VectorImageSeriesWriter_2.png" );
   fileNames.push_back( dataFinder.GetOutputDirectory()+"/VectorImageSeriesWriter_3.png" );

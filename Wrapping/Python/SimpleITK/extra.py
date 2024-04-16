@@ -374,10 +374,10 @@ def ReadImage(
 
     if isinstance(fileName, (str, Path)):
         reader = ImageFileReader()
-        reader.SetFileName(str(fileName))
+        reader.SetFileName(fileName)
     else:
         reader = ImageSeriesReader()
-        reader.SetFileNames([str(name) for name in fileName])
+        reader.SetFileNames(fileName)
 
     reader.SetImageIO(imageIO)
     reader.SetOutputPixelType(outputPixelType)
@@ -422,10 +422,10 @@ def WriteImage(
     """
     if isinstance(fileName, (str, Path)):
         writer = ImageFileWriter()
-        writer.SetFileName(str(fileName))
+        writer.SetFileName(fileName)
     else:
         writer = ImageSeriesWriter()
-        writer.SetFileNames([str(name) for name in fileName])
+        writer.SetFileNames(fileName)
 
     writer.SetUseCompression(useCompression)
     writer.SetCompressionLevel(compressionLevel)

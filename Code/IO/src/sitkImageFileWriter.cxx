@@ -28,7 +28,7 @@
 
 namespace itk::simple {
 
-void WriteImage ( const Image& image, const std::string &inFileName, bool useCompression, int compressionLevel )
+void WriteImage ( const Image& image, const PathType &inFileName, bool useCompression, int compressionLevel )
 {
   ImageFileWriter writer;
   writer.Execute ( image, inFileName, useCompression, compressionLevel );
@@ -143,18 +143,18 @@ bool ImageFileWriter::GetKeepOriginalImageUID( ) const
   return this->m_KeepOriginalImageUID;
 }
 
-ImageFileWriter& ImageFileWriter::SetFileName ( const std::string &fn )
+ImageFileWriter& ImageFileWriter::SetFileName ( const PathType &fn )
 {
   this->m_FileName = fn;
   return *this;
 }
 
-std::string ImageFileWriter::GetFileName() const
+PathType ImageFileWriter::GetFileName() const
 {
   return this->m_FileName;
 }
 
-ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const std::string &inFileName, bool useCompression, int compressionLevel )
+ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const PathType &inFileName, bool useCompression, int compressionLevel )
 {
   this->SetFileName( inFileName );
   this->SetUseCompression( useCompression );
@@ -190,7 +190,7 @@ ImageFileWriter
 
 itk::SmartPointer<ImageIOBase>
 ImageFileWriter
-::GetImageIOBase(const std::string &fileName)
+::GetImageIOBase(const PathType &fileName)
 {
   itk::ImageIOBase::Pointer iobase;
   if (this->m_ImageIOName.empty())

@@ -31,7 +31,7 @@
 
 namespace itk::simple {
 
-  Image ReadImage ( const std::vector<std::string> &filenames,
+  Image ReadImage ( const std::vector<PathType> &filenames,
                     PixelIDValueEnum outputPixelType,
                     const std::string &imageIO )
     {
@@ -43,7 +43,7 @@ namespace itk::simple {
     }
 
 
-  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesFileNames( const std::string &directory,
+  std::vector<PathType> ImageSeriesReader::GetGDCMSeriesFileNames( const PathType &directory,
                                                                       const std::string &seriesID,
                                                                       bool useSeriesDetails,
                                                                       bool recursive,
@@ -61,10 +61,11 @@ namespace itk::simple {
 
     gdcmSeries->Update();
 
-    return gdcmSeries->GetFileNames(seriesID);
+    auto filenames = gdcmSeries->GetFileNames(seriesID);
+    return std::vector<PathType>(filenames.begin(), filenames.end());
     }
 
-  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesIDs( const std::string &directory,
+  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesIDs( const PathType &directory,
                                                                 bool useSeriesDetails )
     {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
@@ -103,24 +104,22 @@ namespace itk::simple {
       out << std::endl;
 
       out << "  FileNames:" << std::endl;
-      std::vector<std::string>::const_iterator iter  = m_FileNames.begin();
-      while( iter != m_FileNames.end() )
+      for ( auto name : m_FileNames)
         {
-        out << "    \"" << *iter << "\"" << std::endl;
-        ++iter;
+        out << "    \"" << name << "\"" << std::endl;
         }
 
       out << ImageReaderBase::ToString();
       return out.str();
     }
 
-  ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<std::string> &filenames )
+  ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<PathType> &filenames )
     {
     this->m_FileNames = filenames;
     return *this;
     }
 
-  const std::vector<std::string> &ImageSeriesReader::GetFileNames() const
+  const std::vector<PathType> &ImageSeriesReader::GetFileNames() const
     {
     return this->m_FileNames;
     }
@@ -190,7 +189,7 @@ namespace itk::simple {
     assert( imageio != nullptr );
     typename Reader::Pointer reader = Reader::New();
     reader->SetImageIO( imageio );
-    reader->SetFileNames( this->m_FileNames );
+    reader->SetFileNames( std::vector<std::string>(this->m_FileNames.begin(), this->m_FileNames.end()) );
     // save some computation by not updating this unneeded data-structure
     reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 

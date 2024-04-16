@@ -37,7 +37,7 @@ int main ( int argc, char* argv[] ) {
 
   // Read the Dicom image series
   sitk::ImageSeriesReader reader;
-  const std::vector<std::string> dicom_names = sitk::ImageSeriesReader::GetGDCMSeriesFileNames( argv[1] );
+  auto dicom_names = sitk::ImageSeriesReader::GetGDCMSeriesFileNames( argv[1] );
   reader.SetFileNames( dicom_names );
 
   sitk::Image image = reader.Execute();

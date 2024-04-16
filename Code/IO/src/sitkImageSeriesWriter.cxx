@@ -32,7 +32,7 @@
 
 namespace itk::simple {
 
-  void WriteImage ( const Image& inImage, const std::vector<std::string> &filenames, bool useCompression, int compressionLevel )
+  void WriteImage ( const Image& inImage, const std::vector<PathType> &filenames, bool useCompression, int compressionLevel )
   {
     ImageSeriesWriter writer;
     writer.Execute( inImage, filenames, useCompression, compressionLevel );
@@ -76,11 +76,9 @@ namespace itk::simple {
     out << std::endl;
 
     out << "  FileNames:" << std::endl;
-    std::vector<std::string>::const_iterator iter  = m_FileNames.begin();
-    while( iter != m_FileNames.end() )
+    for (auto v : m_FileNames)
       {
-      out << "    \"" << *iter << "\"" << std::endl;
-      ++iter;
+      out << "    \"" << v << "\"" << std::endl;
       }
 
     out << "  ImageIOName: ";
@@ -117,7 +115,7 @@ namespace itk::simple {
 
   itk::SmartPointer<ImageIOBase>
   ImageSeriesWriter
-  ::GetImageIOBase(const std::string &fileName)
+  ::GetImageIOBase(const PathType &fileName)
   {
     itk::ImageIOBase::Pointer iobase;
     if (this->m_ImageIOName.empty())
@@ -177,19 +175,19 @@ namespace itk::simple {
   }
 
 
-  ImageSeriesWriter& ImageSeriesWriter::SetFileNames ( const std::vector<std::string> &filenames )
+  ImageSeriesWriter& ImageSeriesWriter::SetFileNames ( const std::vector<PathType> &filenames )
   {
     this->m_FileNames = filenames;
     return *this;
   }
 
-  const std::vector<std::string> &ImageSeriesWriter::GetFileNames() const
+  const std::vector<PathType> &ImageSeriesWriter::GetFileNames() const
   {
     return this->m_FileNames;
   }
 
 
-  ImageSeriesWriter& ImageSeriesWriter::Execute ( const Image& image, const std::vector<std::string> &inFileNames, bool useCompression, int compressionLevel )
+  ImageSeriesWriter& ImageSeriesWriter::Execute ( const Image& image, const std::vector<PathType> &inFileNames, bool useCompression, int compressionLevel )
   {
     this->SetFileNames( inFileNames );
     this->SetUseCompression( useCompression );
@@ -241,7 +239,7 @@ namespace itk::simple {
 
     typename Writer::Pointer writer = Writer::New();
     writer->SetUseCompression( this->m_UseCompression );
-    writer->SetFileNames( this->m_FileNames );
+    writer->SetFileNames( std::vector<std::string>(this->m_FileNames.begin(), this->m_FileNames.end()) );
     writer->SetInput( image );
 
     itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileNames[0] );

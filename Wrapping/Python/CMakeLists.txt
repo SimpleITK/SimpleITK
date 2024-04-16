@@ -34,7 +34,8 @@ set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
   ${CMAKE_CURRENT_SOURCE_DIR}/Python.i
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkImage.i
-  ${CMAKE_CURRENT_SOURCE_DIR}/sitkTransform.i )
+  ${CMAKE_CURRENT_SOURCE_DIR}/sitkTransform.i
+  ${CMAKE_CURRENT_SOURCE_DIR}/sitkPathType.i)
 SWIG_add_module ( SimpleITK python
   SimpleITK.i
   sitkPyCommand.cxx )

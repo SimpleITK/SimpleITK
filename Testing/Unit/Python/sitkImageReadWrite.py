@@ -69,6 +69,13 @@ class ImageReadWrite(unittest.TestCase):
         out = sitk.ReadImage(path)
         self.assertEqual(sitk.Hash(img), sitk.Hash(out))
 
+        z_size = 3
+        path_list = [
+            Path(self.test_dir) / f"write_pathlib_{i}.mha" for i in range(z_size)
+        ]
+        img = sitk.Image([32, 32, z_size], sitk.sitkUInt8)
+        sitk.WriteImage(img, path_list)
+
     def test_write_procedure(self):
         """Test basic functionality of the ImageRead and ImageWrite procedures."""
 
@@ -92,6 +99,42 @@ class ImageReadWrite(unittest.TestCase):
         ]
         sitk.WriteImage(img, fns, compressionLevel=90)
         img = sitk.ReadImage(fns, imageIO="TIFFImageIO")
+
+    def test_path_type(self):
+        """
+        Test functionality of wrapping the PathType object.
+        """
+
+        img = sitk.Image([32, 32], sitk.sitkUInt8)
+
+        writer = sitk.ImageFileWriter()
+        out_path = Path(self.test_dir) / "test_path_type.mha"
+
+        self.assertFalse(out_path.exists())
+        writer.SetFileName(out_path)
+        self.assertTrue(isinstance(writer.GetFileName(), str))
+        writer.Execute(img)
+        self.assertTrue(out_path.exists())
+
+        out_path = Path(self.test_dir) / "test_path_type_str.mha"
+        writer.SetFileName(str(out_path))
+        self.assertTrue(isinstance(writer.GetFileName(), str))
+        writer.Execute(img)
+        self.assertTrue(out_path.exists())
+
+        writer = sitk.ImageSeriesWriter()
+        z_size = 3
+        out_path_series = [
+            Path(self.test_dir) / f"test_path_type_{i}.mha" for i in range(z_size)
+        ]
+        img = sitk.Image([32, 32, z_size], sitk.sitkUInt8)
+        writer.SetFileNames(out_path_series)
+
+        self.assertTrue(all(isinstance(p, str) for p in writer.GetFileNames()))
+
+        writer.Execute(img)
+        for p in out_path_series:
+            self.assertTrue(p.exists())
 
     def _read_write_test(self, img, tmp_filename):
         """ """

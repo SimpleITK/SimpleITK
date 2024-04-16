@@ -32,21 +32,10 @@
  val = val.Downcast()
 };
 
-%pythonprepend itk::simple::ReadTransform
-{
-  filename=str(filename)
-};
 %pythonappend itk::simple::ReadTransform
 {
  val = val.Downcast()
 };
-%pythonprepend itk::simple::WriteTransform %{
-  filename = str(filename)
-%}
-
-%pythonprepend itk::simple::Transform::WriteTransform %{
-  filename = str(filename)
-%}
 
 %extend itk::simple::Transform {
    %pythoncode
