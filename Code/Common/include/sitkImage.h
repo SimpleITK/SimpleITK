@@ -306,6 +306,29 @@ namespace simple
      */
     std::vector<double> EvaluateAtPhysicalPoint( const std::vector<double> &point, InterpolatorEnum interp = sitkLinear) const;
 
+
+    /** Checks whether the images' pixels at the same index occupy the same physical space.
+     *
+     * Compares the origin, spacing, and direction for equality within provided tolerances.
+     * There is no check for matching regions in between the images.
+     *
+     * If The dimensions of the images do not match, false is returned.
+     */
+    bool
+    IsCongruentImageGeometry(const Image & otherImage, double coordinateTolerance, double directionTolerance) const;
+
+    /** Check whether the images have the same grid in physical space.
+     *
+     * Compares largest possible regions for equality, and the origin, spacing,
+     * and direction cosines for equality within provided tolerances.
+     *
+     * If the dimensions of the images do not match, false is returned.
+     */
+    bool
+    IsSameImageGeometryAs(const Image & otherImage,
+                          double       = DefaultImageCoordinateTolerance,
+                          double       = DefaultImageDirectionTolerance) const;
+
     /** Get the number of pixels the Image is in each dimension as a
       * std::vector. The size of the vector is equal to the number of dimensions
       * for the image. */
@@ -557,6 +580,9 @@ namespace simple
     /** \brief Returns true if no other SimpleITK Image object
      * refers to the same internal data structure. */
     bool IsUnique( ) const;
+
+    static constexpr double DefaultImageCoordinateTolerance = 1e-6;
+    static constexpr double DefaultImageDirectionTolerance = 1e-6;
 
   protected:
 

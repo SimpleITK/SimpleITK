@@ -60,6 +60,15 @@ namespace itk::simple
     virtual std::vector< unsigned int > GetSize( ) const = 0;
     virtual unsigned int GetSize( unsigned int dimension ) const = 0;
 
+    virtual bool
+    IsCongruentImageGeometry(const PimpleImageBase * otherImage,
+                             double                  coordinateTolerance,
+                             double                  directionTolerance) const = 0;
+
+    virtual bool
+    IsSameImageGeometryAs(const PimpleImageBase * otherImage,
+                          double                  coordinateTolerance,
+                          double                  directionTolerance) const = 0;
 
     virtual std::vector<double> GetOrigin( ) const = 0;
     virtual void SetOrigin( const std::vector<double> &orgn ) = 0;

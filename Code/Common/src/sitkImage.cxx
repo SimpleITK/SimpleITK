@@ -220,6 +220,32 @@ namespace itk::simple
       return this->m_PimpleImage->ToString();
     }
 
+    bool
+    Image::IsCongruentImageGeometry(const itk::simple::Image & otherImage,
+                                    double                     coordinateTolerance,
+                                    double                     directionTolerance) const
+    {
+      if (this->GetDimension() != otherImage.GetDimension())
+      {
+        return false;
+      }
+      return this->m_PimpleImage->IsCongruentImageGeometry(
+        otherImage.m_PimpleImage.get(), coordinateTolerance, directionTolerance);
+    }
+
+    bool
+    Image::IsSameImageGeometryAs(const itk::simple::Image & otherImage,
+                                 double                     coordinateTolerance,
+                                 double                     directionTolerance) const
+    {
+      if (this->GetDimension() != otherImage.GetDimension())
+      {
+        return false;
+      }
+      return this->m_PimpleImage->IsSameImageGeometryAs(
+        otherImage.m_PimpleImage.get(), coordinateTolerance, directionTolerance);
+    }
+
 
     std::vector< unsigned int > Image::GetSize( ) const
     {
