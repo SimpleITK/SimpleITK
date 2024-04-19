@@ -312,7 +312,37 @@ namespace itk::simple
         return sitkITKVectorToSTL<unsigned int>( largestRegion.GetSize() );
       }
 
-    uint64_t GetNumberOfPixels( ) const override
+
+      bool
+      IsCongruentImageGeometry(const PimpleImageBase * otherImage,
+                               double                  coordinateTolerance,
+                               double                  directionTolerance) const override
+      {
+        auto other = dynamic_cast<const itk::ImageBase<ImageType::ImageDimension> *>(otherImage->GetDataBase());
+        if (other == nullptr)
+        {
+          return false;
+        }
+
+        return this->m_Image->IsCongruentImageGeometry(other, coordinateTolerance, directionTolerance);
+      }
+
+      bool
+      IsSameImageGeometryAs(const PimpleImageBase * otherImage,
+                            double                  coordinateTolerance,
+                            double                  directionTolerance) const override
+      {
+        auto other = dynamic_cast<const itk::ImageBase<ImageType::ImageDimension> *>(otherImage->GetDataBase());
+        if (other == nullptr)
+        {
+          return false;
+        }
+
+        return this->m_Image->IsSameImageGeometryAs(other, coordinateTolerance, directionTolerance);
+      }
+
+
+      uint64_t GetNumberOfPixels() const override
       {
         return this->m_Image->GetLargestPossibleRegion().GetNumberOfPixels();
       }

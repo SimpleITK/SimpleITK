@@ -2226,3 +2226,81 @@ TEST_F(Image, ToScalar)
     }
   }
 }
+
+
+TEST_F(Image, CompareGeometry)
+{
+  const sitk::Image img1 = sitk::Image(10, 10, sitk::sitkUInt8);
+
+  auto image_list = {
+    sitk::Image( 10, 10, itk::simple::sitkUInt8),
+    sitk::Image( 10, 10, itk::simple::sitkFloat32),
+    sitk::Image( 10, 10, itk::simple::sitkComplexFloat32),
+    sitk::Image( 10, 10, itk::simple::sitkVectorUInt8),
+    sitk::Image( 10, 10, itk::simple::sitkLabelUInt32),
+  };
+
+  const double tol = 1e-8;
+
+
+  for ( auto img2 : image_list )
+  {
+    EXPECT_TRUE(img1.IsCongruentImageGeometry(img2, tol, tol));
+    EXPECT_TRUE(img2.IsCongruentImageGeometry(img1, tol, tol));
+    EXPECT_TRUE(img1.IsSameImageGeometryAs(img2));
+    EXPECT_TRUE(img2.IsSameImageGeometryAs(img1));
+
+    img2.SetSpacing({ 1.0 + tol, 1.0 });
+    EXPECT_TRUE(img1.IsCongruentImageGeometry(img2, tol, tol));
+    EXPECT_TRUE(img2.IsCongruentImageGeometry(img1, tol, tol));
+    EXPECT_TRUE(img1.IsSameImageGeometryAs(img2));
+    EXPECT_TRUE(img2.IsSameImageGeometryAs(img1));
+    img2.SetSpacing(img1.GetSpacing());
+
+    img2.SetSpacing({ 1.0 + 2*tol, 1.0 });
+    EXPECT_FALSE(img1.IsCongruentImageGeometry(img2, tol, tol));
+    EXPECT_FALSE(img2.IsCongruentImageGeometry(img1, tol, tol));
+    EXPECT_FALSE(img1.IsSameImageGeometryAs(img2, tol, tol));
+    EXPECT_FALSE(img2.IsSameImageGeometryAs(img1, tol, tol));
+    EXPECT_TRUE(img1.IsSameImageGeometryAs(img2));
+    EXPECT_TRUE(img2.IsSameImageGeometryAs(img1));
+    img2.SetSpacing(img1.GetSpacing());
+
+    img2.SetOrigin({ 0.0+tol , 0.0 });
+    EXPECT_TRUE(img1.IsCongruentImageGeometry(img2, tol, tol));
+    EXPECT_TRUE(img2.IsCongruentImageGeometry(img1, tol, tol));
+    EXPECT_TRUE(img1.IsSameImageGeometryAs(img2));
+    EXPECT_TRUE(img2.IsSameImageGeometryAs(img1));
+    img2.SetOrigin(img1.GetOrigin());
+
+    img2.SetDirection({ 1.0 + tol, 0.0, 0.0, 1.0 });
+    EXPECT_TRUE(img1.IsCongruentImageGeometry(img2, tol, tol));
+    EXPECT_TRUE(img2.IsCongruentImageGeometry(img1, tol, tol));
+    EXPECT_TRUE(img1.IsSameImageGeometryAs(img2));
+    EXPECT_TRUE(img2.IsSameImageGeometryAs(img1));
+    img2.SetDirection(img1.GetDirection());
+
+    img2.SetDirection({ 1.0 + sitk::Image::DefaultImageCoordinateTolerance*2.0, 0.0, 0.0, 1.0 });
+    EXPECT_FALSE(img1.IsCongruentImageGeometry(img2, tol, tol));
+    EXPECT_FALSE(img2.IsCongruentImageGeometry(img1, tol, tol));
+    EXPECT_FALSE(img1.IsSameImageGeometryAs(img2));
+    EXPECT_FALSE(img2.IsSameImageGeometryAs(img1));
+    img2.SetDirection(img1.GetDirection());
+  }
+
+
+  auto img3 = sitk::Image(2,2, sitk::sitkUInt8);
+
+  EXPECT_TRUE(img1.IsCongruentImageGeometry(img3, tol, tol));
+  EXPECT_TRUE(img3.IsCongruentImageGeometry(img1, tol, tol));
+  EXPECT_FALSE(img1.IsSameImageGeometryAs(img3));
+  EXPECT_FALSE(img3.IsSameImageGeometryAs(img1));
+
+
+  auto img4 = sitk::Image(10,10,10, sitk::sitkUInt8);
+  EXPECT_FALSE(img1.IsCongruentImageGeometry(img4, tol, tol));
+  EXPECT_FALSE(img4.IsCongruentImageGeometry(img1, tol, tol));
+  EXPECT_FALSE(img1.IsSameImageGeometryAs(img4));
+  EXPECT_FALSE(img4.IsSameImageGeometryAs(img1));
+
+}
