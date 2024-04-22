@@ -32,6 +32,16 @@ when the EOL Python version is included as part of a long-term support
 operating system version. If you need a newer SimpleITK binary than the one available
 for your Python version you can :ref:`build it on your own<building_simpleitk>`.
 
+How do I use the SimpleElastix framework in SimpleITK?
+-----------------------------------------------------
+
+SimpleITK binary distributions do not include the SimpleElastix framework. To use
+the version of SimpleElastix included in SimpleITK, you will need to
+:ref:`build it on your local machine <building_simpleitk>`
+using the SuperBuild configuration and turn on the SimpleITK_USE_ELASTIX flag in
+addition to the relevant WRAP_LANGUAGE flags for the desired programming languages.
+
+
 Installation
 ============
 
