@@ -33,4 +33,4 @@ runs:
       if: runner.os == 'Windows'
       run: |
         call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
-        bash  ${{ github.action_path }}/scripts//win_build_python.sh
+        bash ${{ github.action_path }}/scripts/win_build_python.sh
