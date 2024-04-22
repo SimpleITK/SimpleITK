@@ -36,29 +36,29 @@ end
 $(if measurements then
 for i = 1,#measurements do
   if measurements[i].active then
-    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = [f = filter.GetPointer()] '
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = [f = filter.GetPointer()]'
     if measurements[i].parameters then
-      OUT=OUT..'( '
+      OUT=OUT..'('
       for inum=1,#measurements[i].parameters do
         if (inum ~= 1) then
           OUT=OUT..', '
         end
         OUT=OUT.."auto && "..measurements[i].parameters[inum].name
       end
-      OUT=OUT..') '
+      OUT=OUT..')'
     end
-    OUT=OUT..' { '
-
+    OUT=OUT..' {\n'
+    indent='    '
     if measurements[i].itk_get then
       if measurements[i].type == 'void' then
-        OUT=OUT..'return '..measurements[i].itk_get..';}; //'
+        OUT=OUT..indent..'return '..measurements[i].itk_get..';  //'
       else
-        OUT=OUT..'const auto value = '..measurements[i].itk_get..'; '
+        OUT=OUT..indent..'const auto & value = '..measurements[i].itk_get..';\n'
       end
     elseif measurements[i].label_map then
-      OUT=OUT..'const auto &value = '..'f->GetOutput()->GetLabelObject(label)->Get'..measurements[i].name ..'();'
+      OUT=OUT..indent..'const auto & value = '..'f->GetOutput()->GetLabelObject(label)->Get'..measurements[i].name ..'();'
     else
-      OUT=OUT..'const auto &value = f->Get'..measurements[i].name..'('
+      OUT=OUT..indent..'const auto & value = f->Get'..measurements[i].name..'('
       if measurements[i].parameters then
         for inum=1,#measurements[i].parameters do
           if (inum ~= 1) then
@@ -67,17 +67,17 @@ for i = 1,#measurements do
           OUT=OUT.."std::forward<decltype("..measurements[i].parameters[inum].name..")>("..measurements[i].parameters[inum].name..")"
         end
       end
-      OUT=OUT..'); '
+      OUT=OUT..');\n'
     end
 
     if measurements[i].custom_cast then
-      OUT=OUT..'using T = typename std::remove_cv< typename std::remove_reference<decltype(value)>::type>::type; '
-      OUT=OUT..'return '..measurements[i].custom_cast..';'
+      OUT=OUT..indent..'using T = typename std::remove_cv< typename std::remove_reference<decltype(value)>::type>::type;\n'
+      OUT=OUT..indent..'return '..measurements[i].custom_cast..';\n'
     else
-      OUT=OUT..'return value;'
+      OUT=OUT..indent..'return value;\n'
     end
-    OUT=OUT..'};\
-'
+
+    OUT=OUT..'  };\n'
   end
 end
 end)
