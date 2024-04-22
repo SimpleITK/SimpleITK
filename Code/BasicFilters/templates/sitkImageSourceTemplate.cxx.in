@@ -78,10 +78,6 @@ Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.
 
 //-----------------------------------------------------------------------------
 
-$(include CustomCasts.cxx)
-
-//-----------------------------------------------------------------------------
-
 sitkClangDiagnosticPush();
 sitkClangWarningIgnore("-Wunused-local-typedef");
 

@@ -97,10 +97,6 @@ Image ${name}::Execute ( const std::vector<Image> &images )
 
 //-----------------------------------------------------------------------------
 
-$(include CustomCasts.cxx)
-
-//-----------------------------------------------------------------------------
-
 
 sitkClangDiagnosticPush();
 sitkClangWarningIgnore("-Wunused-local-typedef");
