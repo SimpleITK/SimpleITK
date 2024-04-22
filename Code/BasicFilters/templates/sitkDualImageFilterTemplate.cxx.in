@@ -152,9 +152,6 @@ $(if in_place then
   OUT=[[$(include ExecuteRValueReferenceNoParameters.cxx.in)]]
 end)
 
-//-----------------------------------------------------------------------------
-
-$(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 
