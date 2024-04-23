@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkScaleVersor3DTransform_h
 #define sitkScaleVersor3DTransform_h
 
@@ -32,8 +32,7 @@ namespace itk::simple
  *
  * \sa itk::ScaleVersor3DTransform
  */
-class SITKCommon_EXPORT ScaleVersor3DTransform
-  : public Transform
+class SITKCommon_EXPORT ScaleVersor3DTransform : public Transform
 {
 public:
   using Self = ScaleVersor3DTransform;
@@ -41,73 +40,91 @@ public:
 
   ~ScaleVersor3DTransform() override;
 
-// construct identity
+  // construct identity
   ScaleVersor3DTransform();
 
-  ScaleVersor3DTransform( const ScaleVersor3DTransform & );
+  ScaleVersor3DTransform(const ScaleVersor3DTransform &);
 
-  explicit ScaleVersor3DTransform( const Transform & );
+  explicit ScaleVersor3DTransform(const Transform &);
 
-  ScaleVersor3DTransform( const std::vector< double > &scale,
-                          const std::vector< double > &versor,
-                          const std::vector< double > &translation=std::vector< double >(3, 0.0),
-                          const std::vector< double> &fixedCenter=std::vector< double >(3, 0.0) );
+  ScaleVersor3DTransform(const std::vector<double> & scale,
+                         const std::vector<double> & versor,
+                         const std::vector<double> & translation = std::vector<double>(3, 0.0),
+                         const std::vector<double> & fixedCenter = std::vector<double>(3, 0.0));
 
-  ScaleVersor3DTransform( const std::vector< double > &scale,
-                          const std::vector< double > &axis, double angle,
-                          const std::vector< double > &translation=std::vector< double >(3, 0.0),
-                          const std::vector< double> &fixedCenter=std::vector< double >(3, 0.0) );
+  ScaleVersor3DTransform(const std::vector<double> & scale,
+                         const std::vector<double> & axis,
+                         double                      angle,
+                         const std::vector<double> & translation = std::vector<double>(3, 0.0),
+                         const std::vector<double> & fixedCenter = std::vector<double>(3, 0.0));
 
-  ScaleVersor3DTransform &operator=( const ScaleVersor3DTransform & );
+  ScaleVersor3DTransform &
+  operator=(const ScaleVersor3DTransform &);
 
   /** Name of this class */
-  std::string GetName() const override { return std::string ("ScaleVersor3DTransform"); }
+  std::string
+  GetName() const override
+  {
+    return std::string("ScaleVersor3DTransform");
+  }
 
-/** fixed parameter */
-  SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
-  std::vector<double> GetCenter( ) const;
+  /** fixed parameter */
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetCenter(const std::vector<double> & params);
+  std::vector<double>
+  GetCenter() const;
 
 
-/** parameter */
-  SITK_RETURN_SELF_TYPE_HEADER SetRotation(const std::vector<double> &versor);
-  SITK_RETURN_SELF_TYPE_HEADER SetRotation(const std::vector<double> &axis,  double angle);
-  std::vector<double> GetVersor() const;
+  /** parameter */
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetRotation(const std::vector<double> & versor);
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetRotation(const std::vector<double> & axis, double angle);
+  std::vector<double>
+  GetVersor() const;
 
-  std::vector<double> GetTranslation( ) const;
-  SITK_RETURN_SELF_TYPE_HEADER SetTranslation(const std::vector<double>& translation);
+  std::vector<double>
+  GetTranslation() const;
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetTranslation(const std::vector<double> & translation);
 
-  std::vector<double> GetScale( ) const;
-  SITK_RETURN_SELF_TYPE_HEADER SetScale( const std::vector<double> & scale );
+  std::vector<double>
+  GetScale() const;
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetScale(const std::vector<double> & scale);
 
-/** additional methods */
-  SITK_RETURN_SELF_TYPE_HEADER Translate(const std::vector<double> &offset);
-  std::vector<double> GetMatrix() const;
+  /** additional methods */
+  SITK_RETURN_SELF_TYPE_HEADER
+  Translate(const std::vector<double> & offset);
+  std::vector<double>
+  GetMatrix() const;
 
 protected:
-
-  void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform ) override;
+  void
+  SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform) override;
 
 private:
-
-  void InternalInitialization(itk::TransformBase *transform);
+  void
+  InternalInitialization(itk::TransformBase * transform);
 
   template <typename TransformType>
-    void InternalInitialization(TransformType *transform);
+  void
+  InternalInitialization(TransformType * transform);
 
 
-  std::function<void(const std::vector<double>&)> m_pfSetCenter;
-  std::function<std::vector<double>()> m_pfGetCenter;
-  std::function<void(const std::vector<double>&)> m_pfSetRotation1;
-  std::function<void(const std::vector<double>&,double)> m_pfSetRotation2;
-  std::function<std::vector<double>()> m_pfGetVersor;
-  std::function<void(const std::vector<double>&)> m_pfSetTranslation;
-  std::function<std::vector<double>()> m_pfGetTranslation;
-  std::function<void(const std::vector<double>&)> m_pfSetScale;
-  std::function<std::vector<double>()> m_pfGetScale;
-  std::function<void(const std::vector<double> &)> m_pfTranslate;
-  std::function<std::vector<double>()> m_pfGetMatrix;
+  std::function<void(const std::vector<double> &)>         m_pfSetCenter;
+  std::function<std::vector<double>()>                     m_pfGetCenter;
+  std::function<void(const std::vector<double> &)>         m_pfSetRotation1;
+  std::function<void(const std::vector<double> &, double)> m_pfSetRotation2;
+  std::function<std::vector<double>()>                     m_pfGetVersor;
+  std::function<void(const std::vector<double> &)>         m_pfSetTranslation;
+  std::function<std::vector<double>()>                     m_pfGetTranslation;
+  std::function<void(const std::vector<double> &)>         m_pfSetScale;
+  std::function<std::vector<double>()>                     m_pfGetScale;
+  std::function<void(const std::vector<double> &)>         m_pfTranslate;
+  std::function<std::vector<double>()>                     m_pfGetMatrix;
 };
 
-}
+} // namespace itk::simple
 
 #endif // sitkVersorTransform_h

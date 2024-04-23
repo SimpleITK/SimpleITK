@@ -53,9 +53,9 @@ public:
   ~LoggerBase() override;
 
   virtual void
-    DisplayText(const char * t)
- #ifndef SWIGR
-  = 0
+  DisplayText(const char * t)
+#ifndef SWIGR
+    = 0
 #endif
     ;
 
@@ -146,7 +146,7 @@ private:
   itk::OutputWindow * m_OutputWindow{ nullptr };
 };
 
-}
-}
+} // namespace simple
+} // namespace itk
 
 #endif

@@ -26,29 +26,29 @@
    and error is triggered. Let's prevent that by setting _CRT_NOFORCE_MANIFEST.
 */
 #if defined(_DEBUG) && defined(SWIG_PYTHON_INTERPRETER_NO_DEBUG)
-# define SITK_PYTHON_UNDEF_DEBUG
+#  define SITK_PYTHON_UNDEF_DEBUG
 // Include these low level headers before undefing _DEBUG. Otherwise when doing
 // a debug build against a release build of python the compiler will end up
 // including these low level headers without DEBUG enabled, causing it to try
 // and link release versions of this low level C api.
-# include <basetsd.h>
-# include <assert.h>
-# include <ctype.h>
-# include <errno.h>
-# include <io.h>
-# include <math.h>
-# include <stdarg.h>
-# include <stddef.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/stat.h>
-# include <time.h>
-# include <wchar.h>
-# undef _DEBUG
-# if defined(_MSC_VER) && _MSC_VER >= 1400
-#  define _CRT_NOFORCE_MANIFEST 1
-# endif
+#  include <basetsd.h>
+#  include <assert.h>
+#  include <ctype.h>
+#  include <errno.h>
+#  include <io.h>
+#  include <math.h>
+#  include <stdarg.h>
+#  include <stddef.h>
+#  include <stdio.h>
+#  include <stdlib.h>
+#  include <string.h>
+#  include <sys/stat.h>
+#  include <time.h>
+#  include <wchar.h>
+#  undef _DEBUG
+#  if defined(_MSC_VER) && _MSC_VER >= 1400
+#    define _CRT_NOFORCE_MANIFEST 1
+#  endif
 #endif
 
 /* We used to try to #undef feature macros that Python.h defines
@@ -65,18 +65,18 @@ before _any_ headers that define feature macros, whether or not
 they are system headers.  Do NOT add any #undef lines here.  */
 
 #if defined(_MSC_VER)
-# pragma warning (push, 1)
+#  pragma warning(push, 1)
 #endif
 
 #include <Python.h>
 
 #if defined(_MSC_VER)
-# pragma warning (pop)
+#  pragma warning(pop)
 #endif
 
 #ifdef SITK_PYTHON_UNDEF_DEBUG
-# define _DEBUG
-# undef SITK_PYTHON_UNDEF_DEBUG
+#  define _DEBUG
+#  undef SITK_PYTHON_UNDEF_DEBUG
 #endif
 
 #endif

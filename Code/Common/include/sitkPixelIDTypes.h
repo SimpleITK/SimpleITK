@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkPixelIDTypes_h
 #define sitkPixelIDTypes_h
 
@@ -22,11 +22,16 @@
 namespace itk
 {
 
-template <unsigned int VImageDimension> class ImageBase;
-template <typename TPixelType, unsigned int VImageDimension> class Image;
-template <typename TPixelType, unsigned int VImageDimension > class VectorImage;
-template < typename TLabelObject > class LabelMap;
-template < typename TLabelObject, unsigned int VImageDimension > class LabelObject;
+template <unsigned int VImageDimension>
+class ImageBase;
+template <typename TPixelType, unsigned int VImageDimension>
+class Image;
+template <typename TPixelType, unsigned int VImageDimension>
+class VectorImage;
+template <typename TLabelObject>
+class LabelMap;
+template <typename TLabelObject, unsigned int VImageDimension>
+class LabelObject;
 
 namespace simple
 {
@@ -97,24 +102,25 @@ struct LabelPixelID
  * \sa ImageTypeToPixelIDValue
  *
  * @{ */
-template <typename TPixelIDType, unsigned int VImageDimension> struct PixelIDToImageType;
+template <typename TPixelIDType, unsigned int VImageDimension>
+struct PixelIDToImageType;
 
 template <typename TPixelType, unsigned int VImageDimension>
-struct PixelIDToImageType< BasicPixelID<TPixelType> , VImageDimension >
+struct PixelIDToImageType<BasicPixelID<TPixelType>, VImageDimension>
 {
-  using ImageType = itk::Image< TPixelType, VImageDimension >;
+  using ImageType = itk::Image<TPixelType, VImageDimension>;
 };
 
 template <typename TVectorPixelType, unsigned int VImageDimension>
-struct PixelIDToImageType< VectorPixelID< TVectorPixelType >, VImageDimension >
+struct PixelIDToImageType<VectorPixelID<TVectorPixelType>, VImageDimension>
 {
-  using ImageType = itk::VectorImage< TVectorPixelType, VImageDimension >;
+  using ImageType = itk::VectorImage<TVectorPixelType, VImageDimension>;
 };
 
 template <typename TLabelType, unsigned int VImageDimension>
-struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
+struct PixelIDToImageType<LabelPixelID<TLabelType>, VImageDimension>
 {
-  using ImageType = itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > >;
+  using ImageType = itk::LabelMap<itk::LabelObject<TLabelType, VImageDimension>>;
 };
 /** @} */
 
@@ -132,27 +138,28 @@ struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
  * \sa ImageTypeToPixelIDValue
  *
  * @{ */
-template <typename TImageType> struct ImageTypeToPixelID;
+template <typename TImageType>
+struct ImageTypeToPixelID;
 
 template <typename TPixelType, unsigned int VImageDimension>
-struct ImageTypeToPixelID< itk::Image< TPixelType, VImageDimension> >
+struct ImageTypeToPixelID<itk::Image<TPixelType, VImageDimension>>
 {
-  using PixelIDType = BasicPixelID<TPixelType >;
+  using PixelIDType = BasicPixelID<TPixelType>;
 };
 
 template <typename TPixelType, unsigned int VImageDimension>
-struct ImageTypeToPixelID< itk::VectorImage< TPixelType, VImageDimension> >
+struct ImageTypeToPixelID<itk::VectorImage<TPixelType, VImageDimension>>
 {
-  using PixelIDType = VectorPixelID< TPixelType >;
+  using PixelIDType = VectorPixelID<TPixelType>;
 };
 
 template <typename TLabelType, unsigned int VImageDimension>
-struct ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >
+struct ImageTypeToPixelID<itk::LabelMap<itk::LabelObject<TLabelType, VImageDimension>>>
 {
-  using PixelIDType = LabelPixelID< TLabelType >;
+  using PixelIDType = LabelPixelID<TLabelType>;
 };
 /** @} */
 
-}
-}
+} // namespace simple
+} // namespace itk
 #endif // _sitkPixelIDTypes_h

@@ -16,7 +16,7 @@
  *
  *=========================================================================*/
 #if defined(_MSC_VER)
-#pragma warning ( disable : 4786 )
+#  pragma warning(disable : 4786)
 #endif
 
 
@@ -31,19 +31,20 @@
 
 namespace sitk = itk::simple;
 
-int main( int argc, char *argv[])
+int
+main(int argc, char * argv[])
 {
 
   //
   // Check command line parameters
   //
-  if( argc < 7 )
-    {
+  if (argc < 7)
+  {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
     std::cerr << " inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]" << std::endl;
     return 1;
-    }
+  }
 
 
   //
@@ -51,7 +52,7 @@ int main( int argc, char *argv[])
   //
 
   sitk::ImageFileReader reader;
-  reader.SetFileName( std::string( argv[1] ) );
+  reader.SetFileName(std::string(argv[1]));
   sitk::Image image = reader.Execute();
 
 
@@ -59,30 +60,30 @@ int main( int argc, char *argv[])
   // Blur using CurvatureFlowImageFilter
   //
   sitk::CurvatureFlowImageFilter blurFilter;
-  blurFilter.SetNumberOfIterations( 5 );
-  blurFilter.SetTimeStep( 0.125 );
-  image = blurFilter.Execute( image );
+  blurFilter.SetNumberOfIterations(5);
+  blurFilter.SetTimeStep(0.125);
+  image = blurFilter.Execute(image);
 
 
   //
   // Set up ConnectedThresholdImageFilter for segmentation
   //
   sitk::ConnectedThresholdImageFilter segmentationFilter;
-  segmentationFilter.SetLower( atof( argv[3] ) );
-  segmentationFilter.SetUpper( atof( argv[4] ) );
-  segmentationFilter.SetReplaceValue( 255 );
+  segmentationFilter.SetLower(atof(argv[3]));
+  segmentationFilter.SetUpper(atof(argv[4]));
+  segmentationFilter.SetReplaceValue(255);
 
-  for (int i = 5; i+1 < argc; i+=2)
-    {
-    std::vector<unsigned int> seed = { (unsigned int) atoi(argv[i]), (unsigned int) atoi(argv[i+1]) };
+  for (int i = 5; i + 1 < argc; i += 2)
+  {
+    std::vector<unsigned int> seed = { (unsigned int)atoi(argv[i]), (unsigned int)atoi(argv[i + 1]) };
     segmentationFilter.AddSeed(seed);
     std::cout << "Adding a seed at: ";
-    for( unsigned int j = 0; j < seed.size(); ++j )
-      {
+    for (unsigned int j = 0; j < seed.size(); ++j)
+    {
       std::cout << seed[j] << " ";
-      }
-    std::cout << std::endl;
     }
+    std::cout << std::endl;
+  }
 
   sitk::Image outImage = segmentationFilter.Execute(image);
 
@@ -91,7 +92,7 @@ int main( int argc, char *argv[])
   // Write out the resulting file
   //
   sitk::ImageFileWriter writer;
-  writer.SetFileName( std::string( argv[2] ) );
+  writer.SetFileName(std::string(argv[2]));
   writer.Execute(outImage);
 
   return 0;

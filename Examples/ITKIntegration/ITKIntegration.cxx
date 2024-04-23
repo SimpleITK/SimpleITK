@@ -16,7 +16,7 @@
  *
  *=========================================================================*/
 #if defined(_MSC_VER)
-#pragma warning ( disable : 4786 )
+#  pragma warning(disable : 4786)
 #endif
 
 // SimpleITK includes
@@ -39,27 +39,29 @@ namespace sitk = itk::simple;
  * how ITK filters that have not been converted for SimpleITK can still be used
  * in a SimpleITK context
  */
-int main( int argc, char *argv[])
+int
+main(int argc, char * argv[])
 {
 
   //
   // Check command line parameters
   //
-  if( argc < 7 )
-    {
+  if (argc < 7)
+  {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
     std::cerr << " inputImage outputImage lowerThreshold upperThreshold "
-      "seedX seedY [seed2X seed2Y ... ]" << std::endl;
+                 "seedX seedY [seed2X seed2Y ... ]"
+              << std::endl;
     return 1;
-    }
+  }
 
 
   //
   // Read the image
   //
   sitk::ImageFileReader reader;
-  reader.SetFileName( std::string( argv[1] ) );
+  reader.SetFileName(std::string(argv[1]));
   sitk::Image image = reader.Execute();
 
 
@@ -67,7 +69,7 @@ int main( int argc, char *argv[])
   // Set up writer
   //
   sitk::ImageFileWriter writer;
-  writer.SetFileName( std::string( argv[2] ) );
+  writer.SetFileName(std::string(argv[2]));
 
   //////
   // Blur using CurvatureFlowImageFilter
@@ -80,52 +82,50 @@ int main( int argc, char *argv[])
   // First, define the type alias that correspond to the types of the input
   // image. This requires foreknowledge of the data type of the input image.
   //
-  const unsigned int                                 Dimension = 2;
+  const unsigned int Dimension = 2;
   using InternalPixelType = float;
-  using InternalImageType = itk::Image< InternalPixelType, Dimension >;
+  using InternalImageType = itk::Image<InternalPixelType, Dimension>;
 
   //
   // We must check the image dimension and the pixel type of the
   // SimpleITK image match the ITK image we will cast to.s
   //
-  if ( image.GetDimension() != Dimension )
-    {
+  if (image.GetDimension() != Dimension)
+  {
     std::cerr << "Input image is not a " << Dimension << " dimensional image as expected!" << std::endl;
     return 1;
-    }
+  }
 
   //
   // The read sitk::Image could be any pixel type. Cast the image, to
   // float so we know what type we have.
   //
   sitk::CastImageFilter caster;
-  caster.SetOutputPixelType( sitk::sitkFloat32 );
-  image = caster.Execute( image );
+  caster.SetOutputPixelType(sitk::sitkFloat32);
+  image = caster.Execute(image);
 
   //
   // Extract the itk image from the SimpleITK image
   //
-  InternalImageType::Pointer itkImage =
-    dynamic_cast <InternalImageType*>( image.GetITKBase() );
+  InternalImageType::Pointer itkImage = dynamic_cast<InternalImageType *>(image.GetITKBase());
 
   //
   // Always check the results of dynamic_casts
   //
-  if ( itkImage.IsNull() )
-    {
+  if (itkImage.IsNull())
+  {
     std::cerr << "Unexpected error converting SimpleITK image to ITK image!" << std::endl;
     return 1;
-    }
+  }
 
   //
   // Set up the blur filter and attach it to the pipeline.
   //
-  using BlurFilterType = itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType >;
+  using BlurFilterType = itk::CurvatureFlowImageFilter<InternalImageType, InternalImageType>;
   BlurFilterType::Pointer blurFilter = BlurFilterType::New();
-  blurFilter->SetInput( itkImage );
-  blurFilter->SetNumberOfIterations( 5 );
-  blurFilter->SetTimeStep( 0.125 );
-
+  blurFilter->SetInput(itkImage);
+  blurFilter->SetNumberOfIterations(5);
+  blurFilter->SetTimeStep(0.125);
 
 
   //
@@ -138,7 +138,7 @@ int main( int argc, char *argv[])
   // Return to the simpleITK setting by making a SimpleITK image using the
   // output of the blur filter.
   //
-  sitk::Image blurredImage = sitk::Image( blurFilter->GetOutput() );
+  sitk::Image blurredImage = sitk::Image(blurFilter->GetOutput());
 
 
   //////
@@ -150,21 +150,21 @@ int main( int argc, char *argv[])
   // Set up ConnectedThresholdImageFilter for segmentation
   //
   sitk::ConnectedThresholdImageFilter segmentationFilter;
-  segmentationFilter.SetLower( atof( argv[3] ) );
-  segmentationFilter.SetUpper( atof( argv[4] ) );
-  segmentationFilter.SetReplaceValue( 255 );
+  segmentationFilter.SetLower(atof(argv[3]));
+  segmentationFilter.SetUpper(atof(argv[4]));
+  segmentationFilter.SetReplaceValue(255);
 
-  for (int i = 5; i+1 < argc; i+=2)
-    {
-    std::vector<unsigned int> seed = { (unsigned int) atoi(argv[i]), (unsigned int) atoi(argv[i+1]) };
+  for (int i = 5; i + 1 < argc; i += 2)
+  {
+    std::vector<unsigned int> seed = { (unsigned int)atoi(argv[i]), (unsigned int)atoi(argv[i + 1]) };
     segmentationFilter.AddSeed(seed);
     std::cout << "Adding a seed at ";
-    for( unsigned int j = 0; j < seed.size(); ++i )
-      {
+    for (unsigned int j = 0; j < seed.size(); ++i)
+    {
       std::cout << seed[j] << " ";
-      }
-    std::cout << std::endl;
     }
+    std::cout << std::endl;
+  }
 
   sitk::Image outImage = segmentationFilter.Execute(blurredImage);
 

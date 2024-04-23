@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkCenteredTransformInitializerFilter_h
 #define sitkCenteredTransformInitializerFilter_h
 
@@ -30,12 +30,15 @@
 #include "sitkProcessObject.h"
 #include "sitkMemberFunctionFactory.h"
 
-namespace itk::simple {
+namespace itk::simple
+{
 
-    /**\class  CenteredTransformInitializerFilter
-\brief  CenteredTransformInitializerFilter is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.
+/**\class  CenteredTransformInitializerFilter
+\brief  CenteredTransformInitializerFilter is a helper class intended to initialize the center of rotation and the
+translation of Transforms having the center of rotation among their parameters.
 
-This class is connected to the fixed image, moving image and transform involved in the registration. Two modes of operation are possible:
+This class is connected to the fixed image, moving image and transform involved in the registration. Two modes of
+operation are possible:
 
 
 \li Geometrical,
@@ -60,75 +63,113 @@ registration is to superimpose both mass centers. Note that this
 assumption will probably not hold in multi-modality registration.
 
 \sa itk::CenteredTransformInitializer
-     */
-    class SITKBasicFilters_EXPORT  CenteredTransformInitializerFilter : public ProcessObject {
-    public:
-      using Self = CenteredTransformInitializerFilter;
+ */
+class SITKBasicFilters_EXPORT CenteredTransformInitializerFilter : public ProcessObject
+{
+public:
+  using Self = CenteredTransformInitializerFilter;
 
-      /** Destructor */
-      ~CenteredTransformInitializerFilter() override;
+  /** Destructor */
+  ~CenteredTransformInitializerFilter() override;
 
-      /** Default Constructor that takes no arguments and initializes
-       * default parameters */
-       CenteredTransformInitializerFilter();
+  /** Default Constructor that takes no arguments and initializes
+   * default parameters */
+  CenteredTransformInitializerFilter();
 
-      /** Define the pixels types supported by this filter */
-      using PixelIDTypeList = BasicPixelIDTypeList;
+  /** Define the pixels types supported by this filter */
+  using PixelIDTypeList = BasicPixelIDTypeList;
 
-      typedef enum {GEOMETRY,MOMENTS} OperationModeType;
+  typedef enum
+  {
+    GEOMETRY,
+    MOMENTS
+  } OperationModeType;
 
-      /**
-       */
-      SITK_RETURN_SELF_TYPE_HEADER SetOperationMode ( OperationModeType OperationMode ) { this->m_OperationMode = OperationMode; return *this; }
-
-      /**
-       */
-        OperationModeType GetOperationMode() const { return this->m_OperationMode; }
-      /** Name of this class */
-      std::string GetName() const override { return std::string ("CenteredTransformInitializerFilter"); }
-
-      /** Print ourselves out */
-      std::string ToString() const override;
-
-
-      /** Execute the filter on the input image */
-      Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform );
-
-      /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
-      SITK_RETURN_SELF_TYPE_HEADER MomentsOn( ) { this->SetOperationMode( MOMENTS ); return *this; }
-
-      /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
-      SITK_RETURN_SELF_TYPE_HEADER GeometryOn( ) { this->SetOperationMode( GEOMETRY ); return *this; }
-
-
-    private:
-
-      /** Setup for member function dispatching */
-
-      typedef Transform (Self::*MemberFunctionType)( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
-      template <class TImageType> Transform ExecuteInternal ( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
-
-
-      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-
-      std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
-
-
-      OperationModeType  m_OperationMode;
-    };
-
-    /**
-     * \brief CenteredTransformInitializer is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.
-     *
-     * This function directly calls the execute method of CenteredTransformInitializerFilter
-     * in order to support a procedural API
-     *
-     * \sa itk::simple::CenteredTransformInitializerFilter for the object oriented interface
-     */
-     SITKBasicFilters_EXPORT Transform CenteredTransformInitializer ( const Image & fixedImage,
-                                                                      const Image & movingImage,
-                                                                      const Transform & transform,
-                                                                      CenteredTransformInitializerFilter::OperationModeType operationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS );
-
+  /**
+   */
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetOperationMode(OperationModeType OperationMode)
+  {
+    this->m_OperationMode = OperationMode;
+    return *this;
   }
+
+  /**
+   */
+  OperationModeType
+  GetOperationMode() const
+  {
+    return this->m_OperationMode;
+  }
+  /** Name of this class */
+  std::string
+  GetName() const override
+  {
+    return std::string("CenteredTransformInitializerFilter");
+  }
+
+  /** Print ourselves out */
+  std::string
+  ToString() const override;
+
+
+  /** Execute the filter on the input image */
+  Transform
+  Execute(const Image & fixedImage, const Image & movingImage, const Transform & transform);
+
+  /** Select between using the geometrical center of the images or using the center of mass given by the image
+   * intensities. */
+  SITK_RETURN_SELF_TYPE_HEADER
+  MomentsOn()
+  {
+    this->SetOperationMode(MOMENTS);
+    return *this;
+  }
+
+  /** Select between using the geometrical center of the images or using the center of mass given by the image
+   * intensities. */
+  SITK_RETURN_SELF_TYPE_HEADER
+  GeometryOn()
+  {
+    this->SetOperationMode(GEOMETRY);
+    return *this;
+  }
+
+
+private:
+  /** Setup for member function dispatching */
+
+  typedef Transform (Self::*MemberFunctionType)(const Image *                  fixedImage,
+                                                const Image *                  movingImage,
+                                                const itk::simple::Transform * transform);
+  template <class TImageType>
+  Transform
+  ExecuteInternal(const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform);
+
+
+  friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+
+  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+
+
+  OperationModeType m_OperationMode;
+};
+
+/**
+ * \brief CenteredTransformInitializer is a helper class intended to initialize the center of rotation and the
+ * translation of Transforms having the center of rotation among their parameters.
+ *
+ * This function directly calls the execute method of CenteredTransformInitializerFilter
+ * in order to support a procedural API
+ *
+ * \sa itk::simple::CenteredTransformInitializerFilter for the object oriented interface
+ */
+SITKBasicFilters_EXPORT Transform
+CenteredTransformInitializer(const Image &                                         fixedImage,
+                             const Image &                                         movingImage,
+                             const Transform &                                     transform,
+                             CenteredTransformInitializerFilter::OperationModeType operationMode =
+                               itk::simple::CenteredTransformInitializerFilter::MOMENTS);
+
+} // namespace itk::simple
 #endif

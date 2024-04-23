@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 
 #include "SimpleITK.h"
 #include "sitkExtractImageFilter.h"
@@ -28,7 +28,8 @@ using itk::simple::operator<<;
 
 // Forward declaration to specialize the implementation with the function's
 // argument and returns types.
-template <class T> struct SliceBySliceDecorator;
+template <class T>
+struct SliceBySliceDecorator;
 
 /* \brief A function decorator to adapt an function to process an image as a
  * sequence of 2D (slices or) images.
@@ -47,9 +48,12 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
 {
   using FunctionType = std::function<R(ImageArg, Args...)>;
 
-  explicit SliceBySliceDecorator(FunctionType f) : f_(std::move(f)) {}
+  explicit SliceBySliceDecorator(FunctionType f)
+    : f_(std::move(f))
+  {}
 
-  R operator()(sitk::Image &image, Args... args)
+  R
+  operator()(sitk::Image & image, Args... args)
   {
     const auto image_size = image.GetSize();
 
@@ -79,8 +83,7 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
     // correct for the situation of preserving the first dimensions and
     // collapsing the remainder.
     sitk::PasteImageFilter paster;
-    paster.SetSourceSize(std::vector<unsigned int>(
-        extract_size.begin(), extract_size.begin() + iter_dim));
+    paster.SetSourceSize(std::vector<unsigned int>(extract_size.begin(), extract_size.begin() + iter_dim));
 
 
     while (static_cast<unsigned int>(extract_index.back()) < image.GetSize().back())
@@ -89,7 +92,7 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
 
       // Store the results of the function as a r-value, so that the
       // paste filter will run "in place" and reuse the buffer for output.
-      sitk::Image &&temp_image = f_(extractor.Execute(image), args...);
+      sitk::Image && temp_image = f_(extractor.Execute(image), args...);
 
       paster.SetDestinationIndex(extract_index);
 
@@ -109,7 +112,7 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
     }
     return image;
   }
-  FunctionType f_;
+  FunctionType                  f_;
   constexpr static unsigned int iter_dim = 2;
 };
 
@@ -120,16 +123,17 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
  * return an sitk::Image.
  */
 template <class R, class... Args>
-SliceBySliceDecorator<R(Args...)> makeSliceBySlice(R (*f)( Args...))
+SliceBySliceDecorator<R(Args...)> makeSliceBySlice(R (*f)(Args...))
 {
   using DecoratorType = SliceBySliceDecorator<R(Args...)>;
   return DecoratorType(typename DecoratorType::FunctionType(f));
 }
 
-int main( int argc, char *argv[])
+int
+main(int argc, char * argv[])
 {
 
-  if ( argc < 3 )
+  if (argc < 3)
   {
     std::cerr << "Usage: " << argv[0] << " <inputImage> <outputImage>" << std::endl;
     return 1;
@@ -138,8 +142,8 @@ int main( int argc, char *argv[])
   sitk::Image tempImage = sitk::ReadImage(argv[1]);
 
   // The parameters to the filter are hard coded to simplify the example.
-  float alpha = 0.3f;
-  float beta = 0.3f;
+  float                     alpha = 0.3f;
+  float                     beta = 0.3f;
   std::vector<unsigned int> radius(2, 20);
 
   // The return type of the function decorator is complex, so the auto type is

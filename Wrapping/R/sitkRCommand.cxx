@@ -24,8 +24,6 @@
 #include "sitkExceptionObject.h"
 
 
-
-
 namespace itk
 {
 namespace simple
@@ -33,11 +31,10 @@ namespace simple
 
 
 RCommand::RCommand()
-  : m_Object(R_NilValue),
-    m_Environ(R_NilValue),
-    m_FunctionClosure(R_NilValue)
-{
-}
+  : m_Object(R_NilValue)
+  , m_Environ(R_NilValue)
+  , m_FunctionClosure(R_NilValue)
+{}
 
 RCommand::~RCommand()
 {
@@ -45,79 +42,84 @@ RCommand::~RCommand()
   R_ReleaseObject(this->m_FunctionClosure);
 }
 
-void RCommand::SetCallbackRCallable(SEXP obj)
+void
+RCommand::SetCallbackRCallable(SEXP obj)
 {
   if (obj != this->m_Object)
+  {
+    if (this->m_Object != R_NilValue)
     {
-      if (this->m_Object != R_NilValue)
-        {
-          // unprotect
-          R_ReleaseObject(this->m_Object);
-        }
+      // unprotect
+      R_ReleaseObject(this->m_Object);
+    }
     this->m_Object = obj;
     R_PreserveObject(this->m_Object);
-    }
+  }
 }
-void RCommand::SetCallbackREnviron(SEXP rho)
+void
+RCommand::SetCallbackREnviron(SEXP rho)
 {
   if (rho != this->m_Environ)
-    {
-      // Don't need to do any releasing of the
-      // environment as it is part of the callable,
-      // and we haven't needed to explicitly protect it
-      this->m_Environ = rho;
-    }
+  {
+    // Don't need to do any releasing of the
+    // environment as it is part of the callable,
+    // and we haven't needed to explicitly protect it
+    this->m_Environ = rho;
+  }
 }
 
-void RCommand::SetFunctionClosure(SEXP FN)
+void
+RCommand::SetFunctionClosure(SEXP FN)
 {
   if (FN != this->m_FunctionClosure)
+  {
+    if (this->m_FunctionClosure != R_NilValue)
     {
-      if (this->m_FunctionClosure != R_NilValue)
-        {
-          R_ReleaseObject(this->m_FunctionClosure);
-        }
-      this->m_FunctionClosure = FN;
-      R_PreserveObject(this->m_FunctionClosure);
-
-       // set up expression for evaluation
-      SEXP R_fcall;
-      // Rf_lang1 creates an executable pair list with one
-      // element
-      R_fcall = PROTECT(Rf_lang1(this->m_FunctionClosure));
-      this->SetCallbackRCallable(R_fcall);
-      this->SetCallbackREnviron(CLOENV(this->m_FunctionClosure));
-      UNPROTECT(1);
+      R_ReleaseObject(this->m_FunctionClosure);
     }
+    this->m_FunctionClosure = FN;
+    R_PreserveObject(this->m_FunctionClosure);
+
+    // set up expression for evaluation
+    SEXP R_fcall;
+    // Rf_lang1 creates an executable pair list with one
+    // element
+    R_fcall = PROTECT(Rf_lang1(this->m_FunctionClosure));
+    this->SetCallbackRCallable(R_fcall);
+    this->SetCallbackREnviron(CLOENV(this->m_FunctionClosure));
+    UNPROTECT(1);
+  }
 }
 
 
-SEXP RCommand::GetCallbackRCallable()
+SEXP
+RCommand::GetCallbackRCallable()
 {
   return this->m_Object;
 }
 
-void RCommand::Execute()
+void
+RCommand::Execute()
 {
   // if null do nothing
   if ((!this->m_Object) || (!this->m_Environ))
-    {
+  {
     return;
-    }
+  }
 
   else
-    {
+  {
     SEXP result;
     // retrieve the environment for passing to eval
     result = eval(this->m_Object, this->m_Environ);
     if (result == NULL)
-      {
-        sitkExceptionMacro(<<"There was an error executing the "
-                           <<"R Callable.");
-      }
+    {
+      sitkExceptionMacro(<< "There was an error executing the "
+                         << "R Callable.");
     }
+  }
 }
 
 
-}
-}
+} // namespace simple
+} // namespace itk

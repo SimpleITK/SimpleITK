@@ -22,7 +22,6 @@
 #include "sitkCommand.h"
 
 
-
 #ifndef PyObject_HEAD
 struct _object;
 using PyObject = _object;
@@ -43,8 +42,7 @@ namespace simple
  * Based of the WrapITK itkPyCommand class originally contributed by
  * Charl P. Botha <cpbotha |AT| ieee.org>.
  */
-class PyCommand
-  : public itk::simple::Command
+class PyCommand : public itk::simple::Command
 {
 public:
   using Super = Command;
@@ -57,25 +55,28 @@ public:
    * a binding to the callable, PyCommand will also take out a reference
    * to make sure the Callable sticks around.
    */
-  void SetCallbackPyCallable(PyObject *obj);
+  void
+  SetCallbackPyCallable(PyObject * obj);
 
-  PyObject * GetCallbackPyCallable();
+  PyObject *
+  GetCallbackPyCallable();
 
-  virtual void Execute(void);
+  virtual void
+  Execute(void);
 
-  #ifndef SWIG
+#ifndef SWIG
   // export for access in the custom ProcessObject method for callables
   using Super::SetOwnedByObjects;
   using Super::GetOwnedByObjects;
   using Super::OwnedByObjectsOn;
   using Super::OwnedByObjectsOff;
-  #endif
+#endif
 
 private:
-  PyObject *m_Object;
+  PyObject * m_Object;
 };
 
-}
-}
+} // namespace simple
+} // namespace itk
 
 #endif // _sitkPyCommand_h
