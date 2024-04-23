@@ -163,6 +163,11 @@ jobs:
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
           rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
 
+      - name: Package CSharp
+        uses: ./.github/actions/package_csharp
+        with:
+          continue-on-error: true
+
       - name: Package Python 3.12
         uses: ./.github/actions/package_python
         with:

@@ -1,0 +1,28 @@
+name: "Build CSharp Package"
+description: "Use script to build CSharl package of SimpleITK after the core build"
+inputs:
+  continue-on-error:
+    description: "Continue on error"
+    required: false
+  VCVAR_OPTIONS:
+    description: "Visual Studio vcvarsall.bat options"
+    required: false
+    default: amd64 -vcvars_ver=14.2
+runs:
+  using: "composite"
+  steps:
+    - name: Build CSharp
+      continue-on-error: ${{ inputs.continue-on-error }}
+      shell: bash
+      if: runner.os == 'macOS'
+      run: |
+        ${{ github.action_path }}/scripts/mac_build_csharp.sh
+    - name: Build CSharp
+      continue-on-error: ${{ inputs.continue-on-error }}
+      shell: cmd
+      if: runner.os == 'Windows'
+      run: |
+        call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
+        bash ${{ github.action_path }}/scripts/win_build_csharp.sh
+      env:
+        CSHARP_PLATFORM: x64
