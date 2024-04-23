@@ -32,7 +32,7 @@ export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/py${PYTHON_VERSION}"
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-py${PYTHON_VERSION}" \
-      -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV -j 2
+      -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -VV -j 2
 
 cmake --build "${CTEST_BINARY_DIRECTORY}" --target dist
 
