@@ -1,5 +1,5 @@
 name: "Build CSharp Package"
-description: "Use script to build CSharp package of SimpleITK after the core build"
+description: "Use script to build CSharl package of SimpleITK after the core build"
 inputs:
   continue-on-error:
     description: "Continue on error"
