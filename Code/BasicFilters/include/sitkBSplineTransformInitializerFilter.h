@@ -39,7 +39,7 @@ initialize the control point grid such that it has a physically
 consistent definition. It sets the transform domain origin, physical
 dimensions and direction from information obtained from the image. It
 also sets the mesh size if asked to do so by calling
-SetTransformDomainMeshSize()before calling InitializeTransform().
+SetTransformDomainMeshSize() before calling InitializeTransform().
 
 \author Luis Ibanez Nick Tustison
 \sa itk::simple::BSplineTransformInitializer for the procedural interface
@@ -140,7 +140,7 @@ private:
  * a physically consistent definition. It sets the transform
  * domain origin, physical dimensions and direction from
  * information obtained from the image. It also sets the mesh size
- * if asked to do so by calling SetTransformDomainMeshSize()before
+ * if asked to do so by calling SetTransformDomainMeshSize() before
  * calling InitializeTransform().
  *
  * This function directly calls the execute method of BSplineTransformInitializerFilter
