@@ -1,5 +1,5 @@
-name: "Build CSharp Package"
-description: "Use script to build CSharl package of SimpleITK after the core build"
+name: "Build Java Package"
+description: "Use script to build Java package of SimpleITK after the core build"
 inputs:
   continue-on-error:
     description: "Continue on error"
@@ -11,18 +11,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Build CSharp
+    - name: Build Java
       continue-on-error: ${{ inputs.continue-on-error }}
       shell: bash
       if: runner.os == 'macOS'
       run: |
-        ${{ github.action_path }}/scripts/mac_build_csharp.sh
-    - name: Build CSharp
+        ${{ github.action_path }}/scripts/mac_build_java.sh
+    - name: Build Java
       continue-on-error: ${{ inputs.continue-on-error }}
       shell: cmd
       if: runner.os == 'Windows'
       run: |
         call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
-        bash ${{ github.action_path }}/scripts/win_build_csharp.sh
-      env:
-        CSHARP_PLATFORM: x64
+        bash ${{ github.action_path }}/scripts/win_build_java.sh

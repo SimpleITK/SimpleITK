@@ -20,18 +20,18 @@ EOM
 
 
 export CTEST_CACHE
-export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/csharp"
+export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/Java"
 
 export CC=cl.exe
 export CXX=cl.exe
 
 
-ctest -D dashboard_source_config_dir="Wrapping/CSharp" \
+ctest -D dashboard_source_config_dir="Wrapping/Java" \
       -D "dashboard_track:STRING=Package" \
-      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-csharp" \
+      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-java" \
       -D "CTEST_CMAKE_GENERATOR:STRING=Ninja" \
       -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -VV -j 2 || \
-      echo "::warning file=win_build_csharp.sh:: There was a build or testing issue with csharp."
+      echo "::warning file=win_build_csharp.sh:: There was a build or testing issue with Java."
 
 ( cd ${CTEST_BINARY_DIRECTORY} && cmake --build "${CTEST_BINARY_DIRECTORY}" --config "${CTEST_CONFIGURATION_TYPE}" --target dist -v )
 

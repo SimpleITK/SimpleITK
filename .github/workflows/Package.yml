@@ -169,6 +169,11 @@ jobs:
         with:
           continue-on-error: true
 
+      - name: Package Java
+        uses: ./.github/actions/package_java
+        with:
+          continue-on-error: true
+
       - name: Package Python 3.12
         uses: ./.github/actions/package_python
         with:

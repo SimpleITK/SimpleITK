@@ -20,15 +20,15 @@ SimpleITK_BUILD_STRIP:BOOL=1
 EOM
 
 export CTEST_CACHE
-export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/CSharp"
+export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/Java"
 
 javac -version
 
-ctest -D dashboard_source_config_dir="Wrapping/CSharp" \
+ctest -D dashboard_source_config_dir="Wrapping/Java" \
       -D "dashboard_track:STRING=Package" \
-      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-csharp" \
+      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-java" \
       -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -VV -j 2 || \
-       echo "::warning file=mac_build_csharp.sh:: There was a build or testing issue with csharp."
+       echo "::warning file=mac_build_csharp.sh:: There was a build or testing issue with Java."
 
 cmake --build "${CTEST_BINARY_DIRECTORY}" --target dist
 
