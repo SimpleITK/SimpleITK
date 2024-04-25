@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkTransform_h
 #define sitkTransform_h
 
@@ -28,11 +28,13 @@
 namespace itk
 {
 
-template< typename TScalar > class TransformBaseTemplate;
+template <typename TScalar>
+class TransformBaseTemplate;
 using TransformBase = TransformBaseTemplate<double>;
 
 #if !defined(SWIG)
-template< typename TScalar, unsigned int NDimension> class CompositeTransform;
+template <typename TScalar, unsigned int NDimension>
+class CompositeTransform;
 #endif
 
 namespace simple
@@ -41,23 +43,25 @@ namespace simple
 class PimpleTransformBase;
 
 
-enum TransformEnum { sitkUnknownTransform = -1,
-                     sitkIdentity,
-                     sitkTranslation,
-                     sitkScale,
-                     sitkScaleLogarithmic,
-                     sitkEuler,
-                     sitkSimilarity,
-                     sitkQuaternionRigid,
-                     sitkVersor,
-                     sitkVersorRigid,
-                     sitkScaleSkewVersor,
-                     sitkComposeScaleSkewVersor,
-                     sitkScaleVersor,
-                     sitkAffine,
-                     sitkComposite,
-                     sitkDisplacementField,
-                     sitkBSplineTransform
+enum TransformEnum
+{
+  sitkUnknownTransform = -1,
+  sitkIdentity,
+  sitkTranslation,
+  sitkScale,
+  sitkScaleLogarithmic,
+  sitkEuler,
+  sitkSimilarity,
+  sitkQuaternionRigid,
+  sitkVersor,
+  sitkVersorRigid,
+  sitkScaleSkewVersor,
+  sitkComposeScaleSkewVersor,
+  sitkScaleVersor,
+  sitkAffine,
+  sitkComposite,
+  sitkDisplacementField,
+  sitkBSplineTransform
 };
 
 
@@ -86,31 +90,31 @@ public:
 
   /** \brief By default a 3-d identity transform is constructed
    */
-  Transform( );
+  Transform();
 
   /** \brief Construct a SimpleITK Transform from a pointer to an ITK
    * composite transform.
    *
    */
-  template<unsigned int NDimension>
-  explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
-  : Transform()
+  template <unsigned int NDimension>
+  explicit Transform(itk::CompositeTransform<double, NDimension> * compositeTransform)
+    : Transform()
+  {
+    static_assert(NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported");
+    if (compositeTransform == nullptr)
     {
-      static_assert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
-      if ( compositeTransform == nullptr )
-        {
-        sitkExceptionMacro( "Unable to construct a null transform!" );
-        }
-      this->InternalInitialization<NDimension>( sitkComposite, compositeTransform );
+      sitkExceptionMacro("Unable to construct a null transform!");
     }
+    this->InternalInitialization<NDimension>(sitkComposite, compositeTransform);
+  }
 
-  explicit Transform( itk::TransformBase *transform );
+  explicit Transform(itk::TransformBase * transform);
 
   /** \brief Construct a specific transformation
    *
    * \deprecated This constructor will be removed in future releases.
    */
-  Transform( unsigned int dimensions, TransformEnum type);
+  Transform(unsigned int dimensions, TransformEnum type);
 
   /** \brief Use an image to construct a transform.
    *
@@ -124,9 +128,9 @@ public:
    *
    * \deprecated This constructor will be removed in future releases.
    */
-  explicit Transform( Image &displacement, TransformEnum type = sitkDisplacementField );
+  explicit Transform(Image & displacement, TransformEnum type = sitkDisplacementField);
 
-  virtual ~Transform( );
+  virtual ~Transform();
 
   /** \brief Copy constructor and assignment operator
    *
@@ -134,8 +138,9 @@ public:
    * copy will be done if the transform in modified.
    * @{
    */
-  Transform &operator=( const Transform & );
-  Transform( const Transform & );
+  Transform &
+  operator=(const Transform &);
+  Transform(const Transform &);
   /**@}*/
 
 
@@ -149,41 +154,51 @@ public:
    *
    * @{
    */
-  itk::TransformBase* GetITKBase( );
-  const itk::TransformBase* GetITKBase( ) const;
+  itk::TransformBase *
+  GetITKBase();
+  const itk::TransformBase *
+  GetITKBase() const;
   /**@}*/
 
   /** Return the dimension of the Transform ( 2D or 3D )
    */
-  unsigned int GetDimension( ) const;
+  unsigned int
+  GetDimension() const;
 
   // todo get transform type
 
   /** Set/Get Transform Parameter
    * @{
    */
-  void SetParameters ( const std::vector<double>& parameters );
-  std::vector<double> GetParameters( ) const;
+  void
+  SetParameters(const std::vector<double> & parameters);
+  std::vector<double>
+  GetParameters() const;
   /**@}*/
 
   /** Return the number of optimizable parameters */
-  unsigned int GetNumberOfParameters( ) const;
+  unsigned int
+  GetNumberOfParameters() const;
 
   /** Set/Get Fixed Transform Parameter
    * @{
    */
-  void SetFixedParameters ( const std::vector<double>& parameters );
-  std::vector<double> GetFixedParameters( ) const;
+  void
+  SetFixedParameters(const std::vector<double> & parameters);
+  std::vector<double>
+  GetFixedParameters() const;
   /**@}*/
 
   /** Get the number of fixed parameters */
-  unsigned int GetNumberOfFixedParameters( ) const;
+  unsigned int
+  GetNumberOfFixedParameters() const;
 
   /** Apply transform to a point.
    *
    * The dimension of the point must match the transform.
    */
-  std::vector< double > TransformPoint( const std::vector< double > &point ) const;
+  std::vector<double>
+  TransformPoint(const std::vector<double> & point) const;
 
   /** Apply transform to a vector at a point.
    *
@@ -196,14 +211,18 @@ public:
    *
    * The dimension of the vector and point must match the transform.
    */
-  std::vector< double > TransformVector( const std::vector< double > &vector, const std::vector< double > &point) const;
+  std::vector<double>
+  TransformVector(const std::vector<double> & vector, const std::vector<double> & point) const;
 
   // write
-  void WriteTransform( const std::string &filename ) const;
+  void
+  WriteTransform(const std::string & filename) const;
 
-  virtual bool IsLinear() const;
+  virtual bool
+  IsLinear() const;
 
-  virtual void SetIdentity();
+  virtual void
+  SetIdentity();
 
   /** \brief Try to change the current transform to it's inverse.
    *
@@ -215,7 +234,8 @@ public:
    * does not exist or fails false will be returned and this transform
    * will not be modified.
    */
-  virtual bool SetInverse();
+  virtual bool
+  SetInverse();
 
   /** \brief Return a new inverse transform of the same type as this.
    *
@@ -224,13 +244,16 @@ public:
    * transforms are not invertible, an exception will be throw is
    * there is no inverse.
    */
-  Transform GetInverse() const;
+  Transform
+  GetInverse() const;
 
-  std::string ToString( ) const;
+  std::string
+  ToString() const;
 
 
   /** return user readable name for the SimpleITK transform */
-  virtual std::string GetName() const;
+  virtual std::string
+  GetName() const;
 
   /** \brief Performs actually coping if needed to make object unique.
    *
@@ -239,7 +262,8 @@ public:
    * to the itk::Transform pointed to is only pointed to by this
    * object.
    */
-  void MakeUnique( );
+  void
+  MakeUnique();
 
   /** \brief Get the TransformEnum of the underlying Transform.
    *
@@ -248,60 +272,66 @@ public:
    *  transform. This value may be used to identify which SimpleITK
    *  class the transform can be converted to.
    */
-  TransformEnum GetTransformEnum() const;
+  TransformEnum
+  GetTransformEnum() const;
 
 protected:
-
-
-  explicit Transform( PimpleTransformBase *pimpleTransform );
+  explicit Transform(PimpleTransformBase * pimpleTransform);
 
   // this method is called to set the private pimpleTransform outside
   // the constructor, derived classes can override it of update the
   // state.
-  virtual void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform );
+  virtual void
+  SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform);
 
 private:
-
-  template< unsigned int VDimension>
-  void InternalInitialization( TransformEnum type, itk::TransformBase *base = nullptr );
+  template <unsigned int VDimension>
+  void
+  InternalInitialization(TransformEnum type, itk::TransformBase * base = nullptr);
 
   struct TransformTryCastVisitor
   {
-    itk::TransformBase *transform;
-    Transform *that;
-    template< typename TransformType >
-    void operator() ( ) const
+    itk::TransformBase * transform;
+    Transform *          that;
+    template <typename TransformType>
+    void
+    operator()() const
+    {
+      TransformType * t = dynamic_cast<TransformType *>(transform);
+      if (t)
       {
-        TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t)
-          {
-          that->InternalInitialization<TransformType>(t);
-          }
+        that->InternalInitialization<TransformType>(t);
       }
+    }
   };
 
 
-  template< class TransformType>
-  void InternalInitialization( TransformType *t );
-  void InternalInitialization( itk::TransformBase *base );
+  template <class TransformType>
+  void
+  InternalInitialization(TransformType * t);
+  void
+  InternalInitialization(itk::TransformBase * base);
 
 
-  template< unsigned int >
-    void InternalBSplineInitialization( Image & img );
+  template <unsigned int>
+  void
+  InternalBSplineInitialization(Image & img);
 
-  template< typename TDisplacementType >
-    void InternalDisplacementInitialization( Image & img );
+  template <typename TDisplacementType>
+  void
+  InternalDisplacementInitialization(Image & img);
 
-  template < class TMemberFunctionPointer >
-    struct DisplacementInitializationMemberFunctionAddressor
+  template <class TMemberFunctionPointer>
+  struct DisplacementInitializationMemberFunctionAddressor
   {
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
-    template< typename TImageType >
-    TMemberFunctionPointer operator() ( ) const
-      {
-        return &ObjectType::template InternalDisplacementInitialization< TImageType >;
-      }
+    template <typename TImageType>
+    TMemberFunctionPointer
+    operator()() const
+    {
+      return &ObjectType::template InternalDisplacementInitialization<TImageType>;
+    }
   };
 
   // As is the architecture of all SimpleITK pimples,
@@ -312,12 +342,14 @@ private:
 
 
 // read
-SITKCommon_EXPORT Transform ReadTransform( const PathType &filename );
+SITKCommon_EXPORT Transform
+ReadTransform(const PathType & filename);
 
 // write
-SITKCommon_EXPORT void WriteTransform( const Transform &transform, const PathType &filename);
+SITKCommon_EXPORT void
+WriteTransform(const Transform & transform, const PathType & filename);
 
-}
-}
+} // namespace simple
+} // namespace itk
 
 #endif // sitkTransform_h

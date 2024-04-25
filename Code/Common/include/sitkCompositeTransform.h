@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 
 
 #ifndef sitkCompositeTransform_h
@@ -55,8 +55,8 @@ namespace simple
  *
  * \sa itk::CompositeTransform
  */
-class SITKCommon_EXPORT CompositeTransform
-    : public Transform {
+class SITKCommon_EXPORT CompositeTransform : public Transform
+{
 public:
   using Self = CompositeTransform;
   using Superclass = Transform;
@@ -75,14 +75,14 @@ public:
    * constructed which holds the transform argument.
    *
    */
-  CompositeTransform( const Transform & );
+  CompositeTransform(const Transform &);
 
   /** \brief A lazy copy constructor
    *
    * The new SimpleITK object will reference to the same underlying ITK
    * CompositeTransform. A deep-copy will be made when the object is modified.
    */
-  CompositeTransform( const CompositeTransform & );
+  CompositeTransform(const CompositeTransform &);
 
   /** \brief Create a composite from a vector of Transform
    *
@@ -97,10 +97,15 @@ public:
 
   ~CompositeTransform() override;
 
-  CompositeTransform &operator=( const CompositeTransform &);
+  CompositeTransform &
+  operator=(const CompositeTransform &);
 
   /** Name of this class */
-  std::string GetName( ) const override  { return std::string("CompositeTransform");}
+  std::string
+  GetName() const override
+  {
+    return std::string("CompositeTransform");
+  }
 
 
   /** \brief Removes nested composite transforms
@@ -112,7 +117,8 @@ public:
    *
    * Nested composite transform may not be written to a file.
    */
-  SITK_RETURN_SELF_TYPE_HEADER FlattenTransform();
+  SITK_RETURN_SELF_TYPE_HEADER
+  FlattenTransform();
 
   /** \brief Add a transform to the back of the stack.
    *
@@ -120,48 +126,53 @@ public:
    * the optimizable parameters, while the other parameters are part of the
    * fixed parameters.
    */
-  SITK_RETURN_SELF_TYPE_HEADER AddTransform( Transform t );
+  SITK_RETURN_SELF_TYPE_HEADER
+  AddTransform(Transform t);
 
   /** \brief The number of transforms in the stack */
-  unsigned int GetNumberOfTransforms() const;
+  unsigned int
+  GetNumberOfTransforms() const;
 
   /** \brief Remove all transforms from the stack. */
-  void ClearTransforms();
+  void
+  ClearTransforms();
 
   /** \brief Remove the active transform at the back.
    *
    * If the stack is empty an exception will be thrown.
    */
-  void RemoveTransform();
+  void
+  RemoveTransform();
 
   /** \brief Get a copy of the back transform.
    *
    * If the stack is empty an exception will be thrown.
    */
-  Transform GetBackTransform();
+  Transform
+  GetBackTransform();
 
   /** \brief Get a copy of a transform in the stack.
    *
    * If n is equal or greater than the number of transforms, then an exception
    * will be thrown.
    * */
-  Transform GetNthTransform(unsigned int n);
+  Transform
+  GetNthTransform(unsigned int n);
 
 protected:
-
-  void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> &&) override;
+  void
+  SetPimpleTransform(std::unique_ptr<PimpleTransformBase> &&) override;
 
 private:
-
-
   struct MyVisitor
   {
-    itk::TransformBase *transform;
-    CompositeTransform *that;
-    template< typename TransformType >
-    void operator() ( )
+    itk::TransformBase * transform;
+    CompositeTransform * that;
+    template <typename TransformType>
+    void
+    operator()()
     {
-      TransformType *t = dynamic_cast<TransformType*>(transform);
+      TransformType * t = dynamic_cast<TransformType *>(transform);
       if (t)
       {
         that->InternalInitialization(t);
@@ -171,24 +182,27 @@ private:
     }
   };
 
-  void InternalInitialization(itk::TransformBase *transform);
+  void
+  InternalInitialization(itk::TransformBase * transform);
 
-  template<unsigned int NDimension>
-  void InternalInitialization(itk::CompositeTransform< double, NDimension > *);
+  template <unsigned int NDimension>
+  void
+  InternalInitialization(itk::CompositeTransform<double, NDimension> *);
 
   template <unsigned int NDimensions>
-  void InternalInitialization(itk::Transform<double, NDimensions, NDimensions> *);
+  void
+  InternalInitialization(itk::Transform<double, NDimensions, NDimensions> *);
 
-  std::function<void ()> m_pfFlattenTransform;
-  std::function<void ( Transform & )> m_pfAddTransform;
-  std::function<void ()> m_pfRemoveTransform;
-  std::function<Transform ()> m_pfBackTransform;
-  std::function<Transform (unsigned int)> m_pfGetNthTransform;
-  std::function<unsigned int ()> m_pfGetNumberOfTransforms;
-  std::function<void ()> m_pfClearTransformQueue;
+  std::function<void()>                  m_pfFlattenTransform;
+  std::function<void(Transform &)>       m_pfAddTransform;
+  std::function<void()>                  m_pfRemoveTransform;
+  std::function<Transform()>             m_pfBackTransform;
+  std::function<Transform(unsigned int)> m_pfGetNthTransform;
+  std::function<unsigned int()>          m_pfGetNumberOfTransforms;
+  std::function<void()>                  m_pfClearTransformQueue;
 };
 
-}
-}
+} // namespace simple
+} // namespace itk
 
 #endif // sitkCompositeTransform_h

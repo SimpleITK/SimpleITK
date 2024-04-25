@@ -22,8 +22,6 @@
 #include "sitkCommand.h"
 
 
-
-
 namespace itk
 {
 namespace simple
@@ -44,8 +42,7 @@ namespace simple
 
 #include "Rinternals.h"
 
-class RCommand
-  : public itk::simple::Command
+class RCommand : public itk::simple::Command
 {
 public:
   // Standard "Self" typedef.
@@ -65,25 +62,29 @@ public:
    * of the function and environment, which usually just makes things
    * more confusing
    */
-  void SetFunctionClosure(SEXP FN);
+  void
+  SetFunctionClosure(SEXP FN);
 
-  SEXP GetCallbackRCallable();
+  SEXP
+  GetCallbackRCallable();
 
-  virtual void Execute(void);
+  virtual void
+  Execute(void);
 
-  #ifndef SWIG
+#ifndef SWIG
   // export for access in the custom ProcessObject method for callables
   using Super::SetOwnedByObjects;
   using Super::GetOwnedByObjects;
   using Super::OwnedByObjectsOn;
   using Super::OwnedByObjectsOff;
-  #endif
+#endif
 
 
 protected:
-
-  void SetCallbackRCallable(SEXP obj);
-  void SetCallbackREnviron(SEXP rho);
+  void
+  SetCallbackRCallable(SEXP obj);
+  void
+  SetCallbackREnviron(SEXP rho);
 
 private:
   SEXP m_Object;
@@ -93,7 +94,7 @@ private:
   SEXP m_FunctionClosure;
 };
 
-}
-}
+} // namespace simple
+} // namespace itk
 
 #endif // _sitkRCommand_h

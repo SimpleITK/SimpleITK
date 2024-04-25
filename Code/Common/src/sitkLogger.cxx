@@ -117,7 +117,7 @@ protected:
 };
 
 
-}
+} // namespace
 
 LoggerBase::~LoggerBase() {}
 
@@ -296,4 +296,4 @@ ITKLogger::SetAsGlobalITKLogger()
   return oldLogger;
 }
 
-}
+} // namespace itk::simple

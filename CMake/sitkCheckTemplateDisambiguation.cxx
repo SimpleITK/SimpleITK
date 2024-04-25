@@ -1,13 +1,15 @@
-template<typename T>
+template <typename T>
 struct A
 {
   template <typename U>
-  void operator()( ) {};
+  void
+  operator()(){};
 };
 
 
-template<typename T>
-void g( )
+template <typename T>
+void
+g()
 {
   A<T> obj;
 
@@ -17,7 +19,8 @@ void g( )
 }
 
 
-int main(void)
+int
+main(void)
 {
   g<int>();
 

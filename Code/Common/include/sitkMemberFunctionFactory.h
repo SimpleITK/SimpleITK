@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkMemberFunctionFactory_h
 #define sitkMemberFunctionFactory_h
 
@@ -22,7 +22,8 @@
 #include "sitkMemberFunctionFactoryBase.h"
 #include "sitkPixelIDValues.h"
 
-namespace itk::simple::detail {
+namespace itk::simple::detail
+{
 
 /** \class MemberFunctionFactory
  * \brief A class used to instantiate and generate function object to
@@ -47,12 +48,10 @@ namespace itk::simple::detail {
  *  not need to have the calling object specified.
  */
 template <typename TMemberFunctionPointer>
-class MemberFunctionFactory
-  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<unsigned int, int> >
+class MemberFunctionFactory : protected MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<unsigned int, int>>
 {
 
 public:
-
   using Superclass = MemberFunctionFactoryBase<TMemberFunctionPointer, std::pair<unsigned int, int>>;
   using Self = MemberFunctionFactory;
 
@@ -61,16 +60,17 @@ public:
   using FunctionObjectType = typename Superclass::FunctionObjectType;
 
   /** \brief Constructor which permanently binds the constructed
-  * object to pObject */
-  MemberFunctionFactory( ObjectType *pObject );
+   * object to pObject */
+  MemberFunctionFactory(ObjectType * pObject);
 
   /** \brief Registers a specific member function.
    *
    * Registers a member function which will be dispatched to the
    * TImageType  type
    */
-  template< typename TImageType >
-  void Register( MemberFunctionType pfunc,  TImageType*  );
+  template <typename TImageType>
+  void
+  Register(MemberFunctionType pfunc, TImageType *);
 
   /** \brief Registers all member functions in TPixelIDTypeList and
    * simple::InstantiatedPixelIDTypeList over itk::Image<Pixel,
@@ -112,50 +112,50 @@ public:
    * \endcode
    * @{
    */
-  template < typename TPixelIDTypeList,
-             unsigned int VImageDimension,
-             typename TAddressor >
-  void RegisterMemberFunctions( );
-  template < typename TPixelIDTypeList, unsigned int VImageDimension >
-  void RegisterMemberFunctions( )
+  template <typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor>
+  void
+  RegisterMemberFunctions();
+  template <typename TPixelIDTypeList, unsigned int VImageDimension>
+  void
+  RegisterMemberFunctions()
   {
-    using AddressorType = detail::MemberFunctionAddressor< TMemberFunctionPointer >;
-    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType >();
+    using AddressorType = detail::MemberFunctionAddressor<TMemberFunctionPointer>;
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, AddressorType>();
   }
 
-  template < typename TPixelIDTypeList, unsigned int VImageDimension, unsigned int VImageDimensionStop >
+  template <typename TPixelIDTypeList, unsigned int VImageDimension, unsigned int VImageDimensionStop>
   void
-   RegisterMemberFunctions( )
+  RegisterMemberFunctions()
   {
-    using AddressorType = detail::MemberFunctionAddressor< TMemberFunctionPointer >;
-    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, VImageDimensionStop, AddressorType >();
+    using AddressorType = detail::MemberFunctionAddressor<TMemberFunctionPointer>;
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, VImageDimensionStop, AddressorType>();
   }
-  template < typename TPixelIDTypeList,
-             unsigned int VImageDimension,
-             unsigned int VImageDimensionStop,
-             typename TAddressor
-               >
-    typename std::enable_if<(VImageDimensionStop > VImageDimension)>::type
-   RegisterMemberFunctions( )
+  template <typename TPixelIDTypeList,
+            unsigned int VImageDimension,
+            unsigned int VImageDimensionStop,
+            typename TAddressor>
+  typename std::enable_if<(VImageDimensionStop > VImageDimension)>::type
+  RegisterMemberFunctions()
   {
-    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimensionStop, TAddressor >();
-    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, VImageDimensionStop - 1, TAddressor >();
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimensionStop, TAddressor>();
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, VImageDimensionStop - 1, TAddressor>();
   }
-  template < typename TPixelIDTypeList,
-             unsigned int VImageDimension,
-             unsigned int VImageDimensionStop,
-             typename TAddressor  >
+  template <typename TPixelIDTypeList,
+            unsigned int VImageDimension,
+            unsigned int VImageDimensionStop,
+            typename TAddressor>
   typename std::enable_if<(VImageDimensionStop == VImageDimension)>::type
-   RegisterMemberFunctions( )
+  RegisterMemberFunctions()
   {
-    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimensionStop, TAddressor >();
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimensionStop, TAddressor>();
   }
   /** @} */
 
   /** \brief Query to determine if an member function has been
-    * registered for pixelID and imageDimension
-    */
-  bool HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const noexcept;
+   * registered for pixelID and imageDimension
+   */
+  bool
+  HasMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension) const noexcept;
 
   /** \brief Returns a function object for the PixelIndex, and image
    *  dimension.
@@ -176,15 +176,14 @@ public:
    *  exception is generated. The returned function object is
    *  guaranteed to be valid.
    */
-  FunctionObjectType GetMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  );
+  FunctionObjectType
+  GetMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension);
 
 protected:
-
-  ObjectType *m_ObjectPointer;
-
+  ObjectType * m_ObjectPointer;
 };
 
-}
+} // namespace itk::simple::detail
 
 #include "sitkMemberFunctionFactory.hxx"
 

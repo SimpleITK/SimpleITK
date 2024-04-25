@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkBiasFieldCorrectionImageFilter_helper_hxx
 #define sitkBiasFieldCorrectionImageFilter_helper_hxx
 
@@ -22,10 +22,12 @@
 
 namespace itk::simple
 {
-namespace {
+namespace
+{
 
-template<typename TBiasFieldType>
-Image BSplineLatticeToImage(const TBiasFieldType *bsplineLattice, const Image &referenceImage, unsigned int splineOrder = 3)
+template <typename TBiasFieldType>
+Image
+BSplineLatticeToImage(const TBiasFieldType * bsplineLattice, const Image & referenceImage, unsigned int splineOrder = 3)
 {
   constexpr unsigned int Dimension = TBiasFieldType::ImageDimension;
 
@@ -45,13 +47,13 @@ Image BSplineLatticeToImage(const TBiasFieldType *bsplineLattice, const Image &r
   // pipeline execution.
   bspliner->Update();
 
-  auto caster = itk::UnaryGeneratorImageFilter<ScalarImageType, itk::Image<float,Dimension> >::New();
-  caster->SetFunctor([](const typename ScalarImageType::PixelType &p){return p[0];});
+  auto caster = itk::UnaryGeneratorImageFilter<ScalarImageType, itk::Image<float, Dimension>>::New();
+  caster->SetFunctor([](const typename ScalarImageType::PixelType & p) { return p[0]; });
   caster->SetInput(bspliner->GetOutput());
   caster->Update();
 
   return Image(caster->GetOutput());
 }
-}
-}
+} // namespace
+} // namespace itk::simple
 #endif // sitkBiasFieldCorrectionImageFilter_helper_hxx

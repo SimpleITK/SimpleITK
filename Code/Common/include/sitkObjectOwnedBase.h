@@ -44,8 +44,7 @@ namespace simple
  *
  *
  */
-class SITKCommon_EXPORT ObjectOwnedBase
-: public NonCopyable
+class SITKCommon_EXPORT ObjectOwnedBase : public NonCopyable
 {
 public:
   virtual ~ObjectOwnedBase()
@@ -65,7 +64,6 @@ public:
   SetName(const std::string & name);
 
 protected:
-
   /** \brief Copy Constructor
    *
    * Only copiable if o does not have OwnedByObjects enabled. If OwnedByObjects is enabled in o, than an exception will
@@ -84,7 +82,7 @@ protected:
    * @return The number of currently registered objects or functions.
    */
   virtual size_t
-  AddObjectCallback(itk::Object *o, std::function<void()> onDelete);
+  AddObjectCallback(itk::Object * o, std::function<void()> onDelete);
 
   virtual size_t
   RemoveObject(const itk::Object *);
@@ -111,14 +109,14 @@ protected:
 
 
 private:
-
-  void ExecuteCallbacks(void);
+  void
+  ExecuteCallbacks(void);
 
   bool                                                m_OwnedByObjects{ false };
   std::multimap<itk::Object *, std::function<void()>> m_ReferencedObjectsCallbacks;
   std::string                                         m_Name;
 };
 
-}
-}
+} // namespace simple
+} // namespace itk
 #endif

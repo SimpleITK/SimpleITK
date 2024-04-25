@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkDisplacementFieldTransform_h
 #define sitkDisplacementFieldTransform_h
 
@@ -31,8 +31,7 @@ namespace itk::simple
  *
  * \sa itk::DisplacementFieldTransform
  */
-class SITKCommon_EXPORT DisplacementFieldTransform
-  : public Transform
+class SITKCommon_EXPORT DisplacementFieldTransform : public Transform
 {
 public:
   using Self = DisplacementFieldTransform;
@@ -40,7 +39,7 @@ public:
 
   ~DisplacementFieldTransform() override;
 
-  explicit DisplacementFieldTransform( unsigned int dimensions );
+  explicit DisplacementFieldTransform(unsigned int dimensions);
 
   /** \brief Consume an image to construct a displacement field transform.
    *
@@ -52,16 +51,21 @@ public:
    * components equal to the image dimension.
    *
    */
-  explicit DisplacementFieldTransform( Image &);
+  explicit DisplacementFieldTransform(Image &);
 
-  DisplacementFieldTransform( const DisplacementFieldTransform & );
+  DisplacementFieldTransform(const DisplacementFieldTransform &);
 
-  explicit DisplacementFieldTransform( const Transform & );
+  explicit DisplacementFieldTransform(const Transform &);
 
-  DisplacementFieldTransform &operator=( const DisplacementFieldTransform & );
+  DisplacementFieldTransform &
+  operator=(const DisplacementFieldTransform &);
 
   /** Name of this class */
-  std::string GetName() const override { return std::string ("DisplacementFieldTransform"); }
+  std::string
+  GetName() const override
+  {
+    return std::string("DisplacementFieldTransform");
+  }
 
   /** parameters */
 
@@ -75,97 +79,114 @@ public:
    * components equal to the image dimension.
    *
    */
-  SITK_RETURN_SELF_TYPE_HEADER SetDisplacementField(Image &);
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetDisplacementField(Image &);
 
   /** \todo The returned image should not directly modify the
    * internal displacement field.
    */
-  Image GetDisplacementField() const;
+  Image
+  GetDisplacementField() const;
 
   /** fixed parameter */
 
   /* additional methods */
-  SITK_RETURN_SELF_TYPE_HEADER SetInverseDisplacementField(Image &);
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetInverseDisplacementField(Image &);
 
   /** \todo The returned image is should not directly modify the
    * internal displacement field.
    */
-  Image GetInverseDisplacementField() const;
+  Image
+  GetInverseDisplacementField() const;
 
   /** Set the interpolator used between the field voxels. */
-  SITK_RETURN_SELF_TYPE_HEADER SetInterpolator(InterpolatorEnum interp);
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetInterpolator(InterpolatorEnum interp);
   // InterpolatorEnum GetInterpolator() const; How to do this?
 
-  SITK_RETURN_SELF_TYPE_HEADER SetSmoothingOff();
-  SITK_RETURN_SELF_TYPE_HEADER SetSmoothingGaussianOnUpdate( double varianceForUpdateField=1.75, double varianceForTotalField=0.5 );
-  SITK_RETURN_SELF_TYPE_HEADER SetSmoothingBSplineOnUpdate( const std::vector<unsigned int> &numberOfControlPointsForUpdateField = std::vector<unsigned int>(3,4),
-                                     const std::vector<unsigned int> &numberOfControlPointsForTotalField = std::vector<unsigned int>(3,4),
-                                     bool enforceStationaryBoundary=true,
-                                     unsigned int order=3 );
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetSmoothingOff();
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetSmoothingGaussianOnUpdate(double varianceForUpdateField = 1.75, double varianceForTotalField = 0.5);
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetSmoothingBSplineOnUpdate(
+    const std::vector<unsigned int> & numberOfControlPointsForUpdateField = std::vector<unsigned int>(3, 4),
+    const std::vector<unsigned int> & numberOfControlPointsForTotalField = std::vector<unsigned int>(3, 4),
+    bool                              enforceStationaryBoundary = true,
+    unsigned int                      order = 3);
 
 
 protected:
-
-  void SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform ) override;
+  void
+  SetPimpleTransform(std::unique_ptr<PimpleTransformBase> && pimpleTransform) override;
 
 private:
-
   struct MyVisitor
   {
-    itk::TransformBase *transform;
-    DisplacementFieldTransform *that;
-    template< typename TransformType >
-    void operator() ( ) const
+    itk::TransformBase *         transform;
+    DisplacementFieldTransform * that;
+    template <typename TransformType>
+    void
+    operator()() const
+    {
+      TransformType * t = dynamic_cast<TransformType *>(transform);
+      if (t && (typeid(*t) == typeid(TransformType)))
       {
-        TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t && (typeid(*t) == typeid(TransformType)))
-          {
-          that->InternalInitialization<TransformType>(t);
-          }
+        that->InternalInitialization<TransformType>(t);
       }
+    }
   };
 
-  void InternalInitialization(itk::TransformBase *transform);
+  void
+  InternalInitialization(itk::TransformBase * transform);
 
   template <typename TransformType>
-    void InternalInitialization(TransformType *transform);
+  void
+  InternalInitialization(TransformType * transform);
 
-  template< typename TDisplacementFieldTransform >
-    static Image InternalGetDisplacementField( const TDisplacementFieldTransform *itkDisplacementTx );
-  template< typename TDisplacementFieldTransform >
-    static Image InternalGetInverseDisplacementField( const TDisplacementFieldTransform *itkDisplacementTx );
+  template <typename TDisplacementFieldTransform>
+  static Image
+  InternalGetDisplacementField(const TDisplacementFieldTransform * itkDisplacementTx);
+  template <typename TDisplacementFieldTransform>
+  static Image
+  InternalGetInverseDisplacementField(const TDisplacementFieldTransform * itkDisplacementTx);
 
-  template< typename TDisplacementFieldTransform >
-    void InternalSetSmoothingOff(TDisplacementFieldTransform *itkDisplacement);
-  template< typename TDisplacementFieldTransform >
-    void InternalSetSmoothingGaussianOnUpdate( TDisplacementFieldTransform *itkDisplacement,
-                                               double varianceForUpdateField,
-                                               double varianceForTotalField );
-  template< typename TDisplacementFieldTransform >
-    void InternalSetSmoothingBSplineOnUpdate( TDisplacementFieldTransform *itkDisplacement,
-                                              const std::vector<unsigned int> &numberOfControlPointsForUpdateField,
-                                              const std::vector<unsigned int> &numberOfControlPointsForTotalField,
-                                              bool enforceStationaryBoundary,
-                                              unsigned int order );
+  template <typename TDisplacementFieldTransform>
+  void
+  InternalSetSmoothingOff(TDisplacementFieldTransform * itkDisplacement);
+  template <typename TDisplacementFieldTransform>
+  void
+  InternalSetSmoothingGaussianOnUpdate(TDisplacementFieldTransform * itkDisplacement,
+                                       double                        varianceForUpdateField,
+                                       double                        varianceForTotalField);
+  template <typename TDisplacementFieldTransform>
+  void
+  InternalSetSmoothingBSplineOnUpdate(TDisplacementFieldTransform *     itkDisplacement,
+                                      const std::vector<unsigned int> & numberOfControlPointsForUpdateField,
+                                      const std::vector<unsigned int> & numberOfControlPointsForTotalField,
+                                      bool                              enforceStationaryBoundary,
+                                      unsigned int                      order);
 
 
-  static PimpleTransformBase *CreateDisplacementFieldPimpleTransform(unsigned int dimension);
+  static PimpleTransformBase *
+  CreateDisplacementFieldPimpleTransform(unsigned int dimension);
 
-  std::function<void (Image &)> m_pfSetDisplacementField;
-  std::function<Image ()> m_pfGetDisplacementField;
+  std::function<void(Image &)> m_pfSetDisplacementField;
+  std::function<Image()>       m_pfGetDisplacementField;
 
-  std::function<void (Image &)> m_pfSetInverseDisplacementField;
-  std::function<Image ()> m_pfGetInverseDisplacementField;
+  std::function<void(Image &)> m_pfSetInverseDisplacementField;
+  std::function<Image()>       m_pfGetInverseDisplacementField;
 
-  std::function<void (InterpolatorEnum &)> m_pfSetInterpolator;
-  std::function<InterpolatorEnum ()> m_pfGetInterpolator;
+  std::function<void(InterpolatorEnum &)> m_pfSetInterpolator;
+  std::function<InterpolatorEnum()>       m_pfGetInterpolator;
 
-  std::function<void ()> m_pfSetSmoothingOff;
-  std::function<void (double, double)> m_pfSetSmoothingGaussianOnUpdate;
-  std::function<void (const std::vector<unsigned int> &,const std::vector<unsigned int>&, bool, unsigned int)> m_pfSetSmoothingBSplineOnUpdate;
-
+  std::function<void()>               m_pfSetSmoothingOff;
+  std::function<void(double, double)> m_pfSetSmoothingGaussianOnUpdate;
+  std::function<void(const std::vector<unsigned int> &, const std::vector<unsigned int> &, bool, unsigned int)>
+    m_pfSetSmoothingBSplineOnUpdate;
 };
 
-}
+} // namespace itk::simple
 
 #endif // sitkDisplacementFieldTransform_h

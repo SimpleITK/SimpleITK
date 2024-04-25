@@ -1,80 +1,82 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #include "sitkMacro.h"
 
 #include "SimpleITKTestHarness.h"
 
 static const char * DESCRIPTION = "We expect this exception";
 
-class sitkExceptionsTest
-  : public ::testing::Test
+class sitkExceptionsTest : public ::testing::Test
 {
 public:
-
-  void ThrowsitkException( )
+  void
+  ThrowsitkException()
   {
-    sitkExceptionMacro( << DESCRIPTION );
+    sitkExceptionMacro(<< DESCRIPTION);
   }
 };
 
-TEST_F(sitkExceptionsTest, Test1) {
-  ASSERT_THROW( ThrowsitkException(), ::itk::simple::GenericException );
+TEST_F(sitkExceptionsTest, Test1)
+{
+  ASSERT_THROW(ThrowsitkException(), ::itk::simple::GenericException);
 
   try
-    {
+  {
     ThrowsitkException();
-    }
-  catch ( ::itk::simple::GenericException &e )
-    {
+  }
+  catch (::itk::simple::GenericException & e)
+  {
     // could do some nifty testing here too
-    EXPECT_EQ ( e.GetNameOfClass(), std::string("GenericException") );
-    //EXPECT_NE ( std::string ( e.GetLocation() ),  "" ); HACK FIXME
+    EXPECT_EQ(e.GetNameOfClass(), std::string("GenericException"));
+    // EXPECT_NE ( std::string ( e.GetLocation() ),  "" ); HACK FIXME
     // exception revision
     return;
-    }
+  }
 
   // should gotten that exception
   FAIL();
 }
 
-TEST_F(sitkExceptionsTest, Test2) {
+TEST_F(sitkExceptionsTest, Test2)
+{
 
   // this can only be tested when true, if it was false the file won't compile
-  static_assert( true, "this is just a test" );
+  static_assert(true, "this is just a test");
 
   SUCCEED();
 }
 
-TEST_F(sitkExceptionsTest, Test3) {
+TEST_F(sitkExceptionsTest, Test3)
+{
 
   // This test is designed to improve coverage of the GenericException class
 
   // Default constructor
   const itk::simple::GenericException empty;
-  itk::simple::GenericException e0;
+  itk::simple::GenericException       e0;
 
 
-  itk::simple::GenericException e1( __FILE__, __LINE__ );
+  itk::simple::GenericException e1(__FILE__, __LINE__);
 
-  itk::simple::GenericException e2( __FILE__, __LINE__, "testing yet another constructor" );
+  itk::simple::GenericException e2(__FILE__, __LINE__, "testing yet another constructor");
 
   // copy constructor
-  itk::simple::GenericException e3( e2 );
+  itk::simple::GenericException e3(e2);
 
 
   // assignment
@@ -89,41 +91,41 @@ TEST_F(sitkExceptionsTest, Test3) {
   e0 = e0;
   sitkClangDiagnosticPop();
 
-  EXPECT_TRUE( e1 == e1 );
-  EXPECT_TRUE( empty == empty );
-  EXPECT_FALSE( e2 == e1 );
+  EXPECT_TRUE(e1 == e1);
+  EXPECT_TRUE(empty == empty);
+  EXPECT_FALSE(e2 == e1);
 
-  EXPECT_NO_THROW( e2.ToString() );
-  EXPECT_NO_THROW( e2.GetLocation() );
-  EXPECT_NO_THROW( e2.GetDescription() );
-  EXPECT_NO_THROW( e2.GetFile() );
-  EXPECT_NO_THROW( e2.GetLine() );
-  EXPECT_NO_THROW( e2.what() );
+  EXPECT_NO_THROW(e2.ToString());
+  EXPECT_NO_THROW(e2.GetLocation());
+  EXPECT_NO_THROW(e2.GetDescription());
+  EXPECT_NO_THROW(e2.GetFile());
+  EXPECT_NO_THROW(e2.GetLine());
+  EXPECT_NO_THROW(e2.what());
 
   // check accessor for empty/null
-  EXPECT_NO_THROW( empty.ToString() );
-  EXPECT_NO_THROW( empty.GetLocation() );
-  EXPECT_NO_THROW( empty.GetDescription() );
-  EXPECT_NO_THROW( empty.GetFile() );
-  EXPECT_NO_THROW( empty.GetLine() );
-  EXPECT_NO_THROW( empty.what() );
-
+  EXPECT_NO_THROW(empty.ToString());
+  EXPECT_NO_THROW(empty.GetLocation());
+  EXPECT_NO_THROW(empty.GetDescription());
+  EXPECT_NO_THROW(empty.GetFile());
+  EXPECT_NO_THROW(empty.GetLine());
+  EXPECT_NO_THROW(empty.what());
 }
 
 
-TEST_F(sitkExceptionsTest, TestDestructionAfterAssignment) {
+TEST_F(sitkExceptionsTest, TestDestructionAfterAssignment)
+{
 
-    // Test that the program does not crash when two GenericException
-    // variables get destructed (automatically, by getting out of scope),
-    // when one of them is assigned to the other. (Such a crash might occur
-    // with previous versions of SimpleITK, version <= v2.2rc3.)
+  // Test that the program does not crash when two GenericException
+  // variables get destructed (automatically, by getting out of scope),
+  // when one of them is assigned to the other. (Such a crash might occur
+  // with previous versions of SimpleITK, version <= v2.2rc3.)
 
-    const itk::simple::GenericException source(__FILE__, __LINE__);
-    itk::simple::GenericException target;
+  const itk::simple::GenericException source(__FILE__, __LINE__);
+  itk::simple::GenericException       target;
 
-    target = source;
+  target = source;
 
-    // After assignment, the variables should compare equal, but moreover,
-    // when they get out of scope, their destructors should not crash.
-    EXPECT_EQ(target, source);
+  // After assignment, the variables should compare equal, but moreover,
+  // when they get out of scope, their destructors should not crash.
+  EXPECT_EQ(target, source);
 }

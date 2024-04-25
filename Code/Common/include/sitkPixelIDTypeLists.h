@@ -1,20 +1,20 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef sitkPixelIDTypeLists_h
 #define sitkPixelIDTypeLists_h
 
@@ -102,7 +102,7 @@ using RealPixelIDTypeList = typelist2::typelist<BasicPixelID<float>, BasicPixelI
  * \sa BasicPixelID
  */
 using ComplexPixelIDTypeList =
-  typelist2::typelist<BasicPixelID<std::complex<float>>, BasicPixelID<std::complex< double > > >;
+  typelist2::typelist<BasicPixelID<std::complex<float>>, BasicPixelID<std::complex<double>>>;
 
 /** List of pixel ids which are signed
  *
@@ -140,7 +140,7 @@ using VectorPixelIDTypeList = typelist2::typelist<VectorPixelID<int8_t>,
  *
  * \sa VectorPixelID
  */
-using  RealVectorPixelIDTypeList = typelist2::typelist<VectorPixelID<float>, VectorPixelID<double>>;
+using RealVectorPixelIDTypeList = typelist2::typelist<VectorPixelID<float>, VectorPixelID<double>>;
 
 /** List of pixel ids which are signed of vectors
  *
@@ -204,5 +204,5 @@ using AllPixelIDTypeList =
  */
 using InstantiatedPixelIDTypeList = AllPixelIDTypeList;
 
-}
+} // namespace itk::simple
 #endif // _sitkPixelIDTypeLists_h

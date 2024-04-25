@@ -1,26 +1,27 @@
 /*=========================================================================
-*
-*  Copyright NumFOCUS
-*
-*  Licensed under the Apache License, Version 2.0 (the "License");
-*  you may not use this file except in compliance with the License.
-*  You may obtain a copy of the License at
-*
-*         http://www.apache.org/licenses/LICENSE-2.0.txt
-*
-*  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*  See the License for the specific language governing permissions and
-*  limitations under the License.
-*
-*=========================================================================*/
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef itkHolderCommand_h
 #define itkHolderCommand_h
 
 #include "itkCommand.h"
 
-namespace itk {
+namespace itk
+{
 
 /** \class HolderCommand
  *  \brief An ITK Command class to hold a object until destruction
@@ -32,9 +33,8 @@ namespace itk {
  * be released on destruction of the ITK object ( subject to the
  * reference counting on the Command ).
  */
-template< class T >
-class HolderCommand
-  : public itk::Command
+template <class T>
+class HolderCommand : public itk::Command
 {
 public:
   using ObjectType = T;
@@ -45,17 +45,34 @@ public:
   using Pointer = itk::SmartPointer<Self>;
   using ConstPointer = itk::SmartPointer<const Self>;
 
-  itkNewMacro( HolderCommand );
+  itkNewMacro(HolderCommand);
 
-  void Set(const ObjectType object) { this->m_Object = object; }
-  ObjectType &Get() {return this->m_Object;}
-  const ObjectType &Get() const {return this->m_Object;}
+  void
+  Set(const ObjectType object)
+  {
+    this->m_Object = object;
+  }
+  ObjectType &
+  Get()
+  {
+    return this->m_Object;
+  }
+  const ObjectType &
+  Get() const
+  {
+    return this->m_Object;
+  }
 
-  void Execute(itk::Object*, const itk::EventObject&) override {}
-  void Execute(const itk::Object*, const itk::EventObject&) override {}
+  void
+  Execute(itk::Object *, const itk::EventObject &) override
+  {}
+  void
+  Execute(const itk::Object *, const itk::EventObject &) override
+  {}
 
-  void operator=(const HolderCommand&) = delete;
-  HolderCommand(const HolderCommand&) = delete;
+  void
+  operator=(const HolderCommand &) = delete;
+  HolderCommand(const HolderCommand &) = delete;
 
 protected:
   HolderCommand() = default;
@@ -63,12 +80,10 @@ protected:
 
 private:
   ObjectType m_Object;
-
 };
 
-template< class T >
-class HolderCommand<T*>
-  : public itk::Command
+template <class T>
+class HolderCommand<T *> : public itk::Command
 {
 public:
   using ObjectType = T;
@@ -79,28 +94,44 @@ public:
   using Pointer = itk::SmartPointer<Self>;
   using ConstPointer = itk::SmartPointer<const Self>;
 
-  itkNewMacro( HolderCommand );
+  itkNewMacro(HolderCommand);
 
-  void Set(ObjectType *object) { this->m_Object = object; }
-  ObjectType *Get() {return this->m_Object;}
-  const ObjectType *Get() const {return this->m_Object;}
+  void
+  Set(ObjectType * object)
+  {
+    this->m_Object = object;
+  }
+  ObjectType *
+  Get()
+  {
+    return this->m_Object;
+  }
+  const ObjectType *
+  Get() const
+  {
+    return this->m_Object;
+  }
 
-  void Execute(itk::Object*, const itk::EventObject&) override {}
-  void Execute(const itk::Object*, const itk::EventObject&) override {}
+  void
+  Execute(itk::Object *, const itk::EventObject &) override
+  {}
+  void
+  Execute(const itk::Object *, const itk::EventObject &) override
+  {}
 
-  void operator=(const HolderCommand&) = delete;
-  HolderCommand(const HolderCommand&) = delete;
+  void
+  operator=(const HolderCommand &) = delete;
+  HolderCommand(const HolderCommand &) = delete;
 
 protected:
-  HolderCommand() : m_Object(nullptr) {};
-  ~HolderCommand() override { delete m_Object;}
+  HolderCommand()
+    : m_Object(nullptr){};
+  ~HolderCommand() override { delete m_Object; }
 
 private:
-
-  ObjectType* m_Object;
-
+  ObjectType * m_Object;
 };
 
-}
+} // namespace itk
 
 #endif
