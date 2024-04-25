@@ -31,6 +31,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Docker Build Image
         shell: bash
         working-directory: Utilities/Distribution/manylinux
@@ -104,6 +106,8 @@ jobs:
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/checkout@v4
         with:
           path: SimpleITK-dashboard
