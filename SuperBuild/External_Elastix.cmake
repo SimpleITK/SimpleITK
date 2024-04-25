@@ -7,7 +7,9 @@ set(${proj}_DEPENDENCIES "ITK")
 file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_common_cache}" )
 
 set( ELASTIX_GIT_REPOSITORY ${git_protocol}://github.com/SuperElastix/elastix )
-set( ELASTIX_GIT_TAG 27289e5a140ab9e336424aec5c28d7c6d4d4b907 ) # hash Apr 19 2024
+# May 22, 2024 with warnings addressed
+set( ELASTIX_GIT_TAG 78fe482aaabac5cb42b19c9365718b80eea1833e )
+
 
 if( NOT ${BUILD_SHARED_LIBS} )
   list( APPEND ep_elastix_args

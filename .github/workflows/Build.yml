@@ -31,6 +31,7 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
     strategy:
       max-parallel: 4
+      fail-fast: false
       matrix:
         include:
           - os: self-hosted-x64
