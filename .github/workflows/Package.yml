@@ -141,8 +141,8 @@ jobs:
             BUILD_TESTING:BOOL=ON
             ${{ matrix.ctest-cache }}
         run: |
-          mkdir ${{ github.workspace }}/artifacts
-          touch ${{ github.workspace }}/artifacts/SimpleITK-${{ matrix.os }}.whl
+          mkdir artifacts
+          touch artifacts/SimpleITK-${{ matrix.os }}.whl
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -150,3 +150,20 @@ jobs:
           path: |
             ${{ github.workspace }}/artifacts/*.whl
             ${{ github.workspace }}/artifacts/*.zip
+  publish:
+    needs:
+      - build
+      - package-docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+
+      - name: Create Release and Upload Artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create latest-draft --target ${{ github.ref }} --draft --generate-notes --title "Release ${{ github.ref_name }}"
+          gh release upload latest-draft ( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" -o -name "*.zip" )
