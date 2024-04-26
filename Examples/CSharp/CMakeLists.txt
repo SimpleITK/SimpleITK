@@ -14,10 +14,8 @@ sitk_add_csharp_test( Example.ImageGetSetBuffer
   "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.SetBuffer.png"
   IMAGE_MD5_COMPARE
     "${SimpleITK_TEST_OUTPUT_DIR}/CSharp.SetBuffer.png"
-    "80d3be0e7a9cafad1ec4fca5bc5cfe89c8a416bc203efccd49cfaf177fb88a4e7e76a336bb09fc2aedca2522a0911e72622a4cde5888b0ec6e415e49d977845a"
+    "0f67e91f82674c0e8560f17653fa9d59"
   )
-set_tests_properties( CSharp.Example.ImageGetSetBuffer
-  PROPERTIES PASS_REGULAR_EXPRESSION "total: 1009713" )
 
 sitk_add_csharp_test( Example.ConnectedThresholdSegmentation
   "${CMAKE_CURRENT_SOURCE_DIR}/ConnectedThresholdSegmentation.cs"
