@@ -6,6 +6,9 @@ export SRC_DIR="/tmp/SimpleITK"
 export BLD_DIR="/tmp/SimpleITK-build"
 export OUT_DIR="/work/io"
 
+echo "BUILD_CSHARP: ${BUILD_CSHARP}"
+echo "BUILD_JAVA: ${BUILD_JAVA}"
+
 SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 
 # Remove Python 2 and pure Python builds
@@ -101,11 +104,29 @@ if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
             -DCMAKE_BUILD_TYPE:STRING=Release \
             -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
-            -DSimpleITK_CSHARP_ARCH:STRING=linux \
+            -DSimpleITK_CSHARP_ARCH:STRING="linux_$(arch)" \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/CSharp &&
         cmake --build "${BLD_DIR}-csharp" --target dist &&
         find "${BLD_DIR}-csharp/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
+fi
+
+if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
+    mkdir ${BLD_DIR}-java &&
+        cd ${BLD_DIR}-java &&
+        cmake  \
+            -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CFLAGS}" \
+            -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
+            -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
+            -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
+            -DCMAKE_BUILD_TYPE:STRING=Release \
+            -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
+            -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
+            -DSimpleITK_JAVA_ARCH:STRING="linux_$(arch)" \
+            -DSimpleITK_BUILD_STRIP:BOOL=ON \
+            ${SRC_DIR}/Wrapping/Java &&
+        cmake --build "${BLD_DIR}-java" --target dist &&
+        find "${BLD_DIR}-java/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
 fi
 
 

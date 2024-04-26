@@ -37,7 +37,7 @@ ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-py${PYTHON_VERSION}" \
       -D "CTEST_CMAKE_GENERATOR:STRING=Ninja" \
-      -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV -j 2
+      -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -VV -j 2
 
 ( cd ${CTEST_BINARY_DIRECTORY} && cmake --build "${CTEST_BINARY_DIRECTORY}" --config "${CTEST_CONFIGURATION_TYPE}" --target dist )
 

@@ -105,3 +105,18 @@ endif()
 
 # Packaging for distribution
 add_subdirectory(dist)
+
+
+if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
+  set(WRAP_CSHARP 1)
+
+  add_subdirectory("${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp" "${CMAKE_BINARY_DIR}/Testing/Unit")
+
+  if(BUILD_EXAMPLES)
+    add_subdirectory("${SimpleITK_SOURCE_DIR}/Examples" "${CMAKE_BINARY_DIR}/Examples")
+  endif()
+
+  if(COMMAND ExternalData_Add_Target )
+    ExternalData_Add_Target( SimpleITKData )
+  endif()
+endif()

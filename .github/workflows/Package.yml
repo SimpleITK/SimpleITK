@@ -26,10 +26,13 @@ jobs:
 
     env:
       PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312"
-      BUILD_CSHARP: 0
+      BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
+      BUILD_JAVA: 1
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Docker Build Image
         shell: bash
         working-directory: Utilities/Distribution/manylinux
@@ -39,11 +42,14 @@ jobs:
         shell: bash
         working-directory: Utilities/Distribution/manylinux
         run: |
+          echo "BUILD_CSHARP: ${BUILD_CSHARP}"
+          echo "BUILD_JAVA: ${BUILD_JAVA}"
           docker run --rm \
                --user "$(id -u):$(id -g)" \
                --env SIMPLEITK_GIT_TAG=${{github.ref}} \
                --env PYTHON_VERSIONS \
                --env BUILD_CSHARP \
+               --env BUILD_JAVA \
                 -v "$(pwd):/work/io" \
                 -t simpleitk_manylinux
       - name: ls
@@ -51,12 +57,13 @@ jobs:
         working-directory: Utilities/Distribution/manylinux
         run: |
           ls -lhR .
-      - name: Upload Wheels
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels-${{ matrix.os }}
+          name: artifacts-${{ matrix.os }}
           path: |
             Utilities/Distribution/manylinux/wheelhouse/*.whl
+            Utilities/Distribution/manylinux/SimpleITK*.zip
 
   build:
 
@@ -99,6 +106,8 @@ jobs:
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/checkout@v4
         with:
           path: SimpleITK-dashboard
@@ -159,6 +168,16 @@ jobs:
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
           rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
 
+      - name: Package CSharp
+        uses: ./.github/actions/package_csharp
+        with:
+          continue-on-error: true
+
+      - name: Package Java
+        uses: ./.github/actions/package_java
+        with:
+          continue-on-error: true
+
       - name: Package Python 3.12
         uses: ./.github/actions/package_python
         with:
@@ -184,9 +203,10 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Upload Wheels
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: python-wheels-${{ matrix.os }}
+          name: artifacts-${{ matrix.os }}
           path: |
             ${{ github.workspace }}/artifacts/*.whl
+            ${{ github.workspace }}/artifacts/*.zip

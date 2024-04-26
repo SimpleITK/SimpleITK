@@ -3,5 +3,7 @@ MAINTAINER Insight Software Consortium <community@itk.org>
 
 WORKDIR /tmp/
 
+RUN yum -y install java-devel
+
 # User is expected to mount directory to "/work"
 ENTRYPOINT ["bash", "-c", "/work/io/imagefiles/cmd.sh" ]

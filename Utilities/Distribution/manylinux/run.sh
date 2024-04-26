@@ -27,6 +27,11 @@ if [ -n "${BUILD_CSHARP}" ]; then
 fi
 
 
+if [ -n "${BUILD_JAVA}" ]; then
+    extra_args="$extra_args --env BUILD_JAVA"
+fi
+
+
 for DF in ${DOCKERFILE}; do
     image_name="simpleitk_manylinux_$(echo "${DF}" | tr '[:upper:]' '[:lower:]')"
     docker build --pull=true --rm=true -t ${image_name} -f ${DF} .
