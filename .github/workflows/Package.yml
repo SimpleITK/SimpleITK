@@ -225,3 +225,65 @@ jobs:
             ${{ github.workspace }}/artifacts/*.whl
             ${{ github.workspace }}/artifacts/*.zip
             ${{ github.workspace }}/artifacts/*.gz
+
+  publish:
+    if: github.ref == 'refs/tags/latest'
+    needs:
+      - build
+      - package-docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        id: download
+        with:
+          path: ${{ github.workspace }}/artifacts
+      - name: Checksums
+        shell: bash
+        run: |
+          sha256sum $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.gz" "*.whl" -o -name "*.zip" ) > checksums.txt
+          echo "== checksums.txt =="
+          cat checksums.txt
+      - name: Set tag name
+        id: tag
+        run: |
+          echo "TAG NAME: ${{ github.ref_name }}-draft" >> $GITHUB_STEP_SUMMARY
+          echo "name=${{github.ref_name}}-draft" >> $GITHUB_OUTPUT
+      - name: Create Release Notes
+        shell: bash
+        run: |
+          echo "Tag Name: ${{ steps.tag.outputs.name }}"
+          echo "This is a draft of the release process with Github Actions.
+
+          This is an automatic pre-release packaging of SimpleITK based on the master branch. It contains the latest features and experimental developments.
+
+          To upgrade to the latest pre-release Python binary package run:
+          \`\`\`pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
+          " >notes.txt
+
+          for f in $( find ${{ steps.download.outputs.download-path }} -type f  )
+          do
+
+            if [[ $f == *.whl ]]; then
+              md5=$(md5sum  $f | awk '{ print $1 }')
+              echo  -n "<a href=\"https://github.com/SimpleITK/SimpleITK/releases/download/${{ steps.tag.outputs.name }}/$(basename $f)#${md5}\"></a>" >> notes.txt
+            fi
+          done
+          echo "== notes.txt =="
+          cat notes.txt
+
+      - name: Create Release and Upload Artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete ${{ steps.tag.outputs.name }} --yes || true
+          gh release create ${{ steps.tag.outputs.name }} \
+            --target ${{ github.sha }} \
+            --draft \
+            --generate-notes \
+            --prerelease \
+            --notes-file notes.txt \
+            --title "Release ${{ github.ref_name }}"
+          gh release upload ${{ steps.tag.outputs.name }} $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" -o -name "*.zip" -o -name "*.gz" )
