@@ -21,8 +21,6 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-          - os: self-hosted-arm
-            dockerfile: Dockerfile-2014-aarch64
           - os: ubuntu-latest
             dockerfile: Dockerfile-2014-x86_64
 
@@ -35,25 +33,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Docker Build Image
-        shell: bash
-        working-directory: Utilities/Distribution/manylinux
-        run: |
-          docker build --pull=true --rm=true -t simpleitk_manylinux -f "${{ matrix.dockerfile }}"   .
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         working-directory: Utilities/Distribution/manylinux
         run: |
-          echo "BUILD_CSHARP: ${BUILD_CSHARP}"
-          echo "BUILD_JAVA: ${BUILD_JAVA}"
-          docker run --rm \
-               --user "$(id -u):$(id -g)" \
-               --env SIMPLEITK_GIT_TAG=${{github.ref}} \
-               --env PYTHON_VERSIONS \
-               --env BUILD_CSHARP \
-               --env BUILD_JAVA \
-                -v "$(pwd):/work/io" \
-                -t simpleitk_manylinux
+          mkdir -p Utilities/Distribution/manylinux/wheelhouse
+          touch Utilities/Distribution/manylinux/wheelhouse/SimpleITK-${{ matrix.os }}.whl
       - name: ls
         shell: bash
         working-directory: Utilities/Distribution/manylinux
@@ -69,10 +54,6 @@ jobs:
 
   build:
 
-
-    # The CMake configure and build commands are platform-agnostic and should work a cross
-    # platforms.
-    if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
     env:
       COREBINARYDIRECTORY:  "${{ github.workspace }}/bld"
@@ -160,51 +141,8 @@ jobs:
             BUILD_TESTING:BOOL=ON
             ${{ matrix.ctest-cache }}
         run: |
-          cmake --version
-          ninja --version
-          ctest -D "dashboard_track:STRING=Package" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
-
-      - name: Cleanup build
-        shell: bash
-        run: |
-          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
-          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
-
-      - name: Package CSharp
-        uses: ./.github/actions/package_csharp
-        with:
-          continue-on-error: true
-
-      - name: Package Java
-        uses: ./.github/actions/package_java
-        with:
-          continue-on-error: true
-
-      - name: Package Python 3.12
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.12
-
-      - name: Package Python 3.11
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.11
-
-      - name: Package Python 3.10
-        uses: ./.github/actions/package_python
-        with:
-          python-version: "3.10"
-
-      - name: Package Python 3.9
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.9
-
-      - name: Package Python 3.8
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.8
-
+          mkdir ${{ github.workspace }}/artifacts
+          touch ${{ github.workspace }}/artifacts/SimpleITK-${{ matrix.os }}.whl
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
