@@ -36,7 +36,13 @@ end
 $(if measurements then
 for i = 1,#measurements do
   if measurements[i].active then
-    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = [f = filter.GetPointer()]'
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = [ '
+    if measurements[i].label_map then
+      OUT=OUT..'lm = filter->GetOutput()'
+    else
+        OUT=OUT..'f = filter.GetPointer()'
+    end
+    OUT=OUT..' ]'
     if measurements[i].parameters then
       OUT=OUT..'('
       for inum=1,#measurements[i].parameters do
@@ -56,7 +62,7 @@ for i = 1,#measurements do
         OUT=OUT..indent..'const auto & value = '..measurements[i].itk_get..';\n'
       end
     elseif measurements[i].label_map then
-      OUT=OUT..indent..'const auto & value = '..'f->GetOutput()->GetLabelObject(label)->Get'..measurements[i].name ..'();'
+      OUT=OUT..indent..'const auto & value = '..'lm->GetLabelObject(label)->Get'..measurements[i].name ..'();\n'
     else
       OUT=OUT..indent..'const auto & value = f->Get'..measurements[i].name..'('
       if measurements[i].parameters then
