@@ -22,7 +22,7 @@ runs:
       shell: cmd
       if: runner.os == 'Windows'
       run: |
-        call  "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
         bash ${{ github.action_path }}/scripts/win_build_csharp.sh
       env:
         CSHARP_PLATFORM: x64
