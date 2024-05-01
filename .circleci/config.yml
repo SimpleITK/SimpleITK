@@ -1,7 +1,7 @@
 referenced:
   defaults: &defaults
     docker:
-     - image: cimg/python:3.8
+     - image: cimg/python:3.10
     working_directory: ~/
     resource_class: medium
   default_environment_keys:  &default_environment
@@ -113,10 +113,10 @@ jobs:
           root: /home/circleci/SimpleITK-build
           paths:
             - "*"
-  python3.8-and-test:
+  python3.10-and-test:
     <<: *defaults
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.10
     environment:
       <<: *default_environment_keys
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
@@ -150,10 +150,10 @@ jobs:
             cat ${CTEST_BINARY_DIRECTORY}/CMakeCache.txt
           when: on_fail
 
-  python3.11-and-test:
+  python3.12-and-test:
     <<: *defaults
     docker:
-     - image: cimg/python:3.11
+     - image: cimg/python:3.12
     environment:
       <<: *default_environment_keys
       CTEST_BINARY_DIRECTORY: "/home/circleci/SimpleITK-py"
@@ -252,10 +252,10 @@ workflows:
                  - gh-pages
                  - dashboard
                  - hooks
-      - python3.8-and-test:
+      - python3.10-and-test:
           requires:
             - build-and-test
-      - python3.11-and-test:
+      - python3.12-and-test:
           requires:
             - build-and-test
       - r-and-test:
