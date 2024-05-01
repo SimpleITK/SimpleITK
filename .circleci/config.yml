@@ -60,7 +60,7 @@ jobs:
     environment:
       <<: *default_environment_keys
       PARALLEL_LEVEL: 4
-      CTEST_BUILD_FLAGS: "-j 4"
+      CTEST_BUILD_FLAGS: "-j 3"
     resource_class: large
     steps:
       - checkout:
