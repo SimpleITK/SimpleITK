@@ -95,9 +95,9 @@ jobs:
               ITK_C_OPTIMIZATION_FLAGS:STRING=
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
-          - os: windows-2019
+          - os: windows-2022
             cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 16 2019"
+            cmake-generator: "Visual Studio 17 2022"
             cmake-generator-toolset: v142,host=x64
             cmake-generator-platform: x64
             ctest-cache: |
