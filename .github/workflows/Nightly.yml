@@ -5,7 +5,8 @@ on:
     # Every day at 6:11 AM UTC or 2:11 AM EST
     - cron: '11 6 * * *'
   pull_request:
-    paths: .github/workflows/Nightly.yml
+    paths:
+     - .github/workflows/Nightly.yml
   workflow_dispatch:
 
 jobs:
