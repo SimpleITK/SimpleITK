@@ -10,6 +10,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  tag-latest:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag latest
+        run: |
+          git tag -f latest
+          git push origin -f latest
   matrix-jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
