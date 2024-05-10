@@ -4,7 +4,9 @@ on:
   push:
    branches: ['master', 'release']
   pull_request:
-    paths: .github/workflows/BatchBuild.yml
+    paths:
+      - .github/workflows/BatchBuild.yml
+
   # Enable manual running of workflow
   workflow_dispatch:
 
