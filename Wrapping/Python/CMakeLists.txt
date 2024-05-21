@@ -74,21 +74,23 @@ if(NOT Python_DEBUG_LIBRARY AND MSVC)
     $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>)
 endif()
 
+
+get_property (_suffix TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX)
+if (NOT _suffix)
+  set (_suffix "${CMAKE_SHARED_MODULE_SUFFIX}")
+endif()
 if (SimpleITK_PYTHON_USE_LIMITED_API)
   # https://docs.python.org/3/c-api/stable.html
 
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::SABIModule )
   target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -DPy_LIMITED_API=0x030b0000)
-  if(NOT WIN32)
-    message(STATUS "Setting ABI3 suffix for Python module")
-    get_property (_suffix TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX)
-    if (NOT _suffix)
-      set (_suffix "${CMAKE_SHARED_MODULE_SUFFIX}")
-    endif()
-    set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOABI}${_suffix}")
-  endif()
+
+  message(STATUS "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}")
+  set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOSABI}${_suffix}")
 else()
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module )
+  message(STATUS "Setting ABI suffix for Python module to: '${Python_SOABI}${_suffix}' ")
+  set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOABI}${_suffix}")
 endif()
 
 

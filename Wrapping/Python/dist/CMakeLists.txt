@@ -16,7 +16,7 @@ Using unknown versions of pip, setuptools and/or wheel packages/" )
 
   if( SimpleITK_PYTHON_WHEEL )
     set(bdist_commands ${bdist_commands} "bdist_wheel")
-    if (SimpleITK_PYTHON_USE_USE_LIMITED_API)
+    if (SimpleITK_PYTHON_USE_LIMITED_API)
       set(bdist_commands ${bdist_commands} "--py-limited-api=cp311")
     endif()
   endif()
