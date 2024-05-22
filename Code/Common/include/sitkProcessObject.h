@@ -328,11 +328,7 @@ protected:
 
   struct EventCommand
   {
-    EventCommand(EventEnum e, Command * c)
-      : m_Event(e)
-      , m_Command(c)
-      , m_ITKTag(std::numeric_limits<unsigned long>::max())
-    {}
+    EventCommand(EventEnum e, Command * c);
     EventEnum m_Event;
     Command * m_Command;
 

@@ -30,7 +30,6 @@
 #include "sitkInterpolator.h"
 #include "sitkTransform.h"
 
-
 namespace itk
 {
 
