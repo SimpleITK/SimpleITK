@@ -43,7 +43,7 @@ class ITKLogger;
  * itk::OutputWindow. Derived instances of LoggerBase are used by an internal adaptor derived from the itk::OutputWindow
  * so that this object instances can be used in ITK.
  *
- * /sa itk::OutputWindow
+ * \sa itk::OutputWindow
  */
 class SITKCommon_EXPORT LoggerBase : public ObjectOwnedBase
 {

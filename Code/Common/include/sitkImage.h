@@ -71,7 +71,7 @@ class PimpleImageBase;
  * Image class, as copying and returning by value do not
  * unnecessarily duplicate the data.
  *
- * /sa itk::Image itk::VectorImage itk::LabelMap itk::ImageBase
+ * \sa itk::Image itk::VectorImage itk::LabelMap itk::ImageBase
  */
 class SITKCommon_EXPORT Image
 {
