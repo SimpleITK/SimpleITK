@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as simpleitk-doxygen
+FROM ubuntu:22.04 as simpleitk-doxygen
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -10,7 +10,8 @@ RUN apt-get update && \
   git \
   ninja-build \
   graphviz \
-  python \
+  python3 \
+  python-is-python3 \
   && apt-get clean
 
 RUN git clone https://github.com/doxygen/doxygen.git && \
