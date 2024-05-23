@@ -199,7 +199,7 @@ public:
    * the file can still be obtained by
    * ImageFileReader::GetDirection.
    *
-   * /sa ExtractImageFilter
+   * \sa ExtractImageFilter
    */
   SITK_RETURN_SELF_TYPE_HEADER
   SetExtractSize(const std::vector<unsigned int> & size);
@@ -211,7 +211,7 @@ public:
    *
    * Missing dimensions are treated the same as 0.
    *
-   * /sa ExtractImageFilter
+   * \sa ExtractImageFilter
    */
   SITK_RETURN_SELF_TYPE_HEADER
   SetExtractIndex(const std::vector<int> & index);
