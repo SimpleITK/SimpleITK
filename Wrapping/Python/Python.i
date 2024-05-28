@@ -19,6 +19,10 @@
 
 %begin %{
 #include "sitkPython.h"
+// Needed by SWIG, but not in Stable Python API.
+// https://github.com/swig/swig/pull/2856
+#define NOMINMAX
+#include "stdlib.h"
 %}
 
 %{

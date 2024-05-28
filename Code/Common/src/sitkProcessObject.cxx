@@ -98,6 +98,15 @@ protected:
 
 } // namespace
 
+
+
+ProcessObject::EventCommand::EventCommand(EventEnum e, Command * c)
+  : m_Event(e)
+  , m_Command(c)
+  , m_ITKTag(std::numeric_limits<unsigned long>::max())
+{}
+
+
 //----------------------------------------------------------------------------
 
 //

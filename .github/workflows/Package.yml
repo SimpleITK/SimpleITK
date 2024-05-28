@@ -203,7 +203,11 @@ jobs:
         uses: ./.github/actions/package_python
         with:
           python-version: 3.11
-
+      - name: Package Python 3.11
+        uses: ./.github/actions/package_python
+        with:
+          python-version: 3.11
+          use_limited_api: true
       - name: Package Python 3.10
         uses: ./.github/actions/package_python
         with:

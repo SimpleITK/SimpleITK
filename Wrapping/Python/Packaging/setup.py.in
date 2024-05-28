@@ -13,6 +13,15 @@ with open(os.path.join("SimpleITK", "_version.py")) as fp:
 with open('Readme.md', encoding='utf-8') as f:
     long_description = f.read()
 
+def is_cmake_true(value: str)->bool:
+    """ Check if a string value is a CMake true value. """
+    return value.upper() in ("1", "ON", "TRUE", "YES", "Y")
+
+def get_py_limited_api_arg() -> dict:
+    if is_cmake_true("@SimpleITK_PYTHON_USE_LIMITED_API@"):
+        return {"py_limited_api": True}
+    return {}
+
 class build_ext(_build_ext):
     """ Override standard command class to build an extension, to
     simply copy an existing compiled library into the packaging
@@ -42,7 +51,9 @@ setup(
     version = __version__,
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
-    ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'])],
+    ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'],
+            **get_py_limited_api_arg())
+            ],
     packages= ['SimpleITK'],
     package_data = {"SimpleITK": ["py.typed"]},
     platforms = [],

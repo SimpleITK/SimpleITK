@@ -247,9 +247,9 @@ MACRO(SWIG_ADD_MODULE name language)
     # Windows: .dll is no longer supported as a filename extension for extension modules.
     # .pyd is now the only filename extension that will be searched for.
     # </quote>
-    IF(WIN32 AND NOT CYGWIN)
+    if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
       SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".pyd")
-    ENDIF(WIN32 AND NOT CYGWIN)
+    endif()
   ENDIF ("${swig_lowercase_language}" STREQUAL "python")
   IF ("${swig_lowercase_language}" STREQUAL "ruby")
     SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
