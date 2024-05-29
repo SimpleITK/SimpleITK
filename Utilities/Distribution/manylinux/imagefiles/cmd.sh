@@ -56,9 +56,6 @@ function build_simpleitk {
     find ./ -name \*.o -delete
 }
 
-
-
-
 function build_simpleitk_python {
 
     PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
@@ -67,9 +64,10 @@ function build_simpleitk_python {
     echo ""
     echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
 
-    rm -rf ${BLD_DIR}-${PYTHON} &&
-    mkdir -p ${BLD_DIR}-${PYTHON} &&
-    cd ${BLD_DIR}-${PYTHON} &&
+    BLD_PY_DIR="${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}"
+    rm -rf  ${BLD_PY_DIR} &&
+    mkdir -p ${BLD_PY_DIR} &&
+    cd ${BLD_PY_DIR} &&
     cmake \
         -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CFLAGS}" \
         -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
@@ -78,6 +76,7 @@ function build_simpleitk_python {
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
         -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
+        -DSimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API:-OFF} \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
@@ -127,6 +126,18 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
             ${SRC_DIR}/Wrapping/Java &&
         cmake --build "${BLD_DIR}-java" --target dist &&
         find "${BLD_DIR}-java/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
+fi
+
+if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0 ]]; then
+    USE_LIMITED_API=ON
+    PYTHON=cp311-cp311
+    PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    PLATFORM=$(${PYTHON_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
+    build_simpleitk_python &&
+       ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name SimpleITK*.whl) -w ${OUT_DIR}/wheelhouse/;
+         ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
+         rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} )
+    unset USE_LIMITED_API
 fi
 
 

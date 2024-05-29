@@ -28,10 +28,7 @@ jobs:
           - os: ubuntu-latest
             dockerfile: Dockerfile-2014-x86_64
 
-    env:
-      PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312"
-      BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
-      BUILD_JAVA: 1
+
 
     steps:
       - uses: actions/checkout@v4
@@ -45,6 +42,11 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         working-directory: Utilities/Distribution/manylinux
+        env:
+          PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312"
+          BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
+          BUILD_JAVA: 1
+          BUILD_PYTHON_LIMITED_API: 1
         run: |
           echo "BUILD_CSHARP: ${BUILD_CSHARP}"
           echo "BUILD_JAVA: ${BUILD_JAVA}"
@@ -54,8 +56,9 @@ jobs:
                --env PYTHON_VERSIONS \
                --env BUILD_CSHARP \
                --env BUILD_JAVA \
-                -v "$(pwd):/work/io" \
-                -t simpleitk_manylinux
+               --env BUILD_PYTHON_LIMITED_API \
+               -v "$(pwd):/work/io" \
+               -t simpleitk_manylinux
       - name: ls
         shell: bash
         working-directory: Utilities/Distribution/manylinux
