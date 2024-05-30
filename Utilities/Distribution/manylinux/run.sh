@@ -22,14 +22,21 @@ elif [ "$proc" == "aarch64" ] ; then
 fi
 
 
-if [ -n "${BUILD_CSHARP}" ]; then
-    extra_args="$extra_args --env BUILD_CSHARP"
-fi
+# a function to check if a variable is set then append it to the extra_args
+function check_var_append_to_extra_args {
+  if [ -n "$1" ]; then
+    echo "Forwarding $1 to docker container"
+    extra_args="$extra_args --env '$1'"
+  fi
+}
 
+# a bash array of variables to check and append to extra_args
+check_vars=( "BUILD_CSHARP" "BUILD_JAVA" "PYTHON_VERSIONS" "BUILD_PYTHON_LIMITED_API")
+for var in "${check_vars[@]}"; do
+    check_var_append_to_extra_args $var
+done
 
-if [ -n "${BUILD_JAVA}" ]; then
-    extra_args="$extra_args --env BUILD_JAVA"
-fi
+echo "extra_args: ${extra_args}"
 
 
 for DF in ${DOCKERFILE}; do
@@ -39,7 +46,6 @@ for DF in ${DOCKERFILE}; do
     docker run -i --rm \
            --user "$(id -u):$(id -g)" \
            ${extra_args} \
-           ${PYTHON_VERSIONS:+--env PYTHON_VERSIONS="${PYTHON_VERSIONS}"} \
            -v "$(pwd):/work/io" \
            -t ${image_name}
 
