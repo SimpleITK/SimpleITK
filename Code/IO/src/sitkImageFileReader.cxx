@@ -352,7 +352,7 @@ ImageFileReader::ExecuteInternal(itk::ImageIOBase * imageio)
   using Reader = itk::ImageFileReader<ImageType>;
 
   using InternalImageType =
-    typename ImageType::template Rebind<typename ImageType::PixelType, SITK_IO_INPUT_MAX_DIMENSION>::Type;
+    typename ImageType::template RebindImageType<typename ImageType::PixelType, SITK_IO_INPUT_MAX_DIMENSION>;
   using InternalReader = itk::ImageFileReader<InternalImageType>;
 
   // if the InstantiatedToken is correctly implemented this should

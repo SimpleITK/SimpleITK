@@ -5,7 +5,7 @@
   "doc" : "",
   "number_of_inputs" : 1,
   "pixel_types" : "typelist2::append<BasicPixelIDTypeList, VectorPixelIDTypeList>::type",
-  "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
+  "output_image_type" : "typename InputImageType::template RebindImageType<float>",
   "members" : [
     {
       "name" : "Sigma",
