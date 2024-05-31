@@ -6,6 +6,7 @@ SPHINXOPTS    = -aE
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
+SOURCE_DATE_EPOCH = $(shell git log -1 --format=%ct)
 
 # Put it first so that "make" without argument is like "make help".
 help:
