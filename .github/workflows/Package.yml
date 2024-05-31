@@ -43,7 +43,7 @@ jobs:
         shell: bash
         working-directory: Utilities/Distribution/manylinux
         env:
-          PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312"
+          PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310"
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
           BUILD_JAVA: 1
           BUILD_PYTHON_LIMITED_API: 1
@@ -197,15 +197,6 @@ jobs:
         with:
           continue-on-error: true
 
-      - name: Package Python 3.12
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.12
-
-      - name: Package Python 3.11
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.11
       - name: Package Python 3.11
         uses: ./.github/actions/package_python
         with:
