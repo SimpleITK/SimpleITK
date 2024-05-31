@@ -159,7 +159,7 @@ ExtractImageFilter::ExecuteInternal(const TImageType * image1,
 
   using InputImageType = TImageType;
   using OutputImageType =
-    typename InputImageType::template Rebind<typename InputImageType::PixelType, OutputDimension>::Type;
+    typename InputImageType::template RebindImageType<typename InputImageType::PixelType, OutputDimension>;
   using FilterType = itk::ExtractImageFilter<InputImageType, OutputImageType>;
 
   // Set up the ITK filter
