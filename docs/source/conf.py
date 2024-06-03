@@ -21,11 +21,16 @@ sys.path.insert(0, os.path.abspath('../../Examples'))
 import cmake
 import subprocess
 import os.path
+import os
+import time
 
 # -- Project information -----------------------------------------------------
 
 project = u'SimpleITK'
-copyright = u'2020, NumFOCUS'
+# get "SOURCE_DATE_EPOCH" environment variable, extract year from Unix epoch time
+# or use the current year, then use it as the year of the copyright
+copyright = f'{time.strftime("%Y", time.gmtime(int(os.environ.get("SOURCE_DATE_EPOCH", time.time()))))} NumFOCUS'
+
 author = u'Insight Software Consortium'
 
 # The short X.Y version
