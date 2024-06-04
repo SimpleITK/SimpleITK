@@ -533,7 +533,7 @@ TEST(IO, ImageSeriesReader_Spacing)
     seriesDir / "000001.mha",
     seriesDir / "000002.mha"
   };
-  auto image = sitk::Image(10, 10, seriesPaths.size(), sitk::sitkUInt8);
+  auto image = sitk::Image(10, 10, (unsigned int)seriesPaths.size(), sitk::sitkUInt8);
   image.SetSpacing({ 2.0, 3.0, 1.12999 });
 
   for (size_t i = 0; i < seriesPaths.size(); ++i)
@@ -551,7 +551,12 @@ TEST(IO, ImageSeriesReader_Spacing)
     sitk::WriteImage(slice, seriesPaths[i].string());
   };
 
-  reader.SetFileNames(std::vector<std::string>{ seriesPaths.begin(), seriesPaths.end() });
+  std::vector<std::string> filenames;
+  for (auto fn: seriesPaths)
+  {
+    filenames.push_back(fn.string());
+  }
+  reader.SetFileNames(filenames);
 
   MockLogger logger;
   logger.SetAsGlobalITKLogger();
