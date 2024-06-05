@@ -201,6 +201,31 @@ TEST(IO, ImageFileWriter)
   EXPECT_TRUE(std::find(ios.begin(), ios.end(), "GDCMImageIO") != ios.end());
 }
 
+TEST(IO, ReadWrite_UTF8)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image img = sitk::Image(10, 10, sitk::sitkUInt16);
+
+  std::filesystem::path dirname = dataFinder.GetOutputDirectory();
+  dirname /= u8"名前がUTF8であるファイル";
+  // Create directory with UTF8 name
+  std::filesystem::create_directory(dirname);
+
+
+
+  const std::string filename = (dirname / "test.mha").string();
+
+  std::cout << "Writing to " << filename << "\n";
+
+  sitk::WriteImage(img, filename);
+  sitk::Image out = sitk::ReadImage(filename);
+
+  EXPECT_EQ(img.GetPixelID(), out.GetPixelID());
+  EXPECT_EQ(sitk::Hash(img), sitk::Hash(out));
+
+}
+
 TEST(IO, ImageFileWriter_Compression)
 {
   namespace sitk = itk::simple;
