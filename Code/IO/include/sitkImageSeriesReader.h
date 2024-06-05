@@ -169,6 +169,12 @@ public:
   const std::vector<PathType> &
   GetFileNames() const;
 
+  /** Set the relative threshold for issuing warnings about non-uniform sampling. */
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetSpacingWarningRelThreshold(double spacingWarningRelThreshold);
+  double
+  GetSpacingWarningRelThreshold() const;
+
   Image
   Execute() override;
 
@@ -234,12 +240,14 @@ private:
   std::function<std::string(int, const std::string &)> m_pfGetMetaData;
 
   // Holder of process object for active measurements
-  itk::ProcessObject * m_Filter;
+  itk::ProcessObject * m_Filter{nullptr};
 
 
   std::vector<PathType> m_FileNames;
 
-  bool m_MetaDataDictionaryArrayUpdate;
+  double m_SpacingWarningRelThreshold{1e-4};
+
+  bool m_MetaDataDictionaryArrayUpdate{false};
 };
 
 /**

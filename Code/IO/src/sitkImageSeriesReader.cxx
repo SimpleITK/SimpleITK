@@ -76,9 +76,20 @@ ImageSeriesReader::GetGDCMSeriesIDs(const PathType & directory, bool useSeriesDe
   return gdcmSeries->GetSeriesUIDs();
 }
 
+double
+ImageSeriesReader::GetSpacingWarningRelThreshold() const
+{
+  return m_SpacingWarningRelThreshold;
+}
+
+ImageSeriesReader &
+ImageSeriesReader::SetSpacingWarningRelThreshold(double spacingWarningRelThreshold)
+{
+  m_SpacingWarningRelThreshold = spacingWarningRelThreshold;
+  return *this;
+}
+
 ImageSeriesReader::ImageSeriesReader()
-  : m_Filter(nullptr)
-  , m_MetaDataDictionaryArrayUpdate(false)
 {
 
   // list of pixel types supported
@@ -195,6 +206,7 @@ ImageSeriesReader::ExecuteInternal(itk::ImageIOBase * imageio)
   typename Reader::Pointer reader = Reader::New();
   reader->SetImageIO(imageio);
   reader->SetFileNames(std::vector<std::string>(this->m_FileNames.begin(), this->m_FileNames.end()));
+  reader->SetSpacingWarningRelThreshold(m_SpacingWarningRelThreshold);
   // save some computation by not updating this unneeded data-structure
   reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
