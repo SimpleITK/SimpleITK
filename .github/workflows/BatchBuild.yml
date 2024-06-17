@@ -134,10 +134,10 @@ jobs:
               WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=ON
 
-          - os: macos-11
+          - os: macos-12
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
-            xcode-version: 12.5.1
+            xcode-version: 13.1
             ctest-cache: |
 
     steps:
