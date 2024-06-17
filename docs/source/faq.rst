@@ -319,6 +319,37 @@ frequently seem to work with the Enthought Canopy Python
 distribution. However, we recommend compiling SimpleITK
 explicitly against this Python distribution to ensure compatibility.
 
+How do I read an image with a special character in the filename?
+~~~~~~~~~~~~~~~~
+
+Special characters are non-ANSI characters, which require a non-ASCII encoding for representation. Unicode is the
+modern standard with UTF-8 being the most common. The underlying ITK API calls uses bytes to represent the filename which
+is compatible with UTF-8. This works on modern POSIX and MacOS systems. However, on Windows, the default encoding is
+an alternative 8-bit encoding and wide UTF-16 is used to represent Unicode code points.
+
+The Windows Operating Systems since about 2020 can be configured to use UTF-8 as the default encoding. This setting
+can be found under "All Settings -> Time & Language -> Language -> "Administrative Language Settings" and the option
+"Beta: Use Unicode UTF-8 for worldwide language support". However, this may change in the future and may have unintended
+consequences for other languages.
+
+An alternative, is to set the character locale to UTF-8 in the Python script. This can be done with the following
+command:
+
+.. code-block :: python
+
+    import locale
+    locale.setlocale( locale.LC_ALL, "en_US.UTF-8" )
+
+
+There are related Python Enhancement Proposals (PEP) related to encodings:
+ * `PEP 528 <https://www.python.org/dev/peps/pep-0528/>`_
+ * `PEP 529 <https://www.python.org/dev/peps/pep-0529/>`_.
+ * `PEP 540 <https://www.python.org/dev/peps/pep-0540/>`_.
+ * `PEP 686 <https://www.python.org/dev/peps/pep-0686/>`_.
+
+
+https://docs.python.org/3/using/windows.html#utf-8-mode
+
 Tcl
 ---
 

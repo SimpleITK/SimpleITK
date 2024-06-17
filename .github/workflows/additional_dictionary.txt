@@ -1883,6 +1883,7 @@ seriesIDs
 setdefault
 setf
 setitem
+setlocale
 setstate
 sexualized
 sgi
