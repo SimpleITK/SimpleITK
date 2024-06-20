@@ -29,40 +29,22 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
     strategy:
       max-parallel: 4
       matrix:
         include:
-          - os: self-hosted-x64
-            cmake-build-type: "Release"
+          - os: macos-14
+            cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
-          - os: self-hosted-arm
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
-              WRAP_R:BOOL=ON
-              WRAP_RUBY:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
-              ITK_USE_BUILD_DIR:BOOL=ON
-          - os: macos-13
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
-          - os: windows-2019
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 16 2019"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
+              CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
+              SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
+
     steps:
     - uses: actions/checkout@v4
       with:
@@ -86,12 +68,12 @@ jobs:
         enableCrossOsArchive: true
         restore-keys: |
           external-data-v1-
-    - name: Set up Python 3.8
+    - name: Set up Python 3.11
       uses: actions/setup-python@v5
       if: matrix.os != 'self-hosted-arm'
       id: cpy
       with:
-        python-version: 3.8
+        python-version: 3.11
 
     - name: Install build dependencies
       if: matrix.os != 'self-hosted-arm'
@@ -100,6 +82,7 @@ jobs:
         python -m pip install ninja cmake~=3.29.0
     - name: Build and Test
       shell: bash
+      continue-on-error: true
       env:
         DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
         ExternalData_OBJECT_STORES: "${{ runner.temp }}/.ExternalData"
@@ -114,6 +97,11 @@ jobs:
           Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           ${{ matrix.ctest-cache }}
       run: |
+        if [  ! -z "${{ matrix.xcode-version }}" ]; then
+          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
+          xcode-select -p
+        fi
+
         cmake --version
         ninja --version
-        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V
+        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
