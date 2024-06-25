@@ -21,13 +21,24 @@
     {
       "name" : "SizeGreatestPrimeFactor",
       "type" : "int",
-      "default" : "5",
+      "default" : "itk::simple::FFTPadImageFilter::DefaultSizeGreatestPrimeFactor()",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the greatest prime factor allowed on the size of the padded image. The filter increase the size of the image to reach a size with the greatest prime factor smaller or equal to the specified value. The default value is 13, which is the greatest prime number for which the FFT are precomputed in FFTW, and thus gives very good performance. A greatest prime factor of 2 produce a size which is a power of 2, and thus is suitable for vnl base fft filters. A greatest prime factor of 1 or less - typically 0 - disable the extra padding.",
+      "detaileddescriptionSet" : "Set/Get the greatest prime factor allowed on the size of the padded image. The filter increase the size of the image to reach a size with the greatest prime factor smaller or equal to the specified value. The default value is 5 for VNL, which is the greatest prime number for which the FFT are precomputed in FFTW, and thus gives very good performance. A greatest prime factor of 2 produce a size which is a power of 2, and thus is suitable for vnl base fft filters. A greatest prime factor of 1 or less - typically 0 - disable the extra padding.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the greatest prime factor allowed on the size of the padded image. The filter increase the size of the image to reach a size with the greatest prime factor smaller or equal to the specified value. The default value is 13, which is the greatest prime number for which the FFT are precomputed in FFTW, and thus gives very good performance. A greatest prime factor of 2 produce a size which is a power of 2, and thus is suitable for vnl base fft filters. A greatest prime factor of 1 or less - typically 0 - disable the extra padding."
+      "detaileddescriptionGet" : "Set/Get the greatest prime factor allowed on the size of the padded image. The filter increase the size of the image to reach a size with the greatest prime factor smaller or equal to the specified value. The default value is 5 for VNL, which is the greatest prime number for which the FFT are precomputed in FFTW, and thus gives very good performance. A greatest prime factor of 2 produce a size which is a power of 2, and thus is suitable for vnl base fft filters. A greatest prime factor of 1 or less - typically 0 - disable the extra padding."
     }
   ],
+  "custom_methods" : [
+    {
+      "name" : "DefaultSizeGreatestPrimeFactor",
+      "doc" : "The largest prime factor supported by underlying FFT implementation (FFTW or VNL).",
+      "static" : true,
+      "return_type" : "int",
+      "parameters" : [
+      ],
+      "body" : "using RealImageType = itk::Image<float, 2>;\n  return itk::FFTPadImageFilter<RealImageType>::New()->GetSizeGreatestPrimeFactor();"
+    }
+    ],
   "tests" : [
     {
       "tag" : "defaults",
