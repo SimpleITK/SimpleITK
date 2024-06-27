@@ -5,7 +5,11 @@ for i=1,#custom_methods do
   if custom_methods[i].doc then
     OUT=OUT..'      /** '..custom_methods[i].doc..' */\n'
   end
-  OUT=OUT..'      '..custom_methods[i].return_type..' '..custom_methods[i].name..'('
+  OUT=OUT..'      '
+  if custom_methods[i].static then
+    OUT=OUT..'static '
+  end
+  OUT=OUT..custom_methods[i].return_type..' '..custom_methods[i].name..'('
   if custom_methods[i].parameters then
     for pnum=1,#custom_methods[i].parameters do
       if  pnum > 1 then
