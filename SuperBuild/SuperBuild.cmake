@@ -128,7 +128,7 @@ sitk_legacy_naming(SimpleITK_GIT_PROTOCOL)
 # SimpleITK options
 #------------------------------------------------------------------------------
 
-option( BUILD_EXAMPLES "Enable Building of the SimpleITK Examples as a separate project." ON )
+option( BUILD_EXAMPLES "Enable Building of the SimpleITK Examples as a separate project." OFF )
 
 # Set a default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
