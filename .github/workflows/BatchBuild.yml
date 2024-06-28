@@ -28,6 +28,38 @@ jobs:
       matrix:
         include:
 
+          - os: windows-2022
+            cmake-build-type: "MinSizeRel"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator-toolset: v143,host=x64
+            cmake-generator-platform: x64
+            ctest-cache: |
+              SimpleITK_USE_ELASTIX:BOOL=ON
+              BUILD_EXAMPLES:BOOL=ON
+              CXXFLAGS:STRING= /wd4251 /MP
+
+          - os: windows-2022
+            cmake-build-type: "MinSizeRel"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator-toolset: v143,host=x64
+            cmake-generator-platform: x64
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
+              CXXFLAGS:STRING= /wd4251 /MP
+              BUILD_SHARED_LIBS:BOOL=ON
+
+          - os: windows-2022
+            cmake-build-type: "Release"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator-toolset: v142,host=x64
+            cmake-generator-platform: x64
+            ctest-cache: |
+              WRAP_CSHARP:BOOL=ON
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              ITK_USE_BUILD_DIR:BOOL=ON
+              CXXFLAGS:STRING= /wd4251 /MP
+
           - os: self-hosted-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -69,46 +101,6 @@ jobs:
             CC: "gcc-12"
             ctest-cache: |
               WRAP_DEFAULT:BOOL=OFF
-
-          - os: windows-2022
-            cmake-build-type: "MinSizeRel"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v143,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              SimpleITK_USE_ELASTIX:BOOL=ON
-              BUILD_EXAMPLES:BOOL=ON
-              CXXFLAGS:STRING= /wd4251 /MP
-
-          - os: windows-2022
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v143,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              CXXFLAGS:STRING= /wd4251 /MP
-              BUILD_SHARED_LIBS:BOOL=ON
-
-          - os: windows-2022
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v143,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-
-          - os: windows-2022
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v142,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
-              WRAP_PYTHON:BOOL=ON
-              CXXFLAGS:STRING= /wd4251 /MP
 
           - os: macos-13
             cmake-build-type: "Release"
