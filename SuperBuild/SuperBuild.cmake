@@ -3,7 +3,7 @@
 #-----------------------------------------------------------------------------
 set(BUILDNAME "NoBuldNameGiven")
 set(SITE      "NoSiteGiven")
-set(BUILD_TESTING_DEFAULT OFF)
+set(BUILD_TESTING_DEFAULT ON)
 option( BUILD_TESTING "Turn on Testing for SimpleITK" ${BUILD_TESTING_DEFAULT} )
 
 configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
