@@ -10,8 +10,8 @@ referenced:
       CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
       CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
       ROOT_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
-      CTEST_BUILD_FLAGS: "-j 1"
-      CTEST_CONFIGURATION_TYPE: "MinSizeRel"
+      CTEST_BUILD_FLAGS: "-j 3"
+      CTEST_CONFIGURATION_TYPE: "Debug"
       CTEST_OUTPUT_ON_FAILURE: 1
       ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
       PARALLEL_LEVEL: 2
