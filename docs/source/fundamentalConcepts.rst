@@ -302,6 +302,80 @@ This is due to:
    common error, which is readily addressed by invoking the transformation's
    `GetInverse` method.
 
+Resampling, registration and the Transformation Direction
+=========================================================
+
+For an overview of the registration framework please read :ref:`this page <lbl_registration_overview>`.
+
+When performing registration the goal is to obtain a transformation that maps points from
+one coordinate system to the other. The most common step after obtaining this transformation
+is to resample (warp) one image onto the other image's grid so that they are overlaid onto
+each other, combining the information from both images to gain insight into the underlying condition.
+For example, registering a patient's MR image with their CT. In this case the goal is to combine the high fidelity
+soft tissue imaging abilities of MR with the high fidelity bone imaging ability of CT, creating a single image
+where both soft tissue and bone are visible with fine details. As a first step we need to estimate the transformation
+between the two coordinate systems (register them), as shown in :ref:`the figure below <forward_transform>`.
+
+
+.. _forward_transform:
+.. figure:: ../images/forward_transform.svg
+   :alt: forward mapping of points.
+
+
+   On the left we have an MR and on the right a CT with different origins, sizes and
+   spacings. Given a transformation it maps points from one coordinate system to the
+   other. In the context of registration, corresponding points should map onto each
+   other as shown here.
+
+Let us assume we know the transformation which maps points from the MR to the CT
+coordinate system and we want to map the MR intensities onto the CT
+image grid using this transformation. We iterate over the MR image grid and map
+these points and associated intensities to the CT coordinates system using the known transformation.
+This is called a **forward mapping**. Unfortunately, this approach is not readily usable for
+image resampling, as illustrated in the :ref:`the following figure <forward_mapping>`.
+
+.. _forward_mapping:
+.. figure:: ../images/forward_mapping.svg
+   :alt: forward mapping of pixels.
+
+   Forward mapping of MR pixels onto the CT coordinate system. Iterate over all the MR pixel locations and map
+   them to the CT coordinate system. Notice that after this mapping the MR grid points and
+   associated intensity values do not fall at the centers of the CT image grid pixels. The MR intensity values
+   at the CT image grid point locations need to be computed from the mapped MR intensities at non-grid locations.
+   What is the MR intensity value for the shaded CT pixel grid location? As no MR point was mapped onto this pixel location, this is not readily
+   clear. Also, what value should one use when multiple MR grid points are mapped onto the same CT pixel location? Resolving
+   these issues requires a non-negligible computational effort. For a CT pixel location to which no MR grid point was mapped
+   one can potentially use nearby mapped MR grid points to estimate the intensity value. Note that this requires a
+   quantitative definition of *nearby* and an efficient way to identify the mapped "nearby" MR grid points once we have this definition.
+
+A straightforward solution to this issue is to use **backward mapping**. That is, use the inverse of the
+transformation which maps from the MR coordinate system to the CT coordinate system. Instead of mapping the MR grid
+locations and intensities to the CT coordinate system followed by estimating the MR intensity values at the CT grid points,
+map the CT grid points to the MR and estimate the MR intensity at these none MR-grid locations
+using interpolation of the nearby MR grid locations as illustrated in the :ref:`the figure below <backward_mapping>`.
+
+.. _backward_mapping:
+.. figure:: ../images/backward_mapping.svg
+   :alt: backward mapping of pixels.
+
+   Backward mapping of CT grid points onto the MR coordinate system enables computationally efficient mapping of
+   MR intensity values onto the CT image grid via interpolation.
+
+
+Consequentially, in ITK/SimpleITK:
+   1. Resampling uses **backward mapping**.
+   2. When the intent of registration is to overlay the two images, select the image to be resampled
+      as the `moving_image` (in the example above the MR image would be set as the `moving_image`).
+   3. When the intent of registration is to transfer a segmentation represented as a label image, select the
+      image modality associated with the label image as the `moving_image` and afterwards resample the label
+      image using the transformation obtained via the registration.
+   4. When the intent of registration is to transfer a segmentation represented by a sparse point set (e.g. contours),
+      select the image modality associated with the segmentation as the `fixed_image` and map the points using the
+      transformation obtained via registration (i.e. `tx.TransformPoint(p)`).
+
+Note that one can always invert a transformation, so selection of which image to use as the `moving_image` is often more of
+a convenience than a requirement (in some cases, `DisplacementFieldTransform`, computing the inverse transformation is
+computationally burdensome).
 
 Additional Resources
 =====================
