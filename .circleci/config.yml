@@ -17,7 +17,6 @@ referenced:
       PARALLEL_LEVEL: 2
       DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
       ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
-      CCACHE_NODIRECT: 1
   cc-dependencies: &cc-dependencies
     run:
       name: Dependencies
@@ -38,9 +37,9 @@ referenced:
   restore-ccache-step: &restore-ccache-step
     restore_cache:
       keys:
-        - ccache-{{ arch }}-{{ .Branch }}
-        - ccache-{{ arch }}-master
-        - ccache-{{ arch }}
+        - disable-ccache-{{ arch }}-{{ .Branch }}
+        - disable-ccache-{{ arch }}-master
+        - disable-ccache-{{ arch }}
   clone-dashboard-step: &clone-dashboard-step
      run:
        name: Cloning dashboard branch
@@ -77,6 +76,7 @@ jobs:
             mkdir -p /home/circleci/.ccache
             ccache --show-stats
             ccache --zero-stats
+            ccache -o direct_mode=false
             ccache --max-size=2.0G
             ccache --show-config
       - run:
@@ -92,7 +92,7 @@ jobs:
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=OFF
 
               WRAP_DEFAULT:BOOL=OFF"
-            ctest -V -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
+            ctest -V -D dashboard_no_test:BOOL=ON -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
       - run:
           name: ccache stats
           when: always
@@ -208,7 +208,8 @@ jobs:
             export CTEST_CACHE="
                         CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
-                        BUILD_EXAMPLES:BOOL=ON"
+                        BUILD_EXAMPLES:BOOL=ON
+            "
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/R" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
   java-and-test:
     <<: *defaults
@@ -239,7 +240,8 @@ jobs:
             export CTEST_CACHE="
                         CMAKE_PREFIX_PATH:PATH=${ROOT_BINARY_DIRECTORY}
                         SWIG_EXECUTABLE:PATH=${ROOT_BINARY_DIRECTORY}/Swig/bin/swig
-                        BUILD_EXAMPLES:BOOL=ON"
+                        BUILD_EXAMPLES:BOOL=ON
+            "
             ctest -V -Ddashboard_source_config_dir:PATH="Wrapping/Java" -S "${CTEST_SOURCE_DIRECTORY}/.circleci/circleci.cmake"
 workflows:
   version: 2
