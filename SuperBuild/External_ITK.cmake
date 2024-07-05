@@ -101,7 +101,9 @@ if (ITK_USE_BUILD_DIR)
   set( ITK_INSTALL_COMMAND INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Skipping install step.")
 endif()
 
-list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
+if(ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG)
+  list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
+endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
 
