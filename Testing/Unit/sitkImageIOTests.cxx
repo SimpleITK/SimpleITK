@@ -520,7 +520,7 @@ TEST(IO, ImageSeriesReader_Spacing)
   sitk::ImageSeriesReader reader;
 
   // create DICOM series with spacing that is greater than the default threshold
-  const std::filesystem::path seriesDir = std::filesystem::path(dataFinder.GetOutputDirectory()) / "SeriesSpacing";
+  const sitk::PathType seriesDir = dataFinder.GetOutputDirectory() + "/SeriesSpacing";
 
   if (std::filesystem::exists(seriesDir))
   {
@@ -528,10 +528,10 @@ TEST(IO, ImageSeriesReader_Spacing)
   }
   std::filesystem::create_directories(seriesDir);
 
-  const std::vector<std::filesystem::path> seriesPaths{
-    seriesDir / "000000.mha",
-    seriesDir / "000001.mha",
-    seriesDir / "000002.mha"
+  const std::vector<sitk::PathType> seriesPaths{
+    seriesDir + "/000000.mha",
+    seriesDir + "/000001.mha",
+    seriesDir + "/000002.mha"
   };
   auto image = sitk::Image(10, 10, (unsigned int)seriesPaths.size(), sitk::sitkUInt8);
   image.SetSpacing({ 2.0, 3.0, 1.12999 });
@@ -548,13 +548,13 @@ TEST(IO, ImageSeriesReader_Spacing)
       slice.SetOrigin(origin);
     }
 
-    sitk::WriteImage(slice, seriesPaths[i].string());
+    sitk::WriteImage(slice, seriesPaths[i]);
   };
 
   std::vector<std::string> filenames;
   for (auto fn: seriesPaths)
   {
-    filenames.push_back(fn.string());
+    filenames.push_back(fn);
   }
   reader.SetFileNames(filenames);
 
