@@ -25,7 +25,9 @@
 #include <sitkAdditiveGaussianNoiseImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkRegionOfInterestImageFilter.h>
-#include <filesystem>
+
+#include <itksys/SystemTools.hxx>
+
 
 TEST(IO, ImageFileReader)
 {
@@ -522,11 +524,11 @@ TEST(IO, ImageSeriesReader_Spacing)
   // create DICOM series with spacing that is greater than the default threshold
   const sitk::PathType seriesDir = dataFinder.GetOutputDirectory() + "/SeriesSpacing";
 
-  if (std::filesystem::exists(seriesDir))
+  if (itksys::SystemTools::FileExists(seriesDir))
   {
-    std::filesystem::remove_all(seriesDir);
+    itksys::SystemTools::RemoveADirectory(seriesDir);
   }
-  std::filesystem::create_directories(seriesDir);
+  itksys::SystemTools::MakeDirectory(seriesDir);
 
   const std::vector<sitk::PathType> seriesPaths{
     seriesDir + "/000000.mha",
