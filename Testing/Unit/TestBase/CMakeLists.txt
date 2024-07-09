@@ -41,7 +41,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
 
 
 #
-# Tests for Compare dirver CXX tests
+# Tests for Compare driver CXX tests
 #
 sitk_add_test(NAME CompareDriver1
   COMMAND
