@@ -17,8 +17,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Tag latest
         run: |
-          git tag -f latest
-          git push origin -f latest
+          # set foo variable if the latest tag is at the same hash as master
+          git fetch --tags
+          if [ "$(git rev-parse master)" = "$(git rev-parse latest)" ]; then
+              echo "### Latest is uptodate." >> $GITHUB_STEP_SUMMARY
+          else
+              echo "updating latest tag"
+              git tag -f latest
+              git push origin latest
+
+              gh workflow run Package --ref latest
+
+              echo "### Updated latest tag and triggered Package workflow" >> $GITHUB_STEP_SUMMARY
+          fi
   matrix-jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
