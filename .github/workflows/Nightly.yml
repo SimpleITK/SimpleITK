@@ -17,8 +17,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Tag latest
         run: |
-          git tag -f latest
-          git push origin -f latest
+          # set foo variable if the latest tag is at the same hash as master
+          git fetch --tags
+          if [ "$(git rev-parse master)" = "$(git rev-parse latest)" ]; then
+              echo "### Latest is uptodate." >> $GITHUB_STEP_SUMMARY
+          else
+              echo "updating latest tag"
+              git tag -f latest
+              git push origin latest
+
+              gh workflow run Package --ref latest
+
+              echo "### Updated latest tag and triggered Package workflow" >> $GITHUB_STEP_SUMMARY
+          fi
   matrix-jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
@@ -92,7 +103,7 @@ jobs:
         run: |
           cmake --version
           gcov --version
-          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -- \
+          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V \
             ${{ matrix.ctest-extra-args }}
 
   itk-nightly:
@@ -106,7 +117,7 @@ jobs:
           - os: coverage-x64
             name: itk-valgrind
             cmake-build-type: Debug
-            ctest-test-timeout: 3600
+            ctest-test-timeout: 5000
             timeout: 600
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-O0
@@ -188,6 +199,4 @@ jobs:
 
           cat dashboard.cmake
 
-          ctest -V -S dashboard.cmake -- ${{ matrix.ctest-extra-args }}
-
-          df -h
+          ctest -V -S dashboard.cmake {{ matrix.ctest-extra-args }}
