@@ -117,7 +117,7 @@ jobs:
           - os: coverage-x64
             name: itk-valgrind
             cmake-build-type: Debug
-            ctest-test-timeout: 3600
+            ctest-test-timeout: 5000
             timeout: 600
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-O0
@@ -200,5 +200,3 @@ jobs:
           cat dashboard.cmake
 
           ctest -V -S dashboard.cmake {{ matrix.ctest-extra-args }}
-
-          df -h
