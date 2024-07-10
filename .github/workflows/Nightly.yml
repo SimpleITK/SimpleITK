@@ -103,7 +103,7 @@ jobs:
         run: |
           cmake --version
           gcov --version
-          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -- \
+          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V \
             ${{ matrix.ctest-extra-args }}
 
   itk-nightly:
@@ -199,6 +199,6 @@ jobs:
 
           cat dashboard.cmake
 
-          ctest -V -S dashboard.cmake -- ${{ matrix.ctest-extra-args }}
+          ctest -V -S dashboard.cmake {{ matrix.ctest-extra-args }}
 
           df -h
