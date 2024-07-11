@@ -227,7 +227,7 @@ jobs:
             ${{ github.workspace }}/artifacts/*.gz
 
   publish:
-    if: github.ref == 'refs/tags/latest'
+    if: github.ref_name == 'latest' || startsWith(github.ref_name, 'v')
     needs:
       - build
       - package-docker
@@ -277,14 +277,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete ${{ steps.tag.outputs.name }} --yes || true
+          if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
+            gh release delete ${{ steps.tag.outputs.name }} --yes || true
+          fi
+
+          if [[  "${{ steps.tag.outputs.name }}" == "latest" ||
+              "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)?$ ]]; then
+            create_args="--prerelease"
+          fi
+
           gh release create ${{ steps.tag.outputs.name }} \
             --target ${{ github.sha }} \
             --verify-tag \
             --draft \
             --generate-notes \
-            --prerelease \
+            $create_args \
             --notes-file notes.txt \
             --title "Release ${{ github.ref_name }}"
           gh release upload ${{ steps.tag.outputs.name }} $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" -o -name "*.zip" -o -name "*.gz" )
-          gh release edit ${{ steps.tag.outputs.name }} --draft=false
+
+          if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
+            gh release edit ${{ steps.tag.outputs.name }} --draft=false
+          fi
