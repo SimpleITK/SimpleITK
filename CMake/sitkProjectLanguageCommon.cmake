@@ -1,5 +1,6 @@
 
 foreach(p
+        CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
     )
   if(POLICY ${p})
     cmake_policy(SET ${p} NEW)
