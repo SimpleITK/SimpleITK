@@ -201,4 +201,4 @@ jobs:
 
           cat dashboard.cmake
 
-          ctest -V -S dashboard.cmake {{ matrix.ctest-extra-args }}
+          ctest -V -S dashboard.cmake ${{ matrix.ctest-extra-args }}
