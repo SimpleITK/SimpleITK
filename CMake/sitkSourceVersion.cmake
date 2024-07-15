@@ -49,8 +49,10 @@ if(_GIT_VERSION_HASH MATCHES "[a-fA-F0-9]+")
   string(SUBSTRING "${_GIT_VERSION_HASH}" 0 5 _GIT_VERSION_HASH)
 endif()
 
-# find the closest anotated tag with the v prefix for version
-git_describe(_GIT_TAG "--match=v*")
+# Find the closest annotated tag with the v prefix for version.
+# Consider all tags starting with v, to accommodate GitHub Actions way in which annotated tags are clobbered. See
+# actions/checkout#290 for details.
+git_describe(_GIT_TAG "--match=v*" "--tags")
 
 git_commits_since("${PROJECT_SOURCE_DIR}/Version.cmake" _GIT_VERSION_COUNT)
 
