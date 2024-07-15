@@ -168,6 +168,12 @@ jobs:
           cmake --version
           ninja --version
           ctest -D "dashboard_track:STRING=Package" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
+      - name: Cat Configure Output
+        if: always()
+        run: |
+          cat "${{ env.COREBINARYDIRECTORY }}/SimpleITK-build/SimpleITKConfigVersion.cmake" "${{ env.COREBINARYDIRECTORY }}/SimpleITK-build/sitkSourceVersionVars.cmake"
+          cat "${{ env.COREBINARYDIRECTORY }}/SimpleITK-build/CMakeOutput.log"
+          true
 
       - name: Generate Source and Data Archives
         shell: bash
