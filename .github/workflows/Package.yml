@@ -149,7 +149,11 @@ jobs:
             sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
             xcode-select -p
           fi
-
+      - name: Git Status
+        run: |
+          git status
+          git log -n 1
+          git describe
       - name: Build and Test
         shell: bash
         env:
