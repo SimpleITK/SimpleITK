@@ -291,14 +291,11 @@ jobs:
           \`\`\`pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
           " >notes.txt
 
-          for f in $( find ${{ steps.download.outputs.download-path }} -type f  )
-          do
+          ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
+            --hash md5 --format gh \
+            $( find ${{ steps.download.outputs.download-path }} -type f  -name \*.whl \
+          >> notes.txt
 
-            if [[ $f == *.whl ]]; then
-              md5=$(md5sum  $f | awk '{ print $1 }')
-              echo  -n "<a href=\"https://github.com/SimpleITK/SimpleITK/releases/download/${{ steps.tag.outputs.name }}/$(basename $f)#${md5}\"></a>" >> notes.txt
-            fi
-          done
           echo "== notes.txt =="
           cat notes.txt
 
