@@ -44,12 +44,16 @@ if(LUA_EXECUTABLE)
   endif()
 endif()
 
+if (CMAKE_VERSION VERSION_GREATER_EQUAL 2.19)
+  set(_args "HANDLE_VERSION_RANGE")
+endif()
 
 # handle the QUIETLY and REQUIRED arguments and set LUA_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LuaInterp
                                   REQUIRED_VARS LUA_EXECUTABLE
-                                  VERSION_VAR LUA_VERSION)
-
+                                  VERSION_VAR LUA_EXECUTABLE_VERSION
+                                  ${_args}
+)
 mark_as_advanced(LUA_EXECUTABLE)
