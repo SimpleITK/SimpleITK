@@ -247,7 +247,7 @@ if ! git rev-parse --verify -q "$commit" >/dev/null ; then
   die "'$commit' is not a valid commit"
 fi
 if test -z "$version"; then
-  desc=$(git describe $commit) &&
+  desc=$(git describe "--match=v*" "--tags" $commit) &&
   if test "${desc:0:1}" != "v"; then
     die "'git describe $commit' is '$desc'; use -v <version>"
   fi &&

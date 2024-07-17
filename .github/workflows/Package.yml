@@ -243,8 +243,9 @@ jobs:
                  --mount type=bind,source=$GITHUB_WORKSPACE,destination=/work/SimpleITK,readonly \
                  --name sitk-dox simpleitk-doxygen
           mkdir -p artifacts
-          docker cp sitk-dox:/SimpleITKDoxygen.tar.gz artifacts/SimpleITKDoxygen-${GITHUB_SHA}.tar.gz
-          docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz artifacts/SimpleITKDoxygenXML-${GITHUB_SHA}.tar.gz
+          TAG=$(git describe --tags --match=v\*)
+          docker cp sitk-dox:/SimpleITKDoxygen.tar.gz artifacts/SimpleITKDoxygen-${TAG}.tar.gz
+          docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz artifacts/SimpleITKDoxygenXML-${TAG}.tar.gz
       - name: Archive Doxygen Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -290,14 +291,11 @@ jobs:
           \`\`\`pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
           " >notes.txt
 
-          for f in $( find ${{ steps.download.outputs.download-path }} -type f  )
-          do
+          ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
+            --hash md5 --format gh \
+            $( find ${{ steps.download.outputs.download-path }} -type f  -name \*.whl \
+          >> notes.txt
 
-            if [[ $f == *.whl ]]; then
-              md5=$(md5sum  $f | awk '{ print $1 }')
-              echo  -n "<a href=\"https://github.com/SimpleITK/SimpleITK/releases/download/${{ steps.tag.outputs.name }}/$(basename $f)#${md5}\"></a>" >> notes.txt
-            fi
-          done
           echo "== notes.txt =="
           cat notes.txt
 
@@ -310,7 +308,7 @@ jobs:
           fi
 
           if [[  "${{ steps.tag.outputs.name }}" == "latest" ||
-              "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)?$ ]]; then
+              "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
             create_args="--prerelease"
           fi
 
