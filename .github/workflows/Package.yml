@@ -293,7 +293,7 @@ jobs:
 
           ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
             --hash md5 --format gh \
-            $( find ${{ steps.download.outputs.download-path }} -type f  -name \*.whl \
+            $( find ${{ steps.download.outputs.download-path }} -type f  -name \*.whl ) \
           >> notes.txt
 
           echo "== notes.txt =="
