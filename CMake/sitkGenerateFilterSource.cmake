@@ -7,7 +7,12 @@ if ( NOT SimpleITK_LUA_EXECUTABLE )
   get_property( SAVE_LUA_EXECUTABLE_DOCSTRING CACHE LUA_EXECUTABLE PROPERTY HELPSTRING )
   unset(LUA_EXECUTABLE CACHE)
 
-  find_package( LuaInterp 5.3...5.4  REQUIRED )
+  if (CMAKE_VERSION VERSION_GREATER 3.19)
+    # support for ranges added in 3.19
+    find_package( LuaInterp 5.3...<5.5  REQUIRED )
+  else()
+    find_package( LuaInterp 5.3 REQUIRED )
+  endif ()
   set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
 
   if (DEFINED SAVE_LUA_EXECUTABLE)
