@@ -126,11 +126,15 @@ public:
   SITK_RETURN_SELF_TYPE_HEADER
   SetTransformParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
   SITK_RETURN_SELF_TYPE_HEADER
+  SetTransformParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector) { return SetTransformParameterMap(parameterMapVector);}
+  SITK_RETURN_SELF_TYPE_HEADER
   SetTransformParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   SITK_RETURN_SELF_TYPE_HEADER
   AddTransformParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   std::vector<std::map<std::string, std::vector<std::string>>>
   GetTransformParameterMap();
+  std::vector<std::map<std::string, std::vector<std::string>>>
+  GetTransformParameterMaps() { return GetTransformParameterMap(); }
   unsigned int
   GetNumberOfTransformParameterMaps();
 

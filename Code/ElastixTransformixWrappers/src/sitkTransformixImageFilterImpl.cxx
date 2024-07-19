@@ -206,7 +206,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
     }
 
     ParameterObjectPointer parameterObject = ParameterObjectType::New();
-    parameterObject->SetParameterMap(transformParameterMapVector);
+    parameterObject->SetParameterMaps(transformParameterMapVector);
     transformixFilter->SetTransformParameterObject(parameterObject);
     transformixFilter->Update();
 
@@ -639,7 +639,7 @@ void
 TransformixImageFilter::TransformixImageFilterImpl ::PrintParameterMap(const ParameterMapVectorType parameterMapVector)
 {
   ParameterObjectPointer parameterObject = ParameterObjectType::New();
-  parameterObject->SetParameterMap(parameterMapVector);
+  parameterObject->SetParameterMaps(parameterMapVector);
   parameterObject->Print(std::cout);
 }
 

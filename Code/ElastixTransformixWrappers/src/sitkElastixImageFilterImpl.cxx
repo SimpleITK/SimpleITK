@@ -254,14 +254,14 @@ ElastixImageFilter::ElastixImageFilterImpl ::DualExecuteInternal(void)
     parameterMapVector[parameterMapVector.size() - 1]["WriteResultImage"] = ParameterValueVectorType(1, "true");
 
     ParameterObjectPointer parameterObject = ParameterObjectType::New();
-    parameterObject->SetParameterMap(parameterMapVector);
+    parameterObject->SetParameterMaps(parameterMapVector);
     elastixFilter->SetParameterObject(parameterObject);
 
     elastixFilter->Update();
 
     output = elastixFilter->GetOutput();
 
-    this->m_TransformParameterMapVector = elastixFilter->GetTransformParameterObject()->GetParameterMap();
+    this->m_TransformParameterMapVector = elastixFilter->GetTransformParameterObject()->GetParameterMaps();
   }
   catch (itk::ExceptionObject & e)
   {
@@ -1030,7 +1030,7 @@ void
 ElastixImageFilter::ElastixImageFilterImpl ::PrintParameterMap(const ParameterMapVectorType parameterMapVector)
 {
   ParameterObjectPointer parameterObject = ParameterObjectType::New();
-  parameterObject->SetParameterMap(parameterMapVector);
+  parameterObject->SetParameterMaps(parameterMapVector);
   parameterObject->Print(std::cout);
 }
 
