@@ -292,7 +292,9 @@ jobs:
           " >notes.txt
 
           ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
-            --hash md5 --format gh \
+            --hash md5 \
+            --format gh \
+            --tag "${{ steps.tag.outputs.name }}" \
             $( find ${{ steps.download.outputs.download-path }} -type f  -name \*.whl ) \
           >> notes.txt
 

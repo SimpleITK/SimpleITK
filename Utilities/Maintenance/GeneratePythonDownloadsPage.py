@@ -27,6 +27,7 @@ parser = argparse.ArgumentParser(
 )
 parser.add_argument("--hash", choices=["md5", "sha256", "sha512"], default="sha512")
 parser.add_argument("-f", "--format", choices=["gh", "html", "md"], default="html")
+parser.add_argument( "-t","--tag", type=str, default=None)
 parser.add_argument(
     "files", metavar="python.whl", type=argparse.FileType(mode="rb"), nargs="+"
 )
@@ -51,7 +52,10 @@ for f in args.files:
         elif args.hash == "sha512":
             hash_value = hashlib.sha512(f.read()).hexdigest()
 
-        tag = f"v{version}"
+        if args.tag:
+            tag = args.tag
+        else:
+            tag = f"v{version}"
 
         host = "GitHub"
         url = f"https://github.com/SimpleITK/SimpleITK/releases/download/{tag}/{name}#{args.hash}={hash_value}"
