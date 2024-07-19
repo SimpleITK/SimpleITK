@@ -201,6 +201,10 @@ ElastixImageFilter::ElastixImageFilterImpl ::DualExecuteInternal(void)
   typedef typename ElastixRegistrationMethodType::FixedMaskType     FixedMaskType;
   typedef typename ElastixRegistrationMethodType::MovingMaskType    MovingMaskType;
 
+  using FixedImageType = typename ElastixRegistrationMethodType::FixedImageType;
+
+  typename FixedImageType::Pointer output;
+
   try
   {
     ElastixRegistrationMethodPointer elastixFilter = ElastixRegistrationMethodType::New();
@@ -255,14 +259,19 @@ ElastixImageFilter::ElastixImageFilterImpl ::DualExecuteInternal(void)
 
     elastixFilter->Update();
 
-    this->m_ResultImage = Image(itkDynamicCastInDebugMode<TFixedImage *>(elastixFilter->GetOutput()));
-    this->m_ResultImage.MakeUnique();
+    output = elastixFilter->GetOutput();
+
     this->m_TransformParameterMapVector = elastixFilter->GetTransformParameterObject()->GetParameterMap();
   }
   catch (itk::ExceptionObject & e)
   {
     sitkExceptionMacro(<< e);
   }
+
+
+  // Convert to SimpleITK image after Elastix filter has been destroyed to avoid issue with multiple references to the
+  // image buffer.
+  this->m_ResultImage = Image(output);
 
   return this->m_ResultImage;
 }

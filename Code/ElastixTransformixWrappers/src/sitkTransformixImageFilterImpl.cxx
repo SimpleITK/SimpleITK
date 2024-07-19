@@ -173,6 +173,10 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
   typedef itk::TransformixFilter<TMovingImage>    TransformixFilterType;
   typedef typename TransformixFilterType::Pointer TransforimxFilterPointer;
 
+  using MovingImageType = typename TransformixFilterType::InputImageType;
+
+  typename MovingImageType::Pointer result;
+
   try
   {
     TransforimxFilterPointer transformixFilter = TransformixFilterType::New();
@@ -208,8 +212,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
 
     if (!this->IsEmpty(this->GetMovingImage()))
     {
-      this->m_ResultImage = Image(itkDynamicCastInDebugMode<TMovingImage *>(transformixFilter->GetOutput()));
-      this->m_ResultImage.MakeUnique();
+      result  = transformixFilter->GetOutput();
     }
 
     if (this->GetComputeDeformationField())
@@ -223,6 +226,8 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
   {
     sitkExceptionMacro(<< e);
   }
+
+  this->m_ResultImage = itk::simple::Image(result);
 
   return this->m_ResultImage;
 }
