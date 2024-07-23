@@ -201,6 +201,10 @@ ElastixImageFilter::ElastixImageFilterImpl ::DualExecuteInternal(void)
   typedef typename ElastixRegistrationMethodType::FixedMaskType     FixedMaskType;
   typedef typename ElastixRegistrationMethodType::MovingMaskType    MovingMaskType;
 
+  using FixedImageType = typename ElastixRegistrationMethodType::FixedImageType;
+
+  typename FixedImageType::Pointer output;
+
   try
   {
     ElastixRegistrationMethodPointer elastixFilter = ElastixRegistrationMethodType::New();
@@ -250,19 +254,24 @@ ElastixImageFilter::ElastixImageFilterImpl ::DualExecuteInternal(void)
     parameterMapVector[parameterMapVector.size() - 1]["WriteResultImage"] = ParameterValueVectorType(1, "true");
 
     ParameterObjectPointer parameterObject = ParameterObjectType::New();
-    parameterObject->SetParameterMap(parameterMapVector);
+    parameterObject->SetParameterMaps(parameterMapVector);
     elastixFilter->SetParameterObject(parameterObject);
 
     elastixFilter->Update();
 
-    this->m_ResultImage = Image(itkDynamicCastInDebugMode<TFixedImage *>(elastixFilter->GetOutput()));
-    this->m_ResultImage.MakeUnique();
-    this->m_TransformParameterMapVector = elastixFilter->GetTransformParameterObject()->GetParameterMap();
+    output = elastixFilter->GetOutput();
+
+    this->m_TransformParameterMapVector = elastixFilter->GetTransformParameterObject()->GetParameterMaps();
   }
   catch (itk::ExceptionObject & e)
   {
     sitkExceptionMacro(<< e);
   }
+
+
+  // Convert to SimpleITK image after Elastix filter has been destroyed to avoid issue with multiple references to the
+  // image buffer.
+  this->m_ResultImage = Image(output);
 
   return this->m_ResultImage;
 }
@@ -1021,7 +1030,7 @@ void
 ElastixImageFilter::ElastixImageFilterImpl ::PrintParameterMap(const ParameterMapVectorType parameterMapVector)
 {
   ParameterObjectPointer parameterObject = ParameterObjectType::New();
-  parameterObject->SetParameterMap(parameterMapVector);
+  parameterObject->SetParameterMaps(parameterMapVector);
   parameterObject->Print(std::cout);
 }
 

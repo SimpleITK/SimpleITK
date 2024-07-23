@@ -173,6 +173,10 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
   typedef itk::TransformixFilter<TMovingImage>    TransformixFilterType;
   typedef typename TransformixFilterType::Pointer TransforimxFilterPointer;
 
+  using MovingImageType = typename TransformixFilterType::InputImageType;
+
+  typename MovingImageType::Pointer result;
+
   try
   {
     TransforimxFilterPointer transformixFilter = TransformixFilterType::New();
@@ -202,14 +206,13 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
     }
 
     ParameterObjectPointer parameterObject = ParameterObjectType::New();
-    parameterObject->SetParameterMap(transformParameterMapVector);
+    parameterObject->SetParameterMaps(transformParameterMapVector);
     transformixFilter->SetTransformParameterObject(parameterObject);
     transformixFilter->Update();
 
     if (!this->IsEmpty(this->GetMovingImage()))
     {
-      this->m_ResultImage = Image(itkDynamicCastInDebugMode<TMovingImage *>(transformixFilter->GetOutput()));
-      this->m_ResultImage.MakeUnique();
+      result  = transformixFilter->GetOutput();
     }
 
     if (this->GetComputeDeformationField())
@@ -223,6 +226,8 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
   {
     sitkExceptionMacro(<< e);
   }
+
+  this->m_ResultImage = itk::simple::Image(result);
 
   return this->m_ResultImage;
 }
@@ -634,7 +639,7 @@ void
 TransformixImageFilter::TransformixImageFilterImpl ::PrintParameterMap(const ParameterMapVectorType parameterMapVector)
 {
   ParameterObjectPointer parameterObject = ParameterObjectType::New();
-  parameterObject->SetParameterMap(parameterMapVector);
+  parameterObject->SetParameterMaps(parameterMapVector);
   parameterObject->Print(std::cout);
 }
 
