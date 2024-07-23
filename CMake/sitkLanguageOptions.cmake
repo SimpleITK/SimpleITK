@@ -149,6 +149,18 @@ if ( WRAP_PYTHON )
     Python_LIBRARY_DEBUG
     Python_LIBRARY_RELEASE
     )
+  # Support CMake < 3.24 by explicitly passing _Python_VERSION variables to workaround issue fixed
+  # in kitware/cmake@ece3bedbf (FindPython: fix error on multiple queries with different COMPONENTS)
+  # See https://gitlab.kitware.com/cmake/cmake/-/merge_requests/7410 for more details
+  if(CMAKE_VERSION VERSION_LESS "3.24")
+    list(APPEND SITK_LANGUAGES_VARS
+      _Python_VERSION
+      _Python_VERSION_MAJOR
+      _Python_VERSION_MINOR
+      _Python_VERSION_PATCH
+      _Python_VERSION_TWEAK
+      )
+  endif()
 endif ()
 
 
