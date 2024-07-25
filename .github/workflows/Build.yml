@@ -39,7 +39,6 @@ jobs:
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
-              CPPFLAGS:STRING=-I/opt/homebrew/opt/openjdk@11/include
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden 
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
@@ -80,6 +79,7 @@ jobs:
       shell: bash
       run: |
         whoami
+        java --version
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
