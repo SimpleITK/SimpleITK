@@ -77,7 +77,7 @@ jobs:
     steps:
     - name: Debug
       shell: bash
-      if: matrix.os != 'mac-arm64'
+      if: matrix.os != 'windows-2019'
       run: |
         whoami
         java --version
