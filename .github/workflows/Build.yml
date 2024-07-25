@@ -80,6 +80,7 @@ jobs:
       run: |
         whoami
         java --version
+        echo $JAVA_HOME
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
