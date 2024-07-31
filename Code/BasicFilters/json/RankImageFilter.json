@@ -102,7 +102,6 @@
           "csharp_value" : "KernelEnum.sitkBall",
           "R_value" : "'sitkBall'"
         }
-
       ],
       "inputs" : [
         "Input/cthead1.png"

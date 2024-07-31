@@ -12,9 +12,9 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing information of the input image in its calculations. Use this option if derivatives are required in physical space.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing information of the input image in its calculations. Use this option if derivatives are required in physical space."
     }
   ],
   "tests" : [
@@ -31,7 +31,7 @@
       "tag" : "shortdefault",
       "description" : "Simply run with default settings on a short image",
       "settings" : [],
-      "tolerance" : 1e-8,
+      "tolerance" : 1e-08,
       "inputs" : [
         "Input/RA-Short.nrrd"
       ]

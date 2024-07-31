@@ -41,9 +41,10 @@
       "name" : "Clamp",
       "type" : "bool",
       "default" : "true",
-        "briefdescriptionSet" : "Set/Get whether to clamp values to supported range of output type",
-        "detaileddescriptionSet" : ""
-
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether to clamp values to supported range of output type. Default: On.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether to clamp values to supported range of output type. Default: On."
     }
   ],
   "tests" : [

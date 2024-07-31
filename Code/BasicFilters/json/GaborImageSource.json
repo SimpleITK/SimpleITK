@@ -29,9 +29,9 @@
       "default" : "std::vector<double>(3, 16.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the the standard deviation in each direction.",
+      "detaileddescriptionSet" : "Set/Get the standard deviation in each direction.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the the standard deviation in each direction."
+      "detaileddescriptionGet" : "Set/Get the standard deviation in each direction."
     },
     {
       "name" : "Mean",
