@@ -34,11 +34,10 @@
       "doc" : "The largest prime factor supported by underlying FFT implementation (FFTW or VNL).",
       "static" : true,
       "return_type" : "int",
-      "parameters" : [
-      ],
+      "parameters" : [],
       "body" : "using RealImageType = itk::Image<float, 2>;\n  return itk::FFTPadImageFilter<RealImageType>::New()->GetSizeGreatestPrimeFactor();"
     }
-    ],
+  ],
   "tests" : [
     {
       "tag" : "defaults",

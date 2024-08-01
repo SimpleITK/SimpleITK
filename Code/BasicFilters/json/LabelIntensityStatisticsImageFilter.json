@@ -97,7 +97,6 @@
       "custom_cast" : "sitkITKImageRegionToSTL(value)",
       "label_map" : true,
       "detaileddescription" : "Get the bounding box of a labeled object.  The bounding box is returned following the common convention for returning an itk::ImageRegion as a 1 dimensional array containing the index values followed by the size values. For example, a 2D image region would have the array \\f[[x, y, width, height]\\f]."
-
     },
     {
       "name" : "Region",

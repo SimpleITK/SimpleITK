@@ -20,8 +20,6 @@
       "name" : "MaskImage",
       "type" : "Image",
       "custom_itk_cast" : "auto maskingValue = this->m_MaskingValue;\n  typename FilterType::MaskImageType::ConstPointer image2;\n  if (inMaskImage->GetPixelID() != sitkUInt8) {\n   sitkWarningMacro( \"Support for pixel type \" << GetPixelIDValueAsString(inMaskImage->GetPixelID()) << \" for the MaskImage input has been deprecated and will be removed in future versions. Implicitly casting input to support \\'sitkUInt8\\' type. \" );   Image temp = NotEqual(*inMaskImage, this->m_MaskingValue);image2 = this->CastImageToITK<typename FilterType::MaskImageType>( temp );\n  } else {\n   image2 = this->CastImageToITK<typename FilterType::MaskImageType>( *inMaskImage );\n}\n  filter->SetMaskImage( image2 );"
-
-
     }
   ],
   "members" : [
