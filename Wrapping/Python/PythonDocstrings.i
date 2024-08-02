@@ -136,6 +136,11 @@ C++ includes: itkImageIOFactoryRegisterManager.h
 ";
 
 
+%feature("docstring") itk::TransformBaseTemplate "
+C++ includes: sitkTransform.h
+";
+
+
 %feature("docstring") itk::TransformIOFactoryRegisterManager "
 C++ includes: itkTransformIOFactoryRegisterManager.h
 ";
@@ -1124,7 +1129,7 @@ leaving the rest of the image unchanged.
 
 This code was contributed in the Insight Journal paper
 
-\"Grayscale morphological attribute operations\" by Beare R. https://hdl.handle.net/1926/1316 https://www.insight-journal.org/browse/publication/203
+\"Grayscale morphological attribute operations\" by Beare R. https://www.insight-journal.org/browse/publication/203
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -1228,7 +1233,7 @@ leaving the rest of the image unchanged.
 
 This code was contributed in the Insight Journal paper
 
-\"Grayscale morphological attribute operations\" by Beare R. https://hdl.handle.net/1926/1316 https://www.insight-journal.org/browse/publication/203
+\"Grayscale morphological attribute operations\" by Beare R. https://www.insight-journal.org/browse/publication/203
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -1700,7 +1705,7 @@ BSplineTransformInitializerFilter is a helper class intended to initialize the c
 that it has a physically consistent definition. It sets the transform
 domain origin, physical dimensions and direction from information
 obtained from the image. It also sets the mesh size if asked to do so
-by calling SetTransformDomainMeshSize()before calling InitializeTransform().
+by calling SetTransformDomainMeshSize() before calling InitializeTransform().
 
 
 
@@ -4864,12 +4869,7 @@ filter in this algorithm
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetUpperThreshold "
 
-Set the upper threshold value for detected edges. TODO: Document in
-the ITKv4 migration guide that the SetThreshold member function was
-removed from the CannyEdgeDetectionImageFilter , and that both UpperThreshold and LowerThreshold need to be set. To
-get the same results as with the SetThreshold method change
-\"myfilter->SetThrehsold\" to \"myfilter->SetUpperThreshold\", and add
-\"myfilter->SetLowerThreshold(GetUpperThreshold()/2.0)\".
+Set the upper threshold value for detected edges.
 
 ";
 
@@ -7013,7 +7013,7 @@ This filter ignores the spacing, origin, and orientation of the kernel
 image and treats them as identical to those in the input image.
  This code was contributed in the Insight Journal paper:
 
-\"Image Kernel Convolution\" by Tustison N., Gee J. https://insight-journal.org/browse/publication/208
+\"Image Kernel Convolution\" by Tustison N., Gee J. https://www.insight-journal.org/browse/publication/208
 
 
 Nicholas J. Tustison
@@ -7906,9 +7906,9 @@ Set/Get the desired limits of the Gaussian kernel width.
 
 Get the metric value. The metric value is the mean square difference
 in intensity between the fixed image and transforming moving image
-computed over the the overlapping region between the two images. This
-is value is only available for the previous iteration and NOT the
-current iteration.
+computed over the overlapping region between the two images. This is
+value is only available for the previous iteration and NOT the current
+iteration.
 
 This is an active measurement. It may be accessed while the filter is
 being executing in command call-backs and can be accessed after
@@ -8344,7 +8344,7 @@ Set/Get the desired limits of the Gaussian kernel width.
 
 Get the metric value. The metric value is the mean square difference
 in intensity between the fixed image and transforming moving image
-computed over the the overlapping region between the two images. This
+computed over the overlapping region between the two images. This
 value is calculated for the current iteration
 
 This is an active measurement. It may be accessed while the filter is
@@ -10089,6 +10089,9 @@ Returns a copy of the parameter maps.
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameterMap "
 ";
 
+%feature("docstring")  itk::simple::ElastixImageFilter::GetParameterMaps "
+";
+
 %feature("docstring")  itk::simple::ElastixImageFilter::GetResultImage "
 
 Returns the result image.
@@ -10547,6 +10550,9 @@ Specifies the parameter map by a transformName (\"translation\", \"rigid\" , \"a
 
 Specifies multiple parameter maps.
 
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMaps "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::WriteParameterFile "
@@ -11576,11 +11582,11 @@ Name of this class
 Set/Get the greatest prime factor allowed on the size of the padded
 image. The filter increase the size of the image to reach a size with
 the greatest prime factor smaller or equal to the specified value. The
-default value is 13, which is the greatest prime number for which the
-FFT are precomputed in FFTW, and thus gives very good performance. A
-greatest prime factor of 2 produce a size which is a power of 2, and
-thus is suitable for vnl base fft filters. A greatest prime factor of
-1 or less - typically 0 - disable the extra padding.
+default value is 5 for VNL, which is the greatest prime number for
+which the FFT are precomputed in FFTW, and thus gives very good
+performance. A greatest prime factor of 2 produce a size which is a
+power of 2, and thus is suitable for vnl base fft filters. A greatest
+prime factor of 1 or less - typically 0 - disable the extra padding.
 
 ";
 
@@ -11592,11 +11598,11 @@ thus is suitable for vnl base fft filters. A greatest prime factor of
 Set/Get the greatest prime factor allowed on the size of the padded
 image. The filter increase the size of the image to reach a size with
 the greatest prime factor smaller or equal to the specified value. The
-default value is 13, which is the greatest prime number for which the
-FFT are precomputed in FFTW, and thus gives very good performance. A
-greatest prime factor of 2 produce a size which is a power of 2, and
-thus is suitable for vnl base fft filters. A greatest prime factor of
-1 or less - typically 0 - disable the extra padding.
+default value is 5 for VNL, which is the greatest prime number for
+which the FFT are precomputed in FFTW, and thus gives very good
+performance. A greatest prime factor of 2 produce a size which is a
+power of 2, and thus is suitable for vnl base fft filters. A greatest
+prime factor of 1 or less - typically 0 - disable the extra padding.
 
 ";
 
@@ -11713,7 +11719,7 @@ Medians aren't separable, but if you want a large robust smoother to
 be relatively quick then it is worthwhile pretending that they are.
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 https://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://www.insight-journal.org/browse/publication/160
 
 
 Richard Beare
@@ -12247,8 +12253,9 @@ Get the container of Target Points.
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetValue "
 
 Get the arrival time corresponding to the last reached target. If
-TargetReachedMode is set to NoTargets, TargetValue contains the last
-(aka largest) Eikonal solution value generated.
+TargetReachedMode is set to TargetConditionEnum::NoTargets ,
+TargetValue contains the last (aka largest) Eikonal solution value
+generated.
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -12284,8 +12291,9 @@ arrival time is smooth.
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetPoints "
 
-Set the container of Target Points. If a target point is reached, the
-propagation stops. Trial points are represented as a VectorContainer of LevelSetNodes.
+Backwards compatibility for enum values Set the container of Target
+Points. If a target point is reached, the propagation stops. Trial
+points are represented as a VectorContainer of LevelSetNodes.
 
 ";
 
@@ -12410,7 +12418,7 @@ Set/Get the desired limits of the Gaussian kernel width.
 
 Get the metric value. The metric value is the mean square difference
 in intensity between the fixed image and transforming moving image
-computed over the the overlapping region between the two images. This
+computed over the overlapping region between the two images. This
 value is calculated for the current iteration
 
 This is an active measurement. It may be accessed while the filter is
@@ -12890,7 +12898,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::GaborImageSource::GetSigma "
 
-Set/Get the the standard deviation in each direction.
+Set/Get the standard deviation in each direction.
 
 ";
 
@@ -12935,7 +12943,7 @@ Set the values of the Sigma vector all to value
 
 %feature("docstring")  itk::simple::GaborImageSource::SetSigma "
 
-Set/Get the the standard deviation in each direction.
+Set/Get the standard deviation in each direction.
 
 ";
 
@@ -16216,7 +16224,10 @@ including it's buffer is delayed until the image is modified. This
 removes the need to use pointers to SimpleITK Image class, as copying and returning by value do not unnecessarily
 duplicate the data.
 
-/sa itk::Image itk::VectorImage itk::LabelMap itk::ImageBase
+
+See:
+ itk::Image itk::VectorImage itk::LabelMap itk::ImageBase
+
 
 C++ includes: sitkImage.h
 ";
@@ -16440,6 +16451,31 @@ all other operations have undefined behavior.
 
 ";
 
+%feature("docstring")  itk::simple::Image::IsCongruentImageGeometry "
+
+Checks whether the images' pixels at the same index occupy the same
+physical space.
+
+Compares the origin, spacing, and direction for equality within
+provided tolerances. There is no check for matching regions in between
+the images.
+
+If The dimensions of the images do not match, false is returned.
+
+";
+
+%feature("docstring")  itk::simple::Image::IsSameImageGeometryAs "
+
+Check whether the images have the same grid in physical space.
+
+Compares largest possible regions for equality, and the origin,
+spacing, and direction cosines for equality within provided
+tolerances.
+
+If the dimensions of the images do not match, false is returned.
+
+";
+
 %feature("docstring")  itk::simple::Image::IsUnique "
 
 Returns true if no other SimpleITK Image object refers to the same internal data structure.
@@ -16609,6 +16645,16 @@ the SetImageIO method. This is useful in cases when multiple ImageIOs
 the first).
 
 
+DICOM tags are represented as strings in the meta-data dictionary(s),
+therefore \"0020|000D\" and \"0020|000d\" are different when accessing
+the tag value. This differs from the hexadecimal numbers they
+represent, 0020|000D and 0020|000d are equivalent. The ITK meta-data
+dictionary is string based and uses lower case to represent the
+hexadecimal number read from disk, so 0020|000d will work as a key and
+0020|000D will not be found in the dictionary (results in an exception
+if attempting to access). It is recommended to use lower case when
+setting and accessing DICOM tags.
+
 See:
  itk::simple::ReadImage for the procedural interface
 
@@ -16694,7 +16740,10 @@ starting index from the image on disk to extract.
 
 Missing dimensions are treated the same as 0.
 
-/sa ExtractImageFilter
+
+See:
+ ExtractImageFilter
+
 
 ";
 
@@ -16722,7 +16771,10 @@ matrix will be set to the identity. However, the spacing for the
 selected axis will remain. The matrix from the file can still be
 obtained by ImageFileReader::GetDirection.
 
-/sa ExtractImageFilter
+
+See:
+ ExtractImageFilter
+
 
 ";
 
@@ -17102,8 +17154,15 @@ See:
 Set optimizer to Nelder-Mead downhill simplex algorithm.
 
 
+The simplexDelta is the value that is added and subtracted to the
+initial parameters to create the initial simplex. The simplexDelta can
+be indirectly set per parameter by the optimizer parameter scaling
+either manually or by using an estimator.
+
 
 See:
+ ImageRegistrationMethod::SetOptimizerScales
+
  itk::AmoebaOptimizerv4
 
 
@@ -17369,6 +17428,16 @@ Once the image series is read the meta-data is directly accessible
 from the reader.
 
 
+DICOM tags are represented as strings in the meta-data dictionary(s),
+therefore \"0020|000D\" and \"0020|000d\" are different when accessing
+the tag value. This differs from the hexadecimal numbers they
+represent, 0020|000D and 0020|000d are equivalent. The ITK meta-data
+dictionary is string based and uses lower case to represent the
+hexadecimal number read from disk, so 0020|000d will work as a key and
+0020|000D will not be found in the dictionary (results in an exception
+if attempting to access). It is recommended to use lower case when
+setting and accessing DICOM tags.
+
 If the pixel type for the returned image is not specified it is
 deduced from the first image in the series. This approach is
 computationally efficient and assumes that all images in a series have
@@ -17436,6 +17505,9 @@ return user readable name of the filter
 
 ";
 
+%feature("docstring")  itk::simple::ImageSeriesReader::GetSpacingWarningRelThreshold "
+";
+
 %feature("docstring")  itk::simple::ImageSeriesReader::HasMetaDataKey "
 
 Query a meta-data dictionary for the existence of a key.
@@ -17463,6 +17535,13 @@ respectively.
 Set/Get whether the meta-data dictionaries for the slices should be
 read. Default value is false, because of the additional computation
 time.
+
+";
+
+%feature("docstring")  itk::simple::ImageSeriesReader::SetSpacingWarningRelThreshold "
+
+Set the relative threshold for issuing warnings about non-uniform
+sampling.
 
 ";
 
@@ -22379,8 +22458,9 @@ Name of this class
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::GetUseImageSpacing "
 
-Set/Get whether or not the filter will use the spacing of the input
-image in its calculations
+Set/Get whether or not the filter will use the spacing information of
+the input image in its calculations. Use this option if derivatives
+are required in physical space.
 
 ";
 
@@ -22393,8 +22473,9 @@ parameters
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::SetUseImageSpacing "
 
-Set/Get whether or not the filter will use the spacing of the input
-image in its calculations
+Set/Get whether or not the filter will use the spacing information of
+the input image in its calculations. Use this option if derivatives
+are required in physical space.
 
 ";
 
@@ -22760,9 +22841,9 @@ Set/Get the desired limits of the Gaussian kernel width.
 
 Get the metric value. The metric value is the mean square difference
 in intensity between the fixed image and transforming moving image
-computed over the the overlapping region between the two images. This
-is value is only available for the previous iteration and NOT the
-current iteration.
+computed over the overlapping region between the two images. This is
+value is only available for the previous iteration and NOT the current
+iteration.
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -23226,7 +23307,10 @@ In ITK this function is implemented by the itk::OutputWindow, but in SimpleITK i
 Provides a base class for SimpleITK to provide the \"DisplayText\"
 methods that match the interface of itk::OutputWindow. Derived instances of LoggerBase are used by an internal adaptor derived from the itk::OutputWindow so that this object instances can be used in ITK.
 
-/sa itk::OutputWindow
+
+See:
+ itk::OutputWindow
+
 
 C++ includes: sitkLogger.h
 ";
@@ -26455,7 +26539,7 @@ This transform is especially useful for normalizing a convolution
 kernel.
 
 This code was contributed in the Insight Journal paper: \"FFT based
-convolution\" by Lehmann G. https://insight-journal.org/browse/publication/717
+convolution\" by Lehmann G. https://www.insight-journal.org/browse/publication/717
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -28277,6 +28361,12 @@ C++ includes: sitkPimpleImageBase.h
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetWidth "
+";
+
+%feature("docstring")  itk::simple::PimpleImageBase::IsCongruentImageGeometry "
+";
+
+%feature("docstring")  itk::simple::PimpleImageBase::IsSameImageGeometryAs "
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::ProxyCopy "
@@ -30762,7 +30852,7 @@ ConfidenceWeight should be left to the default of 1.0.
 
 You must provide a foreground value using SetForegroundValue that the
 STAPLE algorithm will use to identify positively classified pixels in
-the the input images. All other values in the image will be treated as
+the input images. All other values in the image will be treated as
 background values. For example, if your input segmentations consist of
 1's everywhere inside the segmented region, then use
 SetForegroundValue(1).
@@ -31036,12 +31126,12 @@ without edges\" T. Chan and L. Vese. In Scale-Space Theories in
 Computer Vision, pages 141-151, 1999.
 Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.
  This code was taken from the Insight Journal paper: \"Cell Tracking
-using Coupled Active Surfaces for Nuclei and Membranes\" https://www.insight-journal.org/browse/publication/642 https://hdl.handle.net/10380/3055 That is based on the papers: \"Level Set Segmentation: Active
-Contours without edge\" https://www.insight-journal.org/browse/publication/322 https://hdl.handle.net/1926/1532
+using Coupled Active Surfaces for Nuclei and Membranes\" https://www.insight-journal.org/browse/publication/642 That is based on the papers: \"Level Set Segmentation: Active
+Contours without edge\" https://www.insight-journal.org/browse/publication/322
 
 and
 
-\"Level set segmentation using coupled active surfaces\" https://www.insight-journal.org/browse/publication/323 https://hdl.handle.net/1926/1533
+\"Level set segmentation using coupled active surfaces\" https://www.insight-journal.org/browse/publication/323
 See:
  itk::simple::ScalarChanAndVeseDenseLevelSet for the procedural interface
 
@@ -33896,7 +33986,7 @@ This filter was contributed by Nick Tustison and James Gee from the
 PICSL lab, at the University of Pennsylvania as an paper to the
 Insight Journal:
 
-\"Stochastic Fractal Dimension Image\" https://hdl.handle.net/1926/1525 https://www.insight-journal.org/browse/publication/318
+\"Stochastic Fractal Dimension Image\" https://www.insight-journal.org/browse/publication/318
 
 
 Nick Tustison
@@ -34214,7 +34304,7 @@ Set/Get the desired limits of the Gaussian kernel width.
 
 Get the metric value. The metric value is the mean square difference
 in intensity between the fixed image and transforming moving image
-computed over the the overlapping region between the two images. This
+computed over the overlapping region between the two images. This
 value is calculated for the current iteration
 
 This is an active measurement. It may be accessed while the filter is
@@ -34619,23 +34709,21 @@ Destructor
 %feature("docstring") itk::simple::ThresholdImageFilter "
 
 Set image values to a user-specified value if they are below, above,
-or between simple threshold values.
+or outside threshold values.
 
 
 ThresholdImageFilter sets image values to a user-specified \"outside\" value (by default,
-\"black\") if the image values are below, above, or between simple
-threshold values.
+zero) if the image values are below, above, or outside threshold
+values.
 
 The available methods are:
 
-ThresholdAbove() : The values greater than the threshold value are set
-to OutsideValue
+ThresholdAbove() : The values greater than the threshold value are set to OutsideValue
 
-ThresholdBelow() : The values less than the threshold value are set to
-OutsideValue
+ThresholdBelow() : The values less than the threshold value are set to OutsideValue
 
-ThresholdOutside() : The values outside the threshold range (less than
-lower or greater than upper) are set to OutsideValue
+ThresholdOutside() : The values outside the threshold range (less than lower or greater
+than upper) are set to OutsideValue
 
 Note that these definitions indicate that pixels equal to the
 threshold value are not set to OutsideValue in any of these methods
@@ -34702,11 +34790,20 @@ Set/Get methods to set the upper threshold.
 
 ";
 
+%feature("docstring")  itk::simple::ThresholdImageFilter::ThresholdAbove "
+";
+
+%feature("docstring")  itk::simple::ThresholdImageFilter::ThresholdBelow "
+";
+
 %feature("docstring")  itk::simple::ThresholdImageFilter::ThresholdImageFilter "
 
 Default Constructor that takes no arguments and initializes default
 parameters
 
+";
+
+%feature("docstring")  itk::simple::ThresholdImageFilter::ThresholdOutside "
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::ToString "
@@ -34753,7 +34850,7 @@ counted.
 References:
 1) Urish KL, August J, Huard J. \"Unsupervised segmentation for
 myofiber counting in immunofluorescent microscopy images\". Insight
-Journal. ISC/NA-MIC/MICCAI Workshop on Open-Source Software (2005) https://insight-journal.org/browse/publication/40 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
+Journal. ISC/NA-MIC/MICCAI Workshop on Open-Source Software (2005) https://www.insight-journal.org/browse/publication/40 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
 topological stable-state\". Pattern Recognition, 29(5): 829-843, 1996.
 
 Questions: email Ken Urish at ken.urish(at)gmail.com Please cc the itk
@@ -35931,6 +36028,9 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameterMap "
 ";
 
+%feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameterMaps "
+";
+
 %feature("docstring")  itk::simple::TransformixImageFilter::IsEmpty "
 ";
 
@@ -36106,6 +36206,9 @@ C++ includes: sitkTransformixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameterMaps "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilter "
@@ -36419,6 +36522,10 @@ Set/Get amount of enhancement. Usual range: 0.1 to 2.0. Default: 0.5.
 ";
 
 %feature("docstring")  itk::simple::UnsharpMaskImageFilter::GetClamp "
+
+Set/Get whether to clamp values to supported range of output type.
+Default: On.
+
 ";
 
 %feature("docstring")  itk::simple::UnsharpMaskImageFilter::GetName "
@@ -36449,6 +36556,7 @@ Set/Get amount of enhancement. Usual range: 0.1 to 2.0. Default: 0.5.
 %feature("docstring")  itk::simple::UnsharpMaskImageFilter::SetClamp "
 
 Set/Get whether to clamp values to supported range of output type.
+Default: On.
 
 ";
 
@@ -36935,9 +37043,6 @@ Execute the filter on the input image
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::GetIndex "
-
-Get/Set methods for the index
-
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::GetName "
@@ -38435,7 +38540,8 @@ defined.
 The output of the filter is a binary, labeled image of user-specified
 type. By default, zero-crossing pixels are labeled with a default
 \"foreground\" value of itk::NumericTraits<OutputDataType>::OneValue() , where OutputDataType is the data type of the output image. All
-other pixels are labeled with a default \"background\" value of itk::NumericTraits<OutputDataType>::ZeroValue() .
+other pixels are labeled with a default \"background\" value of
+OutputDataType{}.
 Parameters
 There are two parameters for this filter. ForegroundValue is the value
 that marks zero-crossing pixels. The BackgroundValue is the value
@@ -38812,6 +38918,9 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 %feature("docstring")  itk::Accessor::ConvertNumberToString "
 ";
 
+%feature("docstring")  itk::Accessor::Copy "
+";
+
 %feature("docstring")  itk::Accessor::CopyLineToImage "
 ";
 
@@ -38852,6 +38961,9 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
 %feature("docstring")  itk::Accessor::CrossProduct "
+";
+
+%feature("docstring")  itk::Accessor::Deref "
 ";
 
 %feature("docstring")  itk::Accessor::DoAnchorFace "
@@ -38972,6 +39084,9 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
 %feature("docstring")  itk::Accessor::ImageIOFactoryRegisterManagerInstance "
+";
+
+%feature("docstring")  itk::Accessor::ImageRegion "
 ";
 
 %feature("docstring")  itk::Accessor::ImageRegionRange "
@@ -39430,7 +39545,7 @@ BSplineTransformInitializerFilter is a helper class intended to initialize the c
 that it has a physically consistent definition. It sets the transform
 domain origin, physical dimensions and direction from information
 obtained from the image. It also sets the mesh size if asked to do so
-by calling SetTransformDomainMeshSize()before calling
+by calling SetTransformDomainMeshSize() before calling
 InitializeTransform().
 
 
@@ -40008,6 +40123,13 @@ See:
 
 ";
 
+%feature("docstring")  itk::simple::TypeListHasPixelIDValue "
+
+Check if the runtime PixelID is contained in a template parameter
+typelist.
+
+";
+
 %feature("docstring")  itk::simple::Unused "
 
 A function which does nothing.
@@ -40377,6 +40499,11 @@ C++ includes: sitkDetail.h
 
 %feature("docstring") itk::simple::MemberFunctionAddressor "
 C++ includes: sitkDetail.h
+";
+
+
+%feature("docstring") itk::simple::TypeListHasPixelIDValue "
+C++ includes: sitkPixelIDValues.h
 ";
 
 
