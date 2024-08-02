@@ -11,15 +11,28 @@ which python
 python --version
 PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
 
+# Detect OS
+OS_NAME=$(uname -s)
+
+# Detect version (for macOS)
+if [ "$OS_NAME" == "Darwin" ]; then
+    OS_VERSION=$(sw_vers -productVersion | awk -F '.' '{print $1"."$2}')
+    OS_ARCH=$(uname -m)
+    SIMPLEITK_PYTHON_PLAT_NAME="macosx-$OS_VERSION-$OS_ARCH"
+else
+    echo "Unsupported OS: $OS_NAME"
+    exit 1
+fi
+
 read -r -d '' CTEST_CACHE << EOM || true
 CMAKE_PREFIX_PATH:PATH=${COREBINARYDIRECTORY}
 CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
 CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
-CMAKE_OSX_DEPLOYMENT_TARGET=10.9
+CMAKE_OSX_DEPLOYMENT_TARGET=$OS_VERSION
 SWIG_EXECUTABLE:FILEPATH=${COREBINARYDIRECTORY}/Swig/bin/swig
 BUILD_EXAMPLES:BOOL=ON
 BUILD_TESTING:BOOL=ON
-SimpleITK_PYTHON_PLAT_NAME:STRING=macosx-10.9-x86_64
+SimpleITK_PYTHON_PLAT_NAME:STRING=$SIMPLEITK_PYTHON_PLAT_NAME
 SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
 SimpleITK_PYTHON_WHEEL:BOOL=1
 SimpleITK_BUILD_STRIP:BOOL=1
