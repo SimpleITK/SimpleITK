@@ -11,3 +11,4 @@ SuperBuild/.ExternalSource/
 Documentation/docs/build
 #ignore CLion temporary files.
 .idea/
+vcpkg

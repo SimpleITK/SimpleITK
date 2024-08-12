@@ -6,6 +6,14 @@ cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION})
 # http://www.cmake.org/pipermail/cmake/2010-February/035174.html
 SET(MSVC_INCREMENTAL_DEFAULT ON)
 
+list(APPEND VCPKG_FEATURE_FLAGS "versions")
+# Setup vcpkg script with CMake (note: should be placed before project() call)
+if(DEFINED ENV{VCPKG_ROOT})
+    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+else()
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+endif()
+
 project ( SimpleITK )
 
 cmake_policy( VERSION ${SITK_CMAKE_POLICY_VERSION} )
