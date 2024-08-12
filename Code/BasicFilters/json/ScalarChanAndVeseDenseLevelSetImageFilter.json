@@ -157,7 +157,7 @@
     }
   ],
   "briefdescription" : "Dense implementation of the Chan and Vese multiphase level set image filter.",
-  "detaileddescription" : "This code was adapted from the paper: \"An active contour model without edges\"\n T. Chan and L. Vese.\n In Scale-Space Theories in Computer Vision, pages 141-151, 1999.\n \\author Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.\n\n\nThis code was taken from the Insight Journal paper: \"Cell Tracking using Coupled Active Surfaces for Nuclei and Membranes\"\nhttps://www.insight-journal.org/browse/publication/642\n That is based on the papers: \"Level Set Segmentation: Active Contours without edge\"\nhttps://www.insight-journal.org/browse/publication/322\n\nand\n\n\"Level set segmentation using coupled active surfaces\"\nhttps://www.insight-journal.org/browse/publication/323",
+  "detaileddescription" : "This code was adapted from the paper: \"An active contour model without edges\"\n T. Chan and L. Vese.\n In Scale-Space Theories in Computer Vision, pages 141-151, 1999.\n \\author Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.\n\n\nThis code was taken from the Insight Journal paper: \"Cell Tracking using Coupled Active Surfaces for Nuclei and Membranes\"\nhttps://doi.org/10.54294/wvwmf8\n That is based on the papers: \"Level Set Segmentation: Active Contours without edge\"\nhttps://doi.org/10.54294/8jk6oy\n\nand\n\n\"Level set segmentation using coupled active surfaces\"\nhttps://doi.org/10.54294/23ugmy",
   "itk_module" : "ITKReview",
   "itk_group" : "Review",
   "in_place" : false
