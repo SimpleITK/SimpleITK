@@ -573,7 +573,7 @@ $ N \\\\sim \\\\mathcal{N}(\\\\mu, \\\\sigma^2) $
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". https://www.insight-journal.org/browse/publication/721
+Simulation\". https://doi.org/10.54294/vh6vbw
 See:
  itk::simple::AdditiveGaussianNoise for the procedural interface
 
@@ -738,7 +738,7 @@ labels and assigns them to the first label of the label map. At the
 end of the execution of this filter, the map will contain a single
 filter.
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -1129,7 +1129,7 @@ leaving the rest of the image unchanged.
 
 This code was contributed in the Insight Journal paper
 
-\"Grayscale morphological attribute operations\" by Beare R. https://www.insight-journal.org/browse/publication/203
+\"Grayscale morphological attribute operations\" by Beare R. https://doi.org/10.54294/ifvjls
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -1233,7 +1233,7 @@ leaving the rest of the image unchanged.
 
 This code was contributed in the Insight Journal paper
 
-\"Grayscale morphological attribute operations\" by Beare R. https://www.insight-journal.org/browse/publication/203
+\"Grayscale morphological attribute operations\" by Beare R. https://doi.org/10.54294/ifvjls
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -1924,7 +1924,7 @@ The change in image geometry from a 5x5 image binned by a factor of
 
 This code was contributed in the Insight Journal paper: \"BinShrink: A
 multi-resolution filter with cache efficient averaging\" by Lowekamp
-B., Chen D. https://www.insight-journal.org/browse/publication/912
+B., Chen D. https://doi.org/10.54294/p39qox
 See:
  itk::simple::BinShrink for the procedural interface
 
@@ -2001,7 +2001,7 @@ The structuring element is assumed to be composed of binary values
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -2131,7 +2131,7 @@ changed to BackgroundValue.
 The connectivity can be changed to minimum or maximum connectivity
 with SetFullyConnected() . Full connectivity produces thicker contours.
 
-https://www.insight-journal.org/browse/publication/217
+https://doi.org/10.54294/c7d3gv
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -2521,7 +2521,7 @@ and Applications\", Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -2622,7 +2622,7 @@ Principles and Applications\", Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -2734,7 +2734,7 @@ have a lower label.
 
 The GetOutput() function of this class returns an itk::LabelMap .
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3161,7 +3161,7 @@ The structuring element is assumed to be composed of binary values
 > 0 are candidates for affecting the center pixel.
 
 This code was contributed in the Insight Journal paper: \"Binary
-morphological closing and opening image filters\" by Lehmann G. https://www.insight-journal.org/browse/publication/58
+morphological closing and opening image filters\" by Lehmann G. https://doi.org/10.54294/bcwtvq
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3292,7 +3292,7 @@ The structuring element is assumed to be composed of binary values
 > 0 are candidates for affecting the center pixel.
 
 This code was contributed in the Insight Journal paper: \"Binary
-morphological closing and opening image filters\" by Lehmann G. https://www.insight-journal.org/browse/publication/58
+morphological closing and opening image filters\" by Lehmann G. https://doi.org/10.54294/bcwtvq
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3416,7 +3416,7 @@ Where \"!=\" is the equality operator in C++.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 See:
  itk::simple::BinaryNot for the procedural interface
 
@@ -3503,7 +3503,7 @@ The structuring element is assumed to be composed of binary values
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -3638,7 +3638,7 @@ Binary projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3833,7 +3833,7 @@ Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -3950,7 +3950,7 @@ Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -4235,7 +4235,7 @@ BinaryThreshold projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-the original paper can be found at https://www.insight-journal.org/browse/publication/71
+the original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -4635,7 +4635,7 @@ approach.
 
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G https://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://doi.org/10.54294/igq8fn
 
 
 Richard Beare
@@ -4700,7 +4700,7 @@ approach.
 
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G https://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://doi.org/10.54294/igq8fn
 
 
 Gaetan Lehmann
@@ -5435,7 +5435,7 @@ Labels that are relabeled to the same label Id are automatically
 merged and optimized into a single LabelObject . The background label can also be changed. Any object relabeled to
 the output background will automatically be removed.
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -7013,7 +7013,7 @@ This filter ignores the spacing, origin, and orientation of the kernel
 image and treats them as identical to those in the input image.
  This code was contributed in the Insight Journal paper:
 
-\"Image Kernel Convolution\" by Tustison N., Gee J. https://www.insight-journal.org/browse/publication/208
+\"Image Kernel Convolution\" by Tustison N., Gee J. https://doi.org/10.54294/e292kx
 
 
 Nicholas J. Tustison
@@ -8278,7 +8278,7 @@ Tom Vercauteren, INRIA & Mauna Kea Technologies
 WARNING:
 This filter assumes that the fixed image type, moving image type and
 deformation field type all have the same number of dimensions.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/154
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/ux2obj
 
 
 See:
@@ -8692,7 +8692,7 @@ than itk::RecursiveGaussianImageFilter .
 
 
 Ivan Macia, Vicomtech, Spain, https://www.vicomtech.org/en
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/179
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/mrg5is
 
 
 See:
@@ -11324,7 +11324,7 @@ This filter ignores the spacing, origin, and orientation of the kernel
 image and treats them as identical to those in the input image.
  This code was adapted from the Insight Journal contribution:
 
-\"FFT Based Convolution\" by Gaetan Lehmann https://www.insight-journal.org/browse/publication/717
+\"FFT Based Convolution\" by Gaetan Lehmann https://doi.org/10.54294/0iky0u
 
 
 See:
@@ -11539,7 +11539,7 @@ pads the input appropriately.
 
 This code was adapted from the Insight Journal contribution:
 
-\"FFT Based Convolution\" by Gaetan Lehmann https://www.insight-journal.org/browse/publication/717
+\"FFT Based Convolution\" by Gaetan Lehmann https://doi.org/10.54294/0iky0u
 
 
 Gaetan Lehmann
@@ -11634,7 +11634,7 @@ image.
 For images with an odd-sized dimension, applying this filter twice
 will not produce the same image as the original one without using
 SetInverse(true) on one (and only one) of the two filters.
-https://www.insight-journal.org/browse/publication/125
+https://doi.org/10.54294/xd0lzg
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -11719,7 +11719,7 @@ Medians aren't separable, but if you want a large robust smoother to
 be relatively quick then it is worthwhile pretending that they are.
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G https://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://doi.org/10.54294/igq8fn
 
 
 Richard Beare
@@ -12348,7 +12348,7 @@ for each iteration is computed in DemonsRegistrationFunction .
 
 
 Tom Vercauteren, INRIA & Mauna Kea Technologies
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/154
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/ux2obj
 
 
 WARNING:
@@ -12846,7 +12846,7 @@ the remaining N dimensions. Orientation can be manipulated via the Transform cla
 
 The output image may be of any dimension.
 
-This implementation was contributed as a paper to the Insight Journal https://www.insight-journal.org/browse/publication/150
+This implementation was contributed as a paper to the Insight Journal https://doi.org/10.54294/dhogdz
 See:
  itk::simple::GaborSource for the procedural interface
 
@@ -15167,7 +15167,7 @@ The output image may be of any dimension.
 
 
 Tustison N., Avants B., Gee J. University of Pennsylvania
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/140
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/ze1ssz
 See:
  itk::simple::GridSource for the procedural interface
 
@@ -16078,7 +16078,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -17950,7 +17950,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -18656,7 +18656,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -19314,7 +19314,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -19450,7 +19450,7 @@ the same in the input and in the output image.
 The connectivity can be changed to minimum or maximum connectivity
 with SetFullyConnected() . Full connectivity produces thicker contours.
 
-https://www.insight-journal.org/browse/publication/217
+https://doi.org/10.54294/c7d3gv
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -19556,7 +19556,7 @@ the same in the input and the output image.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -19625,7 +19625,7 @@ the statistics attributes at once
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -20056,7 +20056,7 @@ produce a gray pixel with the same intensity than the input one.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -20203,7 +20203,7 @@ Negated equals true. In Both cases, the label is set with SetLabel() .
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -20357,7 +20357,7 @@ produce a gray pixel with the same intensity than the input one.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -20435,7 +20435,7 @@ foreground. The background values of the original binary image can be
 restored by passing this image to the filter with the
 SetBackgroundImage() method.
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -20522,7 +20522,7 @@ LabelMapToBinaryImageFilter to a label image.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -20576,7 +20576,7 @@ Convert a LabelMap to a colored image.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -20638,7 +20638,7 @@ of two images. Background is assumed to be 0.
 
 This code was contributed in the Insight Journal paper: \"Introducing
 Dice, Jaccard, and Other Label Overlap Measures To ITK\" by Nicholas
-J. Tustison, James C. Gee https://www.insight-journal.org/browse/publication/707
+J. Tustison, James C. Gee https://doi.org/10.54294/1vixgg
 
 
 Nicholas J. Tustison
@@ -20860,7 +20860,7 @@ intensity than the input one.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This class was contributed to the Insight Journal https://www.insight-journal.org/browse/publication/79
+ This class was contributed to the Insight Journal https://doi.org/10.54294/xr1bvx
 
 
 See:
@@ -20952,7 +20952,7 @@ attributes.
 A convenient class that converts a label image to a label map and
 valuates the shape attribute at once.
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -21517,7 +21517,7 @@ background label is produced.
 
 This code was contributed in the Insight Journal paper: \"The
 watershed transform in ITK - discussion and new developments\" by
-Beare R., Lehmann G. https://www.insight-journal.org/browse/publication/92
+Beare R., Lehmann G. https://doi.org/10.54294/lf8u75
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -21604,7 +21604,7 @@ keep is selected according to their label.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 See:
@@ -21947,7 +21947,7 @@ see ProjectedLandweberDeconvolutionImageFilter .
 This code was adapted from the Insight Journal contribution:
 
 \"Deconvolution: infrastructure and reference algorithms\" by Gaetan
-Lehmann https://www.insight-journal.org/browse/publication/753
+Lehmann https://doi.org/10.54294/tvgfv1
 
 
 Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA
@@ -23075,7 +23075,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -23878,7 +23878,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -24073,7 +24073,7 @@ Maximum projection.
 
 
 This class was contributed to the insight journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la reproduction, inra
@@ -24218,7 +24218,7 @@ Mean projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -24366,7 +24366,7 @@ Median projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -24448,7 +24448,7 @@ objects with the same label are merged. PACK (2): MergeLabelMapFilter relabel al
 occur. STRICT (3): MergeLabelMapFilter keeps the labels unchanged and raises an exception if the same label
 is found in several images.
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -24776,7 +24776,7 @@ Minimum projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -25016,7 +25016,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -25265,7 +25265,7 @@ Principles and Applications\", Second Edition, Springer, 2003.
 
 This code was contributed in the Insight Journal paper: \"The
 watershed transform in ITK - discussion and new developments\" by
-Beare R., Lehmann G. https://www.insight-journal.org/browse/publication/92
+Beare R., Lehmann G. https://doi.org/10.54294/lf8u75
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -25385,7 +25385,7 @@ Principles and Applications\", Second Edition, Springer, 2003.
 
 This code was contributed in the Insight Journal paper: \"The
 watershed transform in ITK - discussion and new developments\" by
-Beare R., Lehmann G. https://www.insight-journal.org/browse/publication/92
+Beare R., Lehmann G. https://doi.org/10.54294/lf8u75
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -25811,7 +25811,7 @@ results with a B-spline scalar field estimate of the bias field.
 
 Nicholas J. Tustison
  Contributed by Nicholas J. Tustison, James C. Gee in the Insight
-Journal paper: https://www.insight-journal.org/browse/publication/640
+Journal paper: https://doi.org/10.54294/jculxw
 
 REFERENCE
  J.G. Sled, A.P. Zijdenbos and A.C. Evans. \"A Nonparametric Method
@@ -26539,7 +26539,7 @@ This transform is especially useful for normalizing a convolution
 kernel.
 
 This code was contributed in the Insight Journal paper: \"FFT based
-convolution\" by Lehmann G. https://www.insight-journal.org/browse/publication/717
+convolution\" by Lehmann G. https://doi.org/10.54294/0iky0u
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -27461,7 +27461,7 @@ Richard Beare
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -28672,7 +28672,7 @@ images formed by counting photons, for example.
 This code was adapted from the Insight Journal contribution:
 
 \"Deconvolution: infrastructure and reference algorithms\" by Gaetan
-Lehmann https://www.insight-journal.org/browse/publication/753
+Lehmann https://doi.org/10.54294/tvgfv1
 
 
 Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA
@@ -28806,7 +28806,7 @@ The structuring element is assumed to be composed of binary values
 > 0 are candidates for affecting the center pixel.
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G https://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://doi.org/10.54294/igq8fn
 
 
 See:
@@ -29485,7 +29485,7 @@ a maxima or not. The desired behavior can be selected with the SetFlatIsMaxima()
 Gaetan Lehmann
  This class was contributed to the Insight Journal by author Gaetan
 Lehmann. Biologie du Developpement et de la Reproduction, INRA de
-Jouy-en-Josas, France. The paper can be found at https://www.insight-journal.org/browse/publication/65
+Jouy-en-Josas, France. The paper can be found at https://doi.org/10.54294/hva3gz
 
 
 See:
@@ -29626,7 +29626,7 @@ a minima or not. The SetFlatIsMinima() method let the user choose which behavior
 
 This class was contributed to the Insight Journal by
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
-de Jouy-en-Josas, France. https://www.insight-journal.org/browse/publication/65
+de Jouy-en-Josas, France. https://doi.org/10.54294/hva3gz
 
 See:
  RegionalMaximaImageFilter
@@ -29934,7 +29934,7 @@ attempts to reorganize the labels consecutively. The user can assign
 an arbitrary value to the background; the filter will assign the
 labels consecutively by skipping the background value.
 
-This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
@@ -30014,7 +30014,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -30436,7 +30436,7 @@ independent of the other pixels.
 This code was adapted from the Insight Journal contribution:
 
 \"Deconvolution: infrastructure and reference algorithms\" by Gaetan
-Lehmann https://www.insight-journal.org/browse/publication/753
+Lehmann https://doi.org/10.54294/tvgfv1
 
 
 Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA
@@ -30664,7 +30664,7 @@ id is zero.
 
 This code was contributed in the Insight Journal paper: \"Scalable
 Simple Linear Iterative Clustering (SSLIC) Using a Generic and
-Parallel Approach\" by Lowekamp B. C., Chen D. T., Yaniv Z., Yoo T. S. https://www.insight-journal.org/browse/publication/989
+Parallel Approach\" by Lowekamp B. C., Chen D. T., Yaniv Z., Yoo T. S. https://doi.org/10.54294/8hic7f
 See:
  itk::simple::SLIC for the procedural interface
 
@@ -31050,7 +31050,7 @@ pepper pixels are equally distributed.
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". https://www.insight-journal.org/browse/publication/721
+Simulation\". https://doi.org/10.54294/vh6vbw
 See:
  itk::simple::SaltAndPepperNoise for the procedural interface
 
@@ -31126,12 +31126,12 @@ without edges\" T. Chan and L. Vese. In Scale-Space Theories in
 Computer Vision, pages 141-151, 1999.
 Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.
  This code was taken from the Insight Journal paper: \"Cell Tracking
-using Coupled Active Surfaces for Nuclei and Membranes\" https://www.insight-journal.org/browse/publication/642 That is based on the papers: \"Level Set Segmentation: Active
-Contours without edge\" https://www.insight-journal.org/browse/publication/322
+using Coupled Active Surfaces for Nuclei and Membranes\" https://doi.org/10.54294/wvwmf8 That is based on the papers: \"Level Set Segmentation: Active
+Contours without edge\" https://doi.org/10.54294/8jk6oy
 
 and
 
-\"Level set segmentation using coupled active surfaces\" https://www.insight-journal.org/browse/publication/323
+\"Level set segmentation using coupled active surfaces\" https://doi.org/10.54294/23ugmy
 See:
  itk::simple::ScalarChanAndVeseDenseLevelSet for the procedural interface
 
@@ -31491,7 +31491,7 @@ mapped to the entire range of colors.
 
 This code was contributed in the Insight Journal paper: \"Meeting Andy
 Warhol Somewhere Over the Rainbow: RGB Colormapping and ITK\" by
-Tustison N., Zhang H., Lehmann G., Yushkevich P., Gee J. https://www.insight-journal.org/browse/publication/285
+Tustison N., Zhang H., Lehmann G., Yushkevich P., Gee J. https://doi.org/10.54294/tmojbk
 
 
 See:
@@ -31811,7 +31811,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -32256,7 +32256,7 @@ where $ N() $ is a normally distributed random variable of mean 0 and variance 1
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". https://www.insight-journal.org/browse/publication/721
+Simulation\". https://doi.org/10.54294/vh6vbw
 See:
  itk::simple::ShotNoise for the procedural interface
 
@@ -33530,7 +33530,7 @@ $ G \\\\sim \\\\Gamma(\\\\frac{1}{\\\\sigma^2}, \\\\sigma^2) $
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". https://www.insight-journal.org/browse/publication/721
+Simulation\". https://doi.org/10.54294/vh6vbw
 See:
  itk::simple::SpeckleNoise for the procedural interface
 
@@ -33785,7 +33785,7 @@ Mean projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -33986,7 +33986,7 @@ This filter was contributed by Nick Tustison and James Gee from the
 PICSL lab, at the University of Pennsylvania as an paper to the
 Insight Journal:
 
-\"Stochastic Fractal Dimension Image\" https://www.insight-journal.org/browse/publication/318
+\"Stochastic Fractal Dimension Image\" https://doi.org/10.54294/ne109t
 
 
 Nick Tustison
@@ -34138,7 +34138,7 @@ Sum projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at https://www.insight-journal.org/browse/publication/71
+The original paper can be found at https://doi.org/10.54294/0pjyho
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -34850,7 +34850,7 @@ counted.
 References:
 1) Urish KL, August J, Huard J. \"Unsupervised segmentation for
 myofiber counting in immunofluorescent microscopy images\". Insight
-Journal. ISC/NA-MIC/MICCAI Workshop on Open-Source Software (2005) https://www.insight-journal.org/browse/publication/40 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
+Journal. ISC/NA-MIC/MICCAI Workshop on Open-Source Software (2005) https://doi.org/10.54294/h1vbsl 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
 topological stable-state\". Pattern Recognition, 29(5): 829-843, 1996.
 
 Questions: email Ken Urish at ken.urish(at)gmail.com Please cc the itk
@@ -35755,7 +35755,7 @@ ThreadedGenerateData() method for its implementation.
 
 
 Marius Staring, Leiden University Medical Center, The Netherlands.
- This class was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/240
+ This class was taken from the Insight Journal paper: https://doi.org/10.54294/4ids6q
 See:
  itk::simple::TransformToDisplacementFieldFilter for the procedural interface
 
@@ -36283,7 +36283,7 @@ Australia.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
@@ -36611,7 +36611,7 @@ completely flat image will be marked as a regional maxima by this
 filter.
 
 This code was contributed in the Insight Journal paper: \"Finding
-regional extrema - methods and performance\" by Beare R., Lehmann G. https://www.insight-journal.org/browse/publication/65
+regional extrema - methods and performance\" by Beare R., Lehmann G. https://doi.org/10.54294/hva3gz
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -36698,7 +36698,7 @@ completely flat image will be marked as a regional minima by this
 filter.
 
 This code was contributed in the Insight Journal paper: \"Finding
-regional extrema - methods and performance\" by Beare R., Lehmann G. https://www.insight-journal.org/browse/publication/65
+regional extrema - methods and performance\" by Beare R., Lehmann G. https://doi.org/10.54294/hva3gz
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -38264,7 +38264,7 @@ Richard Beare
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: https://www.insight-journal.org/browse/publication/811
+ This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/efycla
 
 
 See:
