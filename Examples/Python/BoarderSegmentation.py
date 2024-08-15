@@ -17,15 +17,16 @@
 #
 # =========================================================================
 
+""" An example script demonstrating boarder segmentation in SimpleITK. """
 
 import sys
-import SimpleITK as sitk
 import os
+import SimpleITK as sitk
 
 # verify that we have the correct number of arguments
 if len(sys.argv) != 5:
-    sys.stderr.write("Usage: prog inputFile outputFile replaceValue upperThreshold\n")
-    exit(1)
+    sys.stderr.write("Usage: {sys.argv[0]} inputFile outputFile replaceValue upperThreshold\n")
+    sys.exit(1)
 
 # copy the arguments in to variables
 inputFileName = sys.argv[1]

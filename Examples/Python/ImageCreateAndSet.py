@@ -17,6 +17,7 @@
 #
 # =========================================================================
 
+""" A SimpleITK example that sets pixel values and computes a Gaussian blob. """
 
 import os
 

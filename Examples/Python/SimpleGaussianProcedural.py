@@ -18,13 +18,15 @@
 # =========================================================================
 
 
+""" Example of the SmoothRecursiveGaussian function in SimpleITK """
+
 import os
 import sys
 
 import SimpleITK as sitk
 
 if len(sys.argv) < 4:
-    print("Usage: %s <input> <sigma> <output>" % (sys.argv[0]))
+    print(f"Usage: {sys.argv[0]} <input> <sigma> <output>")
     sys.exit(1)
 
 image = sitk.ReadImage(sys.argv[1])
