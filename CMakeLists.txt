@@ -357,6 +357,8 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
 if ( BUILD_TESTING )
 
+  find_package(GTest REQUIRED )
+
   include( sitkAddTest )
 
   enable_testing()
