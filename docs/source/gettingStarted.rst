@@ -79,19 +79,15 @@ SimpleITK Conda binaries are available for the conda-forge ecosystem. To get sta
 .. code-block :: bash
 
  conda create --name sitk python=3.11 simpleitk --channel conda-forge --override-channels
+ conda activate sitk
 
-This will create a new conda environment named ``sitk`` with Python 3.11 and SimpleITK installed from the `Anaconda
+This will create and activate a new conda environment named ``sitk`` with Python 3.11 and SimpleITK installed from the `Anaconda
 conda-forge channel <https://anaconda.org/conda-forge/simpleitk>`__. The version of python can be changed to any
 supported version.
 
-To activate the environment, run:
-
-.. code-block :: bash
-
- conda activate sitk
-
-Conda-forge now recommends not mixing the `default` channel with the conda-forge channel, since the
-mixing different libc versions can cause conflicts. Alternatively, the
+The above ``create`` command creates an environment which only used the conda-forge channel. This follows Conda-forge's
+recommendation to not mix the ``defaults`` channel with the conda-forge channel. Mixing the channels can cause package
+dependency issues, missing libraries, and a non-functional virtual environment. Alternatively, the
 `miniforge <https://github.com/conda-forge/miniforge>`__ installer can be used to create dedicated conda-forge
 environments.
 
