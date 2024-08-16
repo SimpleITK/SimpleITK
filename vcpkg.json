@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-schema-definitions.schema.json",
-  "name": "simple-itk",
+  "name": "simpleitk",
   "version-string": "2.4.0",
   "license": "Apache-2.0",
   "dependencies": [
