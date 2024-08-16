@@ -457,6 +457,7 @@ Melonakos
 Mendelsohn
 Mersenne
 Miniconda
+miniforge
 Minimising
 Modersitzki
 Momentss
