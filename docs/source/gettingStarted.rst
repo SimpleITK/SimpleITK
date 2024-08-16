@@ -74,25 +74,26 @@ Alternatively, the wheels can be manually downloaded from `GitHub releases
 Conda-based distributions (Anaconda, Miniconda)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-From the command line prompt, execute:
+SimpleITK Conda binaries are available for the conda-forge ecosystem. To get started run the following command:
 
 .. code-block :: bash
 
- conda install -c conda-forge simpleitk
+ conda create --name sitk python=3.11 simpleitk --channel conda-forge --override-channels
 
-This will install the latest version of SimpleITK that is compatible
-with the package versions already installed in your environment. To install
-the latest version of SimpleITK and update all version dependencies, execute:
+This will create a new conda environment named ``sitk`` with Python 3.11 and SimpleITK installed from the `Anaconda
+conda-forge channel <https://anaconda.org/conda-forge/simpleitk>`__. The version of python can be changed to any
+supported version.
 
-.. code-block :: bash
-
- conda install --update-deps -c conda-forge simpleitk
-
-Finally, to install a specific version, for example 2.2.1, execute:
+To activate the environment, run:
 
 .. code-block :: bash
 
- conda install -c conda-forge simpleitk=2.2.1
+ conda activate sitk
+
+Conda-forge now recommends not mixing the `default` channel with the conda-forge channel, since the
+mixing different libc versions can cause conflicts. Alternatively, the
+`miniforge <https://github.com/conda-forge/miniforge>`__ installer can be used to create dedicated conda-forge
+environments.
 
 
 C# binary files
