@@ -17,12 +17,12 @@
 #
 # =========================================================================
 
-from __future__ import division
+""" Example script showing Fast Fourier Transform convolution in SimpleITK """
 
-import SimpleITK as sitk
 import sys
 import os
 import math
+import SimpleITK as sitk
 
 if len(sys.argv) < 4:
     print("Usage: FFTConvolution <input> <kernel> <output>")

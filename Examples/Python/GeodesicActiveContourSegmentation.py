@@ -16,6 +16,7 @@
 #
 # =========================================================================
 
+""" An example showing how to use SimpleITK's GeodesicActiveContourLevelSetImageFilter """
 
 import os
 import sys

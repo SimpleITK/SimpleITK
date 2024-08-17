@@ -17,13 +17,14 @@
 #
 # =========================================================================
 
+""" An example script demonstrating Canny Edge Detection in SimpleITK. """
 
-import SimpleITK as sitk
 import sys
 import os
+import SimpleITK as sitk
 
 if len(sys.argv) < 2:
-    print("Usage: %s <input>" % (sys.argv[0]))
+    print(f"Usage: {sys.argv[0]} <input>")
     sys.exit(1)
 
 image = sitk.Cast(sitk.ReadImage(sys.argv[1]), sitk.sitkFloat32)

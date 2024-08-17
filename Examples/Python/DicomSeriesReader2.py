@@ -19,12 +19,11 @@
 # =========================================================================
 
 
-#
-#  This example shows how to read a specific series from a Dicom directory that
-#  may contain more than one series.  The script scans for all series.  If an
-#  output name is given, it writes out the requested series.  If no specific
-#  series name is given, the first series found is written.
-#
+""" This example shows how to read a specific series from a Dicom directory that
+may contain more than one series.  The script scans for all series.  If an
+output name is given, it writes out the requested series.  If no specific
+series name is given, the first series found is written.
+"""
 
 
 import sys
@@ -36,8 +35,9 @@ output_image = ""
 
 
 def usage():
+    """ Print usage information. """
     print(
-        "\nUsage: %s [-s series_name] input_directory [output_image]\n" % (sys.argv[0])
+        f"\nUsage: {sys.argv[0]} [-s series_name] input_directory [output_image]\n"
     )
 
 
@@ -88,7 +88,7 @@ if len(series_found):
             print("\nImage size: ", image.GetSize())
 
             if (output_image != "") and not written:
-                if target_series == "" or target_series == serie:
+                if target_series in ('', serie):
                     print("\nWriting", output_image)
                     sitk.WriteImage(image, output_image)
                     written = True

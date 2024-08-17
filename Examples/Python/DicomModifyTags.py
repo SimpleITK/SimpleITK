@@ -17,10 +17,11 @@
 # =========================================================================
 
 
-import SimpleITK as sitk
+""" An example script showing how to modify the tags of a DICOM image with SimpleITK. """
 
 import sys
 import time
+import SimpleITK as sitk
 
 if len(sys.argv) < 3:
     print("Usage: python " + __file__ + " <input_image> <output_image>")
