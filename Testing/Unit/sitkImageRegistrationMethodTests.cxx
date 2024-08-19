@@ -19,6 +19,7 @@
 #include <SimpleITK.h>
 
 #include <memory>
+#include <iomanip>
 
 namespace
 {
