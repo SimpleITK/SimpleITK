@@ -126,20 +126,26 @@ at :ref:`setup SimpleITK with Java <setup-java>`.
 R binary files
 --------------
 
-R binaries are currently only available for Linux and Mac.
+R binaries are not available.
 
-SimpleITK/R is installed using a devtools based installer
-(`GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__).
-Strictly speaking, this is not a binary distribution, but it is a convenient
-way of automatically compiling and installing on a system.
+For Linux and Mac one can easily build and install SimpleITK from source using a `devtools <https://cran.r-project.org/web/packages/devtools/readme/README.html>`__ based installer
+referencing this `GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
 
 This installation requires `R devtools <https://github.com/r-lib/devtools>`__,
 `CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__, and a compiler
 in the path.
 
+One line commands to build and install the package:
+
 .. code-block :: bash
 
   devtools::install_github("SimpleITK/SimpleITKRInstaller")
+
+or using six cores for compilation (change this number based on your hardware):
+
+.. code-block :: bash
+
+  devtools::install_github("SimpleITK/SimpleITKRInstaller", args=c("--configure-vars=MAKEJ=6"))
 
 
 Latest binaries

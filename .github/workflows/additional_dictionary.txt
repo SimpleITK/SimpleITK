@@ -1,3 +1,5 @@
+cran
+readme
 deps
 UIDs
 unittest

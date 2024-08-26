@@ -33,7 +33,7 @@ operating system version. If you need a newer SimpleITK binary than the one avai
 for your Python version you can :ref:`build it on your own<building_simpleitk>`.
 
 How do I use the SimpleElastix framework in SimpleITK?
------------------------------------------------------
+------------------------------------------------------
 
 SimpleITK binary distributions do not include the SimpleElastix framework. To use
 the version of SimpleElastix included in SimpleITK, you will need to
@@ -320,7 +320,7 @@ distribution. However, we recommend compiling SimpleITK
 explicitly against this Python distribution to ensure compatibility.
 
 How do I read an image with a special character in the filename?
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Special characters are non-ANSI characters, which require a non-ASCII encoding for representation. Unicode is the
 modern standard with UTF-8 being the most common. The underlying ITK API calls uses bytes to represent the filename which
