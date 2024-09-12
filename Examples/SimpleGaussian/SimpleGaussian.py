@@ -18,12 +18,15 @@
 # =========================================================================
 
 
+""" Apply SimpleITK's SmoothGaussianImageFilter to an image. """
+
 import os
 import sys
 import SimpleITK as sitk
 
 
 def main(args):
+    """ Apply SimpleITK's SmoothGaussianImageFilter to an image. """
     if len(args) < 4:
         print("Usage: SimpleGaussian <input> <sigma> <output>")
         sys.exit(1)

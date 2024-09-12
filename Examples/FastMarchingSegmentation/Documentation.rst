@@ -109,4 +109,4 @@ Code
 
     .. literalinclude:: ../../Examples/FastMarchingSegmentation/FastMarchingSegmentation.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,22-

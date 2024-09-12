@@ -17,10 +17,12 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating how to read a DICOM
+    series using DicomSeriesReader and then write out a 3d image. """
 
-import SimpleITK as sitk
 import sys
 import os
+import SimpleITK as sitk
 
 if len(sys.argv) < 3:
     print("Usage: DicomSeriesReader <input_directory> <output_file>")

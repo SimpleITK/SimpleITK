@@ -17,20 +17,26 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using the
+    BSplineTransform and the ComplexCorrelation metric. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked when the optimization has an iteration """
     print(f"{method.GetOptimizerIteration():3} " + f"= {method.GetMetricValue():10.5f}")
 
 
 def main(args):
+    """ A SimpleITK example demonstrating image registration using the
+        BSplineTransform and the ComplexCorrelation metric. """
     if len(args) < 4:
         print(
             "Usage:",
-            sys.args[0],
+            sys.argv[0],
             "<fixedImageFilter> <movingImageFile>",
             "<outputTransformFile>",
         )

@@ -70,7 +70,7 @@ Code
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethod4/ImageRegistrationMethod4.py
        :language: python
-       :lines: 1,19-88
+       :lines: 1,19-91
 
   .. tab:: R
 

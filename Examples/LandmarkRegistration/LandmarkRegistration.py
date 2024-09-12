@@ -17,6 +17,8 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating landmark registration. """
+
 import sys
 import SimpleITK as sitk
 

@@ -17,6 +17,8 @@
 #
 # =========================================================================
 
+""" An SimpleITK example demonstrating advanced image reading techniques. """
+
 import sys
 
 import SimpleITK as sitk

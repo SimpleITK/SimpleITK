@@ -16,6 +16,9 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating image viewing using the Show function
+    and an external application. """
+
 import sys
 import SimpleITK as sitk
 

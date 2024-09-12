@@ -24,7 +24,7 @@ Code
 
     .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.py
        :language: python
-       :lines: 19-
+       :lines: 22-
 
   .. tab:: R
 

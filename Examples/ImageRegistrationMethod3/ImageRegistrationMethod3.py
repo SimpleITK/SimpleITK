@@ -17,12 +17,17 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using the
+    correlation metric and the center of mass initial transformation
+    estimation method. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked when the optimization has an iteration """
     if method.GetOptimizerIteration() == 0:
         print("Estimated Scales: ", method.GetOptimizerScales())
     print(
@@ -33,6 +38,9 @@ def command_iteration(method):
 
 
 def main(args):
+    """ A SimpleITK example demonstrating image registration using the
+        correlation metric and the center of mass initial transformation
+        estimation method. """
     if len(args) < 3:
         print(
             "Usage:",

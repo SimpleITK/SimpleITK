@@ -17,12 +17,12 @@
 #
 # =========================================================================
 
+""" Example demonstrating a slice-by-slice function decorator """
 
-import SimpleITK as sitk
 import sys
-
 import itertools
 from functools import wraps
+import SimpleITK as sitk
 
 
 def slice_by_slice_decorator(func):

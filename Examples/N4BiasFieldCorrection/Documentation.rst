@@ -105,7 +105,7 @@ Code
 
     .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.py
        :language: python
-       :lines: 1,20-83
+       :lines: 1,19-84
 
   .. tab:: R
 

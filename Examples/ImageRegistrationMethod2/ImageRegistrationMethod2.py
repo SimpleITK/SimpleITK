@@ -17,12 +17,16 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration with histogram
+    mutual information as a similarity measure. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked when the optimization process is running. """
     print(
         f"{method.GetOptimizerIteration():3} "
         + f" = {method.GetMetricValue():7.5f} "
@@ -31,6 +35,8 @@ def command_iteration(method):
 
 
 def main(args):
+    """ A SimpleITK example demonstrating image registration with histogram
+        mutual information as a similarity measure. """
     if len(args) < 3:
         print(
             "Usage:",

@@ -17,12 +17,16 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using the
+    BSplineTransform and the JointHistogramMutualInformation metric. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method, bspline_transform):
+    """ Callback invoked each iteration """
     if method.GetOptimizerIteration() == 0:
         # The BSpline is resized before the first optimizer
         # iteration is completed per level. Print the transform object
@@ -33,10 +37,12 @@ def command_iteration(method, bspline_transform):
 
 
 def command_multi_iteration(method):
-    # The sitkMultiResolutionIterationEvent occurs before the
-    # resolution of the transform. This event is used here to print
-    # the status of the optimizer from the previous registration level.
-    if R.GetCurrentLevel() > 0:
+    """ Callback invoked before starting a multi-resolution level.
+    The sitkMultiResolutionIterationEvent occurs before the
+    resolution of the transform. This event is used here to print
+    the status of the optimizer from the previous registration level.
+    """
+    if method.GetCurrentLevel() > 0:
         print(
             "Optimizer stop condition: " + f"{R.GetOptimizerStopConditionDescription()}"
         )

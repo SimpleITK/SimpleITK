@@ -88,7 +88,7 @@ Code
 
     .. literalinclude:: ../../Examples/SimpleGaussian/SimpleGaussian.py
        :language: python
-       :lines: 1,22-53
+       :lines: 1,21-54
 
   .. tab:: R
 

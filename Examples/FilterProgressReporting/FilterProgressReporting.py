@@ -17,6 +17,9 @@
 #
 # =========================================================================
 
+
+""" A SimpleITK example demonstrating filter progress reporting. """
+
 import os
 import sys
 
@@ -29,12 +32,15 @@ if len(sys.argv) < 4:
 
 ##! [python director command]
 class MyCommand(sitk.Command):
+    """ Sample command class that prints the progress of the process object. """
     def __init__(self, po):
+        """ Constructor, note that the base class constructor is called here. """
         # required
-        super(MyCommand, self).__init__()
+        super().__init__()
         self.processObject = po
 
     def Execute(self):
+        """ Method that is called by the process object. """
         print(
             f"{self.processObject.GetName()}"
             + f" Progress: {self.processObject.GetProgress():1.2f}"

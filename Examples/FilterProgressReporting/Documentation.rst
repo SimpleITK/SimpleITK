@@ -136,7 +136,7 @@ Code
 
     .. literalinclude:: ../../Examples/FilterProgressReporting/FilterProgressReporting.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,22-
 
   .. group-tab:: R
 

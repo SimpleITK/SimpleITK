@@ -17,12 +17,17 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example that demonstrates how to apply N4BiasFieldImageFilter
+    to an image. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def main(args):
+    """ A SimpleITK example that demonstrates how to apply N4BiasFieldImageFilter
+        to an image. """
     if len(args) < 2:
         print(
             "Usage: N4BiasFieldCorrection inputImage "

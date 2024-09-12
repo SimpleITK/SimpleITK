@@ -17,17 +17,20 @@
 #
 # =========================================================================
 
+
+
+"""
+These examples are used in the I/O documentation page. The IO.rst file
+pulls the code examples based their line numbers in this file. So any
+change in the line numbers of the code below will break the I/O page.
+"""
+
 import sys
-
-
-# These examples are used in the I/O documentation page. The IO.rst file
-# pulls the code examples based their line numbers in this file. So any
-# change in the line numbers of the code below will break the I/O page.
-
 
 # A simple image input/output example
 #
 def example1(inputImageFileName, outputImageFileName):
+    """ A Simple Image Input/Output Example """
 
     import SimpleITK as sitk
 
@@ -44,6 +47,7 @@ def example1(inputImageFileName, outputImageFileName):
 # A simple procedural image input/output example
 #
 def example2(inputImageFileName, outputImageFileName):
+    """ A Simple Procedural Image Input/Output Example """
 
     import SimpleITK as sitk
 
@@ -54,6 +58,7 @@ def example2(inputImageFileName, outputImageFileName):
 # A simple transform input/output example
 #
 def example3():
+    """ A Simple Transform Input/Output Example """
 
     import SimpleITK as sitk
 
@@ -63,7 +68,7 @@ def example3():
     sitk.WriteTransform(basic_transform, "euler2D.tfm")
     read_result = sitk.ReadTransform("euler2D.tfm")
 
-    assert type(read_result) == type(basic_transform)
+    assert isinstance(read_result, sitk.Euler2DTransform)
 
 
 if __name__ == "__main__":

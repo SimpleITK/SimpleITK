@@ -16,12 +16,13 @@
 #
 # =========================================================================
 
-
-import SimpleITK as sitk
+""" A SimpleITK example script demonstrating how to read a DICOM series,
+    modify it, and then write a new DICOM series. """
 
 import sys
 import time
 import os
+import SimpleITK as sitk
 
 if len(sys.argv) < 3:
     print(

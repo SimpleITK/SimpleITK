@@ -68,7 +68,7 @@ Code
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethod3/ImageRegistrationMethod3.py
        :language: python
-       :lines: 1,20-95
+       :lines: 1,20-96
 
   .. tab:: R
 

@@ -17,17 +17,22 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using the
+    BSplineTransform and the MattesMutualInformation metric.  """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked each iteration. """
     print(f"{method.GetOptimizerIteration():3} " + f"= {method.GetMetricValue():10.5f}")
     print("\t#: ", len(method.GetOptimizerPosition()))
 
 
-def command_multi_iteration(method):
+def command_multi_iteration(_):
+    """ Callback invoked at the end of each multi-resolution iteration. """
     print("--------- Resolution Changing ---------")
 
 
