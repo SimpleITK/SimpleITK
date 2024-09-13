@@ -17,12 +17,16 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating basic image registration using the
+    TranlationTransform and the gradient descent optimizer. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked when the optimization process is performing an iteration. """
     print(
         f"{method.GetOptimizerIteration():3} "
         + f"= {method.GetMetricValue():10.5f} "
@@ -31,6 +35,8 @@ def command_iteration(method):
 
 
 def main(args):
+    """ A basic SimpleITK image registration example. """
+
     if len(args) < 3:
         print(
             "Usage:",

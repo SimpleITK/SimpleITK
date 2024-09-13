@@ -28,7 +28,7 @@ Code
 
     .. literalinclude:: ../../Examples/DicomSeriesReadModifyWrite/DicomSeriesReadModifySeriesWrite.py
        :language: python
-       :lines: 19-
+       :lines: 22-
 
   .. tab:: R
 

@@ -17,12 +17,15 @@
 #
 # =========================================================================
 
+""" A SimpleITK 'Hello World' example. """
+
 import os
 import sys
 import SimpleITK as sitk
 
 
-def main(args):
+def main(_):
+    """ Generate a simple image and display it using the SimpleITK Show function. """
     # Create an image
     pixelType = sitk.sitkUInt8
     imageSize = [128, 128]

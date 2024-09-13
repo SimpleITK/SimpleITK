@@ -17,6 +17,8 @@
 #
 # =========================================================================
 
+""" A SimpleITK example that demonstrates how to read a raw image. """
+
 import argparse
 import os
 import tempfile

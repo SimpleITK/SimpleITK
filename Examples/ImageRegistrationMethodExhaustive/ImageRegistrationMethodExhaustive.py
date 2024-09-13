@@ -17,13 +17,17 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using the exhaustive
+    optimizer. """
+
 import sys
 import os
 from math import pi
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked when the optimization has an iteration """
     if method.GetOptimizerIteration() == 0:
         print("Scales: ", method.GetOptimizerScales())
     print(
@@ -51,6 +55,8 @@ R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMattesMutualInformation(numberOfHistogramBins=50)
 
 sample_per_axis = 12
+tx = None
+
 if fixed.GetDimension() == 2:
     tx = sitk.Euler2DTransform()
     # Set the number of samples (radius) in each dimension, with a

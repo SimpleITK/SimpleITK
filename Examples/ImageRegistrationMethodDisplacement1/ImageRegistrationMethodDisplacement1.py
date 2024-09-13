@@ -17,12 +17,17 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using the
+    DisplacementFieldTransform and the JointHistogramMutualInformation
+    metric.  """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked each iteration. """
     if method.GetOptimizerIteration() == 0:
         print(f"\tLevel: {method.GetCurrentLevel()}")
         print(f"\tScales: {method.GetOptimizerScales()}")
@@ -34,6 +39,7 @@ def command_iteration(method):
 
 
 def command_multiresolution_iteration(method):
+    """ Callback invoked at the end of each multi-resolution level. """
     print(f"\tStop Condition: {method.GetOptimizerStopConditionDescription()}")
     print("============= Resolution Change =============")
 

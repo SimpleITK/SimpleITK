@@ -16,6 +16,9 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating how to convert and resize DICOM files
+    to common image types. """
+
 import argparse
 import csv
 import functools
@@ -28,6 +31,7 @@ import SimpleITK as sitk
 
 
 def convert_image(input_file_name, output_file_name, new_width=None):
+    """ Convert a single DICOM image to a common image type. """
     try:
         image_file_reader = sitk.ImageFileReader()
         # only read DICOM images
@@ -73,11 +77,12 @@ def convert_image(input_file_name, output_file_name, new_width=None):
             image = sitk.Cast(image, sitk.sitkUInt8)
         sitk.WriteImage(image, output_file_name)
         return True
-    except BaseException:
+    except RuntimeError:
         return False
 
 
 def convert_images(input_file_names, output_file_names, new_width):
+    """ Convert multiple DICOM images in parallel to a common image type. """
     MAX_PROCESSES = 15
     with multiprocessing.Pool(processes=MAX_PROCESSES) as pool:
         return pool.starmap(
@@ -87,6 +92,7 @@ def convert_images(input_file_names, output_file_names, new_width):
 
 
 def positive_int(int_str):
+    """ Custom argparse type for positive integers. """
     value = int(int_str)
     if value <= 0:
         raise argparse.ArgumentTypeError(int_str + " is not a positive integer value")
@@ -94,12 +100,14 @@ def positive_int(int_str):
 
 
 def directory(dir_name):
+    """ Custom argparse type for directory. """
     if not os.path.isdir(dir_name):
         raise argparse.ArgumentTypeError(dir_name + " is not a valid directory name")
     return dir_name
 
 
 def main(argv=None):
+    """ Main function. """
     parser = argparse.ArgumentParser(
         description="Convert and resize DICOM files to common image types."
     )
@@ -117,7 +125,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     input_file_names = []
-    for dir_name, subdir_names, file_names in os.walk(args.root_of_data_directory):
+    for dir_name, _, file_names in os.walk(args.root_of_data_directory):
         input_file_names += [
             os.path.join(os.path.abspath(dir_name), fname) for fname in file_names
         ]
@@ -142,7 +150,7 @@ def main(argv=None):
     # using csv module and not pandas so as not to create more dependencies
     # for the examples. pandas based code is more elegant/shorter.
     dir_name = args.od if args.od else os.getcwd()
-    with open(os.path.join(dir_name, "file_names.csv"), mode="w") as fp:
+    with open(os.path.join(dir_name, "file_names.csv"), mode="w", encoding='utf-8') as fp:
         fp_writer = csv.writer(
             fp, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL
         )

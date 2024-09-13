@@ -17,11 +17,13 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
-import sys
+""" A SimpleITK example demonstrating how to print a DICOM image's tags. """
 
+import sys
+import SimpleITK as sitk
 
 def main(args):
+    """ A SimpleITK script that prints a DICOM image's tags. """
     if len(args) < 2:
         print("Usage: DicomImagePrintTags <input_file>")
         sys.exit(1)

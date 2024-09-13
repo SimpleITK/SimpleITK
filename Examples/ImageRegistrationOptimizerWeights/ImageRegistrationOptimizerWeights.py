@@ -16,9 +16,13 @@
 #  limitations under the License.
 #
 # =========================================================================
+#
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using optimizer
+    weights. """
+
 import sys
+import SimpleITK as sitk
 
 if len(sys.argv) < 4:
     print(

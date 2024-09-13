@@ -40,7 +40,7 @@ Code
 
     .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.py
        :language: python
-       :lines: 20-21,24-41
+       :lines: 22-44
 
   .. tab:: R
 

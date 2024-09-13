@@ -17,12 +17,14 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating the FastMarchingImageFilter class. """
 
-import SimpleITK as sitk
 import sys
+import SimpleITK as sitk
 
 
 def main(args):
+    """ A SimpleITK example demonstrating the FastMarchingImageFilter class. """
     if len(args) < 10:
         print(
             "Usage:",

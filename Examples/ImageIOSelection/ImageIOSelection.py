@@ -17,6 +17,9 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating how to explicitly select a specific
+    IO for image reading. """
+
 import sys
 import SimpleITK as sitk
 
@@ -46,7 +49,7 @@ try:
 
     size = image.GetSize()
     print("Image size:", size[0], size[1])
-except Exception as err:
+except IOError as err:
     print("Reading failed: ", err)
     sys.exit(1)
 

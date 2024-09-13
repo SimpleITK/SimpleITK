@@ -16,24 +16,26 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating how to write a DICOM series. """
 
 import sys
 import time
 import os
 import numpy as np
+import SimpleITK as sitk
 
 pixel_dtypes = {"int16": np.int16, "float64": np.float64}
 
 
-def writeSlices(series_tag_values, new_img, out_dir, i):
-    image_slice = new_img[:, :, i]
+def writeSlices(series_tag, in_image, out_dir, i):
+    """ Write slices to output directory """
+    image_slice = in_image[:, :, i]
 
     # Tags shared by the series.
     list(
         map(
             lambda tag_value: image_slice.SetMetaData(tag_value[0], tag_value[1]),
-            series_tag_values,
+            series_tag,
         )
     )
 
@@ -52,7 +54,7 @@ def writeSlices(series_tag_values, new_img, out_dir, i):
     #   Image Position (Patient)
     image_slice.SetMetaData(
         "0020|0032",
-        "\\".join(map(str, new_img.TransformIndexToPhysicalPoint((0, 0, i)))),
+        "\\".join(map(str, in_image.TransformIndexToPhysicalPoint((0, 0, i)))),
     )
     #   Instance Number
     image_slice.SetMetaData("0020|0013", str(i))

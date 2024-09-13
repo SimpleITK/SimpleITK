@@ -54,7 +54,7 @@ Code
 
     .. literalinclude:: ../../Examples/ImageGridManipulation/ImageGridManipulation.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,23-
 
   .. tab:: R
 

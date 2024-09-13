@@ -17,13 +17,16 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating the classic Demons image registration. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
-def command_iteration(filter):
-    print(f"{filter.GetElapsedIterations():3} = {filter.GetMetric():10.5f}")
+def command_iteration(sitk_filter):
+    """ Callback invoked when the filter processes an iteration. """
+    print(f"{sitk_filter.GetElapsedIterations():3} = {sitk_filter.GetMetric():10.5f}")
 
 
 if len(sys.argv) < 4:

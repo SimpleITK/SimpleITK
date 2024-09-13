@@ -54,7 +54,7 @@ Code
 
     .. literalinclude:: ../../Examples/ImageIOSelection/ImageIOSelection.py
        :language: python
-       :lines: 19-
+       :lines: 22-
 
   .. tab:: R
 

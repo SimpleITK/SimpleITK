@@ -17,12 +17,16 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example demonstrating image registration using Mattes mutual
+    information as the metric. """
+
 import sys
 import os
+import SimpleITK as sitk
 
 
 def command_iteration(method):
+    """ Callback invoked when the optimization has an iteration. """
     print(
         f"{method.GetOptimizerIteration():3} "
         + f"= {method.GetMetricValue():10.5f} "
@@ -31,6 +35,9 @@ def command_iteration(method):
 
 
 def main(args):
+    """ A SimpleITK example demonstrating image registration using Mattes mutual
+        information as the metric. """
+
     if len(args) < 3:
         print(
             "Usage:",

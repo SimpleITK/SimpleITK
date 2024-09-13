@@ -45,7 +45,7 @@ Code
 
     .. literalinclude:: ../../Examples/DicomSeriesReader/DicomSeriesReader.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,22-
 
   .. tab:: R
 

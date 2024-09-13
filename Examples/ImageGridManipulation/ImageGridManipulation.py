@@ -17,9 +17,11 @@
 #
 # =========================================================================
 
+""" A SimpleITK example demonstrating various image grid manipulation
+    techniques. """
 
-import SimpleITK as sitk
 import sys
+import SimpleITK as sitk
 
 if len(sys.argv) < 3:
     print("Usage: " + sys.argv[0] + " <input-1> <input-2>")

@@ -16,9 +16,12 @@
 #
 # =========================================================================
 
-import SimpleITK as sitk
+""" A SimpleITK example that demonstrates how to adapt SimpleITK messages
+    to be handled by a Python Logger object. """
+
 import logging
 import os
+import SimpleITK as sitk
 
 
 class SimpleITKLogger(sitk.LoggerBase):
@@ -48,26 +51,31 @@ class SimpleITKLogger(sitk.LoggerBase):
         Initializes with a Logger object to handle the messages emitted from
         SimpleITK/ITK.
         """
-        super(SimpleITKLogger, self).__init__()
+        super().__init__()
         self._logger = logger
 
     @property
     def logger(self):
+        """ return the logger object """
         return self._logger
 
     @logger.setter
     def logger(self, logger):
+        """ set the logger object """
         self._logger = logger
 
     def __enter__(self):
+        """ Set this object as the global ITK logger. """
         self._old_logger = self.SetAsGlobalITKLogger()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """ Restore the previous global ITK logger. """
         self._old_logger.SetAsGlobalITKLogger()
         del self._old_logger
 
     def DisplayText(self, s):
+        """ Display text message. """
         # Remove newline endings from SimpleITK/ITK messages since the Python
         # logger adds during output.
         self._logger.info(s.rstrip())
