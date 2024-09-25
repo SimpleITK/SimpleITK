@@ -473,7 +473,7 @@ def DiscreteGaussian(
 
     Also See
     --------
-      \sa itk::simple::DiscreteGaussianImageFilter for the object oriented interface
+     itk::simple::DiscreteGaussianImageFilter for the object oriented interface
     """
     f = DiscreteGaussianImageFilter()
     f.SetVariance(variance)
