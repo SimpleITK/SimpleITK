@@ -153,12 +153,12 @@ jobs:
           enableCrossOsArchive: true
           restore-keys: |
             external-data-v1-
-      - name: Set up Python 3.8
+      - name: Set up Python 3.11
         if: matrix.os != 'self-hosted-arm'
         uses: actions/setup-python@v5
         id: cpy
         with:
-          python-version: 3.8
+          python-version: 3.11
       - name: Update Path for shared libraries
         shell: bash
         if: contains( ${{ matrix.ctest-cache }}, 'BUILD_SHARED_LIBS:BOOL=ON' ) && contains( ${{ matrix.os }}, 'windows' )

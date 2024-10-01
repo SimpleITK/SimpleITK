@@ -95,12 +95,12 @@ jobs:
         enableCrossOsArchive: true
         restore-keys: |
           external-data-v1-
-    - name: Set up Python 3.8
+    - name: Set up Python 3.11
       uses: actions/setup-python@v5
       if: matrix.os != 'self-hosted-arm'
       id: cpy
       with:
-        python-version: 3.8
+        python-version: 3.11
 
     - name: Install build dependencies
       if: matrix.os != 'self-hosted-arm'
