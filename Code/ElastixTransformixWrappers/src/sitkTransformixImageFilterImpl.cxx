@@ -5,6 +5,7 @@
 #include "sitkCastImageFilter.h"
 #include "sitkImageConvert.h"
 #include "sitkInternalUtilities.h"
+#include "sitkImageConvert.hxx"
 
 namespace itk::simple
 {
@@ -125,7 +126,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::TransformixImageFilterImpl(
   this->m_MemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, 2>();
   this->m_MemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, 3>();
 
-#if SITK_MAX_DIMENSIONS >= 4
+#if SITK_MAX_DIMENSION >= 4
   m_MemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, 4>();
 #endif
 
