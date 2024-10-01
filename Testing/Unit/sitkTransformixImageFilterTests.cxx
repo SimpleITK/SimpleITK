@@ -122,7 +122,7 @@ TEST(TransformixImageFilter, ComputeDeformationField)
   EXPECT_GT(deformationVector[1], 1.0);
 }
 
-#if SITK_MAX_DIMENSIONS >= 4
+#if SITK_MAX_DIMENSION >= 4
 
 TEST(TransformixImageFilter, Transformation4D)
 {
