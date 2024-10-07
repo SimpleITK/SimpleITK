@@ -704,23 +704,12 @@ protected:
   void
   Allocate(const std::vector<unsigned int> & size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents);
 
-  /** \brief Dispatched methods for allocating images
-   *
-   * The enable if idiom is used here to enable different methods
-   * for different pixel/image types.
+  /** \brief Allocates images of different types
    *
    * @{
    */
   template <class TImageType>
-  typename std::enable_if<IsBasic<TImageType>::Value>::type
-  AllocateInternal(const std::vector<unsigned int> & size, unsigned int numberOfComponents);
-
-  template <class TImageType>
-  typename std::enable_if<IsVector<TImageType>::Value>::type
-  AllocateInternal(const std::vector<unsigned int> & size, unsigned int numberOfComponents);
-
-  template <class TImageType>
-  typename std::enable_if<IsLabel<TImageType>::Value>::type
+  void
   AllocateInternal(const std::vector<unsigned int> & size, unsigned int numberOfComponents);
   /**@}*/
 
@@ -728,20 +717,14 @@ protected:
    *  @{
    */
   template <class TImageType>
-  std::enable_if_t<IsVector<TImageType>::Value, Image>
+  Image
   ToVectorInternal(bool inPlace);
 
-  template <class TImageType>
-  std::enable_if_t<IsBasic<TImageType>::Value, Image>
-  ToVectorInternal(bool inPlace);
 
   template <class TImageType>
-  std::enable_if_t<IsVector<TImageType>::Value, Image>
+  Image
   ToScalarInternal(bool inPlace);
 
-  template <class TImageType>
-  std::enable_if_t<IsBasic<TImageType>::Value, Image>
-  ToScalarInternal(bool inPlace);
   /**@}*/
 
 private:

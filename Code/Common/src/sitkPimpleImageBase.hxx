@@ -94,66 +94,58 @@ public:
   {
     return std::make_unique<Self>(this->m_Image.GetPointer());
   }
+
   std::unique_ptr<PimpleImageBase>
   DeepCopy() const override
   {
-    return this->DeepCopy<TImageType>();
+    if constexpr (IsLabel<TImageType>::Value)
+    {
+      using FilterType = itk::ConvertLabelMapFilter<TImageType, TImageType>;
+      typename FilterType::Pointer filter = FilterType::New();
+      filter->SetInput(this->m_Image);
+      filter->UpdateLargestPossibleRegion();
+      ImagePointer output = filter->GetOutput();
+
+      return std::make_unique<Self>(output.GetPointer());
+    }
+    else
+    {
+      using ImageDuplicatorType = itk::ImageDuplicator<ImageType>;
+      typename ImageDuplicatorType::Pointer dup = ImageDuplicatorType::New();
+
+      dup->SetInputImage(this->m_Image);
+      dup->Update();
+      ImagePointer output = dup->GetOutput();
+
+      return std::make_unique<Self>(output.GetPointer());
+    }
   }
 
   std::unique_ptr<PimpleImageBase>
   ProxyCopy() override
   {
-    return this->ProxyCopy<TImageType>();
-  }
-  template <typename UImageType>
-  typename std::enable_if<!IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
-  ProxyCopy()
-  {
-    auto oldBuffer = this->m_Image->GetPixelContainer();
-
-    auto itkImage = TImageType::New();
-    itkImage->CopyInformation(this->m_Image);
-    itkImage->SetBufferedRegion(this->m_Image->GetBufferedRegion());
-    itkImage->SetLargestPossibleRegion(this->m_Image->GetLargestPossibleRegion());
+    if constexpr (IsLabel<TImageType>::Value)
     {
-      auto buffer = TImageType::PixelContainer::New();
-      buffer->SetImportPointer(oldBuffer->GetImportPointer(), oldBuffer->Capacity(), false);
-      itkImage->SetPixelContainer(buffer);
+      sitkExceptionMacro("ProxyCopy for inplace operations is not supported for label pixel types.");
     }
-    return std::make_unique<Self>(itkImage.GetPointer());
-  }
-  template <typename UImageType>
-  typename std::enable_if<IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
-  ProxyCopy()
-  {
-    sitkExceptionMacro("ProxyCopy for inplace operations is not supported for label pixel types.");
+    else
+    {
+
+      auto oldBuffer = this->m_Image->GetPixelContainer();
+
+      auto itkImage = TImageType::New();
+      itkImage->CopyInformation(this->m_Image);
+      itkImage->SetBufferedRegion(this->m_Image->GetBufferedRegion());
+      itkImage->SetLargestPossibleRegion(this->m_Image->GetLargestPossibleRegion());
+      {
+        auto buffer = TImageType::PixelContainer::New();
+        buffer->SetImportPointer(oldBuffer->GetImportPointer(), oldBuffer->Capacity(), false);
+        itkImage->SetPixelContainer(buffer);
+      }
+      return std::make_unique<Self>(itkImage.GetPointer());
+    }
   }
 
-  template <typename UImageType>
-  typename std::enable_if<!IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
-  DeepCopy(void) const
-  {
-    using ImageDuplicatorType = itk::ImageDuplicator<ImageType>;
-    typename ImageDuplicatorType::Pointer dup = ImageDuplicatorType::New();
-
-    dup->SetInputImage(this->m_Image);
-    dup->Update();
-    ImagePointer output = dup->GetOutput();
-
-    return std::make_unique<Self>(output.GetPointer());
-  }
-  template <typename UImageType>
-  typename std::enable_if<IsLabel<UImageType>::Value, std::unique_ptr<PimpleImageBase>>::type
-  DeepCopy(void) const
-  {
-    using FilterType = itk::ConvertLabelMapFilter<UImageType, UImageType>;
-    typename FilterType::Pointer filter = FilterType::New();
-    filter->SetInput(this->m_Image);
-    filter->UpdateLargestPossibleRegion();
-    ImagePointer output = filter->GetOutput();
-
-    return std::make_unique<Self>(output.GetPointer());
-  }
 
   itk::DataObject *
   GetDataBase() override
@@ -184,24 +176,12 @@ public:
   unsigned int
   GetNumberOfComponentsPerPixel() const override
   {
-    return this->GetNumberOfComponentsPerPixel<TImageType>();
-  }
-
-  template <typename UImageType>
-  typename std::enable_if<!IsVector<UImageType>::Value, unsigned int>::type
-  GetNumberOfComponentsPerPixel(void) const
-  {
+    if constexpr (IsVector<TImageType>::Value)
+    {
+      return this->m_Image->GetNumberOfComponentsPerPixel();
+    }
     return 1;
   }
-  template <typename UImageType>
-  typename std::enable_if<IsVector<UImageType>::Value, unsigned int>::type
-  GetNumberOfComponentsPerPixel(void) const
-  {
-    // This returns 1 for itk::Image, and the number of elements
-    // is the vectors of a VectorImage
-    return this->m_Image->GetNumberOfComponentsPerPixel();
-  }
-
 
   // Get Origin
   std::vector<double>
