@@ -47,6 +47,27 @@ template <typename T, typename U>
 struct MakeDependentOn : public U
 {};
 
+template<typename T>
+struct ValuePixelType;
+
+template<typename T, unsigned int D>
+struct ValuePixelType<itk::VectorImage<T, D>>
+{
+  using ValueType = typename itk::VectorImage<T, D>::PixelType::ValueType;
+};
+
+template<typename T, unsigned int D>
+struct ValuePixelType<itk::Image<T, D>>
+{
+  using ValueType = typename itk::Image<T, D>::PixelType;
+};
+
+template<typename T>
+struct ValuePixelType<itk::LabelMap<T>>
+{
+  using ValueType = typename itk::LabelMap<T>::PixelType;
+};
+
 template <class TImageType>
 class PimpleImage : public PimpleImageBase
 {
@@ -56,6 +77,7 @@ public:
   using ImagePointer = typename ImageType::Pointer;
   using IndexType = typename ImageType::IndexType;
   using PixelType = typename ImageType::PixelType;
+  using ValuePixelType = typename ValuePixelType<ImageType>::ValueType;
 
   PimpleImage(ImageType * image)
     : m_Image(image)
@@ -76,7 +98,14 @@ public:
                          << "SimpleITK does not support streaming or unbuffered regions!");
     }
 
-    InternalCheckBuffer(image);
+    if constexpr (!IsLabel<ImageType>::Value)
+    {
+      auto container = image->GetPixelContainer();
+      if (container->GetReferenceCount() != 1)
+      {
+        sitkExceptionMacro(<< "The image pixel container is shared by other resources and presents aliasing issue.");
+      }
+    }
 
     const IndexType & idx = image->GetBufferedRegion().GetIndex();
     for (unsigned int i = 0; i < ImageType::ImageDimension; ++i)
@@ -304,7 +333,40 @@ public:
   std::vector<double>
   EvaluateAtContinuousIndex(const std::vector<double> & index, InterpolatorEnum interp) const override
   {
-    return InternalEvaluateAtContinuousIndex<typename ImageTypeToPixelID<ImageType>::PixelIDType>(index, interp);
+    if constexpr (IsLabel<ImageType>::Value)
+    {
+      sitkExceptionMacro("Interpolation is not supported for label pixel types.")
+    }
+    else
+    {
+      auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
+      if (!this->m_Image->GetLargestPossibleRegion().IsInside(cidx))
+      {
+        sitkExceptionMacro("index out of bounds");
+      }
+
+      auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
+      if (itkInterpolator == nullptr)
+      {
+        sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support " << GetPixelIDValueAsString(this->GetPixelID()))
+
+      }
+      itkInterpolator->SetInputImage(this->m_Image.GetPointer());
+      auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
+      if constexpr (IsVector<ImageType>::Value)
+      {
+        return std::vector<double>{ result.GetDataPointer(), result.GetDataPointer() + result.Size() };
+      }
+      else if constexpr (typelist2::has_type<ComplexPixelIDTypeList,
+                                             typename ImageTypeToPixelID<ImageType>::PixelIDType>::value)
+      {
+        return { { double(result.real()), double(result.imag()) } };
+      }
+      else
+      {
+        return std::vector<double>( 1, double(result) );
+      }
+    }
   }
 
   unsigned int
@@ -381,696 +443,459 @@ public:
   int8_t
   GetPixelAsInt8(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<int8_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<int8_t>>(idx);
+    return this->InternalGetPixelAs<int8_t>(idx);
   }
   uint8_t
   GetPixelAsUInt8(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<uint8_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<uint8_t>>(idx);
+    return this->InternalGetPixelAs<uint8_t>(idx);
   }
   int16_t
   GetPixelAsInt16(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<int16_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<int16_t>>(idx);
+    return this->InternalGetPixelAs<int16_t>(idx);
   }
   uint16_t
   GetPixelAsUInt16(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<uint16_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<uint16_t>>(idx);
+    return this->InternalGetPixelAs<uint16_t>(idx);
   }
   int32_t
   GetPixelAsInt32(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<int32_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<int32_t>>(idx);
+    return this->InternalGetPixelAs<int32_t>(idx);
   }
   uint32_t
   GetPixelAsUInt32(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<uint32_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<uint32_t>>(idx);
+    return this->InternalGetPixelAs<uint32_t>(idx);
   }
   int64_t
   GetPixelAsInt64(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<int64_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<int64_t>>(idx);
+    return this->InternalGetPixelAs<int64_t>(idx);
   }
   uint64_t
   GetPixelAsUInt64(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<uint64_t>>(idx);
-    return this->InternalGetPixel<BasicPixelID<uint64_t>>(idx);
+    return this->InternalGetPixelAs<uint64_t>(idx);
   }
   float
   GetPixelAsFloat(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<float>>(idx);
-    return this->InternalGetPixel<BasicPixelID<float>>(idx);
+    return this->InternalGetPixelAs<float>(idx);
   }
   double
   GetPixelAsDouble(const std::vector<uint32_t> & idx) const override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalGetPixel<LabelPixelID<double>>(idx);
-    return this->InternalGetPixel<BasicPixelID<double>>(idx);
+    return this->InternalGetPixelAs<double>(idx);
   }
   std::vector<int8_t>
   GetPixelAsVectorInt8(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<int8_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<int8_t>>(idx);
   }
   std::vector<uint8_t>
   GetPixelAsVectorUInt8(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<uint8_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<uint8_t>>(idx);
   }
   std::vector<int16_t>
   GetPixelAsVectorInt16(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<int16_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<int16_t>>(idx);
   }
   std::vector<uint16_t>
   GetPixelAsVectorUInt16(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<uint16_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<uint16_t>>(idx);
   }
   std::vector<int32_t>
   GetPixelAsVectorInt32(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<int32_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<int32_t>>(idx);
   }
   std::vector<uint32_t>
   GetPixelAsVectorUInt32(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<uint32_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<uint32_t>>(idx);
   }
   std::vector<int64_t>
   GetPixelAsVectorInt64(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<int64_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<int64_t>>(idx);
   }
   std::vector<uint64_t>
   GetPixelAsVectorUInt64(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<uint64_t>>(idx);
+    return this->InternalGetPixelAs<std::vector<uint64_t>>(idx);
   }
   std::vector<float>
   GetPixelAsVectorFloat32(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<float>>(idx);
+    return this->InternalGetPixelAs<std::vector<float>>(idx);
   }
   std::vector<double>
   GetPixelAsVectorFloat64(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<VectorPixelID<double>>(idx);
+    return this->InternalGetPixelAs<std::vector<double>>(idx);
   }
   std::complex<float>
   GetPixelAsComplexFloat32(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<BasicPixelID<std::complex<float>>>(idx);
+    return this->InternalGetPixelAs<std::complex<float>>(idx);
   }
   std::complex<double>
   GetPixelAsComplexFloat64(const std::vector<uint32_t> & idx) const override
   {
-    return this->InternalGetPixel<BasicPixelID<std::complex<double>>>(idx);
+    return this->InternalGetPixelAs<std::complex<double>>(idx);
   }
 
   int8_t *
   GetBufferAsInt8() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<int8_t>>();
-    return this->InternalGetBuffer<BasicPixelID<int8_t>>();
+    return this->InternalGetBufferAs<int8_t>();
   }
   uint8_t *
   GetBufferAsUInt8() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<uint8_t>>();
-    return this->InternalGetBuffer<BasicPixelID<uint8_t>>();
+    return this->InternalGetBufferAs<uint8_t>();
   }
   int16_t *
   GetBufferAsInt16() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<int16_t>>();
-    return this->InternalGetBuffer<BasicPixelID<int16_t>>();
+    return this->InternalGetBufferAs<int16_t>();
   }
   uint16_t *
   GetBufferAsUInt16() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<uint16_t>>();
-    return this->InternalGetBuffer<BasicPixelID<uint16_t>>();
+    return this->InternalGetBufferAs<uint16_t>();
   }
   int32_t *
   GetBufferAsInt32() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<int32_t>>();
-    return this->InternalGetBuffer<BasicPixelID<int32_t>>();
+    return this->InternalGetBufferAs<int32_t>();
   }
   uint32_t *
   GetBufferAsUInt32() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<uint32_t>>();
-    return this->InternalGetBuffer<BasicPixelID<uint32_t>>();
+    return this->InternalGetBufferAs<uint32_t>();
   }
   int64_t *
   GetBufferAsInt64() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<int64_t>>();
-    return this->InternalGetBuffer<BasicPixelID<int64_t>>();
+    return this->InternalGetBufferAs<int64_t>();
   }
   uint64_t *
   GetBufferAsUInt64() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<uint64_t>>();
-    return this->InternalGetBuffer<BasicPixelID<uint64_t>>();
+    return this->InternalGetBufferAs<uint64_t>();
   }
   float *
   GetBufferAsFloat() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<float>>();
-    if (std::is_same<BasicPixelID<std::complex<float>>, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value)
-      return reinterpret_cast<float *>(this->InternalGetBuffer<BasicPixelID<std::complex<float>>>());
-    return this->InternalGetBuffer<BasicPixelID<float>>();
+    return this->InternalGetBufferAs<float>();
   }
   double *
   GetBufferAsDouble() override
   {
-    if (IsVector<ImageType>::Value)
-      return this->InternalGetBuffer<VectorPixelID<double>>();
-    if (std::is_same<BasicPixelID<std::complex<double>>, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value)
-    {
-      return reinterpret_cast<double *>(this->InternalGetBuffer<BasicPixelID<std::complex<double>>>());
-    }
-    return this->InternalGetBuffer<BasicPixelID<double>>();
+    return this->InternalGetBufferAs<double>();
   }
   void *
   GetBufferAsVoid() override
   {
-    return this->InternalGetBuffer<typename ImageTypeToPixelID<ImageType>::PixelIDType>();
+    return this->InternalGetBufferAs<ValuePixelType>();
   }
 
   const int8_t *
   GetBufferAsInt8() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<int8_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<int8_t>>();
+    return this->InternalGetBufferAs<int8_t>();
   }
   const uint8_t *
   GetBufferAsUInt8() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<uint8_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<uint8_t>>();
+    return this->InternalGetBufferAs<uint8_t>();
   }
   const int16_t *
   GetBufferAsInt16() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<int16_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<int16_t>>();
+    return this->InternalGetBufferAs<int16_t>();
   }
   const uint16_t *
   GetBufferAsUInt16() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<uint16_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<uint16_t>>();
+    return this->InternalGetBufferAs<uint16_t>();
   }
   const int32_t *
   GetBufferAsInt32() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<int32_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<int32_t>>();
+    return this->InternalGetBufferAs<int32_t>();
   }
   const uint32_t *
   GetBufferAsUInt32() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<uint32_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<uint32_t>>();
+    return this->InternalGetBufferAs<uint32_t>();
   }
   const int64_t *
   GetBufferAsInt64() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<int64_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<int64_t>>();
+    return this->InternalGetBufferAs<int64_t>();
   }
   const uint64_t *
   GetBufferAsUInt64() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<uint64_t>>();
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<uint64_t>>();
+    return this->InternalGetBufferAs<uint64_t>();
   }
   const float *
   GetBufferAsFloat() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<float>>();
-    if (std::is_same<BasicPixelID<std::complex<float>>, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value)
-      return reinterpret_cast<float *>(
-        const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<std::complex<float>>>());
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<float>>();
+    return this->InternalGetBufferAs<float>();
   }
   const double *
   GetBufferAsDouble() const override
   {
-    if (IsVector<ImageType>::Value)
-      return const_cast<Self *>(this)->InternalGetBuffer<VectorPixelID<double>>();
-    if (std::is_same<BasicPixelID<std::complex<double>>, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value)
-    {
-      return reinterpret_cast<double *>(
-        const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<std::complex<double>>>());
-    }
-    return const_cast<Self *>(this)->InternalGetBuffer<BasicPixelID<double>>();
+    return this->InternalGetBufferAs<double>();
   }
   const void *
   GetBufferAsVoid() const override
   {
-    return const_cast<Self *>(this)->InternalGetBuffer<typename ImageTypeToPixelID<ImageType>::PixelIDType>();
+    return this->InternalGetBufferAs<ValuePixelType>();
   }
 
 
   void
   SetPixelAsInt8(const std::vector<uint32_t> & idx, int8_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<int8_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<int8_t>>(idx, v);
+    InternalSetPixelAs<int8_t>(idx, v);
   }
   void
   SetPixelAsUInt8(const std::vector<uint32_t> & idx, uint8_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<uint8_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<uint8_t>>(idx, v);
+    InternalSetPixelAs<uint8_t>(idx, v);
   }
   void
   SetPixelAsInt16(const std::vector<uint32_t> & idx, int16_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<int16_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<int16_t>>(idx, v);
+    InternalSetPixelAs<int16_t>(idx, v);
   }
   void
   SetPixelAsUInt16(const std::vector<uint32_t> & idx, uint16_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<uint16_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<uint16_t>>(idx, v);
+    InternalSetPixelAs<uint16_t>(idx, v);
   }
   void
   SetPixelAsInt32(const std::vector<uint32_t> & idx, int32_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<int32_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<int32_t>>(idx, v);
+    InternalSetPixelAs<int32_t>(idx, v);
   }
   void
   SetPixelAsUInt32(const std::vector<uint32_t> & idx, uint32_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<uint32_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<uint32_t>>(idx, v);
+    InternalSetPixelAs<uint32_t>(idx, v);
   }
   void
   SetPixelAsInt64(const std::vector<uint32_t> & idx, int64_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<int64_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<int64_t>>(idx, v);
+    InternalSetPixelAs<int64_t>(idx, v);
   }
   void
   SetPixelAsUInt64(const std::vector<uint32_t> & idx, uint64_t v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<uint64_t>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<uint64_t>>(idx, v);
+    InternalSetPixelAs<uint64_t>(idx, v);
   }
   void
   SetPixelAsFloat(const std::vector<uint32_t> & idx, float v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<float>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<float>>(idx, v);
+    InternalSetPixelAs<float>(idx, v);
   }
   void
   SetPixelAsDouble(const std::vector<uint32_t> & idx, double v) override
   {
-    if (IsLabel<ImageType>::Value)
-      return this->InternalSetPixel<LabelPixelID<double>>(idx, v);
-    this->InternalSetPixel<BasicPixelID<double>>(idx, v);
+    InternalSetPixelAs<double>(idx, v);
   }
   void
   SetPixelAsVectorInt8(const std::vector<uint32_t> & idx, const std::vector<int8_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<int8_t>>(idx, v);
+    InternalSetPixelAs<std::vector<int8_t>>(idx, v);
   }
   void
   SetPixelAsVectorUInt8(const std::vector<uint32_t> & idx, const std::vector<uint8_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<uint8_t>>(idx, v);
+    InternalSetPixelAs<std::vector<uint8_t>>(idx, v);
   }
   void
   SetPixelAsVectorInt16(const std::vector<uint32_t> & idx, const std::vector<int16_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<int16_t>>(idx, v);
+    InternalSetPixelAs<std::vector<int16_t>>(idx, v);
   }
   void
   SetPixelAsVectorUInt16(const std::vector<uint32_t> & idx, const std::vector<uint16_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<uint16_t>>(idx, v);
+    InternalSetPixelAs<std::vector<uint16_t>>(idx, v);
   }
   void
   SetPixelAsVectorInt32(const std::vector<uint32_t> & idx, const std::vector<int32_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<int32_t>>(idx, v);
+    InternalSetPixelAs<std::vector<int32_t>>(idx, v);
   }
   void
   SetPixelAsVectorUInt32(const std::vector<uint32_t> & idx, const std::vector<uint32_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<uint32_t>>(idx, v);
+    InternalSetPixelAs<std::vector<uint32_t>>(idx, v);
   }
   void
   SetPixelAsVectorInt64(const std::vector<uint32_t> & idx, const std::vector<int64_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<int64_t>>(idx, v);
+    InternalSetPixelAs<std::vector<int64_t>>(idx, v);
   }
   void
   SetPixelAsVectorUInt64(const std::vector<uint32_t> & idx, const std::vector<uint64_t> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<uint64_t>>(idx, v);
+    InternalSetPixelAs<std::vector<uint64_t>>(idx, v);
   }
   void
   SetPixelAsVectorFloat32(const std::vector<uint32_t> & idx, const std::vector<float> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<float>>(idx, v);
+    InternalSetPixelAs<std::vector<float>>(idx, v);
   }
   void
   SetPixelAsVectorFloat64(const std::vector<uint32_t> & idx, const std::vector<double> & v) override
   {
-    this->InternalSetPixel<VectorPixelID<double>>(idx, v);
+    InternalSetPixelAs<std::vector<double>>(idx, v);
   }
   void
   SetPixelAsComplexFloat32(const std::vector<uint32_t> & idx, const std::complex<float> v) override
   {
-    this->InternalSetPixel<BasicPixelID<std::complex<float>>>(idx, v);
+    InternalSetPixelAs<std::complex<float>>(idx, v);
   }
   void
   SetPixelAsComplexFloat64(const std::vector<uint32_t> & idx, const std::complex<double> v) override
   {
-    this->InternalSetPixel<BasicPixelID<std::complex<double>>>(idx, v);
+    InternalSetPixelAs<std::complex<double>>(idx, v);
   }
-
 
 protected:
-  template <typename TPixelIDType>
-  typename std::enable_if<!IsLabel<TPixelIDType>::Value &&
-                            !typelist2::has_type<ComplexPixelIDTypeList, TPixelIDType>::value &&
-                            !IsVector<TPixelIDType>::Value,
-                          std::vector<double>>::type
-  InternalEvaluateAtContinuousIndex(const std::vector<double> & index, InterpolatorEnum interp) const
+
+  template <typename TReturn,
+            typename TPixelIDType = typename ImageTypeToPixelID<ImageType>::PixelIDType>
+  TReturn
+  InternalGetPixelAs(const std::vector<uint32_t> & idx) const
   {
-    auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(cidx))
+
+    auto getIndex = [idx, this]() -> IndexType {
+      auto itkIdx = sitkSTLVectorToITK<IndexType>(idx);
+      if (!m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
+      {
+        sitkExceptionMacro("index out of bounds");
+      }
+
+      return itkIdx;
+    };
+
+    if constexpr (IsLabel<ImageType>::Value &&
+                  std::is_same<ValuePixelType, TReturn>::value)
     {
-      sitkExceptionMacro("index out of bounds");
+      return this->m_Image->GetPixel(getIndex());
     }
-    auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
-    assert(itkInterpolator != nullptr);
-    if (itkInterpolator == nullptr)
+    else if constexpr (IsBasic<ImageType>::Value &&
+                       std::is_same<ValuePixelType, TReturn>::value)
     {
-      sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support basic pixel types.")
+      return this->m_Image->GetPixel(getIndex());
     }
-    itkInterpolator->SetInputImage(this->m_Image.GetPointer());
-    auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
-    return { { double(result) } };
-  }
-
-  template <typename TPixelIDType>
-  typename std::enable_if<typelist2::has_type<ComplexPixelIDTypeList, TPixelIDType>::value, std::vector<double>>::type
-  InternalEvaluateAtContinuousIndex(const std::vector<double> & index, InterpolatorEnum interp) const
-  {
-    auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(cidx))
+    else if constexpr (IsVector<ImageType>::Value &&
+                       std::is_same<std::vector<ValuePixelType>, TReturn>::value)
     {
-      sitkExceptionMacro("index out of bounds");
+      const typename ImageType::PixelType px = this->m_Image->GetPixel(getIndex());
+      return std::vector<typename ImageType::InternalPixelType>(&px[0], &px[px.GetSize()]);
     }
-    auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
-    if (itkInterpolator == nullptr)
+    else
     {
-      sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support complex pixel types.")
+      sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
+                         << " but the GetPixel access method does not match the type!");
     }
-    itkInterpolator->SetInputImage(this->m_Image.GetPointer());
-    auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
-    return { { double(result.real()), double(result.imag()) } };
   }
 
-  template <typename TPixelIDType>
-  typename std::enable_if<IsVector<TPixelIDType>::Value, std::vector<double>>::type
-  InternalEvaluateAtContinuousIndex(const std::vector<double> & index, InterpolatorEnum interp) const
+
+  template <typename TReturn,
+            typename TPixelIDType = typename ImageTypeToPixelID<ImageType>::PixelIDType>
+  TReturn *
+  InternalGetBufferAs(void) const
   {
-    auto cidx = sitkSTLVectorToITK<itk::ContinuousIndex<double, ImageType::ImageDimension>>(index);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(cidx))
+
+
+    if constexpr (IsLabel<ImageType>::Value )
     {
-      sitkExceptionMacro("index out of bounds");
+      sitkExceptionMacro("This method is not supported for LabelMaps.")
     }
-    auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
-    if (itkInterpolator == nullptr)
+    else if constexpr (IsBasic<ImageType>::Value &&
+                       std::is_same<ValuePixelType, TReturn>::value)
     {
-      sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support vector pixel types.")
+      return this->m_Image->GetPixelContainer()->GetBufferPointer();
     }
-    itkInterpolator->SetInputImage(this->m_Image.GetPointer());
-    auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
-    return std::vector<double>{ result.GetDataPointer(), result.GetDataPointer() + result.Size() };
-  }
-
-  template <typename TPixelIDType>
-  typename std::enable_if<IsLabel<TPixelIDType>::Value, std::vector<double>>::type
-  InternalEvaluateAtContinuousIndex(const std::vector<double> & index, InterpolatorEnum interp, ...) const
-  {
-    Unused(index);
-    Unused(interp);
-    sitkExceptionMacro("Interpolation is not supported for label pixel types.")
-  }
-
-
-  template <typename TPixelIDType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                            !IsLabel<TPixelIDType>::Value && !IsVector<TPixelIDType>::Value,
-                          typename ImageType::PixelType>::type
-  InternalGetPixel(const std::vector<uint32_t> & idx) const
-  {
-    const IndexType itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
+    else if constexpr (IsBasic<ImageType>::Value &&
+                       std::is_same<ValuePixelType, std::complex<TReturn>>::value)
     {
-      sitkExceptionMacro("index out of bounds");
+      return reinterpret_cast<TReturn *>(this->m_Image->GetPixelContainer()->GetBufferPointer());
     }
-    return this->m_Image->GetPixel(itkIdx);
-  }
-
-  template <typename TPixelIDType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                            IsLabel<TPixelIDType>::Value && !IsVector<TPixelIDType>::Value,
-                          typename ImageType::PixelType>::type
-  InternalGetPixel(const std::vector<uint32_t> & idx) const
-  {
-    const IndexType itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
+    else if constexpr (IsVector<ImageType>::Value &&
+                       std::is_same<ValuePixelType, TReturn>::value)
     {
-      sitkExceptionMacro("index out of bounds");
+      return this->m_Image->GetPixelContainer()->GetBufferPointer();
     }
-    return this->m_Image->GetPixel(itkIdx);
-  }
-
-  template <typename TPixelIDType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                            !IsLabel<TPixelIDType>::Value && IsVector<TPixelIDType>::Value,
-                          std::vector<typename MakeDependentOn<TPixelIDType, ImageType>::InternalPixelType>>::type
-  InternalGetPixel(const std::vector<uint32_t> & idx) const
-  {
-    const IndexType itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
+    else
     {
-      sitkExceptionMacro("index out of bounds");
+      sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
+                         << " but the GetBuffer access method does not match the type!");
     }
-    const typename ImageType::PixelType px = this->m_Image->GetPixel(itkIdx);
-    return std::vector<typename ImageType::InternalPixelType>(&px[0], &px[px.GetSize()]);
   }
 
-  template <typename TPixelIDType>
-  typename std::enable_if<
-    !std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
-    typename std::conditional<
-      IsVector<TPixelIDType>::Value,
-      std::vector<typename itk::NumericTraits<
-        typename PixelIDToImageType<TPixelIDType, ImageType::ImageDimension>::ImageType::PixelType>::ValueType>,
-      typename PixelIDToImageType<TPixelIDType, ImageType::ImageDimension>::ImageType::PixelType>::type>::type
-  InternalGetPixel(const std::vector<uint32_t> & idx) const
-  {
-    Unused(idx);
-    sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
-                       << " but the GetPixel access method requires type: "
-                       << GetPixelIDValueAsString(PixelIDToPixelIDValue<TPixelIDType>::Result) << "!");
-  }
-
-  template <typename TPixelType, unsigned int NDimension>
-  bool
-  InternalCheckBuffer(const itk::Image<TPixelType, NDimension> * image)
-  {
-    auto container = image->GetPixelContainer();
-    if (container->GetReferenceCount() != 1)
+    template <typename TPixelType>
+    void
+    InternalSetPixelAs(const std::vector<uint32_t> & idx, const TPixelType v) const
     {
-      sitkExceptionMacro(<< "The image pixel container is shared by other resources and presents aliasing issue.");
-    }
-    return true;
-  }
 
-  template <typename TPixelType, unsigned int NDimension>
-  bool
-  InternalCheckBuffer(const itk::VectorImage<TPixelType, NDimension> * image)
-  {
-    auto container = image->GetPixelContainer();
-    if (container->GetReferenceCount() != 1)
-    {
-      sitkExceptionMacro(
-        << "The vector image pixel container is shared by other resources and presents aliasing issues.");
-    }
-    return true;
-  }
+      auto getIndex = [idx, this]() -> IndexType {
+        auto itkIdx = sitkSTLVectorToITK<IndexType>(idx);
+        if (!m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
+        {
+          sitkExceptionMacro("index out of bounds");
+        }
 
+        return itkIdx;
+      };
 
-  template <typename TLabelObject>
-  bool
-  InternalCheckBuffer(const itk::LabelMap<TLabelObject> *)
-  {
-    return true;
-  }
+      if constexpr (IsLabel<ImageType>::Value &&
+                    std::is_same<ValuePixelType, TPixelType>::value)
+      {
+        return this->m_Image->SetPixel(getIndex(), v);
+      }
+      else if constexpr (IsBasic<ImageType>::Value &&
+                         std::is_same<ValuePixelType, TPixelType>::value)
+      {
+        return this->m_Image->SetPixel(getIndex(),v);
+      }
+      else if constexpr (IsVector<ImageType>::Value &&
+                         std::is_same<std::vector<ValuePixelType>, TPixelType>::value)
+      {
+        typename ImageType::PixelType px = this->m_Image->GetPixel(getIndex());
 
-  template <typename TPixelIDType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                            !IsLabel<TPixelIDType>::Value && !IsVector<TPixelIDType>::Value,
-                          typename ImageType::PixelType *>::type
-  InternalGetBuffer(void)
-  {
-    return this->m_Image->GetPixelContainer()->GetBufferPointer();
-  }
+        if (px.GetSize() != v.size())
+        {
+          sitkExceptionMacro(<< "Unable to convert vector to ITK pixel type\n"
+                             << "Expected vector of length " << px.GetSize() << " but only got " << v.size()
+                             << " elements.");
+        }
 
-  template <typename TPixelIDType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                            IsLabel<TPixelIDType>::Value && !IsVector<TPixelIDType>::Value,
-                          typename ImageType::PixelType *>::type
-  InternalGetBuffer(void)
-  {
-    sitkExceptionMacro("This method is not supported for LabelMaps.")
-  }
-
-  template <typename TPixelIDType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                            !IsLabel<TPixelIDType>::Value && IsVector<TPixelIDType>::Value,
-                          typename MakeDependentOn<TPixelIDType, ImageType>::InternalPixelType *>::type
-  InternalGetBuffer(void)
-  {
-    return this->m_Image->GetPixelContainer()->GetBufferPointer();
-  }
-
-  template <typename TPixelIDType>
-  typename std::enable_if<
-    !std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
-    typename NumericTraits<typename PixelIDToImageType<TPixelIDType, 2>::ImageType::PixelType>::ValueType *>::type
-  InternalGetBuffer(void)
-  {
-    sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
-                       << " but the GetBuffer access method requires type: "
-                       << GetPixelIDValueAsString(PixelIDToPixelIDValue<TPixelIDType>::Result) << "!");
-  }
-
-
-  template <typename TPixelIDType, typename TPixelType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                          !IsLabel<TPixelIDType>::Value && !IsVector<TPixelIDType>::Value>::type
-  InternalSetPixel(const std::vector<uint32_t> & idx, const TPixelType v) const
-  {
-    const IndexType itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
-    {
-      sitkExceptionMacro("index out of bounds");
-    }
-    this->m_Image->SetPixel(itkIdx, v);
-  }
-
-  template <typename TPixelIDType, typename TPixelType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                          IsLabel<TPixelIDType>::Value && !IsVector<TPixelIDType>::Value>::type
-  InternalSetPixel(const std::vector<uint32_t> & idx, const TPixelType v) const
-  {
-    const IndexType itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
-    {
-      sitkExceptionMacro("index out of bounds");
-    }
-    this->m_Image->SetPixel(itkIdx, v);
-  }
-
-  template <typename TPixelIDType, typename TPixelValueType>
-  typename std::enable_if<std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value &&
-                          !IsLabel<TPixelIDType>::Value && IsVector<TPixelIDType>::Value>::type
-  InternalSetPixel(const std::vector<uint32_t> & idx, const std::vector<TPixelValueType> & v) const
-  {
-    const IndexType itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-    if (!this->m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
-    {
-      sitkExceptionMacro("index out of bounds");
+        std::copy(v.begin(), v.end(), &px[0]);
+      }
+      else
+      {
+        sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
+                           << " does not match the type of SetPixel method called.");
+      }
     }
 
-    typename ImageType::PixelType px = this->m_Image->GetPixel(itkIdx);
-
-    if (px.GetSize() != v.size())
-    {
-      sitkExceptionMacro(<< "Unable to convert vector to ITK pixel type\n"
-                         << "Expected vector of length " << px.GetSize() << " but only got " << v.size()
-                         << " elements.");
-    }
-
-    std::copy(v.begin(), v.end(), &px[0]);
-  }
-
-
-  template <typename TPixelIDType, typename TPixelType>
-  typename std::enable_if<!std::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value>::type
-  InternalSetPixel(const std::vector<uint32_t> & idx, const TPixelType & v) const
-  {
-    Unused(idx);
-    Unused(v);
-    sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
-                       << " but the SetPixel access method requires type: "
-                       << GetPixelIDValueAsString(PixelIDToPixelIDValue<BasicPixelID<TPixelType>>::Result) << "!");
-  }
 
 private:
   ImagePointer m_Image;
