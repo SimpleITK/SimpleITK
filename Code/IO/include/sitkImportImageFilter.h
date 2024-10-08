@@ -114,17 +114,6 @@ protected:
   Image
   ExecuteInternal();
 
-  // If the output image type is a VectorImage then the number of
-  // components per pixel needs to be set, otherwise the method
-  // does not exist. This is done with the enable if idiom.
-  template <class TImageType>
-  typename std::enable_if<!IsVector<TImageType>::Value>::type
-  SetNumberOfComponentsOnImage(TImageType *)
-  {}
-  template <class TImageType>
-  typename std::enable_if<IsVector<TImageType>::Value>::type
-  SetNumberOfComponentsOnImage(TImageType *);
-
 private:
   // function pointer type
   typedef Image (Self::*MemberFunctionType)();
