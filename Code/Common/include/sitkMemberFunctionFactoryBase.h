@@ -68,30 +68,14 @@ struct hash<std::pair<S, T>>
 template <class... TupleArgs>
 struct hash<std::tuple<TupleArgs...>>
 {
-private:
-  // recursive hashing of std::tuple from Sarang Baheti's blog
-  // https://www.variadic.xyz/2018/01/15/hashing-stdpair-and-stdtuple/
-  template <size_t Idx, typename... TupleTypes>
-  inline typename std::enable_if<Idx == sizeof...(TupleTypes), void>::type
-  hash_combine_tup(size_t &, const std::tuple<TupleTypes...> &) const
-  {}
-
-  template <size_t Idx, typename... TupleTypes>
-    inline typename std::enable_if < Idx<sizeof...(TupleTypes), void>::type
-                                     hash_combine_tup(size_t & seed, const std::tuple<TupleTypes...> & tup) const
-  {
-    hash_combine(seed, std::get<Idx>(tup));
-
-    //  on to next element
-    hash_combine_tup<Idx + 1>(seed, tup);
-  }
 
 public:
   size_t
   operator()(std::tuple<TupleArgs...> tupleValue) const
   {
     size_t seed = 0;
-    hash_combine_tup<0>(seed, tupleValue);
+    std::apply(
+      [&seed](auto... tupleElement) { (hash_combine(seed, tupleElement), ...); },tupleValue);
     return seed;
   }
 };

@@ -43,23 +43,18 @@ struct MemberFunctionInstantiater
   {}
 
   template <class TPixelIDType>
-  typename std::enable_if<IsInstantiated<TPixelIDType, VImageDimension>::Value>::type
+  void
   operator()(TPixelIDType * id = nullptr) const
   {
     Unused(id);
-    using ImageType = typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType;
-    using AddressorType = TAddressor;
+    if constexpr (IsInstantiated<TPixelIDType, VImageDimension>::Value)
+    {
+      using ImageType = typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType;
+      using AddressorType = TAddressor;
 
-    AddressorType addressor;
-    m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType>(), (ImageType *)(nullptr));
-  }
-
-  // this methods is conditionally enabled when the PixelID is not instantiated
-  template <class TPixelIDType>
-  typename std::enable_if<!IsInstantiated<TPixelIDType, VImageDimension>::Value>::type
-  operator()(TPixelIDType * id = nullptr) const
-  {
-    Unused(id);
+      AddressorType addressor;
+      m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType>(), (ImageType *)(nullptr));
+    }
   }
 
 private:
