@@ -19,77 +19,23 @@
 #define __FunctionTraits_h
 
 #include "sitkMacro.h"
+#include <functional>
 
 namespace detail
 {
 
 template <typename FunctionType>
 struct SITK_ABI_HIDDEN FunctionTraits;
-
-template <typename R, typename C>
-struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(void)>
+template <typename Ret, typename C, typename... Args>
+struct SITK_ABI_HIDDEN FunctionTraits<Ret (C::*)(Args...)>
 {
-  static const unsigned int arity = 0;
+  static constexpr unsigned int arity = sizeof...(Args);
   using ClassType = C;
-  using ResultType = R;
-};
+  using ResultType = Ret;
+  template <std::size_t J>
+  using ArgumentType = std::tuple_element_t<J, std::tuple<Args...>>;
+  using FunctionObjectType = std::function<Ret(Args...)>;
 
-
-template <typename R, typename C, typename A0>
-struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0)>
-{
-  static const unsigned int arity = 1;
-  using ClassType = C;
-  using ResultType = R;
-  using Argument0Type = A0;
-};
-
-
-template <typename R, typename C, typename A0, typename A1>
-struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1)>
-{
-  static const unsigned int arity = 2;
-  using ClassType = C;
-  using ResultType = R;
-  using Argument0Type = A0;
-  using Argument1Type = A1;
-};
-
-
-template <typename R, typename C, typename A0, typename A1, typename A2>
-struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1, A2)>
-{
-  static const unsigned int arity = 3;
-  using ClassType = C;
-  using ResultType = R;
-  using Argument0Type = A0;
-  using Argument1Type = A1;
-  using Argument2Type = A2;
-};
-
-template <typename R, typename C, typename A0, typename A1, typename A2, typename A3>
-struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1, A2, A3)>
-{
-  static const unsigned int arity = 4;
-  using ClassType = C;
-  using ResultType = R;
-  using Argument0Type = A0;
-  using Argument1Type = A1;
-  using Argument2Type = A2;
-  using Argument3Type = A3;
-};
-
-template <typename R, typename C, typename A0, typename A1, typename A2, typename A3, typename A4>
-struct SITK_ABI_HIDDEN FunctionTraits<R (C::*)(A0, A1, A2, A3, A4)>
-{
-  static const unsigned int arity = 5;
-  using ClassType = C;
-  using ResultType = R;
-  using Argument0Type = A0;
-  using Argument1Type = A1;
-  using Argument2Type = A2;
-  using Argument3Type = A3;
-  using Argument4Type = A4;
 };
 
 } // namespace detail

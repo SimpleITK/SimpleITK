@@ -82,19 +82,8 @@ public:
 
 
 template <typename TMemberFunctionPointer,
-          typename TKey,
-          unsigned int TArity = ::detail::FunctionTraits<TMemberFunctionPointer>::arity>
-class MemberFunctionFactoryBase;
-
-
-/** \class MemberFunctionFactoryBase
- * \brief A base class for the MemberFunctionFactory
- *
- *  This class is for specialization needed for different arity for
- *  the templated member function pointer
- */
-template <typename TMemberFunctionPointer, typename TKey>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 0> : protected NonCopyable
+          typename TKey>
+class MemberFunctionFactoryBase
 {
 protected:
   using MemberFunctionType = TMemberFunctionPointer;
@@ -107,282 +96,32 @@ protected:
   {}
 
 public:
-  /**  the pointer MemberFunctionType redefined ad a tr1::function
+  /**  the pointer MemberFunctionType redefined as a std::function
    * object */
-  using FunctionObjectType = std::function<MemberFunctionResultType()>;
+  using FunctionObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::FunctionObjectType;
+
+  protected:
+    using KeyType = TKey;
 
 
-protected:
-  using KeyType = TKey;
-
-  /** A function which binds the objectPointer to the calling object
-   *  argument in the member function pointer, and returns a function
-   *  object.
-   */
-  static FunctionObjectType
-  BindObject(MemberFunctionType pfunc, ObjectType * objectPointer)
-  {
-    return [pfunc, objectPointer] { return std::invoke(pfunc, objectPointer); };
-  }
-
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-  // maps of Keys to pointers to member functions
-  FunctionMapType m_PFunction;
-};
-
-
-/** \class MemberFunctionFactoryBase
- * \brief A base class for the MemberFunctionFactory
- *
- *  This class is for specialization needed for different arity for
- *  the templated member function pointer
- */
-template <typename TMemberFunctionPointer, typename TKey>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 1> : protected NonCopyable
-{
-protected:
-  using MemberFunctionType = TMemberFunctionPointer;
-  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
-  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
-  using MemberFunctionArgumentType = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
-
-
-  MemberFunctionFactoryBase()
-    : m_PFunction(3 * typelist2::length<InstantiatedPixelIDTypeList>::value)
-  {}
-
-public:
-  /**  the pointer MemberFunctionType redefined ad a tr1::function
-   * object */
-  using FunctionObjectType = std::function<MemberFunctionResultType(MemberFunctionArgumentType)>;
-
-
-protected:
-  using KeyType = TKey;
-
-  /** A function which binds the objectPointer to the calling object
-   *  argument in the member function pointer, and returns a function
-   *  object.
-   */
-  static FunctionObjectType
-  BindObject(MemberFunctionType pfunc, ObjectType * objectPointer)
-  {
-
-    return [pfunc, objectPointer](auto && PH1) -> MemberFunctionResultType {
-      return std::invoke(pfunc, objectPointer, std::forward<decltype(PH1)>(PH1));
-    };
-  }
-
-
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-  // maps of Keys to pointers to member functions
-  FunctionMapType m_PFunction;
-};
-
-
-template <typename TMemberFunctionPointer, typename TKey>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 2> : protected NonCopyable
-{
-protected:
-  using MemberFunctionType = TMemberFunctionPointer;
-  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
-  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
-  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
-  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
-
-
-  MemberFunctionFactoryBase()
-    : m_PFunction(3 * typelist2::length<InstantiatedPixelIDTypeList>::value)
-  {}
-
-public:
-  /**  the pointer MemberFunctionType redefined ad a tr1::function
-   * object
-   */
-  using FunctionObjectType =
-    std::function<MemberFunctionResultType(MemberFunctionArgument0Type, MemberFunctionArgument1Type)>;
-
-
-protected:
-  using KeyType = TKey;
-
-  /** A function which binds the objectPointer to the calling object
+    /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
    *  object
-   */
-  static FunctionObjectType
-  BindObject(MemberFunctionType pfunc, ObjectType * objectPointer)
-  {
-    return [pfunc, objectPointer](auto && PH1, auto && PH2) {
-      return std::invoke(pfunc, objectPointer, std::forward<decltype(PH1)>(PH1), std::forward<decltype(PH2)>(PH2));
-    };
-  }
-
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-  // maps of Keys to pointers to member functions
-  FunctionMapType m_PFunction;
-};
+     */
+    template <typename... Args>
+    static FunctionObjectType BindObject(MemberFunctionResultType (ObjectType ::*pfunc)(Args...), ObjectType * objectPointer)
+    {
+      return [pfunc, objectPointer](Args... args) -> MemberFunctionResultType {
+        return std::invoke(pfunc, objectPointer, std::forward<Args>(args)...);
+      };
+    }
 
 
-template <typename TMemberFunctionPointer, typename TKey>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 3> : protected NonCopyable
-{
-protected:
-  using MemberFunctionType = TMemberFunctionPointer;
-  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
-  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
-  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
-  using MemberFunctionArgument2Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type;
-  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
 
+    using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
 
-  MemberFunctionFactoryBase()
-    : m_PFunction(3 * typelist2::length<InstantiatedPixelIDTypeList>::value)
-  {}
-
-public:
-  /**  the pointer MemberFunctionType redefined ad a tr1::function
-   * object */
-  using FunctionObjectType = std::function<
-    MemberFunctionResultType(MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type)>;
-
-
-protected:
-  using KeyType = TKey;
-
-  /** A function which binds the objectPointer to the calling object
-   *  argument in the member function pointer, and returns a function
-   *  object
-   */
-  static FunctionObjectType
-  BindObject(MemberFunctionType pfunc, ObjectType * objectPointer)
-  {
-    return [pfunc, objectPointer](auto && PH1, auto && PH2, auto && PH3) {
-      return std::invoke(pfunc,
-                         objectPointer,
-                         std::forward<decltype(PH1)>(PH1),
-                         std::forward<decltype(PH2)>(PH2),
-                         std::forward<decltype(PH3)>(PH3));
-    };
-  }
-
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-  // maps of Keys to pointers to member functions
-  FunctionMapType m_PFunction;
-};
-
-
-template <typename TMemberFunctionPointer, typename TKey>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 4> : protected NonCopyable
-{
-protected:
-  using MemberFunctionType = TMemberFunctionPointer;
-  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
-  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
-  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
-  using MemberFunctionArgument2Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type;
-  using MemberFunctionArgument3Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type;
-  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
-
-
-  MemberFunctionFactoryBase()
-    : m_PFunction(3 * typelist2::length<InstantiatedPixelIDTypeList>::value)
-  {}
-
-public:
-  /**  the pointer MemberFunctionType redefined ad a tr1::function
-   * object */
-  using FunctionObjectType = std::function<MemberFunctionResultType(MemberFunctionArgument0Type,
-                                                                    MemberFunctionArgument1Type,
-                                                                    MemberFunctionArgument2Type,
-                                                                    MemberFunctionArgument3Type)>;
-
-
-protected:
-  using KeyType = TKey;
-
-  /** A function which binds the objectPointer to the calling object
-   *  argument in the member function pointer, and returns a function
-   *  object
-   */
-  static FunctionObjectType
-  BindObject(MemberFunctionType pfunc, ObjectType * objectPointer)
-  {
-    return [pfunc, objectPointer](auto && PH1, auto && PH2, auto && PH3, auto && PH4) {
-      return std::invoke(pfunc,
-                         objectPointer,
-                         std::forward<decltype(PH1)>(PH1),
-                         std::forward<decltype(PH2)>(PH2),
-                         std::forward<decltype(PH3)>(PH3),
-                         std::forward<decltype(PH4)>(PH4));
-    };
-  }
-
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-  // maps of Keys to pointers to member functions
-  FunctionMapType m_PFunction;
-};
-
-template <typename TMemberFunctionPointer, typename TKey>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 5> : protected NonCopyable
-{
-protected:
-  using MemberFunctionType = TMemberFunctionPointer;
-  using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
-  using MemberFunctionArgument0Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type;
-  using MemberFunctionArgument1Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type;
-  using MemberFunctionArgument2Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type;
-  using MemberFunctionArgument3Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type;
-  using MemberFunctionArgument4Type = typename ::detail::FunctionTraits<MemberFunctionType>::Argument4Type;
-  using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
-
-
-  MemberFunctionFactoryBase()
-    : m_PFunction(3 * typelist2::length<InstantiatedPixelIDTypeList>::value)
-  {}
-
-public:
-  /**  the pointer MemberFunctionType redefined ad a tr1::function
-   * object */
-  typedef std::function<MemberFunctionResultType(MemberFunctionArgument0Type,
-                                                 MemberFunctionArgument1Type,
-                                                 MemberFunctionArgument2Type,
-                                                 MemberFunctionArgument3Type,
-                                                 MemberFunctionArgument4Type)>
-    FunctionObjectType;
-
-
-protected:
-  using KeyType = TKey;
-
-  /** A function which binds the objectPointer to the calling object
-   *  argument in the member function pointer, and returns a function
-   *  object
-   */
-  static FunctionObjectType
-  BindObject(MemberFunctionType pfunc, ObjectType * objectPointer)
-  {
-    return [pfunc, objectPointer](auto && PH1, auto && PH2, auto && PH3, auto && PH4, auto && PH5) {
-      return std::invoke(pfunc,
-                         objectPointer,
-                         std::forward<decltype(PH1)>(PH1),
-                         std::forward<decltype(PH2)>(PH2),
-                         std::forward<decltype(PH3)>(PH3),
-                         std::forward<decltype(PH4)>(PH4),
-                         std::forward<decltype(PH5)>(PH5));
-    };
-  }
-
-
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-  // maps of Keys to pointers to member functions
-  FunctionMapType m_PFunction;
+    // maps of Keys to pointers to member functions
+    FunctionMapType m_PFunction;
 };
 
 } // namespace itk::simple::detail
