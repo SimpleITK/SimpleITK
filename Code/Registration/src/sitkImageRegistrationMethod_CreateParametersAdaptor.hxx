@@ -92,12 +92,9 @@ typename TransformParametersAdaptorBase<TTransformBase>::Pointer
 CreateTransformParametersAdaptorDisplacementField(
   TTransformBase *                                                      transform,
   const FixedArray<unsigned int, TTransformBase::InputSpaceDimension> & shrinkFactors,
-  const TFixedImageType *                                               fixedImage,
-  unsigned int                                                          level)
+  [[ maybe_unused ]] const TFixedImageType *                            fixedImage,
+  [[ maybe_unused ]] unsigned int                                       level)
 {
-  Unused(level);
-  Unused(fixedImage);
-
   using FixedImageType = TFixedImageType;
   const unsigned int Dimension = FixedImageType::ImageDimension;
   using DisplacementFieldTransformType = itk::DisplacementFieldTransform<double, Dimension>;

@@ -44,9 +44,8 @@ struct MemberFunctionInstantiater
 
   template <class TPixelIDType>
   void
-  operator()(TPixelIDType * id = nullptr) const
+  operator()([[ maybe_unused ]] TPixelIDType * id = nullptr) const
   {
-    Unused(id);
     if constexpr (IsInstantiated<TPixelIDType, VImageDimension>::Value)
     {
       using ImageType = typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType;
