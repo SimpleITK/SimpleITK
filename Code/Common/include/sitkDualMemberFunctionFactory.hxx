@@ -42,29 +42,26 @@ struct DualMemberFunctionInstantiater
   {}
 
   template <class TPixelIDType1, class TPixelIDType2 = TPixelIDType1>
-  typename std::enable_if<IsInstantiated<TPixelIDType1, VImageDimension>::Value &&
-                          IsInstantiated<TPixelIDType2, VImageDimension>::Value>::type
+  void
   operator()(TPixelIDType1 * t1 = nullptr, TPixelIDType2 * t2 = nullptr) const
   {
     (void)t1;
     (void)t2;
-    using ImageType1 = typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType;
-    using ImageType2 = typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType;
-    using AddressorType = TAddressor;
 
-    AddressorType addressor;
-    m_Factory.Register(
-      addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(), (ImageType1 *)(nullptr), (ImageType2 *)(nullptr));
-  }
+      if constexpr (IsInstantiated<TPixelIDType1, VImageDimension>::Value &&
+                  IsInstantiated<TPixelIDType2, VImageDimension>::Value)
+      {
+        // conditionally instantiate the member function when PixelID is enabled
 
-  // this methods is conditionally enabled when the PixelID is not instantiated
-  template <class TPixelIDType1, class TPixelIDType2 = TPixelIDType1>
-  typename std::enable_if<!(IsInstantiated<TPixelIDType1, VImageDimension>::Value &&
-                            IsInstantiated<TPixelIDType2, VImageDimension>::Value)>::type
-  operator()(TPixelIDType1 * t1 = nullptr, TPixelIDType2 * t2 = nullptr) const
-  {
-    (void)t1;
-    (void)t2;
+        using ImageType1 = typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType;
+        using ImageType2 = typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType;
+        using AddressorType = TAddressor;
+
+        AddressorType addressor;
+        m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(),
+                           (ImageType1 *)(nullptr),
+                           (ImageType2 *)(nullptr));
+      }
   }
 
 private:

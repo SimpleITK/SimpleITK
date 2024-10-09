@@ -536,22 +536,15 @@ ImportImageFilter::ExecuteInternal()
                                                TheContainerWillTakeCareOfDeletingTheMemoryBuffer);
 
 
-  //
-  // Meta-programmed method to set the number of components if a
-  // vector image
-  //
-  this->SetNumberOfComponentsOnImage(image.GetPointer());
+  // set the number of components if a vector image
+  if constexpr (IsVector<ImageType>::Value)
+  {
+    image->SetNumberOfComponentsPerPixel(m_NumberOfComponentsPerPixel);
+  }
 
   // This line must be the last line in the function to prevent a deep
   // copy caused by a implicit sitk::MakeUnique
   return Image(image);
-}
-
-template <class TFilterType>
-typename std::enable_if<IsVector<TFilterType>::Value>::type
-ImportImageFilter::SetNumberOfComponentsOnImage(TFilterType * image)
-{
-  image->SetNumberOfComponentsPerPixel(m_NumberOfComponentsPerPixel);
 }
 
 } // namespace itk::simple

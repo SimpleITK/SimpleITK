@@ -134,20 +134,14 @@ public:
             unsigned int VImageDimension,
             unsigned int VImageDimensionStop,
             typename TAddressor>
-  typename std::enable_if<(VImageDimensionStop > VImageDimension)>::type
+  void
   RegisterMemberFunctions()
   {
     this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimensionStop, TAddressor>();
-    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, VImageDimensionStop - 1, TAddressor>();
-  }
-  template <typename TPixelIDTypeList,
-            unsigned int VImageDimension,
-            unsigned int VImageDimensionStop,
-            typename TAddressor>
-  typename std::enable_if<(VImageDimensionStop == VImageDimension)>::type
-  RegisterMemberFunctions()
-  {
-    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimensionStop, TAddressor>();
+    if constexpr (VImageDimensionStop > VImageDimension)
+    {
+      this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, VImageDimensionStop - 1, TAddressor>();
+    }
   }
   /** @} */
 
