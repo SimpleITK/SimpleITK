@@ -13,7 +13,7 @@ endif()
 if(NOT SWIG_DIR)
 
   if (NOT MSVC)
-    option(USE_SWIG_FROM_GIT "Use a version of swig pulled from the git repo. This will require automake tools and does not work under windows." OFF )
+    option(USE_SWIG_FROM_GIT "Use a version of swig pulled from the git repo. This will require automake tools and does not work under windows." ON )
 
     mark_as_advanced(USE_SWIG_FROM_GIT)
   endif()
@@ -23,6 +23,7 @@ if(NOT SWIG_DIR)
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
+    set(SWIG_TARGET_VERSION "4.3.0-beta1")
     set(SWIG_GIT_TAG "v${SWIG_TARGET_VERSION}" CACHE STRING "Tag in swig git repo")
     mark_as_advanced(SWIG_GIT_REPO)
     mark_as_advanced(SWIG_GIT_TAG)
