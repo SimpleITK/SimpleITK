@@ -331,7 +331,7 @@ public:
   }
 
   std::vector<double>
-  EvaluateAtContinuousIndex(const std::vector<double> & index, InterpolatorEnum interp) const override
+  EvaluateAtContinuousIndex(const std::vector<double> & index, [[maybe_unused]] InterpolatorEnum interp) const override
   {
     if constexpr (IsLabel<ImageType>::Value)
     {
@@ -852,7 +852,7 @@ protected:
 
     template <typename TPixelType>
     void
-    InternalSetPixelAs(const std::vector<uint32_t> & idx, const TPixelType v) const
+    InternalSetPixelAs(const std::vector<uint32_t> & idx, [[maybe_unused]] const TPixelType v) const
     {
 
       auto getIndex = [idx, this]() -> IndexType {
