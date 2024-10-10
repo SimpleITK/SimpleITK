@@ -43,10 +43,6 @@ namespace itk::simple
 namespace
 {
 
-template <typename T, typename U>
-struct MakeDependentOn : public U
-{};
-
 template<typename T>
 struct ValuePixelType;
 
@@ -777,36 +773,37 @@ public:
 
 protected:
 
-  template <typename TReturn,
-            typename TPixelIDType = typename ImageTypeToPixelID<ImageType>::PixelIDType>
+
+  IndexType GetIndex(const std::vector<uint32_t> & idx) const
+  {
+    auto itkIdx = sitkSTLVectorToITK<IndexType>(idx);
+    if (!m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
+    {
+      sitkExceptionMacro("index out of bounds");
+    }
+
+    return itkIdx;
+  };
+
+  template <typename TReturn>
   TReturn
   InternalGetPixelAs(const std::vector<uint32_t> & idx) const
   {
 
-    auto getIndex = [idx, this]() -> IndexType {
-      auto itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-      if (!m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
-      {
-        sitkExceptionMacro("index out of bounds");
-      }
-
-      return itkIdx;
-    };
-
     if constexpr (IsLabel<ImageType>::Value &&
                   std::is_same<ValuePixelType, TReturn>::value)
     {
-      return this->m_Image->GetPixel(getIndex());
+      return this->m_Image->GetPixel(GetIndex(idx));
     }
     else if constexpr (IsBasic<ImageType>::Value &&
                        std::is_same<ValuePixelType, TReturn>::value)
     {
-      return this->m_Image->GetPixel(getIndex());
+      return this->m_Image->GetPixel(GetIndex(idx));
     }
     else if constexpr (IsVector<ImageType>::Value &&
                        std::is_same<std::vector<ValuePixelType>, TReturn>::value)
     {
-      const typename ImageType::PixelType px = this->m_Image->GetPixel(getIndex());
+      const typename ImageType::PixelType px = this->m_Image->GetPixel(GetIndex(idx));
       return std::vector<typename ImageType::InternalPixelType>(&px[0], &px[px.GetSize()]);
     }
     else
@@ -817,12 +814,10 @@ protected:
   }
 
 
-  template <typename TReturn,
-            typename TPixelIDType = typename ImageTypeToPixelID<ImageType>::PixelIDType>
+  template <typename TReturn>
   TReturn *
-  InternalGetBufferAs(void) const
+  InternalGetBufferAs() const
   {
-
 
     if constexpr (IsLabel<ImageType>::Value )
     {
@@ -855,30 +850,21 @@ protected:
     InternalSetPixelAs(const std::vector<uint32_t> & idx, [[maybe_unused]] const TPixelType v) const
     {
 
-      auto getIndex = [idx, this]() -> IndexType {
-        auto itkIdx = sitkSTLVectorToITK<IndexType>(idx);
-        if (!m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
-        {
-          sitkExceptionMacro("index out of bounds");
-        }
-
-        return itkIdx;
-      };
 
       if constexpr (IsLabel<ImageType>::Value &&
                     std::is_same<ValuePixelType, TPixelType>::value)
       {
-        return this->m_Image->SetPixel(getIndex(), v);
+        return this->m_Image->SetPixel(GetIndex(idx), v);
       }
       else if constexpr (IsBasic<ImageType>::Value &&
                          std::is_same<ValuePixelType, TPixelType>::value)
       {
-        return this->m_Image->SetPixel(getIndex(),v);
+        return this->m_Image->SetPixel(GetIndex(idx),v);
       }
       else if constexpr (IsVector<ImageType>::Value &&
                          std::is_same<std::vector<ValuePixelType>, TPixelType>::value)
       {
-        typename ImageType::PixelType px = this->m_Image->GetPixel(getIndex());
+        typename ImageType::PixelType px = this->m_Image->GetPixel(GetIndex(idx));
 
         if (px.GetSize() != v.size())
         {
