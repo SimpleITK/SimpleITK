@@ -93,6 +93,7 @@ jobs:
           - os: macos-13
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            xcode-version: 14.3.1
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
