@@ -43,7 +43,7 @@ function build_simpleitk {
     cmake \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
-        -DCMAKE_BUILD_TYPE:STRING=Release \
+        -DCMAKE_BUILD_TYPE:STRING=RelMinSize \
         -DBUILD_TESTING:BOOL=ON \
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -73,7 +73,7 @@ function build_simpleitk_python {
         -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
         -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
         -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
-        -DCMAKE_BUILD_TYPE:STRING=Release \
+        -DCMAKE_BUILD_TYPE:STRING=MinSizeRel \
         -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
         -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
         -DSimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API:-OFF} \
