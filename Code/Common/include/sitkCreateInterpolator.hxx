@@ -51,9 +51,8 @@ ConditionalCreateInterpolator(const FalseType &)
 
 template <typename TPixelType, unsigned int N>
 typename itk::InterpolateImageFunction<itk::VectorImage<TPixelType, N>, double>::Pointer
-CreateInterpolator(const itk::VectorImage<TPixelType, N> * image, InterpolatorEnum itype)
+CreateInterpolator( [[ maybe_unused ]] const itk::VectorImage<TPixelType, N> * image, InterpolatorEnum itype)
 {
-  Unused(image);
   using TImageType = itk::VectorImage<TPixelType, N>;
   using RType = typename itk::InterpolateImageFunction<TImageType, double>::Pointer;
 
@@ -75,9 +74,8 @@ CreateInterpolator(const itk::VectorImage<TPixelType, N> * image, InterpolatorEn
 
 template <typename TPixelType, unsigned int N>
 typename itk::InterpolateImageFunction<itk::Image<std::complex<TPixelType>, N>, double>::Pointer
-CreateInterpolator(const itk::Image<std::complex<TPixelType>, N> * image, InterpolatorEnum itype)
+CreateInterpolator([[ maybe_unused ]] const itk::Image<std::complex<TPixelType>, N> * image, InterpolatorEnum itype)
 {
-  Unused(image);
   using TImageType = itk::Image<std::complex<TPixelType>, N>;
   using RType = typename itk::InterpolateImageFunction<TImageType, double>::Pointer;
 
