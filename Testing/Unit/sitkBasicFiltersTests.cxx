@@ -55,7 +55,6 @@
 #include <sitkResampleImageFilter.h>
 #include <sitkSignedMaurerDistanceMapImageFilter.h>
 #include <sitkSignedDanielssonDistanceMapImageFilter.h>
-#include <sitkDICOMOrientImageFilter.h>
 #include <sitkPasteImageFilter.h>
 #include <sitkN4BiasFieldCorrectionImageFilter.h>
 #include <sitkMaskImageFilter.h>
@@ -1152,22 +1151,6 @@ TEST(BasicFilters, OtsuThreshold_CheckNamesInputCompatibility)
   EXPECT_THROW(sitk::OtsuThreshold(input, mask1), sitk::GenericException);
   EXPECT_THROW(sitk::OtsuThreshold(input, mask2), sitk::GenericException);
 }
-
-TEST(BasicFilters, DICOMOrientImageFilter_Direction)
-{
-  namespace sitk = itk::simple;
-
-  auto directionLPS = v9(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
-  auto directionRAS = v9(-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0);
-
-  EXPECT_EQ(directionLPS, sitk::DICOMOrientImageFilter::GetDirectionCosinesFromOrientation("LPS"));
-  EXPECT_EQ("LPS", sitk::DICOMOrientImageFilter::GetOrientationFromDirectionCosines(directionLPS));
-
-  EXPECT_EQ(v9(-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0),
-            sitk::DICOMOrientImageFilter::GetDirectionCosinesFromOrientation("RAS"));
-  EXPECT_EQ("RAS", sitk::DICOMOrientImageFilter::GetOrientationFromDirectionCosines(directionRAS));
-}
-
 
 TEST(BasicFilters, ExtractImageFilter_2D)
 {

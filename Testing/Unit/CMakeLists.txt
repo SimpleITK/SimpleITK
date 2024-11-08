@@ -45,6 +45,10 @@ if ( SimpleITK_MAX_DIMENSION GREATER_EQUAL 4 )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 
+if ( "SimpleITKFilters"  IN_LIST ITK_MODULES_ENABLED)
+    list(APPEND SimpleITKUnitTestSource sitkSimpleITKFiltersTests.cxx)
+endif()
+
 if ( SimpleITK_USE_ELASTIX )
   list(APPEND SimpleITKUnitTestSource
     sitkParameterMapTests.cxx
