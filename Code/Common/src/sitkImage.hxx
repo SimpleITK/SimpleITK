@@ -67,8 +67,7 @@ Image::AllocateInternal(const std::vector<unsigned int> & _size, unsigned int nu
                                                               << " but did not specify pixelID as a vector type!");
     }
 
-    image->Allocate();
-    image->FillBuffer(itk::NumericTraits<typename TImageType::PixelType>::ZeroValue());
+    image->AllocateInitialized();
   }
   else if constexpr (IsVector<TImageType>::Value)
   {
@@ -86,7 +85,7 @@ Image::AllocateInternal(const std::vector<unsigned int> & _size, unsigned int nu
     image->Allocate();
     image->FillBuffer(zero);
   }
-  else if (IsLabel<TImageType>::Value)
+  else if constexpr (IsLabel<TImageType>::Value)
   {
     if (numberOfComponents != 1 && numberOfComponents != 0)
     {
