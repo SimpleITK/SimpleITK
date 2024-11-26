@@ -1,10 +1,10 @@
 # Set the important environmental variables that auto-conf uses to
 # configure, mostly these are passed from the CMake
 # configuration. Others are just explicitly passed from the
-# enviroment. If there is a problem with them in the future they can
+# environment. If there is a problem with them in the future they can
 # be addressed in CMake with the same structure.
 
-cmake_policy(VERSION 3.16.3)
+cmake_minimum_required(VERSION 3.16.3...3.26.0)
 
 set(ENV{CC} "@CMAKE_C_COMPILER_LAUNCHER@ @CMAKE_C_COMPILER@")
 set(ENV{CFLAGS} "@REQUIRED_C_FLAGS@ @CMAKE_C_FLAGS@ @CMAKE_C_FLAGS_RELEASE@")
