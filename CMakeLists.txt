@@ -1,14 +1,12 @@
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkCMakeInit.cmake")
-cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION})
+cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION}...${SITK_CMAKE_POLICY_VERSION} )
 
 # Explicitly add INCREMENTAL linking option to command lines.
 # http://www.cmake.org/pipermail/cmake/2010-February/035174.html
 SET(MSVC_INCREMENTAL_DEFAULT ON)
 
 project ( SimpleITK )
-
-cmake_policy( VERSION ${SITK_CMAKE_POLICY_VERSION} )
 
 foreach(p
         CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
