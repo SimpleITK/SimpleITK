@@ -2,9 +2,13 @@ name: Build and Test
 
 on:
   push:
-    branches: ['master', 'release']
+    branches:
+      - master
+      - release
   pull_request:
-    branches: [ 'master', 'release' ]
+    branches:
+      - master
+      - release
     paths-ignore:
       - 'Testing/CI/**'
       - 'docs/**'
