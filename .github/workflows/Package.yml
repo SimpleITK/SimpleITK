@@ -87,7 +87,7 @@ jobs:
       CTEST_CONFIGURATION_TYPE: "${{ matrix.cmake-build-type }}"
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 5
       matrix:
         include:
           - os: macos-13
@@ -100,6 +100,18 @@ jobs:
               ITK_C_OPTIMIZATION_FLAGS:STRING=
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+              SimpleITK_BUILD_STRIP:BOOL=1
+          - os: mac-arm64
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+              ITK_C_OPTIMIZATION_FLAGS:STRING=
+              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+              SimpleITK_BUILD_STRIP:BOOL=1
           - os: windows-2022
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"

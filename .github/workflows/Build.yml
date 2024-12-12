@@ -30,9 +30,20 @@ jobs:
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
     strategy:
-      max-parallel: 4
+      max-parallel: 5
       matrix:
         include:
+          - os: mac-arm64
+            cmake-build-type: "RelMinSize"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
+              CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
+              SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
           - os: self-hosted-x64
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
