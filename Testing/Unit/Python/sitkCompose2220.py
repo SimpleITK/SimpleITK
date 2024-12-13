@@ -65,7 +65,9 @@ class Compose2220Tests(unittest.TestCase):
 
         img_stack = sitk.GetImageFromArray(np.stack(stack, axis=-1))
 
-        self.assertImageAlmostEqual(img_compose, img_stack)
+        print(f"img_compose: {sitk.Hash(img_compose)}")
+        print(f"img_stack: {sitk.Hash(img_stack)}")
+        self.assertTrue(sitk.Hash(img_compose) == sitk.Hash(img_stack))
 
     def test_case2(self):
         size = 400

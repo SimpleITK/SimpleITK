@@ -39,6 +39,7 @@ set ( SimpleITKUnitTestSource
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
   sitkImageViewerTest.cxx
+  sitkCompose2220Tests.cxx
   sitkDemonsRegistrationTests.cxx)
 
 if ( SimpleITK_MAX_DIMENSION GREATER_EQUAL 4 )
