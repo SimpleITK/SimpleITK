@@ -30,6 +30,10 @@ sitk_add_python_test( Test.GetGDCMSeriesIDs
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkGetGDCMSeriesIDs.py"
   )
 
+sitk_add_python_test( Test.Compose2220
+    "${CMAKE_CURRENT_SOURCE_DIR}/sitkCompose2220.py"
+    )
+
 # Numpy test.
 sitk_add_python_test( Test.Numpy
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkNumpyArrayConversionTest.py"
