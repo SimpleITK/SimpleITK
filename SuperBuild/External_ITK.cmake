@@ -72,8 +72,7 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# release-5.4 branch on 11/23/2024 - contains patches to building tiff
-set(_DEFAULT_ITK_GIT_TAG "49413c3a9e8ecf0f912534e7c13f4c7bc3799d60")
+set(_DEFAULT_ITK_GIT_TAG "v5.4.1")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
