@@ -72,8 +72,7 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# 5.4.1 with vector image accessor patch
-set(_DEFAULT_ITK_GIT_TAG "273d665a5fc3fb63b1b8685a76bad9d7988af819") #
+set(_DEFAULT_ITK_GIT_TAG "v5.4.2")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
