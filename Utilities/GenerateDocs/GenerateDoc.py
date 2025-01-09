@@ -6,7 +6,7 @@ import io
 import json
 import re
 import getopt
-from lxml import etree
+from xml.etree import ElementTree
 from collections import OrderedDict
 
 
@@ -33,7 +33,7 @@ def usage():
     print("")
 
 
-def find_xml_file(itk_path, json_obj):
+def find_xml_file(itk_path, json_obj) -> str:
     itk_name = ""
     if "itk_name" in json_obj:
         itk_name = json_obj["itk_name"]
@@ -51,22 +51,20 @@ def find_xml_file(itk_path, json_obj):
         "classitk_1_1" + name + template_code_filename + ".xml",
         "classitk_1_1" + name + ".xml",
     ]
-    # print( xml_file_options )
+
     for xf in xml_file_options:
         xname = itk_path + "/" + xf
         if os.path.isfile(xname):
             try:
-                xml_file = io.open(xname, "r", encoding="utf8")
-                print("xml file: ", xname)
-            except BaseException:
-                xml_file = None
-                print("no xml file: ", xname)
+                with open(xname, "r", encoding="utf8"):
+                    print("xml file: ", xname)
+                    return xname
+            except IOError:
+                print("Failed to open file: ", xname)
 
-    if not xml_file:
-        print("Tried to read a file for " + name)
-        print(xml_file_options)
-        sys.exit(1)
-    return xml_file
+    print("Tried to read a file for " + name)
+    print(xml_file_options)
+    sys.exit(1)
 
 
 #
@@ -76,17 +74,17 @@ def process_xml(root, debug=False):
     if debug:
         print(root)
 
-    # Remove the parents of 'Wiki Examples' title nodes
-    wiki_sect = root.xpath('//title[contains(., "Wiki Examples")]/..')
-    wiki_sect += root.xpath('//title[contains(., "ITK Sphinx Examples")]/..')
+    # Find nodes with 'Wiki Examples' and 'ITK Sphinx Examples' in their title
+    wiki_sect = root.findall(".//title[.='Wiki Examples']/..")
+    wiki_sect += root.findall(".//title[.='ITK Sphinx Examples']/..")
     for ws in wiki_sect:
         par = ws.getparent()
 
         if debug:
-            print("\nBefore:", etree.tostring(par), "\n")
+            print("\nBefore:", ElementTree.tostring(par), "\n")
         par.remove(ws)
         if debug:
-            print("After:", etree.tostring(par), "\n")
+            print("After:", ElementTree.tostring(par), "\n")
 
 
 #
@@ -143,7 +141,7 @@ def traverse_xml(xml_node, depth=0, debug=False):
         if debug:
             print(blue_text, "\nFormula", end_color)
             print(text)
-        text = text.replace("\[", " \\f[", 1)
+        text = text.replace("\\[", " \\f[", 1)
         text = text.replace("\\]", "\\f] ")
         text = text.replace("$", "\\f$") + " "
         if debug:
@@ -172,7 +170,7 @@ def traverse_xml(xml_node, depth=0, debug=False):
 # Call the recursive XML traversal function to get a description string,
 # then clean up some white space
 #
-def format_description(xml_node, debug):
+def format_description(xml_node, debug=False):
     result = traverse_xml(xml_node, 0, debug)
     result = result.replace("\n\n\n", "\n\n")
     result = re.sub(" +", " ", result)
@@ -234,8 +232,9 @@ if __name__ == "__main__":
     # print(json.dumps(json_obj, indent=1))
 
     # Find and load the XML file
-    xml_file = find_xml_file(itk_path, json_obj)
-    tree = etree.parse(xml_file)
+    xml_filename = find_xml_file(itk_path, json_obj)
+    with open(xml_filename, "r", encoding="utf8") as xml_file:
+        tree = ElementTree.parse(xml_file)
     root = tree.getroot()
 
     # Filter the XML to remove extraneous stuff
