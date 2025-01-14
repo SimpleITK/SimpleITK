@@ -107,7 +107,6 @@ jobs:
             cmake-generator: "Ninja"
             xcode-version: 15.2
             ctest-cache: |
-              SimpleITK_USE_ELASTIX:BOOL=ON
               WRAP_PYTHON:BOOL=ON
 
           - os: macos-13
@@ -117,20 +116,22 @@ jobs:
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
 
-          - os: macos-12
-            cmake-build-type: "Release"
+          - os: macos-13
+            cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
-            xcode-version: 13.4.1
+            xcode-version: 15.2
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=ON
 
-          - os: macos-12
-            cmake-build-type: "MinSizeRel"
+          - os: mac-arm64
+            cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            xcode-version: 13.1
             ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
 
     steps:
       - uses: actions/checkout@v4
