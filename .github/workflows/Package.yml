@@ -263,6 +263,10 @@ jobs:
 
   publish:
     if: github.ref_name == 'latest' || startsWith(github.ref_name, 'v')
+    environment:
+      name: release
+    permissions:
+      id-token: write
     needs:
       - build
       - doxygen
@@ -291,10 +295,14 @@ jobs:
         shell: bash
         run: |
           echo "Tag Name: ${{ steps.tag.outputs.name }}"
+          if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
+            echo "This is an automatic packaging of SimpleITK based on the master branch. It contains the latest features and experimental developments." > notes.txt
+          else
+            echo "This is an automatic packaging of SimpleITK based on the ${{ steps.tag.outputs.name }} tag." > notes.txt
+          fi
           echo "
-          This is an automatic pre-release packaging of SimpleITK based on the master branch. It contains the latest features and experimental developments.
 
-          To upgrade to the latest pre-release Python binary package run:
+          To upgrade to this Python binary package run:
           \`\`\`pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
           " >notes.txt
 
@@ -334,3 +342,14 @@ jobs:
           if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
             gh release edit ${{ steps.tag.outputs.name }} --draft=false
           fi
+      - name: Prepare for PyPI upload
+        shell: bash
+        run: |
+          mkdir -p dist
+          mv $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" ) dist/
+      - name: PyPI Publish package
+        if: startsWith(github.ref_name, 'v')
+        # hash for release/v1.12.3
+        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70
+        with:
+          repository-url: https://test.pypi.org/legacy/
