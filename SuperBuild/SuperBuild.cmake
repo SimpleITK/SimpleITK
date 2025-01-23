@@ -414,6 +414,15 @@ foreach (_varName ${_varNames})
          _varName MATCHES "^DOXYGEN_"
        OR
          _varName MATCHES "^CMAKE_DISABLE_FIND_PACKAGE_"
+       OR
+         _varName MATCHES "^Python\_(ROOT\_DIR|INCLUDE\_DIR|LIBRARY|LIBRARY\_DEBUG|LIBRARY\_RELEASE|EXECUTABLE)$"
+       # Support CMake < 3.24 by explicitly passing _Python_VERSION variables to workaround issue fixed
+       # in kitware/cmake@ece3bedbf (FindPython: fix error on multiple queries with different COMPONENTS)
+       # See https://gitlab.kitware.com/cmake/cmake/-/merge_requests/7410 for more details
+       OR
+         (_varName MATCHES "^\_Python\_VERSION$" AND CMAKE_VERSION VERSION_LESS "3.24")
+       OR
+         (_varName MATCHES "^\_Python\_VERSION\_(MAJOR|MINOR|PATCH)$" AND CMAKE_VERSION VERSION_LESS "3.24")
          )
     message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
     list(APPEND SimpleITK_VARS ${_varName})
