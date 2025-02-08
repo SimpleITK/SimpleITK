@@ -6,6 +6,7 @@
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();\n",
   "members" : [
     {
       "name" : "ProjectionDimension",
