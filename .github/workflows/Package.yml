@@ -23,7 +23,7 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-          - os: self-hosted-arm
+          - os: ubuntu-22.04-arm
             dockerfile: Dockerfile-2014-aarch64
           - os: ubuntu-latest
             dockerfile: Dockerfile-2014-x86_64
