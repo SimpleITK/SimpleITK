@@ -125,7 +125,7 @@ public:
 
 protected:
   HolderCommand()
-    : m_Object(nullptr){};
+    : m_Object(nullptr) {};
   ~HolderCommand() override { delete m_Object; }
 
 private:

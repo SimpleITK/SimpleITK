@@ -35,7 +35,6 @@ struct SITK_ABI_HIDDEN FunctionTraits<Ret (C::*)(Args...)>
   template <std::size_t J>
   using ArgumentType = std::tuple_element_t<J, std::tuple<Args...>>;
   using FunctionObjectType = std::function<Ret(Args...)>;
-
 };
 
 } // namespace detail

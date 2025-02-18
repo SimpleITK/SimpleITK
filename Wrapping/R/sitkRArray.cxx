@@ -48,7 +48,8 @@ ImAsArray(itk::simple::Image src)
   }
   switch (PID)
   {
-    case itk::simple::sitkUnknown: {
+    case itk::simple::sitkUnknown:
+    {
       char error_msg[1024];
       snprintf(error_msg, 1024, "Exception thrown ImAsArray : unknown pixel type");
       REprintf("%s\n", error_msg);
@@ -94,13 +95,15 @@ ImAsArray(itk::simple::Image src)
       Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorInt64 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorInt64,
-                                       -21>::Value: {
+                                       -21>::Value:
+    {
       // allocate an integer array
       PROTECT(res = Rf_allocVector(INTSXP, pixcount));
       ians = INTEGER_POINTER(res);
     }
     break;
-    default: {
+    default:
+    {
       // allocate double array
       PROTECT(res = Rf_allocVector(REALSXP, pixcount));
       dans = NUMERIC_POINTER(res);
@@ -113,7 +116,8 @@ ImAsArray(itk::simple::Image src)
       Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorUInt8 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorUInt8,
-                                       -14>::Value: {
+                                       -14>::Value:
+    {
       uint8_t * buff = src.GetBufferAsUInt8();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -122,7 +126,8 @@ ImAsArray(itk::simple::Image src)
       Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorInt8 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorInt8,
-                                       -15>::Value: {
+                                       -15>::Value:
+    {
       int8_t * buff = src.GetBufferAsInt8();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -131,7 +136,8 @@ ImAsArray(itk::simple::Image src)
       ConditionalValue<itk::simple::sitkUInt16 != itk::simple::sitkUnknown, itk::simple::sitkUInt16, -4>::Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorUInt16 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorUInt16,
-                                       -16>::Value: {
+                                       -16>::Value:
+    {
       uint16_t * buff = src.GetBufferAsUInt16();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -140,7 +146,8 @@ ImAsArray(itk::simple::Image src)
       Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorInt16 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorInt16,
-                                       -17>::Value: {
+                                       -17>::Value:
+    {
       int16_t * buff = src.GetBufferAsInt16();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -149,7 +156,8 @@ ImAsArray(itk::simple::Image src)
       ConditionalValue<itk::simple::sitkUInt32 != itk::simple::sitkUnknown, itk::simple::sitkUInt32, -6>::Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorUInt32 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorUInt32,
-                                       -18>::Value: {
+                                       -18>::Value:
+    {
       uint32_t * buff = src.GetBufferAsUInt32();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -158,7 +166,8 @@ ImAsArray(itk::simple::Image src)
       Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorInt32 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorInt32,
-                                       -19>::Value: {
+                                       -19>::Value:
+    {
       int32_t * buff = src.GetBufferAsInt32();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -178,7 +187,8 @@ ImAsArray(itk::simple::Image src)
       Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorInt64 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorInt64,
-                                       -21>::Value: {
+                                       -21>::Value:
+    {
       int64_t * buff = src.GetBufferAsInt64();
       std::copy(buff, buff + pixcount, ians);
     }
@@ -187,7 +197,8 @@ ImAsArray(itk::simple::Image src)
       ConditionalValue<itk::simple::sitkFloat32 != itk::simple::sitkUnknown, itk::simple::sitkFloat32, -10>::Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorFloat32 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorFloat32,
-                                       -22>::Value: {
+                                       -22>::Value:
+    {
       float * buff = src.GetBufferAsFloat();
       std::copy(buff, buff + pixcount, dans);
     }
@@ -196,7 +207,8 @@ ImAsArray(itk::simple::Image src)
       ConditionalValue<itk::simple::sitkFloat64 != itk::simple::sitkUnknown, itk::simple::sitkFloat64, -11>::Value:
     case itk::simple::ConditionalValue<itk::simple::sitkVectorFloat64 != itk::simple::sitkUnknown,
                                        itk::simple::sitkVectorFloat64,
-                                       -23>::Value: {
+                                       -23>::Value:
+    {
       double * buff = src.GetBufferAsDouble();
       std::copy(buff, buff + pixcount, dans);
     }

@@ -132,7 +132,8 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
   // Calculate and return the hash value
   switch (this->m_HashFunction)
   {
-    case SHA1: {
+    case SHA1:
+    {
       const int HashSize = SHA1HashSize;
       hl_uint8  Digest[1024];
       sha1.SHA1Result(&sha1Context, Digest);
@@ -152,7 +153,8 @@ HashImageFilter<TImageType>::AfterThreadedGenerateData()
 
       break;
     }
-    case MD5: {
+    case MD5:
+    {
       const size_t DigestSize = 32u;
       char         Digest[DigestSize];
 

@@ -43,22 +43,22 @@ namespace itk::simple
 namespace
 {
 
-template<typename T>
+template <typename T>
 struct ValuePixelType;
 
-template<typename T, unsigned int D>
+template <typename T, unsigned int D>
 struct ValuePixelType<itk::VectorImage<T, D>>
 {
   using ValueType = typename itk::VectorImage<T, D>::PixelType::ValueType;
 };
 
-template<typename T, unsigned int D>
+template <typename T, unsigned int D>
 struct ValuePixelType<itk::Image<T, D>>
 {
   using ValueType = typename itk::Image<T, D>::PixelType;
 };
 
-template<typename T>
+template <typename T>
 struct ValuePixelType<itk::LabelMap<T>>
 {
   using ValueType = typename itk::LabelMap<T>::PixelType;
@@ -344,8 +344,8 @@ public:
       auto itkInterpolator = CreateInterpolator(this->m_Image.GetPointer(), interp);
       if (itkInterpolator == nullptr)
       {
-        sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support " << GetPixelIDValueAsString(this->GetPixelID()))
-
+        sitkExceptionMacro("Interpolator type \"" << interp << "\" does not support "
+                                                  << GetPixelIDValueAsString(this->GetPixelID()))
       }
       itkInterpolator->SetInputImage(this->m_Image.GetPointer());
       auto result = itkInterpolator->EvaluateAtContinuousIndex(cidx);
@@ -360,7 +360,7 @@ public:
       }
       else
       {
-        return std::vector<double>( 1, double(result) );
+        return std::vector<double>(1, double(result));
       }
     }
   }
@@ -772,9 +772,8 @@ public:
   }
 
 protected:
-
-
-  IndexType GetIndex(const std::vector<uint32_t> & idx) const
+  IndexType
+  GetIndex(const std::vector<uint32_t> & idx) const
   {
     auto itkIdx = sitkSTLVectorToITK<IndexType>(idx);
     if (!m_Image->GetLargestPossibleRegion().IsInside(itkIdx))
@@ -790,18 +789,15 @@ protected:
   InternalGetPixelAs(const std::vector<uint32_t> & idx) const
   {
 
-    if constexpr (IsLabel<ImageType>::Value &&
-                  std::is_same<ValuePixelType, TReturn>::value)
+    if constexpr (IsLabel<ImageType>::Value && std::is_same<ValuePixelType, TReturn>::value)
     {
       return this->m_Image->GetPixel(GetIndex(idx));
     }
-    else if constexpr (IsBasic<ImageType>::Value &&
-                       std::is_same<ValuePixelType, TReturn>::value)
+    else if constexpr (IsBasic<ImageType>::Value && std::is_same<ValuePixelType, TReturn>::value)
     {
       return this->m_Image->GetPixel(GetIndex(idx));
     }
-    else if constexpr (IsVector<ImageType>::Value &&
-                       std::is_same<std::vector<ValuePixelType>, TReturn>::value)
+    else if constexpr (IsVector<ImageType>::Value && std::is_same<std::vector<ValuePixelType>, TReturn>::value)
     {
       const typename ImageType::PixelType px = this->m_Image->GetPixel(GetIndex(idx));
       return std::vector<typename ImageType::InternalPixelType>(&px[0], &px[px.GetSize()]);
@@ -819,22 +815,19 @@ protected:
   InternalGetBufferAs() const
   {
 
-    if constexpr (IsLabel<ImageType>::Value )
+    if constexpr (IsLabel<ImageType>::Value)
     {
       sitkExceptionMacro("This method is not supported for LabelMaps.")
     }
-    else if constexpr (IsBasic<ImageType>::Value &&
-                       std::is_same<ValuePixelType, TReturn>::value)
+    else if constexpr (IsBasic<ImageType>::Value && std::is_same<ValuePixelType, TReturn>::value)
     {
       return this->m_Image->GetPixelContainer()->GetBufferPointer();
     }
-    else if constexpr (IsBasic<ImageType>::Value &&
-                       std::is_same<ValuePixelType, std::complex<TReturn>>::value)
+    else if constexpr (IsBasic<ImageType>::Value && std::is_same<ValuePixelType, std::complex<TReturn>>::value)
     {
       return reinterpret_cast<TReturn *>(this->m_Image->GetPixelContainer()->GetBufferPointer());
     }
-    else if constexpr (IsVector<ImageType>::Value &&
-                       std::is_same<ValuePixelType, TReturn>::value)
+    else if constexpr (IsVector<ImageType>::Value && std::is_same<ValuePixelType, TReturn>::value)
     {
       return this->m_Image->GetPixelContainer()->GetBufferPointer();
     }
@@ -845,42 +838,39 @@ protected:
     }
   }
 
-    template <typename TPixelType>
-    void
-    InternalSetPixelAs(const std::vector<uint32_t> & idx, [[maybe_unused]] const TPixelType v) const
+  template <typename TPixelType>
+  void
+  InternalSetPixelAs(const std::vector<uint32_t> & idx, [[maybe_unused]] const TPixelType v) const
+  {
+
+
+    if constexpr (IsLabel<ImageType>::Value && std::is_same<ValuePixelType, TPixelType>::value)
     {
-
-
-      if constexpr (IsLabel<ImageType>::Value &&
-                    std::is_same<ValuePixelType, TPixelType>::value)
-      {
-        return this->m_Image->SetPixel(GetIndex(idx), v);
-      }
-      else if constexpr (IsBasic<ImageType>::Value &&
-                         std::is_same<ValuePixelType, TPixelType>::value)
-      {
-        return this->m_Image->SetPixel(GetIndex(idx),v);
-      }
-      else if constexpr (IsVector<ImageType>::Value &&
-                         std::is_same<std::vector<ValuePixelType>, TPixelType>::value)
-      {
-        typename ImageType::PixelType px = this->m_Image->GetPixel(GetIndex(idx));
-
-        if (px.GetSize() != v.size())
-        {
-          sitkExceptionMacro(<< "Unable to convert vector to ITK pixel type\n"
-                             << "Expected vector of length " << px.GetSize() << " but only got " << v.size()
-                             << " elements.");
-        }
-
-        std::copy(v.begin(), v.end(), &px[0]);
-      }
-      else
-      {
-        sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
-                           << " does not match the type of SetPixel method called.");
-      }
+      return this->m_Image->SetPixel(GetIndex(idx), v);
     }
+    else if constexpr (IsBasic<ImageType>::Value && std::is_same<ValuePixelType, TPixelType>::value)
+    {
+      return this->m_Image->SetPixel(GetIndex(idx), v);
+    }
+    else if constexpr (IsVector<ImageType>::Value && std::is_same<std::vector<ValuePixelType>, TPixelType>::value)
+    {
+      typename ImageType::PixelType px = this->m_Image->GetPixel(GetIndex(idx));
+
+      if (px.GetSize() != v.size())
+      {
+        sitkExceptionMacro(<< "Unable to convert vector to ITK pixel type\n"
+                           << "Expected vector of length " << px.GetSize() << " but only got " << v.size()
+                           << " elements.");
+      }
+
+      std::copy(v.begin(), v.end(), &px[0]);
+    }
+    else
+    {
+      sitkExceptionMacro(<< "The image is of type: " << GetPixelIDValueAsString(this->GetPixelID())
+                         << " does not match the type of SetPixel method called.");
+    }
+  }
 
 
 private:

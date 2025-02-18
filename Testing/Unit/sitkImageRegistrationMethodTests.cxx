@@ -1119,9 +1119,7 @@ TEST_F(sitkRegistrationMethodTest, StopRegistration)
     [&R]() { R.SetOptimizerAsGradientDescent(1.0, 100); },
     [&R]() { R.SetOptimizerAsGradientDescentLineSearch(1.0, 100); },
     [&R]() { R.SetOptimizerAsRegularStepGradientDescent(1.0, 0.001, 100, 0.5, 1e-6); },
-    [&R]() {
-      R.SetOptimizerAsExhaustive({ 5, 5 }, 0.5);
-    },
+    [&R]() { R.SetOptimizerAsExhaustive({ 5, 5 }, 0.5); },
     [&R]() { R.SetOptimizerAsPowell(100, 100, 1, 1e-6, 1e-8); },
     [&R]() { R.SetOptimizerAsOnePlusOneEvolutionary(100); }
   };

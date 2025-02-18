@@ -33,10 +33,7 @@ namespace itk::simple
 
 Image::~Image() = default;
 
-Image::Image()
-{
-  Allocate({ 0, 0 }, sitkUInt8, 1);
-}
+Image::Image() { Allocate({ 0, 0 }, sitkUInt8, 1); }
 
 Image::Image(std::unique_ptr<PimpleImageBase> pimpleImage)
   : m_PimpleImage(std::move(pimpleImage))

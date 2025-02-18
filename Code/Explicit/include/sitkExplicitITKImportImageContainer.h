@@ -63,7 +63,7 @@ extern template class SITKExplicit_EXPORT_EXPLICIT
                             std::deque<itk::LabelObjectLine<2u>, std::allocator<itk::LabelObjectLine<2u>>>>;
 extern template class SITKExplicit_EXPORT_EXPLICIT
                                                    itk::ImportImageContainer<itk::SizeValueType,
-                            std::deque<itk::LabelObjectLine<3u>, std::allocator<itk::LabelObjectLine<3u>>>>;
+                                                                             std::deque<itk::LabelObjectLine<3u>, std::allocator<itk::LabelObjectLine<3u>>>>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::ImportImageContainer<itk::SizeValueType, unsigned char>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::ImportImageContainer<itk::SizeValueType, unsigned int>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::ImportImageContainer<itk::SizeValueType, unsigned long>;

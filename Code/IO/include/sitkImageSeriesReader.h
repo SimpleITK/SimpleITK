@@ -106,15 +106,9 @@ public:
 
   /** Set the value of MetaDataDictionaryArrayUpdate to true or false respectively. */
   SITK_RETURN_SELF_TYPE_HEADER
-  MetaDataDictionaryArrayUpdateOn()
-  {
-    return this->SetMetaDataDictionaryArrayUpdate(true);
-  }
+  MetaDataDictionaryArrayUpdateOn() { return this->SetMetaDataDictionaryArrayUpdate(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  MetaDataDictionaryArrayUpdateOff()
-  {
-    return this->SetMetaDataDictionaryArrayUpdate(false);
-  }
+  MetaDataDictionaryArrayUpdateOff() { return this->SetMetaDataDictionaryArrayUpdate(false); }
 
 
   /** \brief Generate a sequence of filenames from a directory with a DICOM data set and a series ID.
@@ -240,14 +234,14 @@ private:
   std::function<std::string(int, const std::string &)> m_pfGetMetaData;
 
   // Holder of process object for active measurements
-  itk::ProcessObject * m_Filter{nullptr};
+  itk::ProcessObject * m_Filter{ nullptr };
 
 
   std::vector<PathType> m_FileNames;
 
-  double m_SpacingWarningRelThreshold{1e-4};
+  double m_SpacingWarningRelThreshold{ 1e-4 };
 
-  bool m_MetaDataDictionaryArrayUpdate{false};
+  bool m_MetaDataDictionaryArrayUpdate{ false };
 };
 
 /**

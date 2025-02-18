@@ -74,15 +74,13 @@ public:
   operator()(std::tuple<TupleArgs...> tupleValue) const
   {
     size_t seed = 0;
-    std::apply(
-      [&seed](auto... tupleElement) { (hash_combine(seed, tupleElement), ...); },tupleValue);
+    std::apply([&seed](auto... tupleElement) { (hash_combine(seed, tupleElement), ...); }, tupleValue);
     return seed;
   }
 };
 
 
-template <typename TMemberFunctionPointer,
-          typename TKey>
+template <typename TMemberFunctionPointer, typename TKey>
 class MemberFunctionFactoryBase
 {
 protected:
@@ -100,28 +98,28 @@ public:
    * object */
   using FunctionObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::FunctionObjectType;
 
-  protected:
-    using KeyType = TKey;
+protected:
+  using KeyType = TKey;
 
 
-    /** A function which binds the objectPointer to the calling object
+  /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
    *  object
-     */
-    template <typename... Args>
-    static FunctionObjectType BindObject(MemberFunctionResultType (ObjectType ::*pfunc)(Args...), ObjectType * objectPointer)
-    {
-      return [pfunc, objectPointer](Args... args) -> MemberFunctionResultType {
-        return std::invoke(pfunc, objectPointer, std::forward<Args>(args)...);
-      };
-    }
+   */
+  template <typename... Args>
+  static FunctionObjectType
+  BindObject(MemberFunctionResultType (ObjectType ::*pfunc)(Args...), ObjectType * objectPointer)
+  {
+    return [pfunc, objectPointer](Args... args) -> MemberFunctionResultType {
+      return std::invoke(pfunc, objectPointer, std::forward<Args>(args)...);
+    };
+  }
 
 
+  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
 
-    using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
-
-    // maps of Keys to pointers to member functions
-    FunctionMapType m_PFunction;
+  // maps of Keys to pointers to member functions
+  FunctionMapType m_PFunction;
 };
 
 } // namespace itk::simple::detail

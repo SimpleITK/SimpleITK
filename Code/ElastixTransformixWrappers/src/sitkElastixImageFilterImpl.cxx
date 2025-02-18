@@ -954,7 +954,7 @@ ElastixImageFilter::ElastixImageFilterImpl ::ReadParameterFile(const std::string
 }
 
 void
-ElastixImageFilter::ElastixImageFilterImpl ::WriteParameterFile(ParameterMapType const parameterMap,
+ElastixImageFilter::ElastixImageFilterImpl ::WriteParameterFile(const ParameterMapType parameterMap,
                                                                 const std::string      parameterFileName)
 {
   ParameterObjectPointer parameterObject = ParameterObjectType::New();

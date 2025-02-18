@@ -126,9 +126,9 @@ private:
   GlobalConfig();
 
 public:
-  GlobalConfig(GlobalConfig const &) = delete;
+  GlobalConfig(const GlobalConfig &) = delete;
   void
-  operator=(GlobalConfig const &) = delete;
+  operator=(const GlobalConfig &) = delete;
 
   std::string
   FindViewingApplication(bool debug = false);
@@ -659,7 +659,8 @@ ExecuteCommand(const std::vector<std::string> & cmdLine, const unsigned int time
       // We want the other process to continue going
       break;
 
-    case itksysProcess_State_Exited: {
+    case itksysProcess_State_Exited:
+    {
       int exitValue = itksysProcess_GetExitValue(kp);
       localDebugMacro(<< "Normal process exit.  exitValue = " << exitValue);
       if (exitValue != 0)
@@ -677,7 +678,8 @@ ExecuteCommand(const std::vector<std::string> & cmdLine, const unsigned int time
                          << "\nCommand line: " << cmdstream.str());
       break;
 
-    case itksysProcess_State_Exception: {
+    case itksysProcess_State_Exception:
+    {
       std::string exceptionString = itksysProcess_GetExceptionString(kp);
       itksysProcess_Delete(kp);
       sitkExceptionMacro(<< "Child terminated abnormally: " << exceptionString
@@ -685,7 +687,8 @@ ExecuteCommand(const std::vector<std::string> & cmdLine, const unsigned int time
     }
     break;
 
-    case itksysProcess_State_Error: {
+    case itksysProcess_State_Error:
+    {
       std::string errorString = itksysProcess_GetErrorString(kp);
       itksysProcess_Delete(kp);
       sitkExceptionMacro(<< "Error in administrating child process: [" << errorString << "]"

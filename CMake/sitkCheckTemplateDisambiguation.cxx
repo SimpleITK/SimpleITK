@@ -3,7 +3,7 @@ struct A
 {
   template <typename U>
   void
-  operator()(){};
+  operator()() {};
 };
 
 

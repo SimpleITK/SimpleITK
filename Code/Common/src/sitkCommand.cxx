@@ -21,10 +21,7 @@
 namespace itk::simple
 {
 
-Command::Command()
-{
-  ObjectOwnedBase::SetName("Command");
-}
+Command::Command() { ObjectOwnedBase::SetName("Command"); }
 
 Command::~Command() {}
 

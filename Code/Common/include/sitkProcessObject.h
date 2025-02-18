@@ -409,8 +409,7 @@ protected:
   template <class TPixelType,
             unsigned int VImageDimension,
             unsigned int VLength,
-            template <typename, unsigned int>
-            class TVector>
+            template <typename, unsigned int> class TVector>
   static Image
   CastITKToImage(itk::Image<TVector<TPixelType, VLength>, VImageDimension> * img)
   {

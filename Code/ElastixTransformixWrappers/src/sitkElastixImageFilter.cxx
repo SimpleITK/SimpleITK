@@ -530,7 +530,7 @@ ElastixImageFilter ::ReadParameterFile(const std::string fileName)
 }
 
 ElastixImageFilter::Self &
-ElastixImageFilter ::WriteParameterFile(ParameterMapType const parameterMap, const std::string parameterFileName)
+ElastixImageFilter ::WriteParameterFile(const ParameterMapType parameterMap, const std::string parameterFileName)
 {
   this->m_Pimple->WriteParameterFile(parameterMap, parameterFileName);
   return *this;

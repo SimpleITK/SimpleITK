@@ -287,7 +287,10 @@ public:
   SITK_RETURN_SELF_TYPE_HEADER
   SetParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
   SITK_RETURN_SELF_TYPE_HEADER
-  SetParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector) { return SetParameterMap(parameterMapVector);}
+  SetParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector)
+  {
+    return SetParameterMap(parameterMapVector);
+  }
 
   /** \brief Specifies a single parameter map. */
   SITK_RETURN_SELF_TYPE_HEADER
@@ -301,7 +304,10 @@ public:
   std::vector<std::map<std::string, std::vector<std::string>>>
   GetParameterMap();
   std::vector<std::map<std::string, std::vector<std::string>>>
-  GetParameterMaps() { return GetParameterMap(); };
+  GetParameterMaps()
+  {
+    return GetParameterMap();
+  };
 
   /** \brief Returns the default parameter map for the specified function arguments (\p transformName may be
    * "translation", "rigid" , "affine", "nonrigid", or "bspline"). */

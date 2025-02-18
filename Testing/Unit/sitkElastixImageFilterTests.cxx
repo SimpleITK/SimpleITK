@@ -18,10 +18,7 @@ silxIsEmpty(const Image image)
   return (image.GetWidth() == 0 && image.GetHeight() == 0);
 }
 
-TEST(ElastixImageFilter, Instantiation)
-{
-  ElastixImageFilter silx;
-}
+TEST(ElastixImageFilter, Instantiation) { ElastixImageFilter silx; }
 
 TEST(ElastixImageFilter, DefaultParameterMaps)
 {
