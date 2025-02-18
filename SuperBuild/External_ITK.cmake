@@ -24,21 +24,12 @@ if(NOT DEFINED Module_ITKReview)
   set(Module_ITKReview ON)
 endif()
 
-if(NOT DEFINED Module_SimpleITKFilters)
-  set(Module_SimpleITKFilters ON)
-endif()
-
-if (NOT DEFINED Module_ITKIOTransformMINC)
-  set(Module_ITKIOTransformMINC ON)
-endif()
-
-if (NOT DEFINED Module_GenericLabelInterpolator)
-  set(Module_GenericLabelInterpolator ON)
-endif()
-
-if (NOT DEFINED Module_LabelErodeDilate)
-  set(Module_LabelErodeDilate ON)
-endif()
+set(_SimpleITK_DEFAULT_MODULES "Module_SimpleITKFilters" "Module_ITKIOTransformMINC" "Module_GenericLabelInterpolator" "Module_LabelErodeDilate")
+foreach(_module ${_SimpleITK_DEFAULT_MODULES})
+  if(NOT DEFINED ${_module})
+    set(${_module} ON)
+  endif()
+endforeach ()
 
 if (NOT DEFINED ITK_DEFAULT_THREADER)
   set( ITK_DEFAULT_THREADER "Platform")
