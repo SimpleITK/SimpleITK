@@ -27,6 +27,12 @@ jobs:
       max-parallel: 4
       matrix:
         include:
+          - os: macos-15
+            cmake-build-type: "MinSizeRel"
+            cmake-generator: "Ninja"
+            xcode-version: 15.4
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
 
           - os: windows-2022
             cmake-build-type: "MinSizeRel"
@@ -96,6 +102,7 @@ jobs:
             CC: "gcc-12"
             ctest-cache: |
               WRAP_DEFAULT:BOOL=OFF
+
 
           - os: macos-13
             cmake-build-type: "Release"
