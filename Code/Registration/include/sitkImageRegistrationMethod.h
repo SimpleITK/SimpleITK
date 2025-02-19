@@ -594,15 +594,9 @@ public:
   SITK_RETURN_SELF_TYPE_HEADER
   SetMetricUseFixedImageGradientFilter(bool);
   SITK_RETURN_SELF_TYPE_HEADER
-  MetricUseFixedImageGradientFilterOn()
-  {
-    return this->SetMetricUseFixedImageGradientFilter(true);
-  }
+  MetricUseFixedImageGradientFilterOn() { return this->SetMetricUseFixedImageGradientFilter(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  MetricUseFixedImageGradientFilterOff()
-  {
-    return this->SetMetricUseFixedImageGradientFilter(false);
-  }
+  MetricUseFixedImageGradientFilterOff() { return this->SetMetricUseFixedImageGradientFilter(false); }
   /** @} */
 
 
@@ -619,15 +613,9 @@ public:
   SITK_RETURN_SELF_TYPE_HEADER
   SetMetricUseMovingImageGradientFilter(bool);
   SITK_RETURN_SELF_TYPE_HEADER
-  MetricUseMovingImageGradientFilterOn()
-  {
-    return this->SetMetricUseMovingImageGradientFilter(true);
-  }
+  MetricUseMovingImageGradientFilterOn() { return this->SetMetricUseMovingImageGradientFilter(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  MetricUseMovingImageGradientFilterOff()
-  {
-    return this->SetMetricUseMovingImageGradientFilter(false);
-  }
+  MetricUseMovingImageGradientFilterOff() { return this->SetMetricUseMovingImageGradientFilter(false); }
   /** @} */
 
 

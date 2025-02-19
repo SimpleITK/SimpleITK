@@ -74,15 +74,9 @@ public:
 
   /** Set the value of ComputeRotation to true or false respectfully. */
   SITK_RETURN_SELF_TYPE_HEADER
-  ComputeRotationOn()
-  {
-    return this->SetComputeRotation(true);
-  }
+  ComputeRotationOn() { return this->SetComputeRotation(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  ComputeRotationOff()
-  {
-    return this->SetComputeRotation(false);
-  }
+  ComputeRotationOff() { return this->SetComputeRotation(false); }
 
   /**
    * Enable the use of the principal axes of each image to compute an initial rotation that will align them.

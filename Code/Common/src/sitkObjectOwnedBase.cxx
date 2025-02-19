@@ -24,10 +24,7 @@ namespace itk::simple
 {
 
 
-ObjectOwnedBase::~ObjectOwnedBase()
-{
-  ExecuteCallbacks();
-}
+ObjectOwnedBase::~ObjectOwnedBase() { ExecuteCallbacks(); }
 
 
 ObjectOwnedBase::ObjectOwnedBase(const ObjectOwnedBase & o)

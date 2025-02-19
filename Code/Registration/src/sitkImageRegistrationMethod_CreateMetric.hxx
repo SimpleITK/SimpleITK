@@ -58,7 +58,8 @@ ImageRegistrationMethod::CreateMetric()
 
   switch (m_MetricType)
   {
-    case ANTSNeighborhoodCorrelation: {
+    case ANTSNeighborhoodCorrelation:
+    {
       typedef itk::ANTSNeighborhoodCorrelationImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
 
       typename _MetricType::Pointer metric = _MetricType::New();
@@ -71,7 +72,8 @@ ImageRegistrationMethod::CreateMetric()
       metric->Register();
       return metric.GetPointer();
     }
-    case Correlation: {
+    case Correlation:
+    {
       typedef itk::CorrelationImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
 
       typename _MetricType::Pointer metric = _MetricType::New();
@@ -81,7 +83,8 @@ ImageRegistrationMethod::CreateMetric()
       metric->Register();
       return metric.GetPointer();
     }
-    case Demons: {
+    case Demons:
+    {
       typedef itk::DemonsImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
       typename _MetricType::Pointer                                            metric = _MetricType::New();
       this->m_pfGetMetricNumberOfValidPoints = [metric = metric.GetPointer()] {
@@ -91,7 +94,8 @@ ImageRegistrationMethod::CreateMetric()
       metric->Register();
       return metric.GetPointer();
     }
-    case JointHistogramMutualInformation: {
+    case JointHistogramMutualInformation:
+    {
       typedef itk::JointHistogramMutualInformationImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
       this->m_pfGetMetricNumberOfValidPoints = [metric = metric.GetPointer()] {
@@ -102,7 +106,8 @@ ImageRegistrationMethod::CreateMetric()
       metric->Register();
       return metric.GetPointer();
     }
-    case MeanSquares: {
+    case MeanSquares:
+    {
       typedef itk::MeanSquaresImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
       typename _MetricType::Pointer                                                 metric = _MetricType::New();
       this->m_pfGetMetricNumberOfValidPoints = [metric = metric.GetPointer()] {
@@ -111,7 +116,8 @@ ImageRegistrationMethod::CreateMetric()
       metric->Register();
       return metric.GetPointer();
     }
-    case MattesMutualInformation: {
+    case MattesMutualInformation:
+    {
       typedef itk::MattesMutualInformationImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
       this->m_pfGetMetricNumberOfValidPoints = [metric = metric.GetPointer()] {

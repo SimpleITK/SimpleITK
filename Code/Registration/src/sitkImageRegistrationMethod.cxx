@@ -713,14 +713,16 @@ ImageRegistrationMethod::CreateScalesEstimator()
 {
   switch (m_OptimizerScalesType)
   {
-    case Jacobian: {
+    case Jacobian:
+    {
       using ScalesEstimatorType = RegistrationParameterScalesFromJacobian<TMetric>;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
       scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
       scalesEstimator->Register();
       return scalesEstimator;
     }
-    case IndexShift: {
+    case IndexShift:
+    {
       using ScalesEstimatorType = RegistrationParameterScalesFromIndexShift<TMetric>;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
       scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
@@ -728,7 +730,8 @@ ImageRegistrationMethod::CreateScalesEstimator()
       scalesEstimator->Register();
       return scalesEstimator;
     }
-    case PhysicalShift: {
+    case PhysicalShift:
+    {
       using ScalesEstimatorType = RegistrationParameterScalesFromPhysicalShift<TMetric>;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
       scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
@@ -900,7 +903,8 @@ ImageRegistrationMethod::ExecuteInternal(const Image & inFixed, const Image & in
   else
   {
     if (m_ShrinkFactorsPerLevel.size() != m_MetricSamplingPercentage.size())
-    {}
+    {
+    }
     typename RegistrationType::MetricSamplingPercentageArrayType param(m_MetricSamplingPercentage.size());
     std::copy(m_MetricSamplingPercentage.begin(), m_MetricSamplingPercentage.end(), param.begin());
     registration->SetMetricSamplingPercentagePerLevel(param);

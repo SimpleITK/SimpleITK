@@ -368,7 +368,8 @@ runargs(lua_State * L, char ** argv, int n)
     lua_assert(argv[i][0] == '-');
     switch (argv[i][1])
     { /* option */
-      case 'e': {
+      case 'e':
+      {
         const char * chunk = argv[i] + 2;
         if (*chunk == '\0')
           chunk = argv[++i];
@@ -377,7 +378,8 @@ runargs(lua_State * L, char ** argv, int n)
           return 1;
         break;
       }
-      case 'l': {
+      case 'l':
+      {
         const char * filename = argv[i] + 2;
         if (*filename == '\0')
           filename = argv[++i];
@@ -386,7 +388,8 @@ runargs(lua_State * L, char ** argv, int n)
           return 1; /* stop if file fails */
         break;
       }
-      case 'c': {
+      case 'c':
+      {
         const char * filename = argv[i] + 2;
         if (*filename == '\0')
           filename = argv[++i];

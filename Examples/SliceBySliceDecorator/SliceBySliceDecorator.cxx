@@ -113,7 +113,7 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
     return image;
   }
   FunctionType                  f_;
-  constexpr static unsigned int iter_dim = 2;
+  static constexpr unsigned int iter_dim = 2;
 };
 
 /** Construct a function object to wrap a function f to process a volume slice by
@@ -123,7 +123,8 @@ struct SliceBySliceDecorator<R(ImageArg, Args...)>
  * return an sitk::Image.
  */
 template <class R, class... Args>
-SliceBySliceDecorator<R(Args...)> makeSliceBySlice(R (*f)(Args...))
+SliceBySliceDecorator<R(Args...)>
+makeSliceBySlice(R (*f)(Args...))
 {
   using DecoratorType = SliceBySliceDecorator<R(Args...)>;
   return DecoratorType(typename DecoratorType::FunctionType(f));

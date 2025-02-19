@@ -23,10 +23,7 @@ namespace itk::simple
 
 FunctionCommand::~FunctionCommand() = default;
 
-FunctionCommand::FunctionCommand()
-{
-  Command::SetName("FunctionCommand");
-}
+FunctionCommand::FunctionCommand() { Command::SetName("FunctionCommand"); }
 
 void
 FunctionCommand::Execute()

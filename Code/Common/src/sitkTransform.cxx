@@ -130,10 +130,7 @@ Transform::Transform()
   : m_PimpleTransform(new PimpleTransform<itk::IdentityTransform<double, 3>>())
 {}
 
-Transform::Transform(itk::TransformBase * transformBase)
-{
-  this->InternalInitialization(transformBase);
-}
+Transform::Transform(itk::TransformBase * transformBase) { this->InternalInitialization(transformBase); }
 
 Transform::Transform(unsigned int dimensions, TransformEnum type)
 {
@@ -154,10 +151,7 @@ Transform::Transform(unsigned int dimensions, TransformEnum type)
 
 Transform::~Transform() = default;
 
-Transform::Transform(const Transform & txf)
-{
-  Self::SetPimpleTransform(txf.m_PimpleTransform->ShallowCopy());
-}
+Transform::Transform(const Transform & txf) { Self::SetPimpleTransform(txf.m_PimpleTransform->ShallowCopy()); }
 
 Transform &
 Transform::operator=(const Transform & txf)
@@ -383,7 +377,8 @@ Transform::InternalInitialization(TransformEnum type, itk::TransformBase * base)
     case sitkAffine:
       temp = std::make_unique<PimpleTransform<itk::AffineTransform<double, VDimension>>>();
       break;
-    case sitkComposite: {
+    case sitkComposite:
+    {
       typename itk::CompositeTransform<double, VDimension>::Pointer compositeTransform;
 
       // if null it'll be converted, no null check needed

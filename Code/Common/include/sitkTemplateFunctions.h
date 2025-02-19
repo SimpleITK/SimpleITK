@@ -44,7 +44,7 @@ namespace simple
  */
 template <typename T>
 void SITKCommon_HIDDEN
-Unused(const T &){};
+Unused(const T &) {};
 
 /**
  * \brief Output the element of an std::vector to the output stream
@@ -267,9 +267,9 @@ struct scope_exit
 
   scope_exit &
   operator=(scope_exit && rhs) = delete;
-  scope_exit(scope_exit const &) = delete;
+  scope_exit(const scope_exit &) = delete;
   scope_exit &
-  operator=(scope_exit const &) = delete;
+  operator=(const scope_exit &) = delete;
 };
 
 template <typename F>

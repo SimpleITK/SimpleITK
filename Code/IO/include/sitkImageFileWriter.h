@@ -89,15 +89,9 @@ public:
   GetUseCompression() const;
 
   SITK_RETURN_SELF_TYPE_HEADER
-  UseCompressionOn()
-  {
-    return this->SetUseCompression(true);
-  }
+  UseCompressionOn() { return this->SetUseCompression(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  UseCompressionOff()
-  {
-    return this->SetUseCompression(false);
-  }
+  UseCompressionOff() { return this->SetUseCompression(false); }
   /** @} */
 
 
@@ -158,15 +152,9 @@ public:
   GetKeepOriginalImageUID() const;
 
   SITK_RETURN_SELF_TYPE_HEADER
-  KeepOriginalImageUIDOn()
-  {
-    return this->SetKeepOriginalImageUID(true);
-  }
+  KeepOriginalImageUIDOn() { return this->SetKeepOriginalImageUID(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  KeepOriginalImageUIDOff()
-  {
-    return this->SetKeepOriginalImageUID(false);
-  }
+  KeepOriginalImageUIDOff() { return this->SetKeepOriginalImageUID(false); }
   /** @} */
 
   SITK_RETURN_SELF_TYPE_HEADER

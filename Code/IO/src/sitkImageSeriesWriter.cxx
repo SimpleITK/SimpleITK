@@ -244,7 +244,7 @@ ImageSeriesWriter::ExecuteInternal(const Image & inImage)
   using Writer =
     itk::ImageSeriesWriter<InputImageType,
                            typename InputImageType::template RebindImageType<typename InputImageType::PixelType,
-                                                                    InputImageType::ImageDimension - 1>>;
+                                                                             InputImageType::ImageDimension - 1>>;
 
   typename Writer::Pointer writer = Writer::New();
   writer->SetUseCompression(this->m_UseCompression);

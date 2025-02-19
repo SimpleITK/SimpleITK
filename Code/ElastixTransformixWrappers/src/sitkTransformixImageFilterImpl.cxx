@@ -213,7 +213,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::ExecuteInternal()
 
     if (!this->IsEmpty(this->GetMovingImage()))
     {
-      result  = transformixFilter->GetOutput();
+      result = transformixFilter->GetOutput();
     }
 
     if (this->GetComputeDeformationField())

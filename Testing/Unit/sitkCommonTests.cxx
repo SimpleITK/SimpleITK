@@ -492,7 +492,7 @@ TEST(ProcessObject, Command_Ownership)
   {
   public:
     HeapCommand()
-      : v(false){};
+      : v(false) {};
     ~HeapCommand() override { ++destroyedCount; }
     void
     Execute() override

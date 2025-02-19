@@ -88,15 +88,9 @@ public:
   bool
   GetComputeZYX() const;
   SITK_RETURN_SELF_TYPE_HEADER
-  ComputeZYXOn()
-  {
-    return this->SetComputeZYX(true);
-  }
+  ComputeZYXOn() { return this->SetComputeZYX(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  ComputeZYXOff()
-  {
-    return this->SetComputeZYX(false);
-  }
+  ComputeZYXOff() { return this->SetComputeZYX(false); }
 
 
   /** additional methods */

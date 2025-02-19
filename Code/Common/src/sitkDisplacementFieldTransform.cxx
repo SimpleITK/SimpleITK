@@ -101,12 +101,14 @@ InternalSetInterpolator(TDisplacementFieldTransform * itkDisplacementTx, Interpo
   typename ITKInterpoaltorType::Pointer itkInterp;
   switch (interp)
   {
-    case sitkNearestNeighbor: {
+    case sitkNearestNeighbor:
+    {
       using InterpolatorType = itk::VectorNearestNeighborInterpolateImageFunction<ImageType, ScalarType>;
       itkInterp = InterpolatorType::New();
       break;
     }
-    case sitkLinear: {
+    case sitkLinear:
+    {
       using InterpolatorType = itk::VectorLinearInterpolateImageFunction<ImageType, ScalarType>;
       itkInterp = InterpolatorType::New();
       break;

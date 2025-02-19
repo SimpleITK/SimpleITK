@@ -104,15 +104,9 @@ public:
   GetUseCompression() const;
 
   SITK_RETURN_SELF_TYPE_HEADER
-  UseCompressionOn()
-  {
-    return this->SetUseCompression(true);
-  }
+  UseCompressionOn() { return this->SetUseCompression(true); }
   SITK_RETURN_SELF_TYPE_HEADER
-  UseCompressionOff()
-  {
-    return this->SetUseCompression(false);
-  }
+  UseCompressionOff() { return this->SetUseCompression(false); }
   /** @} */
 
   /** \brief A hint for the amount of compression to be applied during writing.

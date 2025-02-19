@@ -99,7 +99,6 @@ protected:
 } // namespace
 
 
-
 ProcessObject::EventCommand::EventCommand(EventEnum e, Command * c)
   : m_Event(e)
   , m_Command(c)

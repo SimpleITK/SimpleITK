@@ -48,20 +48,20 @@ struct DualMemberFunctionInstantiater
     (void)t1;
     (void)t2;
 
-      if constexpr (IsInstantiated<TPixelIDType1, VImageDimension>::Value &&
+    if constexpr (IsInstantiated<TPixelIDType1, VImageDimension>::Value &&
                   IsInstantiated<TPixelIDType2, VImageDimension>::Value)
-      {
-        // conditionally instantiate the member function when PixelID is enabled
+    {
+      // conditionally instantiate the member function when PixelID is enabled
 
-        using ImageType1 = typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType;
-        using ImageType2 = typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType;
-        using AddressorType = TAddressor;
+      using ImageType1 = typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType;
+      using ImageType2 = typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType;
+      using AddressorType = TAddressor;
 
-        AddressorType addressor;
-        m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(),
-                           (ImageType1 *)(nullptr),
-                           (ImageType2 *)(nullptr));
-      }
+      AddressorType addressor;
+      m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(),
+                         (ImageType1 *)(nullptr),
+                         (ImageType2 *)(nullptr));
+    }
   }
 
 private:
