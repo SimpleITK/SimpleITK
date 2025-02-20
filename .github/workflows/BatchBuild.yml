@@ -60,16 +60,12 @@ jobs:
               ITK_USE_BUILD_DIR:BOOL=ON
               CXXFLAGS:STRING= /wd4251 /MP
 
-          - os: self-hosted-arm
+          - os: ubuntu-24.04-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
-              WRAP_R:BOOL=ON
-              WRAP_TCL:BOOL=ON
-              WRAP_RUBY:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
           - os: self-hosted-x64
@@ -155,7 +151,6 @@ jobs:
           restore-keys: |
             external-data-v1-
       - name: Set up Python 3.11
-        if: matrix.os != 'self-hosted-arm'
         uses: actions/setup-python@v5
         id: cpy
         with:
@@ -167,7 +162,6 @@ jobs:
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\ITK-prefix\bin" >> $GITHUB_PATH
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\SimpleITK-build\bin\${{ matrix.cmake-build-type }}" >> $GITHUB_PATH
       - name: Install build dependencies
-        if: matrix.os != 'self-hosted-arm'
         shell: bash
         run: |
           python -m pip install --upgrade pip

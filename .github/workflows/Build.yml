@@ -49,14 +49,12 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
-          - os: self-hosted-arm
+          - os: ubuntu-24.04-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
-              WRAP_CSHARP:BOOL=ON
-              WRAP_R:BOOL=ON
-              WRAP_RUBY:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
               ITK_USE_BUILD_DIR:BOOL=ON
           - os: macos-13
             cmake-build-type: "Release"
@@ -97,13 +95,11 @@ jobs:
           external-data-v1-
     - name: Set up Python 3.11
       uses: actions/setup-python@v5
-      if: matrix.os != 'self-hosted-arm'
       id: cpy
       with:
         python-version: 3.11
 
     - name: Install build dependencies
-      if: matrix.os != 'self-hosted-arm'
       run: |
         python -m pip install --upgrade pip
         python -m pip install ninja cmake~=3.29.0
