@@ -55,7 +55,7 @@ if (BUILD_DOXYGEN)
     )
 
   add_custom_command( OUTPUT "${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox"
-    COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py -d ${PROJECT_SOURCE_DIR}/Utilities/filters.csv ${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox
+    COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py --doxygen ${PROJECT_SOURCE_DIR}/Utilities/filters.csv ${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/Utilities"
     DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/filters.csv" "${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py"
     )
