@@ -267,6 +267,7 @@ jobs:
       name: release
     permissions:
       id-token: write
+      contents: write
     needs:
       - build
       - doxygen
