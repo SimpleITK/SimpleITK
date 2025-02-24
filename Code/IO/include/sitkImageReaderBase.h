@@ -61,7 +61,8 @@ public:
   SetOutputPixelType(PixelIDValueEnum pixelID);
   PixelIDValueEnum
   GetOutputPixelType() const;
-  /* @} */
+  /** @} */
+
 
   virtual Image
   Execute() = 0;
@@ -87,7 +88,7 @@ public:
   LoadPrivateTagsOn();
   virtual void
   LoadPrivateTagsOff();
-  /* @} */
+  /** @} */
 
 
   /** \brief Set/Get name of ImageIO to use
@@ -107,7 +108,7 @@ public:
   SetImageIO(const std::string & imageio);
   virtual std::string
   GetImageIO() const;
-  /* @} */
+  /** @} */
 
   /** \brief Get the automatic ImageIO from the ImageIOFactory
    *
