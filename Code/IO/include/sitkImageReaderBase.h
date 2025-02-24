@@ -64,6 +64,11 @@ public:
   /** @} */
 
 
+  /** Pure virtual method to execute the image reading.
+   *
+   * This method is reimplemented in derived classes to perform the
+   * actual reading of the image.
+   */
   virtual Image
   Execute() = 0;
 
