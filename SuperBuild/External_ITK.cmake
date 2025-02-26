@@ -31,6 +31,11 @@ foreach(_module ${_SimpleITK_DEFAULT_MODULES})
   endif()
 endforeach ()
 
+if (Module_LabelErodeDilate AND NOT DEFINED Module_LabelErodeDilate_GIT_TAG)
+  # Remote module version 1.3.1, which contains valgrind fixes
+  set(Module_LabelErodeDilate_GIT_TAG "08c2551096c06fe993b0d5a977a752fb21972896")
+endif ()
+
 if (NOT DEFINED ITK_DEFAULT_THREADER)
   set( ITK_DEFAULT_THREADER "Platform")
 endif()
