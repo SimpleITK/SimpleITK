@@ -134,7 +134,7 @@ jobs:
           - os: coverage-x64
             name: itk-coverage
             cmake-build-type: Debug
-            ctest-test-timeout: 1800
+            ctest-test-timeout: 2700
             timeout: 180
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=--coverage
