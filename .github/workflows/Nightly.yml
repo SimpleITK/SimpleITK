@@ -193,6 +193,10 @@ jobs:
             ITK_LEGACY_SILENT:BOOL=ON
             Module_ITKReview:BOOL=ON
             Module_ITKIODCMTK:BOOL=ON
+            Module_ITKIOTransformMINC:BOOL=ON
+            Module_SimpleITKFilters:BOOL=ON
+            Module_GenericLabelInterpolator:BOOL=ON
+            Module_LabelErodeDilate:BOOL=ON
             ${{ matrix.ctest-cache }}
           ")
           include(\$ENV{DASHBOARD_BRANCH_DIRECTORY}/itk_common.cmake)
