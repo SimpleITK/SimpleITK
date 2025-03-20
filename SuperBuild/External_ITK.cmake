@@ -31,11 +31,6 @@ foreach(_module ${_SimpleITK_DEFAULT_MODULES})
   endif()
 endforeach ()
 
-if (Module_LabelErodeDilate AND NOT DEFINED Module_LabelErodeDilate_GIT_TAG)
-  # Remote module version after 1.3.1, which contains additional valgrind fixes
-  set(Module_LabelErodeDilate_GIT_TAG "2437c0958d35b96dba5b788df1990fc2f8593bb8")
-endif ()
-
 if (NOT DEFINED ITK_DEFAULT_THREADER)
   set( ITK_DEFAULT_THREADER "Platform")
 endif()
@@ -72,7 +67,8 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-set(_DEFAULT_ITK_GIT_TAG "v5.4.2")
+# ITK v5.4.3 tag
+set(_DEFAULT_ITK_GIT_TAG "v5.4.3")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
