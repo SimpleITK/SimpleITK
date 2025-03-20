@@ -39,7 +39,7 @@ jobs:
       matrix:
         include:
 
-          - os: coverage-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             name: coverage
             cmake-build-type: "RelWithDebInfo"
             ctest-cache: |
@@ -52,7 +52,7 @@ jobs:
               -Ddashboard_track="Nightly" \
               -DCTEST_COVERAGE_COMMAND="$(which gcov)"
 
-          - os: coverage-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             name: valgrind
             cmake-build-type: "RelWithDebInfo"
             ctest-test-timeout: 10000
