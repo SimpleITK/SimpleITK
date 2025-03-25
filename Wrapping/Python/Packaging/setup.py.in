@@ -47,7 +47,7 @@ class build_ext(_build_ext):
 
 
 setup(
-    name = 'SimpleITK',
+    name = 'simpleitk',
     version = __version__,
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
