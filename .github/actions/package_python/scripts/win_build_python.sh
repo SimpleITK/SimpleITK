@@ -44,4 +44,4 @@ ctest -D dashboard_source_config_dir="Wrapping/Python" \
 
 
 mkdir -p "${GITHUB_WORKSPACE}/artifacts"
-find ${CTEST_BINARY_DIRECTORY} -name "SimpleITK*.whl" -exec cp -v {} "${GITHUB_WORKSPACE}/artifacts" \;
+find ${CTEST_BINARY_DIRECTORY} -iname "simpleitk*.whl" -exec cp -v {} "${GITHUB_WORKSPACE}/artifacts" \;

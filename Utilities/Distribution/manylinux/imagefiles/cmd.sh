@@ -134,7 +134,7 @@ if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0
     PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     PLATFORM=$(${PYTHON_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
     build_simpleitk_python &&
-       ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name SimpleITK*.whl) -w ${OUT_DIR}/wheelhouse/;
+       ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
          ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
          rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} )
     unset USE_LIMITED_API
@@ -146,7 +146,7 @@ for PYTHON in ${PYTHON_VERSIONS}; do
     PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     PLATFORM=$(${PYTHON_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
     build_simpleitk_python &&
-        ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name SimpleITK*.whl) -w ${OUT_DIR}/wheelhouse/;
+        ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
           ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}.log &&
           rm -rf ${BLD_DIR}-${PYTHON} )
 done

@@ -59,4 +59,4 @@ cmake --build "${CTEST_BINARY_DIRECTORY}" --target dist
 
 
 mkdir -p "${GITHUB_WORKSPACE}/artifacts"
-find ${CTEST_BINARY_DIRECTORY} -name "SimpleITK*.whl" -exec cp -v {} "${GITHUB_WORKSPACE}/artifacts" \;
+find ${CTEST_BINARY_DIRECTORY} -iname "simpleitk*.whl" -exec cp -v {} "${GITHUB_WORKSPACE}/artifacts" \;

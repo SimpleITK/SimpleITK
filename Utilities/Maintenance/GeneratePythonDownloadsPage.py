@@ -39,11 +39,6 @@ args = parser.parse_args()
 for f in args.files:
     try:
         name = os.path.basename(f.name)
-        # version="1.1.0"
-        version = re.match(
-            r"SimpleITK-([0-9]+\.[0-9]+(\.[0-9]+)?(rc[0-9]+)?)", name
-        ).group(1)
-        # print(("version:{0}".format(version)))
 
         if args.hash == "md5":
             hash_value = hashlib.md5(f.read()).hexdigest()
@@ -55,6 +50,10 @@ for f in args.files:
         if args.tag:
             tag = args.tag
         else:
+            # version="1.1.0"
+            version = re.match(
+                r"SimpleITK-([0-9]+\.[0-9]+(\.[0-9]+)?(rc[0-9]+)?)", name, re.IGNORECASE
+            ).group(1)
             tag = f"v{version}"
 
         host = "GitHub"
