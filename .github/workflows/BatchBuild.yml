@@ -98,6 +98,13 @@ jobs:
             ctest-cache: |
               WRAP_DEFAULT:BOOL=OFF
 
+          - os: macos-15
+            cmake-build-type: "MinSizeRel"
+            cmake-generator: "Ninja"
+            xcode-version: 15.4
+            ctest-cache: |
+              WRAP_DEFAULT:BOOL=OFF
+
           - os: macos-13
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
