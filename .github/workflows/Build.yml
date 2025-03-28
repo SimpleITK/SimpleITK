@@ -42,9 +42,10 @@ jobs:
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
-          - os: self-hosted-x64
+          - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            cmake_build_parallel_level: 6
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
@@ -119,6 +120,9 @@ jobs:
           Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           ${{ matrix.ctest-cache }}
       run: |
+        if [ ! -z "${{ matrix.cmake_build_parallel_level }}" ]; then
+          export CMAKE_BUILD_PARALLEL_LEVEL=${{ matrix.cmake_build_parallel_level }}
+        fi
         cmake --version
         ninja --version
         ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V
