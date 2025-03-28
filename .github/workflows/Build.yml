@@ -42,7 +42,7 @@ jobs:
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
-          - os: self-hosted-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |

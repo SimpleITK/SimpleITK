@@ -39,7 +39,7 @@ jobs:
       matrix:
         include:
 
-          - os: coverage-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-2xlarge
             name: coverage
             cmake-build-type: "RelWithDebInfo"
             ctest-cache: |
@@ -52,7 +52,7 @@ jobs:
               -Ddashboard_track="Nightly" \
               -DCTEST_COVERAGE_COMMAND="$(which gcov)"
 
-          - os: coverage-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-2xlarge
             name: valgrind
             cmake-build-type: "RelWithDebInfo"
             ctest-test-timeout: 10000
@@ -87,6 +87,16 @@ jobs:
           enableCrossOsArchive: true
           restore-keys: |
             external-data-v1-
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        id: cpy
+        with:
+          python-version: 3.11
+  
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ninja cmake~=3.29.0
       - name: Build and Test
         shell: bash
         env:
@@ -116,7 +126,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: coverage-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-2xlarge
             name: itk-valgrind
             cmake-build-type: Debug
             ctest-test-timeout: 5000
@@ -131,7 +141,7 @@ jobs:
               -DCTEST_MEMORYCHECK_COMMAND_OPTIONS="--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes" \
               -DCTEST_MEMORYCHECK_SUPPRESSIONS_FILE="${CTEST_SOURCE_DIRECTORY}/ITK/CMake/InsightValgrind-Ubuntu2004.supp"
 
-          - os: coverage-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-2xlarge
             name: itk-coverage
             cmake-build-type: Debug
             ctest-test-timeout: 1800
@@ -153,6 +163,16 @@ jobs:
           repository: InsightSoftwareConsortium/ITK
           path: ITK-dashboard
           ref: dashboard
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        id: cpy
+        with:
+          python-version: 3.11
+  
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ninja cmake~=3.29.0
       - name: CTest Build and Test
         shell: bash
         env:
