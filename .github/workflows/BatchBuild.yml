@@ -68,16 +68,18 @@ jobs:
               WRAP_JAVA:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
-          - os: self-hosted-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            apt-get-dependencies: "g++-10"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
-          - os: self-hosted-x64
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            apt-get-dependencies: "g++-10"
             CXX: "g++-10"
             CC: "gcc-10"
             ctest-cache: |
