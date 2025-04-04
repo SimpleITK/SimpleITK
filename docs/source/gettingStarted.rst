@@ -56,12 +56,13 @@ binary wheel:
 
 .. code-block :: bash
 
- pip install SimpleITK
+ pip install simpleitk
 
-This installation requires a recent version of  pip (>=9.0), to properly detect
-compatibility with the `PEP 427
-<https://www.python.org/dev/peps/pep-0427/>`__ tags in the wheel
-filenames. Pip can be updated using ``pip install -U pip``.
+This installation requires a recent version of pip, to properly detect
+compatibility with the filename tags`PEP 427
+<https://www.python.org/dev/peps/pep-0427/>`__ , stable API
+`PEP 425 <https://peps.python.org/pep-0425/>`__ , and package
+name normalization. Pip can be updated using ``pip install -U pip``.
 Also the Python environment must be compatible with one of
 the pre-compiled binary wheels.
 
@@ -161,7 +162,7 @@ upgrade to the latest pre-release Python binary package run:
 
 .. code-block :: bash
 
- pip install --upgrade --pre SimpleITK --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
+ pip install --upgrade --pre simpleitk --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
 
 
 Recommended Software
