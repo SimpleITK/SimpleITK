@@ -55,6 +55,7 @@ jobs:
           - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             name: valgrind
             cmake-build-type: "RelWithDebInfo"
+            apt-get-dependencies: "valgrind"
             ctest-test-timeout: 10000
             ctest-extra-args: |
               -Ddashboard_do_memcheck=1 \
@@ -97,6 +98,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install ninja cmake~=3.29.0
+
+          if [ ! -z "${{ matrix.apt-get-dependencies }}" ]; then
+            sudo apt-get update
+            sudo apt-get install -y ${{ matrix.apt-get-dependencies }}
+          fi
       - name: Build and Test
         shell: bash
         env:
@@ -129,6 +135,7 @@ jobs:
           - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             name: itk-valgrind
             cmake-build-type: Debug
+            apt-get-dependencies: "valgrind"
             ctest-test-timeout: 5000
             timeout: 600
             ctest-cache: |
@@ -173,6 +180,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install ninja cmake~=3.29.0
+
+          if [ ! -z "${{ matrix.apt-get-dependencies }}" ]; then
+            sudo apt-get update
+            sudo apt-get install -y ${{ matrix.apt-get-dependencies }}
+          fi
+
       - name: CTest Build and Test
         shell: bash
         env:
