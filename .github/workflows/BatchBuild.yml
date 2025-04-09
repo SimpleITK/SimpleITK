@@ -68,28 +68,27 @@ jobs:
               WRAP_JAVA:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
-          - os: self-hosted-x64
+          - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
-          - os: self-hosted-x64
+          - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            CXX: "g++-10"
-            CC: "gcc-10"
             ctest-cache: |
               ITK_GIT_TAG:STRING=master
 
           - os: ubuntu-22.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            CXX: "g++-11"
-            CC: "gcc-11"
+            CXX: "g++-10"
+            CC: "gcc-10"
             ctest-cache: |
               WRAP_DEFAULT:BOOL=OFF
+
           - os: ubuntu-22.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -200,7 +199,9 @@ jobs:
           if [ ! -z "${{ matrix.CXX }} ]; then
             export CXX=${{ matrix.CXX }}
           fi
-
+          if [ ! -z "${{ matrix.cmake_build_parallel_level }}" ]; then
+            export CMAKE_BUILD_PARALLEL_LEVEL=${{ matrix.cmake_build_parallel_level }}
+          fi
           cmake --version
           ninja --version
           ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V -j 2
