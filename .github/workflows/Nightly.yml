@@ -2,12 +2,15 @@ name: Nightly Build
 
 on:
   schedule:
-    # Every day at 6:11 AM UTC or 2:11 AM EST
-    - cron: '11 6 * * *'
+    # Every day at 5:11 AM UTC or 1:11 AM EST
+    - cron: '11 5 * * *'
   pull_request:
     paths:
      - .github/workflows/Nightly.yml
   workflow_dispatch:
+concurrency:
+  group: nightly
+  cancel-in-progress: false
 
 jobs:
   tag-latest:
@@ -36,6 +39,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         include:
 
@@ -114,8 +119,22 @@ jobs:
     timeout-minutes: ${{ matrix.timeout }}
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         include:
+          - os: coverage-x64
+            name: itk-coverage
+            cmake-build-type: Debug
+            ctest-test-timeout: 1800
+            timeout: 180
+            ctest-cache: |
+              CMAKE_CXX_FLAGS:STRING=--coverage
+              CMAKE_C_FLAGS:STRING=--coverage
+              CMAKE_EXE_LINKER_FLAGS=-lgcov
+            ctest-extra-args: |
+              -Ddashboard_do_coverage=1 \
+              -DCTEST_COVERAGE_COMMAND="$(which gcov)"
+
           - os: coverage-x64
             name: itk-valgrind
             cmake-build-type: Debug
@@ -131,18 +150,6 @@ jobs:
               -DCTEST_MEMORYCHECK_COMMAND_OPTIONS="--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all  --child-silent-after-fork=yes" \
               -DCTEST_MEMORYCHECK_SUPPRESSIONS_FILE="${CTEST_SOURCE_DIRECTORY}/ITK/CMake/InsightValgrind-Ubuntu2004.supp"
 
-          - os: coverage-x64
-            name: itk-coverage
-            cmake-build-type: Debug
-            ctest-test-timeout: 1800
-            timeout: 180
-            ctest-cache: |
-              CMAKE_CXX_FLAGS:STRING=--coverage
-              CMAKE_C_FLAGS:STRING=--coverage
-              CMAKE_EXE_LINKER_FLAGS=-lgcov
-            ctest-extra-args: |
-              -Ddashboard_do_coverage=1 \
-              -DCTEST_COVERAGE_COMMAND="$(which gcov)"
 
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
