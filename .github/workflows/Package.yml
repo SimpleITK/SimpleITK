@@ -43,7 +43,7 @@ jobs:
         shell: bash
         working-directory: Utilities/Distribution/manylinux
         env:
-          PYTHON_VERSIONS: "cp38-cp38 cp39-cp39 cp310-cp310"
+          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310"
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
           BUILD_JAVA: 1
           BUILD_PYTHON_LIMITED_API: 1
