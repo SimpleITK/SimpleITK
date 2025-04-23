@@ -1,3 +1,6 @@
+gitforwindows
+metaio
+structitk
 cran
 readme
 deps

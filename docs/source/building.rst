@@ -35,7 +35,7 @@ To build SimpleITK you need:
    -  Git is required if building SimpleITK using :ref:`SuperBuild <building_superbuild>`
       to automatically download the matching version of ITK,
       SWIG, etc...
-   -  Windows users may prefer `msysGit <http://msysgit.github.com/>`__
+   -  Windows users may prefer `Git For Windows <https://gitforwindows.org/>`__
 
 -  The Python interface requires Python version 3.5 or greater.
 

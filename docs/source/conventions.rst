@@ -58,7 +58,7 @@ Matrices are represented as a single dimensional vector with the entries in row 
 Image Regions as Index and Size
 ...............................
 
-The `itk::ImageRegion <http://itk.org/Doxygen/html/classitk_1_1ImageRegion.html>`_ is a frequently used class in ITK to define a sub-image area. It is defined by `itk::Index <http://itk.org/Doxygen/html/classitk_1_1Index.html>`_ and `itk::Size <http://itk.org/Doxygen/html/classitk_1_1Size.html>`_ of signed and unsigned integer types respectfully. In SimpleITK, the index and size elements are usually separated into two arguments with separate Set and Get methods.
+The `itk::ImageRegion <https://docs.itk.org/projects/doxygen/en/stable/classitk_1_1ImageRegion.html>`_ is a frequently used class in ITK to define a sub-image area. It is defined by `itk::Index <https://docs.itk.org/projects/doxygen/en/stable/structitk_1_1Index.html>`_ and `itk::Size <https://docs.itk.org/projects/doxygen/en/stable/structitk_1_1Size.html>`_ of signed and unsigned integer types respectfully. In SimpleITK, the index and size elements are usually separated into two arguments with separate Set and Get methods.
 
 When specified as a single argument value, it is a 1 dimensional array with the index values followed by the size values i.e. :math:`[idx_x, idx_y, idx_z, size_x, size_y, size_z]`.
 
