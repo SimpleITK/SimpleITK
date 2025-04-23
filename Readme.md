@@ -57,8 +57,7 @@ Documentation
 -------------
 With massive libraries like SimpleITK, good documentation is a must. The documentation for SimpleITK is split up into multiple levels:
 1. [API Documentation](https://simpleitk.org/doxygen/latest/html/) - This contains class and function documentation. The descriptions for functions and classes are primarily borrowed from the original ITK C++ classes.
-2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/master/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages. [This site replaced the
-[SimpleITK Wiki](https://itk.org/Wiki/SimpleITK)  which is mostly of interest for historical reasons.]
+2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/master/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages.
 3. [Jupyter Notebook Repository](http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/) - This repository contains a collection of Jupyter Notebooks illustrating the use of SimpleITK for educational and research activities. The notebooks demonstrate the use of SimpleITK for interactive image analysis using the Python and R programming languages. Recommended reading, if you are starting with SimpleITK.
 
 
