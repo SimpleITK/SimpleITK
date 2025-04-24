@@ -96,8 +96,9 @@ def writeCSV(name):
                             fieldnames[4]: filt in fs.todo,
                         }
                     )
-    except:
+    except Exception as e:
         logging.warning("Warning: Couldn't write output file %s", name)
+        logging.warning("Error: %s", e)
         sys.exit(-1)
 
 
@@ -148,8 +149,9 @@ def readCSV(name):
                     if row[fieldnames[4]].lower() == "true":
                         fs.todo.add(filt)
 
-    except:
+    except Exception as e:
         logging.warning("Warning: Couldn't read input file %s. Proceeding without it.", name)
+        logging.warning("Error: %s", e)
     else:
         if not quietMode:
             logging.info("Read file %s", remarkFile)
