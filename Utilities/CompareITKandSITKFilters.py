@@ -21,6 +21,10 @@ import re, sys, csv
 import SimpleITK
 import itk
 import argparse
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class bcolors:
@@ -92,14 +96,7 @@ def writeCSV(name):
                         }
                     )
     except:
-        print(
-            bcolors.FAIL,
-            "Error:",
-            bcolors.ENDC,
-            "Couldn't write output file",
-            name,
-            "\n",
-        )
+        logging.warning("Warning: Couldn't write output file %s", name)
         sys.exit(-1)
 
 
@@ -130,24 +127,15 @@ def readCSV(name):
                 insitk = filt in fs.sitk
 
                 if not initk and not insitk:
-                    print(
-                        bcolors.FAIL,
-                        "Warning: ",
-                        bcolors.ENDC,
-                        "Filter ",
-                        filt,
-                        "not found in either ITK or SimpleITK",
+                    logging.warning(
+                        "Warning: Filter %s not found in either ITK or SimpleITK", filt
                     )
 
                 if (iflag != initk) or (sflag != insitk):
-                    print(
-                        bcolors.FAIL,
-                        "Warning: ",
-                        bcolors.ENDC,
-                        "mismatch between file and symbol table for filter ",
-                        filt,
+                    logging.warning(
+                        "Warning: mismatch between file and symbol table for filter %s", filt
                     )
-                    print("    ", row)
+                    logging.warning("    %s", row)
 
                 # Get the remark field from the file.
                 if row[fieldnames[3]] != None:
@@ -160,17 +148,10 @@ def readCSV(name):
                         fs.todo.add(filt)
 
     except:
-        print(
-            bcolors.FAIL,
-            "Warning:",
-            bcolors.ENDC,
-            "Couldn't read input file",
-            name,
-            ".  Proceeding without it.\n",
-        )
+        logging.warning("Warning: Couldn't read input file %s. Proceeding without it.", name)
     else:
         if not quietMode:
-            print("Read file", remarkFile, "\n")
+            logging.info("Read file %s", remarkFile)
 
 
 #
@@ -243,7 +224,7 @@ for s in sclasses:
             fs.sitk.add(s)
 
 if not quietMode:
-    print("\nSimpleITK has", bcolors.OKBLUE, len(fs.sitk), bcolors.ENDC, "filters.")
+    logging.info("SimpleITK has %d filters.", len(fs.sitk))
 
 
 #   Find all the ITK class names that end with "ImageFilter" or "ImageSource"
@@ -254,7 +235,7 @@ for i in iclasses:
             fs.itk.add(i)
 
 if not quietMode:
-    print("ITK has", bcolors.OKBLUE, len(fs.itk), bcolors.ENDC, "filters.\n")
+    logging.info("ITK has %d filters.", len(fs.itk))
 
 fs.filters = list(fs.itk.union(fs.sitk))
 
@@ -305,11 +286,9 @@ if not quietMode:
             rem = fs.remarks[filt]
         print("%50s %s %s %s      %s" % (filt, color, word, bcolors.ENDC, rem))
 
-    print("")
-    print("%3d filters in both toolkits." % bothcount)
-    print("%3d filters in ITK only." % icount)
-    print("%3d filters in SimpleITK only." % scount)
-    print("")
+    logging.info("%3d filters in both toolkits.", bothcount)
+    logging.info("%3d filters in ITK only.", icount)
+    logging.info("%3d filters in SimpleITK only.", scount)
 
 
 #
@@ -321,5 +300,4 @@ if not writelessMode:
         remarkFile = "filters.csv"
     writeCSV(remarkFile)
     if not quietMode:
-        print("Wrote file", remarkFile)
-        print("")
+        logging.info("Wrote file %s", remarkFile)
