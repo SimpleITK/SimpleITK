@@ -196,108 +196,93 @@ def parse_arguments():
     return parser.parse_args()
 
 
-args = parse_arguments()
-remarkFile = args.output_file
-onlyRemarksFlag = args.only
-sortByType = args.type
-quietMode = args.quiet
-writelessMode = args.writeless
+def main():
+    args = parse_arguments()
 
-if args.remark:
-    words = args.remark.partition(":")
-    remarks[words[0]] = words[2]
-    print(words[0], remarks[words[0]])
+    global remarkFile, onlyRemarksFlag, sortByType, quietMode, writelessMode
+    remarkFile = args.output_file
+    onlyRemarksFlag = args.only
+    sortByType = args.type
+    quietMode = args.quiet
+    writelessMode = args.writeless
 
+    if args.remark:
+        words = args.remark.partition(":")
+        remarks[words[0]] = words[2]
+        print(words[0], remarks[words[0]])
 
-#
-#   Get all the ITK and SimpleITK classes from Python symbol tables.
-#
+    # Get all the ITK and SimpleITK classes from Python symbol tables
+    sclasses = dir(SimpleITK)
+    iclasses = dir(itk)
 
-sclasses = dir(SimpleITK)
-iclasses = dir(itk)
+    # Find all the SimpleITK class names that end with "ImageFilter"
+    for s in sclasses:
+        if re.search(r"ImageFilter$", s):
+            if s != "ImageFilter":
+                fs.sitk.add(s)
 
-#   Find all the SimpleITK class names that end with "ImageFilter".
-#   SimpleITK has a base class that is just "ImageFilter" that we want to omit.
-for s in sclasses:
-    if re.search(r"ImageFilter$", s):
-        if s != "ImageFilter":
-            fs.sitk.add(s)
-
-if not quietMode:
-    logging.info("SimpleITK has %d filters.", len(fs.sitk))
-
-
-#   Find all the ITK class names that end with "ImageFilter" or "ImageSource"
-#   ITK has a base class that is just "ImageSource" that we want to omit.
-for i in iclasses:
-    if re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i):
-        if i != "ImageSource":
-            fs.itk.add(i)
-
-if not quietMode:
-    logging.info("ITK has %d filters.", len(fs.itk))
-
-fs.filters = list(fs.itk.union(fs.sitk))
-
-
-#
-# Sort the filters either by name or toolkit and name
-#
-
-if sortByType:
-    fs.filters = sorted(fs.filters, key=filterKey)
-else:
-    fs.filters.sort()
-
-
-#
-#  Read the remarks from file
-
-if remarkFile != "":
-    readCSV(remarkFile)
-
-
-#
-#    Print all the filters
-#
-
-if not quietMode:
-    bothcount = icount = scount = 0
-    word = ""
-
-    for filt in fs.filters:
-        inI = filt in fs.itk
-        inS = filt in fs.sitk
-        if inI and inS:
-            color = bcolors.OKBLUE
-            word = "Both"
-            bothcount += 1
-        elif inI:
-            color = bcolors.OKGREEN
-            word = "ITK "
-            icount += 1
-        else:
-            color = bcolors.FAIL
-            word = "SITK"
-            scount += 1
-
-        rem = ""
-        if filt in fs.remarks:
-            rem = fs.remarks[filt]
-        print("%50s %s %s %s      %s" % (filt, color, word, bcolors.ENDC, rem))
-
-    logging.info("%3d filters in both toolkits.", bothcount)
-    logging.info("%3d filters in ITK only.", icount)
-    logging.info("%3d filters in SimpleITK only.", scount)
-
-
-#
-#   Write out the new CSV file
-#
-
-if not writelessMode:
-    if remarkFile == "":
-        remarkFile = "filters.csv"
-    writeCSV(remarkFile)
     if not quietMode:
-        logging.info("Wrote file %s", remarkFile)
+        logging.info("SimpleITK has %d filters.", len(fs.sitk))
+
+    # Find all the ITK class names that end with "ImageFilter" or "ImageSource"
+    for i in iclasses:
+        if re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i):
+            if i != "ImageSource":
+                fs.itk.add(i)
+
+    if not quietMode:
+        logging.info("ITK has %d filters.", len(fs.itk))
+
+    fs.filters = list(fs.itk.union(fs.sitk))
+
+    # Sort the filters either by name or toolkit and name
+    if sortByType:
+        fs.filters = sorted(fs.filters, key=filterKey)
+    else:
+        fs.filters.sort()
+
+    # Read the remarks from file
+    if remarkFile != "":
+        readCSV(remarkFile)
+
+    # Print all the filters
+    if not quietMode:
+        bothcount = icount = scount = 0
+        word = ""
+
+        for filt in fs.filters:
+            inI = filt in fs.itk
+            inS = filt in fs.sitk
+            if inI and inS:
+                color = bcolors.OKBLUE
+                word = "Both"
+                bothcount += 1
+            elif inI:
+                color = bcolors.OKGREEN
+                word = "ITK "
+                icount += 1
+            else:
+                color = bcolors.FAIL
+                word = "SITK"
+                scount += 1
+
+            rem = ""
+            if filt in fs.remarks:
+                rem = fs.remarks[filt]
+            print("%50s %s %s %s      %s" % (filt, color, word, bcolors.ENDC, rem))
+
+        logging.info("%3d filters in both toolkits.", bothcount)
+        logging.info("%3d filters in ITK only.", icount)
+        logging.info("%3d filters in SimpleITK only.", scount)
+
+    # Write out the new CSV file
+    if not writelessMode:
+        if remarkFile == "":
+            remarkFile = "filters.csv"
+        writeCSV(remarkFile)
+        if not quietMode:
+            logging.info("Wrote file %s", remarkFile)
+
+
+if __name__ == "__main__":
+    main()
