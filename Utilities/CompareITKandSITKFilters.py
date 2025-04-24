@@ -54,7 +54,6 @@ fs = FilterSet()  # the filter data structure
 remarkFile = Path("")
 onlyRemarksFlag = False
 sortByType = False
-quietMode = False
 writelessMode = False
 
 fieldnames = ("Filter", "ITK", "SITK", "Remark", "ToDo")  # fields in the CSV file
@@ -148,8 +147,7 @@ def readCSV(name):
         logging.warning("Warning: Couldn't read input file %s. Proceeding without it.", name)
         logging.warning("Error: %s", e)
     else:
-        if not quietMode:
-            logging.info("Read file %s", remarkFile)
+        logging.info("Read file %s", remarkFile)
 
 
 #
@@ -197,17 +195,19 @@ def parse_arguments():
 def main():
     args = parse_arguments()
 
-    global remarkFile, onlyRemarksFlag, sortByType, quietMode, writelessMode
+    global remarkFile, onlyRemarksFlag, sortByType, writelessMode
     remarkFile = Path(args.output_file)
     onlyRemarksFlag = args.only
     sortByType = args.type
-    quietMode = args.quiet
     writelessMode = args.writeless
+
+    if args.quiet:
+        logging.getLogger().setLevel(logging.WARNING)
 
     if args.remark:
         words = args.remark.partition(":")
-        remarks[words[0]] = words[2]
-        print(words[0], remarks[words[0]])
+        fs.remarks[words[0]] = words[2]
+        print(words[0], fs.remarks[words[0]])
 
     # Get all the ITK and SimpleITK classes from Python symbol tables
     sclasses = dir(SimpleITK)
@@ -216,14 +216,12 @@ def main():
     # Find all the SimpleITK class names that end with "ImageFilter"
     fs.sitk = {s for s in sclasses if re.search(r"ImageFilter$", s) and s != "ImageFilter"}
 
-    if not quietMode:
-        logging.info("SimpleITK has %d filters.", len(fs.sitk))
+    logging.info("SimpleITK has %d filters.", len(fs.sitk))
 
     # Find all the ITK class names that end with "ImageFilter" or "ImageSource"
     fs.itk = {i for i in iclasses if (re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i)) and i != "ImageSource"}
 
-    if not quietMode:
-        logging.info("ITK has %d filters.", len(fs.itk))
+    logging.info("ITK has %d filters.", len(fs.itk))
 
     fs.filters = list(fs.itk.union(fs.sitk))
 
@@ -238,42 +236,40 @@ def main():
         readCSV(remarkFile)
 
     # Print all the filters
-    if not quietMode:
-        bothcount = icount = scount = 0
-        word = ""
+    bothcount = icount = scount = 0
+    word = ""
 
-        for filt in fs.filters:
-            inI = filt in fs.itk
-            inS = filt in fs.sitk
-            if inI and inS:
-                color = bcolors.OKBLUE
-                word = "Both"
-                bothcount += 1
-            elif inI:
-                color = bcolors.OKGREEN
-                word = "ITK "
-                icount += 1
-            else:
-                color = bcolors.FAIL
-                word = "SITK"
-                scount += 1
+    for filt in fs.filters:
+        inI = filt in fs.itk
+        inS = filt in fs.sitk
+        if inI and inS:
+            color = bcolors.OKBLUE
+            word = "Both"
+            bothcount += 1
+        elif inI:
+            color = bcolors.OKGREEN
+            word = "ITK "
+            icount += 1
+        else:
+            color = bcolors.FAIL
+            word = "SITK"
+            scount += 1
 
-            rem = ""
-            if filt in fs.remarks:
-                rem = fs.remarks[filt]
-            print("%50s %s %s %s      %s" % (filt, color, word, bcolors.ENDC, rem))
+        rem = ""
+        if filt in fs.remarks:
+            rem = fs.remarks[filt]
+        print("%50s %s %s %s      %s" % (filt, color, word, bcolors.ENDC, rem))
 
-        logging.info("%3d filters in both toolkits.", bothcount)
-        logging.info("%3d filters in ITK only.", icount)
-        logging.info("%3d filters in SimpleITK only.", scount)
+    logging.info("%3d filters in both toolkits.", bothcount)
+    logging.info("%3d filters in ITK only.", icount)
+    logging.info("%3d filters in SimpleITK only.", scount)
 
     # Write out the new CSV file
     if not writelessMode:
         if remarkFile == Path(""):
             remarkFile = Path("filters.csv")
         writeCSV(remarkFile)
-        if not quietMode:
-            logging.info(f"Wrote file {remarkFile}")
+        logging.info(f"Wrote file {remarkFile}")
 
 
 if __name__ == "__main__":
