@@ -17,9 +17,10 @@
 #
 # =========================================================================
 
-import re, getopt, sys, csv
+import re, sys, csv
 import SimpleITK
 import itk
+import argparse
 
 
 class bcolors:
@@ -189,65 +190,42 @@ def filterKey(filter_name):
 
 #
 #
-def usage():
-    """command line usage message"""
-    print("")
-    print("CompareITKandSITKFilters.py [options] [output_file.csv]")
-    print("")
-    print("  -h         This help message.")
-    print("  -t         Sort printed filters by toolkit type.")
-    print('  -r string  Add a remark entry in the format "filter_name:remark string".')
-    print("  -o         Only output filters with remarks.")
-    print("  -q         Quiet mode, don't print filter list.")
-    print("  -w         Writeless mode, don't write the output file.")
-    print("")
-    print(
-        "This script compares what image filters ITK (via WrapITK) and SimpleITK implement."
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Compare what image filters ITK (via WrapITK) and SimpleITK implement."
     )
-    print("It works by comparing the symbol tables of their respective python modules.")
-    print(
-        "If no output file name is given, by default, the script writes results to filters.csv."
+    parser.add_argument(
+        "output_file", nargs="?", default="filters.csv", help="Output file name (default: filters.csv)"
     )
-    print("")
-
-
-#
-#   Handle command line options
-#
-
-try:
-    opts, args = getopt.getopt(
-        sys.argv[1:],
-        "htoqwr:",
-        ["help", "type", "only", "quiet", "writeless", "remark"],
+    parser.add_argument(
+        "-t", "--type", action="store_true", help="Sort printed filters by toolkit type."
     )
-except getopt.GetoptError as err:
-    print(str(err))
-    usage()
-    sys.exit(2)
+    parser.add_argument(
+        "-r", "--remark", metavar="FILTER:REMARK", help="Add a remark entry in the format 'filter_name:remark string'."
+    )
+    parser.add_argument(
+        "-o", "--only", action="store_true", help="Only output filters with remarks."
+    )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Quiet mode, don't print filter list."
+    )
+    parser.add_argument(
+        "-w", "--writeless", action="store_true", help="Writeless mode, don't write the output file."
+    )
+    return parser.parse_args()
 
-for o, a in opts:
-    if o in ("-h", "--help"):
-        usage()
-        sys.exit()
-    elif o in ("-t", "--type"):
-        sortByType = True
-    elif o in ("-o", "--only"):
-        onlyRemarksFlag = True
-    elif o in ("-q", "--quiet"):
-        quietMode = True
-    elif o in ("-w", "--writeless"):
-        writelessMode = True
-    elif o in ("-r", "--remark"):
-        words = a.partition(":")
-        remarks[words[0]] = words[2]
-        print(words[0], remarks[words[0]])
-    else:
-        assert False, "unhandled option"
 
-# take the last word left from the args list as the output file name
-if len(args):
-    remarkFile = args[len(args) - 1]
+args = parse_arguments()
+remarkFile = args.output_file
+onlyRemarksFlag = args.only
+sortByType = args.type
+quietMode = args.quiet
+writelessMode = args.writeless
+
+if args.remark:
+    words = args.remark.partition(":")
+    remarks[words[0]] = words[2]
+    print(words[0], remarks[words[0]])
 
 
 #
