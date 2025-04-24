@@ -22,6 +22,7 @@ import SimpleITK
 import itk
 import argparse
 import logging
+from pathlib import Path
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -50,7 +51,7 @@ class FilterSet:
 
 # Global variables
 fs = FilterSet()  # the filter data structure
-remarkFile = ""
+remarkFile = Path("")
 onlyRemarksFlag = False
 sortByType = False
 quietMode = False
@@ -200,7 +201,7 @@ def main():
     args = parse_arguments()
 
     global remarkFile, onlyRemarksFlag, sortByType, quietMode, writelessMode
-    remarkFile = args.output_file
+    remarkFile = Path(args.output_file)
     onlyRemarksFlag = args.only
     sortByType = args.type
     quietMode = args.quiet
@@ -242,7 +243,7 @@ def main():
         fs.filters.sort()
 
     # Read the remarks from file
-    if remarkFile != "":
+    if remarkFile.exists():
         readCSV(remarkFile)
 
     # Print all the filters
@@ -277,11 +278,11 @@ def main():
 
     # Write out the new CSV file
     if not writelessMode:
-        if remarkFile == "":
-            remarkFile = "filters.csv"
+        if remarkFile == Path(""):
+            remarkFile = Path("filters.csv")
         writeCSV(remarkFile)
         if not quietMode:
-            logging.info("Wrote file %s", remarkFile)
+            logging.info(f"Wrote file {remarkFile}")
 
 
 if __name__ == "__main__":
