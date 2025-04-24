@@ -86,7 +86,7 @@ SimpleITK Filters
      - BinaryThreshold projection.
    * - `BinomialBlurImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BinomialBlurImageFilter.html>`_
      - Performs a separable blur on each dimension of an image.
-   * - `BitwiseNotImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1UnaryFunctorImageFilter.html>`_
+   * - `BitwiseNotImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BitwiseNotImageFilter.html>`_
      - Implements pixel-wise generic operation on one image.
    * - `BlackTopHatImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BlackTopHatImageFilter.html>`_
      - Black top hat extracts local minima that are smaller than the structuring element.
@@ -162,7 +162,7 @@ SimpleITK Filters
      - Blurs an image by separable convolution with discrete gaussian kernels. This filter performs Gaussian blurring by separable convolution of an image and a discrete Gaussian operator (kernel).
    * - `DisplacementFieldJacobianDeterminantFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DisplacementFieldJacobianDeterminantFilter.html>`_
      - Computes a scalar image from a vector image (e.g., deformation field) input, where each output scalar at each pixel is the Jacobian determinant of the vector field at that location. This calculation is correct in the case where the vector image is a "displacement" from the current location. The computation for the jacobian determinant is: det[ dT/dx ] = det[ I + du/dx ].
-   * - `DivideFloorImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1BinaryFunctorImageFilter.html>`_
+   * - `DivideFloorImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DivideFloorImageFilter.html>`_
      - Implements pixel-wise generic operation of two images, or of an image and a constant.
    * - `DivideImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1DivideImageFilter.html>`_
      - Pixel-wise division of two images.
@@ -194,7 +194,7 @@ SimpleITK Filters
      - Shift the zero-frequency components of a Fourier transform to the center of the image.
    * - `FastApproximateRankImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastApproximateRankImageFilter.html>`_
      - A separable rank filter.
-   * - `FastMarchingBaseImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastMarchingImageFilterBase.html>`_
+   * - `FastMarchingBaseImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastMarchingBaseImageFilter.html>`_
      - Apply the Fast Marching method to solve an Eikonal equation on an image.
    * - `FastMarchingImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastMarchingImageFilter.html>`_
      - Solve an Eikonal equation using Fast Marching.
@@ -296,7 +296,7 @@ SimpleITK Filters
      - Labels the pixels on the border of the objects in a labeled image.
    * - `LabelImageToLabelMapFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelImageToLabelMapFilter.html>`_
      - convert a labeled image to a label collection image
-   * - `LabelIntensityStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelImageToStatisticsLabelMapFilter.html>`_
+   * - `LabelIntensityStatisticsImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelIntensityStatisticsImageFilter.html>`_
      - a convenient class to convert a label image to a label map and valuate the statistics attributes at once
    * - `LabelMapContourOverlayImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelMapContourOverlayImageFilter.html>`_
      - Apply a colormap to the contours (outlines) of each object in a label map and superimpose it on top of the feature image.
@@ -558,7 +558,7 @@ SimpleITK Filters
      - Generate a displacement field from a coordinate transform.
    * - `TriangleThresholdImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1TriangleThresholdImageFilter.html>`_
      - Threshold an image using the Triangle Threshold.
-   * - `UnaryMinusImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1UnaryFunctorImageFilter.html>`_
+   * - `UnaryMinusImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1UnaryMinusImageFilter.html>`_
      - Implements pixel-wise generic operation on one image.
    * - `UnsharpMaskImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1UnsharpMaskImageFilter.html>`_
      - Edge enhancement filter.

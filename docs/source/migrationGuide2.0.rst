@@ -106,7 +106,7 @@ Behavior Changes
 ITKv5
 +++++
 
-SimpleITK 2.0 uses ITK version 5.0. This major version change to ITK includes numerous changes to the usage and behavior of ITK. The `ITK v5 Migration Guide <https://github.com/InsightSoftwareConsortium/ITK/blob/master/Documentation/ITK5MigrationGuide.md>`_ contains valuable information documenting changes.
+SimpleITK 2.0 uses ITK version 5.0. This major version change to ITK includes numerous changes to the usage and behavior of ITK. The `ITK v5 Migration Guide <https://github.com/InsightSoftwareConsortium/ITK/blob/master/Documentation/docs/migration_guides/itk_5_migration_guide.md>`_ contains valuable information documenting changes.
 
 
 Show Environment Variables
@@ -151,7 +151,7 @@ Changes to DICOM reading, due to SimpleITK's move from ITK 4.x to 5.x. Photometr
 Python Installation
 +++++++++++++++++++
 
-The Python installation procedure to use `setup.py` changed. To install see the updated `Python Installation <python_installation>`_ documentation.
+The Python installation procedure to use `setup.py` changed. To install see the updated :ref:`Python Installation <python_installation>` documentation.
 
 Multi-threading
 +++++++++++++++

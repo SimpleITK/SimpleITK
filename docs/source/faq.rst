@@ -127,7 +127,7 @@ programmatically hard code this header information. The suggested way is
 to create a Meta image header file (\*.mhd) which references the raw
 data file and describes the size and type of the data. The documentation
 on how to write a Meta image header can be found
-`here <https://www.itk.org/Wiki/MetaIO/Documentation#Reading_a_Brick-of-Bytes_.28an_N-Dimensional_volume_in_a_single_file.29>`__.
+`here <https://docs.itk.org/en/latest/learn/metaio.html#reading-a-brick-of-bytes-an-n-dimensional-volume-in-a-single-file>`__.
 
 The following is a sample Meta image header file, perhaps of name
 sample.mhd:
