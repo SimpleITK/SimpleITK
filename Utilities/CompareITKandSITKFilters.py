@@ -82,20 +82,15 @@ def writeCSV(name):
             headers = dict((n, n) for n in fieldnames)
             writer.writerow(headers)
             for filt in fs.filters:
-                if filt in fs.remarks:
-                    rem = fs.remarks[filt]
-                else:
-                    rem = ""
+                rem = fs.remarks.get(filt, "")
                 if len(rem) or not onlyRemarksFlag:
-                    writer.writerow(
-                        {
-                            fieldnames[0]: filt,
-                            fieldnames[1]: filt in fs.itk,
-                            fieldnames[2]: filt in fs.sitk,
-                            fieldnames[3]: rem,
-                            fieldnames[4]: filt in fs.todo,
-                        }
-                    )
+                    writer.writerow({
+                        fieldnames[0]: filt,
+                        fieldnames[1]: filt in fs.itk,
+                        fieldnames[2]: filt in fs.sitk,
+                        fieldnames[3]: rem,
+                        fieldnames[4]: filt in fs.todo,
+                    })
     except Exception as e:
         logging.warning("Warning: Couldn't write output file %s", name)
         logging.warning("Error: %s", e)
@@ -219,19 +214,13 @@ def main():
     iclasses = dir(itk)
 
     # Find all the SimpleITK class names that end with "ImageFilter"
-    for s in sclasses:
-        if re.search(r"ImageFilter$", s):
-            if s != "ImageFilter":
-                fs.sitk.add(s)
+    fs.sitk = {s for s in sclasses if re.search(r"ImageFilter$", s) and s != "ImageFilter"}
 
     if not quietMode:
         logging.info("SimpleITK has %d filters.", len(fs.sitk))
 
     # Find all the ITK class names that end with "ImageFilter" or "ImageSource"
-    for i in iclasses:
-        if re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i):
-            if i != "ImageSource":
-                fs.itk.add(i)
+    fs.itk = {i for i in iclasses if (re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i)) and i != "ImageSource"}
 
     if not quietMode:
         logging.info("ITK has %d filters.", len(fs.itk))
