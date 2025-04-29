@@ -55,13 +55,13 @@ public:
   operator=(const ScaleTransform &);
 
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetScale(const std::vector<double> & params);
   std::vector<double>
   GetScale() const;
 
   /** fixed parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetCenter(const std::vector<double> & params);
   std::vector<double>
   GetCenter() const;

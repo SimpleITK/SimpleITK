@@ -146,11 +146,6 @@ namespace std
 #endif
 
 
-#ifndef SITK_RETURN_SELF_TYPE_HEADER
-#define SITK_RETURN_SELF_TYPE_HEADER void
-#endif
-
-
 // define these preprocessor directives to nothing for the swig interface
 #define SITKCommon_EXPORT
 #define SITKCommon_HIDDEN

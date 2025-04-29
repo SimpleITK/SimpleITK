@@ -28,7 +28,7 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
       end
       OUT= OUT .. '\
        */\
-      SITK_RETURN_SELF_TYPE_HEADER Set${name} ('
+      void Set${name} ('
       if not type and enum then
         OUT=OUT..' ${name}Type'
       elseif dim_vec and (dim_vec == 1) then
@@ -41,22 +41,22 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
       OUT=OUT..' ${name} ) '
       if (dim_vec and (dim_vec == 1)) or
          (point_vec and (point_vec == 1)) then
-        OUT = OUT..'{ this->m_${name} = std::move(${name}); return *this; }'
+        OUT = OUT..'{ this->m_${name} = std::move(${name});  }'
       else
-        OUT=OUT..'{ this->m_${name} = ${name}; return *this; }'
+        OUT=OUT..'{ this->m_${name} = ${name};  }'
       end
   if dim_vec and ( set_as_scalar == 1 ) then
     OUT = OUT .. '\
 \
       /** Set the values of the ${name} vector all to value */\
-      SITK_RETURN_SELF_TYPE_HEADER Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value); return *this; }'
+      void Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value);  }'
   end
   if type == "bool" and ( not dim_vec or not dim_vec == 1 ) then
       OUT = OUT .. '\
 \
       /** Set the value of ${name} to true or false respectfully. */\
-      SITK_RETURN_SELF_TYPE_HEADER ${name}On() { return this->Set${name}(true); }\
-      SITK_RETURN_SELF_TYPE_HEADER ${name}Off() { return this->Set${name}(false); }'
+      void ${name}On() { return this->Set${name}(true); }\
+      void ${name}Off() { return this->Set${name}(false); }'
   end
 end)
 $(if (not no_get_method) or (no_get_method == 0) then
@@ -87,9 +87,9 @@ end)$(if point_vec and (point_vec == 1) then
       OUT=[[
 
       /** \brief Add ${name} point */
-      SITK_RETURN_SELF_TYPE_HEADER Add${name:gsub("List", ""):gsub("s(%d?)$","%1")}( std::vector< ${type} > point ) { this->m_${name}.push_back(std::move(point)); return *this;}
+      void Add${name:gsub("List", ""):gsub("s(%d?)$","%1")}( std::vector< ${type} > point ) { this->m_${name}.push_back(std::move(point)); }
       /** \brief Remove all ${name} points */
-      SITK_RETURN_SELF_TYPE_HEADER Clear${name:gsub("List", "s")}( ) { this->m_${name}.clear(); return *this;}
+      void Clear${name:gsub("List", "s")}( ) { this->m_${name}.clear(); }
 ]]
 end))$(when measurements $(foreach measurements
 

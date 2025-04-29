@@ -82,11 +82,10 @@ ImageSeriesReader::GetSpacingWarningRelThreshold() const
   return m_SpacingWarningRelThreshold;
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::SetSpacingWarningRelThreshold(double spacingWarningRelThreshold)
 {
   m_SpacingWarningRelThreshold = spacingWarningRelThreshold;
-  return *this;
 }
 
 ImageSeriesReader::ImageSeriesReader()
@@ -126,11 +125,10 @@ ImageSeriesReader::ToString() const
   return out.str();
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::SetFileNames(const std::vector<PathType> & filenames)
 {
   this->m_FileNames = filenames;
-  return *this;
 }
 
 const std::vector<PathType> &

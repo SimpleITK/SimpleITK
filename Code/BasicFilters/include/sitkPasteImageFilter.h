@@ -70,11 +70,10 @@ public:
 
   /**
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSourceSize(std::vector<unsigned int> SourceSize)
   {
     this->m_SourceSize = std::move(SourceSize);
-    return *this;
   }
 
   /**
@@ -87,11 +86,10 @@ public:
 
   /**
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSourceIndex(std::vector<int> SourceIndex)
   {
     this->m_SourceIndex = std::move(SourceIndex);
-    return *this;
   }
 
   /**
@@ -105,11 +103,10 @@ public:
   /**
    * Set/Get the destination index (where in the first input the second input will be pasted.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetDestinationIndex(std::vector<int> DestinationIndex)
   {
     this->m_DestinationIndex = std::move(DestinationIndex);
-    return *this;
   }
 
   /**
@@ -130,11 +127,10 @@ public:
    *
    * By default this array contains SourceImageDimension false values followed by true values for the remainder.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetDestinationSkipAxes(std::vector<bool> DestinationSkipAxes)
   {
     this->m_DestinationSkipAxes = std::move(DestinationSkipAxes);
-    return *this;
   }
 
   /** Set/Get the array describing which axes in the destination image to skip

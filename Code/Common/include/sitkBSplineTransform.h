@@ -68,19 +68,19 @@ public:
   /** parameters */
 
   /** fixed parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformDomainDirection(const std::vector<double> &);
   std::vector<double>
   GetTransformDomainDirection() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformDomainMeshSize(const std::vector<unsigned int> &);
   std::vector<unsigned int>
   GetTransformDomainMeshSize() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformDomainOrigin(const std::vector<double> &);
   std::vector<double>
   GetTransformDomainOrigin() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformDomainPhysicalDimensions(const std::vector<double> &);
   std::vector<double>
   GetTransformDomainPhysicalDimensions() const;

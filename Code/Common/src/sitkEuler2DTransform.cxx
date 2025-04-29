@@ -69,12 +69,11 @@ Euler2DTransform::operator=(const Euler2DTransform & arg)
 
 
 /** fixed parameter */
-Euler2DTransform::Self &
+void
 Euler2DTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -90,20 +89,18 @@ Euler2DTransform::GetAngle() const
 }
 
 /** parameter */
-Euler2DTransform::Self &
+void
 Euler2DTransform::SetAngle(double angle)
 {
   this->MakeUnique();
   this->m_pfSetAngle(angle);
-  return *this;
 }
 
-Euler2DTransform::Self &
+void
 Euler2DTransform::SetTranslation(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetTranslation(params);
-  return *this;
 }
 
 std::vector<double>
@@ -118,12 +115,11 @@ Euler2DTransform::GetMatrix() const
   return this->m_pfGetMatrix();
 }
 
-Euler2DTransform::Self &
+void
 Euler2DTransform::SetMatrix(const std::vector<double> & params, double tolerance)
 {
   this->MakeUnique();
   this->m_pfSetMatrix(params, tolerance);
-  return *this;
 }
 
 void

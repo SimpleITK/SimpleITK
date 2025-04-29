@@ -91,11 +91,10 @@ public:
    * collapsed. The number of non-zero sized determines the output
    * dimension.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSize(std::vector<unsigned int> Size)
   {
     this->m_Size = std::move(Size);
-    return *this;
   }
 
   /** \brief Get the size of the region to extract.
@@ -110,11 +109,10 @@ public:
    *
    * The index defaults to all zeros.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetIndex(std::vector<int> Index)
   {
     this->m_Index = std::move(Index);
-    return *this;
   }
 
   /** \brief Get the starting index to extract.
@@ -157,11 +155,10 @@ public:
    * programmer knows that a 4D image is 3D+time, and that the 3D
    * sub-space is properly defined.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetDirectionCollapseToStrategy(DirectionCollapseToStrategyType DirectionCollapseToStrategy)
   {
     this->m_DirectionCollapseToStrategy = DirectionCollapseToStrategy;
-    return *this;
   }
 
   /** Get the currently set strategy for collapsing directions of physical space.

@@ -87,11 +87,10 @@ public:
 
   /**
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetOperationMode(OperationModeType OperationMode)
   {
     this->m_OperationMode = OperationMode;
-    return *this;
   }
 
   /**
@@ -119,20 +118,18 @@ public:
 
   /** Select between using the geometrical center of the images or using the center of mass given by the image
    * intensities. */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   MomentsOn()
   {
     this->SetOperationMode(MOMENTS);
-    return *this;
   }
 
   /** Select between using the geometrical center of the images or using the center of mass given by the image
    * intensities. */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   GeometryOn()
   {
     this->SetOperationMode(GEOMETRY);
-    return *this;
   }
 
 
