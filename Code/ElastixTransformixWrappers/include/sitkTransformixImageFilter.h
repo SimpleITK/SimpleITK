@@ -50,89 +50,89 @@ public:
   std::string
   GetName() const;
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetMovingImage(const Image & movingImage);
   Image &
   GetMovingImage();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   RemoveMovingImage();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetFixedPointSetFileName(const std::string movingPointSetFileName);
   std::string
   GetFixedPointSetFileName();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   RemoveFixedPointSetFileName();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetComputeSpatialJacobian(const bool);
   bool
   GetComputeSpatialJacobian();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ComputeSpatialJacobianOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ComputeSpatialJacobianOff();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetComputeDeterminantOfSpatialJacobian(const bool);
   bool
   GetComputeDeterminantOfSpatialJacobian();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ComputeDeterminantOfSpatialJacobianOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ComputeDeterminantOfSpatialJacobianOff();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetComputeDeformationField(bool);
   bool
   GetComputeDeformationField();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ComputeDeformationFieldOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ComputeDeformationFieldOff();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetOutputDirectory(const std::string outputDirectory);
   std::string
   GetOutputDirectory();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   RemoveOutputDirectory();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetLogFileName(const std::string logFileName);
   std::string
   GetLogFileName();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   RemoveLogFileName();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetLogToFile(const bool logToFile);
   bool
   GetLogToFile();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   LogToFileOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   LogToFileOff();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetLogToConsole(const bool logToConsole);
   bool
   GetLogToConsole();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   LogToConsoleOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   LogToConsoleOff();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector)
   {
     return SetTransformParameterMap(parameterMapVector);
   }
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   AddTransformParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   std::vector<std::map<std::string, std::vector<std::string>>>
   GetTransformParameterMap();
@@ -144,38 +144,38 @@ public:
   unsigned int
   GetNumberOfTransformParameterMaps();
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameter(const std::string key, const std::string value);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameter(const std::string key, const std::vector<std::string> value);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameter(const unsigned int index, const std::string key, const std::string value);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformParameter(const unsigned int index, const std::string key, const std::vector<std::string> value);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   AddTransformParameter(const std::string key, const std::string value);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   AddTransformParameter(const unsigned int index, const std::string key, const std::string value);
   std::vector<std::string>
   GetTransformParameter(const std::string key);
   std::vector<std::string>
   GetTransformParameter(const unsigned int index, const std::string key);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   RemoveTransformParameter(const std::string key);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   RemoveTransformParameter(const unsigned int index, const std::string key);
 
   std::map<std::string, std::vector<std::string>>
   ReadParameterFile(const std::string parameterFileName);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   WriteParameterFile(const std::map<std::string, std::vector<std::string>> parameterMap,
                      const std::string                                     parameterFileName);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   PrintParameterMap();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   PrintParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   PrintParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
 
   Image

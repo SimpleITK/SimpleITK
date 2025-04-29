@@ -64,45 +64,45 @@ public:
     return std::string("ImportImageFilter");
   }
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSize(const std::vector<unsigned int> & size);
   const std::vector<unsigned int> &
   GetSize() const;
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSpacing(const std::vector<double> & spacing);
   const std::vector<double> &
   GetSpacing() const;
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetOrigin(const std::vector<double> & origin);
   const std::vector<double> &
   GetOrigin() const;
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetDirection(const std::vector<double> & direction);
   const std::vector<double> &
   GetDirection() const;
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsInt8(int8_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsUInt8(uint8_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsInt16(int16_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsUInt16(uint16_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsInt32(int32_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsUInt32(uint32_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsInt64(int64_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsUInt64(uint64_t * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsFloat(float * buffer, unsigned int numberOfComponents = 1);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBufferAsDouble(double * buffer, unsigned int numberOfComponents = 1);
 
   Image

@@ -65,18 +65,23 @@ public:
   /**
    * Enable the use of the principal axes of each image to compute an initial rotation that will align them.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetComputeRotation(bool ComputeRotation)
   {
     this->m_ComputeRotation = ComputeRotation;
-    return *this;
   }
 
   /** Set the value of ComputeRotation to true or false respectfully. */
-  SITK_RETURN_SELF_TYPE_HEADER
-  ComputeRotationOn() { return this->SetComputeRotation(true); }
-  SITK_RETURN_SELF_TYPE_HEADER
-  ComputeRotationOff() { return this->SetComputeRotation(false); }
+  void
+  ComputeRotationOn()
+  {
+    return this->SetComputeRotation(true);
+  }
+  void
+  ComputeRotationOff()
+  {
+    return this->SetComputeRotation(false);
+  }
 
   /**
    * Enable the use of the principal axes of each image to compute an initial rotation that will align them.

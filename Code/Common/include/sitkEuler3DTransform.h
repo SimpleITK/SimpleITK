@@ -62,7 +62,7 @@ public:
   }
 
   /** fixed parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetCenter(const std::vector<double> & params);
   std::vector<double>
   GetCenter() const;
@@ -75,28 +75,34 @@ public:
   GetAngleZ() const;
 
   /** parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetRotation(double angleX, double angleY, double angleZ);
 
   std::vector<double>
   GetTranslation() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTranslation(const std::vector<double> & translation);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetComputeZYX(bool _arg);
   bool
   GetComputeZYX() const;
-  SITK_RETURN_SELF_TYPE_HEADER
-  ComputeZYXOn() { return this->SetComputeZYX(true); }
-  SITK_RETURN_SELF_TYPE_HEADER
-  ComputeZYXOff() { return this->SetComputeZYX(false); }
+  void
+  ComputeZYXOn()
+  {
+    return this->SetComputeZYX(true);
+  }
+  void
+  ComputeZYXOff()
+  {
+    return this->SetComputeZYX(false);
+  }
 
 
   /** additional methods */
   std::vector<double>
   GetMatrix() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetMatrix(const std::vector<double> & matrix, double tolerance = 1e-10);
 
 protected:

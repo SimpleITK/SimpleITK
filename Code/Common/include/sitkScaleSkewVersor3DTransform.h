@@ -70,37 +70,37 @@ public:
   }
 
   /** fixed parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetCenter(const std::vector<double> & params);
   std::vector<double>
   GetCenter() const;
 
 
   /** parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetRotation(const std::vector<double> & versor);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetRotation(const std::vector<double> & axis, double angle);
   std::vector<double>
   GetVersor() const;
 
   std::vector<double>
   GetTranslation() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTranslation(const std::vector<double> & translation);
 
   std::vector<double>
   GetScale() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetScale(const std::vector<double> & scale);
 
   std::vector<double>
   GetSkew() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSkew(const std::vector<double> & skew);
 
   /** additional methods */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Translate(const std::vector<double> & offset);
   std::vector<double>
   GetMatrix() const;

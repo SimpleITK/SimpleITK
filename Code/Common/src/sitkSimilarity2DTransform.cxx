@@ -70,12 +70,11 @@ Similarity2DTransform::operator=(const Similarity2DTransform & arg)
 
 
 /** fixed parameter */
-Similarity2DTransform::Self &
+void
 Similarity2DTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -91,20 +90,18 @@ Similarity2DTransform::GetAngle() const
 }
 
 /** parameter */
-Similarity2DTransform::Self &
+void
 Similarity2DTransform::SetAngle(double angle)
 {
   this->MakeUnique();
   this->m_pfSetAngle(angle);
-  return *this;
 }
 
-Similarity2DTransform::Self &
+void
 Similarity2DTransform::SetTranslation(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetTranslation(params);
-  return *this;
 }
 
 std::vector<double>
@@ -113,12 +110,11 @@ Similarity2DTransform::GetTranslation() const
   return this->m_pfGetTranslation();
 }
 
-Similarity2DTransform::Self &
+void
 Similarity2DTransform::SetScale(double scale)
 {
   this->MakeUnique();
   this->m_pfSetScale(scale);
-  return *this;
 }
 
 double
@@ -133,12 +129,11 @@ Similarity2DTransform::GetMatrix() const
   return this->m_pfGetMatrix();
 }
 
-Similarity2DTransform::Self &
+void
 Similarity2DTransform::SetMatrix(const std::vector<double> & params, double tolerance)
 {
   this->MakeUnique();
   this->m_pfSetMatrix(params, tolerance);
-  return *this;
 }
 
 void

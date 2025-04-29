@@ -58,12 +58,11 @@ TranslationTransform::operator=(const TranslationTransform & arg)
 
 
 /** fixed parameter */
-TranslationTransform::Self &
+void
 TranslationTransform::SetOffset(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetOffset(params);
-  return *this;
 }
 
 std::vector<double>

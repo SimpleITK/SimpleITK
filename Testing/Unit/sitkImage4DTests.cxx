@@ -189,7 +189,9 @@ TEST_F(Image4D, ImageDataType)
 TEST_F(Image4D, Constructors)
 {
   itk::simple::HashImageFilter hasher;
-  int                          result;
+  hasher.SetHashFunction(itk::simple::HashImageFilter::SHA1);
+
+  int result;
 
   {
     itk::simple::Image image;
@@ -205,9 +207,7 @@ TEST_F(Image4D, Constructors)
   s4d6[2] = 66;
   s4d6[3] = 67;
   itk::simple::Image image(s4d6, itk::simple::sitkUInt8);
-  EXPECT_EQ("d2ed3a9bceae811402dcb5223fb16990cd89537d",
-            hasher.SetHashFunction(itk::simple::HashImageFilter::SHA1).Execute(image))
-    << " SHA1 hash value sitkUInt8";
+  EXPECT_EQ("d2ed3a9bceae811402dcb5223fb16990cd89537d", hasher.Execute(image)) << " SHA1 hash value sitkUInt8";
   result = typelist2::index_of<InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char>>::value;
   EXPECT_EQ(image.GetPixelIDValue(), result);
   EXPECT_EQ(image.GetPixelIDTypeAsString(), "8-bit unsigned integer");
@@ -219,9 +219,7 @@ TEST_F(Image4D, Constructors)
   EXPECT_EQ(image.GetDirection(), directionI4D);
 
   image = itk::simple::Image(s4d6, itk::simple::sitkInt16);
-  EXPECT_EQ("0e444ec26123b59643b58f84dd8f685a991dfb4b",
-            hasher.SetHashFunction(itk::simple::HashImageFilter::SHA1).Execute(image))
-    << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ("0e444ec26123b59643b58f84dd8f685a991dfb4b", hasher.Execute(image)) << " SHA1 hash value sitkUInt16";
   result = typelist2::index_of<InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short>>::value;
   EXPECT_EQ(image.GetPixelIDValue(), result);
   EXPECT_EQ(image.GetPixelIDTypeAsString(), "16-bit signed integer");

@@ -94,11 +94,10 @@ ImageFileWriter::GetRegisteredImageIOs() const
   return ioutils::GetRegisteredImageIOs();
 }
 
-ImageFileWriter::Self &
+void
 ImageFileWriter::SetUseCompression(bool UseCompression)
 {
   this->m_UseCompression = UseCompression;
-  return *this;
 }
 
 bool
@@ -107,11 +106,10 @@ ImageFileWriter::GetUseCompression() const
   return this->m_UseCompression;
 }
 
-ImageFileWriter::Self &
+void
 ImageFileWriter::SetCompressionLevel(int CompressionLevel)
 {
   this->m_CompressionLevel = CompressionLevel;
-  return *this;
 }
 
 int
@@ -120,11 +118,10 @@ ImageFileWriter::GetCompressionLevel() const
   return m_CompressionLevel;
 }
 
-ImageFileWriter::Self &
+void
 ImageFileWriter::SetCompressor(const std::string & Compressor)
 {
   this->m_Compressor = Compressor;
-  return *this;
 }
 
 std::string
@@ -134,11 +131,10 @@ ImageFileWriter::GetCompressor()
 }
 
 
-ImageFileWriter::Self &
+void
 ImageFileWriter::SetKeepOriginalImageUID(bool KeepOriginalImageUID)
 {
   this->m_KeepOriginalImageUID = KeepOriginalImageUID;
-  return *this;
 }
 
 bool
@@ -147,11 +143,10 @@ ImageFileWriter::GetKeepOriginalImageUID() const
   return this->m_KeepOriginalImageUID;
 }
 
-ImageFileWriter &
+void
 ImageFileWriter::SetFileName(const PathType & fn)
 {
   this->m_FileName = fn;
-  return *this;
 }
 
 PathType
@@ -160,7 +155,7 @@ ImageFileWriter::GetFileName() const
   return this->m_FileName;
 }
 
-ImageFileWriter &
+void
 ImageFileWriter::Execute(const Image & image, const PathType & inFileName, bool useCompression, int compressionLevel)
 {
   this->SetFileName(inFileName);
@@ -169,7 +164,7 @@ ImageFileWriter::Execute(const Image & image, const PathType & inFileName, bool 
   return this->Execute(image);
 }
 
-ImageFileWriter &
+void
 ImageFileWriter::Execute(const Image & image)
 {
   PixelIDValueType type = image.GetPixelIDValue();
@@ -179,11 +174,10 @@ ImageFileWriter::Execute(const Image & image)
 }
 
 
-ImageFileWriter::Self &
+void
 ImageFileWriter ::SetImageIO(const std::string & imageio)
 {
   this->m_ImageIOName = imageio;
-  return *this;
 }
 
 
@@ -223,7 +217,7 @@ ImageFileWriter ::GetImageIOBase(const PathType & fileName)
 
 //-----------------------------------------------------------------------------
 template <class InputImageType>
-ImageFileWriter &
+void
 ImageFileWriter::ExecuteInternal(const Image & inImage)
 {
   typename InputImageType::ConstPointer image = dynamic_cast<const InputImageType *>(inImage.GetITKBase());
@@ -249,8 +243,6 @@ ImageFileWriter::ExecuteInternal(const Image & inImage)
   this->PreUpdate(writer.GetPointer());
 
   writer->Update();
-
-  return *this;
 }
 
 } // namespace itk::simple

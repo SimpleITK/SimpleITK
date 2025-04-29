@@ -91,11 +91,10 @@ public:
    * should be read. Default value is false, because of the
    * additional computation time.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetMetaDataDictionaryArrayUpdate(bool metaDataDictionaryArrayUpdate)
   {
     this->m_MetaDataDictionaryArrayUpdate = metaDataDictionaryArrayUpdate;
-    return *this;
   }
   bool
   GetMetaDataDictionaryArrayUpdate()
@@ -105,10 +104,16 @@ public:
 
 
   /** Set the value of MetaDataDictionaryArrayUpdate to true or false respectively. */
-  SITK_RETURN_SELF_TYPE_HEADER
-  MetaDataDictionaryArrayUpdateOn() { return this->SetMetaDataDictionaryArrayUpdate(true); }
-  SITK_RETURN_SELF_TYPE_HEADER
-  MetaDataDictionaryArrayUpdateOff() { return this->SetMetaDataDictionaryArrayUpdate(false); }
+  void
+  MetaDataDictionaryArrayUpdateOn()
+  {
+    return this->SetMetaDataDictionaryArrayUpdate(true);
+  }
+  void
+  MetaDataDictionaryArrayUpdateOff()
+  {
+    return this->SetMetaDataDictionaryArrayUpdate(false);
+  }
 
 
   /** \brief Generate a sequence of filenames from a directory with a DICOM data set and a series ID.
@@ -158,13 +163,13 @@ public:
   static std::vector<std::string>
   GetGDCMSeriesIDs(const PathType & directory, bool useSeriesDetails = false);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetFileNames(const std::vector<PathType> & fileNames);
   const std::vector<PathType> &
   GetFileNames() const;
 
   /** Set the relative threshold for issuing warnings about non-uniform sampling. */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSpacingWarningRelThreshold(double spacingWarningRelThreshold);
   double
   GetSpacingWarningRelThreshold() const;
@@ -174,26 +179,26 @@ public:
    * Do we want to force orthogonal direction cosines? On by default. Turning it off enables proper reading of DICOM
    * series with gantry tilt.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetForceOrthogonalDirection(bool forceOrthogonalDirection);
   bool
   GetForceOrthogonalDirection() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ForceOrthogonalDirectionOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ForceOrthogonalDirectionOff();
 
   /** Set/Get/OnOff whether to reverse the order of the input files.
    *
    * If true, the order of the input file names will be reversed before reading. Defaults to false.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetReverseOrder(bool reverseOrder);
   bool
   GetReverseOrder() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ReverseOrderOn();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   ReverseOrderOff();
 
   Image

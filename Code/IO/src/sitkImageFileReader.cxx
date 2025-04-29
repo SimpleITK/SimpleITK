@@ -118,11 +118,10 @@ ImageFileReader::ToString() const
   return out.str();
 }
 
-ImageFileReader &
+void
 ImageFileReader::SetFileName(const PathType & fn)
 {
   this->m_FileName = fn;
-  return *this;
 }
 
 PathType
@@ -259,11 +258,10 @@ ImageFileReader ::GetMetaData(const std::string & key) const
   return this->m_pfGetMetaData(key);
 }
 
-ImageFileReader &
+void
 ImageFileReader::SetExtractSize(const std::vector<unsigned int> & size)
 {
   this->m_ExtractSize = size;
-  return *this;
 }
 
 const std::vector<unsigned int> &
@@ -272,11 +270,10 @@ ImageFileReader::GetExtractSize() const
   return this->m_ExtractSize;
 }
 
-ImageFileReader &
+void
 ImageFileReader::SetExtractIndex(const std::vector<int> & index)
 {
   this->m_ExtractIndex = index;
-  return *this;
 }
 
 

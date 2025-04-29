@@ -20,6 +20,7 @@
 #include <itksys/SystemTools.hxx>
 
 #include "sitkImageCompare.h"
+#include "sitkImageFileReader.h"
 
 namespace sitk = itk::simple;
 
@@ -159,8 +160,10 @@ ImageCompare::testImages(const itk::simple::Image & testImage,
     std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>"
               << std::endl;
 
-    std::string volumeName = OutputDir + "/" + shortFilename + ".nrrd";
-    sitk::ImageFileWriter().SetFileName(volumeName).Execute(testImage);
+    std::string           volumeName = OutputDir + "/" + shortFilename + ".nrrd";
+    sitk::ImageFileWriter writer;
+    writer.SetFileName(volumeName);
+    writer.Execute(testImage);
 
     // Save pngs
     std::string ExpectedImageFilename = OutputDir + "/" + shortFilename + "_Expected.png";
@@ -260,7 +263,7 @@ ImageCompare::compare(const sitk::Image & image, std::string inTestCase, std::st
     itksys::SystemTools::MakeDirectory(newBaselineDir.c_str());
     std::cout << "Making directory " << newBaselineDir << std::endl;
     std::string newBaseline = newBaselineDir + name + extension;
-    sitk::ImageFileWriter().SetFileName(newBaseline).Execute(centerSlice);
+    sitk::WriteImage(centerSlice, newBaseline);
     mMessage = "Baseline does not exist, wrote " + newBaseline + "\ncp " + newBaseline + " " + baselineFileName;
     return false;
   }
@@ -301,7 +304,7 @@ ImageCompare::compare(const sitk::Image & image, std::string inTestCase, std::st
 
     try
     {
-      baseline = sitk::ImageFileReader().SetFileName(*iterName).Execute();
+      baseline = sitk::ReadImage(*iterName);
     }
     catch (std::exception & e)
     {
@@ -321,7 +324,7 @@ ImageCompare::compare(const sitk::Image & image, std::string inTestCase, std::st
 
   if (bestRMS > fabs(mTolerance))
   {
-    sitk::Image baseline = sitk::ImageFileReader().SetFileName(bestBaselineName).Execute();
+    sitk::Image baseline = sitk::ReadImage(baselineFileName);
     testImages(centerSlice, baseline, true, bestBaselineName);
     return false;
   }

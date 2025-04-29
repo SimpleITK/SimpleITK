@@ -6,7 +6,7 @@
   "number_of_inputs" : 1,
   "pixel_types" : "RealPixelIDTypeList",
   "filter_type" : "itk::UnsharpMaskImageFilter<InputImageType, OutputImageType, typename InputImageType::PixelType>",
-  "public_declarations" : "SITK_RETURN_SELF_TYPE_HEADER SetSigmas(double s) { this->m_Sigmas = std::vector<double>(3, s ); return *this; }",
+  "public_declarations" : "void SetSigmas(double s) { this->m_Sigmas = std::vector<double>(3, s );  }",
   "members" : [
     {
       "name" : "Sigmas",

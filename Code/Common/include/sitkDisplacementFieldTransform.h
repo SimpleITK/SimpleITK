@@ -79,7 +79,7 @@ public:
    * components equal to the image dimension.
    *
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetDisplacementField(Image &);
 
   /** \todo The returned image should not directly modify the
@@ -91,7 +91,7 @@ public:
   /** fixed parameter */
 
   /* additional methods */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetInverseDisplacementField(Image &);
 
   /** \todo The returned image is should not directly modify the
@@ -101,15 +101,15 @@ public:
   GetInverseDisplacementField() const;
 
   /** Set the interpolator used between the field voxels. */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetInterpolator(InterpolatorEnum interp);
   // InterpolatorEnum GetInterpolator() const; How to do this?
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSmoothingOff();
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSmoothingGaussianOnUpdate(double varianceForUpdateField = 1.75, double varianceForTotalField = 0.5);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetSmoothingBSplineOnUpdate(
     const std::vector<unsigned int> & numberOfControlPointsForUpdateField = std::vector<unsigned int>(3, 4),
     const std::vector<unsigned int> & numberOfControlPointsForTotalField = std::vector<unsigned int>(3, 4),
