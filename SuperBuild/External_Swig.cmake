@@ -19,7 +19,7 @@ if(NOT SWIG_DIR)
   endif()
 
 
-  set(SWIG_TARGET_VERSION "4.3.0" )
+  set(SWIG_TARGET_VERSION "4.3.1" )
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
