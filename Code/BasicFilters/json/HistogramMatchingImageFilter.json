@@ -15,7 +15,7 @@
       "name" : "ReferenceImage",
       "type" : "Image",
       "custom_itk_cast" : "filter->SetReferenceImage(this->CastImageToITK<typename FilterType::InputImageType>(*inReferenceImage));",
-      "no_size_check" : 1
+      "no_size_check" : true
     }
   ],
   "members" : [
