@@ -63,7 +63,7 @@
           "python_value" : "SimpleITK.ScalarToRGBColormapImageFilter.Hot",
           "ruby_value" : "Simpleitk::ScalarToRGBColormapImageFilter::Hot",
           "java_value" : "ScalarToRGBColormapImageFilter.ColormapType.Hot",
-          "tcl_value" : "ScalarToRGBColormapImageFilter_Hot",
+          "tcl_value" : "$ScalarToRGBColormapImageFilter_Hot",
           "csharp_value" : "itk.simple.ScalarToRGBColormapImageFilter.ColormapType.Hot",
           "R_value" : "'Hot'"
         }

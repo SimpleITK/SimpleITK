@@ -60,7 +60,7 @@
           "python_value" : "SimpleITK.FFTPadImageFilter.PERIODIC_PAD",
           "ruby_value" : "Simpleitk::FFTPadImageFilter::PERIODIC_PAD",
           "java_value" : "FFTPadImageFilter.BoundaryConditionType.PERIODIC_PAD",
-          "tcl_value" : "FFTPadImageFilter_PERIODIC_PAD",
+          "tcl_value" : "$FFTPadImageFilter_PERIODIC_PAD",
           "csharp_value" : "FFTPadImageFilter.BoundaryConditionType.PERIODIC_PAD",
           "R_value" : "'PERIODIC_PAD'"
         },

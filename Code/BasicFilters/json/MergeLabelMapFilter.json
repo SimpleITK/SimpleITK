@@ -47,7 +47,7 @@
           "python_value" : "SimpleITK.MergeLabelMapFilter.Keep",
           "ruby_value" : "Simpleitk::MergeLabelMapFilter::Keep",
           "java_value" : "MergeLabelMapFilter.MethodType.Keep",
-          "tcl_value" : "MergeLabelMapFilter_Keep",
+          "tcl_value" : "$MergeLabelMapFilter_Keep",
           "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Keep",
           "R_value" : "'Keep'"
         }
@@ -71,7 +71,7 @@
           "python_value" : "SimpleITK.MergeLabelMapFilter.Aggregate",
           "ruby_value" : "Simpleitk::MergeLabelMapFilter::Aggregate",
           "java_value" : "MergeLabelMapFilter.MethodType.Aggregate",
-          "tcl_value" : "MergeLabelMapFilter_Aggregate",
+          "tcl_value" : "$MergeLabelMapFilter_Aggregate",
           "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Aggregate",
           "R_value" : "'Aggregate'"
         }
@@ -95,7 +95,7 @@
           "python_value" : "SimpleITK.MergeLabelMapFilter.Pack",
           "ruby_value" : "Simpleitk::MergeLabelMapFilter::Pack",
           "java_value" : "MergeLabelMapFilter.MethodType.Pack",
-          "tcl_value" : "MergeLabelMapFilter_Pack",
+          "tcl_value" : "$MergeLabelMapFilter_Pack",
           "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Pack",
           "R_value" : "'Pack'"
         }
@@ -119,7 +119,7 @@
           "python_value" : "SimpleITK.MergeLabelMapFilter.Strict",
           "ruby_value" : "Simpleitk::MergeLabelMapFilter::Strict",
           "java_value" : "MergeLabelMapFilter.MethodType.Strict",
-          "tcl_value" : "MergeLabelMapFilter_Strict",
+          "tcl_value" : "$MergeLabelMapFilter_Strict",
           "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Strict",
           "R_value" : "'Strict'"
         }

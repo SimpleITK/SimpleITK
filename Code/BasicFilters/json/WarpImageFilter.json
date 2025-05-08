@@ -156,7 +156,7 @@
           "python_value" : "SimpleITK.sitkHammingWindowedSinc",
           "ruby_value" : "Simpleitk::SitkHammingWindowedSinc",
           "java_value" : "InterpolatorEnum.sitkHammingWindowedSinc",
-          "tcl_value" : "$$sitkHammingWindowedSinc",
+          "tcl_value" : "$sitkHammingWindowedSinc",
           "csharp_value" : "InterpolatorEnum.sitkHammingWindowedSinc",
           "R_value" : "'sitkHammingWindowedSinc'"
         }

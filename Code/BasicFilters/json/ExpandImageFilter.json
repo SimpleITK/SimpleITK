@@ -98,7 +98,7 @@
           "python_value" : "SimpleITK.sitkNearestNeighbor",
           "ruby_value" : "Simpleitk::SitkNearestNeighbor",
           "java_value" : "InterpolatorEnum.sitkNearestNeighbor",
-          "tcl_value" : "$$sitkNearestNeighbor",
+          "tcl_value" : "$sitkNearestNeighbor",
           "csharp_value" : "InterpolatorEnum.sitkNearestNeighbor",
           "R_value" : "'sitkNearestNeighbor'"
         }
@@ -125,7 +125,7 @@
           "python_value" : "SimpleITK.sitkBSpline",
           "ruby_value" : "Simpleitk::SitkBSpline",
           "java_value" : "InterpolatorEnum.sitkBSpline",
-          "tcl_value" : "$$sitkBSpline",
+          "tcl_value" : "$sitkBSpline",
           "csharp_value" : "InterpolatorEnum.sitkBSpline",
           "R_value" : "'sitkBSpline'"
         }
@@ -152,7 +152,7 @@
           "python_value" : "SimpleITK.sitkGaussian",
           "ruby_value" : "Simpleitk::SitkGaussian",
           "java_value" : "InterpolatorEnum.sitkGaussian",
-          "tcl_value" : "$$sitkGaussian",
+          "tcl_value" : "$sitkGaussian",
           "csharp_value" : "InterpolatorEnum.sitkGaussian",
           "R_value" : "'sitkGaussian'"
         }
@@ -179,7 +179,7 @@
           "python_value" : "SimpleITK.sitkLabelGaussian",
           "ruby_value" : "Simpleitk::SitkLabelGaussian",
           "java_value" : "InterpolatorEnum.sitkLabelGaussian",
-          "tcl_value" : "$$sitkLabelGaussian",
+          "tcl_value" : "$sitkLabelGaussian",
           "csharp_value" : "InterpolatorEnum.sitkLabelGaussian",
           "R_value" : "'sitkLabelGaussian'"
         }

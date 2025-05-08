@@ -80,7 +80,7 @@
           "python_value" : "SimpleITK.RecursiveGaussianImageFilter.FirstOrder",
           "ruby_value" : "Simpleitk::RecursiveGaussianImageFilter::FirstOrder",
           "java_value" : "RecursiveGaussianImageFilter.OrderType.FirstOrder",
-          "tcl_value" : "RecursiveGaussianImageFilter_FirstOrder",
+          "tcl_value" : "$RecursiveGaussianImageFilter_FirstOrder",
           "csharp_value" : "RecursiveGaussianImageFilter.OrderType.FirstOrder",
           "R_value" : "'FirstOrder'"
         }
