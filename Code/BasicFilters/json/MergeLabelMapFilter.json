@@ -42,13 +42,13 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::Keep",
-          "lua_value" : "SimpleITK.${name}_Keep",
-          "python_value" : "SimpleITK.${name}.Keep",
-          "ruby_value" : "Simpleitk::${name}::Keep",
-          "java_value" : "${name}.MethodType.Keep",
-          "tcl_value" : "$$${name}_Keep",
-          "csharp_value" : "itk.simple.${name}.MethodType.Keep",
+          "value" : "itk::simple::MergeLabelMapFilter::Keep",
+          "lua_value" : "SimpleITK.MergeLabelMapFilter_Keep",
+          "python_value" : "SimpleITK.MergeLabelMapFilter.Keep",
+          "ruby_value" : "Simpleitk::MergeLabelMapFilter::Keep",
+          "java_value" : "MergeLabelMapFilter.MethodType.Keep",
+          "tcl_value" : "MergeLabelMapFilter_Keep",
+          "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Keep",
           "R_value" : "'Keep'"
         }
       ],
@@ -66,13 +66,13 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::Aggregate",
-          "lua_value" : "SimpleITK.${name}_Aggregate",
-          "python_value" : "SimpleITK.${name}.Aggregate",
-          "ruby_value" : "Simpleitk::${name}::Aggregate",
-          "java_value" : "${name}.MethodType.Aggregate",
-          "tcl_value" : "$$${name}_Aggregate",
-          "csharp_value" : "itk.simple.${name}.MethodType.Aggregate",
+          "value" : "itk::simple::MergeLabelMapFilter::Aggregate",
+          "lua_value" : "SimpleITK.MergeLabelMapFilter_Aggregate",
+          "python_value" : "SimpleITK.MergeLabelMapFilter.Aggregate",
+          "ruby_value" : "Simpleitk::MergeLabelMapFilter::Aggregate",
+          "java_value" : "MergeLabelMapFilter.MethodType.Aggregate",
+          "tcl_value" : "MergeLabelMapFilter_Aggregate",
+          "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Aggregate",
           "R_value" : "'Aggregate'"
         }
       ],
@@ -90,13 +90,13 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::Pack",
-          "lua_value" : "SimpleITK.${name}_Pack",
-          "python_value" : "SimpleITK.${name}.Pack",
-          "ruby_value" : "Simpleitk::${name}::Pack",
-          "java_value" : "${name}.MethodType.Pack",
-          "tcl_value" : "$$${name}_Pack",
-          "csharp_value" : "itk.simple.${name}.MethodType.Pack",
+          "value" : "itk::simple::MergeLabelMapFilter::Pack",
+          "lua_value" : "SimpleITK.MergeLabelMapFilter_Pack",
+          "python_value" : "SimpleITK.MergeLabelMapFilter.Pack",
+          "ruby_value" : "Simpleitk::MergeLabelMapFilter::Pack",
+          "java_value" : "MergeLabelMapFilter.MethodType.Pack",
+          "tcl_value" : "MergeLabelMapFilter_Pack",
+          "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Pack",
           "R_value" : "'Pack'"
         }
       ],
@@ -114,13 +114,13 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::Strict",
-          "lua_value" : "SimpleITK.${name}_Strict",
-          "python_value" : "SimpleITK.${name}.Strict",
-          "ruby_value" : "Simpleitk::${name}::Strict",
-          "java_value" : "${name}.MethodType.Strict",
-          "tcl_value" : "$$${name}_Strict",
-          "csharp_value" : "itk.simple.${name}.MethodType.Strict",
+          "value" : "itk::simple::MergeLabelMapFilter::Strict",
+          "lua_value" : "SimpleITK.MergeLabelMapFilter_Strict",
+          "python_value" : "SimpleITK.MergeLabelMapFilter.Strict",
+          "ruby_value" : "Simpleitk::MergeLabelMapFilter::Strict",
+          "java_value" : "MergeLabelMapFilter.MethodType.Strict",
+          "tcl_value" : "MergeLabelMapFilter_Strict",
+          "csharp_value" : "itk.simple.MergeLabelMapFilter.MethodType.Strict",
           "R_value" : "'Strict'"
         }
       ],
