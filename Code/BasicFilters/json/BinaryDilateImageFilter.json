@@ -72,7 +72,7 @@
           "python_value" : "SimpleITK.sitkBall",
           "ruby_value" : "Simpleitk::SitkBall",
           "java_value" : "KernelEnum.sitkBall",
-          "tcl_value" : "$$sitkBall",
+          "tcl_value" : "$sitkBall",
           "csharp_value" : "KernelEnum.sitkBall",
           "R_value" : "'sitkBall'"
         },
@@ -106,7 +106,7 @@
           "python_value" : "SimpleITK.sitkBox",
           "ruby_value" : "Simpleitk::SitkBox",
           "java_value" : "KernelEnum.sitkBox",
-          "tcl_value" : "$$sitkBox",
+          "tcl_value" : "$sitkBox",
           "csharp_value" : "KernelEnum.sitkBox",
           "R_value" : "'sitkBox'"
         },

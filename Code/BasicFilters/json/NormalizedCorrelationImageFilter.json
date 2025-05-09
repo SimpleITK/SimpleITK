@@ -19,7 +19,7 @@
     {
       "name" : "TemplateImage",
       "type" : "Image",
-      "no_size_check" : 0,
+      "no_size_check" : true,
       "custom_itk_cast" : "filter->SetTemplate( *CreateOperatorFromImage( this->CastImageToITK<typename FilterType::InputImageType>(*inTemplateImage).GetPointer() ).get() );"
     }
   ],

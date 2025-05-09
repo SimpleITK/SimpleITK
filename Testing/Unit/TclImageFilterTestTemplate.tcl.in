@@ -70,7 +70,7 @@ OUT=[[  filter Clear${parameter}
   end
 elseif tcl_value then
 OUT=[[
-  filter Set${parameter} ${tcl_value}]]
+filter Set${parameter} ${tcl_value}]]
 elseif dim_vec and dim_vec==1 then
 OUT=[[
   filter Set${parameter} [list $(for i=1,#value do OUT=OUT..value[i]..' ' end)] ]]

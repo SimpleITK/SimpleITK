@@ -178,7 +178,7 @@
           "python_value" : "SimpleITK.sitkBSplineResamplerOrder3",
           "ruby_value" : "Simpleitk::SitkBSplineResamplerOrder3",
           "java_value" : "InterpolatorEnum.sitkBSplineResamplerOrder3",
-          "tcl_value" : "$$sitkBSplineResamplerOrder3",
+          "tcl_value" : "$sitkBSplineResamplerOrder3",
           "csharp_value" : "InterpolatorEnum.sitkBSplineResamplerOrder3",
           "R_value" : "'sitkBSplineResamplerOrder3'"
         }
@@ -209,7 +209,7 @@
           "python_value" : "SimpleITK.sitkUInt16",
           "ruby_value" : "Simpleitk::SitkUInt16",
           "java_value" : "PixelIDValueEnum.sitkUInt16",
-          "tcl_value" : "$$sitkUInt16",
+          "tcl_value" : "$sitkUInt16",
           "csharp_value" : "PixelIDValueEnum.sitkUInt16",
           "R_value" : "'sitkUInt16'"
         },
@@ -220,7 +220,7 @@
           "python_value" : "SimpleITK.sitkGaussian",
           "ruby_value" : "Simpleitk::SitkGaussian",
           "java_value" : "InterpolatorEnum.sitkGaussian",
-          "tcl_value" : "$$sitkGaussian",
+          "tcl_value" : "$sitkGaussian",
           "csharp_value" : "InterpolatorEnum.sitkGaussian",
           "R_value" : "'sitkGaussian'"
         }

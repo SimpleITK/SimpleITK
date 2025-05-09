@@ -75,13 +75,13 @@
         },
         {
           "parameter" : "Order",
-          "value" : "itk::simple::${name}::FirstOrder",
-          "lua_value" : "SimpleITK.${name}_FirstOrder",
-          "python_value" : "SimpleITK.${name}.FirstOrder",
-          "ruby_value" : "Simpleitk::${name}::FirstOrder",
-          "java_value" : "${name}.OrderType.FirstOrder",
-          "tcl_value" : "$$${name}_FirstOrder",
-          "csharp_value" : "${name}.OrderType.FirstOrder",
+          "value" : "itk::simple::RecursiveGaussianImageFilter::FirstOrder",
+          "lua_value" : "SimpleITK.RecursiveGaussianImageFilter_FirstOrder",
+          "python_value" : "SimpleITK.RecursiveGaussianImageFilter.FirstOrder",
+          "ruby_value" : "Simpleitk::RecursiveGaussianImageFilter::FirstOrder",
+          "java_value" : "RecursiveGaussianImageFilter.OrderType.FirstOrder",
+          "tcl_value" : "$RecursiveGaussianImageFilter_FirstOrder",
+          "csharp_value" : "RecursiveGaussianImageFilter.OrderType.FirstOrder",
           "R_value" : "'FirstOrder'"
         }
       ],
