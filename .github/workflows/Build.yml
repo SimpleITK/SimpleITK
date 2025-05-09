@@ -109,7 +109,7 @@ jobs:
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install ninja cmake~=3.29.0
+        python -m pip install ninja cmake~=3.29.0 jinja2
     - name: Build and Test
       shell: bash
       env:
