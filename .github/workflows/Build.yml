@@ -37,6 +37,7 @@ jobs:
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
+              WRAP_TCL:BOOL=ON
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
@@ -48,7 +49,7 @@ jobs:
             cmake_build_parallel_level: 6
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
+              WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
           - os: ubuntu-24.04-arm
             cmake-build-type: "Release"
@@ -80,6 +81,11 @@ jobs:
       with:
         path: SimpleITK-dashboard
         ref: dashboard
+    - name: Install R
+      if: contains(matrix.ctest-cache, 'WRAP_R')
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: 'latest'
     - name: Generate External Data Hash
       shell: bash
       run: |
