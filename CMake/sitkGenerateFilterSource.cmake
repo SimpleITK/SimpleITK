@@ -63,6 +63,7 @@ set(SimpleITK_Python_EXECUTABLE
 sitk_check_python_module_version(
   MODULE_NAME jsonschema
   MINIMUM_VERSION 4.0
+  MAXIMUM_VERSION 5.0
   PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
   RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
 )
@@ -74,6 +75,14 @@ if( NOT SITK_LUA_VERSION_RESULT_VARIABLE )
     SimpleITK_LUA_EXECUTABLE_VERSION
     "${SimpleITK_LUA_EXECUTABLE_VERSION_STRING}" )
 endif()
+sitk_check_python_module_version(
+        MODULE_NAME jinja2
+        MINIMUM_VERSION 3.1
+        MAXIMUM_VERSION 4.0
+        PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
+        RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
+        REQUIRED
+)
 
 if( SITK_LUA_VERSION_RESULT_VARIABLE
       OR
@@ -82,6 +91,10 @@ if( SITK_LUA_VERSION_RESULT_VARIABLE
     NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.5" )
   message(SEND_ERROR "Lua version between 5.3 and 5.4 is required for SimpleITK_LUA_EXECUTABLE_VERSION.")
 endif()
+
+set(SimpleITK_TEMPLATE_PYTHON ${Python_EXECUTABLE})
+set(SimpleITK_EXPANSION_SCRIPT "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.py" CACHE INTERNAL
+  "Python script used to expand templates." FORCE)
 
 # Sets "out_var" variable name to the value in the json path specified
 # to the json file name. If an error is encountered than the variable
