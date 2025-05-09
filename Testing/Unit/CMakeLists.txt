@@ -89,14 +89,14 @@ target_compile_options( SimpleITKUnitTestDriver0
 # Glob for necessary template files up front, before the foreach loop over
 # the filters:
 #
-file ( GLOB CXX_TEMPLATE_FILES "sitk*Template.cxx.in" )
-file ( GLOB LUA_TEMPLATE_FILES "Lua*Template.lua.in" )
-file ( GLOB PYTHON_TEMPLATE_FILES "Python*Template.py.in" )
-file ( GLOB TCL_TEMPLATE_FILES "Tcl*Template.tcl.in" )
-file ( GLOB R_TEMPLATE_FILES "R*Template.R.in" )
-file ( GLOB RUBY_TEMPLATE_FILES "Ruby*Template.rb.in" )
-file ( GLOB JAVA_TEMPLATE_FILES "Java*Template.java.in" )
-file ( GLOB CSHARP_TEMPLATE_FILES "CSharp*Template.cs.in" )
+file ( GLOB CXX_TEMPLATE_FILES "*Template.cxx.jinja" )
+file ( GLOB LUA_TEMPLATE_FILES "*Template.lua.jinja" )
+file ( GLOB PYTHON_TEMPLATE_FILES "*Template.py.jinja" )
+file ( GLOB TCL_TEMPLATE_FILES "*Template.tcl.jinja" )
+file ( GLOB R_TEMPLATE_FILES "*Template.R.jinja" )
+file ( GLOB RUBY_TEMPLATE_FILES "*Template.rb.jinja" )
+file ( GLOB JAVA_TEMPLATE_FILES "*Template.java.jinja" )
+file ( GLOB CSHARP_TEMPLATE_FILES "*Template.cs.jinja" )
 
 
 #
@@ -140,10 +140,13 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${template_line}")
   set(template_name "${CMAKE_MATCH_1}" )
 
+  set(SimpleITK_TEMPLATE_PYTHON ${Python_EXECUTABLE})
+  set(python_expansion_script "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.py")
+
   if (template_name)
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake")
     file(REMOVE "${OUTPUT_TEST_FILENAME}")
-    set(cmd ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}")
+    set(cmd ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterCTestTemplate.cmake.jinja  "${OUTPUT_TEST_FILENAME}")
     execute_process(
       COMMAND ${cmd}
       RESULT_VARIABLE failed
@@ -158,8 +161,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}Test.cxx")
     add_custom_command (
       OUTPUT  ${OUTPUT_TEST_FILENAME}
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ sitkImageFilterTestTemplate.cxx.jinja  "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
       )
     add_test( NAME BasicFilters.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_* )
@@ -169,19 +171,18 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}Test.lua")
       add_custom_command (
         OUTPUT "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.lua.jinja  "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
     endif()
 
+
     if ( WRAP_PYTHON )
       set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}Test.py")
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.py.jinja  "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -191,8 +192,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}Test.tcl")
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.tcl.jinja  "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -202,8 +202,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}Test.R")
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.R.jinja  "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -213,8 +212,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}Test.rb")
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.rb.jinja  "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -226,7 +224,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.java.jinja  "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES}  ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}        )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
     endif()
@@ -237,7 +235,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_TEMPLATE_PYTHON} ${python_expansion_script} ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ImageFilterTestTemplate.cs.jinja  "${OUTPUT_TEST_FILENAME}"
+
         DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
