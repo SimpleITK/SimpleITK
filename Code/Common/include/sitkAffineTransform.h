@@ -62,33 +62,33 @@ public:
   /** parameters */
   std::vector<double>
   GetTranslation() const;
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTranslation(const std::vector<double> & translation);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetMatrix(const std::vector<double> & matrix);
   std::vector<double>
   GetMatrix() const;
 
   /** fixed parameter */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetCenter(const std::vector<double> & params);
   std::vector<double>
   GetCenter() const;
 
   /** additional methods */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Scale(const std::vector<double> & factor, bool pre = false);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Scale(double factor, bool pre = false);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Shear(int axis1, int axis2, double coef, bool pre = false);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Translate(const std::vector<double> & offset, bool pre = false);
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Rotate(int axis1, int axis2, double angle, bool pre = false);
 
 protected:

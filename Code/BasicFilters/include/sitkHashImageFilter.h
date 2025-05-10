@@ -53,7 +53,7 @@ public:
     SHA1,
     MD5
   };
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetHashFunction(HashFunction hashFunction);
   HashFunction
   GetHashFunction() const;

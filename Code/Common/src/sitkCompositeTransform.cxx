@@ -106,21 +106,19 @@ CompositeTransform::InternalInitialization(itk::TransformBase * transform)
 }
 
 
-CompositeTransform &
+void
 CompositeTransform::AddTransform(Transform t)
 {
   this->MakeUnique();
   this->m_pfAddTransform(t);
-  return *this;
 }
 
 
-CompositeTransform &
+void
 CompositeTransform::FlattenTransform()
 {
   this->MakeUnique();
   this->m_pfFlattenTransform();
-  return *this;
 }
 
 unsigned int

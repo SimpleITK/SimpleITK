@@ -90,11 +90,10 @@ public:
   /**
    * Set the Fixed landmark point containers
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetFixedLandmarks(const std::vector<double> & FixedLandmarks)
   {
     this->m_FixedLandmarks = FixedLandmarks;
-    return *this;
   }
 
   /**
@@ -109,11 +108,10 @@ public:
   /**
    * Set the Moving landmark point containers
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetMovingLandmarks(const std::vector<double> & MovingLandmarks)
   {
     this->m_MovingLandmarks = MovingLandmarks;
-    return *this;
   }
 
   /**
@@ -128,11 +126,10 @@ public:
   /**
    * Set the landmark weight point containers Weight includes diagonal elements of weight matrix
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetLandmarkWeight(const std::vector<double> & LandmarkWeight)
   {
     this->m_LandmarkWeight = LandmarkWeight;
-    return *this;
   }
 
   /**
@@ -147,11 +144,10 @@ public:
   /**
    * Set the reference image to define the parametric domain for the BSpline transform
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetReferenceImage(const Image & ReferenceImage)
   {
     this->m_ReferenceImage = ReferenceImage;
-    return *this;
   }
 
   /**
@@ -165,11 +161,10 @@ public:
   /**
    * Set/Get the number of control points
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetBSplineNumberOfControlPoints(unsigned int BSplineNumberOfControlPoints)
   {
     this->m_BSplineNumberOfControlPoints = BSplineNumberOfControlPoints;
-    return *this;
   }
 
   /**

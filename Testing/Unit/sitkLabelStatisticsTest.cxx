@@ -24,11 +24,9 @@
 
 TEST(LabelStatistics, Simple)
 {
-  itk::simple::ImageFileReader reader;
-
   // By using the same image, the label min/max values should equal the label itself.
-  itk::simple::Image intensityImage = reader.SetFileName(dataFinder.GetFile("Input/2th_cthead1.png")).Execute();
-  itk::simple::Image labelImage = reader.SetFileName(dataFinder.GetFile("Input/2th_cthead1.png")).Execute();
+  itk::simple::Image intensityImage = itk::simple::ReadImage(dataFinder.GetFile("Input/2th_cthead1.png"));
+  itk::simple::Image labelImage = itk::simple::ReadImage(dataFinder.GetFile("Input/2th_cthead1.png"));
 
   itk::simple::LabelStatisticsImageFilter lsFilter;
 
