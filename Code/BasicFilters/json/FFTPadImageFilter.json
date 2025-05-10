@@ -55,13 +55,13 @@
       "settings" : [
         {
           "parameter" : "BoundaryCondition",
-          "value" : "itk::simple::${name}::PERIODIC_PAD",
-          "lua_value" : "SimpleITK.${name}_PERIODIC_PAD",
-          "python_value" : "SimpleITK.${name}.PERIODIC_PAD",
-          "ruby_value" : "Simpleitk::${name}::PERIODIC_PAD",
-          "java_value" : "${name}.BoundaryConditionType.PERIODIC_PAD",
-          "tcl_value" : "$$${name}_PERIODIC_PAD",
-          "csharp_value" : "${name}.BoundaryConditionType.PERIODIC_PAD",
+          "value" : "itk::simple::FFTPadImageFilter::PERIODIC_PAD",
+          "lua_value" : "SimpleITK.FFTPadImageFilter_PERIODIC_PAD",
+          "python_value" : "SimpleITK.FFTPadImageFilter.PERIODIC_PAD",
+          "ruby_value" : "Simpleitk::FFTPadImageFilter::PERIODIC_PAD",
+          "java_value" : "FFTPadImageFilter.BoundaryConditionType.PERIODIC_PAD",
+          "tcl_value" : "$FFTPadImageFilter_PERIODIC_PAD",
+          "csharp_value" : "FFTPadImageFilter.BoundaryConditionType.PERIODIC_PAD",
           "R_value" : "'PERIODIC_PAD'"
         },
         {

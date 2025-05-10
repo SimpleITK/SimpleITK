@@ -53,7 +53,7 @@
           "python_value" : "SimpleITK.sitkUInt8",
           "ruby_value" : "Simpleitk::SitkUInt8",
           "java_value" : "PixelIDValueEnum.sitkUInt8",
-          "tcl_value" : "$$sitkUInt8",
+          "tcl_value" : "$sitkUInt8",
           "csharp_value" : "PixelIDValueEnum.sitkUInt8",
           "R_value" : "'sitkUInt8'"
         }
@@ -74,7 +74,7 @@
           "python_value" : "SimpleITK.sitkInt16",
           "ruby_value" : "Simpleitk::SitkInt16",
           "java_value" : "PixelIDValueEnum.sitkInt16",
-          "tcl_value" : "$$sitkInt16",
+          "tcl_value" : "$sitkInt16",
           "csharp_value" : "PixelIDValueEnum.sitkInt16",
           "R_value" : "'sitkInt16'"
         }
@@ -95,7 +95,7 @@
           "python_value" : "SimpleITK.sitkFloat64",
           "ruby_value" : "Simpleitk::SitkFloat64",
           "java_value" : "PixelIDValueEnum.sitkFloat64",
-          "tcl_value" : "$$sitkFloat64",
+          "tcl_value" : "$sitkFloat64",
           "csharp_value" : "PixelIDValueEnum.sitkFloat64",
           "R_value" : "'sitkFloat64'"
         },
@@ -124,7 +124,7 @@
           "python_value" : "SimpleITK.sitkVectorUInt8",
           "ruby_value" : "Simpleitk::SitkVectorUInt8",
           "java_value" : "PixelIDValueEnum.sitkVectorUInt8",
-          "tcl_value" : "$$sitkVectorUInt8",
+          "tcl_value" : "$sitkVectorUInt8",
           "csharp_value" : "PixelIDValueEnum.sitkVectorUInt8",
           "R_value" : "'sitkVectorUInt8'"
         }

@@ -17,7 +17,7 @@
     {
       "name" : "KernelImage",
       "type" : "Image",
-      "no_size_check" : 0
+      "no_size_check" : true
     }
   ],
   "members" : [

@@ -166,13 +166,13 @@
         },
         {
           "parameter" : "Connectivity",
-          "value" : "itk::simple::${name}::FullConnectivity",
-          "lua_value" : "SimpleITK.${name}_FullConnectivity",
-          "python_value" : "SimpleITK.${name}.FullConnectivity",
-          "ruby_value" : "Simpleitk::${name}::FullConnectivity",
-          "java_value" : "${name}.ConnectivityType.FullConnectivity",
-          "tcl_value" : "$$${name}_FullConnectivity",
-          "csharp_value" : "${name}.ConnectivityType.FullConnectivity",
+          "value" : "itk::simple::ConnectedThresholdImageFilter::FullConnectivity",
+          "lua_value" : "SimpleITK.ConnectedThresholdImageFilter_FullConnectivity",
+          "python_value" : "SimpleITK.ConnectedThresholdImageFilter.FullConnectivity",
+          "ruby_value" : "Simpleitk::ConnectedThresholdImageFilter::FullConnectivity",
+          "java_value" : "ConnectedThresholdImageFilter.ConnectivityType.FullConnectivity",
+          "tcl_value" : "$ConnectedThresholdImageFilter_FullConnectivity",
+          "csharp_value" : "ConnectedThresholdImageFilter.ConnectivityType.FullConnectivity",
           "R_value" : "'FullConnectivity'"
         }
       ],
