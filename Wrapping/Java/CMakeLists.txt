@@ -37,7 +37,7 @@ target_link_libraries( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} ${SimpleITK_LIBR
 target_include_directories( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
   PRIVATE
      ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
-set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+target_compile_options(${SWIG_MODULE_SimpleITKJava_TARGET_NAME} PRIVATE -w)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
 
 set(JAVA_SOURCE_CODE "${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java")

@@ -123,7 +123,7 @@ if (UNIX AND NOT APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     LINK_FLAGS " -Wl,--version-script=${VERSION_SCRIPT}")
 endif()
 
-set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+target_compile_options(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -w)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 
 

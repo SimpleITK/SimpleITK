@@ -23,7 +23,7 @@ set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
   ${CMAKE_CURRENT_SOURCE_DIR}/Lua.i )
 SWIG_module_initialize ( SimpleITKLua lua )
 SWIG_add_source_to_module ( SimpleITKLua  swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
-set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w" )
+set_target_options( ${SWIG_MODULE_SimpleITKLua_TARGET_NAME} PRIVATE -w)
 
 # Create a standalone Lua executable that includes SimpleITK.
 option( SimpleITK_LUA_BUILD_EXECUTABLE "Build a standalone SimpleITK-Lua executable" OFF)
@@ -46,6 +46,6 @@ target_include_directories( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME}
     SYSTEM
     PRIVATE
       ${LUA_INCLUDE_DIR} )
-set_source_files_properties( ${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+target_compile_options(${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} PRIVATE -w)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} )
 
