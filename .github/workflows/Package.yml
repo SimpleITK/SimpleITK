@@ -15,6 +15,11 @@ on:
 concurrency:
   group: '${{ github.workflow }}@${{ github.event.pull_request.head.sha || github.head_ref || github.ref }}'
 
+# Set minimal permissions for all jobs (read-only)
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   package-docker:
     runs-on: ${{ matrix.os }}
@@ -27,9 +32,6 @@ jobs:
             dockerfile: Dockerfile-2014-aarch64
           - os: ubuntu-latest
             dockerfile: Dockerfile-2014-x86_64
-
-
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -73,10 +75,6 @@ jobs:
             Utilities/Distribution/manylinux/SimpleITK*.zip
 
   build:
-
-
-    # The CMake configure and build commands are platform-agnostic and should work a cross
-    # platforms.
     if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
     env:
@@ -233,9 +231,7 @@ jobs:
             ${{ github.workspace }}/artifacts/*.zip
             ${{ github.workspace }}/artifacts/*.gz
   doxygen:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -262,12 +258,12 @@ jobs:
             artifacts/SimpleITKDoxygen-*.tar.gz
 
   publish:
-    if: github.ref_name == 'latest' || startsWith(github.ref_name, 'v')
+    if: github.event_name != 'pull_request' && (github.ref_name == 'latest' || startsWith(github.ref_name, 'v'))
     environment:
       name: release
     permissions:
-      id-token: write
-      contents: write
+      id-token: write  # for PyPI publish
+      contents: write  # for creating and uploading GitHub releases
     needs:
       - build
       - doxygen
