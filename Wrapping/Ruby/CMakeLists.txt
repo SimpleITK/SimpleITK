@@ -1,6 +1,8 @@
 include("${CMAKE_CURRENT_SOURCE_DIR}/../../CMake/sitkCMakeInit.cmake")
 cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION}...${SITK_CMAKE_POLICY_VERSION})
 
+
+
 project( SimpleITK_Ruby )
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
@@ -19,7 +21,14 @@ set(SWIG_MODULE_simpleitk_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
 SWIG_add_module( simpleitk ruby SimpleITK.i  )
 target_link_libraries( ${SWIG_MODULE_simpleitk_TARGET_NAME}
   ${SimpleITK_LIBRARIES} )
-set_source_files_properties( ${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+
+
+# Addresses register keyword usage in header, producing an compilation error with C++ >=std17
+# print all varaible used below
+if(APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
+  target_compile_options(${SWIG_MODULE_simpleitk_TARGET_NAME} BEFORE PRIVATE "-Wno-register")
+endif()
+target_compile_options(${SWIG_MODULE_simpleitk_TARGET_NAME} PRIVATE -w)
 
 
 sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_simpleitk_TARGET_NAME} ${Ruby_LIBRARY} )

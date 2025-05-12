@@ -38,6 +38,7 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_TCL:BOOL=ON
+              WRAP_RUBY:BOOL=ON
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
