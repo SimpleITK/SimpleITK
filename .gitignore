@@ -9,5 +9,9 @@ build
 .ExternalData
 SuperBuild/.ExternalSource/
 Documentation/docs/build
-#ignore CLion temporary files.
+
+.venv*
+venv*
+# CLion temporary files, and default build paths
 .idea/
+cmake-build*
