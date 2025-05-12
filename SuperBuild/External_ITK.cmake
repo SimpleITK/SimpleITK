@@ -32,7 +32,7 @@ foreach(_module ${_SimpleITK_DEFAULT_MODULES})
 endforeach ()
 
 if (NOT DEFINED ITK_DEFAULT_THREADER)
-  set( ITK_DEFAULT_THREADER "Platform")
+  set( ITK_DEFAULT_THREADER "Pool")
 endif()
 
 get_cmake_property( _varNames VARIABLES )
