@@ -127,7 +127,7 @@ usage()
 int
 TestDriverInvokeProcess(const ArgumentsList & args)
 {
-  // a ITK_NULLPTR is required at the end of the table
+  // a nullptr is required at the end of the table
   char ** argv = new char *[args.size() + 1];
 
   for (unsigned int i = 0; i < args.size(); i++)

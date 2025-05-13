@@ -404,7 +404,7 @@ ImageRegistrationMethod::CreateOptimizer(unsigned int numberOfTransformParameter
     {
       // use time() and clock() to generate a unlikely-to-repeat
       // seed.
-      uint64_t seed = time(ITK_NULLPTR);
+      uint64_t seed = time(nullptr);
       seed ^= (uint64_t)clock();
       generator->Initialize(static_cast<unsigned int>(seed));
     }
