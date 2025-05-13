@@ -48,7 +48,7 @@ jobs:
       matrix:
         include:
 
-          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-large
             name: coverage
             cmake-build-type: "RelWithDebInfo"
             ctest-cache: |
@@ -61,7 +61,7 @@ jobs:
               -Ddashboard_track="Nightly" \
               -DCTEST_COVERAGE_COMMAND="$(which gcov)"
 
-          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
+          - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-large
             name: valgrind
             cmake-build-type: "RelWithDebInfo"
             apt-get-dependencies: "valgrind"
