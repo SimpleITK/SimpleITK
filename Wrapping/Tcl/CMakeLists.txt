@@ -25,10 +25,10 @@ set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS  ${SWIG_MODULE_SimpleITKTCL_EXTRA_DEPS})
 
 SWIG_module_initialize ( SimpleITKTCL tcl )
 SWIG_add_source_to_module ( SimpleITKTCL swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
-set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w" )
 add_executable ( SimpleITKTclsh ${swig_generated_file_fullname} )
 target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} )
 target_include_directories( SimpleITKTclsh
   PRIVATE
    ${TCL_INCLUDE_PATH} )
+target_compile_options(SimpleITKTclsh PRIVATE -w)
 sitk_strip_target( SimpleITKTclsh )
