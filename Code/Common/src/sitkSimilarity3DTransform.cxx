@@ -83,12 +83,11 @@ Similarity3DTransform::operator=(const Similarity3DTransform & arg)
 
 
 /** fixed parameter */
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -98,20 +97,18 @@ Similarity3DTransform::GetCenter() const
 }
 
 
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::SetRotation(const std::vector<double> & versor)
 {
   this->MakeUnique();
   this->m_pfSetRotation1(versor);
-  return *this;
 }
 
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::SetRotation(const std::vector<double> & axis, double angle)
 {
   this->MakeUnique();
   this->m_pfSetRotation2(axis, angle);
-  return *this;
 }
 
 std::vector<double>
@@ -120,12 +117,11 @@ Similarity3DTransform::GetVersor() const
   return this->m_pfGetVersor();
 }
 
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::SetTranslation(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetTranslation(params);
-  return *this;
 }
 
 std::vector<double>
@@ -134,12 +130,11 @@ Similarity3DTransform::GetTranslation() const
   return this->m_pfGetTranslation();
 }
 
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::SetScale(double scale)
 {
   this->MakeUnique();
   this->m_pfSetScale(scale);
-  return *this;
 }
 
 double
@@ -148,12 +143,11 @@ Similarity3DTransform::GetScale() const
   return this->m_pfGetScale();
 }
 
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::Translate(const std::vector<double> & offset)
 {
   this->MakeUnique();
   this->m_pfTranslate(offset);
-  return *this;
 }
 
 std::vector<double>
@@ -162,12 +156,11 @@ Similarity3DTransform::GetMatrix() const
   return this->m_pfGetMatrix();
 }
 
-Similarity3DTransform::Self &
+void
 Similarity3DTransform::SetMatrix(const std::vector<double> & params, double tolerance)
 {
   this->MakeUnique();
   this->m_pfSetMatrix(params, tolerance);
-  return *this;
 }
 
 void

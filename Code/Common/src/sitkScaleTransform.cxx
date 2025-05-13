@@ -57,12 +57,11 @@ ScaleTransform::operator=(const ScaleTransform & arg)
 
 
 /** fixed parameter */
-ScaleTransform::Self &
+void
 ScaleTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -71,12 +70,11 @@ ScaleTransform::GetCenter() const
   return this->m_pfGetCenter();
 }
 
-ScaleTransform::Self &
+void
 ScaleTransform::SetScale(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetScale(params);
-  return *this;
 }
 
 std::vector<double>

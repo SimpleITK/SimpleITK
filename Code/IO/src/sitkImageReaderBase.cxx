@@ -114,11 +114,10 @@ ImageReaderBase ::GetImageIOBase(const PathType & fileName)
   return iobase;
 }
 
-ImageReaderBase::Self &
+void
 ImageReaderBase ::SetOutputPixelType(PixelIDValueEnum pixelID)
 {
   this->m_OutputPixelType = pixelID;
-  return *this;
 }
 
 PixelIDValueEnum
@@ -128,11 +127,10 @@ ImageReaderBase ::GetOutputPixelType() const
 }
 
 
-ImageReaderBase::Self &
+void
 ImageReaderBase ::SetLoadPrivateTags(bool loadPrivateTags)
 {
   this->m_LoadPrivateTags = loadPrivateTags;
-  return *this;
 }
 
 bool
@@ -153,11 +151,10 @@ ImageReaderBase ::LoadPrivateTagsOff()
   this->SetLoadPrivateTags(false);
 }
 
-ImageReaderBase::Self &
+void
 ImageReaderBase ::SetImageIO(const std::string & imageio)
 {
   this->m_ImageIOName = imageio;
-  return *this;
 }
 
 

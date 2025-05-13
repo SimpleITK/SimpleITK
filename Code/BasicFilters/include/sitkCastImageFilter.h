@@ -42,7 +42,7 @@ public:
   using Self = CastImageFilter;
 
   /** Set/Get the output pixel type */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetOutputPixelType(PixelIDValueEnum pixelID);
   PixelIDValueEnum
   GetOutputPixelType() const;

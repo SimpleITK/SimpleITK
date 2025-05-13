@@ -70,11 +70,10 @@ HashImageFilter::GetHashFunction() const
   return this->m_HashFunction;
 }
 
-HashImageFilter &
+void
 HashImageFilter::SetHashFunction(HashImageFilter::HashFunction hashFunction)
 {
   this->m_HashFunction = hashFunction;
-  return *this;
 }
 
 std::string

@@ -155,7 +155,6 @@ Image::ToVectorInternal(bool inPlace)
       // The pre-existing image must be destroyed before the new one is created.
       this->m_PimpleImage.reset();
       this->m_PimpleImage = std::make_unique<PimpleImage<VectorImageType>>(itkVectorImage);
-      return *this;
     }
 
     return Image(std::make_unique<PimpleImage<VectorImageType>>(itkVectorImage));
@@ -201,7 +200,6 @@ Image::ToScalarInternal(bool inPlace)
     {
       this->m_PimpleImage.reset();
       this->m_PimpleImage = std::make_unique<PimpleImage<ScalarImageType>>(itkScalarImage);
-      return *this;
     }
     return Image(std::make_unique<PimpleImage<ScalarImageType>>(itkScalarImage));
   }

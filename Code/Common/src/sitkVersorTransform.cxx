@@ -73,12 +73,11 @@ VersorTransform::operator=(const VersorTransform & arg)
 
 
 /** fixed parameter */
-VersorTransform::Self &
+void
 VersorTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -88,20 +87,18 @@ VersorTransform::GetCenter() const
 }
 
 
-VersorTransform::Self &
+void
 VersorTransform::SetRotation(const std::vector<double> & versor)
 {
   this->MakeUnique();
   this->m_pfSetRotation1(versor);
-  return *this;
 }
 
-VersorTransform::Self &
+void
 VersorTransform::SetRotation(const std::vector<double> & axis, double angle)
 {
   this->MakeUnique();
   this->m_pfSetRotation2(axis, angle);
-  return *this;
 }
 
 std::vector<double>
@@ -116,12 +113,11 @@ VersorTransform::GetMatrix() const
   return this->m_pfGetMatrix();
 }
 
-VersorTransform::Self &
+void
 VersorTransform::SetMatrix(const std::vector<double> & params, double tolerance)
 {
   this->MakeUnique();
   this->m_pfSetMatrix(params, tolerance);
-  return *this;
 }
 
 void

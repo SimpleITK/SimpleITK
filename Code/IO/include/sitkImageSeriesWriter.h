@@ -79,7 +79,7 @@ public:
    * ImageIO factory mechanism.
    * @{
    */
-  virtual SITK_RETURN_SELF_TYPE_HEADER
+  virtual void
   SetImageIO(const std::string & imageio);
   virtual std::string
   GetImageIO() const;
@@ -98,15 +98,21 @@ public:
    * gets passed to image file's itk::ImageIO object. This is
    * only a request as not all file formats support compression.
    * @{ */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetUseCompression(bool UseCompression);
   bool
   GetUseCompression() const;
 
-  SITK_RETURN_SELF_TYPE_HEADER
-  UseCompressionOn() { return this->SetUseCompression(true); }
-  SITK_RETURN_SELF_TYPE_HEADER
-  UseCompressionOff() { return this->SetUseCompression(false); }
+  void
+  UseCompressionOn()
+  {
+    return this->SetUseCompression(true);
+  }
+  void
+  UseCompressionOff()
+  {
+    return this->SetUseCompression(false);
+  }
   /** @} */
 
   /** \brief A hint for the amount of compression to be applied during writing.
@@ -115,7 +121,7 @@ public:
    * is dependent upon the compression algorithm used. It is generally 0-100 for JPEG like lossy compression and 0-9 for
    * lossless zip or LZW like compression algorithms.  Please see the specific itk::ImageIO for details.
    * @{ */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetCompressionLevel(int);
   int
   GetCompressionLevel() const;
@@ -127,7 +133,7 @@ public:
    * If the string identifier is not known a warning is produced and the default compressor is used. Please see the
    * itk::ImageIO for details.
    * @{ */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetCompressor(const std::string &);
   std::string
   GetCompressor();
@@ -138,21 +144,21 @@ public:
    * The number of filenames must match the number of slices in
    * the image.
    * @{ */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetFileNames(const std::vector<PathType> & fileNames);
   const std::vector<PathType> &
   GetFileNames() const;
   /** @} */
 
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Execute(const Image &);
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   Execute(const Image & image, const std::vector<PathType> & inFileNames, bool useCompression, int compressionLevel);
 
 protected:
   template <class TImageType>
-  Self &
+  void
   ExecuteInternal(const Image & inImage);
 
 private:
@@ -160,7 +166,7 @@ private:
   GetImageIOBase(const PathType & fileName);
 
   // function pointer type
-  typedef Self & (Self::*MemberFunctionType)(const Image &);
+  typedef void (Self::*MemberFunctionType)(const Image &);
 
   // friend to get access to executeInternal member
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;

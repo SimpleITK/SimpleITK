@@ -484,7 +484,8 @@ TEST(BasicFilters, Cast_Float32)
     try
     {
       itk::simple::CastImageFilter caster;
-      itk::simple::Image           test = caster.SetOutputPixelType(pixelID).Execute(image);
+      caster.SetOutputPixelType(pixelID);
+      itk::simple::Image test = caster.Execute(image);
 
       hasher.SetHashFunction(itk::simple::HashImageFilter::MD5);
       EXPECT_EQ(hash, hasher.Execute(test)) << "Cast to " << itk::simple::GetPixelIDValueAsString(pixelID);
@@ -568,7 +569,8 @@ TEST(BasicFilters, Cast_UInt8)
     try
     {
       itk::simple::CastImageFilter caster;
-      itk::simple::Image           test = caster.SetOutputPixelType(pixelID).Execute(image);
+      caster.SetOutputPixelType(pixelID);
+      itk::simple::Image test = caster.Execute(image);
 
       hasher.SetHashFunction(itk::simple::HashImageFilter::MD5);
       EXPECT_EQ(hash, hasher.Execute(test)) << "Cast to " << itk::simple::GetPixelIDValueAsString(pixelID);
@@ -601,10 +603,10 @@ TEST(BasicFilters, HashImageFilter)
   EXPECT_TRUE(out.find("HashFunction: SHA1") != std::string::npos);
   EXPECT_TRUE(out.find("Debug:") != std::string::npos);
   EXPECT_TRUE(out.find("NumberOfThreads:") != std::string::npos);
-  EXPECT_EQ(itk::simple::HashImageFilter::SHA1,
-            hasher.SetHashFunction(itk::simple::HashImageFilter::SHA1).GetHashFunction());
-  EXPECT_EQ(itk::simple::HashImageFilter::MD5,
-            hasher.SetHashFunction(itk::simple::HashImageFilter::MD5).GetHashFunction());
+  hasher.SetHashFunction(itk::simple::HashImageFilter::SHA1);
+  EXPECT_EQ(itk::simple::HashImageFilter::SHA1, hasher.GetHashFunction());
+  hasher.SetHashFunction(itk::simple::HashImageFilter::MD5);
+  EXPECT_EQ(itk::simple::HashImageFilter::MD5, hasher.GetHashFunction());
 }
 
 
@@ -616,8 +618,8 @@ TEST(BasicFilters, BSplineTransformInitializer)
 
   EXPECT_EQ("BSplineTransformInitializerFilter", filter.GetName());
   EXPECT_EQ(std::vector<uint32_t>(3, 1u), filter.GetTransformDomainMeshSize());
-  EXPECT_EQ(std::vector<uint32_t>(3, 10u),
-            filter.SetTransformDomainMeshSize(std::vector<uint32_t>(3, 10u)).GetTransformDomainMeshSize());
+  filter.SetTransformDomainMeshSize(std::vector<uint32_t>(3, 10u));
+  EXPECT_EQ(std::vector<uint32_t>(3, 10u), filter.GetTransformDomainMeshSize());
 
   const double cs = 0.5 * itk::Math::sqrt2; // cos(pi/4) = sin(pi/4)
   sitk::Image  img(100, 100, sitk::sitkUInt32);
@@ -734,8 +736,10 @@ TEST(BasicFilters, CenteredVersorTransformInitializer)
 
   EXPECT_EQ("CenteredVersorTransformInitializerFilter", filter.GetName());
   EXPECT_EQ(filter.GetComputeRotation(), false);
-  EXPECT_EQ(filter.ComputeRotationOn().GetComputeRotation(), true);
-  EXPECT_EQ(filter.ComputeRotationOff().GetComputeRotation(), false);
+  filter.ComputeRotationOn();
+  EXPECT_EQ(filter.GetComputeRotation(), true);
+  filter.ComputeRotationOff();
+  EXPECT_EQ(filter.GetComputeRotation(), false);
 
   // generate a few basic test images from gaussian blobs
 

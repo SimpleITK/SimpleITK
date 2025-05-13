@@ -82,7 +82,7 @@ TEST(BasicFilters, TransformGeometryImageFilter_defaults)
   inputFileNames.push_back("Input/RA-Float.nrrd");
   inputFileNames.push_back("Input/xforms/affine_i_3.txt");
 
-  itk::simple::Image     input1 = reader.SetFileName(dataFinder.GetFile(inputFileNames[0])).Execute();
+  itk::simple::Image     input1 = itk::simple::ReadImage(dataFinder.GetFile(inputFileNames[0]));
   itk::simple::Transform input2 = itk::simple::ReadTransform(dataFinder.GetFile(inputFileNames[1]));
 
   inputSHA1hash = itk::simple::Hash(input1);

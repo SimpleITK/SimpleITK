@@ -228,11 +228,10 @@ ImportImageFilter::ImportImageFilter()
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
 }
 
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetSpacing(const std::vector<double> & spacing)
 {
   this->m_Spacing = spacing;
-  return *this;
 }
 
 const std::vector<double> &
@@ -241,11 +240,10 @@ ImportImageFilter::GetSpacing() const
   return this->m_Spacing;
 }
 
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetOrigin(const std::vector<double> & origin)
 {
   this->m_Origin = origin;
-  return *this;
 }
 
 const std::vector<double> &
@@ -254,11 +252,10 @@ ImportImageFilter::GetOrigin() const
   return this->m_Origin;
 }
 
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetSize(const std::vector<unsigned int> & size)
 {
   this->m_Size = size;
-  return *this;
 }
 
 const std::vector<unsigned int> &
@@ -267,11 +264,10 @@ ImportImageFilter::GetSize() const
   return this->m_Size;
 }
 
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetDirection(const std::vector<double> & direction)
 {
   this->m_Direction = direction;
-  return *this;
 }
 
 const std::vector<double> &
@@ -280,7 +276,7 @@ ImportImageFilter::GetDirection() const
   return this->m_Direction;
 }
 
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsInt8(int8_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -293,9 +289,8 @@ ImportImageFilter::SetBufferAsInt8(int8_t * buffer, unsigned int numberOfCompone
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<int8_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsUInt8(uint8_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -308,9 +303,8 @@ ImportImageFilter::SetBufferAsUInt8(uint8_t * buffer, unsigned int numberOfCompo
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<uint8_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsInt16(int16_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -323,9 +317,8 @@ ImportImageFilter::SetBufferAsInt16(int16_t * buffer, unsigned int numberOfCompo
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<int16_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsUInt16(uint16_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -338,9 +331,8 @@ ImportImageFilter::SetBufferAsUInt16(uint16_t * buffer, unsigned int numberOfCom
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<uint16_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsInt32(int32_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -353,9 +345,8 @@ ImportImageFilter::SetBufferAsInt32(int32_t * buffer, unsigned int numberOfCompo
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<int32_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsUInt32(uint32_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -368,9 +359,8 @@ ImportImageFilter::SetBufferAsUInt32(uint32_t * buffer, unsigned int numberOfCom
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<uint32_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsInt64(int64_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -383,9 +373,8 @@ ImportImageFilter::SetBufferAsInt64(int64_t * buffer, unsigned int numberOfCompo
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<int64_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsUInt64(uint64_t * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -398,10 +387,9 @@ ImportImageFilter::SetBufferAsUInt64(uint64_t * buffer, unsigned int numberOfCom
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<uint64_t, UnusedDimension>>::Result;
   }
-  return *this;
 }
 
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsFloat(float * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -414,9 +402,8 @@ ImportImageFilter::SetBufferAsFloat(float * buffer, unsigned int numberOfCompone
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<float, UnusedDimension>>::Result;
   }
-  return *this;
 }
-ImportImageFilter::Self &
+void
 ImportImageFilter::SetBufferAsDouble(double * buffer, unsigned int numberOfComponents)
 {
   this->m_Buffer = buffer;
@@ -429,7 +416,6 @@ ImportImageFilter::SetBufferAsDouble(double * buffer, unsigned int numberOfCompo
   {
     this->m_PixelIDValue = ImageTypeToPixelIDValue<itk::VectorImage<double, UnusedDimension>>::Result;
   }
-  return *this;
 }
 
 

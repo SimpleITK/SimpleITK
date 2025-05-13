@@ -162,12 +162,11 @@ DisplacementFieldTransform::operator=(const DisplacementFieldTransform & arg)
 }
 
 
-DisplacementFieldTransform::Self &
+void
 DisplacementFieldTransform::SetDisplacementField(Image & img)
 {
   this->MakeUnique();
   this->m_pfSetDisplacementField(img);
-  return *this;
 }
 
 Image
@@ -177,12 +176,11 @@ DisplacementFieldTransform::GetDisplacementField() const
 }
 
 
-DisplacementFieldTransform::Self &
+void
 DisplacementFieldTransform::SetInverseDisplacementField(Image & img)
 {
   this->MakeUnique();
   this->m_pfSetInverseDisplacementField(img);
-  return *this;
 }
 
 
@@ -192,12 +190,11 @@ DisplacementFieldTransform::GetInverseDisplacementField() const
   return this->m_pfGetInverseDisplacementField();
 }
 
-DisplacementFieldTransform::Self &
+void
 DisplacementFieldTransform::SetInterpolator(InterpolatorEnum interp)
 {
   this->MakeUnique();
   this->m_pfSetInterpolator(interp);
-  return *this;
 }
 
 // InterpolatorEnum DisplacementFieldTransform::GetInterpolator() const
@@ -205,23 +202,21 @@ DisplacementFieldTransform::SetInterpolator(InterpolatorEnum interp)
 //   return this->m_pfGetInterpolator();
 // }
 
-DisplacementFieldTransform::Self &
+void
 DisplacementFieldTransform::SetSmoothingOff()
 {
   this->MakeUnique();
   this->m_pfSetSmoothingOff();
-  return *this;
 }
 
-DisplacementFieldTransform::Self &
+void
 DisplacementFieldTransform::SetSmoothingGaussianOnUpdate(double varianceForUpdateField, double varianceForTotalField)
 {
   this->MakeUnique();
   this->m_pfSetSmoothingGaussianOnUpdate(varianceForUpdateField, varianceForTotalField);
-  return *this;
 }
 
-DisplacementFieldTransform::Self &
+void
 DisplacementFieldTransform::SetSmoothingBSplineOnUpdate(
   const std::vector<unsigned int> & numberOfControlPointsForUpdateField,
   const std::vector<unsigned int> & numberOfControlPointsForTotalField,
@@ -231,7 +226,6 @@ DisplacementFieldTransform::SetSmoothingBSplineOnUpdate(
   this->MakeUnique();
   this->m_pfSetSmoothingBSplineOnUpdate(
     numberOfControlPointsForUpdateField, numberOfControlPointsForTotalField, enforceStationaryBoundary, order);
-  return *this;
 }
 
 
