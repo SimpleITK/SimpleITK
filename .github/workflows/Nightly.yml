@@ -9,10 +9,19 @@ on:
      - .github/workflows/Nightly.yml
   workflow_dispatch:
 
+# Set minimal permissions for all jobs (read-only)
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   tag-latest:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    # Needs write permissions for contents and actions to tag and trigger workflows
+    permissions:
+      contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
