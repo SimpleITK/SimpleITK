@@ -515,6 +515,61 @@ TEST(IO, DicomSeriesReader)
   EXPECT_ANY_THROW(reader.GetMetaDataKeys(99));
   EXPECT_ANY_THROW(reader.HasMetaDataKey(99, "nothing"));
   EXPECT_ANY_THROW(reader.GetMetaData(99, "nothing"));
+
+  // Test setting and getting of ForceOrthogonalDirection
+  EXPECT_TRUE(reader.GetForceOrthogonalDirection());
+  reader.SetForceOrthogonalDirection(false);
+  EXPECT_FALSE(reader.GetForceOrthogonalDirection());
+  reader.SetForceOrthogonalDirection(true);
+  EXPECT_TRUE(reader.GetForceOrthogonalDirection());
+  reader.ForceOrthogonalDirectionOff();
+  EXPECT_FALSE(reader.GetForceOrthogonalDirection());
+  reader.ForceOrthogonalDirectionOn();
+  EXPECT_TRUE(reader.GetForceOrthogonalDirection());
+
+  // Test setting and getting of ReverseOrder
+  EXPECT_FALSE(reader.GetReverseOrder());
+  reader.SetReverseOrder(true);
+  EXPECT_TRUE(reader.GetReverseOrder());
+  reader.SetReverseOrder(false);
+  EXPECT_FALSE(reader.GetReverseOrder());
+  reader.ReverseOrderOn();
+  EXPECT_TRUE(reader.GetReverseOrder());
+  reader.ReverseOrderOff();
+  EXPECT_FALSE(reader.GetReverseOrder());
+
+  sitk::Image image2 = reader.Execute();
+
+  reader.ReverseOrderOn();
+
+  sitk::Image image2_reverse = reader.Execute();
+
+
+  EXPECT_EQ(image2.GetSize(), image2_reverse.GetSize());
+  EXPECT_NE(image2.GetOrigin(), image2_reverse.GetOrigin());
+  EXPECT_EQ(image2.GetSpacing(), image2_reverse.GetSpacing());
+  EXPECT_EQ(image2.GetDirection(), image2_reverse.GetDirection());
+  EXPECT_EQ(image2.GetPixelID(), image2_reverse.GetPixelID());
+  EXPECT_EQ(image2.GetDimension(), image2_reverse.GetDimension());
+  EXPECT_EQ(image2.GetNumberOfComponentsPerPixel(), image2_reverse.GetNumberOfComponentsPerPixel());
+
+
+  reader.ReverseOrderOn();
+  reader.ForceOrthogonalDirectionOff();
+
+  image2_reverse = reader.Execute();
+
+
+  std::cout << image2.ToString() << std::endl;
+  std::cout << image2_reverse.ToString() << std::endl;
+
+  EXPECT_EQ(image2.GetSize(), image2_reverse.GetSize());
+  EXPECT_NE(image2.GetOrigin(), image2_reverse.GetOrigin());
+  EXPECT_EQ(image2.GetSpacing(), image2_reverse.GetSpacing());
+  EXPECT_NE(image2.GetDirection(), image2_reverse.GetDirection());
+  EXPECT_EQ(image2.GetPixelID(), image2_reverse.GetPixelID());
+  EXPECT_EQ(image2.GetDimension(), image2_reverse.GetDimension());
+  EXPECT_EQ(image2.GetNumberOfComponentsPerPixel(), image2_reverse.GetNumberOfComponentsPerPixel());
 }
 
 TEST(IO, ImageSeriesReader_Spacing)

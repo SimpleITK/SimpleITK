@@ -169,6 +169,33 @@ public:
   double
   GetSpacingWarningRelThreshold() const;
 
+  /** Set/Get/OnOff whether to force orthogonal direction cosines.
+   *
+   * Do we want to force orthogonal direction cosines? On by default. Turning it off enables proper reading of DICOM
+   * series with gantry tilt.
+   */
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetForceOrthogonalDirection(bool forceOrthogonalDirection);
+  bool
+  GetForceOrthogonalDirection() const;
+  SITK_RETURN_SELF_TYPE_HEADER
+  ForceOrthogonalDirectionOn();
+  SITK_RETURN_SELF_TYPE_HEADER
+  ForceOrthogonalDirectionOff();
+
+  /** Set/Get/OnOff whether to reverse the order of the input files.
+   *
+   * If true, the order of the input file names will be reversed before reading. Defaults to false.
+   */
+  SITK_RETURN_SELF_TYPE_HEADER
+  SetReverseOrder(bool reverseOrder);
+  bool
+  GetReverseOrder() const;
+  SITK_RETURN_SELF_TYPE_HEADER
+  ReverseOrderOn();
+  SITK_RETURN_SELF_TYPE_HEADER
+  ReverseOrderOff();
+
   Image
   Execute() override;
 
@@ -242,6 +269,10 @@ private:
   double m_SpacingWarningRelThreshold{ 1e-4 };
 
   bool m_MetaDataDictionaryArrayUpdate{ false };
+
+  bool m_ForceOrthogonalDirection{ true };
+
+  bool m_ReverseOrder{ false };
 };
 
 /**
