@@ -89,6 +89,56 @@ ImageSeriesReader::SetSpacingWarningRelThreshold(double spacingWarningRelThresho
   return *this;
 }
 
+ImageSeriesReader &
+ImageSeriesReader::SetForceOrthogonalDirection(bool forceOrthogonalDirection)
+{
+  this->m_ForceOrthogonalDirection = forceOrthogonalDirection;
+  return *this;
+}
+
+bool
+ImageSeriesReader::GetForceOrthogonalDirection() const
+{
+  return this->m_ForceOrthogonalDirection;
+}
+
+ImageSeriesReader &
+ImageSeriesReader::ForceOrthogonalDirectionOn()
+{
+  return this->SetForceOrthogonalDirection(true);
+}
+
+ImageSeriesReader &
+ImageSeriesReader::ForceOrthogonalDirectionOff()
+{
+  return this->SetForceOrthogonalDirection(false);
+}
+
+ImageSeriesReader &
+ImageSeriesReader::SetReverseOrder(bool reverseOrder)
+{
+  this->m_ReverseOrder = reverseOrder;
+  return *this;
+}
+
+bool
+ImageSeriesReader::GetReverseOrder() const
+{
+  return this->m_ReverseOrder;
+}
+
+ImageSeriesReader &
+ImageSeriesReader::ReverseOrderOn()
+{
+  return this->SetReverseOrder(true);
+}
+
+ImageSeriesReader &
+ImageSeriesReader::ReverseOrderOff()
+{
+  return this->SetReverseOrder(false);
+}
+
 ImageSeriesReader::ImageSeriesReader()
 {
 
@@ -121,6 +171,15 @@ ImageSeriesReader::ToString() const
   {
     out << "    \"" << name << "\"" << std::endl;
   }
+
+  out << "  SpacingWarningRelThreshold: " << m_SpacingWarningRelThreshold << std::endl;
+  out << "  MetaDataDictionaryArrayUpdate: ";
+  this->ToStringHelper(out, m_MetaDataDictionaryArrayUpdate) << std::endl;
+  out << "  ForceOrthogonalDirection: ";
+  this->ToStringHelper(out, m_ForceOrthogonalDirection) << std::endl;
+  out << "  ReverseOrder: ";
+  this->ToStringHelper(out, m_ReverseOrder) << std::endl;
+
 
   out << ImageReaderBase::ToString();
   return out.str();
@@ -207,6 +266,8 @@ ImageSeriesReader::ExecuteInternal(itk::ImageIOBase * imageio)
   reader->SetImageIO(imageio);
   reader->SetFileNames(std::vector<std::string>(this->m_FileNames.begin(), this->m_FileNames.end()));
   reader->SetSpacingWarningRelThreshold(m_SpacingWarningRelThreshold);
+  reader->SetForceOrthogonalDirection(m_ForceOrthogonalDirection);
+  reader->SetReverseOrder(m_ReverseOrder);
   // save some computation by not updating this unneeded data-structure
   reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
