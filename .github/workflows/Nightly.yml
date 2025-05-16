@@ -148,8 +148,8 @@ jobs:
             ctest-test-timeout: 5000
             timeout: 600
             ctest-cache: |
-              CMAKE_CXX_FLAGS:STRING=-O0
-              CMAKE_C_FLAGS:STRING=-O0
+              CMAKE_CXX_FLAGS:STRING=-O1
+              CMAKE_C_FLAGS:STRING=-O1
             ctest-extra-args: |
               -Ddashboard_do_memcheck=1 \
               -DCTEST_TEST_ARGS="EXCLUDE_LABEL;RUNS_LONG" \
