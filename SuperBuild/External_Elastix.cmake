@@ -7,7 +7,8 @@ set(${proj}_DEPENDENCIES "ITK")
 file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_common_cache}" )
 
 set( ELASTIX_GIT_REPOSITORY ${git_protocol}://github.com/SuperElastix/elastix )
-set( ELASTIX_GIT_TAG 5.2.0 )
+# May 13, 2024 compatibility with ITKv6 dev
+set( ELASTIX_GIT_TAG 3bcb0104940876da37e91ea8da9e96b25081b21f )
 
 if( NOT ${BUILD_SHARED_LIBS} )
   list( APPEND ep_elastix_args

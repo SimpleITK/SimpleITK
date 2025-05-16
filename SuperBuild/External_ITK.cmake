@@ -32,7 +32,7 @@ foreach(_module ${_SimpleITK_DEFAULT_MODULES})
 endforeach ()
 
 if (NOT DEFINED ITK_DEFAULT_THREADER)
-  set( ITK_DEFAULT_THREADER "Platform")
+  set( ITK_DEFAULT_THREADER "Pool")
 endif()
 
 get_cmake_property( _varNames VARIABLES )
@@ -67,8 +67,8 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# ITK v5.4.3 tag
-set(_DEFAULT_ITK_GIT_TAG "v5.4.3")
+# Using 6.0 alpha tags for SimpleITK 3 development
+set(_DEFAULT_ITK_GIT_TAG "v6.0a03")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
@@ -98,7 +98,8 @@ if (ITK_USE_BUILD_DIR)
 endif()
 
 if(ITK_GIT_TAG STREQUAL _DEFAULT_ITK_GIT_TAG)
-  list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
+  # While migrated to ITK 6.0 this is disabled
+  #list( APPEND ep_itk_args "-DITK_LEGACY_REMOVE:BOOL=ON" )
 endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
