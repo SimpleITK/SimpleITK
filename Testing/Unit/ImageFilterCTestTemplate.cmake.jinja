@@ -1,0 +1,115 @@
+# Jinja2 template for ImageFilter CTest
+
+# Data for External Tests
+{% for test in tests %}
+ExternalData_Expand_Arguments( SimpleITKData
+  unused_argument
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  {% if test.tolerance -%}
+  "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}"
+  {%- endif %}
+)
+{% endfor %}
+
+# Lua Tests
+{% for test in tests %}
+sitk_add_lua_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/{{ name }}Test.lua"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Lua-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}}/Lua-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}}/Lua-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
+
+# Python Tests
+{% for test in tests %}
+sitk_add_python_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/{{ name }}Test.py"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Python-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Python-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Python-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
+
+
+# Ruby Tests
+{% for test in tests %}
+sitk_add_ruby_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/{{ name }}Test.rb"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Ruby-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Ruby-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Ruby-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
+
+# R Tests
+{% for test in tests %}
+sitk_add_r_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/{{ name }}Test.R"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/R-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/R-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/R-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
+
+
+# Java Tests
+{% for test in tests %}
+sitk_add_java_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/{{ name }}Test.java"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Java-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Java-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Java-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
+
+
+# C# Tests
+{% for test in tests %}
+sitk_add_csharp_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/{{ name }}Test.cs"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/CSharp-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/CSharp-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/CSharp-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
+
+# Tcl Tests
+{% for test in tests %}
+sitk_add_tcl_test( {{ name }}.{{ test.tag }}
+  "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/{{ name }}Test.tcl"
+  {{ test.tag }}
+  {% for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Tcl-{{ name }}-{{ test.tag }}.nrrd"
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Tcl-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Tcl-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+)
+{% endfor %}
