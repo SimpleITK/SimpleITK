@@ -5,7 +5,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 0,
   "doc" : "Docs",
-  "pixel_types" : "IntegerPixelIDTypeList",
+  "pixel_types" : "UnsignedIntegerPixelIDTypeList",
   "pixel_types2" : "BasicPixelIDTypeList",
   "filter_type" : "itk::LabelImageToStatisticsLabelMapFilter<InputImageType,InputImageType2, itk::LabelMap< itk::StatisticsLabelObject< int64_t, InputImageType::ImageDimension > > >",
   "no_procedure" : true,
