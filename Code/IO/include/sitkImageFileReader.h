@@ -91,7 +91,7 @@ public:
     return std::string("ImageFileReader");
   }
 
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetFileName(const PathType & fn);
   PathType
   GetFileName() const;
@@ -201,7 +201,7 @@ public:
    *
    * \sa ExtractImageFilter
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetExtractSize(const std::vector<unsigned int> & size);
   const std::vector<unsigned int> &
   GetExtractSize() const;
@@ -213,7 +213,7 @@ public:
    *
    * \sa ExtractImageFilter
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetExtractIndex(const std::vector<int> & index);
   const std::vector<int> &
   GetExtractIndex() const;

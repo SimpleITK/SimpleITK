@@ -230,6 +230,8 @@ TEST_F(Image, Constructors)
   sitk::HashImageFilter hasher;
   int                   result;
 
+  hasher.SetHashFunction(sitk::HashImageFilter::SHA1);
+
   {
     sitk::Image image;
     EXPECT_EQ(0u, image.GetWidth());
@@ -239,9 +241,7 @@ TEST_F(Image, Constructors)
   }
 
   sitk::Image image(64, 65, 66, sitk::sitkUInt8);
-  EXPECT_EQ("08183e1b0c50fd2cf6f070b58e218443fb7d5317",
-            hasher.SetHashFunction(sitk::HashImageFilter::SHA1).Execute(image))
-    << " SHA1 hash value sitkUInt8";
+  EXPECT_EQ("08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.Execute(image)) << " SHA1 hash value sitkUInt8";
   result = typelist2::index_of<InstantiatedPixelIDTypeList, sitk::BasicPixelID<unsigned char>>::value;
   EXPECT_EQ(image.GetPixelIDValue(), result);
   EXPECT_EQ(image.GetPixelIDTypeAsString(), "8-bit unsigned integer");
@@ -254,9 +254,7 @@ TEST_F(Image, Constructors)
   EXPECT_EQ(image.GetDirection(), directionI3D);
 
   image = sitk::Image(64, 65, 66, sitk::sitkInt16);
-  EXPECT_EQ("645b71695b94923c868e16b943d8acf8f6788617",
-            hasher.SetHashFunction(sitk::HashImageFilter::SHA1).Execute(image))
-    << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ("645b71695b94923c868e16b943d8acf8f6788617", hasher.Execute(image)) << " SHA1 hash value sitkUInt16";
   result = typelist2::index_of<InstantiatedPixelIDTypeList, sitk::BasicPixelID<short>>::value;
   EXPECT_EQ(image.GetPixelIDValue(), result);
   EXPECT_EQ(image.GetPixelIDTypeAsString(), "16-bit signed integer");
@@ -269,9 +267,7 @@ TEST_F(Image, Constructors)
   EXPECT_EQ(image.GetDirection(), directionI3D);
 
   image = sitk::Image(64, 65, sitk::sitkUInt16);
-  EXPECT_EQ("e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6",
-            hasher.SetHashFunction(sitk::HashImageFilter::SHA1).Execute(image))
-    << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ("e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.Execute(image)) << " SHA1 hash value sitkUInt16";
   result = typelist2::index_of<InstantiatedPixelIDTypeList, sitk::BasicPixelID<unsigned short>>::value;
   EXPECT_EQ(image.GetPixelIDValue(), result);
   EXPECT_EQ(image.GetPixelIDTypeAsString(), "16-bit unsigned integer");
@@ -355,17 +351,15 @@ TEST_F(Image, Constructors)
 TEST_F(Image, Hash)
 {
   sitk::HashImageFilter hasher;
-  EXPECT_EQ("a998ea8b4999b4db9cbad033a52fe6d654211ff9",
-            hasher.SetHashFunction(sitk::HashImageFilter::SHA1).Execute(*shortImage))
-    << " SHA1 hash value";
-  EXPECT_EQ("8cdd56962c5b3aabbfac56cd4dce1c7e", hasher.SetHashFunction(sitk::HashImageFilter::MD5).Execute(*shortImage))
-    << " MD5 hash value";
+  hasher.SetHashFunction(sitk::HashImageFilter::SHA1);
+  EXPECT_EQ("a998ea8b4999b4db9cbad033a52fe6d654211ff9", hasher.Execute(*shortImage)) << " SHA1 hash value";
+  hasher.SetHashFunction(sitk::HashImageFilter::MD5);
+  EXPECT_EQ("8cdd56962c5b3aabbfac56cd4dce1c7e", hasher.Execute(*shortImage)) << " MD5 hash value";
 
-  EXPECT_EQ("3b6bfcb1922bf8b29b171062ad722c82f8aa3f50",
-            hasher.SetHashFunction(sitk::HashImageFilter::SHA1).Execute(*floatImage))
-    << " SHA1 hash value";
-  EXPECT_EQ("e5eba8af943d7911220c9f2fb9b5b9c8", hasher.SetHashFunction(sitk::HashImageFilter::MD5).Execute(*floatImage))
-    << " MD5 hash value";
+  hasher.SetHashFunction(sitk::HashImageFilter::SHA1);
+  EXPECT_EQ("3b6bfcb1922bf8b29b171062ad722c82f8aa3f50", hasher.Execute(*floatImage)) << " SHA1 hash value";
+  hasher.SetHashFunction(sitk::HashImageFilter::MD5);
+  EXPECT_EQ("e5eba8af943d7911220c9f2fb9b5b9c8", hasher.Execute(*floatImage)) << " MD5 hash value";
 }
 
 TEST_F(Image, Transforms)

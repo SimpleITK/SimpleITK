@@ -99,11 +99,10 @@ ImageSeriesWriter::GetRegisteredImageIOs() const
   return ioutils::GetRegisteredImageIOs();
 }
 
-ImageSeriesWriter::Self &
+void
 ImageSeriesWriter ::SetImageIO(const std::string & imageio)
 {
   this->m_ImageIOName = imageio;
-  return *this;
 }
 
 
@@ -135,11 +134,10 @@ ImageSeriesWriter ::GetImageIOBase(const PathType & fileName)
 }
 
 
-ImageSeriesWriter::Self &
+void
 ImageSeriesWriter::SetUseCompression(bool UseCompression)
 {
   this->m_UseCompression = UseCompression;
-  return *this;
 }
 
 bool
@@ -148,11 +146,10 @@ ImageSeriesWriter::GetUseCompression() const
   return this->m_UseCompression;
 }
 
-ImageSeriesWriter::Self &
+void
 ImageSeriesWriter::SetCompressionLevel(int CompressionLevel)
 {
   this->m_CompressionLevel = CompressionLevel;
-  return *this;
 }
 
 int
@@ -161,11 +158,10 @@ ImageSeriesWriter::GetCompressionLevel() const
   return m_CompressionLevel;
 }
 
-ImageSeriesWriter::Self &
+void
 ImageSeriesWriter::SetCompressor(const std::string & Compressor)
 {
   this->m_Compressor = Compressor;
-  return *this;
 }
 
 std::string
@@ -175,11 +171,10 @@ ImageSeriesWriter::GetCompressor()
 }
 
 
-ImageSeriesWriter &
+void
 ImageSeriesWriter::SetFileNames(const std::vector<PathType> & filenames)
 {
   this->m_FileNames = filenames;
-  return *this;
 }
 
 const std::vector<PathType> &
@@ -189,7 +184,7 @@ ImageSeriesWriter::GetFileNames() const
 }
 
 
-ImageSeriesWriter &
+void
 ImageSeriesWriter::Execute(const Image &                 image,
                            const std::vector<PathType> & inFileNames,
                            bool                          useCompression,
@@ -201,7 +196,7 @@ ImageSeriesWriter::Execute(const Image &                 image,
   return this->Execute(image);
 }
 
-ImageSeriesWriter &
+void
 ImageSeriesWriter::Execute(const Image & image)
 {
 
@@ -209,11 +204,11 @@ ImageSeriesWriter::Execute(const Image & image)
   PixelIDValueType type = image.GetPixelIDValue();
   unsigned int     dimension = image.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension)(image);
+  this->m_MemberFactory->GetMemberFunction(type, dimension)(image);
 }
 
 template <class TImageType>
-ImageSeriesWriter &
+void
 ImageSeriesWriter::ExecuteInternal(const Image & inImage)
 {
   // Define the input and output image types
@@ -270,8 +265,6 @@ ImageSeriesWriter::ExecuteInternal(const Image & inImage)
   this->PreUpdate(writer.GetPointer());
 
   writer->Update();
-
-  return *this;
 }
 
 } // namespace itk::simple

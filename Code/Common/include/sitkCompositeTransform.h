@@ -117,7 +117,7 @@ public:
    *
    * Nested composite transform may not be written to a file.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   FlattenTransform();
 
   /** \brief Add a transform to the back of the stack.
@@ -126,7 +126,7 @@ public:
    * the optimizable parameters, while the other parameters are part of the
    * fixed parameters.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   AddTransform(Transform t);
 
   /** \brief The number of transforms in the stack */

@@ -65,11 +65,10 @@ public:
    * Allow the user to set the mesh size of the transform via the initializer even though the initializer does not do
    * anything with that information. Default = 1^ImageDimension.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetTransformDomainMeshSize(const std::vector<uint32_t> & TransformDomainMeshSize)
   {
     this->m_TransformDomainMeshSize = TransformDomainMeshSize;
-    return *this;
   }
 
   /**
@@ -84,11 +83,10 @@ public:
    * The order of the bspline in the output BSplineTransform. This
    * value effects the number of control points.
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetOrder(unsigned int order)
   {
     this->m_Order = order;
-    return *this;
   }
   unsigned int
   GetOrder() const

@@ -57,7 +57,7 @@ public:
    * convert the pixels.
    * @{
    */
-  SITK_RETURN_SELF_TYPE_HEADER
+  void
   SetOutputPixelType(PixelIDValueEnum pixelID);
   PixelIDValueEnum
   GetOutputPixelType() const;
@@ -85,7 +85,7 @@ public:
    * Unknown private tags may be encoded with Base64 encoding.
    * @{
    */
-  virtual SITK_RETURN_SELF_TYPE_HEADER
+  virtual void
   SetLoadPrivateTags(bool loadPrivateTags);
   virtual bool
   GetLoadPrivateTags() const;
@@ -109,7 +109,7 @@ public:
    * ImageIO factory mechanism.
    * @{
    */
-  virtual SITK_RETURN_SELF_TYPE_HEADER
+  virtual void
   SetImageIO(const std::string & imageio);
   virtual std::string
   GetImageIO() const;

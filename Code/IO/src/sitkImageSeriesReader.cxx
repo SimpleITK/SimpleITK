@@ -82,18 +82,16 @@ ImageSeriesReader::GetSpacingWarningRelThreshold() const
   return m_SpacingWarningRelThreshold;
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::SetSpacingWarningRelThreshold(double spacingWarningRelThreshold)
 {
   m_SpacingWarningRelThreshold = spacingWarningRelThreshold;
-  return *this;
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::SetForceOrthogonalDirection(bool forceOrthogonalDirection)
 {
   this->m_ForceOrthogonalDirection = forceOrthogonalDirection;
-  return *this;
 }
 
 bool
@@ -102,23 +100,22 @@ ImageSeriesReader::GetForceOrthogonalDirection() const
   return this->m_ForceOrthogonalDirection;
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::ForceOrthogonalDirectionOn()
 {
-  return this->SetForceOrthogonalDirection(true);
+  this->SetForceOrthogonalDirection(true);
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::ForceOrthogonalDirectionOff()
 {
-  return this->SetForceOrthogonalDirection(false);
+  this->SetForceOrthogonalDirection(false);
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::SetReverseOrder(bool reverseOrder)
 {
   this->m_ReverseOrder = reverseOrder;
-  return *this;
 }
 
 bool
@@ -127,16 +124,16 @@ ImageSeriesReader::GetReverseOrder() const
   return this->m_ReverseOrder;
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::ReverseOrderOn()
 {
-  return this->SetReverseOrder(true);
+  this->SetReverseOrder(true);
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::ReverseOrderOff()
 {
-  return this->SetReverseOrder(false);
+  this->SetReverseOrder(false);
 }
 
 ImageSeriesReader::ImageSeriesReader()
@@ -185,11 +182,10 @@ ImageSeriesReader::ToString() const
   return out.str();
 }
 
-ImageSeriesReader &
+void
 ImageSeriesReader::SetFileNames(const std::vector<PathType> & filenames)
 {
   this->m_FileNames = filenames;
-  return *this;
 }
 
 const std::vector<PathType> &

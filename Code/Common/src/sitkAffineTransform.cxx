@@ -64,12 +64,11 @@ AffineTransform::operator=(const AffineTransform & arg)
 }
 
 /** parameter */
-AffineTransform::Self &
+void
 AffineTransform::SetTranslation(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetTranslation(params);
-  return *this;
 }
 
 std::vector<double>
@@ -79,12 +78,11 @@ AffineTransform::GetTranslation() const
 }
 
 
-AffineTransform::Self &
+void
 AffineTransform::SetMatrix(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetMatrix(params);
-  return *this;
 }
 
 std::vector<double>
@@ -95,12 +93,11 @@ AffineTransform::GetMatrix() const
 
 
 /** fixed parameter */
-AffineTransform::Self &
+void
 AffineTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -109,44 +106,39 @@ AffineTransform::GetCenter() const
   return this->m_pfGetCenter();
 }
 
-AffineTransform::Self &
+void
 AffineTransform::Scale(const std::vector<double> & factor, bool pre)
 {
   this->MakeUnique();
   this->m_pfScale1(factor, pre);
-  return *this;
 }
 
-AffineTransform::Self &
+void
 AffineTransform::Scale(double factor, bool pre)
 {
   this->MakeUnique();
   this->m_pfScale2(factor, pre);
-  return *this;
 }
 
-AffineTransform::Self &
+void
 AffineTransform::Shear(int axis1, int axis2, double coef, bool pre)
 {
   this->MakeUnique();
   this->m_pfShear(axis1, axis2, coef, pre);
-  return *this;
 }
 
-AffineTransform::Self &
+void
 AffineTransform::Translate(const std::vector<double> & offset, bool pre)
 {
   this->MakeUnique();
   this->m_pfTranslate(offset, pre);
-  return *this;
 }
 
-AffineTransform::Self &
+void
 AffineTransform::Rotate(int axis1, int axis2, double angle, bool pre)
 {
   this->MakeUnique();
   this->m_pfRotate(axis1, axis2, angle, pre);
-  return *this;
 }
 
 void
