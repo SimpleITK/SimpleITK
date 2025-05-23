@@ -1,0 +1,62 @@
+{% import "macros.jinja" as macros %}
+{#
+  Jinja2 port of the Lua expand template for the Execute method with no member parameters.
+  Handles input checking, dispatch, and recursive optional input overloads.
+#}
+{{ "void" if no_return_image else "Image" }}
+{{ name }}::Execute ( {{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional) }} )
+{
+  {#- Determine the primary input name for type/dimension checks #}
+  {%- set inputName = "image1" %}
+  {%- if (number_of_inputs|default(0) <= 0) and (inputs|length > 0) %}
+    {%- set inputName = inputs[0].name[0]|lower ~ inputs[0].name[1:] %}
+  {%- endif %}
+
+  const PixelIDValueEnum type = {{ inputName }}.GetPixelID();
+  const unsigned int dimension = {{ inputName }}.GetDimension();
+
+  {#- Check dimension and pixel type for additional image inputs #}
+  {%- for inum in range(2, number_of_inputs+1) %}
+  CheckImageMatchingDimension( {{ inputName }}, image{{ inum }}, "image{{ inum }}" );
+  CheckImageMatchingPixelType( {{ inputName }}, image{{ inum }}, "image{{ inum }}" );
+  {%- endfor %}
+
+  {#- Check dimension and size for additional image-type inputs (beyond the numbered ones) #}
+  {%- if inputs %}
+    {%- for inum in range(1, inputs|length) %}
+      {%- set inp = inputs[inum] %}
+      {%- if inp.type == "Image" and (not inp.optional or not no_optional) %}
+        {%- set currentInputName = inp.name[0]|lower ~ inp.name[1:] %}
+  CheckImageMatchingDimension( {{ inputName }}, {{ currentInputName }}, "{{ currentInputName }}" );
+        {%- if not inp.no_size_check %}
+  CheckImageMatchingSize( {{ inputName }}, {{ currentInputName }}, "{{ currentInputName }}" );
+        {%- endif %}
+      {%- endif %}
+    {%- endfor %}
+  {%- endif %}
+
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )(
+    {#- Pass numbered image arguments #}
+    {{- range(1, number_of_inputs+1) | format_list('image{}') | join(', ') }}
+    {%- set comma = joiner(', ') %}
+    {# Pass additional input arguments #}
+    {%- for inp in inputs %}
+      {{- comma() }}
+      {%- if inp.optional and no_optional %}nullptr{%- else -%}&{{ inp.name[0]|lower ~ inp.name[1:] }}{%- endif -%}
+    {%- endfor -%}
+  );
+}
+
+{#- If in_place is set, include the rvalue reference overload #}
+{%- if in_place %}
+  {%- include "ExecuteRValueReferenceNoParameters.cxx.jinja" %}
+{%- endif %}
+
+{#- If there are optional inputs and not no_optional, recursively include this template with no_optional=1 #}
+{%- if inputs %}
+  {%- set has_optional_inputs = inputs|selectattr("optional")|list|length > 0 %}
+  {%- if has_optional_inputs and not no_optional %}
+    {%- set no_optional = 1 %}
+    {%- include "ExecuteNoParameters.cxx.jinja" %}
+  {%- endif %}
+{%- endif %}

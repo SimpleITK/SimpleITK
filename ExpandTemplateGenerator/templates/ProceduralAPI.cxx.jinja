@@ -1,0 +1,35 @@
+{% import "macros.jinja" as macros %}
+//
+// Function to run the Execute method of this filter
+//
+Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} (
+  {{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional) }}{{ macros.member_parameters(members, number_of_inputs, name, inputs) }}
+)
+{
+  {{ name }} filter;
+  {% for member in members %}
+  filter.Set{{ member.name }}( {{ member.name[0]|lower ~ member.name[1:] }} );
+  {%- endfor %}
+  return filter.Execute( {{ range(1, number_of_inputs+1) | format_list('image{}') | join(', ') }}
+    {%- set comma = joiner(', ') %}
+    {%- for inp in inputs -%}
+    {%- if not (inp.optional and no_optional) %}
+        {{- comma() }}
+        {{ inp.name[0]|lower ~ inp.name[1:] }}
+    {%- endif -%}
+    {%- endfor %} );
+}
+
+{# If in_place is set, include the rvalue reference overload #}
+{% if in_place %}
+  {%- include "ProceduralAPIRValueReference.cxx.jinja" %}
+{%- endif %}
+
+{# If there are optional inputs and not no_optional, recursively include this template with no_optional=1 #}
+{% if inputs and not no_procedure %}
+  {%- set has_optional_inputs = inputs|selectattr('optional')|list|length > 0 %}
+  {%- if has_optional_inputs and not no_optional %}
+    {%- set no_optional = 1 %}
+    {%- include "ProceduralAPI.cxx.jinja" %}
+  {%- endif %}
+{%- endif %}

@@ -15,10 +15,10 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef sitk${name}_h
-#define sitk${name}_h
+#ifndef sitk{{ name }}_h
+#define sitk{{ name }}_h
 
-$(include DoNotEditWarning.h.in)
+{% include "DoNotEditWarning.h.jinja" %}
 
 #include <memory>
 
@@ -27,19 +27,20 @@ $(include DoNotEditWarning.h.in)
 
 namespace itk::simple {
 
-$(include ClassDeclaration.h.in)$(include PublicDeclarations.h.in)
-$(include MemberGetSetDeclarations.h.in)
-$(include ClassNameAndPrint.h.in)
+{% include "ClassDeclaration.h.jinja" %}
+{% include "PublicDeclarations.h.jinja" %}
+{% include "MemberGetSetDeclarations.h.jinja" %}
+{% include "ClassNameAndPrint.h.jinja" %}
 
-$(include ExecuteMethodNoParameters.h.in)$(include CustomMethods.h.in)
-$(include ExecuteInternalMethod.h.in)
+{% include "ExecuteMethodNoParameters.h.jinja" -%}
+{%- include "CustomMethods.h.jinja" %}
+{% include "ExecuteInternalMethod.h.jinja" %}
+{% include "MemberFunctionDispatch.h.jinja" %}
+{% include "PrivateMemberDeclarations.h.jinja" %}
+};
 
-$(include MemberFunctionDispatch.h.in)
-
-$(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
-
-$(if not no_procedure then
-OUT=[[$(include ProceduralAPI.h.in)]]
-end)
+{% if not no_procedure %}
+{% include "ProceduralAPI.h.jinja" %}
+{% endif %}
 }
 #endif

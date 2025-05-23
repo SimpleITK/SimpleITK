@@ -1,0 +1,136 @@
+/*=========================================================================
+*
+*  Copyright NumFOCUS
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*         http://www.apache.org/licenses/LICENSE-2.0.txt
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*
+*=========================================================================*/
+{% include "DoNotEditWarning.cxx.jinja" %}
+{% import "macros.jinja" as macros %}
+{% include "StandardIncludes.cxx.jinja" %}
+{% include "AddExtraIncludes.cxx.jinja" %}
+
+namespace itk::simple {
+
+//-----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+{% include "ConstructorSignature.cxx.jinja" %}
+{
+{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+
+{% include "ConstructorVectorPixels.cxx.jinja" %}
+}
+
+{% include "DestructorDefinition.cxx.jinja" %}
+
+//
+// ToString
+//
+{% include "ToStringSignature.cxx.jinja" %}
+{
+{% include "ToStringBody.cxx.jinja" %}
+{% include "ToStringReturn.cxx.jinja" %}
+}
+
+//-----------------------------------------------------------------------------
+
+//
+// Execute no parameters (overloads for 1-5 images)
+//
+{% for inum in range(1,6) %}
+Image {{ name }}::Execute ( const Image& image1{% for jnum in range(2, inum+1) %}, const Image& image{{ jnum }}{% endfor %} )
+{
+  std::vector<Image> images;
+  {% for jnum in range(1, inum+1) %}
+  images.push_back( image{{ jnum }} );
+  {% endfor %}
+  return this->Execute( images );
+}
+{% endfor %}
+
+Image {{ name }}::Execute ( const std::vector<Image> &images )
+{
+  if ( images.empty() )
+    {
+    sitkExceptionMacro( "Atleast one input is required" );
+    }
+
+  PixelIDValueEnum type = images.front().GetPixelID();
+  unsigned int dimension = images.front().GetDimension();
+
+  unsigned int inputIndex = 1;
+  for( std::vector<Image>::const_iterator i = images.begin(); i != images.end(); ++i )
+    {
+    CheckImageMatchingDimension(images.front(), *i, "image" + std::to_string(inputIndex));
+    CheckImageMatchingPixelType(images.front(), *i, "image" + std::to_string(inputIndex));
+    ++inputIndex;
+    }
+
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )( images );
+}
+
+//-----------------------------------------------------------------------------
+
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wunused-local-typedef");
+
+//
+// ExecuteInternal
+//
+template <class TImageType>
+Image {{ name }}::ExecuteInternal ( const std::vector<Image> &images )
+{
+{% include "ExecuteInternalTypedefs.cxx.jinja" %}
+
+{% include "ExecuteInternalITKFilter.cxx.jinja" %}
+
+  for ( unsigned int i = 0; i < images.size(); ++i )
+    {
+    // Get the pointer to the ITK image contained in image1
+    typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( images[i] );
+    filter->SetInput( i, image );
+    }
+
+{% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
+
+{% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+}
+
+sitkClangDiagnosticPop();
+
+//
+// Function to run the Execute method of this filter
+//
+Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} ( const std::vector<Image> & images{{ macros.member_parameters(members, number_of_inputs, name, inputs) }} )
+{
+  {{ name }} filter;
+  {% for member in members %}
+    filter.Set{{ member.name }}( {{ member.name[0]|lower ~ member.name[1:] }} );
+  {% endfor %}
+  return filter.Execute ( images );
+}
+{% for inum in range(1,6) %}
+Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} ( const Image& image1{% for jnum in range(2, inum+1) %}, const Image& image{{ jnum }}{% endfor %}{{ macros.member_parameters(members, inum, name, inputs) }} )
+{
+  {{ name }} filter;
+  {% for member in members %}
+    filter.Set{{ member.name }}( {{ member.name[0]|lower ~ member.name[1:] }} );
+  {% endfor %}
+  return filter.Execute ( image1{% for jnum in range(2, inum+1) %}, image{{ jnum }}{% endfor %} );
+}
+{% endfor %}
+
+}
