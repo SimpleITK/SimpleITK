@@ -1,0 +1,4 @@
+{% for file in include_files %}
+{{- "// Additional include files" if loop.first }}
+#include "{{ file }}"
+{%- endfor %}

@@ -1,0 +1,77 @@
+{% if measurements %}
+  {#- Check if any measurement is active #}
+  {% set any_active = measurements | selectattr('active') | list | length > 0 %}
+  {% if any_active %}
+
+  // release the old filter ( and output data )
+  if ( this->m_Filter != nullptr)
+    {
+    {% for m in measurements %}
+      {% if m.active %}
+        this->m_pfGet{{ m.name }} = nullptr;
+      {% endif %}
+    {% endfor %}
+      this->m_Filter->UnRegister();
+      this->m_Filter = nullptr;
+    }
+
+  this->m_Filter = filter;
+  this->m_Filter->Register();
+  {% endif %}
+{% endif %}
+
+  this->PreUpdate( filter.GetPointer() );
+
+{%- for m in measurements -%}
+{% if m.active %}
+  this->m_pfGet{{ m.name }} = [
+    {%- if m.label_map -%}lm = filter->GetOutput(){%- else -%}f = filter.GetPointer(){%- endif -%}
+  ]
+  {%- if m.parameters -%}( {{ m.parameters | map(attribute='name') | list | format_list( 'auto && {}') | join(", ") }} ){%- endif -%}
+{
+  {% set ns = namespace(return_value="value") %}
+  {% if m.itk_get %}
+    {% if m.type == 'void' %}
+    return {{ m.itk_get }};
+    {% set ns.return_value = None %}
+    {% else %}
+    const auto & value = {{ m.itk_get }};
+    {% endif %}
+  {% elif m.label_map %}
+  const auto & value = lm->GetLabelObject(label)->Get{{ m.name }}();
+  {% else %}
+    const auto & value = f->Get{{ m.name }}(
+    {{- m.parameters | map(attribute='name') | list | format_list( 'std::forward<decltype({0})>({0})') | join(", ") -}}
+    );
+  {%- endif %}
+
+  {%- if m.custom_cast %}
+    using T = typename std::remove_cv< typename std::remove_reference<decltype(value)>::type>::type;
+    return {{ m.custom_cast }};
+  {%- elif ns.return_value %}
+    return {{ ns.return_value }};
+  {% endif %}
+  };
+{% endif %}
+{%- endfor -%}
+
+
+  // Run the ITK filter and return the output as a SimpleITK image
+  filter->Update();
+
+{% for m in measurements %}
+{% if not m.active and m.custom_itk_cast %}
+  {{ m.custom_itk_cast }}
+{% elif not m.active %}
+  this->m_{{ m.name }} = filter->Get{{ m.name }}();
+{% endif %}
+{% endfor %}
+
+{% if no_return_image %}
+  return;
+{% else %}
+  typename FilterType::OutputImageType::Pointer itkOutImage{ filter->GetOutput()};
+  filter = nullptr;
+  this->FixNonZeroIndex( itkOutImage.GetPointer() );
+  return Image{ this->CastITKToImage( itkOutImage.GetPointer() ) };
+{% endif %}

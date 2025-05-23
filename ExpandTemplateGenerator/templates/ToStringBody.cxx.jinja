@@ -1,0 +1,40 @@
+  std::ostringstream out;
+  out << "itk::simple::{{ name }}\\n";
+{% for member in members %}
+{%- if not member.no_print %}
+  out << "  {{ member.name }}: ";
+  {%- if member.point_vec %}
+  out << "[ ";
+  for (unsigned int i = 0; i + 1 < m_{{ member.name }}.size(); ++i)
+    {
+    this->ToStringHelper(out, this->m_{{ member.name }}[i]);
+    out << ", ";
+    }
+  if ( !this->m_{{ member.name }}.empty() ) out << this->m_{{ member.name }}.back() << ' ';
+  out << "]";
+  {%- else %}
+  this->ToStringHelper(out, this->m_{{ member.name }});
+  {%- endif %}
+  out << std::endl;
+{%- endif %}
+{% endfor %}
+{%- if measurements %}
+{%- for measurement in measurements %}
+{%- if not measurement.no_print%}
+  out << "  {{ measurement.name }}: ";
+  {%- if measurement.active %}
+  if (bool(this->m_pfGet{{ measurement.name }}))
+  {
+    this->ToStringHelper(out, this->m_pfGet{{ measurement.name }}());
+  }
+  else
+  {
+    out << "(null)";
+  }
+  out << std::endl;
+  {%- else %}
+  out << "  {{ measurement.name }}: " << this->m_{{ measurement.name }} << std::endl;
+  {%- endif %}
+{%- endif %}
+{%- endfor %}
+{%- endif %}

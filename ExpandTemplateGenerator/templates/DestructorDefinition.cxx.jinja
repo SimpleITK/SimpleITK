@@ -1,0 +1,14 @@
+//
+// Destructor
+//
+{{ name }}::~{{ name }}()
+{% set has_active = measurements | selectattr('active') | list | length > 0 %}
+{% if has_active %}
+{
+  if (this->m_Filter != nullptr)
+    {
+      m_Filter->UnRegister();
+    }
+}
+{% else %} = default;
+{%- endif %}
