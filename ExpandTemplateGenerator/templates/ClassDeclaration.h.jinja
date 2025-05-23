@@ -1,0 +1,26 @@
+/**
+ * \class {{ name }}
+{% if briefdescription and briefdescription|length > 0 %}
+ * \brief {{ briefdescription }}
+{% endif %}
+{% if detaileddescription and detaileddescription|length > 0 %}
+ * {{ detaileddescription }}
+{% endif %}
+{% if not no_procedure or no_procedure == 1 %}
+ * \sa itk::simple::{{ name|regex_replace('ImageSource$', 'Source')|regex_replace('(ImageFilter|Filter)$', '') }} for the procedural interface
+{% endif %}
+ * \sa {% if itk_name and itk_name|length > 0 %}itk::{{ itk_name }}{% elif filter_type and filter_type|length > 0 %}{{ filter_type|regex_replace('<.*>', '') }}{% else %}itk::{{ name }}{% endif %} for the Doxygen on the original ITK class.
+ */
+class SITKBasicFilters_EXPORT {{ name }} : public ImageFilter {
+public:
+  using Self = {{ name }};
+
+  /** Destructor */
+  virtual ~{{ name }}();
+
+  /** Default Constructor that takes no arguments and initializes
+   * default parameters */
+  {{ name }}();
+
+  /** Define the pixels types supported by this filter */
+  using PixelIDTypeList = {{ pixel_types }};

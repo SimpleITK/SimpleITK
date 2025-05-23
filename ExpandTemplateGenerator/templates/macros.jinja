@@ -1,0 +1,127 @@
+{#
+  Macro: image_rvalue_reference_parameters(number_of_inputs)
+  Generates a comma-separated list of rvalue reference image parameters for the filter class constructor or methods.
+#}
+{% macro image_rvalue_reference_parameters(number_of_inputs) -%}
+  {%- for inum in range(1, number_of_inputs + 1) %}
+    {%- if inum > 1 %}, const Image& image{{ inum }}
+    {%- else %}Image&& image{{ inum }}
+    {%- endif %}
+  {%- endfor %}
+{%- endmacro %}
+
+{#
+  Macro: input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional)
+  Generates a comma-separated list of input parameters for the filter class constructor or methods, using rvalue reference for the second Image input.
+#}
+{% macro input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) -%}
+  {%- if inputs %}
+    {%- set local_ns = namespace(count=1) %}
+    {%- for input in inputs %}
+      {%- if not (input.optional and no_optional == 1) %}
+        {%- if number_of_inputs > 0 or local_ns.count > 1 %}, {% endif -%}
+        {%- set local_ns.count = local_ns.count + 1 %}
+        {%- if not input.type and input.enum %}
+          {{ name }}::{{ input.name }}Type
+        {%- elif input.dim_vec and input.dim_vec == 1 %}
+          const std::vector<{{ input.type }}> &
+        {%- elif input.point_vec and input.point_vec == 1 %}
+          const std::vector< std::vector<{{ input.type }}> > &
+        {%- elif local_ns.count == 2 and input.type == "Image" %}
+          {{ input.type }} &&
+        {%- else %}
+          const {{ input.type }} &
+        {%- endif %}
+        {{ input.name[0]|lower ~ input.name[1:] }}
+      {%- endif %}
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
+
+{#
+  Macro: image_parameters(number_of_inputs)
+  Generates a comma-separated list of input image parameters for the filter class constructor or methods.
+#}
+{% macro image_parameters(number_of_inputs) -%}
+  {%- for inum in range(1, number_of_inputs + 1) -%}
+    {%- if inum > 1 %}, {% endif -%}
+    const Image& image{{ inum }}
+  {%- endfor -%}
+{%- endmacro %}
+
+{#
+  Macro: input_parameters(inputs, number_of_inputs, name, no_optional)
+  Generates a comma-separated list of input parameters for the filter class constructor or methods.
+  Skips optional inputs if 'no_optional' is set to 1.
+  Handles enums, vectors, and types.
+#}
+{% macro input_parameters(inputs, number_of_inputs, name, no_optional) -%}
+  {%- if inputs -%}
+    {%- set local_ns = namespace(count=1) -%}
+    {%- for input in inputs -%}
+      {%- if not (input.optional and no_optional == 1) -%}
+        {%- if number_of_inputs > 0 or local_ns.count > 1 %}, {% endif -%}
+        {%- set local_ns.count = local_ns.count + 1 %}
+        {%- if not input.type and input.enum -%}
+          {{ name }}::{{ input.name }}Type
+        {%- elif input.dim_vec and input.dim_vec == 1 -%}
+          std::vector<{{ input.type }}>
+        {%- elif input.point_vec and input.point_vec == 1 -%}
+          std::vector< std::vector<{{ input.type }}> >
+        {%- else -%}
+          const {{ input.type }} &
+        {%- endif -%}
+        {{ input.name[0]|lower ~ input.name[1:] }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif %}
+{%- endmacro %}
+
+{#
+  Macro: input_parameters_internal(inputs, number_of_inputs, name)
+  Generates a comma-separated list of input parameters for internal methods.
+  Each parameter is a pointer type, with special handling for enums and vectors.
+#}
+{% macro input_parameters_internal(inputs, number_of_inputs, name) -%}
+  {%- if inputs %}
+    {%- for i in range(inputs|length) %}
+      {%- if number_of_inputs > 0 or i > 0 %}, {% endif -%}
+      {%- set input = inputs[i] %}
+      {%- if not input.type and input.enum %}
+        {{ name }}::{{ input.name }}Type
+      {%- elif input.dim_vec and input.dim_vec == 1 %}
+        const std::vector<{{ input.type }}> *
+      {%- elif input.point_vec and input.point_vec == 1 %}
+        const std::vector< std::vector<{{ input.type }}> > *
+      {%- else %}
+        const {{ input.type }} *
+      {%- endif %}
+      {{ input.name[0]|lower ~ input.name[1:] }}
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
+
+{#
+  Macro: member_parameters(members, number_of_inputs, name)
+  Generates a comma-separated list of member parameters for the filter class constructor or methods.
+  Handles enums, vectors, and types.
+#}
+{% macro member_parameters(members, number_of_inputs, name) -%}
+  {%- if members -%}
+    {%- for i in range(members|length) -%}
+      {%- set temp = number_of_inputs + (members|length if members else 0) -%}
+      {%- if temp > 0 or i > 0 %}, {% endif -%}
+      {%- set member = members[i] -%}
+      {%- if not member.type and member.enum -%}
+        {{ name }}::{{ member.name }}Type
+      {%- elif member.dim_vec and member.dim_vec == 1 %}
+        std::vector<{{ member.type }}>
+      {%- elif member.point_vec and member.point_vec == 1 -%}
+        std::vector< std::vector<{{ member.type }}> >
+      {%- else -%}
+        {{ member.type }}
+      {%- endif -%}
+      {{ " " ~member.name[0]|lower ~ member.name[1:] }}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endmacro %}
