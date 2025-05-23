@@ -136,6 +136,35 @@ class ImageReadWrite(unittest.TestCase):
         for p in out_path_series:
             self.assertTrue(p.exists())
 
+    def test_reader_kwargs(self):
+        """Test the new kwargs in the ReadImage method."""
+
+        # Create a series of 3 PNG files with different values
+        # NOTE: ITK had a bug with TIFFImageIO for reading series addressed in: InsightSoftwareConsortium/ITK#5355
+        z_size = 3
+        img = sitk.Image([32, 32, z_size], sitk.sitkUInt16)
+        for z in range(z_size):
+            img[:, :, z] = 1 + z * 5
+
+        file_paths = [
+            Path(self.test_dir) / f"test_reader_kwargs_{z}.png" for z in range(z_size)
+        ]
+        sitk.WriteImage(img, file_paths)
+
+        reversed_img = sitk.ReadImage(file_paths, reverseOrder=True, spacingWarningRelThreshold=0.0)
+
+        for z in range(z_size):
+            print(f"Original slice {z}: {sitk.Hash(img[:, :, z])}")
+            print(f"Reversed slice {-z-1}: {sitk.Hash(reversed_img[:, :, -z-1])}")
+            self.assertTrue(
+            sitk.Hash(img[:, :, z]) == sitk.Hash(reversed_img[:, :, -z-1])
+            )
+
+        # Test ReadImage with a nonsense keyword argument and expect and exception
+        with self.assertRaises(TypeError):
+            sitk.ReadImage(file_paths, nonsenseKwarg=True)
+
+
     def _read_write_test(self, img, tmp_filename):
         """ """
 
