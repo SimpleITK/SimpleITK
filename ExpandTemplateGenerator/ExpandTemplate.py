@@ -47,7 +47,12 @@ def regex_replace(s, find, replace):
         logging.error(f"Invalid regex pattern: {find}. Error: {e}")
         return s
 
-def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, clobber:bool=True):
+def format_list(list_, pattern):
+    """ Formats a list of strings using a given pattern.
+    """
+    return [pattern.format(s) for s in list_]
+
+def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, verbose= False, clobber:bool=True):
     """
     Expands a template using the provided JSON configuration and Jinja2.
 
@@ -69,11 +74,23 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
     env.filters['regex_replace'] = regex_replace
     env.filters['ruby_capitalize'] = ruby_capitalize
     env.filters['quote'] = quote_string
+    env.filters['format_list'] = format_list
 
-    template = env.get_template(str(template))
 
-    # Render the template with the filter description
-    output_content = template.render(filter_description)
+    try:
+        template_obj = env.get_template(str(template))
+
+        # Check if the template file exists
+        if not template_obj:
+            logging.error(f"Template file {template} not found in the specified directories.")
+            return -1
+
+
+        # Render the template with the filter description
+        output_content = template_obj.render(filter_description)
+    except Exception as e:
+        logging.error(f"Jinja2 error: {e}")
+        return -1
 
     if output_file.exists() and not clobber:
         logging.error(f"Output file {output_file} already exists and cannot be overwritten.")
@@ -99,6 +116,7 @@ def main() -> int:
     # add overwrite option defaulting to true and an additional no-overwrite option
     parser.add_argument("-o", "--overwrite", action='store_true', default=True, help="Overwrite the output file if it exists.")
     parser.add_argument("-n", "--no-overwrite", action='store_false', dest='overwrite', help="Do not overwrite the output file if it exists.")
+    parser.add_argument("-v", "--verbose", action='store_true', help="Enable verbose output.")
 
 
 
@@ -112,6 +130,7 @@ def main() -> int:
                     template,
                     args.template_dir,
                     args.output_file,
+                    verbose=args.verbose,
                     clobber=args.overwrite)
 
 if __name__ == "__main__":

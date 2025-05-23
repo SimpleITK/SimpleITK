@@ -1,0 +1,39 @@
+{#
+  This template generates private member variable declarations for each member and measurement.
+#}
+{% for member in members %}
+  {%- if member.doc %}
+  /* {{ member.doc }} */
+  {%- endif %}
+  {%- if not member.type and member.enum %}
+    {{ member.name }}Type m_{{ member.name }}{ {{ member.default }} };
+  {%- elif member.dim_vec and member.dim_vec == 1 %}
+    std::vector<{{ member.type }}> m_{{ member.name }}{ {{ member.default }} };
+  {%- elif member.point_vec and member.point_vec == 1 %}
+    std::vector< std::vector<{{ member.type }}> > m_{{ member.name }}{ {{ member.default }} };
+  {%- else %}
+    {{ member.type }} m_{{ member.name }}{ {{ member.default }} };
+  {%- endif %}
+{% endfor %}
+
+{# Measurements #}
+{%- for measurement in measurements %}
+  {%- if measurement.doc %}
+  /* {{ measurement.doc }} */
+  {%- endif %}
+  {%- if measurement.active %}
+    std::function<{{ measurement.type }}({% if measurement.parameters %}{% for param in measurement.parameters %}{{ param.type }}{{ ", " if not loop.last }}{% endfor %}{% endif %})> m_pfGet{{ measurement.name }};
+  {%- else %}
+    {{ measurement.type }} m_{{ measurement.name }}{ {{ measurement.default }} };
+  {%- endif %}
+{%- endfor %}
+{# If any measurement is active, add m_Filter #}
+{%- if measurements|selectattr('active')|list|length > 0 %}
+    // Holder of process object for active measurements
+    itk::ProcessObject *m_Filter{nullptr};
+{%- endif %}
+
+{# In-place logic #}
+{% if in_place %}
+      bool m_InPlace{false};
+{% endif %}

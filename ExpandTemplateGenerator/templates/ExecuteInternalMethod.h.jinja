@@ -1,0 +1,15 @@
+{% import "macros.jinja" as macros %}
+
+private:
+  /** Setup for member function dispatching */
+  using MemberFunctionType = {{ "void" if no_return_image else "Image" }} (Self::*)({{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters_internal(inputs, number_of_inputs, name) }});
+  template <class TImageType> {{ "void" if no_return_image else "Image" }} ExecuteInternal({{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters_internal(inputs, number_of_inputs, name) }});
+  {%- if vector_pixel_types_by_component %}
+    {%- if number_of_inputs > 1 %}
+      {# number_of_inputs must be 1 to use vector_pixel_types_by_component #}
+      {# This is an error in the original logic; review your configuration! #}
+    {%- else %}
+      /** Dispatched methods which calls ExecuteInternal on each component */
+      template <class TImageType> {{ "void" if no_return_image else "Image" }} ExecuteInternalVectorImage(const Image& image);
+    {%- endif %}
+  {%- endif %}

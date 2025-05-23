@@ -1,0 +1,84 @@
+/*=========================================================================
+*
+*  Copyright NumFOCUS
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*         http://www.apache.org/licenses/LICENSE-2.0.txt
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*
+*=========================================================================*/
+{% include "DoNotEditWarning.cxx.jinja" %}
+
+{% include "StandardIncludes.cxx.jinja" %}
+{% include "AddExtraIncludes.cxx.jinja" %}
+
+namespace itk::simple {
+
+//-----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+{% include "ConstructorSignature.cxx.jinja" %}
+{
+{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+
+{%- include "ConstructorVectorPixels.cxx.jinja" %}
+}
+
+{% include "DestructorDefinition.cxx.jinja" %}
+
+{% include "CustomMethods.cxx.jinja" %}
+
+//
+// ToString
+//
+{% include "ToStringSignature.cxx.jinja" %}
+{
+{% include "ToStringBody.cxx.jinja" %}
+{% include "ToStringReturn.cxx.jinja" %}
+}
+
+//
+// Execute
+//
+{% include "ExecuteNoParameters.cxx.jinja" %}
+
+//-----------------------------------------------------------------------------
+
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wunused-local-typedef");
+
+//
+// ExecuteInternal
+//
+{% include "ExecuteInternalSignature.cxx.jinja" %}
+{
+{%- include "ExecuteInternalTypedefs.cxx.jinja" %}
+
+{%- include "ExecuteInternalGetImagePointers.cxx.jinja" %}
+
+{%- include "ExecuteInternalITKFilter.cxx.jinja" %}
+
+{%- include "ExecuteInternalSetITKFilterInputs.cxx.jinja" %}
+{%- include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+}
+
+sitkClangDiagnosticPop();
+
+//-----------------------------------------------------------------------------
+
+{% include "ExecuteInternalVectorImages.cxx.jinja" %}
+{% if not no_procedure %}
+{% include "ProceduralAPI.cxx.jinja" %}
+{% endif %}
+
+}

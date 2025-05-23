@@ -1,0 +1,20 @@
+{% import "macros.jinja" as macros %}
+
+{{ "void" if no_return_image else "Image" }} {{ name }}::Execute ( {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) }} )
+{
+  Image &temp = {% if number_of_inputs >= 1 %}image1{% else %}{{ inputs[0].name[0]|lower ~ inputs[0].name[1:] }}{% endif %};
+  auto autoResetInPlace = make_scope_exit([this, &temp]{this->m_InPlace=false; Image moved(std::move(temp));});
+  if (temp.IsUnique())
+    {
+    m_InPlace = true;
+    }
+  return this->Execute( {{ range(1, number_of_inputs+1) | format_list('image{}') | join(', ') }}
+    {%- set comma = joiner(', ') -%}
+    {{ comma() if number_of_inputs }}
+    {%- for inp in inputs -%}
+        {%- if not (inp.optional and no_optional) -%}
+            {{- comma() -}}{{ inp.name[0]|lower ~ inp.name[1:] }}
+        {%- endif -%}
+    {%- endfor -%}
+  );
+}

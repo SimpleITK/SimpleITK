@@ -1,0 +1,26 @@
+{#
+  Generates a comma-separated list of member parameters with default values for the filter class constructor or methods.
+  Handles enums, vectors, and types. Skips optional inputs if 'no_optional' is set.
+#}
+{%- for i in range(members|length) -%}
+  {%- set local_ns = namespace(count = number_of_inputs) -%}
+  {%- if inputs -%}
+    {%- for input in inputs -%}
+      {%- if not (input.optional and no_optional) -%}
+        {%- set local_ns.count = local_ns.count + 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if local_ns.count > 0 or i > 0 -%}, {% endif -%}
+  {%- set member = members[i] -%}
+  {%- if not member.type and member.enum -%}
+    {{ name }}::{{ member.name }}Type
+  {%- elif member.dim_vec and member.dim_vec == 1 -%}
+    std::vector<{{ member.type }}>
+  {%- elif member.point_vec and member.point_vec == 1 -%}
+    std::vector< std::vector<{{ member.type }}> >
+  {%- else -%}
+    {{ member.type }}
+  {%- endif -%}
+  {{ " " ~ member.name[0]|lower ~ member.name[1:] }} = {{ member.default }}
+{%- endfor -%}

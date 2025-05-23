@@ -1,0 +1,17 @@
+{% for member in members %}
+  {%- if member.custom_itk_cast is defined %}
+  {{ member.custom_itk_cast }}
+  {%- elif member.dim_vec and member.dim_vec == 1 %}
+  {{ member.itk_type }} itkVec{{ member.name }} = sitkSTLVectorToITK<{{ member.itk_type }}>( this->Get{{ member.name }}() );
+  filter->Set{{ member.name }}( itkVec{{ member.name }} );
+  {%- elif member.pixeltype %}
+  filter->Set{{ member.name }}( static_cast< typename {{ member.pixeltype }}ImageType::PixelType >( this->m_{{ member.name }} ) );
+  {%- elif member.enum %}
+  filter->Set{{ member.name }}( {{ member.itk_type }}( int( this->m_{{ member.name }} ) ) );
+  {%- else %}
+  filter->Set{{ member.name }}( this->m_{{ member.name }} );
+  {%- endif %}
+{%- endfor %}
+{%- if in_place %}
+  filter->SetInPlace( m_InPlace );
+{%- endif %}
