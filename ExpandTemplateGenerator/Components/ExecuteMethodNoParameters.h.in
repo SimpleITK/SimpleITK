@@ -1,0 +1,30 @@
+$(if inputs then
+    for i =1,#inputs do
+      if inputs[i].optional then
+        has_optional_inputs=inputs[i].optional
+      end
+    end
+  end
+)
+      /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
+$(if in_place then
+  OUT=OUT..[[#ifndef SWIG
+      ]]
+  if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end OUT=OUT..[[ Execute ( $(include ImageRValueReferenceParameters.in)$(include InputRValueReferenceParameters.in) );
+]]
+end)$(if in_place and has_optional_inputs then
+    no_optional=1
+    OUT=OUT..[[
+      ]]
+    if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end OUT=OUT..[[ Execute ( $(include ImageRValueReferenceParameters.in)$(include InputRValueReferenceParameters.in) );
+]]
+end)$(if in_place then
+  OUT=OUT..[[
+#endif]]end)$(if inputs then no_optional=nil end)
+      $(if no_return_image then OUT="void" else OUT="Image" end) Execute ( $(include ImageParameters.in)$(include InputParameters.in) );
+$(if has_optional_inputs then
+  no_optional=1
+  OUT=[[      ]]
+  if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end OUT=OUT..[[ Execute ( $(include ImageParameters.in)$(include InputParameters.in) );
+]]
+end)$(if inputs then no_optional=nil end)

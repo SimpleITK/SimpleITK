@@ -1,0 +1,43 @@
+{% import "macros.jinja" as macros %}
+//
+// Function to run the Execute method of this filter
+//
+Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} (
+  {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) }}{{ macros.member_parameters(members, number_of_inputs, name, inputs) }}
+)
+{
+  {{ name }} filter;
+  {% for member in members %}
+    filter.Set{{ member.name }}(
+      {%- set member_name = member.name[0]|lower ~ member.name[1:] -%}
+      {%- if member.dim_vec or member.point_vec -%}
+        std::move({{ member_name }})
+      {%- else -%}
+        {{ member_name }}
+      {%- endif -%}
+    );
+  {% endfor %}
+  return filter.Execute(
+    {%- for inum in range(1, number_of_inputs+1) -%}
+      {%- if inum == 1 -%}
+        std::move(image1)
+      {%- else -%}
+        , image{{ inum }}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- set count = number_of_inputs %}
+    {%- if inputs %}
+      {%- for inum in range(inputs|length) %}
+        {%- set inp = inputs[inum] %}
+        {%- if not (inp.optional and no_optional) %}
+          {%- if count == 0 and inum == 0 %}
+            std::move({{ inp.name[0]|lower ~ inp.name[1:] }})
+          {%- else -%}
+            , {{ inp.name[0]|lower ~ inp.name[1:] }}
+          {%- endif -%}
+          {%- set count = count + 1 %}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  );
+}

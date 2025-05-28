@@ -1,0 +1,33 @@
+{% if custom_set_input %}
+  {{ custom_set_input }}
+{% else %}
+  {%- for nimg in range(1, number_of_inputs+1) %}
+  filter->SetInput( {{ nimg-1 }}, image{{ nimg }} );
+  {%- endfor %}
+{% endif %}
+
+{%- for inp in inputs %}
+  {%- if inp.optional %}
+  if ( in{{ inp.name }} != nullptr ) {
+  {%- else %}
+  assert( in{{ inp.name }} != nullptr );
+  {%- endif %}
+  {%- if inp.custom_itk_cast %}
+  {{ inp.custom_itk_cast }}
+  {%- elif inp.type == "Image" %}
+    {%- set input_type = 'typename FilterType::InputImageType' if loop.index0 == 0 else 'typename FilterType::' ~ inp.name ~ 'Type' %}
+  {{ input_type }}::ConstPointer image{{ loop.index }} = this->CastImageToITK<{{ input_type }}>( *in{{ inp.name }} );
+    {%- if loop.index0 == 0 %}
+  filter->SetInput( image1 );
+    {%- else %}
+    filter->Set{{ inp.name }}( image{{ loop.index }} );
+    {%- endif %}
+  {%- else %}
+  filter->Set{{ inp.name }}( in{{ inp.name }} );
+  {%- endif %}
+  {%- if inp.optional %}
+    }
+  {%- endif %}
+{%- endfor %}
+
+{%- include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}

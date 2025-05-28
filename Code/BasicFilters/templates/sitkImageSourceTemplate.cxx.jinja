@@ -1,0 +1,125 @@
+/*=========================================================================*
+*
+*  Copyright NumFOCUS
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*         http://www.apache.org/licenses/LICENSE-2.0.txt
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*
+*=========================================================================*/
+{% include "DoNotEditWarning.cxx.jinja" %}
+{% import "macros.jinja" as macros %}
+{% include "StandardIncludes.cxx.jinja" %}
+{% include "AddExtraIncludes.cxx.jinja" %}
+
+namespace itk::simple {
+
+//-----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+{% include "ConstructorSignature.cxx.jinja" %}
+{
+{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+
+{% include "ConstructorVectorPixels.cxx.jinja" %}
+}
+
+{% include "DestructorDefinition.cxx.jinja" %}
+
+//
+// ToString
+//
+{% include "ToStringSignature.cxx.jinja" %}
+{
+{% include "ToStringBody.cxx.jinja" %}
+{% include "ToStringReturn.cxx.jinja" %}
+}
+
+{% include "CustomMethods.cxx.jinja" %}
+
+//
+// Execute
+//
+Image {{ name }}::Execute ( {{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional) }} )
+{
+  PixelIDValueEnum type = m_OutputPixelType;
+  unsigned int dimension = m_Size.size();
+
+  {%- for inum in range(2, number_of_inputs+1) %}
+    if ( type != image{{ inum }}.GetPixelIDValue() || dimension != image{{ inum }}.GetDimension() ) { sitkExceptionMacro ( "Image{{ inum }} for {{ name }} doesn't match type or dimension!" ); }
+  {%- endfor %}
+
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )(
+    {%- for inum in range(1, number_of_inputs+1) -%}
+      {%- if inum > 1 %}, {% endif -%}
+      image{{ inum }}
+    {%- endfor -%}
+    {%- if inputs %}
+      {%- for inum in range(inputs|length) %}
+        {%- if number_of_inputs > 0 or inum > 0 %}, {% endif -%}
+        &{{ inputs[inum].name[0]|lower ~ inputs[inum].name[1:] }}
+      {%- endfor -%}
+    {%- endif -%}
+  );
+}
+
+//-----------------------------------------------------------------------------
+
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wunused-local-typedef");
+
+//
+// ExecuteInternal
+//
+{% include "ExecuteInternalSignature.cxx.jinja" %}
+{
+{% include "ExecuteInternalTypedefs.cxx.jinja" %}
+
+{% include "ExecuteInternalGetImagePointers.cxx.jinja" %}
+
+{% include "ExecuteInternalITKFilter.cxx.jinja" %}
+
+{% include "ExecuteInternalSetITKFilterInputs.cxx.jinja" %}
+{% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+}
+
+sitkClangDiagnosticPop();
+
+//-----------------------------------------------------------------------------
+
+{% include "ExecuteInternalVectorImages.cxx.jinja" %}
+
+//
+// Function to run the Execute method of this filter
+//
+Image {{ name|regex_replace('ImageSource$', 'Source')|regex_replace('Filter$', '') }} ( {{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional) }}{{ macros.member_parameters(members, number_of_inputs, name, inputs) }} )
+{
+  {{ name }} filter;
+  {% for member in members %}
+    filter.Set{{ member.name }}( {{ member.name[0]|lower ~ member.name[1:] }} );
+  {% endfor %}
+  return filter.Execute (
+    {%- for inum in range(1, number_of_inputs+1) -%}
+      {%- if inum > 1 %}, {% endif -%}
+      image{{ inum }}
+    {%- endfor -%}
+    {%- if inputs %}
+      {%- for inum in range(inputs|length) %}
+        {%- if number_of_inputs > 0 or inum > 0 %}, {% endif -%}
+        {{ inputs[inum].name[0]|lower ~ inputs[inum].name[1:] }}
+      {%- endfor -%}
+    {%- endif -%}
+  );
+}
+
+}

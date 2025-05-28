@@ -23,51 +23,24 @@
 #include <memory>
 
 #include "sitkBasicFilters.h"
-
-{#- Import parameter macros for use in this template -#}
-{% import "macros.jinja" as macros %}
-
 #include "sitkImageFilter.h"
 
 namespace itk::simple {
 
 {% include "ClassDeclaration.h.jinja" %}
 {% include "PublicDeclarations.h.jinja" %}
-
-
 {% include "MemberGetSetDeclarations.h.jinja" %}
 {% include "ClassNameAndPrint.h.jinja" %}
 
 {% include "ExecuteMethodNoParameters.h.jinja" -%}
-
 {%- include "CustomMethods.h.jinja" %}
-
 {% include "ExecuteInternalMethod.h.jinja" %}
-
 {% include "MemberFunctionDispatch.h.jinja" %}
-
 {% include "PrivateMemberDeclarations.h.jinja" %}
-
 };
 
-
-
-   /**
-{% if briefdescription and (briefdescription|length > 0) %}
-     * \brief {{ briefdescription }}
-{% else %}
-     * \brief itk::simple::{{ name }} Procedural Interface
+{% if not no_procedure %}
+{% include "ProceduralAPI.h.jinja" %}
 {% endif %}
-     *
-     * This function directly calls the execute method of {{ name }}
-     * in order to support a procedural API
-     *
-     * \sa itk::simple::{{ name }} for the object oriented interface
-     */
-SITKBasicFilters_EXPORT Image {{ name|regex_replace("ImageSource$", "Source")|regex_replace("(ImageFilter|Filter)$", "") }} (
-  {{ macros.image_parameters(number_of_inputs) }}
-  {{ macros.input_parameters(inputs, number_of_inputs, name, no_optional) }}
-  {% include "MemberParametersWithDefaults.jinja" %}
-);
 }
 #endif
