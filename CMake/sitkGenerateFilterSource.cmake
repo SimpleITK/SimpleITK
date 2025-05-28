@@ -1,47 +1,5 @@
 include("sitkCheckPythonModuleVersion")
 
-# Find a Lua executable
-#
-if ( NOT SimpleITK_LUA_EXECUTABLE )
-  set ( SAVE_LUA_EXECUTABLE ${LUA_EXECUTABLE} )
-  get_property( SAVE_LUA_EXECUTABLE_TYPE CACHE LUA_EXECUTABLE PROPERTY TYPE )
-  get_property( SAVE_LUA_EXECUTABLE_DOCSTRING CACHE LUA_EXECUTABLE PROPERTY HELPSTRING )
-  unset(LUA_EXECUTABLE CACHE)
-
-  if (CMAKE_VERSION VERSION_GREATER 3.19)
-    # support for ranges added in 3.19
-    find_package( LuaInterp 5.3...<5.5  REQUIRED )
-  else()
-    find_package( LuaInterp 5.3 REQUIRED )
-  endif ()
-  set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
-
-  if (DEFINED SAVE_LUA_EXECUTABLE)
-    set( LUA_EXECUTABLE ${SAVE_LUA_EXECUTABLE}
-      CACHE
-       ${SAVE_LUA_EXECUTABLE_TYPE}
-       ${SAVE_LUA_EXECUTABLE_DOCSTRING}
-       FORCE
-       )
-  else()
-    unset( LUA_EXECUTABLE CACHE )
-  endif()
-endif()
-
-# Get the Lua version
-#
-execute_process(
-  COMMAND ${SimpleITK_LUA_EXECUTABLE} -v
-  OUTPUT_VARIABLE
-    SimpleITK_LUA_EXECUTABLE_VERSION_STRING
-  ERROR_VARIABLE
-    SimpleITK_LUA_EXECUTABLE_VERSION_STRING
-  RESULT_VARIABLE
-    SITK_LUA_VERSION_RESULT_VARIABLE
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-  ERROR_STRIP_TRAILING_WHITESPACE
-  )
-
 # Find a Python executable for code generation
 ## If SimpleITK_Python_EXECUTABLE is defined, use it, otherwise use Python_EXECUTABLE or find it.
 if (DEFINED SimpleITK_Python_EXECUTABLE)
@@ -68,13 +26,6 @@ sitk_check_python_module_version(
   RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
 )
 
-# Check that the Lua version is acceptable
-#
-if( NOT SITK_LUA_VERSION_RESULT_VARIABLE )
-  string( REGEX MATCH "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
-    SimpleITK_LUA_EXECUTABLE_VERSION
-    "${SimpleITK_LUA_EXECUTABLE_VERSION_STRING}" )
-endif()
 sitk_check_python_module_version(
         MODULE_NAME jinja2
         MINIMUM_VERSION 3.1
@@ -83,14 +34,6 @@ sitk_check_python_module_version(
         RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
         REQUIRED
 )
-
-if( SITK_LUA_VERSION_RESULT_VARIABLE
-      OR
-    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_GREATER "5.2"
-      OR
-    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.5" )
-  message(SEND_ERROR "Lua version between 5.3 and 5.4 is required for SimpleITK_LUA_EXECUTABLE_VERSION.")
-endif()
 
 set(SimpleITK_TEMPLATE_PYTHON ${Python_EXECUTABLE})
 set(SimpleITK_EXPANSION_SCRIPT "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.py" CACHE INTERNAL
@@ -102,25 +45,23 @@ set(SimpleITK_EXPANSION_SCRIPT "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/
 #
 function( get_json_path out_var json_file path )
 
-  execute_process(COMMAND ${SimpleITK_LUA_EXECUTABLE}
-     ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/JSONQuery.lua
-     ${json_file}
-     ${path}
-     OUTPUT_VARIABLE value
-     RESULT_VARIABLE ret
-     ERROR_VARIABLE error_var)
 
+  execute_process(
+    COMMAND ${Python_EXECUTABLE} -c
+      "import sys, json; d=json.load(open(sys.argv[1])); v=d;\nfor k in sys.argv[2].split('.'):\n    v = v[k]\nprint(v)"
+      ${json_file} ${path}
+    OUTPUT_VARIABLE value
+    RESULT_VARIABLE ret
+    ERROR_VARIABLE error_var
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_STRIP_TRAILING_WHITESPACE
+  )
 
-   if ( NOT ${ret} )
-     string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${value}" )
-
-     if(_out)
-       set(${out_var} "${CMAKE_MATCH_1}" PARENT_SCOPE)
-     endif()
-
-   else()
-     message( WARNING ${error_var} )
-   endif()
+  if ( NOT ret )
+    set(${out_var} "${value}" PARENT_SCOPE)
+  else()
+    message( WARNING ${error_var} )
+  endif()
 
 endfunction()
 
@@ -164,8 +105,6 @@ function( expand_template FILENAME input_dir output_dir library_name )
 
 
   # Set common variables
-  set ( expand_template_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua )
-  set ( template_include_dir ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components )
   set ( jinja_include_dir ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/templates )
   set ( output_h "${output_dir}/include/sitk${FILENAME}.h" )
   set ( output_cxx "${output_dir}/src/sitk${FILENAME}.cxx" )
