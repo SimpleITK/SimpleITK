@@ -11,7 +11,7 @@
   {%- else %}
     filter->Set{{ member.name }}( this->m_{{ member.name }} );
   {%- endif %}
-{% endfor %}
-{% if in_place %}
+{%- endfor %}
+{%- if in_place %}
   filter->SetInPlace( m_InPlace );
-{% endif %}
+{%- endif %}

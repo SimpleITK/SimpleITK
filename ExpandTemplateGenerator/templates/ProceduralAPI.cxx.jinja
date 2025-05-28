@@ -10,11 +10,11 @@ Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} (
   {% for member in members %}
   filter.Set{{ member.name }}( {{ member.name[0]|lower ~ member.name[1:] }} );
   {%- endfor %}
-  return filter.Execute( {{ range(1, number_of_inputs+1) |  format_list('image%d') | join(', ') }}
-    {%- set need_comma = number_of_inputs>0 %}
+  return filter.Execute( {{ range(1, number_of_inputs+1) | format_list('image%d') | join(', ') }}
+    {%- set comma = joiner(', ') %}
     {%- for inp in inputs -%}
     {%- if not (inp.optional and no_optional) %}
-        {%- if not loop.first or need_comma%}, {% endif -%}
+        {{- comma() }}
         {{ inp.name[0]|lower ~ inp.name[1:] }}
     {%- endif -%}
     {%- endfor %} );
@@ -22,8 +22,8 @@ Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} (
 
 {# If in_place is set, include the rvalue reference overload #}
 {% if in_place %}
-  {% include "ProceduralAPIRValueReference.cxx.jinja" %}
-{% endif %}
+  {%- include "ProceduralAPIRValueReference.cxx.jinja" %}
+{%- endif %}
 
 {# If there are optional inputs and not no_optional, recursively include this template with no_optional=1 #}
 {% if inputs and not no_procedure %}
@@ -32,4 +32,4 @@ Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} (
     {%- set no_optional = 1 %}
     {%- include "ProceduralAPI.cxx.jinja" %}
   {%- endif %}
-{% endif %}
+{%- endif %}

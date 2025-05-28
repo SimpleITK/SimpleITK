@@ -1,14 +1,11 @@
 {% if filter_type %}
-using FilterType = {{ filter_type }};
+  using FilterType = {{ filter_type }};
 {% else %}
-using FilterType = {% if itk_name %}itk::{{ itk_name }}<InputImageType,{% else %} itk::{{ name }}<InputImageType,{% endif %}
-  {% if number_of_inputs == 2 or (inputs and inputs|length == 2) %}
+  using FilterType = itk::{{ itk_name|default(name) }}<InputImageType,
+  {%- if number_of_inputs == 2 or inputs|length == 2 %}
     InputImageType2,
-  {% endif %}
-  {% if additional_template_types %}
-    {# TODO: Handle additional_template_types #}
-  {% endif %}
+  {%- endif %}
   OutputImageType>;
 {% endif %}
-// Set up the ITK filter
-typename FilterType::Pointer filter = FilterType::New();
+  // Set up the ITK filter
+  typename FilterType::Pointer filter = FilterType::New();

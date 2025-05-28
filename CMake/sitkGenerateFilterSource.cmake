@@ -171,28 +171,13 @@ function( expand_template FILENAME input_dir output_dir library_name )
     DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.h.jinja
   )
 
-  set(jinja_templates "ImageFilter" "MultiInputImageFilter" "ImageSource" "DualImageFilter")
-
-  if (template_code_filename IN_LIST jinja_templates)
-    # impl
-    add_custom_command (
-      OUTPUT "${output_cxx}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-      COMMAND ${Python_EXECUTABLE} ${python_expansion_script} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
-      DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.cxx.jinja
-      )
-  else()
-
   # impl
-    add_custom_command (
-     OUTPUT "${output_cxx}"
-     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-     COMMAND ${SimpleITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
-     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
+  add_custom_command (
+    OUTPUT "${output_cxx}"
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
+    COMMAND ${Python_EXECUTABLE} ${python_expansion_script} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
+    DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.cxx.jinja
     )
-  endif()
-
-
 
   set ( ${library_name}GeneratedHeader ${${library_name}GeneratedHeader}
     "${output_h}" CACHE INTERNAL "" )

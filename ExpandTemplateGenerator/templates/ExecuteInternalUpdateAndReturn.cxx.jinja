@@ -20,9 +20,9 @@
   {% endif %}
 {% endif %}
 
-this->PreUpdate( filter.GetPointer() );
+  this->PreUpdate( filter.GetPointer() );
 
-{% if measurements %}
+{%- if measurements %}
   {%- for m in measurements -%}
     {% if m.active %}
       this->m_pfGet{{ m.name }} = [
@@ -59,10 +59,10 @@ this->PreUpdate( filter.GetPointer() );
   {%- endfor -%}
 {%- endif %}
 
-// Run the ITK filter and return the output as a SimpleITK image
-filter->Update();
+  // Run the ITK filter and return the output as a SimpleITK image
+  filter->Update();
 
-{% if measurements %}
+{%- if measurements %}
   {% for m in measurements %}
     {% if not m.active and m.custom_itk_cast %}
       {{ m.custom_itk_cast }}

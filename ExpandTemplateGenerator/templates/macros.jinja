@@ -1,7 +1,7 @@
 {#
   Macro: image_rvalue_reference_parameters(number_of_inputs)
   Generates a comma-separated list of rvalue reference image parameters for the filter class constructor or methods.
-#}{{ range(1, number_of_inputs+1) | format_list('image%d') | join(', ') }}
+#}
 {% macro image_rvalue_reference_parameters(number_of_inputs) -%}
   {{- "Image&& image1" if number_of_inputs >= 1 -}}
   {{- range(2, number_of_inputs+1) | format_list(', const Image &image%d') | join('') -}}
@@ -27,9 +27,9 @@
         {{ input.type }} &&
       {%- else -%}
         const {{ input.type }} &
-      {%- endif %}
+      {%- endif -%}
       {{ input.name[0]|lower ~ input.name[1:] }}
-    {%- endif %}
+    {%- endif -%}
   {%- endfor %}
 {%- endmacro %}
 
