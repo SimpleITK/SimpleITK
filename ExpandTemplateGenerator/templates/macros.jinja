@@ -18,7 +18,7 @@
   {%- if inputs %}
     {%- set local_ns = namespace(count=1) %}
     {%- for input in inputs %}
-      {%- if not (input.optional and no_optional == 1) %}
+      {%- if not (input.optional and no_optional) %}
         {%- if number_of_inputs > 0 or local_ns.count > 1 %}, {% endif -%}
         {%- set local_ns.count = local_ns.count + 1 %}
         {%- if not input.type and input.enum %}
@@ -59,7 +59,7 @@
   {%- if inputs -%}
     {%- set local_ns = namespace(count=1) -%}
     {%- for input in inputs -%}
-      {%- if not (input.optional and no_optional == 1) -%}
+      {%- if not (input.optional and no_optional) -%}
         {%- if number_of_inputs > 0 or local_ns.count > 1 %}, {% endif -%}
         {%- set local_ns.count = local_ns.count + 1 %}
         {%- if not input.type and input.enum -%}
@@ -106,10 +106,10 @@
   Generates a comma-separated list of member parameters for the filter class constructor or methods.
   Handles enums, vectors, and types.
 #}
-{% macro member_parameters(members, number_of_inputs, name) -%}
+{% macro member_parameters(members, number_of_inputs, name, inputs) -%}
   {%- if members -%}
-    {%- for i in range(members|length) -%}
-      {%- set temp = number_of_inputs + (members|length if members else 0) -%}
+    {%- set temp = number_of_inputs + inputs|length -%}
+    {% for i in range(members|length) -%}
       {%- if temp > 0 or i > 0 %}, {% endif -%}
       {%- set member = members[i] -%}
       {%- if not member.type and member.enum -%}

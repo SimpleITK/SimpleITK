@@ -11,11 +11,13 @@
      * \sa itk::simple::{{ name }} for the object oriented interface
      * @{ */
 {% import "macros.jinja" as macros %}
+{%- set has_optional_inputs = inputs | selectattr('optional') | list | length > 0 %}
 {% if in_place %}
 #ifndef SWIG
 SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(
     {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) }}{% include "MemberParametersWithDefaults.jinja" %}
 );
+
 {% if has_optional_inputs %}
 SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(
     {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, 1) }}{% include "MemberParametersWithDefaults.jinja" %}

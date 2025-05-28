@@ -72,7 +72,7 @@
 
   {%- if member.point_vec and member.point_vec == 1 %}
     /** \brief Add {{ member.name }} point */
-    SITK_RETURN_SELF_TYPE_HEADER Add{{ member.name|regex_replace('List$', '')|regex_replace('s(\d?)$', '\1') }}( std::vector< {{ member.type }} > point ) { this->m_{{ member.name }}.push_back(std::move(point)); return *this;}
+    SITK_RETURN_SELF_TYPE_HEADER Add{{ member.name|regex_replace('List$', '')|regex_replace('s(\d?)$', '\\1') }}( std::vector< {{ member.type }} > point ) { this->m_{{ member.name }}.push_back(std::move(point)); return *this;}
     /** \brief Remove all {{ member.name }} points */
     SITK_RETURN_SELF_TYPE_HEADER Clear{{ member.name|regex_replace('List$', 's') }}( ) { this->m_{{ member.name }}.clear(); return *this;}
   {%- endif %}
