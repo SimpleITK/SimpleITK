@@ -1,4 +1,3 @@
-
 # Find a Lua executable
 #
 if ( NOT SimpleITK_LUA_EXECUTABLE )
@@ -57,6 +56,9 @@ if( SITK_LUA_VERSION_RESULT_VARIABLE
   message(SEND_ERROR "Lua version between 5.3 and 5.4 is required for SimpleITK_LUA_EXECUTABLE_VERSION.")
 endif()
 
+set(SimpleITK_TEMPLATE_PYTHON ${Python_EXECUTABLE})
+set(python_expansion_script "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.py")
+
 # Sets "out_var" variable name to the value in the json path specified
 # to the json file name. If an error is encountered than the variable
 # is not updated.
@@ -109,26 +111,6 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
     # Get dependencies template files
     ######
 
-    set(cache_var "_${template_file_h}_${template_file_cxx}_components_cache")
-    if ( NOT ${cache_var} )
-
-      # Get the contents of the file
-      file(READ ${template_file_h} h_contents)
-      file(READ ${template_file_cxx} cxx_contents)
-
-      # For each component, see if it appears in the body of the template file
-      foreach(component ${template_components})
-
-        # Get the filename without the path
-        get_filename_component( filename ${component} NAME )
-
-        if("${h_contents}" MATCHES ".*${filename}.*" OR
-            "${cxx_contents}" MATCHES ".*${filename}.*")
-          set(${cache_var} ${${cache_var}} ${component})
-        endif()
-
-      endforeach(component)
-    endif()
     set (${out_var_name} ${${cache_var}} )
 
   else()
@@ -147,6 +129,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua )
   set ( template_include_dir ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components )
+  set ( jinja_include_dir ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/templates )
   set ( output_h "${output_dir}/include/sitk${FILENAME}.h" )
   set ( output_cxx "${output_dir}/src/sitk${FILENAME}.cxx" )
 
@@ -176,21 +159,40 @@ function( expand_template FILENAME input_dir output_dir library_name )
     set ( JSON_VALIDATE_COMMAND COMMAND "${Python_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py" "${input_json_file}" )
   endif ()
 
+  # glob on jinja files in ${jinja_include_dir}
+  file(GLOB_RECURSE jinja_files "${jinja_include_dir}/*.jinja")
+
   # header
   add_custom_command (
     OUTPUT "${output_h}"
     ${JSON_VALIDATE_COMMAND}
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_h}
-    COMMAND ${SimpleITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
-    DEPENDS ${input_json_file} ${template_deps} ${template_file_h}
-    )
+    COMMAND ${Python_EXECUTABLE} ${python_expansion_script} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.h.jinja ${output_h}
+    DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.h.jinja
+  )
+
+  set(jinja_templates "ImageFilter" "MultiInputImageFilter" "ImageSource" "DualImageFilter")
+
+  if (template_code_filename IN_LIST jinja_templates)
+    # impl
+    add_custom_command (
+      OUTPUT "${output_cxx}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
+      COMMAND ${Python_EXECUTABLE} ${python_expansion_script} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
+      DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.cxx.jinja
+      )
+  else()
+
   # impl
-  add_custom_command (
-    OUTPUT "${output_cxx}"
-    COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-    COMMAND ${SimpleITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
-    DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
+    add_custom_command (
+     OUTPUT "${output_cxx}"
+     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
+     COMMAND ${SimpleITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
+     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
+  endif()
+
+
 
   set ( ${library_name}GeneratedHeader ${${library_name}GeneratedHeader}
     "${output_h}" CACHE INTERNAL "" )
