@@ -1,9 +1,0 @@
-$(if number_of_inputs > 0 then
-OUT=[[
-  // Get the pointer to the ITK image contained in image1
-  typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
-]] end)$(for nimg=2,number_of_inputs do
-OUT = OUT .. '  // Get the a pointer to the ITK image contained in image' .. nimg .. '\n'
-OUT = OUT .. '  typename InputImageType' .. nimg .. '::ConstPointer image' .. nimg .. ' ='
-  .. ' this->CastImageToITK<InputImageType' .. nimg .. '>( inImage' .. nimg .. ' );\n'
-end)
