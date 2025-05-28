@@ -13,7 +13,7 @@
     {
       "name" : "NumberOfIterations",
       "type" : "int",
-      "default" : "1",
+      "default" : 1,
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the number of iterations.",
       "briefdescriptionGet" : "",
