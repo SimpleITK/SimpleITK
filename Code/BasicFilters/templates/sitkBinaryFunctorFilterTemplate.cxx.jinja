@@ -169,9 +169,7 @@ Image {{ name | regex_replace('ImageFilter$', '') | regex_replace('Filter$', '')
     {%- endfor %} );
 }
 
-
-
-Image {{ name | regex_replace('ImageFilter$', '') | regex_replace('Filter$', '') }} ( const Image&& image1, {{ constant_type }} constant{{ macros.member_parameters(members, number_of_inputs, name, inputs) }} )
+Image {{ name | regex_replace('ImageFilter$', '') | regex_replace('Filter$', '') }} ( Image&& image1, {{ constant_type }} constant{{ macros.member_parameters(members, number_of_inputs, name, inputs) }} )
 {
     {{ name }} filter;
     return filter.Execute ( std::move(image1), constant{% for member in members -%}
@@ -179,7 +177,7 @@ Image {{ name | regex_replace('ImageFilter$', '') | regex_replace('Filter$', '')
     {%- endfor %} );
 }
 
-Image {{ name | regex_replace('ImageFilter$', '') | regex_replace('Filter$', '') }} ( {{ constant_type }} constant, const Image&& image2{{ macros.member_parameters(members, number_of_inputs, name, inputs) }} )
+Image {{ name | regex_replace('ImageFilter$', '') | regex_replace('Filter$', '') }} ( {{ constant_type }} constant, const Image& image2{{ macros.member_parameters(members, number_of_inputs, name, inputs) }} )
 {
     {{ name }} filter;
     return filter.Execute ( constant, image2 {% for member in members -%}

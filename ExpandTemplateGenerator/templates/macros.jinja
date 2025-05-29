@@ -48,16 +48,16 @@
   Handles enums, vectors, and types.
 #}
 {% macro input_parameters(inputs, number_of_inputs, name, no_optional) -%}
-  {% set comma = joiner(', ') %}
+  {%- set comma = joiner(', ') -%}
   {{- comma() if number_of_inputs -}}
   {%- for input in inputs -%}
     {%- if not (input.optional and no_optional) -%}
       {{- comma() -}}
       {%- if not input.type and input.enum -%}
         {{ name }}::{{ input.name }}Type
-      {%- elif input.dim_vec and input.dim_vec == 1 -%}
+      {%- elif input.dim_vec -%}
         std::vector<{{ input.type }}>
-      {%- elif input.point_vec and input.point_vec == 1 -%}
+      {%- elif input.point_vec -%}
         std::vector< std::vector<{{ input.type }}> >
       {%- else -%}
         const {{ input.type }} &
@@ -75,17 +75,17 @@
 {% macro input_parameters_internal(inputs, number_of_inputs, name) -%}
   {%- set comma = joiner(', ') -%}
   {{- comma() if number_of_inputs -}}
-  {%- for input in inputs %}
+  {%- for input in inputs -%}
     {{- comma() -}}
-    {%- if not input.type and input.enum %}
+    {%- if not input.type and input.enum -%}
       {{ name }}::{{ input.name }}Type
-    {%- elif input.dim_vec and input.dim_vec == 1 %}
+    {%- elif input.dim_vec -%}
       const std::vector<{{ input.type }}> *
-    {%- elif input.point_vec and input.point_vec == 1 %}
+    {%- elif input.point_vec -%}
       const std::vector< std::vector<{{ input.type }}> > *
-    {%- else %}
+    {%- else -%}
       const {{ input.type }} *
-    {%- endif %}
+    {%- endif -%}
     {{ input.name[0]|lower ~ input.name[1:] }}
   {%- endfor -%}
 {%- endmacro %}
@@ -102,9 +102,9 @@
     {{- comma() -}}
     {%- if not member.type and member.enum -%}
       {{ name }}::{{ member.name }}Type
-    {%- elif member.dim_vec and member.dim_vec == 1 %}
+    {%- elif member.dim_vec -%}
       std::vector<{{ member.type }}>
-    {%- elif member.point_vec and member.point_vec == 1 -%}
+    {%- elif member.point_vec -%}
       std::vector< std::vector<{{ member.type }}> >
     {%- else -%}
       {{ member.type }}

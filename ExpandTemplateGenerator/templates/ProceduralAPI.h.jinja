@@ -1,5 +1,5 @@
 /**
-{% if briefdescription and briefdescription|length > 0 %}
+{% if briefdescription %}
      * \brief {{ briefdescription }}
 {% else %}
      * \brief itk::simple::{{ name }} Procedural Interface
@@ -23,7 +23,7 @@ SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '')
     {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, 1) }}{% include "MemberParametersWithDefaults.jinja" %}
 );
 {% endif %}
-    #endif
+#endif
 {% endif %}
 SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(
     {{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional) }}{% include "MemberParametersWithDefaults.jinja" %}

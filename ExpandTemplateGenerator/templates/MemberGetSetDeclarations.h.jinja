@@ -5,113 +5,113 @@
 #}
 {% for member in members %}
   {%- if member.enum %}
-    typedef enum {
-      {%- for value in member.enum %}
-        {{ value }}{{ "," if not loop.last }}
-      {%- endfor %}
-    } {{ member.type if member.type else member.name ~ 'Type' }};
+    typedef enum { {{ member.enum | join(', ') }} } {{ member.type if member.type else member.name ~ 'Type' }};
   {%- endif %}
 
-  {%- if not member.no_set_method or member.no_set_method == 0 %}
-    /**
+  {%- if not member.no_set_method %}
+  /**
     {%- if member.briefdescriptionSet %}
-     * \brief {{ member.briefdescriptionSet }}
+   * \brief {{ member.briefdescriptionSet }}
     {%- endif %}
     {%- if member.detaileddescriptionSet %}
-     * {{ member.detaileddescriptionSet }}
+   * {{ member.detaileddescriptionSet }}
     {%- endif %}
-     */
-    SITK_RETURN_SELF_TYPE_HEADER Set{{ member.name }}(
-      {%- if not member.type and member.enum %}
+   */
+  SITK_RETURN_SELF_TYPE_HEADER
+  Set{{ member.name }}(
+      {%- if not member.type and member.enum -%}
         {{ member.name }}Type
-      {%- elif member.dim_vec and member.dim_vec == 1 %}
+      {%- elif member.dim_vec -%}
         std::vector<{{ member.type }}>
-      {%- elif member.point_vec and member.point_vec == 1 %}
+      {%- elif member.point_vec -%}
         std::vector< std::vector<{{ member.type }}> >
-      {%- else %}
+      {%- else -%}
         {{ member.type }}
       {%- endif %}
-      {{ " " }}{{ member.name }} )
-    {%- if member.dim_vec and member.dim_vec == 1 or member.point_vec and member.point_vec == 1 %}
-      { this->m_{{ member.name }} = std::move({{ member.name }}); return *this; }
+      {{- " " ~ member.name }} )
+    {%- if member.dim_vec or member.point_vec %}
+    { this->m_{{ member.name }} = std::move({{ member.name }}); return *this; }
     {%- else %}
-      { this->m_{{ member.name }} = {{ member.name }}; return *this; }
+    { this->m_{{ member.name }} = {{ member.name }}; return *this; }
+    {%- endif -%}
+
+    {%- if member.dim_vec and member.set_as_scalar %}
+
+  /** Set the values of the {{ member.name }} vector all to value */
+  SITK_RETURN_SELF_TYPE_HEADER
+  Set{{ member.name }}( {{ member.type }} value ) { this->m_{{ member.name }} = std::vector<{{ member.type }}>(3, value); return *this; }
     {%- endif %}
-    ;
-    {%- if member.dim_vec and member.set_as_scalar == 1 %}
-      /** Set the values of the {{ member.name }} vector all to value */
-      SITK_RETURN_SELF_TYPE_HEADER Set{{ member.name }}( {{ member.type }} value ) { this->m_{{ member.name }} = std::vector<{{ member.type }}>(3, value); return *this; }
-    {%- endif %}
-    {%- if member.type == "bool" and (not member.dim_vec or not member.dim_vec == 1) %}
-      /** Set the value of {{ member.name }} to true or false respectfully. */
-      SITK_RETURN_SELF_TYPE_HEADER {{ member.name }}On() { return this->Set{{ member.name }}(true); }
-      SITK_RETURN_SELF_TYPE_HEADER {{ member.name }}Off() { return this->Set{{ member.name }}(false); }
+    {%- if member.type == "bool" and not member.dim_vec %}
+
+  /** Set the value of {{ member.name }} to true or false respectfully. */
+  SITK_RETURN_SELF_TYPE_HEADER
+  {{ member.name }}On() { return this->Set{{ member.name }}(true); }
+  SITK_RETURN_SELF_TYPE_HEADER
+  {{ member.name }}Off() { return this->Set{{ member.name }}(false); }
     {%- endif %}
   {%- endif %}
 
-  {%- if not member.no_get_method or member.no_get_method == 0 %}
-    /**
+  {%- if not member.no_get_method %}
+  /**
     {%- if member.briefdescriptionGet %}
-     * \brief {{ member.briefdescriptionGet }}
+   * \brief {{ member.briefdescriptionGet }}
     {%- endif %}
     {%- if member.detaileddescriptionGet %}
-     * {{ member.detaileddescriptionGet }}
+   * {{ member.detaileddescriptionGet }}
     {%- endif %}
-     */
+   */
     {%- if not member.type and member.enum %}
-      {{ member.name }}Type
-    {%- elif member.dim_vec and member.dim_vec == 1 %}
-      std::vector<{{ member.type }}>
-    {%- elif member.point_vec and member.point_vec == 1 %}
-      std::vector< std::vector< {{ member.type }} > >
+  {{ member.name }}Type
+    {%- elif member.dim_vec %}
+  std::vector<{{ member.type }}>
+    {%- elif member.point_vec %}
+  std::vector< std::vector< {{ member.type }} > >
     {%- else %}
-      {{ member.type }}
+  {{ member.type }}
     {%- endif %}
-    Get{{ member.name }}() const { return this->m_{{ member.name }}; }
+  Get{{ member.name }}() const { return this->m_{{ member.name }}; }
   {%- endif %}
 
-  {%- if member.point_vec and member.point_vec == 1 %}
-    /** \brief Add {{ member.name }} point */
-    SITK_RETURN_SELF_TYPE_HEADER Add{{ member.name|regex_replace('List$', '')|regex_replace('s(\d?)$', '\\1') }}( std::vector< {{ member.type }} > point ) { this->m_{{ member.name }}.push_back(std::move(point)); return *this;}
-    /** \brief Remove all {{ member.name }} points */
-    SITK_RETURN_SELF_TYPE_HEADER Clear{{ member.name|regex_replace('List$', 's') }}( ) { this->m_{{ member.name }}.clear(); return *this;}
+  {%- if member.point_vec %}
+  /** \brief Add {{ member.name }} point */
+  SITK_RETURN_SELF_TYPE_HEADER
+  Add{{ member.name|regex_replace('List$', '')|regex_replace('s(\d?)$', '\\1') }}( std::vector< {{ member.type }} > point ) { this->m_{{ member.name }}.push_back(std::move(point)); return *this;}
+  /** \brief Remove all {{ member.name }} points */
+  SITK_RETURN_SELF_TYPE_HEADER
+  Clear{{ member.name|regex_replace('List$', 's') }}( ) { this->m_{{ member.name }}.clear(); return *this;}
   {%- endif %}
 {% endfor %}
 
-{# Measurements block #}
-{% if measurements %}
-  {% for measurement in measurements %}
-    /**
-    {%- if measurement.briefdescriptionGet %} \brief {{ measurement.briefdescriptionGet }}{% endif %}
-    {%- if measurement.detaileddescriptionGet %}
-     * {{ measurement.detaileddescriptionGet }}
-    {%- endif %}
-     *
-    {%- if measurement.active %}
-     * This is an active measurement. It may be accessed while the
-     * filter is being executing in command call-backs and can be
-     * accessed after execution.
-    {%- else %}
-     * This is a measurement. Its value is updated in the Execute
-     * methods, so the value will only be valid after an execution.
-    {%- endif %}
-     */
-    {%- if measurement.active %}
-      {{ measurement.type }} {{ measurement.function_name if measurement.function_name else 'Get' ~ measurement.name }}(
-        {%- if measurement.parameters %}
-          {%- for param in measurement.parameters %}
-            {{ param.type }} {{ param.name }}{{ ", " if not loop.last }}
-          {%- endfor %}
-        {%- endif %}
-      ){{ '' if measurement.non_const else ' const' }} { return this->m_pfGet{{ measurement.name }}(
-        {%- if measurement.parameters %}
-          {%- for param in measurement.parameters %}
-            {{ param.name }}{{ ", " if not loop.last }}
-          {%- endfor %}
-        {%- endif %}
-      ); };
-    {%- else %}
-      {{ measurement.type }} Get{{ measurement.name }}() const { return this->m_{{ measurement.name }}; };
-    {%- endif %}
-  {% endfor %}
-{% endif %}
+{#- Measurements block #}
+{% for measurement in measurements %}
+  /**
+  {%- if measurement.briefdescriptionGet %} \brief {{ measurement.briefdescriptionGet }}{% endif %}
+  {%- if measurement.detaileddescriptionGet %}
+   * {{ measurement.detaileddescriptionGet }}
+  {%- endif %}
+   *
+  {%- if measurement.active %}
+   * This is an active measurement. It may be accessed while the
+   * filter is being executing in command call-backs and can be
+   * accessed after execution.
+  {%- else %}
+   * This is a measurement. Its value is updated in the Execute
+   * methods, so the value will only be valid after an execution.
+  {%- endif %}
+   */
+  {%- if measurement.active %}
+  {{ measurement.type }} {{ measurement.function_name if measurement.function_name else 'Get' ~ measurement.name }}(
+    {%- if measurement.parameters -%}
+      {%- for param in measurement.parameters -%}
+          {{- param.type }} {{ param.name }}{{ ", " if not loop.last }}
+      {%- endfor %}
+    {%- endif -%}
+    ){{ 'const' if not measurement.non_const }} { return this->m_pfGet{{ measurement.name }}(
+    {%- if measurement.parameters %}
+      {{- measurement.parameters | map(attribute='name') | join(', ') }}
+    {%- endif -%}
+    ); }
+  {%- else %}
+  {{ measurement.type }} Get{{ measurement.name }}() const { return this->m_{{ measurement.name }}; }
+  {%- endif %}
+{% endfor %}

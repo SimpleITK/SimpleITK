@@ -1,7 +1,4 @@
-{% if include_files and include_files|length > 0 %}
-// Additional include files
-{% for file in include_files -%}
+{% for file in include_files %}
+{{- "// Additional include files" if loop.first }}
 #include "{{ file }}"
-{% endfor %}
-// Done with additional include files
-{% endif %}
+{%- endfor %}

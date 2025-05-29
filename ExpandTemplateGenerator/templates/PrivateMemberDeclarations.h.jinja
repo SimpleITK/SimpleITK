@@ -17,25 +17,21 @@
 {% endfor %}
 
 {# Measurements #}
-{% set has_active_measurement = false %}
-{% if measurements %}
-  {% for measurement in measurements %}
-    {%- if measurement.doc %}
-    /* {{ measurement.doc }} */
-    {%- endif %}
-    {%- if measurement.active %}
-      std::function<{{ measurement.type }}({% if measurement.parameters %}{% for param in measurement.parameters %}{{ param.type }}{{ ", " if not loop.last }}{% endfor %}{% endif %})> m_pfGet{{ measurement.name }};
-      {% set has_active_measurement = true %}
-    {%- else %}
-      {{ measurement.type }} m_{{ measurement.name }}{ {{ measurement.default }} };
-    {%- endif %}
-  {% endfor %}
-  {# If any measurement is active, add m_Filter #}
-  {% if measurements|selectattr('active')|list|length > 0 %}
-      // Holder of process object for active measurements
-      itk::ProcessObject *m_Filter{nullptr};
-  {% endif %}
-{% endif %}
+{%- for measurement in measurements %}
+  {%- if measurement.doc %}
+  /* {{ measurement.doc }} */
+  {%- endif %}
+  {%- if measurement.active %}
+    std::function<{{ measurement.type }}({% if measurement.parameters %}{% for param in measurement.parameters %}{{ param.type }}{{ ", " if not loop.last }}{% endfor %}{% endif %})> m_pfGet{{ measurement.name }};
+  {%- else %}
+    {{ measurement.type }} m_{{ measurement.name }}{ {{ measurement.default }} };
+  {%- endif %}
+{%- endfor %}
+{# If any measurement is active, add m_Filter #}
+{%- if measurements|selectattr('active')|list|length > 0 %}
+    // Holder of process object for active measurements
+    itk::ProcessObject *m_Filter{nullptr};
+{%- endif %}
 
 {# In-place logic #}
 {% if in_place %}
