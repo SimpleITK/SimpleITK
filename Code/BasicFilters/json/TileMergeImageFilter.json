@@ -1,0 +1,66 @@
+{
+  "name": "TileMergeImageFilter",
+  "template_code_filename": "ImageFilter",
+  "template_test_filename": "ImageFilter",
+  "no_procedure": "1",
+  "number_of_inputs": 0,
+  "pixel_types": "BasicPixelIDTypeList",
+  "output_image_type": "TImageType",
+  "filter_type": "itk::TileMergeImageFilter<TImageType>",
+  "include_files": [
+    "sitkImageConvert.hxx"
+  ],
+  "inputs": [
+    {
+      "name": "Montage",
+      "type": "object",
+      "custom_itk_cast": "filter->SetMontage( this->CastToITKMontage(*inMontage) );"
+    }
+  ],
+  "members": [
+    {
+      "name": "MontageSize",
+      "type": "uint32_t",
+      "dim_vec": 1,
+      "itk_type" : "typename FilterType::SizeType",
+      "detaileddescriptionSet": "Set the size of the image mosaic (number of tiles in each dimension).",
+      "detaileddescriptionGet": "Get the size of the image mosaic (number of tiles in each dimension)."
+    },
+    {
+      "name": "Background",
+      "type": "PixelType",
+      "default": "0",
+      "detaileddescriptionSet": "Set the background value for regions not covered by any input tile.",
+      "detaileddescriptionGet": "Get the background value for regions not covered by any input tile."
+    },
+    {
+      "name": "CropToFill",
+      "type": "bool",
+      "default": false,
+      "detaileddescriptionSet": "Set whether the output image is cropped to only include regions covered by input tiles.",
+      "detaileddescriptionGet": "Get whether the output image is cropped to only include regions covered by input tiles."
+    }
+  ],
+  "parent_members": [
+    {
+      "name": "SetInputTile",
+      "type": "function",
+      "detaileddescriptionSet": "Set an input tile at a given position or index in the montage."
+    },
+    {
+      "name": "SetTileTransform",
+      "type": "function",
+      "detaileddescriptionSet": "Set the transform for a specific tile in the montage."
+    },
+    {
+      "name": "SetOriginAdjustment",
+      "type": "function",
+      "detaileddescriptionSet": "Set the origin adjustment for the montage."
+    }
+  ],
+  "briefdescription": "Resamples an n-Dimensional mosaic of images into a single composite image.",
+  "detaileddescription": "TileMergeImageFilter resamples a mosaic of images (tiles) into a single composite image. It supports background filling, cropping to filled regions, and setting transforms for each tile. Inherits montage management and tile input methods from TileMontage.",
+  "itk_module": "XXMontage",
+  "itk_group": "Montage",
+  "in_place": false
+}

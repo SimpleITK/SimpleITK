@@ -1,0 +1,82 @@
+{
+  "name": "PhaseCorrelationImageRegistrationMethod",
+  "template_code_filename": "ImageFilter",
+  "template_test_filename": "ImageFilter",
+  "no_procedure": "1",
+  "number_of_inputs": 0,
+  "pixel_types": "BasicPixelIDTypeList",
+  "output_image_type": "itk::Image< double, TImageType::ImageDimension >",
+  "filter_type": "itk::PhaseCorrelationImageRegistrationMethod<TImageType, TImageType>",
+  "include_files": [
+    "sitkImageConvert.hxx"
+  ],
+  "inputs": [
+    {
+      "name": "FixedImage",
+      "type": "Image",
+      "custom_itk_cast": "filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );"
+    },
+    {
+      "name": "MovingImage",
+      "type": "Image"
+    }
+  ],
+  "members": [
+    {
+      "name": "CropToOverlap",
+      "type": "bool",
+      "default": "false",
+      "detaileddescriptionSet": "Set/Get whether to crop images to their overlapping region before registration.",
+      "detaileddescriptionGet": "Set/Get whether to crop images to their overlapping region before registration."
+    },
+    {
+      "name": "PaddingMethod",
+      "type": "enum",
+      "enum_type": "PhaseCorrelationImageRegistrationMethodEnums::PaddingMethod",
+      "default": "MirrorWithExponentialDecay",
+      "detaileddescriptionSet": "Set/Get the padding method used to make images suitable for FFT.",
+      "detaileddescriptionGet": "Set/Get the padding method used to make images suitable for FFT."
+    },
+    {
+      "name": "LowFrequency",
+      "type": "double",
+      "default": 0.0,
+      "detaileddescriptionSet": "Set/Get the low frequency cutoff for the Butterworth band-pass filter.",
+      "detaileddescriptionGet": "Set/Get the low frequency cutoff for the Butterworth band-pass filter."
+    },
+    {
+      "name": "HighFrequency",
+      "type": "double",
+      "default": 0.0,
+      "detaileddescriptionSet": "Set/Get the high frequency cutoff for the Butterworth band-pass filter.",
+      "detaileddescriptionGet": "Set/Get the high frequency cutoff for the Butterworth band-pass filter."
+    },
+    {
+      "name": "ButterworthOrder",
+      "type": "unsigned int",
+      "default": 2,
+      "detaileddescriptionSet": "Set/Get the order of the Butterworth filter.",
+      "detaileddescriptionGet": "Set/Get the order of the Butterworth filter."
+    }
+  ],
+  "measurements": [
+    {
+      "name": "TransformParameters",
+      "type": "vector<double>",
+      "active": true,
+      "default": [],
+      "briefdescriptionGet": "The estimated translation parameters."
+    },
+    {
+      "name": "PhaseCorrelationImage",
+      "type": "Image",
+      "active": true,
+      "briefdescriptionGet": "The phase correlation image (cross-power spectrum)."
+    }
+  ],
+  "briefdescription": "Register two images using the phase correlation method.",
+  "detaileddescription": "PhaseCorrelationImageRegistrationMethod implements the phase correlation algorithm to estimate the translation between two images. The method computes the cross-power spectrum and finds the peak to determine the shift. Optionally, band-pass filtering can be applied to improve robustness.",
+  "itk_module": "ITKMontage",
+  "itk_group": "Montage",
+  "in_place": false
+}

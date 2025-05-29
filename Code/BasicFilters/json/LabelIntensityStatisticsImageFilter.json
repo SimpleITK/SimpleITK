@@ -559,7 +559,7 @@
           "value" : 1.1422985238962327,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -567,7 +567,7 @@
           "value" : 194.2969857,
           "tolerance" : 1e-06,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -575,14 +575,14 @@
           "value" : 30.9233257,
           "tolerance" : 1e-06,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "FeretDiameter",
           "value" : 0,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -590,7 +590,7 @@
           "value" : 1.1422985238962327,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -601,14 +601,14 @@
           "name" : "NumberOfPixels",
           "value" : "24139u",
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "NumberOfPixelsOnBorder",
           "value" : "0u",
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -616,21 +616,21 @@
           "value" : 1254.3608035,
           "tolerance" : 1e-06,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "PerimeterOnBorder",
           "value" : 0,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "PerimeterOnBorderRatio",
           "value" : 0,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -638,7 +638,7 @@
           "value" : 3004.1544869,
           "tolerance" : 1e-06,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -646,7 +646,7 @@
           "value" : 0.15489720755458994,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -654,14 +654,14 @@
           "value" : 5.491040986144835,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "Maximum",
           "value" : 199,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -669,7 +669,7 @@
           "value" : 138.56282364638136,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -685,14 +685,14 @@
           "value" : 136.46484375,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "Minimum",
           "value" : 100,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -700,7 +700,7 @@
           "value" : 1,
           "tolerance" : 1.8728484943852783,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -708,14 +708,14 @@
           "value" : 14.051474145970603,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
           "name" : "Sum",
           "value" : 3344768,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -723,7 +723,7 @@
           "value" : 197.44392567488032,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -731,7 +731,7 @@
           "value" : 1.1454453590786724,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         },
         {
@@ -739,7 +739,7 @@
           "value" : 1.1454453590786724,
           "tolerance" : 1e-08,
           "parameters" : [
-            "1"
+            1
           ]
         }
       ]

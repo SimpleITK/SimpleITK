@@ -1,0 +1,15 @@
+#include "itkImage.h"
+#include "itkVectorImage.h"
+#include "itkLabelMap.h"
+#include "itkLabelObject.h"
+#include "itkNumericTraits.h"
+#include "itkNumericTraitsVariableLengthVectorPixel.h"
+#include "itkVectorIndexSelectionCastImageFilter.h"
+#include "itkComposeImageFilter.h"
+
+#include "sitk{{ name }}.h"
+{% if itk_name %}
+#include "itk{{ itk_name }}.h"
+{% else %}
+#include "itk{{ name }}.h"
+{% endif %}

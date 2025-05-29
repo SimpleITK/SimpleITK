@@ -1,0 +1,10 @@
+{% for method in custom_methods %}
+  {%- if method.doc %}
+  /** {{ method.doc }} */
+  {%- endif %}
+  {{ "static " if method.static }}{{ method.return_type }} {{ method.name }}(
+    {%- for param in method.parameters %}
+      {{ param.type }} {{ param.var_name }}{{ ", " if not loop.last }}
+    {%- endfor %}
+  );
+{% endfor %}
