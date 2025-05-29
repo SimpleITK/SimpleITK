@@ -341,6 +341,7 @@ def ReadImage(
     fileName: PathType,
     outputPixelType: int = sitkUnknown,
     imageIO: str = "",
+    **kwargs,
 ) -> Image:
     r"""ReadImage is a procedural interface to the ImageFileReader class which is convenient for most image reading
      tasks.
@@ -360,6 +361,8 @@ def ReadImage(
      to read the image. The available ImageIOs are listed by the GetRegisteredImageIOs method. If the ImageIO can not
      be constructed an exception will be generated. If the ImageIO can not read the file an exception will be
      generated.
+    kwargs
+     Additional keyword arguments corresponding to set methods on the reader (e.g., ReverseOrder=True calls SetReverseOrder(True)).
 
     Returns
     -------
@@ -381,6 +384,15 @@ def ReadImage(
 
     reader.SetImageIO(imageIO)
     reader.SetOutputPixelType(outputPixelType)
+
+    # Handle extra keyword arguments as set methods
+    for key, value in kwargs.items():
+        set_method = f"Set{key[0].upper()}{key[1:]}"
+        if hasattr(reader, set_method):
+            getattr(reader, set_method)(value)
+        else:
+            raise TypeError(f"ReadImage() got an unexpected keyword argument '{key}'. Method '{set_method} does not exists.")
+
     return reader.Execute()
 
 
