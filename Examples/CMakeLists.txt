@@ -1,9 +1,7 @@
-cmake_minimum_required(VERSION 3.16.3)
+cmake_minimum_required(VERSION 3.16.3...3.20)
 project(SimpleITKExamples)
 
 foreach(p
-    CMP0042 # CMake 3.0
-    CMP0063 # CMake 3.3.2
     CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
     )
   if(POLICY ${p})
