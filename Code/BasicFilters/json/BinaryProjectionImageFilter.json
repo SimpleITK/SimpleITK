@@ -49,7 +49,7 @@
         {
           "parameter" : "ProjectionDimension",
           "cxx_value" : "1u",
-          "value" : "1"
+          "value" : 1
         },
         {
           "parameter" : "ForegroundValue",

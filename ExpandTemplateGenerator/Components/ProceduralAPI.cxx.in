@@ -28,7 +28,7 @@ end)
 }
 $(if in_place then
       OUT=OUT..[[$(include ProceduralAPIRValueReference.cxx.in)]]
-end)$(if inputs and ((not no_procedure) or (no_procedure == 1))then
+end)$(if inputs and ( not no_procedure )then
     local has_optional_inputs = false
     for i =1,#inputs do
       if inputs[i].optional then

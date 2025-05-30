@@ -2,7 +2,7 @@
   "name" : "LevelSetMotionRegistrationFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "no_procedure" : "1",
+  "no_procedure" : true,
   "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::LevelSetMotionRegistrationFilter<InputImageType, InputImageType, itk::Image< Vector<double, InputImageType::ImageDimension>, InputImageType::ImageDimension > >",
