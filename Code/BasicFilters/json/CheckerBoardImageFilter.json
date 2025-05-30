@@ -11,7 +11,7 @@
       "name" : "CheckerPattern",
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 4)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::PatternArrayType",
       "briefdescriptionSet" : "",
@@ -38,7 +38,7 @@
         {
           "parameter" : "CheckerPattern",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             20,
             4

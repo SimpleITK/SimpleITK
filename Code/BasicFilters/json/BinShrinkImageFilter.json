@@ -10,7 +10,7 @@
       "name" : "ShrinkFactors",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::ShrinkFactorsType",
       "briefdescriptionSet" : "",

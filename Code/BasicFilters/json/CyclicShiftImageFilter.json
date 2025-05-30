@@ -9,7 +9,7 @@
       "name" : "Shift",
       "type" : "int",
       "default" : "std::vector<int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::OffsetType",
       "briefdescriptionSet" : "",
@@ -36,7 +36,7 @@
         {
           "parameter" : "Shift",
           "type" : "int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             5,
             -10,

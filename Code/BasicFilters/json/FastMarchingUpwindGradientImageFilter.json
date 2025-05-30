@@ -213,7 +213,7 @@
         },
         {
           "parameter" : "InitialTrialValues",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "type" : "double",
           "value" : [
             10.0,

@@ -131,7 +131,7 @@ elseif point_vec and point_vec == 1 then
                 }
 ]]
      end
-elseif dim_vec == 1 then
+elseif dim_vec then
       OUT=[[
       {
         $(if type == "bool" then

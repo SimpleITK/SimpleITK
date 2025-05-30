@@ -73,7 +73,7 @@
         },
         {
           "name" : "SizeOfObjectsInPhysicalUnits",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             23061,
             9085
@@ -108,7 +108,7 @@
         },
         {
           "name" : "SizeOfObjectsInPhysicalUnits",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             146,
             126,
@@ -149,7 +149,7 @@
         },
         {
           "name" : "SizeOfObjectsInPhysicalUnits",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             146,
             200

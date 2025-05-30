@@ -14,7 +14,7 @@
       "name" : "ExpandFactors",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "set_as_scalar" : 1,
       "doc" : "",
       "itk_type" : "typename FilterType::ExpandFactorsType",
@@ -53,7 +53,7 @@
         {
           "parameter" : "ExpandFactors",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             2,
             3

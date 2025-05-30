@@ -17,14 +17,14 @@
     {
       "name" : "Size",
       "type" : "unsigned int",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<unsigned int>(3, 64)",
       "itk_type" : "typename FilterType::SizeType"
     },
     {
       "name" : "Sigma",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "set_as_scalar" : 1,
       "default" : "std::vector<double>(3, 0.5)",
       "itk_type" : "typename FilterType::ArrayType",
@@ -36,7 +36,7 @@
     {
       "name" : "GridSpacing",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>(3, 4.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
@@ -47,7 +47,7 @@
     {
       "name" : "GridOffset",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>(3, 0.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
@@ -67,14 +67,14 @@
     {
       "name" : "Origin",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>(3, 0.0)",
       "itk_type" : "typename FilterType::PointType"
     },
     {
       "name" : "Spacing",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>(3, 1.0)",
       "itk_type" : "typename FilterType::SpacingType"
     },
@@ -89,7 +89,7 @@
       "name" : "WhichDimensions",
       "type" : "bool",
       "default" : "std::vector<bool>(3, true)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::BoolArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the dimensions which are gridded.",

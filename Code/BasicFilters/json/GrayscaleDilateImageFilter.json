@@ -14,7 +14,7 @@
       "name" : "KernelRadius",
       "type" : "unsigned int",
       "default" : "std::vector<uint32_t>(3, 1)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "set_as_scalar" : 1,
       "doc" : "",
       "custom_itk_cast" : "",

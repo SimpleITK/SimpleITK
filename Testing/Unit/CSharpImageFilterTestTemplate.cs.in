@@ -115,7 +115,7 @@ elseif point_vec and point_vec == 1 then
                 }
 ]]
     end
-elseif dim_vec == 1 then
+elseif dim_vec then
   A='{'
   for i=1,#value-1 do
     A=A..value[i]..", "
