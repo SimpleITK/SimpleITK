@@ -289,7 +289,8 @@ TEST(IO, ReadWrite)
   reader.AddCommand(sitk::sitkUserEvent, userCmd);
 
 
-  sitk::Image image = reader.SetFileName(dataFinder.GetFile("Input/RA-Short.nrrd")).Execute();
+  reader.SetFileName(dataFinder.GetFile("Input/RA-Short.nrrd"));
+  sitk::Image image = reader.Execute();
   ASSERT_NE(image.GetITKBase(), nullptr);
   hasher.SetHashFunction(sitk::HashImageFilter::MD5);
   EXPECT_EQ(md5, hasher.Execute(image));
@@ -307,10 +308,12 @@ TEST(IO, ReadWrite)
 
   // Write it out
   std::string filename = dataFinder.GetOutputFile("IO.ReadWrite.nrrd");
-  writer.SetFileName(filename).Execute(image);
+  writer.SetFileName(filename);
+  writer.Execute(image);
   ASSERT_TRUE(dataFinder.FileExists(filename));
 
-  image = reader.SetFileName(filename).Execute();
+  reader.SetFileName(filename);
+  image = reader.Execute();
   ASSERT_NE(image.GetITKBase(), nullptr);
 
   // Make sure we wrote and read the file correctly
@@ -324,7 +327,8 @@ TEST(IO, ReadWrite)
   sitk::WriteImage(image, filename);
   ASSERT_TRUE(dataFinder.FileExists(filename));
 
-  image = reader.SetFileName(filename).Execute();
+  reader.SetFileName(filename);
+  image = reader.Execute();
   ASSERT_NE(image.GetITKBase(), nullptr);
 
   // Make sure we wrote and read the file correctly
@@ -338,9 +342,8 @@ TEST(IO, ReadWrite)
 TEST(IO, 2DFormats)
 {
   itk::simple::HashImageFilter hasher;
-  itk::simple::ImageFileReader reader;
 
-  itk::simple::Image image = reader.SetFileName(dataFinder.GetFile("Input/RA-Slice-Short.png")).Execute();
+  itk::simple::Image image = itk::simple::ReadImage(dataFinder.GetFile("Input/RA-Slice-Short.png"));
   ASSERT_NE(image.GetITKBase(), nullptr);
   hasher.SetHashFunction(itk::simple::HashImageFilter::SHA1);
   EXPECT_EQ("bf0f7bae60b0322222e224941c31f37a981901aa", hasher.Execute(image));
@@ -388,7 +391,8 @@ TEST(IO, SeriesReader)
   CountCommand userCmd(reader);
   reader.AddCommand(sitk::sitkUserEvent, userCmd);
 
-  sitk::Image image = reader.SetFileNames(fileNames).Execute();
+  reader.SetFileNames(fileNames);
+  sitk::Image image = reader.Execute();
   EXPECT_EQ("b13c0a17109e3a5058e8f225c9ef2dbcf79ac240", sitk::Hash(image));
   EXPECT_EQ(3u, reader.GetFileNames().size());
   EXPECT_EQ(3u, image.GetDimension());

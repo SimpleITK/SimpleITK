@@ -87,12 +87,11 @@ ComposeScaleSkewVersor3DTransform::operator=(const ComposeScaleSkewVersor3DTrans
 
 
 /** fixed parameter */
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -102,20 +101,18 @@ ComposeScaleSkewVersor3DTransform::GetCenter() const
 }
 
 
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::SetRotation(const std::vector<double> & versor)
 {
   this->MakeUnique();
   this->m_pfSetRotation1(versor);
-  return *this;
 }
 
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::SetRotation(const std::vector<double> & axis, double angle)
 {
   this->MakeUnique();
   this->m_pfSetRotation2(axis, angle);
-  return *this;
 }
 
 std::vector<double>
@@ -124,12 +121,11 @@ ComposeScaleSkewVersor3DTransform::GetVersor() const
   return this->m_pfGetVersor();
 }
 
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::SetTranslation(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetTranslation(params);
-  return *this;
 }
 
 std::vector<double>
@@ -138,20 +134,18 @@ ComposeScaleSkewVersor3DTransform::GetTranslation() const
   return this->m_pfGetTranslation();
 }
 
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::Translate(const std::vector<double> & offset)
 {
   this->MakeUnique();
   this->m_pfTranslate(offset);
-  return *this;
 }
 
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::SetScale(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetScale(params);
-  return *this;
 }
 
 std::vector<double>
@@ -160,12 +154,11 @@ ComposeScaleSkewVersor3DTransform::GetScale() const
   return this->m_pfGetScale();
 }
 
-ComposeScaleSkewVersor3DTransform::Self &
+void
 ComposeScaleSkewVersor3DTransform::SetSkew(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetSkew(params);
-  return *this;
 }
 
 std::vector<double>

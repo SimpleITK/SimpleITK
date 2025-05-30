@@ -125,14 +125,13 @@ ImageRegistrationMethod::ToString() const
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetInitialTransform(const Transform & transform)
 {
   this->m_InitialTransform = transform;
   this->m_InitialTransform.MakeUnique();
   this->m_InitialTransformInPlace = true;
   this->m_TransformBSplineScaleFactors = std::vector<unsigned int>();
-  return *this;
 }
 
 
@@ -147,7 +146,7 @@ ImageRegistrationMethod::SetInitialTransformAsBSpline(BSplineTransform &        
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetInitialTransform(Transform & transform, bool inPlace)
 {
 
@@ -166,10 +165,9 @@ ImageRegistrationMethod::SetInitialTransform(Transform & transform, bool inPlace
   this->m_InitialTransform = transform;
   this->m_InitialTransformInPlace = inPlace;
   this->m_TransformBSplineScaleFactors = std::vector<unsigned int>();
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetVirtualDomain(const std::vector<uint32_t> & virtualSize,
                                           const std::vector<double> &   virtualOrigin,
                                           const std::vector<double> &   virtualSpacing,
@@ -196,71 +194,62 @@ ImageRegistrationMethod::SetVirtualDomain(const std::vector<uint32_t> & virtualS
   this->m_VirtualDomainOrigin = virtualOrigin;
   this->m_VirtualDomainSpacing = virtualSpacing;
   this->m_VirtualDomainDirection = virtualDirection;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetVirtualDomainFromImage(const Image & virtualImage)
 {
   this->m_VirtualDomainSize = virtualImage.GetSize();
   this->m_VirtualDomainOrigin = virtualImage.GetOrigin();
   this->m_VirtualDomainSpacing = virtualImage.GetSpacing();
   this->m_VirtualDomainDirection = virtualImage.GetDirection();
-
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricAsANTSNeighborhoodCorrelation(unsigned int radius)
 {
   m_MetricRadius = radius;
   m_MetricType = ANTSNeighborhoodCorrelation;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricAsCorrelation()
 {
   m_MetricType = Correlation;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricAsDemons(double intensityDifferenceThreshold)
 {
   m_MetricType = Demons;
   m_MetricIntensityDifferenceThreshold = intensityDifferenceThreshold;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricAsJointHistogramMutualInformation(unsigned int numberOfHistogramBins,
                                                                     double       varianceForJointPDFSmoothing)
 {
   m_MetricType = JointHistogramMutualInformation;
   m_MetricNumberOfHistogramBins = numberOfHistogramBins;
   m_MetricVarianceForJointPDFSmoothing = varianceForJointPDFSmoothing;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricAsMeanSquares()
 {
   m_MetricType = MeanSquares;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricAsMattesMutualInformation(unsigned int numberOfHistogramBins)
 {
   m_MetricType = MattesMutualInformation;
   m_MetricNumberOfHistogramBins = numberOfHistogramBins;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsConjugateGradientLineSearch(double                   learningRate,
                                                                    unsigned int             numberOfIterations,
                                                                    double                   convergenceMinimumValue,
@@ -283,10 +272,9 @@ ImageRegistrationMethod::SetOptimizerAsConjugateGradientLineSearch(double       
   m_OptimizerLineSearchMaximumIterations = lineSearchMaximumIterations;
   m_OptimizerEstimateLearningRate = estimateLearningRate;
   m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent(double                   learningRate,
                                                                   double                   minStep,
                                                                   unsigned int             numberOfIteratons,
@@ -303,10 +291,9 @@ ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent(double        
   m_OptimizerGradientMagnitudeTolerance = gradientMagnitudeTolerance;
   m_OptimizerEstimateLearningRate = estimateLearningRate;
   m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsGradientDescent(double                   learningRate,
                                                        unsigned int             numberOfIteratons,
                                                        double                   convergenceMinimumValue,
@@ -321,10 +308,9 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescent(double                   
   m_OptimizerConvergenceWindowSize = convergenceWindowSize;
   m_OptimizerEstimateLearningRate = estimateLearningRate;
   m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch(double                   learningRate,
                                                                  unsigned int             numberOfIterations,
                                                                  double                   convergenceMinimumValue,
@@ -347,11 +333,10 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch(double         
   m_OptimizerLineSearchMaximumIterations = lineSearchMaximumIterations;
   m_OptimizerEstimateLearningRate = estimateLearningRate;
   m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsLBFGSB(double       gradientConvergenceTolerance,
                                               unsigned int numberOfIterations,
                                               unsigned int maximumNumberOfCorrections,
@@ -370,11 +355,10 @@ ImageRegistrationMethod::SetOptimizerAsLBFGSB(double       gradientConvergenceTo
   m_OptimizerLowerBound = lowerBound;
   m_OptimizerUpperBound = upperBound;
   m_OptimizerTrace = trace;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsLBFGS2(double       solutionAccuracy,
                                               unsigned int numberOfIterations,
                                               unsigned int hessianApproximateAccuracy,
@@ -395,15 +379,13 @@ ImageRegistrationMethod::SetOptimizerAsLBFGS2(double       solutionAccuracy,
   m_OptimizerLineSearchMinimumStep = lineSearchMinimumStep;
   m_OptimizerLineSearchMaximumStep = lineSearchMaximumStep;
   m_OptimizerLineSearchAccuracy = lineSearchAccuracy;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerWeights(const std::vector<double> & weights)
 {
   this->m_OptimizerWeights = weights;
-  return *this;
 }
 
 std::vector<double>
@@ -412,16 +394,15 @@ ImageRegistrationMethod::GetOptimizerWeights() const
   return this->m_OptimizerWeights;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsExhaustive(const std::vector<unsigned int> & numberOfSteps, double stepLength)
 {
   m_OptimizerType = Exhaustive;
   m_OptimizerStepLength = stepLength;
   m_OptimizerNumberOfSteps = numberOfSteps;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsAmoeba(double       simplexDelta,
                                               unsigned int numberOfIterations,
                                               double       parametersConvergenceTolerance,
@@ -434,10 +415,9 @@ ImageRegistrationMethod::SetOptimizerAsAmoeba(double       simplexDelta,
   m_OptimizerParametersConvergenceTolerance = parametersConvergenceTolerance;
   m_OptimizerFunctionConvergenceTolerance = functionConvergenceTolerance;
   m_OptimizerWithRestarts = withRestarts;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsPowell(unsigned int numberOfIterations,
                                               unsigned int maximumLineIterations,
                                               double       stepLength,
@@ -450,10 +430,9 @@ ImageRegistrationMethod::SetOptimizerAsPowell(unsigned int numberOfIterations,
   m_OptimizerStepLength = stepLength;
   m_OptimizerStepTolerance = stepTolerance;
   m_OptimizerValueTolerance = valueTolerance;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerAsOnePlusOneEvolutionary(unsigned int numberOfIterations,
                                                               double       epsilon,
                                                               double       initialRadius,
@@ -468,46 +447,40 @@ ImageRegistrationMethod::SetOptimizerAsOnePlusOneEvolutionary(unsigned int numbe
   m_OptimizerGrowthFactor = growthFactor;
   m_OptimizerShrinkFactor = shrinkFactor;
   m_OptimizerSeed = seed;
-
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerScales(const std::vector<double> & scales)
 {
   this->m_OptimizerScalesType = Manual;
   this->m_OptimizerScales = scales;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricFixedMask(const Image & binaryMask)
 {
   // todo
   m_MetricFixedMaskImage = binaryMask;
   // m_MetricFixedMaskRegion.clear();
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricMovingMask(const Image & binaryMask)
 {
   m_MetricMovingMaskImage = binaryMask;
   // m_MetricMovingMaskRegion.clear();
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerScalesFromJacobian(unsigned int centralRegionRadius)
 {
   this->m_OptimizerScalesType = Jacobian;
   this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
   this->m_OptimizerScales = std::vector<double>();
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerScalesFromIndexShift(unsigned int centralRegionRadius,
                                                           double       smallParameterVariation)
 {
@@ -515,10 +488,9 @@ ImageRegistrationMethod::SetOptimizerScalesFromIndexShift(unsigned int centralRe
   this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
   this->m_OptimizerScalesSmallParameterVariation = smallParameterVariation;
   this->m_OptimizerScales = std::vector<double>();
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift(unsigned int centralRegionRadius,
                                                              double       smallParameterVariation)
 {
@@ -526,24 +498,21 @@ ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift(unsigned int centra
   this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
   this->m_OptimizerScalesSmallParameterVariation = smallParameterVariation;
   this->m_OptimizerScales = std::vector<double>();
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricSamplingPercentage(double percentage, unsigned int seed)
 {
   m_MetricSamplingPercentage.resize(1);
   m_MetricSamplingPercentage[0] = percentage;
   m_MetricSamplingSeed = seed;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel(const std::vector<double> & percentage, unsigned int seed)
 {
   m_MetricSamplingPercentage = percentage;
   m_MetricSamplingSeed = seed;
-  return *this;
 }
 
 
@@ -553,47 +522,41 @@ ImageRegistrationMethod::GetMetricSamplingPercentagePerLevel() const
   return m_MetricSamplingPercentage;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricSamplingStrategy(MetricSamplingStrategyType strategy)
 {
   m_MetricSamplingStrategy = strategy;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter(bool arg)
 {
   m_MetricUseFixedImageGradientFilter = arg;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter(bool arg)
 {
   m_MetricUseMovingImageGradientFilter = arg;
-  return *this;
 }
 
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetShrinkFactorsPerLevel(const std::vector<unsigned int> & shrinkFactors)
 {
   this->m_ShrinkFactorsPerLevel = shrinkFactors;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetSmoothingSigmasPerLevel(const std::vector<double> & smoothingSigmas)
 {
   this->m_SmoothingSigmasPerLevel = smoothingSigmas;
-  return *this;
 }
 
-ImageRegistrationMethod::Self &
+void
 ImageRegistrationMethod::SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg)
 {
   m_SmoothingSigmasAreSpecifiedInPhysicalUnits = arg;
-  return *this;
 }
 
 std::string

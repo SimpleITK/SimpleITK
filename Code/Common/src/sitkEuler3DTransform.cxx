@@ -69,12 +69,11 @@ Euler3DTransform::operator=(const Euler3DTransform & arg)
 
 
 /** fixed parameter */
-Euler3DTransform::Self &
+void
 Euler3DTransform::SetCenter(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetCenter(params);
-  return *this;
 }
 
 std::vector<double>
@@ -102,20 +101,18 @@ Euler3DTransform::GetAngleZ() const
 }
 
 /** parameter */
-Euler3DTransform::Self &
+void
 Euler3DTransform::SetRotation(double angleX, double angleY, double angleZ)
 {
   this->MakeUnique();
   this->m_pfSetRotation(angleX, angleY, angleZ);
-  return *this;
 }
 
-Euler3DTransform::Self &
+void
 Euler3DTransform::SetTranslation(const std::vector<double> & params)
 {
   this->MakeUnique();
   this->m_pfSetTranslation(params);
-  return *this;
 }
 
 std::vector<double>
@@ -125,12 +122,11 @@ Euler3DTransform::GetTranslation() const
 }
 
 
-Euler3DTransform::Self &
+void
 Euler3DTransform::SetComputeZYX(bool _arg)
 {
   this->MakeUnique();
   this->m_pfSetComputeZYX(_arg);
-  return *this;
 }
 
 bool
@@ -145,12 +141,11 @@ Euler3DTransform::GetMatrix() const
   return this->m_pfGetMatrix();
 }
 
-Euler3DTransform::Self &
+void
 Euler3DTransform::SetMatrix(const std::vector<double> & params, double tolerance)
 {
   this->MakeUnique();
   this->m_pfSetMatrix(params, tolerance);
-  return *this;
 }
 
 void
