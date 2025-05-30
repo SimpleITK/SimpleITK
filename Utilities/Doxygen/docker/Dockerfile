@@ -1,4 +1,4 @@
-FROM ubuntu:24.04 as itk-doxygen
+FROM ubuntu:24.04 AS itk-doxygen
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
