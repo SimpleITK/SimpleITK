@@ -66,7 +66,7 @@ Support
 
 SimpleITK provides access to most of the ITK components, but not all. If you are looking for something specific and can't find it, open an issue on GitHub or ask for support on the [forum](https://discourse.itk.org).
 
-Report and Issue or Request a Feature
+Report an Issue or Request a Feature
 -------------------------------------
 
 Please use the [issue tracker](https://github.com/SimpleITK/SimpleITK/issues) to report problems or request features.
