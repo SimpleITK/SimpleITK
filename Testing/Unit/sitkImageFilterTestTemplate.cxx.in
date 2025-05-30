@@ -248,7 +248,7 @@ $(foreach settings
       temp = value
     end
     OUT='filter.Set${parameter} ( ${temp} );'
-      if (not no_get_method) then
+      if not no_get_method then
         if (temp == "true") then
           OUT = OUT .. '\
   ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'

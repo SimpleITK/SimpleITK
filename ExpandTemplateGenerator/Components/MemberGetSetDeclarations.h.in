@@ -59,7 +59,7 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
       void ${name}Off() { return this->Set${name}(false); }'
   end
 end)
-$(if (not no_get_method) or (no_get_method == 0) then
+$(if not no_get_method then
        OUT = '\
       /**'
       if briefdescriptionGet and (briefdescriptionGet:len() > 0)  then
