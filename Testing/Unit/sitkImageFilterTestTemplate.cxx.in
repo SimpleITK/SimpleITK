@@ -59,7 +59,7 @@ TEST(BasicFilters,${name}) {
     end)
 
 $(foreach members
-  $(if dim_vec and dim_vec == 1 then
+  $(if dim_vec then
   OUT=[[for(unsigned int i = 0; i < filter.Get${name}().size(); ++i)
     {
     EXPECT_EQ ( filter.Get${name}()[i], ${default}[i] ) << "Testing get for ${name} at " << i;
@@ -73,7 +73,7 @@ end)
 
   // Test sets / gets
 $(foreach members
-  $(if dim_vec and dim_vec == 1 then
+  $(if dim_vec then
   OUT=[[filter.Set${name} ( ${default} );
   for(unsigned int i = 0; i < filter.Get${name}().size(); ++i)
     {
@@ -222,12 +222,12 @@ end)) ) << "Functional interface to ${name}";
 $(if settings then
 OUT=[[
 $(foreach settings
-  $(if point_vec and point_vec == 1 then
+  $(if point_vec then
     OUT="filter.Clear${parameter:gsub('List','s')}();\n"
     for i=1,#value do
       OUT=OUT.."  filter.Add${parameter:gsub('List',''):gsub('s(%d?)$','%1')}("..value[i].." );\n"
      end
-  elseif dim_vec and dim_vec == 1 then
+  elseif dim_vec then
   OUT='{\
   std::vector< ${type} > vec{'
   for i=1,#value-1 do
@@ -248,7 +248,7 @@ $(foreach settings
       temp = value
     end
     OUT='filter.Set${parameter} ( ${temp} );'
-      if (not no_get_method) then
+      if not no_get_method then
         if (temp == "true") then
           OUT = OUT .. '\
   ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'

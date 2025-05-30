@@ -49,7 +49,7 @@
       "measurements_results" : [
         {
           "name" : "FlipAxes",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0,
             0,
@@ -59,7 +59,7 @@
         },
         {
           "name" : "PermuteOrder",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0,
             1,
@@ -86,7 +86,7 @@
       "measurements_results" : [
         {
           "name" : "FlipAxes",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             1,
             1,
@@ -96,7 +96,7 @@
         },
         {
           "name" : "PermuteOrder",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0,
             2,
@@ -123,7 +123,7 @@
       "measurements_results" : [
         {
           "name" : "FlipAxes",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             1,
             1,
@@ -133,7 +133,7 @@
         },
         {
           "name" : "PermuteOrder",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0,
             1,

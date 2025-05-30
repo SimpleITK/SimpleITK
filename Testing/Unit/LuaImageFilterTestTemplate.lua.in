@@ -65,7 +65,7 @@ elseif parameter == "TrialPoints" and lua_value then
     idx = SimpleITK.VectorUInt32();\
     for _,v in ipairs(".. lua_value[i] ..") do idx:push_back(v) end\
     filter:AddTrialPoint( idx );"end)]]
-elseif point_vec and point_vec == 1 then
+elseif point_vec then
     OUT=[[filter:Clear${parameter}();
 ]]
     for i=1,#value do
@@ -74,7 +74,7 @@ elseif point_vec and point_vec == 1 then
       for _,v in ipairs(]].. value[i] ..[[) do pts:push_back(v) end
       filter:Add${parameter:gsub('s([0-9]?)$','%1')}( pts );]]
     end
-elseif dim_vec and dim_vec == 1 then
+elseif dim_vec then
    if type == "bool" then
      OUT="idx = SimpleITK.VectorBool();"
    elseif type == "uint8_t" then

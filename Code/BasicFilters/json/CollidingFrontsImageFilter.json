@@ -11,7 +11,7 @@
     {
       "name" : "SeedPoints1",
       "type" : "unsigned int",
-      "point_vec" : 1,
+      "point_vec" : true,
       "default" : "std::vector< std::vector<unsigned int > >()",
       "custom_itk_cast" : "  using NodeType = typename FilterType::NodeType;\n  using NodeContainerType =  typename FilterType::NodeContainer;\n\n  typename NodeContainerType::Pointer seed1Nodes = NodeContainerType::New();\n  seed1Nodes->reserve( m_SeedPoints1.size() );\n\n  for (unsigned int i = 0; i < m_SeedPoints1.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_SeedPoints1[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n    if (m_SeedPoints1[i].size() > NodeType::SetDimension)\n      node.SetValue(m_SeedPoints1[i][NodeType::SetDimension]);\n\n    seed1Nodes->push_back( node );\n    }\n  filter->SetSeedPoints1( seed1Nodes );",
       "briefdescriptionSet" : "",
@@ -22,7 +22,7 @@
     {
       "name" : "SeedPoints2",
       "type" : "unsigned int",
-      "point_vec" : 1,
+      "point_vec" : true,
       "default" : "std::vector< std::vector<unsigned int > >()",
       "custom_itk_cast" : "  using NodeType = typename FilterType::NodeType;\n  using NodeContainerType = typename FilterType::NodeContainer;\n\n  typename NodeContainerType::Pointer seed2Nodes = NodeContainerType::New();\n  seed2Nodes->reserve( m_SeedPoints2.size() );\n\n  for (unsigned int i = 0; i < m_SeedPoints2.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_SeedPoints2[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n    if (m_SeedPoints2[i].size() > NodeType::SetDimension)\n      node.SetValue(m_SeedPoints2[i][NodeType::SetDimension]);\n\n    seed2Nodes->push_back( node );\n    }\n  filter->SetSeedPoints2( seed2Nodes );",
       "briefdescriptionSet" : "",
@@ -66,7 +66,7 @@
       "settings" : [
         {
           "parameter" : "SeedPoints1",
-          "point_vec" : 1,
+          "point_vec" : true,
           "type" : "unsigned int",
           "value" : [
             "{30,30}"
@@ -81,7 +81,7 @@
         },
         {
           "parameter" : "SeedPoints2",
-          "point_vec" : 1,
+          "point_vec" : true,
           "type" : "unsigned int",
           "value" : [
             "{255,105}"

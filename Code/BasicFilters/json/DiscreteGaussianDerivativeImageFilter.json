@@ -9,9 +9,9 @@
     {
       "name" : "Variance",
       "type" : "double",
-      "set_as_scalar" : 1,
+      "set_as_scalar" : true,
       "default" : "std::vector<double>(3, 0.0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Convenience Set methods for setting all dimensional parameters to the same values.",
@@ -22,8 +22,8 @@
       "name" : "Order",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
-      "dim_vec" : 1,
-      "set_as_scalar" : 1,
+      "dim_vec" : true,
+      "set_as_scalar" : true,
       "itk_type" : "typename FilterType::OrderArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Convenience Set methods for setting all dimensional parameters to the same values.",
@@ -84,7 +84,7 @@
         {
           "parameter" : "Variance",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             10,
             10,
@@ -110,7 +110,7 @@
         {
           "parameter" : "Order",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             1,
             0,
@@ -130,7 +130,7 @@
         {
           "parameter" : "Order",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0,
             2,

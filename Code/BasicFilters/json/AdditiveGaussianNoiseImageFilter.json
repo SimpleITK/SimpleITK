@@ -35,7 +35,7 @@
     {
       "tag" : "2d",
       "description" : "2D - baseline as zero noise",
-      "no_procedure" : 1,
+      "no_procedure" : true,
       "settings" : [
         {
           "parameter" : "Seed",
@@ -55,7 +55,7 @@
     {
       "tag" : "3d",
       "description" : "3D - baseline as zero noise",
-      "no_procedure" : 1,
+      "no_procedure" : true,
       "settings" : [
         {
           "parameter" : "Seed",
@@ -75,7 +75,7 @@
     {
       "tag" : "rgb",
       "description" : "vector image - baseline as zero noise",
-      "no_procedure" : 1,
+      "no_procedure" : true,
       "settings" : [
         {
           "parameter" : "Seed",

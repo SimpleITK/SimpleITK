@@ -9,7 +9,7 @@
       "name" : "Seed",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::InputImageIndexType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the seed pixel for the segmentation",
@@ -43,7 +43,7 @@
         {
           "parameter" : "Seed",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             142,
             170

@@ -23,7 +23,7 @@
       "name" : "Radius",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "custom_itk_cast" : "",
       "doc" : ""
     },
@@ -61,7 +61,7 @@
         {
           "parameter" : "Radius",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             2,
             3
@@ -85,7 +85,7 @@
         {
           "parameter" : "Radius",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             10,
             10

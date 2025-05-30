@@ -8,7 +8,7 @@
   "filter_type" : "itk::FlipImageFilter< InputImageType >",
   "members" : [
     {
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "name" : "FlipAxes",
       "type" : "bool",
       "default" : "std::vector<bool>(3, false)",
@@ -48,7 +48,7 @@
         {
           "parameter" : "FlipAxes",
           "type" : "bool",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             "true",
             "false",

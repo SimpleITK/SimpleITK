@@ -14,8 +14,8 @@
       "name" : "ExpandFactors",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
-      "dim_vec" : 1,
-      "set_as_scalar" : 1,
+      "dim_vec" : true,
+      "set_as_scalar" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::ExpandFactorsType",
       "briefdescriptionSet" : "",
@@ -53,7 +53,7 @@
         {
           "parameter" : "ExpandFactors",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             2,
             3
@@ -72,7 +72,7 @@
         {
           "parameter" : "ExpandFactor",
           "type" : "unsigned int",
-          "no_get_method" : 1,
+          "no_get_method" : true,
           "value" : "2"
         }
       ],
@@ -88,7 +88,7 @@
         {
           "parameter" : "ExpandFactor",
           "type" : "unsigned int",
-          "no_get_method" : 1,
+          "no_get_method" : true,
           "value" : "4"
         },
         {
@@ -115,7 +115,7 @@
         {
           "parameter" : "ExpandFactor",
           "type" : "unsigned int",
-          "no_get_method" : 1,
+          "no_get_method" : true,
           "value" : "3"
         },
         {
@@ -142,7 +142,7 @@
         {
           "parameter" : "ExpandFactor",
           "type" : "unsigned int",
-          "no_get_method" : 1,
+          "no_get_method" : true,
           "value" : "3"
         },
         {
@@ -169,7 +169,7 @@
         {
           "parameter" : "ExpandFactor",
           "type" : "unsigned int",
-          "no_get_method" : 1,
+          "no_get_method" : true,
           "value" : "4"
         },
         {

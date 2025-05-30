@@ -424,7 +424,7 @@
       "measurements_results" : [
         {
           "name" : "BoundingBox",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             17,
             12,
@@ -438,7 +438,7 @@
         },
         {
           "name" : "Region",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             17,
             12,
@@ -452,7 +452,7 @@
         },
         {
           "name" : "Centroid",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             25,
             27
@@ -472,7 +472,7 @@
         },
         {
           "name" : "EquivalentEllipsoidDiameter",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             19.1708196,
             35.0009678
@@ -562,7 +562,7 @@
         },
         {
           "name" : "PrincipalAxes",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             1,
             0,
@@ -576,7 +576,7 @@
         },
         {
           "name" : "PrincipalMoments",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             24,
             80
@@ -596,7 +596,7 @@
         },
         {
           "name" : "OrientedBoundingBoxSize",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             17,
             31
@@ -608,7 +608,7 @@
         },
         {
           "name" : "OrientedBoundingBoxDirection",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             1,
             0,
@@ -622,7 +622,7 @@
         },
         {
           "name" : "OrientedBoundingBoxVertices",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             16.5,
             11.5,

@@ -42,7 +42,7 @@
         {
           "parameter" : "ClassWithInitialMean",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             25000,
             30000

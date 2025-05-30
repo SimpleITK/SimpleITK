@@ -11,7 +11,7 @@
       "name" : "Seed1",
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
@@ -23,7 +23,7 @@
       "name" : "Seed2",
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
@@ -88,7 +88,7 @@
         {
           "parameter" : "Seed1",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             113,
             84
@@ -97,7 +97,7 @@
         {
           "parameter" : "Seed2",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             120,
             99

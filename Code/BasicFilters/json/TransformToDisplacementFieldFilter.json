@@ -28,7 +28,7 @@
     {
       "name" : "Size",
       "type" : "unsigned int",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<unsigned int>(3, 64)",
       "itk_type" : "typename FilterType::SizeType",
       "briefdescriptionSet" : "",
@@ -39,7 +39,7 @@
     {
       "name" : "OutputOrigin",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>(3, 0.0)",
       "itk_type" : "typename FilterType::PointType",
       "briefdescriptionSet" : "",
@@ -50,7 +50,7 @@
     {
       "name" : "OutputSpacing",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>(3, 1.0)",
       "itk_type" : "typename FilterType::SpacingType",
       "briefdescriptionSet" : "",

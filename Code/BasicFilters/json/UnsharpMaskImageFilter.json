@@ -12,7 +12,7 @@
       "name" : "Sigmas",
       "type" : "double",
       "default" : "std::vector<double>(3, 1.0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::SigmaArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get Sigma values measured in the units of image spacing. Default: 1.0.",
@@ -64,7 +64,7 @@
         {
           "parameter" : "Sigmas",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             30.0,
             30.0

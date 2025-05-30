@@ -312,7 +312,7 @@ sitkClangDiagnosticPop();
 
 //-----------------------------------------------------------------------------
 
-$(if (not no_procedure) or (no_procedure == 1) then
+$(if not no_procedure then
 OUT=[[$(include ProceduralAPI.cxx.in)]]
 end)
 

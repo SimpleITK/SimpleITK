@@ -73,7 +73,7 @@ elseif R_value then
 OUT=[[
     filter$$Set${parameter}( ${R_value} )
   ]]
-elseif dim_vec and dim_vec==1 then
+elseif dim_vec then
 OUT=[[
     filter$$Set${parameter}( c( ]]
   for i=1,#value-1 do

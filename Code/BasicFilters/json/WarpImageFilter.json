@@ -37,7 +37,7 @@
       "name" : "OutputSize",
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::SizeType",
       "briefdescriptionSet" : "",
@@ -49,7 +49,7 @@
       "name" : "OutputOrigin",
       "type" : "double",
       "default" : "std::vector<double>(3, 0.0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::PointType",
       "briefdescriptionSet" : "",
@@ -61,7 +61,7 @@
       "name" : "OutputSpacing",
       "type" : "double",
       "default" : "std::vector<double>(3, 1.0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::SpacingType",
       "briefdescriptionSet" : "",
@@ -113,7 +113,7 @@
         {
           "parameter" : "OutputSize",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             128,
             128,
@@ -123,7 +123,7 @@
         {
           "parameter" : "OutputSpacing",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0.73,
             0.73
@@ -143,7 +143,7 @@
         {
           "parameter" : "OutputSize",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             297,
             371

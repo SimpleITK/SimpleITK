@@ -11,7 +11,7 @@
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "vector_pixel_types_by_component2" : "VectorPixelIDTypeList",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
-  "no_procedure" : "1",
+  "no_procedure" : true,
   "include_files" : [
     "sitkCreateInterpolator.hxx",
     "sitkTransform.h",
@@ -22,7 +22,7 @@
       "name" : "Size",
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::SizeType",
       "briefdescriptionSet" : "",
@@ -35,7 +35,7 @@
       "type" : "Transform",
       "default" : "itk::simple::Transform()",
       "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\n    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) {\n      if( this->m_Transform.GetITKBase()->GetNameOfClass() != std::string(\"IdentityTransform\") )\n      sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n     }\n    else { filter->SetTransform( itkTx ); }",
-      "no_print" : "1",
+      "no_print" : true,
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
@@ -56,7 +56,7 @@
       "name" : "OutputOrigin",
       "type" : "double",
       "default" : "std::vector<double>(3, 0.0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::OriginPointType",
       "briefdescriptionSet" : "",
@@ -68,7 +68,7 @@
       "name" : "OutputSpacing",
       "type" : "double",
       "default" : "std::vector<double>(3, 1.0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::SpacingType",
       "briefdescriptionSet" : "",
@@ -135,7 +135,7 @@
         {
           "parameter" : "Size",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             64,
             64,
@@ -155,7 +155,7 @@
         {
           "parameter" : "Size",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             5,
             5,
@@ -165,7 +165,7 @@
         {
           "parameter" : "OutputSpacing",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             13.8281,
             16.0781
@@ -195,7 +195,7 @@
         {
           "parameter" : "Size",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             64,
             64,
@@ -237,7 +237,7 @@
         {
           "parameter" : "Size",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             512,
             512
@@ -247,7 +247,7 @@
         {
           "parameter" : "OutputSpacing",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0.73,
             0.73
@@ -266,7 +266,7 @@
         {
           "parameter" : "Size",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             520,
             540
@@ -275,7 +275,7 @@
         {
           "parameter" : "OutputOrigin",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             "-40.0",
             "-140.0"

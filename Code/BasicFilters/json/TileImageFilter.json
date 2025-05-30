@@ -12,7 +12,7 @@
       "name" : "Layout",
       "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 100)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::LayoutArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the layout of the tiles. If the last Layout value is 0, the filter will compute a value that will accommodate all of the images.",
@@ -50,7 +50,7 @@
         {
           "parameter" : "Layout",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             2,
             2
