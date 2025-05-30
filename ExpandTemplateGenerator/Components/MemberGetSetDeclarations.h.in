@@ -33,19 +33,19 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
         OUT=OUT..' ${name}Type'
       elseif dim_vec then
         OUT=OUT..' std::vector<${type}>'
-      elseif point_vec and (point_vec == 1) then
+      elseif point_vec then
         OUT=OUT..' std::vector< std::vector<${type}> >'
       else
         OUT=OUT..' ${type}'
       end
       OUT=OUT..' ${name} ) '
       if (dim_vec) or
-         (point_vec and (point_vec == 1)) then
+         (point_vec) then
         OUT = OUT..'{ this->m_${name} = std::move(${name});  }'
       else
         OUT=OUT..'{ this->m_${name} = ${name};  }'
       end
-  if dim_vec and ( set_as_scalar == 1 ) then
+  if dim_vec and set_as_scalar then
     OUT = OUT .. '\
 \
       /** Set the values of the ${name} vector all to value */\
@@ -77,13 +77,13 @@ $(if (not no_get_method) or (no_get_method == 0) then
         OUT=OUT..'${name}Type'
       elseif dim_vec then
         OUT=OUT..'std::vector<${type}>'
-      elseif point_vec and (point_vec == 1) then
+      elseif point_vec then
         OUT=OUT..'std::vector< std::vector< ${type} > >'
       else
         OUT=OUT..'${type}'
       end
       OUT=OUT..' Get${name}() const { return this->m_${name}; }'
-end)$(if point_vec and (point_vec == 1) then
+end)$(if point_vec then
       OUT=[[
 
       /** \brief Add ${name} point */

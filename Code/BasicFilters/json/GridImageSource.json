@@ -25,7 +25,7 @@
       "name" : "Sigma",
       "type" : "double",
       "dim_vec" : true,
-      "set_as_scalar" : 1,
+      "set_as_scalar" : true,
       "default" : "std::vector<double>(3, 0.5)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",

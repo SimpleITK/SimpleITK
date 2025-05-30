@@ -50,7 +50,7 @@ end)
             // Instantiate objects
             ImageFileReader reader = new ImageFileReader();
             ${name} filter = new ${name}();
-			List<Image> inputs = new List<Image>();
+            List<Image> inputs = new List<Image>();
 $(if #tests == 0 then
             OUT=[[
             // No tests defined => exit with error code
@@ -103,7 +103,7 @@ $(for i=1,#value do OUT=OUT .. "\
                 filter.AddTrialPoint( idx );\
                 }\
 " end)]]
-elseif point_vec and point_vec == 1 then
+elseif point_vec then
     OUT=[[
                 filter.Clear${parameter}();
 ]]

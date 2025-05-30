@@ -10,7 +10,7 @@
     {
       "name" : "SeedList",
       "type" : "unsigned int",
-      "point_vec" : 1,
+      "point_vec" : true,
       "default" : "std::vector< std::vector<unsigned int > >()",
       "custom_itk_cast" : "filter->ClearSeeds();\n  for(auto &&seed : m_SeedList)\n    {\n    using IndexType = typename InputImageType::IndexType;\n    filter->AddSeed(sitkSTLVectorToITK< IndexType >( seed ));\n    }\n",
       "briefdescriptionSet" : "Set list of image indexes for seeds.",
@@ -44,7 +44,7 @@
       "default" : "std::vector<unsigned int>(3, 1)",
       "doc" : "Radius of the neighborhood used to compute the median",
       "dim_vec" : true,
-      "set_as_scalar" : 1,
+      "set_as_scalar" : true,
       "itk_type" : "typename InputImageType::SizeType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the radius of the neighborhood used for a mask.",
@@ -71,7 +71,7 @@
       "settings" : [
         {
           "parameter" : "SeedList",
-          "point_vec" : 1,
+          "point_vec" : true,
           "value" : [
             "{100,100}",
             "{95,85}"

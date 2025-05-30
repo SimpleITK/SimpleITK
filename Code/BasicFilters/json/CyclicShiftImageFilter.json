@@ -10,7 +10,7 @@
       "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : true,
-      "set_as_scalar" : 1,
+      "set_as_scalar" : true,
       "itk_type" : "typename FilterType::OffsetType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/get the shift. Shifts may be positive or negative.",

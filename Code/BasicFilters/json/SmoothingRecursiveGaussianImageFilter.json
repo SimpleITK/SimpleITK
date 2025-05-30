@@ -12,7 +12,7 @@
       "type" : "double",
       "default" : "std::vector<double>(3,1.0)",
       "dim_vec" : true,
-      "set_as_scalar" : 1,
+      "set_as_scalar" : true,
       "itk_type" : "typename FilterType::SigmaArrayType",
       "custom_itk_cast" : "typename FilterType::SigmaArrayType itkVecSigma = sitkSTLVectorToITK<typename FilterType::SigmaArrayType>( this->GetSigma() );\n  filter->SetSigmaArray( itkVecSigma );",
       "doc" : "",

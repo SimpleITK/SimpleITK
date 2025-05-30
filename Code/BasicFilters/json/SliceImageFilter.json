@@ -33,7 +33,7 @@
       "type" : "int",
       "default" : "std::vector<int>(3, 1)",
       "dim_vec" : true,
-      "set_as_scalar" : 1,
+      "set_as_scalar" : true,
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the stride of indexes extracted An exception will be generated if 0.",
