@@ -32,7 +32,18 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-
+          - os: mac-arm64
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
+          - os: mac-arm64
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              BUILD_SHARED_LIBS:BOOL=ON
           - os: windows-2022
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Visual Studio 17 2022"
@@ -125,13 +136,6 @@ jobs:
               WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=ON
 
-          - os: mac-arm64
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
 
     steps:
       - uses: actions/checkout@v4
