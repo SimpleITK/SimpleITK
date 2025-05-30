@@ -87,6 +87,12 @@ if(NOT SWIG_DIR)
       set(REQUIRED_CXX_FLAGS "-isysroot ${CMAKE_OSX_SYSROOT}")
     endif()
 
+    # supress sprintf deprecation warnings
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND APPLE)
+      set(REQUIRED_CXX_FLAGS "${REQUIRED_CXX_FLAGS} -Wno-deprecated-declarations")
+      set(REQUIRED_C_FLAGS "${REQUIRED_C_FLAGS} -Wno-deprecated-declarations")
+    endif()
+
     # configure step
     configure_file(
       swig_configure_step.cmake.in
