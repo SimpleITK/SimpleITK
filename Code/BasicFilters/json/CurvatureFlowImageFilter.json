@@ -4,7 +4,6 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
-  "long" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [

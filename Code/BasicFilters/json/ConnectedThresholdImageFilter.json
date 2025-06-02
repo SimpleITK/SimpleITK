@@ -112,8 +112,7 @@
         {
           "parameter" : "ReplaceValue",
           "value" : "255",
-          "java_value" : "(short) 255",
-          "comment" : "/* JAVA does not implicitly cast ints to short */"
+          "java_value" : "(short) 255"
         }
       ],
       "md5hash" : "5119a1fef13206c4a28fcfa0c55b5c13",
@@ -128,7 +127,6 @@
         {
           "parameter" : "SeedList",
           "point_vec" : true,
-          "dim" : 2,
           "value" : [
             "{100,100}",
             "{95,85}"
@@ -161,8 +159,7 @@
         {
           "parameter" : "ReplaceValue",
           "value" : "255",
-          "java_value" : "(short) 255",
-          "comment" : "/* JAVA does not implicitly cast ints to short */"
+          "java_value" : "(short) 255"
         },
         {
           "parameter" : "Connectivity",

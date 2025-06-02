@@ -68,7 +68,7 @@
       "description" : "Simply run with default settings",
       "settings" : [],
       "tolerance" : 0.1,
-      "measurements" : [
+      "measurements_results" : [
         {
           "name" : "ElapsedIterations",
           "value" : 100,
