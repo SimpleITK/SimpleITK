@@ -35,7 +35,7 @@
       "tag" : "3d",
       "description" : "3D",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]

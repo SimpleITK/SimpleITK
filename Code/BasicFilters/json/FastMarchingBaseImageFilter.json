@@ -67,7 +67,7 @@
     {
       "tag" : "default",
       "description" : "Default parameter settings",
-      "tolerance" : "1e-5",
+      "tolerance" : 1e-5,
       "settings" : [
         {
           "parameter" : "TrialPoints",

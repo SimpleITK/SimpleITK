@@ -32,7 +32,7 @@
     {
       "tag" : "default",
       "description" : "Default parameter settings",
-      "tolerance" : "0.01",
+      "tolerance" : 0.01,
       "settings" : [],
       "inputs" : [
         "Input/2th_cthead1.png"
@@ -41,7 +41,7 @@
     {
       "tag" : "modified_parms",
       "description" : "Setting InsideValue and OutsideValuew",
-      "tolerance" : "0.01",
+      "tolerance" : 0.01,
       "settings" : [
         {
           "parameter" : "InsideValue",

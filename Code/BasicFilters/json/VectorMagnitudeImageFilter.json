@@ -12,7 +12,7 @@
       "tag" : "3d",
       "description" : "3D",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/RA-Gradient.nrrd"
       ]

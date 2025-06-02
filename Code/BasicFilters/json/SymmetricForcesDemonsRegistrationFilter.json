@@ -142,7 +142,7 @@
       "tag" : "2d",
       "description" : "2D",
       "settings" : [],
-      "tolerance" : "1e-3",
+      "tolerance" : 1e-3,
       "inputs" : [
         "Input/BrainProtonDensitySliceBorder20.png",
         "Input/BrainProtonDensitySliceBSplined10.png"
@@ -168,7 +168,7 @@
       "tag" : "2d_with_initial",
       "description" : "2D With Initial Displacement",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "inputs" : [
         "Input/BrainProtonDensitySliceBorder20.png",
         "Input/BrainProtonDensitySliceBSplined10.png",

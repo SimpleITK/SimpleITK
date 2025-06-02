@@ -22,7 +22,7 @@
     {
       "tag" : "defaults",
       "description" : "Test half inverse FFT",
-      "tolerance" : "0.01",
+      "tolerance" : 0.01,
       "settings" : [],
       "inputs" : [
         "Input/RA-HalfFFT-Complex.nrrd"

@@ -25,7 +25,7 @@
           "value" : "2"
         }
       ],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]

@@ -18,7 +18,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "inputs" : [
         "Input/Ramp-Up-Short.nrrd",
         "Input/Ramp-Down-Short.nrrd"

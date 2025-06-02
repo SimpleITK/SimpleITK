@@ -32,7 +32,7 @@
       "tag" : "defaults",
       "description" : "run with some defaults",
       "settings" : [],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/xforms/bspline_ceoff0.mha"
       ]

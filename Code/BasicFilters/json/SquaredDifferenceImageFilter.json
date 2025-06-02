@@ -12,7 +12,7 @@
       "tag" : "2DStapleImages",
       "description" : "Default parameter settings",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "inputA_cast" : "sitkUInt16",
       "inputB_cast" : "sitkUInt16",
       "inputs" : [
@@ -24,7 +24,7 @@
       "tag" : "Ramp_Short1",
       "description" : "Ramp",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd"
@@ -34,7 +34,7 @@
       "tag" : "Ramp_Short2",
       "description" : "Ramp",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "inputA_cast" : "sitkUInt32",
       "inputB_cast" : "sitkUInt32",
       "inputs" : [
