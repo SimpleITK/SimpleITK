@@ -220,14 +220,14 @@
           "name" : "Minimum",
           "value" : 100,
           "parameters" : [
-            1
+            "1"
           ]
         },
         {
           "name" : "Maximum",
           "value" : 199,
           "parameters" : [
-            1
+            "1"
           ]
         },
         {
@@ -235,14 +235,14 @@
           "value" : 138.56282364638136,
           "tolerance" : 1e-08,
           "parameters" : [
-            1
+            "1"
           ]
         },
         {
           "name" : "Median",
           "value" : 137,
           "parameters" : [
-            1
+            "1"
           ]
         },
         {
@@ -250,14 +250,14 @@
           "value" : 14.051474145970603,
           "tolerance" : 1e-08,
           "parameters" : [
-            1
+            "1"
           ]
         },
         {
           "name" : "Sum",
           "value" : 3344768,
           "parameters" : [
-            1
+            "1"
           ]
         },
         {
@@ -265,7 +265,7 @@
           "value" : 197.44392567488032,
           "tolerance" : 1e-06,
           "parameters" : [
-            1
+            "1"
           ]
         }
       ]
