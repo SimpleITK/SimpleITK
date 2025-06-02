@@ -95,5 +95,6 @@
   ],
   "briefdescription" : "Coherence enhanging diffusion and edge enhancing diffusion.",
   "detaileddescription" : "Implementation of Coherence Enhancing Diffusion (CED), and Edge Enhancing Diffusion (EED), as described by Weickert.\n\nCED heuristically smoothes everywhere except accross image contours, while EED smoothes nowhere but tangentially to image contours.\n\nThe non-linear diffusion tensor is defined in terms of the structure tensor.\n\nDenote by \\f$\\mu_i\\f$ the structure tensor eigenvalues, at a given point \\f$x\\f$ , with \\f$0\\leq i < d\\f$ . Let also \\f$\\mu_{\\rm min}\\f$ and \\f$\\mu_{\\rm max}\\f$ , be the smallest and largest eigenvalues respectively. The diffusion tensor is defined by the same eigenvectors, but with modified with eigenvalues \\f$\\lambda_i\\f$ .\n\nCoherence Enhancing Diffusion:\n\n\\f$\\lambda_i := g(\\mu_i - \\mu_{\\rm min})\\f$ , where \\f$g(s) = 1 - (1-\\alpha)*exp(-(\\lambda/s)^m)\\f$ \n\nNote the limit values \\f$g(0) = 1\\f$ , \\f$g(\\infty) = \\alpha\\f$ .\n\nEdge enhancing diffusion:\n\n\\f$\\lambda_i := g(\\mu_{\\rm max} - \\mu_i)\\f$ , where \\f$g(s) = \\alpha + (1-\\alpha)*exp(-(\\lambda/s)^m)\\f$ \n\nNote the limit values \\f$g(0) = \\alpha\\f$ , \\f$g(\\infty) = 1\\f$ .",
-  "itk_module" : "AnisotropicDiffusionLBR"
+  "itk_module" : "AnisotropicDiffusionLBR",
+  "itk_group" : "AnisotropicDiffusionLBR"
 }

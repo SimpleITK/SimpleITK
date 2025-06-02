@@ -43,5 +43,6 @@
   ],
   "briefdescription" : "Class for binary morphological erosion of label images.",
   "detaileddescription" : "This filter will separate touching labels. If you don't want this then use a conventional binary erosion to mask the label image. This filter is threaded.\n\n\\see itkLabelSetDilateImageFilter\n\n\\author Richard Beare, Department of Medicine, Monash University, Australia. Richard.Beare@monash.edu",
-  "itk_module" : "LabelErodeDilate"
+  "itk_module" : "LabelErodeDilate",
+  "itk_group" : "LabelErodeDilate"
 }

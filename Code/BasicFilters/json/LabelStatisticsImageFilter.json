@@ -52,7 +52,8 @@
       "name" : "GetNumberOfLabels",
       "doc" : "Return the number of labels after execution .",
       "return_type" : "uint64_t",
-      "body" : "return m_Labels.size();"
+      "body" : "return m_Labels.size();",
+      "parameters" : []
     }
   ],
   "measurements" : [
