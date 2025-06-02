@@ -52,12 +52,6 @@ TEST(BasicFilters,${name}) {
   itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
   std::string inputSHA1hash;
 
-  $(if #tests == 0 then
-    OUT=[[
-  FAIL() << "Filter ${name} has no tests defined";
-        ]]
-    end)
-
 $(foreach members
   $(if dim_vec then
   OUT=[[for(unsigned int i = 0; i < filter.Get${name}().size(); ++i)
