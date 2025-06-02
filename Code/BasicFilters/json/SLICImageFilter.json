@@ -10,7 +10,7 @@
       "name" : "SuperGridSize",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 50)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "doc" : "",
       "itk_type" : "typename FilterType::SuperGridSizeType",
       "briefdescriptionSet" : "",
@@ -119,7 +119,7 @@
         {
           "parameter" : "SuperGridSize",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             20,
             20

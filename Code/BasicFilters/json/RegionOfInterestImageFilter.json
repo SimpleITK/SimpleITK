@@ -10,7 +10,7 @@
       "name" : "Size",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename InputImageType::SizeType",
       "briefdescriptionSet" : "Size in pixels of the region extracted.",
       "detaileddescriptionSet" : "",
@@ -22,7 +22,7 @@
       "name" : "Index",
       "type" : "int",
       "default" : "std::vector<int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename InputImageType::IndexType",
       "briefdescriptionSet" : "Set the inclusive starting index of the region extracted.",
       "detaileddescriptionSet" : "",
@@ -63,7 +63,7 @@
         {
           "parameter" : "Size",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             10,
             10
@@ -72,7 +72,7 @@
         {
           "parameter" : "Index",
           "type" : "int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             167,
             151

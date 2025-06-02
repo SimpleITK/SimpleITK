@@ -38,7 +38,7 @@ $(include MemberFunctionDispatch.h.in)
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
-$(if (not no_procedure) or (no_procedure == 1) then
+$(if not no_procedure then
 OUT=[[$(include ProceduralAPI.h.in)]]
 end)
 }

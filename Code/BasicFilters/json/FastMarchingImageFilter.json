@@ -11,7 +11,7 @@
     {
       "name" : "TrialPoints",
       "type" : "unsigned int",
-      "point_vec" : 1,
+      "point_vec" : true,
       "default" : "std::vector< std::vector<unsigned int > >()",
       "custom_itk_cast" : "using NodeType = typename FilterType::NodeType;\n  using NodeContainerType = typename FilterType::NodeContainer;\n\n  typename NodeContainerType::Pointer trialPoints = NodeContainerType::New();\n  trialPoints->reserve( m_TrialPoints.size() );\n\n  for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TrialPoints[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n    if (m_TrialPoints[i].size() > NodeType::SetDimension)\n      node.SetValue(m_TrialPoints[i][NodeType::SetDimension]);\n\n    trialPoints->push_back( node );\n    }\n  filter->SetTrialPoints( trialPoints );",
       "briefdescriptionSet" : "",
@@ -57,7 +57,7 @@
         {
           "parameter" : "TrialPoints",
           "dim" : 2,
-          "point_vec" : 1,
+          "point_vec" : true,
           "value" : [
             "{70,70}",
             "{200,180}"
@@ -97,7 +97,7 @@
         {
           "parameter" : "TrialPoints",
           "dim" : 2,
-          "point_vec" : 1,
+          "point_vec" : true,
           "value" : [
             "{70,70}",
             "{200,180}"
@@ -126,7 +126,7 @@
         },
         {
           "parameter" : "InitialTrialValues",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "type" : "double",
           "value" : [
             1.1,

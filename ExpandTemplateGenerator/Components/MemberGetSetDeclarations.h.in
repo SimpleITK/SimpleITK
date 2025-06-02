@@ -31,27 +31,27 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
       void Set${name} ('
       if not type and enum then
         OUT=OUT..' ${name}Type'
-      elseif dim_vec and (dim_vec == 1) then
+      elseif dim_vec then
         OUT=OUT..' std::vector<${type}>'
-      elseif point_vec and (point_vec == 1) then
+      elseif point_vec then
         OUT=OUT..' std::vector< std::vector<${type}> >'
       else
         OUT=OUT..' ${type}'
       end
       OUT=OUT..' ${name} ) '
-      if (dim_vec and (dim_vec == 1)) or
-         (point_vec and (point_vec == 1)) then
+      if (dim_vec) or
+         (point_vec) then
         OUT = OUT..'{ this->m_${name} = std::move(${name});  }'
       else
         OUT=OUT..'{ this->m_${name} = ${name};  }'
       end
-  if dim_vec and ( set_as_scalar == 1 ) then
+  if dim_vec and set_as_scalar then
     OUT = OUT .. '\
 \
       /** Set the values of the ${name} vector all to value */\
       void Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value);  }'
   end
-  if type == "bool" and ( not dim_vec or not dim_vec == 1 ) then
+  if type == "bool" and ( not dim_vec ) then
       OUT = OUT .. '\
 \
       /** Set the value of ${name} to true or false respectfully. */\
@@ -59,7 +59,7 @@ end)$(if (not no_set_method) or (no_set_method == 0) then
       void ${name}Off() { return this->Set${name}(false); }'
   end
 end)
-$(if (not no_get_method) or (no_get_method == 0) then
+$(if not no_get_method then
        OUT = '\
       /**'
       if briefdescriptionGet and (briefdescriptionGet:len() > 0)  then
@@ -75,15 +75,15 @@ $(if (not no_get_method) or (no_get_method == 0) then
       '
       if not type and enum then
         OUT=OUT..'${name}Type'
-      elseif dim_vec and (dim_vec == 1) then
+      elseif dim_vec then
         OUT=OUT..'std::vector<${type}>'
-      elseif point_vec and (point_vec == 1) then
+      elseif point_vec then
         OUT=OUT..'std::vector< std::vector< ${type} > >'
       else
         OUT=OUT..'${type}'
       end
       OUT=OUT..' Get${name}() const { return this->m_${name}; }'
-end)$(if point_vec and (point_vec == 1) then
+end)$(if point_vec then
       OUT=[[
 
       /** \brief Add ${name} point */

@@ -17,7 +17,7 @@
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(itk::simple::PermuteAxesImageFilter::DefaultOrder)",
       "doc" : "",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::PermuteOrderArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the permutation order. The elements of order must be a rearrangement of the numbers from 0 to ImageDimension - 1.",
@@ -43,7 +43,7 @@
         {
           "parameter" : "Order",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0,
             1
@@ -62,7 +62,7 @@
         {
           "parameter" : "Order",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             1,
             2,

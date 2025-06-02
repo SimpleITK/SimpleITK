@@ -10,7 +10,7 @@
     {
       "name" : "SeedList",
       "type" : "unsigned int",
-      "point_vec" : 1,
+      "point_vec" : true,
       "default" : "std::vector< std::vector<unsigned int > >()",
       "custom_itk_cast" : "filter->ClearSeeds();\n  for(auto &&seed : m_SeedList)\n    {\n    using IndexType = typename InputImageType::IndexType;\n    filter->AddSeed(sitkSTLVectorToITK< IndexType >( seed ));\n    }\n",
       "briefdescriptionSet" : "Set list of image indexes for seeds.",
@@ -79,7 +79,7 @@
       "settings" : [
         {
           "parameter" : "SeedList",
-          "point_vec" : 1,
+          "point_vec" : true,
           "value" : [
             "{100,100}",
             "{95,85}"
@@ -127,7 +127,7 @@
       "settings" : [
         {
           "parameter" : "SeedList",
-          "point_vec" : 1,
+          "point_vec" : true,
           "dim" : 2,
           "value" : [
             "{100,100}",

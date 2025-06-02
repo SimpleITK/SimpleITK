@@ -12,7 +12,7 @@
       "name" : "ChangeMap",
       "type" : "std::map<double,double>",
       "default" : "std::map<double,double>()",
-      "no_print" : 1,
+      "no_print" : true,
       "custom_itk_cast" : "typename FilterType::ChangeMapType cmap; for( std::map<double,double>::const_iterator i = m_ChangeMap.begin(); i != m_ChangeMap.end(); ++i ) { cmap[static_cast<typename FilterType::PixelType>(i->first)] = static_cast<typename FilterType::PixelType>(i->second); } filter->SetChangeMap( cmap );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",

@@ -23,7 +23,7 @@
     {
       "name" : "DerivativeWeights",
       "type" : "double",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "default" : "std::vector<double>()",
       "itk_type" : "typename FilterType::WeightsType",
       "custom_itk_cast" : "if (!this->m_DerivativeWeights.empty()) filter->SetDerivativeWeights( sitkSTLVectorToITK<typename FilterType::WeightsType>( this->m_DerivativeWeights ) );",
@@ -52,7 +52,7 @@
         {
           "parameter" : "DerivativeWeights",
           "type" : "double",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             0.1,
             10.0

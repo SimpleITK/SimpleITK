@@ -45,7 +45,7 @@
         {
           "parameter" : "ProjectionDimension",
           "cxx_value" : "1u",
-          "value" : "1"
+          "value" : 1
         }
       ],
       "md5hash" : "c4d83f61ffd5cc3a163155bb5d6a0698",

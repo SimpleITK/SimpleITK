@@ -10,7 +10,7 @@
       "name" : "Seed1",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set a single seed point 1.\n\nThis seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue."
@@ -19,7 +19,7 @@
       "name" : "Seed2",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set a single seed point 2.\n\nThis seed will be isolated from Seed1 (if possible)."
@@ -100,7 +100,7 @@
         {
           "parameter" : "Seed1",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             150,
             150
@@ -109,7 +109,7 @@
         {
           "parameter" : "Seed2",
           "type" : "uint32_t",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             201,
             132

@@ -61,7 +61,7 @@ elseif parameter == "TrialPoints" and python_value then
 elseif python_value then
 OUT=[[
     filter.Set${parameter}( ${python_value} )]]
-elseif dim_vec and dim_vec==1 then
+elseif dim_vec then
 OUT=[[
     filter.Set${parameter}( ( ]]
   for i=1,#value-1 do

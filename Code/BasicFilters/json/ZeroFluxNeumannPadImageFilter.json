@@ -9,14 +9,14 @@
       "name" : "PadLowerBound",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename InputImageType::SizeType"
     },
     {
       "name" : "PadUpperBound",
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
-      "dim_vec" : 1,
+      "dim_vec" : true,
       "itk_type" : "typename InputImageType::SizeType"
     }
   ],
@@ -38,7 +38,7 @@
         {
           "parameter" : "PadLowerBound",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             5,
             10,
@@ -48,7 +48,7 @@
         {
           "parameter" : "PadUpperBound",
           "type" : "unsigned int",
-          "dim_vec" : 1,
+          "dim_vec" : true,
           "value" : [
             3,
             6,
