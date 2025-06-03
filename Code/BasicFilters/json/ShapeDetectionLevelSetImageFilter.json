@@ -71,12 +71,12 @@
       "measurements_results" : [
         {
           "name" : "ElapsedIterations",
-          "value" : 100,
-          "tolerance" : 10
+          "value" : 8,
+          "tolerance" : 1
         },
         {
           "name" : "RMSChange",
-          "value" : 0.02,
+          "value" : 0.0,
           "tolerance" : 0.002
         }
       ],
