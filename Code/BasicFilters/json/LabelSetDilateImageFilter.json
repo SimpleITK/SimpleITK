@@ -42,5 +42,6 @@
   ],
   "briefdescription" : "Class for binary morphological erosion of label images.",
   "detaileddescription" : "This filter is threaded.\n\n\\see itkLabelSetDilateErodeImageFilter\n\n\\author Richard Beare, Department of Medicine, Monash University, Australia. Richard.Beare@monash.edu",
-  "itk_module" : "LabelErodeDilate"
+  "itk_module" : "LabelErodeDilate",
+  "itk_group" : "LabelErodeDilate"
 }

@@ -31,7 +31,7 @@
       "tag" : "defaults",
       "description" : "Basic xcorr with and odd kernel",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/cthead1-Float.mha",
@@ -42,7 +42,7 @@
       "tag" : "EvenKernel",
       "description" : "Basic xcorr with an even kernel",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/cthead1-Float.mha",

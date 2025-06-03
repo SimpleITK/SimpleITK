@@ -55,7 +55,6 @@
       "description" : "Simply run with default settings",
       "settings" : [],
       "tolerance" : 0,
-      "md5hash" : null,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]

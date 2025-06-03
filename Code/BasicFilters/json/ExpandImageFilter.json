@@ -48,7 +48,7 @@
     {
       "tag" : "Expand2x3",
       "description" : "expand image 2 x 3",
-      "tolerance" : "0.08",
+      "tolerance" : 0.08,
       "settings" : [
         {
           "parameter" : "ExpandFactors",
@@ -67,7 +67,7 @@
     {
       "tag" : "Vector",
       "description" : "Vector image",
-      "tolerance" : "1e-6",
+      "tolerance" : 1e-6,
       "settings" : [
         {
           "parameter" : "ExpandFactor",
@@ -110,7 +110,7 @@
     {
       "tag" : "Interpolator_BSpline",
       "description" : "default",
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "settings" : [
         {
           "parameter" : "ExpandFactor",
@@ -137,7 +137,7 @@
     {
       "tag" : "Interpolator_Gaussian",
       "description" : "default",
-      "tolerance" : "1e-8",
+      "tolerance" : 1e-8,
       "settings" : [
         {
           "parameter" : "ExpandFactor",

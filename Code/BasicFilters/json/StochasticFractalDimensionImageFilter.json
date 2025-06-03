@@ -40,7 +40,7 @@
       "settings" : [],
       "inputA_cast" : "sitkFloat32",
       "measurements_results" : [],
-      "tolerance" : "0",
+      "tolerance" : 0,
       "inputs" : [
         "Input/WhiteDots.png"
       ]
@@ -51,7 +51,7 @@
       "settings" : [],
       "inputA_cast" : "sitkFloat32",
       "measurements_results" : [],
-      "tolerance" : "0",
+      "tolerance" : 0,
       "inputs" : [
         "Input/2th_cthead1.png",
         "Input/2th_cthead1.png"

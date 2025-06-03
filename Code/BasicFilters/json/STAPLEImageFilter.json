@@ -62,7 +62,7 @@
     {
       "tag" : "basic",
       "description" : "Basic usage",
-      "tolerance" : "1e-5",
+      "tolerance" : 1e-5,
       "inputs" : [
         "Input/STAPLE1-binary.png",
         "Input/STAPLE2-binary.png"

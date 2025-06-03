@@ -55,7 +55,7 @@
       "tag" : "defaults",
       "description" : "Basic xcorr with and odd kernel",
       "settings" : [],
-      "tolerance" : "0.02",
+      "tolerance" : 0.02,
       "inputs" : [
         "Input/DeconvolutionInput.nrrd",
         "Input/Gaussian_1.5.nrrd",
@@ -74,7 +74,7 @@
           "value" : "75000"
         }
       ],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/OAS1_0001_MR1_mpr-1_anon.nrrd",
         "Input/OAS1_0002_MR1_mpr-1_anon.nrrd",

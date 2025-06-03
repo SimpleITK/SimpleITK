@@ -61,7 +61,7 @@
           "R_value" : "TRUE"
         }
       ],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/DeconvolutionInput.nrrd",
         "Input/DeconvolutionKernel.nrrd"

@@ -34,7 +34,6 @@
       "description" : "Simply run with default settings",
       "settings" : [],
       "tolerance" : 0.01,
-      "md5hash" : null,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]
@@ -54,7 +53,6 @@
         }
       ],
       "tolerance" : 0.01,
-      "md5hash" : null,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]

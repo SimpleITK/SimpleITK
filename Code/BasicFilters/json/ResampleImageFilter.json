@@ -143,7 +143,7 @@
           ]
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]
@@ -183,7 +183,7 @@
           "R_value" : "'sitkBSplineResamplerOrder3'"
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/xforms/bspline_ceoff0.mha"
       ]
@@ -225,7 +225,7 @@
           "R_value" : "'sitkGaussian'"
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]
@@ -254,7 +254,7 @@
           ]
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/VM1111Shrink-RGBFloat.nrrd"
       ]
@@ -289,7 +289,7 @@
           "R_value" : "TRUE"
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/VM1111Shrink-RGBFloat.nrrd"
       ]

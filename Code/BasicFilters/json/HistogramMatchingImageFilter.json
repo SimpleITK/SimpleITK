@@ -52,7 +52,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/Ramp-One-Zero-Float.nrrd",
         "Input/RA-Slice-Float.nrrd"

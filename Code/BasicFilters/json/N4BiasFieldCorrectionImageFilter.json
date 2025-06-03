@@ -170,7 +170,7 @@
           "R_value" : "TRUE"
         }
       ],
-      "tolerance" : "0.015",
+      "tolerance" : 0.015,
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/2th_cthead1.mha"

@@ -13,7 +13,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/Ramp-Up-Short.nrrd"
       ]
@@ -22,7 +22,7 @@
       "tag" : "vector",
       "description" : "Simply run with default settings for a vector image",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : 0.0001,
       "inputs" : [
         "Input/VM1111Shrink-RGB.png"
       ]

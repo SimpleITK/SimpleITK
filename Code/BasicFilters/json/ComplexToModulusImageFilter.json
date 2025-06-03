@@ -11,7 +11,7 @@
     {
       "tag" : "defaults",
       "description" : "Test Complex to modulus",
-      "tolerance" : "0.01",
+      "tolerance" : 0.01,
       "settings" : [],
       "inputs" : [
         "Input/RA-FFT-Complex.nrrd"

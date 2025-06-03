@@ -56,7 +56,6 @@
       "settings" : [
         {
           "parameter" : "TrialPoints",
-          "dim" : 2,
           "point_vec" : true,
           "value" : [
             "{70,70}",
@@ -96,7 +95,6 @@
       "settings" : [
         {
           "parameter" : "TrialPoints",
-          "dim" : 2,
           "point_vec" : true,
           "value" : [
             "{70,70}",

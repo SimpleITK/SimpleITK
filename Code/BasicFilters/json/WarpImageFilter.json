@@ -130,7 +130,7 @@
           ]
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/cthead1-dis1.nrrd"
@@ -161,7 +161,7 @@
           "R_value" : "'sitkHammingWindowedSinc'"
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/VM1111Shrink-RGBFloat.nrrd",
         "Input/VM1111Shrink-dis1.nrrd"

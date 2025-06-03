@@ -87,7 +87,7 @@
           ]
         }
       ],
-      "tolerance" : "0.001",
+      "tolerance" : 0.001,
       "inputs" : [
         "Input/displacement.mha"
       ]

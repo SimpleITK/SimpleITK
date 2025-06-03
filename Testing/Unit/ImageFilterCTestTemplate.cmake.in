@@ -1,6 +1,11 @@
 # TODO
 # - test output
 
+$(if #tests == 0 then OUT=[[
+# No tests defined.
+message(WARNING "Filter ${name} has no tests defined!")
+]] end)
+
 #
 # Data for External Tests
 #
