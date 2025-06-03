@@ -172,7 +172,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
   set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
   # validate json files if python is available
-  if ( Python_EXECUTABLE AND NOT Python_VERSION_STRING VERSION_LESS 3.9 )
+  if ( Python_EXECUTABLE AND NOT Python_VERSION VERSION_LESS 3.9 )
     set ( JSON_SCHEMA_FILE "${SimpleITK_SOURCE_DIR}/Utilities/JSON/SimpleITKImageFilterSchema.json" )
     set ( JSON_VALIDATE_COMMAND COMMAND "${Python_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py" "${JSON_SCHEMA_FILE}" "${input_json_file}" )
   endif ()
