@@ -19,6 +19,14 @@ repos:
    - id: check-illegal-windows-names
    - id: check-json
    - id: check-yaml
+- repo: https://github.com/cheshirekow/cmake-format-precommit
+  rev: e2c2116d86a80e72e7146a06e68b7c228afc6319 # v0.6.13
+  # note JSON is not supported out of the box with the hook
+  hooks:
+   - id: cmake-format
+     args : ['--config', 'Utilities/CMakeFormat/config.json', '--in-place']
+   - id: cmake-lint
+     args : ['--config', 'Utilities/CMakeFormat/config.json']
 - repo: https://github.com/psf/black
   rev: 24.2.0
   hooks: # check conformance to black formatting
