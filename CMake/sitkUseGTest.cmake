@@ -1,72 +1,76 @@
 #
 # sitkUseGTest
 #
-#  This file is a wrapper of CMake's FindGTest and GoogleTest's
-# recommendation to add the Google Test source tree as a subdirectory
-# of the project.
+# This file is a wrapper of CMake's FindGTest and GoogleTest's recommendation to add the Google Test source tree as a
+# subdirectory of the project.
 #
 # This file is designed to provide the "GTest::GTest" target.
 #
 # The follow cache variable is used to find GTest:
 #
-# ``GTEST_ROOT``
-#   The root directory of the Google Test installation or a source
-# directory.
-
+# ``GTEST_ROOT`` The root directory of the Google Test installation or a source directory.
 
 include(GoogleTest)
 
-if (TARGET GTest::Main AND TARGET GTest::GTest)
-    message(STATUS "GTest targets already defined.")
-    return()
+if(TARGET GTest::Main AND TARGET GTest::GTest)
+  message(STATUS "GTest targets already defined.")
+  return()
 endif()
 
-set(GTEST_ROOT "" CACHE PATH "Path to the root of a binary gtest \
+set(GTEST_ROOT
+    ""
+    CACHE PATH "Path to the root of a binary gtest \
 installation where GTEST_ROOT/include/gtest/gtest.h can be found OR \
 path to a Google Test source tree.")
 
-
 function(_sitk_gtest_use_gtest_source)
 
-  # Prevent overriding the parent project's compiler/linker
-  # settings on Windows
-  set(gtest_force_shared_crt ON CACHE INTERNAL "")
+  # Prevent overriding the parent project's compiler/linker settings on Windows
+  set(gtest_force_shared_crt
+      ON
+      CACHE INTERNAL "")
 
   # Avoid CMP0063 warning
   set(CMAKE_C_VISIBILITY_PRESET)
   set(CMAKE_CXX_VISIBILITY_PRESET)
   set(CMAKE_VISIBILITY_INLINES_HIDDEN)
 
-  set(BUILD_GTEST ON CACHE INTERNAL "" FORCE )
-  set(BUILD_GMOCK OFF CACHE INTERNAL "" FORCE )
-
+  set(BUILD_GTEST
+      ON
+      CACHE INTERNAL "" FORCE)
+  set(BUILD_GMOCK
+      OFF
+      CACHE INTERNAL "" FORCE)
 
   # google test does not properly use pthreads on mingw
-  if (MINGW)
-    set(gtest_disable_pthreads  ON CACHE INTERNAL "" FORCE)
+  if(MINGW)
+    set(gtest_disable_pthreads
+        ON
+        CACHE INTERNAL "" FORCE)
   endif()
 
-  # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
-  # needed GTest shared libraries from being installed.
+  # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude needed GTest shared libraries from being installed.
   set(BUILD_SHARED_LIBS OFF)
 
-  # Add googletest directly to our build but exclude from using it's
-  # target's and installation unless referenced by other dependencies.
-  add_subdirectory("${GTEST_ROOT}"
-    "${CMAKE_CURRENT_BINARY_DIR}/GTest-build" EXCLUDE_FROM_ALL)
+  # Add googletest directly to our build but exclude from using it's target's and installation unless referenced by
+  # other dependencies.
+  add_subdirectory("${GTEST_ROOT}" "${CMAKE_CURRENT_BINARY_DIR}/GTest-build" EXCLUDE_FROM_ALL)
 
 endfunction()
 
 #
 
+if(DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
 
-if( DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
-
-  find_path(GTEST_INCLUDE_DIRS gtest/gtest.h
+  find_path(
+    GTEST_INCLUDE_DIRS gtest/gtest.h
     PATHS "${GTEST_ROOT}"
     NO_DEFAULT_PATH)
 
-  if(NOT "${GTEST_INCLUDE_DIRS}" STREQUAL "")
+  if(NOT
+     "${GTEST_INCLUDE_DIRS}"
+     STREQUAL
+     "")
 
     message(STATUS "Adding Google Test source directory as subdirectory.")
     set(GTEST_FOUND 1)
@@ -90,6 +94,6 @@ if( DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
 
 else()
 
-  find_package( GTest REQUIRED )
+  find_package(GTest REQUIRED)
 
-endif ()
+endif()

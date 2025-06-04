@@ -7,5 +7,7 @@ set(SITK_CMAKE_POLICY_VERSION "3.20")
 function(cache_list_append cache_variable)
   set(_list ${${cache_variable}})
   list(APPEND _list ${ARGN})
-  set(${cache_variable} ${_list} CACHE INTERNAL "")
+  set(${cache_variable}
+      ${_list}
+      CACHE INTERNAL "")
 endfunction()

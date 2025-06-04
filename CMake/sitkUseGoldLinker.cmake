@@ -1,21 +1,21 @@
 # Add CMake option for linker flags to enable GNU's gold linker.
 #
-# By default the if the "use-ld=gold" flag is supported by the
-# compiler then it is used.
+# By default the if the "use-ld=gold" flag is supported by the compiler then it is used.
 #
-# USE_GOLD_LINKER - a CMake option used to control the usage of the
-# gold linker.
+# USE_GOLD_LINKER - a CMake option used to control the usage of the gold linker.
 
 include(CheckCXXCompilerFlag)
 
 function(sitk_check_gold_linker output_var)
-  if (MSVC)
+  if(MSVC)
     set(have_fold 0)
   else()
     set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -fuse-ld=gold")
     check_cxx_source_compiles("int main() {return 0;}" have_gold)
   endif()
-  set("${output_var}" "${have_gold}" PARENT_SCOPE)
+  set("${output_var}"
+      "${have_gold}"
+      PARENT_SCOPE)
 endfunction()
 
 if(NOT DEFINED USE_GOLD_LINKER)
