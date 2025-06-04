@@ -23,7 +23,7 @@
 import org.itk.simple.*;
 
 class SimpleGaussian {
- 
+
   public static void main(String argv[]) {
 
     if ( argv.length < 3 ) {
@@ -45,7 +45,7 @@ class SimpleGaussian {
 
     ImageFileWriter writer = new ImageFileWriter();
     writer.setFileName(argv[2]);
-    writer.execute( castImg ); 
+    writer.execute( castImg );
 
   }
 

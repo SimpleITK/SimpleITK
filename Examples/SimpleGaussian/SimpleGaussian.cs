@@ -35,7 +35,7 @@ namespace itk.simple.examples {
                 SmoothingRecursiveGaussianImageFilter gaussian = new SmoothingRecursiveGaussianImageFilter();
                 gaussian.SetSigma(Double.Parse(args[1]));
                 Image blurredImage = gaussian.Execute(image);
-                
+
                 // Covert the real output image back to the original pixel type , to
                 // make writing easier , as many file formats don 't support real
                 // pixels .

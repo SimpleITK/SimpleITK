@@ -75,7 +75,7 @@ namespace itk.simple.examples
             uint  numberOfIterations = 200;
             double convergenceMinimumValue = 1e-4;
             uint convergenceWindowSize = 5;
-            
+
             R.SetOptimizerAsGradientDescentLineSearch(learningRate,
                                                       numberOfIterations,
                                                       convergenceMinimumValue,

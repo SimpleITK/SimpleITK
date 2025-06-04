@@ -1,7 +1,7 @@
 #
-# Usage: cmake -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}" 
+# Usage: cmake -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
 #              -D "OUTPUT_FILE:PATH=${PROJECT_BINARY_DIR}/Examples.dox"
-#              -P GenerateExamplesDox.cmake 
+#              -P GenerateExamplesDox.cmake
 
 # This cmake script gets a lists of examples for the project and
 # generates a file suitable for doxygen. The file is a list of

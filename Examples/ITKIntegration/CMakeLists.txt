@@ -1,5 +1,5 @@
 
-find_package(ITK REQUIRED ) 
+find_package(ITK REQUIRED )
 include(${ITK_USE_FILE})
 
 add_executable ( ITKIntegration ITKIntegration.cxx )
