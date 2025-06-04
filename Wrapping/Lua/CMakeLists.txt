@@ -48,4 +48,3 @@ target_include_directories( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME}
       ${LUA_INCLUDE_DIR} )
 target_compile_options(${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} PRIVATE -w)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} )
-

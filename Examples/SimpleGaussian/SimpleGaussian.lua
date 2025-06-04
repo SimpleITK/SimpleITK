@@ -41,4 +41,3 @@ image = caster:Execute( image )
 writer = SimpleITK.ImageFileWriter()
 writer:SetFileName ( arg[3] )
 writer:Execute ( image );
-

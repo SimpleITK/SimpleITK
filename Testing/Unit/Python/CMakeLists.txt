@@ -59,4 +59,3 @@ endif()
 sitk_add_python_test( Test.ArrayView
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkGetArrayViewFromImageTest.py"
   )
-

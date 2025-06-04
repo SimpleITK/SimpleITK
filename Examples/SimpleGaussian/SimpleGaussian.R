@@ -41,4 +41,3 @@ castedimage <- mycaster$Execute(smoothedimage )
 mywriter <- ImageFileWriter()
 mywriter$SetFileName(args[[3]] )
 mywriter$Execute(castedimage )
-

@@ -67,8 +67,3 @@ sitk_add_test( NAME CXX.Example.Segmentation.NeighborhoodConnectedImageFilter1
 #
 #  add_java_test( Example.ImageConnection
 #    "${SimpleITK_SOURCE_DIR}/Examples/ImageConnection.java" )
-
-
-
-
-

@@ -574,4 +574,3 @@ function(sitk_target_link_libraries_with_dynamic_lookup target)
     target_link_libraries(${target} "${links}")
   endif()
 endfunction()
-

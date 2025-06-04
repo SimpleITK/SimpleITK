@@ -39,4 +39,3 @@ image = caster.execute image
 writer = Simpleitk::ImageFileWriter.new
 writer.set_file_name ARGV[2] 
 writer.execute image
-

@@ -96,4 +96,3 @@ namespace itk.simple.examples
     }
 
 }
-
