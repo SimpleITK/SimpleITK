@@ -20,6 +20,7 @@ repos:
    - id: check-json
    - id: check-yaml
    - id: check-xml
+   - id: check-shebang-scripts-are-executable
 - repo: https://github.com/psf/black
   rev: 24.2.0
   hooks: # check conformance to black formatting
