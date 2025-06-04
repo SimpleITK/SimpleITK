@@ -1,112 +1,123 @@
 # Set the required KWStyle version
-SET(KWSTYLE_REQ_MAJOR 1)
-SET(KWSTYLE_REQ_MINOR 0)
-SET(KWSTYLE_REQ_PATCH 1)
+set(KWSTYLE_REQ_MAJOR 1)
+set(KWSTYLE_REQ_MINOR 0)
+set(KWSTYLE_REQ_PATCH 1)
 
-OPTION(KWSTYLE_USE_VIM_FORMAT "Set KWStyle to generate errors with a VIM-compatible format." OFF)
-OPTION(KWSTYLE_USE_MSVC_FORMAT "Set KWStyle to generate errors with a VisualStudio-compatible format." OFF)
+option(KWSTYLE_USE_VIM_FORMAT "Set KWStyle to generate errors with a VIM-compatible format." OFF)
+option(KWSTYLE_USE_MSVC_FORMAT "Set KWStyle to generate errors with a VisualStudio-compatible format." OFF)
 
-FIND_PROGRAM(KWSTYLE_EXECUTABLE
-NAMES KWStyle 
-PATHS
-/usr/local/bin
-)
+find_program(
+  KWSTYLE_EXECUTABLE
+  NAMES KWStyle
+  PATHS /usr/local/bin)
 
-IF(KWSTYLE_EXECUTABLE)
-  
-  EXECUTE_PROCESS(
-  COMMAND ${KWSTYLE_EXECUTABLE} -version
-  OUTPUT_VARIABLE KWSTYLE_VERSION_TEXT
-  ) 
+if(KWSTYLE_EXECUTABLE)
 
-string(STRIP ${KWSTYLE_VERSION_TEXT} KWSTYLE_VERSION_TEXT)
+  execute_process(COMMAND ${KWSTYLE_EXECUTABLE} -version OUTPUT_VARIABLE KWSTYLE_VERSION_TEXT)
 
-IF(KWSTYLE_VERSION_TEXT STREQUAL "Version: Not defined")
-  MESSAGE("This project requires a newer version of KWStyle. Please upgrade the KWStyle executable.")
-ELSE(${KWSTYLE_VERSION_TEXT} STREQUAL "Version: Not defined")
+  string(STRIP ${KWSTYLE_VERSION_TEXT} KWSTYLE_VERSION_TEXT)
 
-  string(LENGTH ${KWSTYLE_VERSION_TEXT} KWSTYLE_VERSION_LENGTH)
-  math(EXPR KWSTYLE_VERSION_FINAL_LENGTH "${KWSTYLE_VERSION_LENGTH}-9")
-  string(SUBSTRING ${KWSTYLE_VERSION_TEXT} 9 ${KWSTYLE_VERSION_FINAL_LENGTH} KWSTYLE_VERSION)
+  if(KWSTYLE_VERSION_TEXT STREQUAL "Version: Not defined")
+    message("This project requires a newer version of KWStyle. Please upgrade the KWStyle executable.")
+  else(${KWSTYLE_VERSION_TEXT} STREQUAL "Version: Not defined")
 
-  # now parse the parts of the user given version string into variables
-  STRING(REGEX REPLACE "^([0-9]+)\\.[0-9]+\\.[0-9]+" "\\1" KWSTYLE_MAJOR_VERSION "${KWSTYLE_VERSION}")
-  STRING(REGEX REPLACE "^[0-9]+\\.([0-9])+\\.[0-9]+" "\\1" KWSTYLE_MINOR_VERSION "${KWSTYLE_VERSION}")
-  STRING(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1" KWSTYLE_PATCH_VERSION "${KWSTYLE_VERSION}")
+    string(LENGTH ${KWSTYLE_VERSION_TEXT} KWSTYLE_VERSION_LENGTH)
+    math(EXPR KWSTYLE_VERSION_FINAL_LENGTH "${KWSTYLE_VERSION_LENGTH}-9")
+    string(
+      SUBSTRING ${KWSTYLE_VERSION_TEXT}
+                9
+                ${KWSTYLE_VERSION_FINAL_LENGTH}
+                KWSTYLE_VERSION)
 
-  MATH(EXPR KWSTYLE_REQ_VERSION "${KWSTYLE_REQ_MAJOR}*10000 + ${KWSTYLE_REQ_MINOR}*100 + ${KWSTYLE_REQ_PATCH}")
-  MATH(EXPR KWSTYLE_LONG_VERSION "${KWSTYLE_MAJOR_VERSION}*10000 + ${KWSTYLE_MINOR_VERSION}*100 + ${KWSTYLE_PATCH_VERSION}")
-  
-  # Set the minimum require version for batchmake
-  IF(KWSTYLE_LONG_VERSION LESS KWSTYLE_REQ_VERSION)
-    MESSAGE(FATAL_ERROR "This project requires a newer version of KWStyle. Please upgrade the KWStyle executable.")
-  ELSE(KWSTYLE_LONG_VERSION LESS KWSTYLE_REQ_VERSION)
-    SET(KWSTYLE_FOUND 1)
-  ENDIF(KWSTYLE_LONG_VERSION LESS KWSTYLE_REQ_VERSION)
-ENDIF(KWSTYLE_VERSION_TEXT STREQUAL "Version: Not defined")
+    # now parse the parts of the user given version string into variables
+    string(
+      REGEX
+      REPLACE "^([0-9]+)\\.[0-9]+\\.[0-9]+"
+              "\\1"
+              KWSTYLE_MAJOR_VERSION
+              "${KWSTYLE_VERSION}")
+    string(
+      REGEX
+      REPLACE "^[0-9]+\\.([0-9])+\\.[0-9]+"
+              "\\1"
+              KWSTYLE_MINOR_VERSION
+              "${KWSTYLE_VERSION}")
+    string(
+      REGEX
+      REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+)"
+              "\\1"
+              KWSTYLE_PATCH_VERSION
+              "${KWSTYLE_VERSION}")
 
-IF(KWSTYLE_FOUND)
-#
-#  Define file names
-#
-SET(KWSTYLE_CONFIGURATION_FILE 
-  ${PROJECT_BINARY_DIR}/Utilities/KWStyle/SITK.kws.xml)
+    math(EXPR KWSTYLE_REQ_VERSION "${KWSTYLE_REQ_MAJOR}*10000 + ${KWSTYLE_REQ_MINOR}*100 + ${KWSTYLE_REQ_PATCH}")
+    math(EXPR KWSTYLE_LONG_VERSION
+         "${KWSTYLE_MAJOR_VERSION}*10000 + ${KWSTYLE_MINOR_VERSION}*100 + ${KWSTYLE_PATCH_VERSION}")
 
-SET(KWSTYLE_SITK_FILES_LIST
-  ${PROJECT_BINARY_DIR}/Utilities/KWStyle/SITKFiles.txt)
+    # Set the minimum require version for batchmake
+    if(KWSTYLE_LONG_VERSION LESS KWSTYLE_REQ_VERSION)
+      message(FATAL_ERROR "This project requires a newer version of KWStyle. Please upgrade the KWStyle executable.")
+    else(KWSTYLE_LONG_VERSION LESS KWSTYLE_REQ_VERSION)
+      set(KWSTYLE_FOUND 1)
+    endif(KWSTYLE_LONG_VERSION LESS KWSTYLE_REQ_VERSION)
+  endif(KWSTYLE_VERSION_TEXT STREQUAL "Version: Not defined")
 
-SET(KWSTYLE_SITK_OVERWRITE_FILE
-  ${PROJECT_SOURCE_DIR}/Utilities/KWStyle/SITKOverwrite.txt )
+  if(KWSTYLE_FOUND)
+    #
+    # Define file names
+    #
+    set(KWSTYLE_CONFIGURATION_FILE ${PROJECT_BINARY_DIR}/Utilities/KWStyle/SITK.kws.xml)
 
-#
-# Configure the files
-#
-CONFIGURE_FILE(
-  ${PROJECT_SOURCE_DIR}/Utilities/KWStyle/SITKFiles.txt.in
-  ${KWSTYLE_SITK_FILES_LIST})
+    set(KWSTYLE_SITK_FILES_LIST ${PROJECT_BINARY_DIR}/Utilities/KWStyle/SITKFiles.txt)
 
-CONFIGURE_FILE(
-  ${PROJECT_SOURCE_DIR}/Utilities/KWStyle/SITK.kws.xml.in
-  ${KWSTYLE_CONFIGURATION_FILE})
+    set(KWSTYLE_SITK_OVERWRITE_FILE ${PROJECT_SOURCE_DIR}/Utilities/KWStyle/SITKOverwrite.txt)
 
+    #
+    # Configure the files
+    #
+    configure_file(${PROJECT_SOURCE_DIR}/Utilities/KWStyle/SITKFiles.txt.in ${KWSTYLE_SITK_FILES_LIST})
 
-#
-#  Define formatting for error messages
-#
-SET(KWSTYLE_EDITOR_FORMAT " ")
-SET(KWSTYLE_EDITOR_FORMAT "")
+    configure_file(${PROJECT_SOURCE_DIR}/Utilities/KWStyle/SITK.kws.xml.in ${KWSTYLE_CONFIGURATION_FILE})
 
-IF(${CMAKE_CXX_COMPILER} MATCHES "cl.exe$")
-  SET(KWSTYLE_USE_MSVC_FORMAT 1)
-ENDIF(${CMAKE_CXX_COMPILER} MATCHES "cl.exe$")
+    #
+    # Define formatting for error messages
+    #
+    set(KWSTYLE_EDITOR_FORMAT " ")
+    set(KWSTYLE_EDITOR_FORMAT "")
 
-IF(${CMAKE_C_COMPILER} MATCHES "g[cx][cx]$")
-  SET(KWSTYLE_USE_VIM_FORMAT 1)
-ENDIF(${CMAKE_C_COMPILER} MATCHES "g[cx][cx]$")
+    if(${CMAKE_CXX_COMPILER} MATCHES "cl.exe$")
+      set(KWSTYLE_USE_MSVC_FORMAT 1)
+    endif(${CMAKE_CXX_COMPILER} MATCHES "cl.exe$")
 
-IF(KWSTYLE_USE_VIM_FORMAT)
-  SET(KWSTYLE_EDITOR_FORMAT -vim)
-ENDIF(KWSTYLE_USE_VIM_FORMAT)
+    if(${CMAKE_C_COMPILER} MATCHES "g[cx][cx]$")
+      set(KWSTYLE_USE_VIM_FORMAT 1)
+    endif(${CMAKE_C_COMPILER} MATCHES "g[cx][cx]$")
 
-IF(KWSTYLE_USE_MSVC_FORMAT)
-  SET(KWSTYLE_EDITOR_FORMAT -msvc)
-ENDIF(KWSTYLE_USE_MSVC_FORMAT)
+    if(KWSTYLE_USE_VIM_FORMAT)
+      set(KWSTYLE_EDITOR_FORMAT -vim)
+    endif(KWSTYLE_USE_VIM_FORMAT)
 
-SET(KWSTYLE_ARGUMENTS_CODE
-  -xml ${KWSTYLE_CONFIGURATION_FILE} -v -D ${KWSTYLE_SITK_FILES_LIST}
-  -o ${KWSTYLE_SITK_OVERWRITE_FILE} ${KWSTYLE_EDITOR_FORMAT}
-  )
+    if(KWSTYLE_USE_MSVC_FORMAT)
+      set(KWSTYLE_EDITOR_FORMAT -msvc)
+    endif(KWSTYLE_USE_MSVC_FORMAT)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT  ${PROJECT_BINARY_DIR}/KWStyleCodeReport.txt
-  COMMAND ${KWSTYLE_EXECUTABLE}
-  ARGS    ${KWSTYLE_ARGUMENTS_CODE}
-  COMMENT "Coding Style Checker"
-  )
+    set(KWSTYLE_ARGUMENTS_CODE
+        -xml
+        ${KWSTYLE_CONFIGURATION_FILE}
+        -v
+        -D
+        ${KWSTYLE_SITK_FILES_LIST}
+        -o
+        ${KWSTYLE_SITK_OVERWRITE_FILE}
+        ${KWSTYLE_EDITOR_FORMAT})
 
-ADD_CUSTOM_TARGET(StyleCheckCode DEPENDS ${PROJECT_BINARY_DIR}/KWStyleCodeReport.txt)
+    add_custom_command(
+      OUTPUT ${PROJECT_BINARY_DIR}/KWStyleCodeReport.txt
+      COMMAND ${KWSTYLE_EXECUTABLE} ARGS ${KWSTYLE_ARGUMENTS_CODE}
+      COMMENT "Coding Style Checker")
 
-ADD_TEST(KWStyleCodeTest ${KWSTYLE_EXECUTABLE} ${KWSTYLE_ARGUMENTS_CODE})
+    add_custom_target(StyleCheckCode DEPENDS ${PROJECT_BINARY_DIR}/KWStyleCodeReport.txt)
 
-ENDIF(KWSTYLE_FOUND)
-ENDIF(KWSTYLE_EXECUTABLE)
+    add_test(KWStyleCodeTest ${KWSTYLE_EXECUTABLE} ${KWSTYLE_ARGUMENTS_CODE})
+
+  endif(KWSTYLE_FOUND)
+endif(KWSTYLE_EXECUTABLE)
