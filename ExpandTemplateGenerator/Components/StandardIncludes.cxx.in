@@ -15,4 +15,3 @@ else
   OUT=[[
 #include "itk${name}.h"]]
 end)
-

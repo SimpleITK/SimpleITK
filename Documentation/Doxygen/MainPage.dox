@@ -37,4 +37,3 @@ This documentation describes the SimpleITK C++ API.
 The wrapped languages have a very similar
 interface, that should only be trivially different.
 */
-

@@ -83,4 +83,3 @@ set(warning_flags_to_test
 set(cxx_flags_to_test ${warning_flags_to_test} -Wno-invalid-offsetof )
 
 test_cxx_flags(CXX_ADDITIONAL_WARNING_FLAGS cxx_flags_to_test)
-

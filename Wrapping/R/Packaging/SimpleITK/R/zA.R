@@ -200,7 +200,7 @@ setMethod('[',
 
 setMethod('[[', "_p_itk__simple__Image",
           function(x, i, j, ...) {
-              return(VectorIndexSelectionCast(x, i-1)) 
+              return(VectorIndexSelectionCast(x, i-1))
           }
           )
 
