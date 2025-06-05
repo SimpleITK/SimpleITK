@@ -81,16 +81,13 @@ function(sitk_check_python_module_version)
             ERROR_STRIP_TRAILING_WHITESPACE
     )
 
-    if(MODULE_ERROR)
-        message(DEBUG "Error when checking module: ${MODULE_ERROR}")
-    endif()
-
     if (NOT MODULE_RESULT_VARIABLE EQUAL 0)
-        message(DEBUG "Error when checking module: ${MODULE_ERROR}")
         if(SCPMV_REQUIRED)
-            message(SEND_ERROR "Python ${SCPMV_MODULE_NAME} module is missing. Please install it.")
+            message(SEND_ERROR
+                    "${MODULE_ERROR}\n"
+                    "Python ${SCPMV_MODULE_NAME} module is missing with \"${SCPMV_PYTHON_EXECUTABLE}\". Please install it.")
         else()
-            message(STATUS "Python ${SCPMV_MODULE_NAME} module is not found, but this is not required.")
+            message(STATUS "Python ${SCPMV_MODULE_NAME} module is not found with \"${SCPMV_PYTHON_EXECUTABLE}\", but this is not required.")
         endif()
         return()
     endif()
