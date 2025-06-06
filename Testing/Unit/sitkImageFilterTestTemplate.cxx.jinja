@@ -134,7 +134,7 @@ TEST(BasicFilters, {{ name }}_{{ test.tag }}) {
   std::vector<std::string> inputFileNames = { {{ test.inputs|map('quote')|join(", ") }} };
 
   for (unsigned int i = 0; i < inputFileNames.size(); ++i) {
-    reader.SetFileName(dataFinder.GetFile(inputFileNames[i])
+    reader.SetFileName(dataFinder.GetFile(inputFileNames[i]));
     ASSERT_NO_THROW(inputs.push_back(reader.Execute())) << "Failed to load " << inputFileNames[i] << " from " << dataFinder.GetFile(inputFileNames[i]);
 
     {%- if test.inputA_cast -%}
