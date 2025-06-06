@@ -1,0 +1,117 @@
+{#
+  This template generates getter and setter declarations for each member in the 'members' list.
+  It handles enums, vectors, and documentation comments.
+  It also generates additional methods for vector/scalar, bool, and point_vec types, and measurement accessors.
+#}
+{% for member in members %}
+  {%- if member.enum %}
+    typedef enum { {{ member.enum | join(', ') }} } {{ member.type if member.type else member.name ~ 'Type' }};
+  {%- endif %}
+
+  {%- if not member.no_set_method %}
+  /**
+    {%- if member.briefdescriptionSet %}
+   * \brief {{ member.briefdescriptionSet }}
+    {%- endif %}
+    {%- if member.detaileddescriptionSet %}
+   * {{ member.detaileddescriptionSet }}
+    {%- endif %}
+   */
+  void
+  Set{{ member.name }}(
+      {%- if not member.type and member.enum -%}
+        {{ member.name }}Type
+      {%- elif member.dim_vec -%}
+        std::vector<{{ member.type }}>
+      {%- elif member.point_vec -%}
+        std::vector< std::vector<{{ member.type }}> >
+      {%- else -%}
+        {{ member.type }}
+      {%- endif %}
+      {{- " " ~ member.name }} )
+    {%- if member.dim_vec or member.point_vec %}
+    { this->m_{{ member.name }} = std::move({{ member.name }}); }
+    {%- else %}
+    { this->m_{{ member.name }} = {{ member.name }}; }
+    {%- endif -%}
+
+    {%- if member.dim_vec and member.set_as_scalar %}
+
+  /** Set the values of the {{ member.name }} vector all to value */
+  void
+  Set{{ member.name }}( {{ member.type }} value ) { this->m_{{ member.name }} = std::vector<{{ member.type }}>(3, value); }
+    {%- endif %}
+    {%- if member.type == "bool" and not member.dim_vec %}
+
+  /** Set the value of {{ member.name }} to true or false respectfully. */
+  void
+  {{ member.name }}On() { return this->Set{{ member.name }}(true); }
+  void
+  {{ member.name }}Off() { return this->Set{{ member.name }}(false); }
+    {%- endif %}
+  {%- endif %}
+
+  {%- if not member.no_get_method %}
+  /**
+    {%- if member.briefdescriptionGet %}
+   * \brief {{ member.briefdescriptionGet }}
+    {%- endif %}
+    {%- if member.detaileddescriptionGet %}
+   * {{ member.detaileddescriptionGet }}
+    {%- endif %}
+   */
+    {%- if not member.type and member.enum %}
+  {{ member.name }}Type
+    {%- elif member.dim_vec %}
+  std::vector<{{ member.type }}>
+    {%- elif member.point_vec %}
+  std::vector< std::vector< {{ member.type }} > >
+    {%- else %}
+  {{ member.type }}
+    {%- endif %}
+  Get{{ member.name }}() const { return this->m_{{ member.name }}; }
+  {%- endif %}
+
+  {%- if member.point_vec %}
+  /** \brief Add {{ member.name }} point */
+  void
+  Add{{ member.name|regex_replace('List$', '')|regex_replace('s(\d?)$', '\\1') }}( std::vector< {{ member.type }} > point ) { this->m_{{ member.name }}.push_back(std::move(point));}
+  /** \brief Remove all {{ member.name }} points */
+  void
+  Clear{{ member.name|regex_replace('List$', 's') }}( ) { this->m_{{ member.name }}.clear();}
+  {%- endif %}
+{% endfor %}
+
+{#- Measurements block #}
+{% for measurement in measurements %}
+  /**
+  {%- if measurement.briefdescriptionGet %} \brief {{ measurement.briefdescriptionGet }}{% endif %}
+  {%- if measurement.detaileddescriptionGet %}
+   * {{ measurement.detaileddescriptionGet }}
+  {%- endif %}
+   *
+  {%- if measurement.active %}
+   * This is an active measurement. It may be accessed while the
+   * filter is being executing in command call-backs and can be
+   * accessed after execution.
+  {%- else %}
+   * This is a measurement. Its value is updated in the Execute
+   * methods, so the value will only be valid after an execution.
+  {%- endif %}
+   */
+  {%- if measurement.active %}
+  {{ measurement.type }} {{ measurement.function_name if measurement.function_name else 'Get' ~ measurement.name }}(
+    {%- if measurement.parameters -%}
+      {%- for param in measurement.parameters -%}
+          {{- param.type }} {{ param.name }}{{ ", " if not loop.last }}
+      {%- endfor %}
+    {%- endif -%}
+    ){{ 'const' if not measurement.non_const }} { return this->m_pfGet{{ measurement.name }}(
+    {%- if measurement.parameters %}
+      {{- measurement.parameters | map(attribute='name') | join(', ') }}
+    {%- endif -%}
+    ); }
+  {%- else %}
+  {{ measurement.type }} Get{{ measurement.name }}() const { return this->m_{{ measurement.name }}; }
+  {%- endif %}
+{% endfor %}

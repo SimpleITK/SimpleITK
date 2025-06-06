@@ -1,0 +1,15 @@
+{% import "macros.jinja" as macros %}
+  /** Execute the filter on the input image{% if number_of_inputs >= 2 %}s{% endif %} */
+{%- set has_optional_inputs = inputs and (inputs|selectattr('optional')|list|length > 0) %}
+{%- if in_place %}
+#ifndef SWIG
+    {{ "void" if no_return_image else "Image" }} Execute({{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, False) }});
+{%- if has_optional_inputs %}
+    {{ "void" if no_return_image else "Image" }} Execute({{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, True) }});
+{%- endif %}
+#endif
+{%- endif %}
+  {{ "void" if no_return_image else "Image" }} Execute({{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, False) }});
+{%- if has_optional_inputs %}
+  {{ "void" if no_return_image else "Image" }} Execute({{ macros.image_parameters(number_of_inputs) }}{{ macros.input_parameters(inputs, number_of_inputs, name, True) }});
+{%- endif %}

@@ -1,0 +1,13 @@
+{% for method in custom_methods %}
+{{ "// Custom Methods" if loop.first }}
+
+{{ method.return_type }} {{ name }}::{{ method.name }}(
+{% set comma = joiner(", ") %}
+{%- for param in method.parameters -%}
+    {{- comma() }}{{ param.type }} {{ param.var_name -}}
+{%- endfor -%}
+)
+{
+  {{ method.body }}
+}
+{% endfor %}
