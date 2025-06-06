@@ -21,8 +21,18 @@ set(SimpleITK_Python_EXECUTABLE
 sitk_check_python_module_version(
   MODULE_NAME jsonschema
   MINIMUM_VERSION 4.0
+  MAXIMUM_VERSION 5.0
   PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
   RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
+)
+
+sitk_check_python_module_version(
+        MODULE_NAME jinja2
+        MINIMUM_VERSION 3.1
+        MAXIMUM_VERSION 4.0
+        PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
+        RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
+        REQUIRED
 )
 
 
