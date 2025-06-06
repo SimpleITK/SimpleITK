@@ -1,3 +1,4 @@
+include("sitkCheckPythonModuleVersion")
 
 # Find a Lua executable
 #
@@ -41,12 +42,37 @@ execute_process(
   ERROR_STRIP_TRAILING_WHITESPACE
   )
 
+# Find a Python executable for code generation
+## If SimpleITK_Python_EXECUTABLE is defined, use it, otherwise use Python_EXECUTABLE or find it.
+if (DEFINED SimpleITK_Python_EXECUTABLE)
+  set(SimpleITK_Python_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}")
+else()
+  if (NOT DEFINED Python_EXECUTABLE)
+    find_package(Python 3.9.0...<4 REQUIRED COMPONENTS Interpreter)
+  endif()
+  set(SimpleITK_Python_EXECUTABLE "${Python_EXECUTABLE}")
+endif()
+
+set(SimpleITK_Python_EXECUTABLE
+  "${SimpleITK_Python_EXECUTABLE}"
+  CACHE FILEPATH
+  "Python executable used for code generation."
+)
+
+# Check for Python jsonschema module
+sitk_check_python_module_version(
+  MODULE_NAME jsonschema
+  MINIMUM_VERSION 4.0
+  PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
+  RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
+)
+
 # Check that the Lua version is acceptable
 #
 if( NOT SITK_LUA_VERSION_RESULT_VARIABLE )
   string( REGEX MATCH "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
     SimpleITK_LUA_EXECUTABLE_VERSION
-    ${SimpleITK_LUA_EXECUTABLE_VERSION_STRING} )
+    "${SimpleITK_LUA_EXECUTABLE_VERSION_STRING}" )
 endif()
 
 if( SITK_LUA_VERSION_RESULT_VARIABLE
@@ -171,9 +197,10 @@ function( expand_template FILENAME input_dir output_dir library_name )
   # Make a global list of ImageFilter template filters
   set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
-  # validate json files if python is available
-  if ( Python_EXECUTABLE AND NOT Python_VERSION_STRING VERSION_LESS 2.6 )
-    set ( JSON_VALIDATE_COMMAND COMMAND "${Python_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py" "${input_json_file}" )
+  # validate json files if requirements available
+  if ( SimpleITK_Python_JSONSCHEMA_VERSION )
+    set ( JSON_SCHEMA_FILE "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/simpleitk_filter_description.schema.json" )
+    set ( JSON_VALIDATE_COMMAND COMMAND "${SimpleITK_Python_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py" "${JSON_SCHEMA_FILE}" "${input_json_file}" )
   endif ()
 
   # header
