@@ -248,7 +248,10 @@
                   "type": "array",
                   "description": "List of parameters for this measurement (optional)",
                   "items": {
-                    "type": "string",
+                    "type": [
+                      "string",
+                      "number"
+                    ],
                     "description": "Parameter value to pass to measurement"
                   }
                 },

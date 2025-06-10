@@ -305,7 +305,7 @@
           "value": 0.1632896305125149,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -313,7 +313,7 @@
           "value": 0.02165664,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -321,7 +321,7 @@
           "value": 0.8842423479027586,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -329,7 +329,7 @@
           "value": 0.7925039512305261,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -337,7 +337,7 @@
           "value": -0.11361,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -345,7 +345,7 @@
           "value": 0.7925039512305261,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -353,7 +353,7 @@
           "value": 0.8842423479027586,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         },
         {
@@ -361,7 +361,7 @@
           "value": 0.0625,
           "tolerance": 1e-05,
           "parameters": [
-            "1"
+            1
           ]
         }
       ],
