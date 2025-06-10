@@ -1,382 +1,382 @@
 {
-  "$schema" : "http://json-schema.org/draft-07/schema#",
-  "title" : "SimpleITK Filter Description",
-  "type" : "object",
-  "properties" : {
-    "name" : {
-      "type" : "string",
-      "description" : "Name of the filter as a SimpleITK class."
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SimpleITK Filter Description",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the filter as a SimpleITK class."
     },
-    "itk_name" : {
-      "type" : "string",
-      "description" : "Name of the filter in ITK class, if not provided then the name properties will be used."
+    "itk_name": {
+      "type": "string",
+      "description": "Name of the filter in ITK class, if not provided then the name properties will be used."
     },
-    "template_code_filename" : {
-      "type" : "string",
-      "description" : "The JINJA template code filename"
+    "template_code_filename": {
+      "type": "string",
+      "description": "The JINJA template code filename"
     },
-    "template_test_filename" : {
-      "type" : "string",
-      "description" : "The JINJA template test filename"
+    "template_test_filename": {
+      "type": "string",
+      "description": "The JINJA template test filename"
     },
-    "constant_type" : {
-      "type" : "string",
-      "description" : "The Binary Functor template uses this as the optional non-image type for the operation."
+    "constant_type": {
+      "type": "string",
+      "description": "The Binary Functor template uses this as the optional non-image type for the operation."
     },
-    "custom_register" : {
-      "type" : "string",
-      "description" : "Custom registration code for the memberfunction factory. (optional)"
+    "custom_register": {
+      "type": "string",
+      "description": "Custom registration code for the memberfunction factory. (optional)"
     },
-    "filter_type" : {
-      "type" : "string",
-      "description" : "The ITK filter type including template arguments. (optional)"
+    "filter_type": {
+      "type": "string",
+      "description": "The ITK filter type including template arguments. (optional)"
     },
-    "number_of_inputs" : {
-      "type" : "integer",
-      "description" : "Number of input images",
-      "minimum" : 0
+    "number_of_inputs": {
+      "type": "integer",
+      "description": "Number of input images",
+      "minimum": 0
     },
-    "public_declarations" : {
-      "type" : "string",
-      "description" : "Public declarations for the filter, can be used to declare and define a public member function in one line."
+    "public_declarations": {
+      "type": "string",
+      "description": "Public declarations for the filter, can be used to declare and define a public member function in one line."
     },
-    "doc" : {
-      "type" : "string",
-      "description" : "Documentation string for the filter."
+    "doc": {
+      "type": "string",
+      "description": "Documentation string for the filter."
     },
-    "pixel_types" : {
-      "type" : "string",
-      "description" : "Allowed pixel types (enum or type list)"
+    "pixel_types": {
+      "type": "string",
+      "description": "Allowed pixel types (enum or type list)"
     },
-    "output_pixel_type" : {
-      "type" : "string",
-      "description" : "Output pixel type (optional)"
+    "output_pixel_type": {
+      "type": "string",
+      "description": "Output pixel type (optional)"
     },
-    "vector_pixel_types_by_component" : {
-      "type" : "string",
-      "description" : "Allowed vector pixel types (optional)"
+    "vector_pixel_types_by_component": {
+      "type": "string",
+      "description": "Allowed vector pixel types (optional)"
     },
-    "members" : {
-      "type" : "array",
-      "items" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "Member/parameter name"
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Member/parameter name"
           },
-          "type" : {
-            "type" : "string",
-            "description" : "Data type (optional)"
+          "type": {
+            "type": "string",
+            "description": "Data type (optional)"
           },
-          "default" : {
-            "description" : "Default value (string, number, array, etc.)"
+          "default": {
+            "description": "Default value (string, number, array, etc.)"
           },
-          "dim_vec" : {
-            "type" : "boolean",
-            "description" : "Is this a vector parameter? (optional)",
-            "default" : false
+          "dim_vec": {
+            "type": "boolean",
+            "description": "Is this a vector parameter? (optional)",
+            "default": false
           },
-          "point_vec" : {
-            "type" : "boolean",
-            "description" : "Is this a vector of points parameter? (optional)",
-            "default" : false
+          "point_vec": {
+            "type": "boolean",
+            "description": "Is this a vector of points parameter? (optional)",
+            "default": false
           },
-          "enum" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
+          "enum": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
-            "description" : "Enumeration values (optional)"
+            "description": "Enumeration values (optional)"
           },
-          "set_as_scalar" : {
-            "type" : "boolean",
-            "description" : "Can be set as scalar? (optional)",
-            "default" : false
+          "set_as_scalar": {
+            "type": "boolean",
+            "description": "Can be set as scalar? (optional)",
+            "default": false
           },
-          "doc" : {
-            "type" : "string",
-            "description" : "Documentation (optional)"
+          "doc": {
+            "type": "string",
+            "description": "Documentation (optional)"
           },
-          "itk_type" : {
-            "type" : "string",
-            "description" : "ITK type (optional)"
+          "itk_type": {
+            "type": "string",
+            "description": "ITK type (optional)"
           },
-          "briefdescriptionSet" : {
-            "type" : "string",
-            "description" : "Brief description for setter (optional)"
+          "briefdescriptionSet": {
+            "type": "string",
+            "description": "Brief description for setter (optional)"
           },
-          "detaileddescriptionSet" : {
-            "type" : "string",
-            "description" : "Detailed description for setter (optional)"
+          "detaileddescriptionSet": {
+            "type": "string",
+            "description": "Detailed description for setter (optional)"
           },
-          "briefdescriptionGet" : {
-            "type" : "string",
-            "description" : "Brief description for getter (optional)"
+          "briefdescriptionGet": {
+            "type": "string",
+            "description": "Brief description for getter (optional)"
           },
-          "detaileddescriptionGet" : {
-            "type" : "string",
-            "description" : "Detailed description for getter (optional)"
+          "detaileddescriptionGet": {
+            "type": "string",
+            "description": "Detailed description for getter (optional)"
           },
-          "custom_itk_cast" : {
-            "type" : "string",
-            "description" : "Custom ITK cast code (optional)"
+          "custom_itk_cast": {
+            "type": "string",
+            "description": "Custom ITK cast code (optional)"
           },
-          "no_print" : {
-            "type" : "boolean",
-            "description" : "Should not be printed (optional)",
-            "default" : false
+          "no_print": {
+            "type": "boolean",
+            "description": "Should not be printed (optional)",
+            "default": false
           },
-          "pixeltype" : {
-            "type" : "string",
-            "description" : "Pixel type (optional)"
+          "pixeltype": {
+            "type": "string",
+            "description": "Pixel type (optional)"
           }
         },
-        "additionalProperties" : false
+        "additionalProperties": false
       }
     },
-    "tests" : {
-      "type" : "array",
-      "items" : {
-        "type" : "object",
-        "properties" : {
-          "tag" : {
-            "type" : "string",
-            "description" : "Test tag"
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "description": "Test tag"
           },
-          "description" : {
-            "type" : "string",
-            "description" : "Test description"
+          "description": {
+            "type": "string",
+            "description": "Test description"
           },
-          "no_procedure" : {
-            "type" : "boolean",
-            "description" : "Do not test the procedural interface.",
-            "default" : false
+          "no_procedure": {
+            "type": "boolean",
+            "description": "Do not test the procedural interface.",
+            "default": false
           },
-          "md5hash" : {
-            "type" : "string",
-            "description" : "MD5 hash for output validation (optional)"
+          "md5hash": {
+            "type": "string",
+            "description": "MD5 hash for output validation (optional)"
           },
-          "settings" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "parameter" : {
-                  "type" : "string",
-                  "description" : "Parameter name"
+          "settings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "parameter": {
+                  "type": "string",
+                  "description": "Parameter name"
                 },
-                "type" : {
-                  "type" : "string",
-                  "description" : "Data type"
+                "type": {
+                  "type": "string",
+                  "description": "Data type"
                 },
-                "dim_vec" : {
-                  "type" : "boolean",
-                  "description" : "Is this a vector parameter? (optional)"
+                "dim_vec": {
+                  "type": "boolean",
+                  "description": "Is this a vector parameter? (optional)"
                 },
-                "point_vec" : {
-                  "type" : "boolean",
-                  "description" : "Is this a vector of points parameter? (optional)",
-                  "default" : false
+                "point_vec": {
+                  "type": "boolean",
+                  "description": "Is this a vector of points parameter? (optional)",
+                  "default": false
                 },
-                "no_get_method" : {
-                  "type" : "boolean",
-                  "description" : "Do not generate a getter method for this parameter (optional)",
-                  "default" : false
+                "no_get_method": {
+                  "type": "boolean",
+                  "description": "Do not generate a getter method for this parameter (optional)",
+                  "default": false
                 },
-                "value" : {
-                  "description" : "Value (number, string, array, etc.)"
+                "value": {
+                  "description": "Value (number, string, array, etc.)"
                 },
-                "python_value" : {
-                  "description" : "Language-specific value (optional)"
+                "python_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "lua_value" : {
-                  "description" : "Language-specific value (optional)"
+                "lua_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "ruby_value" : {
-                  "description" : "Language-specific value (optional)"
+                "ruby_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "java_value" : {
-                  "description" : "Language-specific value (optional)"
+                "java_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "tcl_value" : {
-                  "description" : "Language-specific value (optional)"
+                "tcl_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "csharp_value" : {
-                  "description" : "Language-specific value (optional)"
+                "csharp_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "cxx_value" : {
-                  "description" : "Language-specific value (optional)"
+                "cxx_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "R_value" : {
-                  "description" : "Language-specific value (optional)"
+                "R_value": {
+                  "description": "Language-specific value (optional)"
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties": false
             }
           },
-          "inputs" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
-            "description" : "List of input files"
+            "description": "List of input files"
           },
-          "tolerance" : {
-            "type" : "number",
-            "description" : "Tolerance for test (optional)"
+          "tolerance": {
+            "type": "number",
+            "description": "Tolerance for test (optional)"
           },
-          "inputA_cast" : {
-            "type" : "string",
-            "description" : "Input A cast type (optional)"
+          "inputA_cast": {
+            "type": "string",
+            "description": "Input A cast type (optional)"
           },
-          "inputB_cast" : {
-            "type" : "string",
-            "description" : "Input B cast type (optional)"
+          "inputB_cast": {
+            "type": "string",
+            "description": "Input B cast type (optional)"
           },
-          "measurements_results" : {
-            "type" : "array",
-            "description" : "Results for measurements (optional)",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "name" : {
-                  "type" : "string",
-                  "description" : "Measurement name"
+          "measurements_results": {
+            "type": "array",
+            "description": "Results for measurements (optional)",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Measurement name"
                 },
-                "parameters" : {
-                  "type" : "array",
-                  "description" : "List of parameters for this measurement (optional)",
-                  "items" : {
-                    "type" : "string",
-                    "description" : "Parameter value to pass to measurement"
+                "parameters": {
+                  "type": "array",
+                  "description": "List of parameters for this measurement (optional)",
+                  "items": {
+                    "type": "string",
+                    "description": "Parameter value to pass to measurement"
                   }
                 },
-                "dim_vec" : {
-                  "type" : "boolean",
-                  "description" : "Is this a vector parameter? (optional)",
-                  "default" : false
+                "dim_vec": {
+                  "type": "boolean",
+                  "description": "Is this a vector parameter? (optional)",
+                  "default": false
                 },
-                "value" : {
-                  "description" : "Measurement value (number, string, etc.)"
+                "value": {
+                  "description": "Measurement value (number, string, etc.)"
                 },
-                "python_value" : {
-                  "description" : "Language-specific value (optional)"
+                "python_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "lua_value" : {
-                  "description" : "Language-specific value (optional)"
+                "lua_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "ruby_value" : {
-                  "description" : "Language-specific value (optional)"
+                "ruby_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "java_value" : {
-                  "description" : "Language-specific value (optional)"
+                "java_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "tcl_value" : {
-                  "description" : "Language-specific value (optional)"
+                "tcl_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "csharp_value" : {
-                  "description" : "Language-specific value (optional)"
+                "csharp_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "r_value" : {
-                  "description" : "Language-specific value (optional)"
+                "r_value": {
+                  "description": "Language-specific value (optional)"
                 },
-                "tolerance" : {
-                  "description" : "Tolerance for measurement (optional)"
+                "tolerance": {
+                  "description": "Tolerance for measurement (optional)"
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties": false
             }
           }
         },
-        "additionalProperties" : false,
-        "required" : [
+        "additionalProperties": false,
+        "required": [
           "tag",
           "description",
           "inputs"
         ]
       }
     },
-    "briefdescription" : {
-      "type" : "string",
-      "description" : "Brief description of the filter"
+    "briefdescription": {
+      "type": "string",
+      "description": "Brief description of the filter"
     },
-    "detaileddescription" : {
-      "type" : "string",
-      "description" : "Detailed description of the filter"
+    "detaileddescription": {
+      "type": "string",
+      "description": "Detailed description of the filter"
     },
-    "itk_module" : {
-      "type" : "string",
-      "description" : "ITK module name"
+    "itk_module": {
+      "type": "string",
+      "description": "ITK module name"
     },
-    "itk_group" : {
-      "type" : "string",
-      "description" : "ITK group name"
+    "itk_group": {
+      "type": "string",
+      "description": "ITK group name"
     },
-    "in_place" : {
-      "type" : "boolean",
-      "description" : "Can operate in-place?",
-      "default" : false
+    "in_place": {
+      "type": "boolean",
+      "description": "Can operate in-place?",
+      "default": false
     },
-    "custom_methods" : {
-      "type" : "array",
-      "description" : "Custom methods (optional)",
-      "items" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "Method name"
+    "custom_methods": {
+      "type": "array",
+      "description": "Custom methods (optional)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Method name"
           },
-          "doc" : {
-            "type" : "string",
-            "description" : "Method documentation"
+          "doc": {
+            "type": "string",
+            "description": "Method documentation"
           },
-          "briefdescription" : {
-            "type" : "string",
-            "description" : "Brief description of the method (maybe removed)"
+          "briefdescription": {
+            "type": "string",
+            "description": "Brief description of the method (maybe removed)"
           },
-          "detaileddescription" : {
-            "type" : "string",
-            "description" : "Detailed description of the method (maybe removed)"
+          "detaileddescription": {
+            "type": "string",
+            "description": "Detailed description of the method (maybe removed)"
           },
-          "static" : {
-            "type" : "boolean",
-            "description" : "Is this method static?"
+          "static": {
+            "type": "boolean",
+            "description": "Is this method static?"
           },
-          "return_type" : {
-            "type" : "string",
-            "description" : "Return type"
+          "return_type": {
+            "type": "string",
+            "description": "Return type"
           },
-          "parameters" : {
-            "type" : "array",
-            "description" : "Method parameters",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "type" : {
-                  "type" : "string",
-                  "description" : "Parameter type"
+          "parameters": {
+            "type": "array",
+            "description": "Method parameters",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Parameter type"
                 },
-                "var_name" : {
-                  "type" : "string",
-                  "description" : "Parameter variable name"
+                "var_name": {
+                  "type": "string",
+                  "description": "Parameter variable name"
                 }
               },
-              "required" : [
+              "required": [
                 "type",
                 "var_name"
               ],
-              "additionalProperties" : false
+              "additionalProperties": false
             }
           },
-          "body" : {
-            "type" : "string",
-            "description" : "Method body"
+          "body": {
+            "type": "string",
+            "description": "Method body"
           }
         },
-        "additionalProperties" : false,
-        "required" : [
+        "additionalProperties": false,
+        "required": [
           "name",
           "return_type",
           "parameters",
@@ -384,166 +384,166 @@
         ]
       }
     },
-    "custom_set_input" : {
-      "type" : "string",
-      "description" : "Custom code for setting filter input (optional)"
+    "custom_set_input": {
+      "type": "string",
+      "description": "Custom code for setting filter input (optional)"
     },
-    "no_procedure" : {
-      "type" : "boolean",
-      "description" : "No procedure (optional)",
-      "default" : false
+    "no_procedure": {
+      "type": "boolean",
+      "description": "No procedure (optional)",
+      "default": false
     },
-    "no_return_image" : {
-      "type" : "boolean",
-      "description" : "If true then returns void instead of an image (optional)",
-      "default" : false
+    "no_return_image": {
+      "type": "boolean",
+      "description": "If true then returns void instead of an image (optional)",
+      "default": false
     },
-    "measurements" : {
-      "type" : "array",
-      "description" : "List of measurement descriptors (optional)",
-      "items" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "Measurement name"
+    "measurements": {
+      "type": "array",
+      "description": "List of measurement descriptors (optional)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Measurement name"
           },
-          "type" : {
-            "type" : "string",
-            "description" : "Measurement type"
+          "type": {
+            "type": "string",
+            "description": "Measurement type"
           },
-          "function_name" : {
-            "type" : "string",
-            "description" : "Function name for this measurement (optional) (may be removed)"
+          "function_name": {
+            "type": "string",
+            "description": "Function name for this measurement (optional) (may be removed)"
           },
-          "active" : {
-            "type" : "boolean",
-            "description" : "Is measurement active? (optional)",
-            "default" : false
+          "active": {
+            "type": "boolean",
+            "description": "Is measurement active? (optional)",
+            "default": false
           },
-          "default" : {
-            "description" : "Default value (optional)"
+          "default": {
+            "description": "Default value (optional)"
           },
-          "no_print" : {
-            "type" : "boolean",
-            "description" : "Suppress output for this measurement (optional)",
-            "default" : false
+          "no_print": {
+            "type": "boolean",
+            "description": "Suppress output for this measurement (optional)",
+            "default": false
           },
-          "custom_itk_cast" : {
-            "type" : "string",
-            "description" : "Custom ITK cast for this measurement (optional)"
+          "custom_itk_cast": {
+            "type": "string",
+            "description": "Custom ITK cast for this measurement (optional)"
           },
-          "custom_cast" : {
-            "type" : "string",
-            "description" : "Custom cast for this measurement (optional), used only with active measurements"
+          "custom_cast": {
+            "type": "string",
+            "description": "Custom cast for this measurement (optional), used only with active measurements"
           },
-          "itk_get" : {
-            "type" : "string",
-            "description" : "ITK get function for this measurement (optional)"
+          "itk_get": {
+            "type": "string",
+            "description": "ITK get function for this measurement (optional)"
           },
-          "label_map" : {
-            "type" : "boolean",
-            "description" : "Label map for this measurement (optional)"
+          "label_map": {
+            "type": "boolean",
+            "description": "Label map for this measurement (optional)"
           },
-          "non_const" : {
-            "type" : "boolean",
-            "description" : "Is this measurement non-const? (optional)",
-            "default" : false
+          "non_const": {
+            "type": "boolean",
+            "description": "Is this measurement non-const? (optional)",
+            "default": false
           },
-          "briefdescriptionGet" : {
-            "type" : "string",
-            "description" : "Brief description for getter (optional)"
+          "briefdescriptionGet": {
+            "type": "string",
+            "description": "Brief description for getter (optional)"
           },
-          "detaileddescriptionGet" : {
-            "type" : "string",
-            "description" : "Detailed description for getter (optional)"
+          "detaileddescriptionGet": {
+            "type": "string",
+            "description": "Detailed description for getter (optional)"
           },
-          "parameters" : {
-            "type" : "array",
-            "description" : "List of parameters for measurements or methods (optional)",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "name" : {
-                  "type" : "string",
-                  "description" : "Parameter name"
+          "parameters": {
+            "type": "array",
+            "description": "List of parameters for measurements or methods (optional)",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Parameter name"
                 },
-                "type" : {
-                  "type" : "string",
-                  "description" : "Parameter type"
+                "type": {
+                  "type": "string",
+                  "description": "Parameter type"
                 }
               },
-              "required" : [
+              "required": [
                 "name",
                 "type"
               ],
-              "additionalProperties" : false
+              "additionalProperties": false
             }
           }
         },
-        "additionalProperties" : false
+        "additionalProperties": false
       }
     },
-    "include_files" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
+    "include_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
       },
-      "description" : "List of include files (optional)"
+      "description": "List of include files (optional)"
     },
-    "output_image_type" : {
-      "type" : "string",
-      "description" : "Output image type (optional)"
+    "output_image_type": {
+      "type": "string",
+      "description": "Output image type (optional)"
     },
-    "pixel_types2" : {
-      "type" : "string",
-      "description" : "Second input pixel types (optional)"
+    "pixel_types2": {
+      "type": "string",
+      "description": "Second input pixel types (optional)"
     },
-    "custom_type2" : {
-      "type" : "string",
-      "description" : "Custom type for second input (optional)"
+    "custom_type2": {
+      "type": "string",
+      "description": "Custom type for second input (optional)"
     },
-    "vector_pixel_types_by_component2" : {
-      "type" : "string",
-      "description" : "Vector pixel types for second input (optional)"
+    "vector_pixel_types_by_component2": {
+      "type": "string",
+      "description": "Vector pixel types for second input (optional)"
     },
-    "inputs" : {
-      "type" : "array",
-      "description" : "List of input image descriptors (optional, for filters with non-standard or multiple named inputs)",
-      "items" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "Input name"
+    "inputs": {
+      "type": "array",
+      "description": "List of input image descriptors (optional, for filters with non-standard or multiple named inputs)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Input name"
           },
-          "type" : {
-            "type" : "string",
-            "description" : "Input type"
+          "type": {
+            "type": "string",
+            "description": "Input type"
           },
-          "optional" : {
-            "type" : "boolean",
-            "description" : "Is this input optional?"
+          "optional": {
+            "type": "boolean",
+            "description": "Is this input optional?"
           },
-          "no_size_check" : {
-            "type" : "boolean",
-            "description" : "Skip checking that the size of this input matches the first (optional)",
-            "default" : false
+          "no_size_check": {
+            "type": "boolean",
+            "description": "Skip checking that the size of this input matches the first (optional)",
+            "default": false
           },
-          "custom_itk_cast" : {
-            "type" : "string",
-            "description" : "Custom ITK cast code (optional)"
+          "custom_itk_cast": {
+            "type": "string",
+            "description": "Custom ITK cast code (optional)"
           }
         },
-        "required" : [
+        "required": [
           "name",
           "type"
         ],
-        "additionalProperties" : false
+        "additionalProperties": false
       }
     }
   },
-  "required" : [
+  "required": [
     "name",
     "template_code_filename",
     "template_test_filename",
@@ -556,5 +556,5 @@
     "itk_module",
     "itk_group"
   ],
-  "additionalProperties" : false
+  "additionalProperties": false
 }
