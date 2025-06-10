@@ -228,7 +228,7 @@ GlobalConfig::GlobalConfig()
   //  Set the ExecutableNames
   //
 #if defined(_WIN32)
-  m_DefaultExecutableNames = { "Fiji.app/ImageJ-win64.exe", "Fiji.app/ImageJ-win32.exe" };
+  m_DefaultExecutableNames = { "Fiji.app/ImageJ-win64.exe", "Fiji.app/ImageJ-win32.exe", "Fiji/fiji-windows-x64.exe" };
 #elif defined(__APPLE__)
   m_DefaultExecutableNames = { "Fiji.app" };
 #else
