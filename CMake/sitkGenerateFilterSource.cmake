@@ -47,7 +47,7 @@ function( get_json_path out_var json_file path )
 
 
   execute_process(
-    COMMAND ${Python_EXECUTABLE} -c
+    COMMAND ${SimpleITK_Python_EXECUTABLE} -c
       "import sys, json; d=json.load(open(sys.argv[1])); v=d;\nfor k in sys.argv[2].split('.'):\n    v = v[k]\nprint(v)"
       ${json_file} ${path}
     OUTPUT_VARIABLE value
@@ -60,7 +60,8 @@ function( get_json_path out_var json_file path )
   if ( NOT ret )
     set(${out_var} "${value}" PARENT_SCOPE)
   else()
-    message( WARNING ${error_var} )
+    message( WARNING "ERROR VAR: ${error_var}\n ERROR CODE: ${ret}\n"
+      "Unable to find path \"${path}\" in json file \"${json_file}\"." )
   endif()
 
 endfunction()

@@ -186,9 +186,6 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r ./.github/workflows/requirements-build.txt
-
           if [ ! -z "${{ matrix.apt-get-dependencies }}" ]; then
             sudo apt-get update
             sudo apt-get install -y ${{ matrix.apt-get-dependencies }}
