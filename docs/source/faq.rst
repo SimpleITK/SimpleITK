@@ -178,7 +178,7 @@ Why isn't Fiji or ImageJ found by the Show function (RuntimeError: Exception thr
 The SimpleITK ``Show`` function expects the Fiji or ImageJ application to be
 installed in specific locations. The recommended installation locations are:
 
-- On Windows: in your user directory (e.g. C:\\Users\\your_user_name\\Fiji.app).
+- On Windows: in your user directory (e.g. C:\\Users\\your_user_name\\Fiji.app or C:\\Users\\your_user_name\\Fiji).
 - On Linux: in ~/bin.
 - On Mac: in /Applications or ~/Applications.
 

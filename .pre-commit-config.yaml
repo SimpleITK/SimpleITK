@@ -25,6 +25,12 @@ repos:
      types: [text]
    - id: trailing-whitespace
      types: [text]
+   - id: pretty-format-json
+     args:
+       - "--autofix"
+       - "--no-ensure-ascii"
+       - "--indent=2"
+       - "--no-sort-keys"
 - repo: https://github.com/psf/black
   rev: 24.2.0
   hooks: # check conformance to black formatting
