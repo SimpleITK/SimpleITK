@@ -11,6 +11,7 @@ RUN apt-get update && \
   ninja-build \
   graphviz \
   python3 \
+  python3-pip \
   perl \
   texlive-bibtex-extra \
   && apt-get clean
