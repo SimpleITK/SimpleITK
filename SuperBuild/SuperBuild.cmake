@@ -372,6 +372,42 @@ if(SimpleITK_USE_ELASTIX )
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Elastix)
 endif()
 
+#
+# Python Virtual Environment
+#
+if (NOT DEFINED SimpleITK_Python_EXECUTABLE AND NOT DEFINED Python_EXECUTABLE)
+  find_package(Python 3.9...<4 COMPONENTS Interpreter REQUIRED)
+endif()
+
+set( _Python_venv_home "${CMAKE_CURRENT_BINARY_DIR}/venv" )
+get_filename_component(_Python_EXECUTABLE_NAME ${Python_EXECUTABLE} NAME)
+
+if( WIN32 )
+  set( _SimpleITK_Python_EXECUTABLE
+          "${_Python_venv_home}/Scripts/${_Python_EXECUTABLE_NAME}")
+else( )
+  set( _SimpleITK_Python_EXECUTABLE "${_Python_venv_home}/bin/${_Python_EXECUTABLE_NAME}" )
+endif()
+
+if ( NOT DEFINED SimpleITK_Python_EXECUTABLE )
+
+  set(SimpleITK_Python_EXECUTABLE "${_SimpleITK_Python_EXECUTABLE}" CACHE FILEPATH "Python executable for SimpleITK build requirements." )
+endif()
+
+add_custom_target( SimpleITK_VENV
+        DEPENDS "${SimpleITK_Python_EXECUTABLE}" )
+
+add_custom_command( OUTPUT "${_SimpleITK_Python_EXECUTABLE}"
+        COMMAND "${Python_EXECUTABLE}" "-m" "venv" "--clear" "${_Python_venv_home}"
+        COMMAND "${SimpleITK_Python_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
+        COMMAND "${SimpleITK_Python_EXECUTABLE}" "-m" "pip" "install"  "jinja2~=3.1" "jsonschema~=4.24"
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+        COMMENT "Creating python virtual environment..."
+)
+
+list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES SimpleITK_VENV)
+
+
 
 get_cmake_property( _varNames VARIABLES )
 
