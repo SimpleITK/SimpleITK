@@ -1,0 +1,16 @@
+{% if number_of_inputs > 0 or inputs|length > 0 %}
+  // Define the input and output image types
+  using InputImageType = TImageType;
+{% endif %}
+{%- for nimg in range(2, number_of_inputs+1) %}
+  using InputImageType{{ nimg }} = TImageType;
+{%- endfor %}
+{%- if output_image_type %}
+  // Define output image type
+  using OutputImageType = {{ output_image_type }};
+{%- elif output_pixel_type %}
+  // Define output image type
+  using OutputImageType = itk::Image< {{ output_pixel_type }}, InputImageType::ImageDimension >;
+{%- else %}
+  using OutputImageType = InputImageType;
+{%- endif %}

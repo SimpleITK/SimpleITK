@@ -117,7 +117,7 @@ jobs:
     - name: Install build dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install ninja cmake~=3.29.0 jsonschema
+        python -m pip install -r ./.github/workflows/requirements-build.txt
     - name: Build and Test
       shell: bash
       env:

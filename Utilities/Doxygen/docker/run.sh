@@ -18,6 +18,10 @@ if [ ! -d ${SRC_DIR} ]; then
     )
 fi
 
+if [ -f ${SRC_DIR}/.github/workflows/requirements-build.txt ]; then
+   python3 -m pip install --break-system-packages -r ${SRC_DIR}/.github/workflows/requirements-build.txt
+fi
+
 mkdir -p ${BLD_DIR} && \
     cd ${BLD_DIR} && \
     cmake -G Ninja\

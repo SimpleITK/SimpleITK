@@ -1,0 +1,9 @@
+{% if number_of_inputs > 0 %}
+  // Get the pointer to the ITK image contained in image1
+  typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
+  {% for nimg in range(2, number_of_inputs+1) %}
+  // Get the a pointer to the ITK image contained in image{{ nimg }}
+  typename InputImageType{{ nimg }}::ConstPointer image{{ nimg }} =
+    this->CastImageToITK<InputImageType{{ nimg }}>( inImage{{ nimg }} );
+  {% endfor %}
+{% endif %}
