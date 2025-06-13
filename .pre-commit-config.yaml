@@ -50,7 +50,7 @@ repos:
       args: ["--schemafile", "ExpandTemplateGenerator/simpleitk_filter_description.schema.json"]
       files: ^Code/BasicFilters/.*\.json$
 - repo: https://github.com/SimpleITK/CommentSpellCheck.git
-  rev: make_pre_commit_hook
+  rev: AddedCXXToPrecommit
   hooks:
     - id: comment-spell-check
       args: ['--miss', '--dict','.github/workflows/additional_dictionary.txt']
