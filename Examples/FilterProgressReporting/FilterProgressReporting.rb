@@ -28,7 +28,7 @@ end
 ## [ruby director command]
 class MyCommand < Simpleitk::Command
   def initialize(po)
-    # Explicit call to supoer class initlaizer is required to
+    # Explicit call to super class initializer is required to
     # initialize the SWIG director class to enable overloaded methods
     super()
     @po = po
@@ -51,8 +51,8 @@ inputPixelType = image.get_pixel_idvalue
 gaussian = Simpleitk::DiscreteGaussianImageFilter.new
 gaussian.set_variance ARGV[1].to_f
 
-# create a new MyCommand class, the references between the objects is
-# automatically taked care of. The connection will automatically be
+# Create a new MyCommand class, the references between the objects is
+# automatically taken care of. The connection will automatically be
 # removed when either object is deleted.
 cmd = MyCommand.new gaussian
 gaussian.add_command Simpleitk::SitkProgressEvent, cmd
