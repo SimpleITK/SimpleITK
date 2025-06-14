@@ -12,7 +12,7 @@ In the following sections we describe how to install SimpleITK and
 auxiliary software tools.
 
 After installing SimpleITK, we recommend going over the
-:ref:`latest tutorial <lbl_tutorials_courses>` and skimming
+`virtual tutorial <https://simpleitk.org/TUTORIAL/>`_ and skimming
 the `Doxygen <http://www.simpleitk.org/doxygen/latest/html/>`__ pages for
 more information.
 
