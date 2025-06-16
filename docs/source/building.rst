@@ -6,15 +6,14 @@ Building SimpleITK
 Pre-built binaries (see :ref:`Downloading the binaries
 <installation-binaries>`) are available in many cases so
 users do not need to build SimpleITK. However, there are
-several reasons a user might prefer to **build SimpleITK from source code**:
+several reasons to **build SimpleITK from source code**:
 
--  The binary files for your programming language of choice are not
-   (yet) distributed
--  You want the live on the bleeding edge by using the
-   latest-and-greatest version of SimpleITK
--  You want to wrap your own filters using the SimpleITK infrastructure
--  You want to contribute to the development of SimpleITK
--  To use the SimpleITK's C++ interface and/or use ITK directly
+-  The binary files for a preferred programming language may not
+   (yet) be distributed.
+-  To use the latest-and-greatest version of SimpleITK from the development branch.
+-  To wrap custom filters using the SimpleITK infrastructure.
+-  To contribute to the development of SimpleITK.
+-  To use the SimpleITK C++ interface and/or use ITK directly.
 
 ..
   .. contents:: On this page
@@ -37,12 +36,10 @@ To build SimpleITK you need:
       SWIG, etc...
    -  Windows users may prefer `Git For Windows <https://gitforwindows.org/>`__
 
--  The Python interface requires Python version 3.5 or greater.
+-  The build of the core SimpleITK C++ library requires `Python 3.9 or greater <https://www.python.org>`__.
 
--  It is recommended to have numpy installed when testing Python
-   bindings.
-
--  The R interface requires R version 3.3 or greater.
+- If you are wrapping SimpleITK for a language, that language's development libraries are
+also required.
 
 System Requirements
 ===================
@@ -72,17 +69,9 @@ building of SimpleITK (see their repository for more details):
    frontend <https://github.com/SimpleITK/SimpleITKPythonPackage>`__ can be
    used to build, install, and package SimpleITK for Python.
 
--  For the **Anaconda Python** distribution: The recipe and instructions
-   for the SimpleITK build are in `this GitHub
-   repository <https://github.com/SimpleITK/SimpleITKCondaRecipe>`__.
-
 -  For the **R language** (version 3.3 or greater): A remotes installer and instructions are
    available from `this GitHub
    repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
-
--  For the **Lua language** with the Luarocks module deployment system,
-   a SimpleITK rockspec is available at the `Luarocks repository <https://luarocks.org/modules/dave3d/simpleitk>`__
-   or from `this GitHub repository <https://github.com/SimpleITK/SimpleITKLuaRock>`__.
 
 .. _source_code:
 
@@ -129,8 +118,9 @@ configure the SuperBuild:
  cmake ../SimpleITK/SuperBuild
 
 The SuperBuild will automatically download and build the matching
-versions of ITK, SWIG, Lua, and GTest (if testing is enabled) needed to
-compile SimpleITK.
+versions of ITK, SWIG, and GTest (if testing is enabled) and create a
+Python virtual environment with required packages needed to compile
+SimpleITK.
 
 If you get an error message saying that ITK\_DIR is not set then, you
 did not correctly point cmake to the SuperBuild sub-directory. Please
@@ -171,7 +161,7 @@ External CMake files in the Superbuild sub-directory.
 Additional Prerequisites
 ------------------------
 
-The following are dependencies you will need when not using the SuperBuild:
+These additional dependencies are required when not using the SuperBuild:
 
 #. Setup the prerequisites as described above (i.e. CMake and supported
    compiler)
@@ -182,11 +172,12 @@ The following are dependencies you will need when not using the SuperBuild:
    with SimpleITK, as future ITK versions are generally backwards
    compatible.
 
-#. `Lua <https://www.lua.org/>`__ 5.3.5
+#. `Python <https://www.python.org>`__ >= 3.9 with JINJA2 is required for code generation
+   of the SimpleITK core C++ library.
 
-#. `SWIG <http://www.swig.org/>`__ >= 4.0
+#. `SWIG <http://www.swig.org/>`__ >= 4.3
 
-#. GTest or `Google Test <https://github.com/google/googletest>`__ >= 1.10
+#. GTest or `Google Test <https://github.com/google/googletest>`__ >= 1.15
    is needed if testing is enabled.
 
 
