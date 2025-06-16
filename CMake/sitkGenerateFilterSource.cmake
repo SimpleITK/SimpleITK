@@ -3,10 +3,13 @@ include("sitkCheckPythonModuleVersion")
 # Find a Python executable for code generation
 ## If SimpleITK_Python_EXECUTABLE is defined, use it, otherwise use Python_EXECUTABLE or find it.
 if (DEFINED SimpleITK_Python_EXECUTABLE)
-  set(SimpleITK_Python_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}")
+  # check if the variable is a valid executable
+  if (NOT EXISTS "${SimpleITK_Python_EXECUTABLE}" OR NOT IS_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}")
+      message(FATAL_ERROR "SimpleITK_Python_EXECUTABLE is set to an invalid executable: ${SimpleITK_Python_EXECUTABLE}")
+  endif()
 else()
   if (NOT DEFINED Python_EXECUTABLE)
-    find_package(Python 3.9.0...<4 REQUIRED COMPONENTS Interpreter)
+    find_package(Python 3.9...<4 REQUIRED COMPONENTS Interpreter)
   endif()
   set(SimpleITK_Python_EXECUTABLE "${Python_EXECUTABLE}")
 endif()
@@ -35,7 +38,6 @@ sitk_check_python_module_version(
         REQUIRED
 )
 
-set(SimpleITK_TEMPLATE_PYTHON ${Python_EXECUTABLE})
 set(SimpleITK_EXPANSION_SCRIPT "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.py" CACHE INTERNAL
   "Python script used to expand templates." FORCE)
 
@@ -145,7 +147,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
     OUTPUT "${output_h}"
     ${JSON_VALIDATE_COMMAND}
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_h}
-    COMMAND ${Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.h.jinja ${output_h}
+    COMMAND ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.h.jinja ${output_h}
     DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.h.jinja
   )
 
@@ -153,7 +155,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
   add_custom_command (
     OUTPUT "${output_cxx}"
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-    COMMAND ${Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
+    COMMAND ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT} ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
     DEPENDS ${input_json_file} ${template_deps}  ${jinja_files} ${input_dir}/templates/sitk${template_code_filename}Template.cxx.jinja
     )
 
