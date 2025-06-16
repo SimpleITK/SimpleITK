@@ -49,7 +49,7 @@ def Resample(
     image1: Image,
     *args,
     referenceImage: Optional[Image] = None,
-    size: Optional[int] = None,
+    size: Optional[List[int]] = None,
     **kwargs,
 ) -> Image:
     """
