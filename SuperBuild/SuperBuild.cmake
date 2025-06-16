@@ -376,11 +376,11 @@ endif()
 # Python Virtual Environment
 #
 if (NOT DEFINED SimpleITK_Python_EXECUTABLE AND NOT DEFINED Python_EXECUTABLE)
-  find_package(Python 3.9...<4 COMPONENTS Interpreter REQUIRED)
+  find_package(Python 3.9...<4 REQUIRED COMPONENTS Interpreter )
 endif()
 
 set( _Python_venv_home "${CMAKE_CURRENT_BINARY_DIR}/venv" )
-get_filename_component(_Python_EXECUTABLE_NAME ${Python_EXECUTABLE} NAME)
+get_filename_component(_Python_EXECUTABLE_NAME "${Python_EXECUTABLE}" NAME)
 
 if( WIN32 )
   set( _SimpleITK_Python_EXECUTABLE
