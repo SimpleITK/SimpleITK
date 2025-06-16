@@ -105,21 +105,21 @@
         },
         {
           "parameter": "Threshold",
-          "value": "0.001"
+          "value": 0.001
         },
         {
           "parameter": "ReplaceValue1",
-          "value": "255",
+          "value": 255,
           "java_value": "(short) 255"
         },
         {
           "parameter": "ReplaceValue2",
-          "value": "127",
+          "value": 127,
           "java_value": "(short) 127"
         },
         {
           "parameter": "UpperValueLimit",
-          "value": "1.0"
+          "value": 1.0
         }
       ],
       "inputs": [

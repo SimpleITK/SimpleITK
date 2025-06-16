@@ -101,7 +101,7 @@
         {
           "parameter": "InitialNeighborhoodRadius",
           "cxx_value": "10u",
-          "value": "10"
+          "value": 10
         }
       ],
       "md5hash": "d9617e028958be235069f542d1c2111b",
