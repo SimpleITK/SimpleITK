@@ -13,6 +13,7 @@ RUN apt-get update -y && \
   graphviz \
   python3 \
   python3-pip \
+  python3-venv \
   perl \
   texlive-bibtex-extra &&\
   apt-get clean
