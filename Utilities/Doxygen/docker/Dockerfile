@@ -1,4 +1,5 @@
 FROM ubuntu:24.04 AS itk-doxygen
+LABEL maintainer="Insight Software Consortium <community@itk.org>"
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
