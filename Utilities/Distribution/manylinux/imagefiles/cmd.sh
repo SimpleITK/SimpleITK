@@ -29,8 +29,7 @@ export PYTHONUSERBASE=${PYTHONUSERBASE:-/tmp/.pylocal}
 mkdir -p ${PYTHONUSERBASE}
 export PATH=${PATH}:/tmp/.pylocal/bin
 
-function build_simpleitk {
-
+build_simpleitk() {
 
     if [ ! -d ${SRC_DIR} ]; then
         ( git clone https://github.com/SimpleITK/SimpleITK.git ${SRC_DIR} &&
@@ -60,7 +59,7 @@ function build_simpleitk {
     find ./ -name \*.o -delete
 }
 
-function build_simpleitk_python {
+build_simpleitk_python() {
 
     PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     PYTHON_INCLUDE_DIR="$( find -L /opt/python/${PYTHON}/include/ -name Python.h -exec dirname {} \; )"
