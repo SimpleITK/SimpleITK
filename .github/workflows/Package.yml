@@ -346,7 +346,7 @@ jobs:
           mv $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" ) dist/
       - name: PyPI Publish package
         if: startsWith(github.ref_name, 'v')
-        # hash for release/v1.12.3
+        # hash for release/v1.12.4
         uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc
         with:
           repository-url: https://test.pypi.org/legacy/
