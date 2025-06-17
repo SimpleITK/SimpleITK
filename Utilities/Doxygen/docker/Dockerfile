@@ -1,6 +1,7 @@
 FROM ubuntu:24.04 AS itk-doxygen
+LABEL maintainer="Insight Software Consortium <community@itk.org>"
 
-RUN apt-get update && \
+RUN apt-get update -y && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
   cmake \
   bison \
@@ -12,9 +13,10 @@ RUN apt-get update && \
   graphviz \
   python3 \
   python3-pip \
+  python3-venv \
   perl \
-  texlive-bibtex-extra \
-  && apt-get clean
+  texlive-bibtex-extra &&\
+  apt-get clean
 
 RUN ln /usr/bin/dot /usr/sbin/dot
 

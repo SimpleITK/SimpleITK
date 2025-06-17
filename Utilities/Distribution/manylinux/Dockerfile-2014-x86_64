@@ -1,9 +1,11 @@
 FROM quay.io/pypa/manylinux2014_x86_64
-MAINTAINER Insight Software Consortium <community@itk.org>
+LABEL maintainer="Insight Software Consortium <community@itk.org>"
 
 WORKDIR /tmp/
 
-RUN yum -y install mono-devel java-devel
+RUN yum update -y\
+    && yum -y install mono-devel java-devel\
+     && yum clean all
 
 # User is expected to mount directory to "/work"
 ENTRYPOINT ["bash", "-c", "/work/io/imagefiles/cmd.sh" ]

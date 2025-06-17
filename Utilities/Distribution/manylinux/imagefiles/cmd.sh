@@ -23,13 +23,13 @@ export MAKEFLAGS="-j ${NPROC}"
 export ExternalData_OBJECT_STORES=${ExternalData_OBJECT_STORES:-/tmp/.ExternalData}
 mkdir -p ${ExternalData_OBJECT_STORES}
 
+export PIP_NO_CACHE_DIR=1
 
 export PYTHONUSERBASE=${PYTHONUSERBASE:-/tmp/.pylocal}
 mkdir -p ${PYTHONUSERBASE}
 export PATH=${PATH}:/tmp/.pylocal/bin
 
-function build_simpleitk {
-
+build_simpleitk() {
 
     if [ ! -d ${SRC_DIR} ]; then
         ( git clone https://github.com/SimpleITK/SimpleITK.git ${SRC_DIR} &&
@@ -37,6 +37,8 @@ function build_simpleitk {
               git checkout ${SIMPLEITK_GIT_TAG}
         )
     fi
+
+    PYTHON_EXECUTABLE=/usr/local/bin/python3.12
 
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
@@ -51,12 +53,13 @@ function build_simpleitk {
         -DITK_GIT_REPOSITORY:STRING="https://github.com/InsightSoftwareConsortium/ITK.git" \
         -DITK_C_OPTIMIZATION_FLAGS:STRING="" \
         -DITK_CXX_OPTIMIZATION_FLAGS:STRING="" \
+        -DPython_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         ${SRC_DIR}/SuperBuild &&
     make  &&
     find ./ -name \*.o -delete
 }
 
-function build_simpleitk_python {
+build_simpleitk_python() {
 
     PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     PYTHON_INCLUDE_DIR="$( find -L /opt/python/${PYTHON}/include/ -name Python.h -exec dirname {} \; )"
