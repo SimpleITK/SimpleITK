@@ -15,12 +15,12 @@
 {% if in_place %}
 #ifndef SWIG
 SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(
-    {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) }}{% include "MemberParametersWithDefaults.jinja" %}
+    {{ macros.image_parameters(number_of_inputs, True) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional, True) }}{% include "MemberParametersWithDefaults.jinja" %}
 );
 
 {% if has_optional_inputs %}
 SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(
-    {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, 1) }}{% include "MemberParametersWithDefaults.jinja" %}
+    {{ macros.image_parameters(number_of_inputs, True) }}{{ macros.input_parameters(inputs, number_of_inputs, name, 1, True) }}{% include "MemberParametersWithDefaults.jinja" %}
 );
 {% endif %}
 #endif
