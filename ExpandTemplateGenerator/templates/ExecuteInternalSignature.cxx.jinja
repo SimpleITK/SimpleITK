@@ -2,25 +2,13 @@
 template <class TImageType>
 {{ "void" if no_return_image else "Image" }} {{ name }}::ExecuteInternal (
   {# Numbered image inputs #}
-  {%- for inum in range(1, number_of_inputs+1) -%}
-    {%- if inum > 1 %}, {% endif -%}
-    const Image& inImage{{ inum }}
-  {%- endfor -%}
+  {{- range(1, number_of_inputs+1) | format_list('const Image &inImage{}') | join(', ') }}
   {# Additional inputs #}
-  {%- if inputs %}
-    {%- for i in range(inputs|length) %}
-      {%- if number_of_inputs > 0 or i > 0 %}, {% endif -%}
-      {%- set inp = inputs[i] %}
-      {%- if not inp.type and inp.enum %}
-        {{ name }}::{{ inp.name }}Type
-      {%- elif inp.dim_vec and inp.dim_vec == 1 %}
-        const std::vector<{{ inp.type }}> *
-      {%- elif inp.point_vec and inp.point_vec == 1 %}
-        const std::vector< std::vector<{{ inp.type }}> > *
-      {%- else %}
-        const {{ inp.type }} *
-      {%- endif %}
-      in{{ inp.name }}
-    {%- endfor -%}
-  {%- endif -%}
+  {%- set comma = joiner(', ') -%}
+  {{- comma() if number_of_inputs -}}
+  {%- for inputs in inputs %}
+    {{- comma() -}}
+      const {{ inputs.type }} *
+    in{{ inputs.name }}
+  {%- endfor -%}
 )

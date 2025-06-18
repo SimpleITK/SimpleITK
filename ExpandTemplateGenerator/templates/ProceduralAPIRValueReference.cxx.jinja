@@ -3,7 +3,7 @@
 // Function to run the Execute method of this filter
 //
 Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }} (
-  {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) }}{{ macros.member_parameters(members, number_of_inputs, name, inputs) }}
+  {{ macros.image_parameters(number_of_inputs, True) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional, True) }}{{ macros.member_parameters(members, number_of_inputs, name, inputs) }}
 )
 {
   {{ name }} filter;
