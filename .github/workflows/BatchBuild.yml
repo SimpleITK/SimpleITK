@@ -2,7 +2,7 @@ name: Batch Build and Test
 
 on:
   push:
-   branches: ['master', 'release']
+   branches: ['master', 'main', 'release']
   pull_request:
     paths:
       - .github/workflows/BatchBuild.yml
