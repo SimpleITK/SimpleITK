@@ -23,16 +23,8 @@
   {%- for input in inputs -%}
     {%- if not (input.optional and no_optional) -%}
       {{- comma() -}}
-      {%- if not input.type and input.enum -%}
-        {{ name }}::{{ input.name }}Type
-      {%- elif input.dim_vec -%}
-        const std::vector<{{ input.type }}> &
-      {%- elif input.point_vec -%}
-        const std::vector< std::vector<{{ input.type }}> > &
-      {%- elif input.type == "Image" and rvalue_reference and loop.first -%}
+      {%- if input.type == "Image" and rvalue_reference and loop.first -%}
         {{ input.type }} &&
-      {%- elif input.type == "Image" -%}
-        const {{ input.type }} &
       {%- else -%}
         const {{ input.type }} &
       {%- endif -%}
@@ -43,7 +35,7 @@
 
 {#
   Macro: input_parameters_internal(inputs, number_of_inputs, name)
-  Generates a comma-separated list of input parameters for internal methods.
+  Generates a comma-separated list of input parameters for ExecuteInternal methods.
   Each parameter is a pointer type, with special handling for enums and vectors.
 #}
 {% macro input_parameters_internal(inputs, number_of_inputs, name) -%}
@@ -51,15 +43,7 @@
   {{- comma() if number_of_inputs -}}
   {%- for input in inputs -%}
     {{- comma() -}}
-    {%- if not input.type and input.enum -%}
-      {{ name }}::{{ input.name }}Type
-    {%- elif input.dim_vec -%}
-      const std::vector<{{ input.type }}> *
-    {%- elif input.point_vec -%}
-      const std::vector< std::vector<{{ input.type }}> > *
-    {%- else -%}
       const {{ input.type }} *
-    {%- endif -%}
     {{ input.name[0]|lower ~ input.name[1:] }}
   {%- endfor -%}
 {%- endmacro %}
