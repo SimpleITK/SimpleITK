@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.16.3...3.20)
 project(SimpleITKExamples)
 
-foreach(p
-    CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
-    )
+foreach(
+  p
+  CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
+)
   if(POLICY ${p})
     cmake_policy(SET ${p} NEW)
   endif()
@@ -13,14 +14,18 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)
 endif()
 
-option(SimpleITK_TESTING_NOSHOW "Disable the Show function in SimpleITK testing." ON)
+option(
+  SimpleITK_TESTING_NOSHOW
+  "Disable the Show function in SimpleITK testing."
+  ON
+)
 mark_as_advanced(SimpleITK_TESTING_NOSHOW)
 
-add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
-target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
+add_executable(SimpleGaussianFunctional SimpleGaussianFunctional.cxx)
+target_link_libraries(SimpleGaussianFunctional ${SimpleITK_LIBRARIES})
 
-add_executable ( BufferImportExport BufferImportExport.cxx )
-target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
+add_executable(BufferImportExport BufferImportExport.cxx)
+target_link_libraries(BufferImportExport ${SimpleITK_LIBRARIES})
 
 # Add subdirectories
 add_subdirectory(Segmentation)
@@ -65,19 +70,15 @@ add_subdirectory(Logging)
 
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)
-  if ( WRAP_${LANG} )
+  if(WRAP_${LANG})
     add_subdirectory(${lang})
   endif()
 endmacro()
 
-
-
-
-if ( BUILD_TESTING )
-  add_subdirectory( test )
+if(BUILD_TESTING)
+  add_subdirectory(test)
 
   add_language_subdirectory( Java )
   add_language_subdirectory( CSharp )
   add_language_subdirectory( Python )
-
 endif()

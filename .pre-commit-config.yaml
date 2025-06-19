@@ -42,6 +42,12 @@ repos:
     - id: clang-format
       args: ['--style=file']
       files: '\.(c|cc|h|cxx|hxx)$'
+- repo: https://github.com/BlankSpruce/gersemi
+  rev: 0.19.3
+  hooks:
+  - id: gersemi
+    args: [ '--config', '.gersemi.config', '-i' ]
+    files: '.cmake$|CMakeLists.txt'
 - repo: https://github.com/python-jsonschema/check-jsonschema
   rev: '78690b6ce14891a2ae695190a74e966217eec3c8' #'0.33.0'
   hooks:

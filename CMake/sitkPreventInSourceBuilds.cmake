@@ -8,11 +8,13 @@ function(AssureOutOfSourceBuilds)
   # disallow in-source builds
   if("${srcdir}" STREQUAL "${bindir}")
     message("######################################################")
-    message("# SimpleITK should not be configured & built in the SimpleITK source directory")
+    message(
+      "# SimpleITK should not be configured & built in the SimpleITK source directory"
+    )
     message("# You must run cmake in a build directory.")
     message("######################################################")
     message(FATAL_ERROR "Quitting configuration")
   endif()
 endfunction()
 
-AssureOutOfSourceBuilds()
+assureoutofsourcebuilds()
