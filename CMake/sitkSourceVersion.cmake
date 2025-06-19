@@ -26,7 +26,6 @@
 # _GIT_VERSION_POST is defined as the number of commits since the tag.
 #
 
-
 include(GetGitRevisionDescription)
 
 get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
@@ -35,13 +34,16 @@ get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
 # which should contain this additional cmake file with the
 # _GIT_VERSION variables
 if(_GIT_VERSION_HASH STREQUAL "GITDIR-NOTFOUND")
-    if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake")
-      include( "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake" )
-    else()
-      message(WARNING "Unable to determine source version!\n
-Please use the git repository or an official source distribution.\n")
-      set(_GIT_VERSION_DEV "")
-    endif()
+  if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake")
+  else()
+    message(
+      WARNING
+      "Unable to determine source version!\n
+Please use the git repository or an official source distribution.\n"
+    )
+    set(_GIT_VERSION_DEV "")
+  endif()
   return()
 endif()
 
@@ -56,12 +58,18 @@ git_describe(_GIT_TAG "--match=v*" "--tags")
 
 git_commits_since("${PROJECT_SOURCE_DIR}/Version.cmake" _GIT_VERSION_COUNT)
 
-set(VERSION_REGEX "^v([0-9]+)\\.([0-9]+)+(\\.([0-9]+))?(\\.([0-9]+))?((a|b|c|rc)[0-9]*)?(-[0-9]+)?")
+set(
+  VERSION_REGEX
+  "^v([0-9]+)\\.([0-9]+)+(\\.([0-9]+))?(\\.([0-9]+))?((a|b|c|rc)[0-9]*)?(-[0-9]+)?"
+)
 
 string(REGEX MATCH "${VERSION_REGEX}" _out "${_GIT_TAG}")
 
 if("${_out}" STREQUAL "")
-  message(WARNING "git tag: \"${_GIT_TAG}\" does not match expected version format!")
+  message(
+    WARNING
+    "git tag: \"${_GIT_TAG}\" does not match expected version format!"
+  )
   return()
 endif()
 
@@ -74,7 +82,7 @@ if(NOT "${CMAKE_MATCH_6}" STREQUAL "")
   set(_GIT_VERSION_TWEAK "${CMAKE_MATCH_6}")
 endif()
 if(NOT "${CMAKE_MATCH_7}" STREQUAL "")
-  set(_GIT_VERSION_RC "${CMAKE_MATCH_7}" ) # a,b,rc01 etc
+  set(_GIT_VERSION_RC "${CMAKE_MATCH_7}") # a,b,rc01 etc
 endif()
 
 if(NOT "${CMAKE_MATCH_9}" STREQUAL "")
@@ -83,7 +91,6 @@ if(NOT "${CMAKE_MATCH_9}" STREQUAL "")
 
   set(_GIT_TAG_COUNT "${CMAKE_MATCH_9}")
 endif()
-
 
 set(_GIT_VERSION "${_GIT_VERSION_MAJOR}.${_GIT_VERSION_MINOR}")
 if(DEFINED _GIT_VERSION_PATCH)
@@ -100,14 +107,22 @@ elseif(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_PATCH)
   endif()
 endif()
 
-set(_${CMAKE_PROJECT_NAME}_VERSION "${${CMAKE_PROJECT_NAME}_VERSION_MAJOR}.${${CMAKE_PROJECT_NAME}_VERSION_MINOR}")
+set(
+  _${CMAKE_PROJECT_NAME}_VERSION
+  "${${CMAKE_PROJECT_NAME}_VERSION_MAJOR}.${${CMAKE_PROJECT_NAME}_VERSION_MINOR}"
+)
 if(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_PATCH)
-  set(_${CMAKE_PROJECT_NAME}_VERSION "${_${CMAKE_PROJECT_NAME}_VERSION}.${${CMAKE_PROJECT_NAME}_VERSION_PATCH}")
+  set(
+    _${CMAKE_PROJECT_NAME}_VERSION
+    "${_${CMAKE_PROJECT_NAME}_VERSION}.${${CMAKE_PROJECT_NAME}_VERSION_PATCH}"
+  )
   if(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_TWEAK)
-    set(_${CMAKE_PROJECT_NAME}_VERSION "${_${CMAKE_PROJECT_NAME}_VERSION}.${${CMAKE_PROJECT_NAME}_VERSION_TWEAK}")
+    set(
+      _${CMAKE_PROJECT_NAME}_VERSION
+      "${_${CMAKE_PROJECT_NAME}_VERSION}.${${CMAKE_PROJECT_NAME}_VERSION_TWEAK}"
+    )
   endif()
 endif()
-
 
 if(_GIT_VERSION VERSION_EQUAL _${CMAKE_PROJECT_NAME}_VERSION)
   if(_GIT_TAG_COUNT) #ignore if 0
@@ -116,10 +131,13 @@ if(_GIT_VERSION VERSION_EQUAL _${CMAKE_PROJECT_NAME}_VERSION)
 else()
   # The first commit after a tag should increase the project version
   # number in Version.cmake and be "dev1"
-  MATH(EXPR _GIT_VERSION_COUNT "${_GIT_VERSION_COUNT}+1")
+  math(EXPR _GIT_VERSION_COUNT "${_GIT_VERSION_COUNT}+1")
   set(_GIT_VERSION_DEV "${_GIT_VERSION_COUNT}")
 endif()
 
 # save variable in a configuration file in case we have no git directory
-configure_file("${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake"  @ONLY)
+configure_file(
+  "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake"
+  @ONLY
+)

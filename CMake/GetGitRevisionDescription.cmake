@@ -51,13 +51,15 @@ function(get_git_head_revision _refvar _hashvar)
   set(src_dir ${PROJECT_SOURCE_DIR})
   set(bin_dir ${PROJECT_BINARY_DIR})
 
-  execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --git-dir
+  execute_process(
+    COMMAND
+      ${GIT_EXECUTABLE} rev-parse --git-dir
     WORKING_DIRECTORY ${src_dir}
     OUTPUT_VARIABLE GIT_DIR
     ERROR_VARIABLE error
     RESULT_VARIABLE failed
     OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
+  )
   if(NOT IS_ABSOLUTE "${GIT_DIR}")
     set(GIT_DIR "${src_dir}/${GIT_DIR}")
   endif()
@@ -82,11 +84,15 @@ function(get_git_head_revision _refvar _hashvar)
   else()
     set(HEAD_REF "")
   endif()
-  execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+  execute_process(
+    COMMAND
+      ${GIT_EXECUTABLE} rev-parse HEAD
     WORKING_DIRECTORY ${src_dir}
-    OUTPUT_VARIABLE HEAD_HASH OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE HEAD_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_VARIABLE error
-    RESULT_VARIABLE failed)
+    RESULT_VARIABLE failed
+  )
   if(failed)
     set(HEAD_HASH "HEAD-HASH-NOTFOUND")
   endif()
@@ -95,34 +101,40 @@ function(get_git_head_revision _refvar _hashvar)
 endfunction()
 
 # get the number of commits since the file has last been modified
-function(git_commits_since file _commits )
+function(git_commits_since file _commits)
   get_git_head_revision(ref head)
 
   set(src_dir ${PROJECT_SOURCE_DIR})
 
-  execute_process(COMMAND ${GIT_EXECUTABLE} rev-list ${head} -n 1 -- ${file}
+  execute_process(
+    COMMAND
+      ${GIT_EXECUTABLE} rev-list ${head} -n 1 -- ${file}
     WORKING_DIRECTORY ${src_dir}
-    OUTPUT_VARIABLE tag OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE tag
+    OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_VARIABLE error
     RESULT_VARIABLE failed
-    )
+  )
   if(failed)
-    set( tag "")
+    set(tag "")
   endif()
 
-  execute_process(COMMAND ${GIT_EXECUTABLE} rev-list ${tag}..${head}
+  execute_process(
+    COMMAND
+      ${GIT_EXECUTABLE} rev-list ${tag}..${head}
     WORKING_DIRECTORY ${src_dir}
-    OUTPUT_VARIABLE rev_list OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE rev_list
+    OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_VARIABLE error
     RESULT_VARIABLE failed
-    )
+  )
 
   if(failed)
-    set( rev_list "")
+    set(rev_list "")
   endif()
 
-  string( REGEX MATCHALL "[a-fA-F0-9]+" rev_list "${rev_list}")
-  list( LENGTH rev_list COUNT)
+  string(REGEX MATCHALL "[a-fA-F0-9]+" rev_list "${rev_list}")
+  list(LENGTH rev_list COUNT)
 
   set(${_commits} "${COUNT}" PARENT_SCOPE)
 endfunction()
@@ -130,11 +142,11 @@ endfunction()
 function(git_describe _var)
   get_git_head_revision(refspec hash)
   if(NOT GIT_FOUND)
-    set(${_var} "GIT-NOTFOUND"  PARENT_SCOPE)
+    set(${_var} "GIT-NOTFOUND" PARENT_SCOPE)
     return()
   endif()
   if(NOT hash)
-    set(${_var} "HEAD-HASH-NOTFOUND"  PARENT_SCOPE)
+    set(${_var} "HEAD-HASH-NOTFOUND" PARENT_SCOPE)
     return()
   endif()
 
@@ -150,12 +162,15 @@ function(git_describe _var)
 
   #message(STATUS "Arguments to execute_process: ${ARGN}")
 
-  execute_process(COMMAND "${GIT_EXECUTABLE}" describe ${hash} ${ARGN}
+  execute_process(
+    COMMAND
+      "${GIT_EXECUTABLE}" describe ${hash} ${ARGN}
     WORKING_DIRECTORY "${src_dir}"
     RESULT_VARIABLE res
     OUTPUT_VARIABLE out
     ERROR_QUIET
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
   if(NOT res EQUAL 0)
     set(out "${out}-${res}-NOTFOUND")
   endif()

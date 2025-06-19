@@ -10,7 +10,8 @@
 # referenced files.
 
 # glob the examples for each language
-file( GLOB_RECURSE EXAMPLES_LIST
+file(
+  GLOB_RECURSE EXAMPLES_LIST
   RELATIVE "${PROJECT_SOURCE_DIR}/Examples"
   "*.cxx"
   "*.py"
@@ -22,14 +23,14 @@ file( GLOB_RECURSE EXAMPLES_LIST
 )
 
 # remove the file before we begin appending
-file( REMOVE ${OUTPUT_FILE} )
+file(REMOVE ${OUTPUT_FILE})
 
 # begin comment
-file( APPEND ${OUTPUT_FILE} "namespace sitk = itk::simple;/**\n")
+file(APPEND ${OUTPUT_FILE} "namespace sitk = itk::simple;/**\n")
 
-FOREACH( f IN LISTS EXAMPLES_LIST )
-  file( APPEND ${OUTPUT_FILE}  "\\example ${f}\n" )
-ENDFOREACH( )
+foreach(f IN LISTS EXAMPLES_LIST)
+  file(APPEND ${OUTPUT_FILE} "\\example ${f}\n")
+endforeach()
 
 # end comment
-file( APPEND ${OUTPUT_FILE}  "*/\n" )
+file(APPEND ${OUTPUT_FILE} "*/\n")

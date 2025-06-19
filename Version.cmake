@@ -13,16 +13,14 @@ set(SimpleITK_VERSION_MINOR 0)
 set(SimpleITK_VERSION_PATCH 0)
 #set(SimpleITK_VERSION_TWEAK "")
 
-
 include(sitkSourceVersion)
 
 # pre-release codes are defined based on suffix of most recent tags.
 
 # a[N]+<b[N]+<c[N]+=rc[N]+
-if(NOT ${_GIT_VERSION_RC} STREQUAL "" )
+if(NOT ${_GIT_VERSION_RC} STREQUAL "")
   set(SimpleITK_VERSION_RC "${_GIT_VERSION_RC}")
 endif()
-
 
 # The hash is the current git sha1 hash tag of the HEAD.
 set(SimpleITK_VERSION_HASH "${_GIT_VERSION_HASH}")
