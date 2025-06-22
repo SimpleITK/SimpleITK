@@ -91,7 +91,7 @@ jobs:
       matrix:
         include:
           - os: macos-13
-            cmake-build-type: "Release"
+            cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
@@ -102,7 +102,7 @@ jobs:
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
           - os: mac-arm64
-            cmake-build-type: "Release"
+            cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
@@ -113,7 +113,7 @@ jobs:
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
           - os: windows-2022
-            cmake-build-type: "Release"
+            cmake-build-type: "MinSizeRel"
             cmake-generator: "Visual Studio 17 2022"
             cmake-generator-toolset: v142,host=x64
             cmake-generator-platform: x64
