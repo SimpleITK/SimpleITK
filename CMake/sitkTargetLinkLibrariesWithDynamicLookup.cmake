@@ -187,16 +187,16 @@ function(_get_target_type result_var target)
   set(${result_var} ${result} PARENT_SCOPE)
 endfunction()
 
-
-function(_test_weak_link_project
-         target_type
-         lib_type
-         can_weak_link_var
-         project_name)
-
-  set(gnu_ld_ignore      "-Wl,--unresolved-symbols=ignore-all")
-  set(osx_dynamic_lookup           "-undefined dynamic_lookup")
-  set(no_flag                                               "")
+function(
+  _test_weak_link_project
+  target_type
+  lib_type
+  can_weak_link_var
+  project_name
+)
+  set(gnu_ld_ignore "-Wl,--unresolved-symbols=ignore-all")
+  set(osx_dynamic_lookup "-undefined dynamic_lookup")
+  set(no_flag "")
 
   foreach(link_flag_spec gnu_ld_ignore osx_dynamic_lookup no_flag)
     set(link_flag "${${link_flag_spec}}")
@@ -229,8 +229,10 @@ function(_test_weak_link_project
       set(link_mod_lib FALSE)
     endif()
 
-
-    file(WRITE "${test_project_src_dir}/CMakeLists.txt" "
+    file(
+      WRITE
+      "${test_project_src_dir}/CMakeLists.txt"
+      "
       cmake_minimum_required(VERSION ${CMAKE_VERSION})
       project(${project_name} C)
 
@@ -238,93 +240,153 @@ function(_test_weak_link_project
 
       add_library(number ${lib_type} number.c)
       add_library(counter ${mod_type} counter.c)
-    ")
+    "
+    )
 
     if("${mod_type}" STREQUAL "MODULE")
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         set_target_properties(counter PROPERTIES PREFIX \"\")
-      ")
+      "
+      )
     endif()
 
     if(link_mod_lib)
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         target_link_libraries(counter number)
-      ")
+      "
+      )
     elseif(NOT link_flag STREQUAL "")
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         set_target_properties(counter PROPERTIES LINK_FLAGS \"${link_flag}\")
-      ")
+      "
+      )
     endif()
 
-    file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+    file(
+      APPEND
+      "${test_project_src_dir}/CMakeLists.txt"
+      "
       add_executable(main main.c)
-    ")
+    "
+    )
 
     if(link_exe_lib)
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         target_link_libraries(main number)
-      ")
+      "
+      )
     elseif(NOT link_flag STREQUAL "")
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         target_link_libraries(main \"${link_flag}\")
-      ")
+      "
+      )
     endif()
 
     if(link_exe_mod)
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         target_link_libraries(main counter)
-      ")
+      "
+      )
     else()
-      file(APPEND "${test_project_src_dir}/CMakeLists.txt" "
+      file(
+        APPEND
+        "${test_project_src_dir}/CMakeLists.txt"
+        "
         target_link_libraries(main \"${CMAKE_DL_LIBS}\")
-      ")
+      "
+      )
     endif()
 
-    file(WRITE "${test_project_src_dir}/number.c" "
+    file(
+      WRITE
+      "${test_project_src_dir}/number.c"
+      "
       #include <number.h>
 
       static int _number;
       void set_number(int number) { _number = number; }
       int get_number() { return _number; }
-    ")
+    "
+    )
 
-    file(WRITE "${test_project_src_dir}/number.h" "
+    file(
+      WRITE
+      "${test_project_src_dir}/number.h"
+      "
       #ifndef _NUMBER_H
       #define _NUMBER_H
       extern void set_number(int);
       extern int get_number(void);
       #endif
-    ")
+    "
+    )
 
-    file(WRITE "${test_project_src_dir}/counter.c" "
+    file(
+      WRITE
+      "${test_project_src_dir}/counter.c"
+      "
       #include <number.h>
       int count() {
         int result = get_number();
         set_number(result + 1);
         return result;
       }
-    ")
+    "
+    )
 
-    file(WRITE "${test_project_src_dir}/counter.h" "
+    file(
+      WRITE
+      "${test_project_src_dir}/counter.h"
+      "
       #ifndef _COUNTER_H
       #define _COUNTER_H
       extern int count(void);
       #endif
-    ")
+    "
+    )
 
-    file(WRITE "${test_project_src_dir}/main.c" "
+    file(
+      WRITE
+      "${test_project_src_dir}/main.c"
+      "
       #include <stdlib.h>
       #include <stdio.h>
       #include <number.h>
-    ")
+    "
+    )
 
     if(NOT link_exe_mod)
-      file(APPEND "${test_project_src_dir}/main.c" "
+      file(
+        APPEND
+        "${test_project_src_dir}/main.c"
+        "
         #include <dlfcn.h>
-      ")
+      "
+      )
     endif()
 
-    file(APPEND "${test_project_src_dir}/main.c" "
+    file(
+      APPEND
+      "${test_project_src_dir}/main.c"
+      "
       int my_count() {
         int result = get_number();
         set_number(result + 1);
@@ -333,10 +395,14 @@ function(_test_weak_link_project
 
       int main(int argc, char **argv) {
         int result;
-    ")
+    "
+    )
 
     if(NOT link_exe_mod)
-      file(APPEND "${test_project_src_dir}/main.c" "
+      file(
+        APPEND
+        "${test_project_src_dir}/main.c"
+        "
         void *counter_module;
         int (*count)(void);
 
@@ -345,10 +411,14 @@ function(_test_weak_link_project
 
         count = dlsym(counter_module, \"count\");
         if(!count) goto error;
-      ")
+      "
+      )
     endif()
 
-    file(APPEND "${test_project_src_dir}/main.c" "
+    file(
+      APPEND
+      "${test_project_src_dir}/main.c"
+      "
         result = count()    != 0 ? EXIT_FAILURE :
                  my_count() != 1 ? EXIT_FAILURE :
                  my_count() != 2 ? EXIT_FAILURE :
@@ -356,10 +426,14 @@ function(_test_weak_link_project
                  count()    != 4 ? EXIT_FAILURE :
                  count()    != 5 ? EXIT_FAILURE :
                  my_count() != 6 ? EXIT_FAILURE : EXIT_SUCCESS;
-    ")
+    "
+    )
 
     if(NOT link_exe_mod)
-      file(APPEND "${test_project_src_dir}/main.c" "
+      file(
+        APPEND
+        "${test_project_src_dir}/main.c"
+        "
         goto done;
         error:
           fprintf(stderr, \"Error occured:\\n    %s\\n\", dlerror());
@@ -367,40 +441,51 @@ function(_test_weak_link_project
 
         done:
           if(counter_module) dlclose(counter_module);
-      ")
+      "
+      )
     endif()
 
-    file(APPEND "${test_project_src_dir}/main.c" "
+    file(
+      APPEND
+      "${test_project_src_dir}/main.c"
+      "
           return result;
       }
-    ")
+    "
+    )
 
     set(_rpath_arg "-DCMAKE_MACOSX_RPATH='${CMAKE_MACOSX_RPATH}'")
 
-    try_compile(project_compiles
-                "${test_project_bin_dir}"
-                "${test_project_src_dir}"
-                "${project_name}"
-                CMAKE_FLAGS
-                  "-DCMAKE_SHARED_LINKER_FLAGS='${CMAKE_SHARED_LINKER_FLAGS}'"
-                  "-DCMAKE_ENABLE_EXPORTS=ON"
-                  ${_rpath_arg}
-                OUTPUT_VARIABLE compile_output)
+    try_compile(
+      project_compiles
+      "${test_project_bin_dir}"
+      "${test_project_src_dir}"
+      "${project_name}"
+      CMAKE_FLAGS
+        "-DCMAKE_SHARED_LINKER_FLAGS='${CMAKE_SHARED_LINKER_FLAGS}'"
+        "-DCMAKE_ENABLE_EXPORTS=ON"
+        ${_rpath_arg}
+      OUTPUT_VARIABLE compile_output
+    )
 
     set(project_works 1)
     set(run_output)
 
     if(project_compiles)
-      execute_process(COMMAND ${CMAKE_CROSSCOMPILING_EMULATOR}
-                              "${test_project_bin_dir}/main"
-                      WORKING_DIRECTORY "${test_project_bin_dir}"
-                      RESULT_VARIABLE project_works
-                      OUTPUT_VARIABLE run_output
-                      ERROR_VARIABLE run_output)
+      execute_process(
+        COMMAND
+          ${CMAKE_CROSSCOMPILING_EMULATOR} "${test_project_bin_dir}/main"
+        WORKING_DIRECTORY "${test_project_bin_dir}"
+        RESULT_VARIABLE project_works
+        OUTPUT_VARIABLE run_output
+        ERROR_VARIABLE run_output
+      )
     endif()
 
-    set(test_description
-        "Weak Link ${target_type} -> ${lib_type} (${link_flag_spec})")
+    set(
+      test_description
+      "Weak Link ${target_type} -> ${lib_type} (${link_flag_spec})"
+    )
 
     if(project_works EQUAL 0)
       set(project_works TRUE)
@@ -408,10 +493,13 @@ function(_test_weak_link_project
     else()
       set(project_works FALSE)
       message(STATUS "Performing Test ${test_description} - Failed")
-      file(APPEND ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/CMakeError.log
-           "Performing Test ${test_description} failed with the "
-           "following output:\n"
-           "BUILD\n-----\n${compile_output}\nRUN\n---\n${run_output}\n")
+      file(
+        APPEND
+        ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/CMakeError.log
+        "Performing Test ${test_description} failed with the "
+        "following output:\n"
+        "BUILD\n-----\n${compile_output}\nRUN\n---\n${run_output}\n"
+      )
     endif()
 
     set(${can_weak_link_var} ${project_works} PARENT_SCOPE)
@@ -433,7 +521,6 @@ function(sitk_check_dynamic_lookup)
     set(lib_type "SHARED")
     set(has_dynamic_lookup_var "${ARGV0}")
     set(link_flags_var "unused")
-
   elseif(ARGC GREATER "2")
     #
     # sitk_check_dynamic_lookup(<TargetType>
@@ -458,20 +545,20 @@ function(sitk_check_dynamic_lookup)
     ${lib_type}
     ${has_dynamic_lookup_var}
     ${link_flags_var}
-    )
+  )
   set(${has_dynamic_lookup_var} ${${has_dynamic_lookup_var}} PARENT_SCOPE)
   if(NOT "x${link_flags_var}x" MATCHES "^xunusedx$")
     set(${link_flags_var} ${${link_flags_var}} PARENT_SCOPE)
   endif()
 endfunction()
 
-function(_check_dynamic_lookup
-         target_type
-         lib_type
-         has_dynamic_lookup_var
-         link_flags_var
-         )
-
+function(
+  _check_dynamic_lookup
+  target_type
+  lib_type
+  has_dynamic_lookup_var
+  link_flags_var
+)
   # hash the CMAKE_FLAGS passed and check cache to know if we need to rerun
   if("${target_type}" STREQUAL "STATIC")
     string(MD5 cmake_flags_hash "${CMAKE_STATIC_LINKER_FLAGS}")
@@ -483,15 +570,23 @@ function(_check_dynamic_lookup
   set(cache_hash_var "HAS_DYNAMIC_LOOKUP_${target_type}_${lib_type}_hash")
   set(result_var "DYNAMIC_LOOKUP_FLAGS_${target_type}_${lib_type}")
 
-  if(     NOT DEFINED ${cache_hash_var}
-       OR NOT "${${cache_hash_var}}" STREQUAL "${cmake_flags_hash}")
+  if(
+    NOT
+      DEFINED
+        ${cache_hash_var}
+    OR
+      NOT
+        "${${cache_hash_var}}"
+          STREQUAL
+          "${cmake_flags_hash}"
+  )
     unset(${cache_var} CACHE)
   endif()
 
   if(NOT DEFINED ${cache_var})
     set(skip_test FALSE)
 
-   if(CMAKE_CROSSCOMPILING AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
+    if(CMAKE_CROSSCOMPILING AND NOT CMAKE_CROSSCOMPILING_EMULATOR)
       set(skip_test TRUE)
     endif()
 
@@ -502,23 +597,34 @@ function(_check_dynamic_lookup
       _test_weak_link_project(${target_type}
                               ${lib_type}
                               has_dynamic_lookup
-                              link_flags)
+                              link_flags
+      )
     endif()
 
     set(caveat " (when linking ${target_type} against ${lib_type})")
 
-    set(${cache_var} "${has_dynamic_lookup}"
-        CACHE BOOL
-        "linker supports dynamic lookup for undefined symbols${caveat}")
+    set(
+      ${cache_var}
+      "${has_dynamic_lookup}"
+      CACHE BOOL
+      "linker supports dynamic lookup for undefined symbols${caveat}"
+    )
     mark_as_advanced(${cache_var})
 
-    set(${result_var} "${link_flags}"
-        CACHE STRING
-        "linker flags for dynamic lookup${caveat}")
+    set(
+      ${result_var}
+      "${link_flags}"
+      CACHE STRING
+      "linker flags for dynamic lookup${caveat}"
+    )
     mark_as_advanced(${result_var})
 
-    set(${cache_hash_var} "${cmake_flags_hash}"
-        CACHE INTERNAL "hashed flags for ${cache_var} check")
+    set(
+      ${cache_hash_var}
+      "${cmake_flags_hash}"
+      CACHE INTERNAL
+      "hashed flags for ${cache_var} check"
+    )
   endif()
 
   set(${has_dynamic_lookup_var} "${${cache_var}}" PARENT_SCOPE)
@@ -537,7 +643,8 @@ function(sitk_target_link_libraries_with_dynamic_lookup target)
     sitk_check_dynamic_lookup(${target_type}
                          ${lib_type}
                          has_dynamic_lookup
-                         dynamic_lookup_flags)
+                         dynamic_lookup_flags
+    )
 
     if(has_dynamic_lookup)
       if(dynamic_lookup_flags)
@@ -565,11 +672,19 @@ function(sitk_target_link_libraries_with_dynamic_lookup target)
   endif()
 
   if(link_props)
-    set_target_properties(${target}
-                          PROPERTIES LINK_FLAGS "${link_props}")
+    set_target_properties(
+      ${target}
+      PROPERTIES
+        LINK_FLAGS
+          "${link_props}"
+    )
   endif()
 
-  set(links "${link_items}" "${link_libs}")
+  set(
+    links
+    "${link_items}"
+    "${link_libs}"
+  )
   if(links)
     target_link_libraries(${target} "${links}")
   endif()
