@@ -28,11 +28,23 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/DemonsRegistration2/DemonsRegistration2.cs
+       :language: csharp
+       :lines: 19-
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/DemonsRegistration2/DemonsRegistration2.cxx
        :language: c++
        :lines: 18-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/DemonsRegistration2/DemonsRegistration2.java
+       :language: java
+       :lines: 19-
 
   .. tab:: Python
 
