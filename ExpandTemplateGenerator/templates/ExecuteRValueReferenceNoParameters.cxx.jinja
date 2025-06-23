@@ -1,6 +1,6 @@
 {% import "macros.jinja" as macros %}
 
-{{ "void" if no_return_image else "Image" }} {{ name }}::Execute ( {{ macros.image_rvalue_reference_parameters(number_of_inputs) }}{{ macros.input_rvalue_reference_parameters(inputs, number_of_inputs, name, no_optional) }} )
+{{ "void" if no_return_image else "Image" }} {{ name }}::Execute ( {{ macros.image_parameters(number_of_inputs, True) }}{{ macros.input_parameters(inputs, number_of_inputs, name, no_optional, True) }} )
 {
   Image &temp = {% if number_of_inputs >= 1 %}image1{% else %}{{ inputs[0].name[0]|lower ~ inputs[0].name[1:] }}{% endif %};
   auto autoResetInPlace = make_scope_exit([this, &temp]{this->m_InPlace=false; Image moved(std::move(temp));});
