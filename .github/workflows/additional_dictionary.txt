@@ -1854,6 +1854,7 @@ rescale
 rescaled
 rescope
 resizable
+resize
 resizeable
 return
 reusability
