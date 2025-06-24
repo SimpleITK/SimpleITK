@@ -138,6 +138,51 @@ function(sitk_add_python_test name)
 endfunction()
 
 #
+# This is a function which set up the environment for executing python examples and tests
+#
+function(sitk_add_pytest_test name)
+  if(NOT WRAP_PYTHON)
+    return()
+  endif()
+
+  set(command "${SimpleITK_PYTHON_TEST_EXECUTABLE}")
+
+  # add extra command which may be needed on some systems
+  if(CMAKE_OSX_ARCHITECTURES)
+    list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+    set(
+      command
+      arch
+      -${test_arch}
+      ${command}
+    )
+  endif()
+
+  sitk_add_test(
+    NAME Python.${name}
+    COMMAND
+      ${command} -m pytest --capture=no ${ARGN}
+  )
+  set_property(
+    TEST
+      Python.${name}
+    PROPERTY
+      LABELS
+        Python
+  )
+  if(NOT SimpleITK_PYTHON_USE_VIRTUALENV)
+    set_property(
+      TEST
+        Python.${name}
+      APPEND
+      PROPERTY
+        ENVIRONMENT
+          PYTHONPATH=${SimpleITK_Python_BINARY_DIR}
+    )
+  endif()
+endfunction()
+
+#
 # This is a function which set up the enviroment for executing lua examples and tests
 #
 function(sitk_add_lua_test name)

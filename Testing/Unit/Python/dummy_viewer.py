@@ -6,4 +6,4 @@ out = ""
 if len(sys.argv) > 1:
     out = " ".join(sys.argv[1:])
 
-print(out)
+print(f"dummy_output: {out}")

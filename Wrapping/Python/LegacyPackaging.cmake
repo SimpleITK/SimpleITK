@@ -110,7 +110,7 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
       "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
     COMMAND
       "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "wheel"
-      "numpy!=1.24.1,!=1.24.0" "setuptools" "."
+      "numpy!=1.24.1,!=1.24.0" "setuptools" "pytest" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
