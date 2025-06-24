@@ -10,9 +10,13 @@
 # to indicate interface of the library is also required.
 
 function(sitk_target_use_itk target_name interface_keyword)
-
   set(itk_modules ${ARGV})
-  list(REMOVE_AT itk_modules 0 1)
+  list(
+    REMOVE_AT
+    itk_modules
+    0
+    1
+  )
 
   itk_module_config(_itk ${itk_modules})
 
@@ -21,34 +25,43 @@ function(sitk_target_use_itk target_name interface_keyword)
   endif()
 
   if(_itk_LIBRARIES)
-    target_link_libraries( ${target_name}
+    target_link_libraries(
+      ${target_name}
       ${interface_keyword}
-      ${_itk_LIBRARIES} )
+      ${_itk_LIBRARIES}
+    )
   endif()
   if(_itk_INCLUDE_DIRS)
-    target_include_directories( ${target_name}
+    target_include_directories(
+      ${target_name}
       ${interface_keyword}
-      ${_itk_INCLUDE_DIRS} )
+      ${_itk_INCLUDE_DIRS}
+    )
   endif()
-
 endfunction()
 
 function(sitk_target_use_itk_factory target_name factory_name)
-
-  list( FIND ITK_FACTORY_LIST "${factory_name}" _index )
+  list(FIND ITK_FACTORY_LIST "${factory_name}" _index)
   if(_index EQUAL -1)
-    message(FATAL_ERROR "Factory \"${factory_name}\" not contained in ITK_FACTORY_LIST: \"${ITK_FACTORY_LIST}\"")
+    message(
+      FATAL_ERROR
+      "Factory \"${factory_name}\" not contained in ITK_FACTORY_LIST: \"${ITK_FACTORY_LIST}\""
+    )
   endif()
 
   itk_generate_factory_registration(${factory_name} )
 
   string(TOUPPER ${factory_name} factory_uc)
 
-  target_compile_definitions( ${target_name}
+  target_compile_definitions(
+    ${target_name}
     PRIVATE
-    ITK_${factory_uc}_FACTORY_REGISTER_MANAGER)
+      ITK_${factory_uc}_FACTORY_REGISTER_MANAGER
+  )
 
-  target_include_directories( ${target_name}
+  target_include_directories(
+    ${target_name}
     PRIVATE
-    "${CMAKE_CURRENT_BINARY_DIR}/ITKFactoryRegistration" )
+      "${CMAKE_CURRENT_BINARY_DIR}/ITKFactoryRegistration"
+  )
 endfunction()

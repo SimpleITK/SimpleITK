@@ -13,4 +13,4 @@
 # Copyright (c) 2006-2010 Mathieu Malaterre <mathieu.malaterre@gmail.com>
 #
 
-message( STATUS "Using Mono compiler version ${CSHARP_MONO_VERSION}" )
+message(STATUS "Using Mono compiler version ${CSHARP_MONO_VERSION}")

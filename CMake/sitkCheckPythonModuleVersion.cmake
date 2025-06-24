@@ -46,84 +46,122 @@
 
 #]=======================================================================]
 function(sitk_check_python_module_version)
-    set(options REQUIRED)
-    set(oneValueArgs MODULE_NAME MINIMUM_VERSION MAXIMUM_VERSION PYTHON_EXECUTABLE RESULT_VERSION_VAR RESULT_STATUS_VAR)
-    set(multiValueArgs )
-    cmake_parse_arguments(SCPMV "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  set(options REQUIRED)
+  set(
+    oneValueArgs
+    MODULE_NAME
+    MINIMUM_VERSION
+    MAXIMUM_VERSION
+    PYTHON_EXECUTABLE
+    RESULT_VERSION_VAR
+    RESULT_STATUS_VAR
+  )
+  set(multiValueArgs)
+  cmake_parse_arguments(
+    SCPMV
+    "${options}"
+    "${oneValueArgs}"
+    "${multiValueArgs}"
+    ${ARGN}
+  )
 
-    # Check required arguments
-    foreach(arg MODULE_NAME MINIMUM_VERSION PYTHON_EXECUTABLE RESULT_VERSION_VAR)
-        if(NOT DEFINED SCPMV_${arg})
-            message(FATAL_ERROR "sitk_check_python_module_version requires ${arg}")
-        endif()
-    endforeach()
-
-    if(NOT DEFINED SCPMV_RESULT_STATUS_VAR)
-        set(SCPMV_RESULT_STATUS_VAR "${SCPMV_RESULT_VERSION_VAR}_FOUND")
+  # Check required arguments
+  foreach(arg MODULE_NAME MINIMUM_VERSION PYTHON_EXECUTABLE RESULT_VERSION_VAR)
+    if(NOT DEFINED SCPMV_${arg})
+      message(FATAL_ERROR "sitk_check_python_module_version requires ${arg}")
     endif()
+  endforeach()
 
-    # Clear the output variables in parent scope
-    unset(${SCPMV_RESULT_VERSION_VAR} PARENT_SCOPE)
+  if(NOT DEFINED SCPMV_RESULT_STATUS_VAR)
+    set(SCPMV_RESULT_STATUS_VAR "${SCPMV_RESULT_VERSION_VAR}_FOUND")
+  endif()
+
+  # Clear the output variables in parent scope
+  unset(${SCPMV_RESULT_VERSION_VAR} PARENT_SCOPE)
+  set(${SCPMV_RESULT_STATUS_VAR} FALSE PARENT_SCOPE)
+
+  # Check if Python executable exists
+  if(NOT EXISTS "${SCPMV_PYTHON_EXECUTABLE}")
+    message(
+      SEND_ERROR
+      "Python executable not found: ${SCPMV_PYTHON_EXECUTABLE}"
+    )
+    return()
+  endif()
+
+  execute_process(
+    COMMAND
+      "${SCPMV_PYTHON_EXECUTABLE}" -c
+      "import importlib.metadata; print(importlib.metadata.version('${SCPMV_MODULE_NAME}'))"
+    OUTPUT_VARIABLE MODULE_VERSION
+    ERROR_VARIABLE MODULE_ERROR
+    RESULT_VARIABLE MODULE_RESULT_VARIABLE
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_STRIP_TRAILING_WHITESPACE
+  )
+
+  if(NOT MODULE_RESULT_VARIABLE EQUAL 0)
+    if(SCPMV_REQUIRED)
+      message(
+        SEND_ERROR
+        "${MODULE_ERROR}\n"
+        "Python ${SCPMV_MODULE_NAME} module is missing with \"${SCPMV_PYTHON_EXECUTABLE}\". Please install it."
+      )
+    else()
+      message(
+        STATUS
+        "Python ${SCPMV_MODULE_NAME} module is not found with \"${SCPMV_PYTHON_EXECUTABLE}\", but this is not required."
+      )
+    endif()
+    return()
+  endif()
+
+  set(VERSION_CONSTRAINTS_SATISFIED TRUE)
+
+  # Check minimum version constraint
+  if(NOT MODULE_VERSION GREATER_EQUAL ${SCPMV_MINIMUM_VERSION})
+    set(VERSION_CONSTRAINTS_SATISFIED FALSE)
+  endif()
+
+  # Check maximum version constraint if specified
+  if(DEFINED SCPMV_MAXIMUM_VERSION)
+    if(MODULE_VERSION VERSION_GREATER "${SCPMV_MAXIMUM_VERSION}")
+      set(VERSION_CONSTRAINTS_SATISFIED FALSE)
+    endif()
+  endif()
+
+  if(VERSION_CONSTRAINTS_SATISFIED)
+    message(
+      STATUS
+      "Python ${SCPMV_MODULE_NAME} module version: ${MODULE_VERSION}"
+    )
+    set(${SCPMV_RESULT_VERSION_VAR} ${MODULE_VERSION} PARENT_SCOPE)
+    set(${SCPMV_RESULT_STATUS_VAR} TRUE PARENT_SCOPE)
+  else()
+    message(
+      DEBUG
+      "Python ${SCPMV_MODULE_NAME} module version ${MODULE_VERSION} does not satisfy required version constraints."
+    )
+    set(${SCPMV_RESULT_VERSION_VAR} "" PARENT_SCOPE)
     set(${SCPMV_RESULT_STATUS_VAR} FALSE PARENT_SCOPE)
 
-    # Check if Python executable exists
-    if ( NOT EXISTS "${SCPMV_PYTHON_EXECUTABLE}" )
-        message(SEND_ERROR "Python executable not found: ${SCPMV_PYTHON_EXECUTABLE}")
-        return()
-    endif()
-
-    execute_process(
-            COMMAND "${SCPMV_PYTHON_EXECUTABLE}" -c "import importlib.metadata; print(importlib.metadata.version('${SCPMV_MODULE_NAME}'))"
-            OUTPUT_VARIABLE MODULE_VERSION
-            ERROR_VARIABLE MODULE_ERROR
-            RESULT_VARIABLE MODULE_RESULT_VARIABLE
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            ERROR_STRIP_TRAILING_WHITESPACE
-    )
-
-    if (NOT MODULE_RESULT_VARIABLE EQUAL 0)
-        if(SCPMV_REQUIRED)
-            message(SEND_ERROR
-                    "${MODULE_ERROR}\n"
-                    "Python ${SCPMV_MODULE_NAME} module is missing with \"${SCPMV_PYTHON_EXECUTABLE}\". Please install it.")
-        else()
-            message(STATUS "Python ${SCPMV_MODULE_NAME} module is not found with \"${SCPMV_PYTHON_EXECUTABLE}\", but this is not required.")
-        endif()
-        return()
-    endif()
-
-    set(VERSION_CONSTRAINTS_SATISFIED TRUE)
-
-    # Check minimum version constraint
-    if(NOT MODULE_VERSION GREATER_EQUAL ${SCPMV_MINIMUM_VERSION})
-        set(VERSION_CONSTRAINTS_SATISFIED FALSE)
-    endif()
-
-    # Check maximum version constraint if specified
-    if(DEFINED SCPMV_MAXIMUM_VERSION)
-        if(MODULE_VERSION VERSION_GREATER "${SCPMV_MAXIMUM_VERSION}")
-            set(VERSION_CONSTRAINTS_SATISFIED FALSE)
-        endif()
-    endif()
-
-    if(VERSION_CONSTRAINTS_SATISFIED)
-        message(STATUS "Python ${SCPMV_MODULE_NAME} module version: ${MODULE_VERSION}")
-        set(${SCPMV_RESULT_VERSION_VAR} ${MODULE_VERSION} PARENT_SCOPE)
-        set(${SCPMV_RESULT_STATUS_VAR} TRUE PARENT_SCOPE)
+    if(SCPMV_REQUIRED)
+      set(VERSION_CONSTRAINT_MSG "version >= ${SCPMV_MINIMUM_VERSION}")
+      if(DEFINED SCPMV_MAXIMUM_VERSION)
+        set(
+          VERSION_CONSTRAINT_MSG
+          "${VERSION_CONSTRAINT_MSG} and <= ${SCPMV_MAXIMUM_VERSION}"
+        )
+      endif()
+      message(
+        SEND_ERROR
+        "Python ${SCPMV_MODULE_NAME} module does not satisfy required ${VERSION_CONSTRAINT_MSG}"
+      )
     else()
-        message(DEBUG "Python ${SCPMV_MODULE_NAME} module version ${MODULE_VERSION} does not satisfy required version constraints.")
-        set(${SCPMV_RESULT_VERSION_VAR} "" PARENT_SCOPE)
-        set(${SCPMV_RESULT_STATUS_VAR} FALSE PARENT_SCOPE)
-
-        if(SCPMV_REQUIRED)
-            set(VERSION_CONSTRAINT_MSG "version >= ${SCPMV_MINIMUM_VERSION}")
-            if(DEFINED SCPMV_MAXIMUM_VERSION)
-                set(VERSION_CONSTRAINT_MSG "${VERSION_CONSTRAINT_MSG} and <= ${SCPMV_MAXIMUM_VERSION}")
-            endif()
-            message(SEND_ERROR "Python ${SCPMV_MODULE_NAME} module does not satisfy required ${VERSION_CONSTRAINT_MSG}")
-        else()
-            message(STATUS "Python ${SCPMV_MODULE_NAME} module version does not satisfy optional constraints.")
-        endif()
+      message(
+        STATUS
+        "Python ${SCPMV_MODULE_NAME} module version does not satisfy optional constraints."
+      )
     endif()
-
+  endif()
 endfunction()

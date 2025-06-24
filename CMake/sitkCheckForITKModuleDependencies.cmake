@@ -14,7 +14,9 @@
 # is dependent on most of the IO modules so we only need to force 'review on' to
 # ensure that we have the 'IO on' too.
 #
-list(APPEND _SITK_REQUIRED_ITK_MODULES
+list(
+  APPEND
+  _SITK_REQUIRED_ITK_MODULES
   ITKCommon
   ITKDisplacementField
   ITKIOGDCM
@@ -32,6 +34,9 @@ list(APPEND _SITK_REQUIRED_ITK_MODULES
 foreach(itkDependency ${_SITK_REQUIRED_ITK_MODULES})
   list(FIND ITK_MODULES_ENABLED ${itkDependency} ITKDependency_FOUND)
   if(ITKDependency_FOUND EQUAL -1)
-    message(FATAL_ERROR "SimpleITK requires that the ${itkDependency} module be turned on in ITK")
+    message(
+      FATAL_ERROR
+      "SimpleITK requires that the ${itkDependency} module be turned on in ITK"
+    )
   endif()
 endforeach()
