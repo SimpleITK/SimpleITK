@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+#==========================================================================
+#
+#   Copyright NumFOCUS
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#          http://www.apache.org/licenses/LICENSE-2.0.txt
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+#==========================================================================*/
+# Check if master branch exists and prompt to rename to main
+if git show-ref --verify --quiet refs/heads/master; then
+  current_branch=$(git branch --show-current 2>/dev/null || git symbolic-ref --short HEAD 2>/dev/null)
+  echo "A 'master' branch exists in this repository."
+  echo "SimpleITK has transitioned to using 'main' as the default branch name."
+  echo ""
+
+  if test "$current_branch" = "master"; then
+    echo "You are currently on the 'master' branch."
+  else
+    echo "You are currently on the '$current_branch' branch."
+  fi
+
+  read -p "Would you like to rename 'master' to 'main'? [y/N]: " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Renaming master branch to main..."
+
+    # Switch to master branch if not already there
+    if test "$current_branch" != "master"; then
+      echo "Switching to master branch..."
+      git checkout master
+    fi
+
+    git branch -m master main
+
+    # Update the upstream tracking if it exists
+    if git config --get branch.master.remote > /dev/null 2>&1; then
+      remote_name=$(git config --get branch.master.remote)
+      merge_ref=$(git config --get branch.master.merge 2>/dev/null || true)
+
+      # Set up the main branch configuration
+      git config branch.main.remote "$remote_name"
+      git config branch.main.merge refs/heads/main
+
+      # Clean up old master branch configuration
+      git config --unset branch.master.remote 2>/dev/null || true
+      git config --unset branch.master.merge 2>/dev/null || true
+
+      echo "Updated upstream tracking to $remote_name/main"
+      echo "Note: You may need to update the default branch on your remote repository."
+    fi
+
+    # Ensure main branch merge configuration is set to main
+    git config branch.main.merge refs/heads/main 2>/dev/null || true
+
+    # Update remote fetch configurations to use main instead of master
+    for remote in $(git remote); do
+      fetch_config=$(git config --get remote.$remote.fetch 2>/dev/null || true)
+      if [[ "$fetch_config" == *"refs/heads/master:refs/remotes/$remote/master"* ]]; then
+        echo "Updating $remote remote fetch configuration from master to main..."
+        git config remote.$remote.fetch "+refs/heads/main:refs/remotes/$remote/main"
+      fi
+    done
+
+    # Switch back to the original branch if it wasn't master
+    if test "$current_branch" != "master" && test "$current_branch" != ""; then
+      echo "Switching back to '$current_branch' branch..."
+      git checkout "$current_branch"
+    fi
+
+    echo "Successfully renamed master to main."
+  else
+    echo "Keeping master branch name. Consider renaming to main in the future."
+  fi
+  echo
+fi
