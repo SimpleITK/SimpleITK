@@ -408,13 +408,9 @@ if(SimpleITK_USE_ELASTIX)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Elastix)
 endif()
 
-#
-# Python Virtual Environment
-#
-if(NOT DEFINED SimpleITK_Python_EXECUTABLE AND NOT DEFINED Python_EXECUTABLE)
-  find_package(Python 3.9...<4 REQUIRED COMPONENTS Interpreter)
-endif()
-
+#------------------------------------------------------------------------------
+# Python Virtual Environment with uv
+#------------------------------------------------------------------------------
 set(_Python_venv_home "${CMAKE_CURRENT_BINARY_DIR}/venv")
 get_filename_component(_Python_EXECUTABLE_NAME "${Python_EXECUTABLE}" NAME)
 
@@ -441,17 +437,40 @@ endif()
 
 add_custom_target(SimpleITK_VENV DEPENDS "${SimpleITK_Python_EXECUTABLE}")
 
+set(_SimpleITK_uv_PATH "${CMAKE_CURRENT_BINARY_DIR}/uv")
+set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_PATH}/bin/uv")
+if(WIN32)
+  set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_EXECUTABLE}.exe")
+endif()
+set(_SimpleITK_uv_PYTHON_VERSION "3.12")
+
+sitksourcedownload(UV_INSTALLER "uv_install.sh")
+
+add_custom_command(
+  OUTPUT
+    "${_SimpleITK_uv_EXECUTABLE}"
+  COMMAND
+    "${CMAKE_COMMAND}" -E env "XDG_BIN_HOME=${_SimpleITK_uv_PATH}/bin"
+    NO_MODIFY_PATH=1 sh ${UV_INSTALLER} --quiet
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+  DEPENDS
+    "${UV_INSTALLER}"
+)
+
 add_custom_command(
   OUTPUT
     "${_SimpleITK_Python_EXECUTABLE}"
   COMMAND
-    "${Python_EXECUTABLE}" "-m" "venv" "--clear" "${_Python_venv_home}"
+    "${_SimpleITK_uv_EXECUTABLE}" "venv" "--python"
+    "${_SimpleITK_uv_PYTHON_VERSION}" --managed-python --allow-existing
+    "${_Python_venv_home}"
   COMMAND
-    "${SimpleITK_Python_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
-  COMMAND
-    "${SimpleITK_Python_EXECUTABLE}" "-m" "pip" "install" "jinja2~=3.1"
+    "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}"
+    "${_SimpleITK_uv_PATH}/bin/uv" "pip" "install" "jinja2~=3.1"
     "jsonschema~=4.24"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+  DEPENDS
+    "${_SimpleITK_uv_EXECUTABLE}"
   COMMENT "Creating python virtual environment..."
 )
 
