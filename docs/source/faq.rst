@@ -114,7 +114,7 @@ in the CSharp application.  Below is the complete error message that can result:
 
 The application is missing the SimpleITK dynamically loaded library (DLL).  To
 fix this problem, follow the instructions in the
-`Add Native Library <https://simpleitk.readthedocs.io/en/master/setUp.html#add-native-library>`__
+`Add Native Library <https://simpleitk.readthedocs.io/en/main/setUp.html#add-native-library>`__
 section of the SimpleITK Visual Studio/C# build instructions.
 
 How to Use

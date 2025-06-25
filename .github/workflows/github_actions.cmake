@@ -165,6 +165,4 @@ if(
   print_if(build_errors)
   print_if(build_warnings)
   print_if(test_return)
-else()
-  return(0)
 endif()

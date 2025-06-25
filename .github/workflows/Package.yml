@@ -294,7 +294,7 @@ jobs:
         run: |
           echo "Tag Name: ${{ steps.tag.outputs.name }}"
           if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
-            echo "This is an automatic packaging of SimpleITK based on the master branch. It contains the latest features and experimental developments." > notes.txt
+            echo "This is an automatic packaging of SimpleITK based on the ${{github.event.repository.default_branch}} branch. It contains the latest features and experimental developments." > notes.txt
           else
             echo "This is an automatic packaging of SimpleITK based on the ${{ steps.tag.outputs.name }} tag." > notes.txt
           fi

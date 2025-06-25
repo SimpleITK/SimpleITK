@@ -6,7 +6,7 @@ SRC_DIR="/work/SimpleITK"
 BLD_DIR="/work/SimpleITK-super"
 
 # If the SRC_DIR is not mounted, then this tag will be checked out
-SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-"master"}
+SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-"release"}
 
 set -xe
 
