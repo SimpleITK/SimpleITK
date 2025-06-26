@@ -451,7 +451,7 @@ add_custom_command(
     "${_SimpleITK_uv_EXECUTABLE}"
   COMMAND
     "${CMAKE_COMMAND}" -E env "XDG_BIN_HOME=${_SimpleITK_uv_PATH}/bin"
-    NO_MODIFY_PATH=1 sh ${UV_INSTALLER} --quiet
+    NO_MODIFY_PATH=1 sh ${UV_INSTALLER} --quiet --no-modify-path
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
   DEPENDS
     "${UV_INSTALLER}"
