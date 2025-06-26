@@ -44,3 +44,29 @@ sitk_add_r_test(
     DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
     0.01
 )
+
+sitk_add_java_test(
+  Example.DemonsRegistration2
+  "${CMAKE_CURRENT_SOURCE_DIR}/DemonsRegistration2.java"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
+  ${SimpleITK_TEST_OUTPUT_DIR}/JavaDemonsRegistration2Test.hdf5
+  TRANSFORM_COMPARE
+    ${SimpleITK_TEST_OUTPUT_DIR}/JavaDemonsRegistration2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
+    0.01
+)
+
+sitk_add_csharp_test(
+  Example.DemonsRegistration2
+  "${CMAKE_CURRENT_SOURCE_DIR}/DemonsRegistration2.cs"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
+  ${SimpleITK_TEST_OUTPUT_DIR}/CSharpDemonsRegistration2Test.hdf5
+  TRANSFORM_COMPARE
+    ${SimpleITK_TEST_OUTPUT_DIR}/CSharpDemonsRegistration2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
+    0.01
+)
