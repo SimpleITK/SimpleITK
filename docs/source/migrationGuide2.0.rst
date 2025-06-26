@@ -156,7 +156,7 @@ The Python installation procedure to use `setup.py` changed. To install see the 
 Multi-threading
 +++++++++++++++
 
-The upgrade to ITKv5 contains a major refactoring of ITK's threading model. Details on the behavior of the new default PoolMultiThreader can be found in the `ITK v5 Multi-Threading Section <https://github.com/InsightSoftwareConsortium/ITK/blob/master/Documentation/ITK5MigrationGuide.md#multithreading-refactored>`_.
+The upgrade to ITKv5 contains a major refactoring of ITK's threading model. Details on the behavior of the new default PoolMultiThreader can be found in the `ITK v5 Multi-Threading Section <https://github.com/InsightSoftwareConsortium/ITK/blob/main/Documentation/docs/migration_guides/itk_5_migration_guide.md#multithreading-refactored>`_.
 
 The SimpleITK `ProcessObject class <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html>`_ contains the methods to configure the ITK Threader used and the number of threads and number of work units used for an algorithm.
 
