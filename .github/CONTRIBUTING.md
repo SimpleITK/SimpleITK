@@ -26,7 +26,7 @@ This script will configure your local checkout with the `upstream` repository an
 
 Submitting code to SimpleITK follows the standard pull request GitHub workflow. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://guides.github.com/introduction/flow/) regarding the workflow and getting your computer setup.
 
-SimpleITK uses a branchy workflow where each PR should be a new topic branch. Locally, you create a branch with a concise and precise name then commit your changes to that branch. The branch should be based on your target branch which will usually be `master` for new features and improvements or `release` for back patches such as bugs fixes.
+SimpleITK uses a branchy workflow where each PR should be a new topic branch. Locally, you create a branch with a concise and precise name then commit your changes to that branch. The branch should be based on your target branch which will usually be `main` for new features and improvements or `release` for back patches such as bugs fixes.
 
 After completing the local branch, push it to your fork, then create a GitHub pull request in the SimpleITK upstream repository. The pull request is then required to have an approving *code review*, and the *continuous integration* testing pass before the topic is merged into the upstream repository.
 
@@ -69,14 +69,14 @@ git fetch upstream
 You will see something like this:
 ``` shell
  * [new branch]        dashboard  -> upstream/dashboard
- * [new branch]        master     -> upstream/master
+ * [new branch]        main       -> upstream/main
  * [new branch]        release    -> upstream/release
 ```
 2. Start a branch
 Create your new branch where "newdocumentation" is the name of the new branch. you can change the name
 ``` shell
-git checkout -b newdocumentation upstream/master
-Branch 'newdocumentation' set up to track remote branch 'master' from 'upstream'.
+git checkout -b newdocumentation upstream/main
+Branch 'newdocumentation' set up to track remote branch 'main' from 'upstream'.
 Switched to a new branch 'newdocumentation'
 ```
 To check the branches to type this:
@@ -85,7 +85,7 @@ git branch
 ```
 The name with the * in front is the branch that you are.
 ``` shell
-  master
+  main
 * newdocumentation
 ```
 3. Create a Pull Request
@@ -118,7 +118,7 @@ You will not see again the green button name "compare & pull request". That mean
 
 ## Branches
 
-* **master** - Stable branch of the code which is expected to available to users when building SimpleITK. New features should be based on this branch.
+* **main** - Stable branch of the code which is expected to available to users when building SimpleITK. New features should be based on this branch.
 * **release** - Branch of the code from the stable release. Patches which are bug fixes for the most recent release should be based on the `release` branch.
 * **dashboard** - CMake scripts used for continuous integration and nightly testing
 
@@ -128,7 +128,7 @@ Testing is very important for SimpleITK, to ensure quality and reliable code tha
 
 Pull requests are run through the continuous integration building and
 testing infrastructure to ensure quality code. Many options are tested
-on the PR, but more are run when merged into master. It is important
+on the PR, but more are run when merged into main. It is important
 to check the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK) to verify no new warnings or regression test failures are introduced after your patch has been merged.
 
 The regression testing is reported to the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK).
