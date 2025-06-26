@@ -9,9 +9,15 @@ if(DEFINED SimpleITK_Python_EXECUTABLE)
       EXISTS
         "${SimpleITK_Python_EXECUTABLE}"
     OR
-      NOT
-        IS_EXECUTABLE
-          "${SimpleITK_Python_EXECUTABLE}"
+      (
+        CMAKE_VERSION
+          VERSION_GREATER_EQUAL
+          "3.29"
+        AND
+          NOT
+            IS_EXECUTABLE
+              "${SimpleITK_Python_EXECUTABLE}"
+      )
   )
     message(
       FATAL_ERROR
