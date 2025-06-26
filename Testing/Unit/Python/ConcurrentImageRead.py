@@ -16,78 +16,52 @@
 #
 # ==========================================================================*/
 import sys
-import os
-import unittest
-import tempfile
-import shutil
+import pytest
+from pathlib import Path
 
 
 import SimpleITK as sitk
 from multiprocessing.pool import ThreadPool
 
 
-class ConcurrentImageRead(unittest.TestCase):
-    """Testing thread concurrent reading of Images"""
+def create_data(tmp_path, img_extension, img_type):
+    """Method to create the many temporary images for reading."""
+    n = 64
+    s = 128
+    t = img_type
 
-    def setUp(self):
+    files = []
 
-        # Create a temporary directory for output files
-        self.test_dir = tempfile.mkdtemp()
+    for i in range(0, n):
+        img = sitk.GaussianSource(t, [s, s], mean=[256 * (i + 1)] * 2)
+        fname = tmp_path / f"g_{i}.{img_extension}"
+        files.append(str(fname))
+        sitk.WriteImage(img, files[-1])
 
-    def tearDown(self):
-
-        # Delete the temporary directory and files contained within. Perhaps if tests fail then the output should  stick
-        # around to debug the problem
-        shutil.rmtree(self.test_dir)
-
-    def _create_data(self, img_extension, img_type):
-        """Method to create the many temporary image for reading"""
-        n = 64
-        s = 128
-        t = img_type
-
-        files = []
-
-        for i in range(0, n):
-            img = sitk.GaussianSource(t, [s, s], mean=[256 * (i + 1)] * 2)
-            fname = "g_{0}.{1}".format(i, img_extension)
-            fname = os.path.join(self.test_dir, fname)
-            files.append(fname)
-            sitk.WriteImage(img, files[-1])
-
-        return files
-
-    def _threaded_read_test(self, files, expected_hash):
-        """Reads a list of files with thread parallelism, and verifies the hash of the resulting volume."""
-        p = ThreadPool()
-        img = sitk.JoinSeries(p.map(sitk.ReadImage, files))
-        self.assertEqual(img.GetSize()[2], len(files))
-        self.assertEqual(sitk.Hash(img), expected_hash)
-
-    @staticmethod
-    def generate_test(img_extension, expected_hash, img_type=sitk.sitkUInt32):
-        """Generate additional test by adding a generated member function"""
-
-        def do_test(self):
-            files = self._create_data(img_extension, img_type)
-            files *= 64
-            self._threaded_read_test(files, expected_hash)
-
-        test_method = do_test
-        test_method.__name__ = "test_threaded_read_{0}".format(p_ext_hash[0])
-        setattr(ConcurrentImageRead, test_method.__name__, test_method)
+    return files
 
 
-# Programmatically generate tests for different file formats
-for p_ext_hash in [
+def threaded_read_test(files, expected_hash):
+    """Reads a list of files with thread parallelism, and verifies the hash of the resulting volume."""
+    p = ThreadPool()
+    img = sitk.JoinSeries(p.map(sitk.ReadImage, files))
+    assert img.GetSize()[2] == len(files)
+    assert sitk.Hash(img) == expected_hash
+
+
+# Test parameters: (extension, expected hash, image type)
+test_parameters = [
     ("jpg", "44fac4bedde4df04b9572ac665d3ac2c5cd00c7d", sitk.sitkUInt8),
     ("tiff", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
     ("png", "ba713b819c1202dcb0d178df9d2b3222ba1bba44", sitk.sitkUInt16),
-    ("nii", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75"),
-    ("mha", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75"),
-]:
-    ConcurrentImageRead.generate_test(*p_ext_hash)
+    ("nii", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75", sitk.sitkUInt32),
+    ("mha", "7b91dbdc56c5781edf6c8847b4aa6965566c5c75", sitk.sitkUInt32),
+]
 
 
-if __name__ == "__main__":
-    unittest.main()
+@pytest.mark.parametrize("img_extension,expected_hash,img_type", test_parameters)
+def test_threaded_read(tmp_path, img_extension, expected_hash, img_type):
+    """Test thread concurrent reading of images in various formats."""
+    files = create_data(tmp_path, img_extension, img_type)
+    files *= 64
+    threaded_read_test(files, expected_hash)
