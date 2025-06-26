@@ -75,7 +75,8 @@ namespace itk.simple.examples
 
             FastMarchingImageFilter fastMarching = new FastMarchingImageFilter();
 
-            //VectorUIntList trialPoints; Add trialPoints into list if using multiple seeds. Here we only use one seedpoint
+            //VectorUIntList trialPoints; Add trialPoints into list if using multiple seeds.
+            //  Here we only use one seed point.
 
             VectorUInt32 trialPoint = new VectorUInt32(3);
             trialPoint.Add(seedPosition[0]);
