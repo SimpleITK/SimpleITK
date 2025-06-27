@@ -36,6 +36,24 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.cs
+       :language: csharp
+       :lines: 22-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.cxx
+       :language: c++
+       :lines: 22-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.java
+       :language: java
+       :lines: 23-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/DicomImagePrintTags/DicomImagePrintTags.py
