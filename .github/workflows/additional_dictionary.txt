@@ -2134,6 +2134,7 @@ usr
 ustom
 utf
 utils
+uv
 valarray
 valuator
 variadic

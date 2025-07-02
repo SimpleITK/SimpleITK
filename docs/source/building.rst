@@ -36,18 +36,15 @@ To build SimpleITK you need:
       SWIG, etc...
    -  Windows users may prefer `Git For Windows <https://gitforwindows.org/>`__
 
--  The build of the core SimpleITK C++ library requires `Python 3.9 or greater <https://www.python.org>`__.
-
 - If you are wrapping SimpleITK for a language, that language's development libraries are
 also required.
 
 System Requirements
 ===================
-Building SimpleITK requires a significant amount of compute power, and we
-recommend a reasonably powerful, modern computer.  We suggest at least 4
-gigabytes (GB) of RAM plus an additional 2 GB per thread when building with
-multiple threads.  We also suggest a system with at least 4 cores for
-multithreaded compilation.
+Building SimpleITK requires a significant amount of compute power, and a reasonably
+powerful, modern computer is recommended.  We suggest at least 4
+gigabytes (GB) of RAM plus an additional 2 GB per job process when building with
+multiple jobs.  A system with at least 4 cores for multi-job compilation is suggested.
 
 Building a SuperBuild of SimpleITK's C++ core including all the testing and
 example code requires approximately 10 GB of disk space.  Enabling the
@@ -118,9 +115,9 @@ configure the SuperBuild:
  cmake ../SimpleITK/SuperBuild
 
 The SuperBuild will automatically download and build the matching
-versions of ITK, SWIG, and GTest (if testing is enabled) and create a
-Python virtual environment with required packages needed to compile
-SimpleITK.
+versions of ITK, SWIG, and GTest (if testing is enabled) and will use
+`'uv' <https://docs.astral.sh/uv/>`__ to download Python then create a virtual
+environment with required packages needed to build SimpleITK.
 
 If you get an error message saying that ITK\_DIR is not set then, you
 did not correctly point cmake to the SuperBuild sub-directory. Please
@@ -172,8 +169,9 @@ These additional dependencies are required when not using the SuperBuild:
    with SimpleITK, as future ITK versions are generally backwards
    compatible.
 
-#. `Python <https://www.python.org>`__ >= 3.9 with JINJA2 is required for code generation
-   of the SimpleITK core C++ library.
+#. `Python <https://www.python.org>`__ >= 3.9 with
+   `Jinja2 <https://jinja.palletsprojects.com/en/stable/>`__ is required
+   for code generation of the SimpleITK core C++ library.
 
 #. `SWIG <http://www.swig.org/>`__ >= 4.3
 
