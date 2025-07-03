@@ -59,7 +59,7 @@ Image {{ name }}::Execute ( {{ macros.image_parameters(number_of_inputs) }}{{ ma
     if ( type != image{{ inum }}.GetPixelIDValue() || dimension != image{{ inum }}.GetDimension() ) { sitkExceptionMacro ( "Image{{ inum }} for {{ name }} doesn't match type or dimension!" ); }
   {%- endfor %}
 
-  return this->m_MemberFactory->GetMemberFunction( type, dimension )(
+  return this->m_MemberFactory->GetMemberFunction( type, dimension, this )(
     {%- for inum in range(1, number_of_inputs+1) -%}
       {%- if inum > 1 %}, {% endif -%}
       image{{ inum }}

@@ -48,11 +48,11 @@ namespace itk::simple
 //
 PasteImageFilter::PasteImageFilter()
 {
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
 
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
 
-  this->m_MemberFactory2 = std::make_unique<detail::MemberFunctionFactory<MemberFunction2Type>>(this);
+  this->m_MemberFactory2 = std::make_unique<detail::MemberFunctionFactory<MemberFunction2Type>>();
   this->m_MemberFactory2->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
 }
 
@@ -97,7 +97,7 @@ PasteImageFilter::Execute(const Image & destinationImage, const Image & sourceIm
   const unsigned int     dimension = destinationImage.GetDimension();
   CheckImageMatchingPixelType(destinationImage, sourceImage, "sourceImage");
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension)(&destinationImage, &sourceImage);
+  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(&destinationImage, &sourceImage);
 }
 Image
 PasteImageFilter::Execute(const Image & destinationImage, double constant)
@@ -105,7 +105,7 @@ PasteImageFilter::Execute(const Image & destinationImage, double constant)
   const PixelIDValueEnum type = destinationImage.GetPixelID();
   const unsigned int     dimension = destinationImage.GetDimension();
 
-  return this->m_MemberFactory2->GetMemberFunction(type, dimension)(&destinationImage, constant);
+  return this->m_MemberFactory2->GetMemberFunction(type, dimension, this)(&destinationImage, constant);
 }
 Image
 PasteImageFilter::Execute(Image && destinationImage, const Image & sourceImage)

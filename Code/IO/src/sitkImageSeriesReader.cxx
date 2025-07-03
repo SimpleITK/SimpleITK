@@ -142,7 +142,7 @@ ImageSeriesReader::ImageSeriesReader()
   // list of pixel types supported
   using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
 
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
 }
@@ -242,7 +242,7 @@ ImageSeriesReader::Execute()
                        << "Refusing to load! " << std::endl);
   }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension)(imageio);
+  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(imageio);
 }
 
 

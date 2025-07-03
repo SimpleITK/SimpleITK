@@ -72,7 +72,7 @@ public:
 
   /** \brief Constructor which permanently binds the constructed
    * object to pObject */
-  DualMemberFunctionFactory(ObjectType * pObject);
+  DualMemberFunctionFactory() = default;
 
   /** \brief Registers a specific member function.
    *
@@ -149,7 +149,12 @@ public:
 
 
   /** \brief Returns a function object for the combination of
-   *  PixelID1 and PixelID2, and image dimension.
+   *  PixelID1 and PixelID2, and image dimension, with a object pointer.
+   *
+   *  This overload of GetMemberFunction allows the caller to specify a
+   *  custom object pointer type, which can be useful in certain
+   *  situations where the object pointer type needs to be different from
+   *  the one used during factory construction.
    *
    *  pixelID1 or pixelID2 is the value of Image::GetPixelIDValue(),
    *  or PixelIDToPixelIDValue<PixelIDType>::Result
@@ -160,7 +165,7 @@ public:
    *  \code
    *  PixelIDValueType pixelID = image->GetPixelIDValue();
    *  unsigned int dimension = image->GetDimension();
-   *  return this->m_MemberFactory->GetMemberFunction( pixelID, pixelID, dimension )( image );
+   *  return this->m_MemberFactory->GetMemberFunction( pixelID, pixelID, dimension, objectPointer )( image );
    *  \endcode
    *
    *  If the requested member function is not registered then an
@@ -168,7 +173,10 @@ public:
    *  guaranteed to be valid.
    */
   FunctionObjectType
-  GetMemberFunction(PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int imageDimension);
+  GetMemberFunction(PixelIDValueType pixelID1,
+                    PixelIDValueType pixelID2,
+                    unsigned int     imageDimension,
+                    ObjectType *     objectPointer) const;
 
 protected:
   ObjectType * m_ObjectPointer;

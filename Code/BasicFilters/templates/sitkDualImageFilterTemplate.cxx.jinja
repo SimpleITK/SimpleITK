@@ -27,7 +27,7 @@ namespace itk::simple {
 // Default constructor that initializes parameters
 {% include "ConstructorSignature.cxx.jinja" %}
 {
-  this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
+  this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType> );
   {% if pixel_types2 %}
   using PixelIDTypeList2 = {{ pixel_types2 }};
   {% endif %}
@@ -100,7 +100,7 @@ namespace itk::simple {
         {{ custom_type2 }}
     {% endif %}
 
-    return this->m_DualMemberFactory->GetMemberFunction(type1, type2, dimension)(
+    return this->m_DualMemberFactory->GetMemberFunction(type1, type2, dimension, this)(
         {%- for inum in range(1, number_of_inputs+1) -%}
             {%- if inum > 1 %}, {% endif -%}image{{ inum }}
         {%- endfor -%}

@@ -25,6 +25,7 @@
 #include <vector>
 #include <ostream>
 #include <iterator>
+#include <utility>
 
 namespace itk
 {
@@ -279,6 +280,21 @@ make_scope_exit(F && f) noexcept
   return scope_exit<F>{ std::forward<F>(f) };
 }
 
+namespace detail
+{
+
+template <typename T, T Offset, T... Is>
+struct make_offset_integer_sequence_helper
+{
+  using type = std::integer_sequence<T, Offset + Is...>;
+};
+} // namespace detail
+
+template <unsigned int Start, unsigned int Stop>
+using make_dimension_sequence =
+  detail::make_offset_integer_sequence_helper<unsigned int,
+                                              Start,
+                                              std::make_integer_sequence<unsigned int, Stop - Start + 1>::type>;
 
 } // namespace simple
 } // namespace itk

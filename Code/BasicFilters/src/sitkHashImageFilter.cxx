@@ -35,7 +35,7 @@ HashImageFilter::HashImageFilter()
 {
   this->m_HashFunction = SHA1;
 
-  this->m_MemberFactory.reset(new detail::MemberFunctionFactory<MemberFunctionType>(this));
+  this->m_MemberFactory.reset(new detail::MemberFunctionFactory<MemberFunctionType>());
 
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
   this->m_MemberFactory->RegisterMemberFunctions<LabelPixelIDTypeList,
@@ -83,7 +83,7 @@ HashImageFilter::Execute(const Image & image)
   PixelIDValueEnum type = image.GetPixelID();
   unsigned int     dimension = image.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension)(image);
+  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image);
 }
 
 template <class TLabelImageType>

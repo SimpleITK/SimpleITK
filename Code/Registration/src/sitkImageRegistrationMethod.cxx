@@ -79,9 +79,9 @@ ImageRegistrationMethod::ImageRegistrationMethod()
   , m_SmoothingSigmasAreSpecifiedInPhysicalUnits(true)
   , m_ActiveOptimizer(NULL)
 {
-  m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
 
-  m_EvaluateMemberFactory = std::make_unique<detail::MemberFunctionFactory<EvaluateMemberFunctionType>>(this);
+  m_EvaluateMemberFactory = std::make_unique<detail::MemberFunctionFactory<EvaluateMemberFunctionType>>();
 
   // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 3 > ();
   // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 2 > ();
@@ -759,7 +759,7 @@ ImageRegistrationMethod::Execute(const Image & fixed, const Image & moving)
 
   if (this->m_MemberFactory->HasMemberFunction(fixedType, fixedDim))
   {
-    return this->m_MemberFactory->GetMemberFunction(fixedType, fixedDim)(fixed, moving);
+    return this->m_MemberFactory->GetMemberFunction(fixedType, fixedDim, this)(fixed, moving);
   }
 
   sitkExceptionMacro(<< "Filter does not support fixed image type: "
@@ -1015,7 +1015,7 @@ ImageRegistrationMethod::MetricEvaluate(const Image & fixed, const Image & movin
 
   if (this->m_MemberFactory->HasMemberFunction(fixedType, fixedDim))
   {
-    return this->m_EvaluateMemberFactory->GetMemberFunction(fixedType, fixedDim)(fixed, moving);
+    return this->m_EvaluateMemberFactory->GetMemberFunction(fixedType, fixedDim, this)(fixed, moving);
   }
 
   sitkExceptionMacro(<< "Filter does not support fixed image type: "

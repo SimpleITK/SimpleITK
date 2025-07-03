@@ -47,7 +47,7 @@ CenteredTransformInitializerFilter::CenteredTransformInitializerFilter()
 
   this->m_OperationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
 
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
@@ -94,7 +94,7 @@ CenteredTransformInitializerFilter::Execute(const Image &     fixedImage,
     sitkExceptionMacro("Transform parameter for " << this->GetName() << " doesn't match dimension!");
   }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension)(&fixedImage, &movingImage, &transform);
+  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(&fixedImage, &movingImage, &transform);
 }
 
 

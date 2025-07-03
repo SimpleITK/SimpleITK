@@ -122,7 +122,7 @@ GetPixelIDValueFromElastixString(const std::string & enumString)
 TransformixImageFilter::TransformixImageFilterImpl ::TransformixImageFilterImpl()
 {
   // Register this class with SimpleITK
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
   this->m_MemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, 2>();
   this->m_MemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, 3>();
 
@@ -158,7 +158,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::Execute()
 
   if (this->m_MemberFactory->HasMemberFunction(sitkFloat32, MovingImageDimension))
   {
-    return this->m_MemberFactory->GetMemberFunction(sitkFloat32, MovingImageDimension)();
+    return this->m_MemberFactory->GetMemberFunction(sitkFloat32, MovingImageDimension, this)();
   }
 
   sitkExceptionMacro(<< "TransformixImageFilter does not support the combination of image type "

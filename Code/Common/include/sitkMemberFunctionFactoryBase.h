@@ -116,7 +116,7 @@ protected:
   }
 
 
-  using FunctionMapType = std::unordered_map<TKey, FunctionObjectType, hash<TKey>>;
+  using FunctionMapType = std::unordered_map<TKey, MemberFunctionType, hash<TKey>>;
 
   // maps of Keys to pointers to member functions
   FunctionMapType m_PFunction;
