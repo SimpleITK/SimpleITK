@@ -11,7 +11,7 @@ namespace itk::simple
 ElastixImageFilter::ElastixImageFilterImpl ::ElastixImageFilterImpl(void)
 {
   // Register this class with SimpleITK
-  this->m_DualMemberFactory = std::make_unique<detail::DualMemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_DualMemberFactory = std::make_unique<detail::DualMemberFunctionFactory<MemberFunctionType>>();
   this->m_DualMemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, FloatPixelIDTypeList, 2>();
   this->m_DualMemberFactory->RegisterMemberFunctions<FloatPixelIDTypeList, FloatPixelIDTypeList, 3>();
 
@@ -183,7 +183,7 @@ ElastixImageFilter::ElastixImageFilterImpl ::Execute(void)
 
   if (this->m_DualMemberFactory->HasMemberFunction(sitkFloat32, sitkFloat32, FixedImageDimension))
   {
-    return this->m_DualMemberFactory->GetMemberFunction(sitkFloat32, sitkFloat32, FixedImageDimension)();
+    return this->m_DualMemberFactory->GetMemberFunction(sitkFloat32, sitkFloat32, FixedImageDimension, this)();
   }
 
   sitkExceptionMacro(<< "ElastixImageFilter does not support the combination of " << FixedImageDimension

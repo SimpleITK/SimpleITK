@@ -34,7 +34,7 @@ CastImageFilter::CastImageFilter()
 {
   this->m_OutputPixelType = sitkFloat32;
 
-  m_DualMemberFactory.reset(new detail::DualMemberFunctionFactory<MemberFunctionType>(this));
+  m_DualMemberFactory.reset(new detail::DualMemberFunctionFactory<MemberFunctionType>());
 
   this->RegisterMemberFactory2();
   this->RegisterMemberFactory2v();
@@ -89,7 +89,7 @@ CastImageFilter::Execute(const Image & image)
 
   if (this->m_DualMemberFactory->HasMemberFunction(inputType, outputType, dimension))
   {
-    return this->m_DualMemberFactory->GetMemberFunction(inputType, outputType, dimension)(image);
+    return this->m_DualMemberFactory->GetMemberFunction(inputType, outputType, dimension, this)(image);
   }
 
   sitkExceptionMacro(<< "Filter does not support casting from casting "

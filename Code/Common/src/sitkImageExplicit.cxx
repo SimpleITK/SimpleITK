@@ -74,11 +74,11 @@ Image::InternalInitialization(PixelIDValueType type, unsigned int dimension, itk
 
   typedef PimpleImageBase * (Self::*MemberFunctionType)(itk::DataObject *);
 
-  detail::MemberFunctionFactory<MemberFunctionType> memberFactory(this);
+  detail::MemberFunctionFactory<MemberFunctionType> memberFactory;
 
   memberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, Addressor>();
 
-  this->m_PimpleImage.reset(memberFactory.GetMemberFunction(type, dimension)(image));
+  this->m_PimpleImage.reset(memberFactory.GetMemberFunction(type, dimension, this)(image));
 }
 
 void
@@ -93,7 +93,7 @@ Image::Allocate(const std::vector<unsigned int> & _size, PixelIDValueEnum ValueE
 
   using AllocateAddressor = AllocateMemberFunctionAddressor;
 
-  detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
+  detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory;
   allocateMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, AllocateAddressor>();
 
   if (ValueEnum == sitkUnknown)
@@ -108,7 +108,7 @@ Image::Allocate(const std::vector<unsigned int> & _size, PixelIDValueEnum ValueE
                        << "The maximum supported Image dimension is " << SITK_MAX_DIMENSION << ".");
   }
 
-  allocateMemberFactory.GetMemberFunction(ValueEnum, _size.size())(_size, numberOfComponents);
+  allocateMemberFactory.GetMemberFunction(ValueEnum, _size.size(), this)(_size, numberOfComponents);
 }
 
 
@@ -121,7 +121,7 @@ Image::ToVectorImage(bool inPlace)
 
   typedef Image (Self::*MemberFunctionType)(bool);
 
-  detail::MemberFunctionFactory<MemberFunctionType> toVectorMemberFactory(this);
+  detail::MemberFunctionFactory<MemberFunctionType> toVectorMemberFactory;
 
   toVectorMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3, SITK_MAX_DIMENSION, ToVectorAddressor>();
   toVectorMemberFactory.RegisterMemberFunctions<VectorPixelIDTypeList, 2, 2, ToVectorAddressor>();
@@ -132,7 +132,7 @@ Image::ToVectorImage(bool inPlace)
                                                                       << this->GetDimension() << " to a vector image!");
   }
 
-  return toVectorMemberFactory.GetMemberFunction(this->GetPixelID(), this->GetDimension())(inPlace);
+  return toVectorMemberFactory.GetMemberFunction(this->GetPixelID(), this->GetDimension(), this)(inPlace);
 }
 
 Image
@@ -141,11 +141,10 @@ Image::ToScalarImage(bool inPlace)
   assert(m_PimpleImage);
 
   using PixelIDTypeList = typelist2::append<ScalarPixelIDTypeList, VectorPixelIDTypeList>::type;
-  ;
 
   typedef Image (Self::*MemberFunctionType)(bool);
 
-  detail::MemberFunctionFactory<MemberFunctionType> toScalarMemberFactory(this);
+  detail::MemberFunctionFactory<MemberFunctionType> toScalarMemberFactory;
 
   toScalarMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION - 1, ToScalarAddressor>();
   toScalarMemberFactory
@@ -157,7 +156,7 @@ Image::ToScalarImage(bool inPlace)
                                                                       << this->GetDimension() << " to a scalar image!");
   }
 
-  return toScalarMemberFactory.GetMemberFunction(this->GetPixelID(), this->GetDimension())(inPlace);
+  return toScalarMemberFactory.GetMemberFunction(this->GetPixelID(), this->GetDimension(), this)(inPlace);
 }
 
 } // namespace itk::simple
