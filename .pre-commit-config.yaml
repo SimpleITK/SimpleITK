@@ -72,6 +72,7 @@ repos:
       name: 'Check version of SetupForDevelopment'
       entry: 'Utilities/Hooks/check-setup-for-development'
       language: system
+      pass_filenames: false
       stages: [pre-commit]
     - id: kw-commit-msg
       name: 'kw commit-msg'
@@ -83,6 +84,7 @@ repos:
       entry: 'Utilities/Hooks/kw-pre-commit'
       language: system
       stages: [pre-commit]
+      pass_filenames: false
     - id: forbid-txx
       name: 'forbid txx extensions'
       entry: Files with the .txx extension are deprecated -- please use .hxx instead
