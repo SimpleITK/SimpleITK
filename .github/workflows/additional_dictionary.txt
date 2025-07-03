@@ -1854,7 +1854,7 @@ rescale
 rescaled
 rescope
 resizable
-resizeable
+resize
 return
 reusability
 rfind
