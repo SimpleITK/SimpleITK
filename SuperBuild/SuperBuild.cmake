@@ -412,18 +412,11 @@ endif()
 # Python Virtual Environment with uv
 #------------------------------------------------------------------------------
 set(_Python_venv_home "${CMAKE_CURRENT_BINARY_DIR}/venv")
-get_filename_component(_Python_EXECUTABLE_NAME "${Python_EXECUTABLE}" NAME)
 
 if(WIN32)
-  set(
-    _SimpleITK_Python_EXECUTABLE
-    "${_Python_venv_home}/Scripts/${_Python_EXECUTABLE_NAME}"
-  )
+  set(_SimpleITK_Python_EXECUTABLE "${_Python_venv_home}/Scripts/python.exe")
 else()
-  set(
-    _SimpleITK_Python_EXECUTABLE
-    "${_Python_venv_home}/bin/${_Python_EXECUTABLE_NAME}"
-  )
+  set(_SimpleITK_Python_EXECUTABLE "${_Python_venv_home}/bin/python")
 endif()
 
 if(NOT DEFINED SimpleITK_Python_EXECUTABLE)
