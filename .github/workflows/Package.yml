@@ -7,7 +7,6 @@ on:
       - 'v*'
     branches-ignore:
       - '**'
-    branches: [ master, main ]
   pull_request:
     branches: [ master, main ]
     paths:
