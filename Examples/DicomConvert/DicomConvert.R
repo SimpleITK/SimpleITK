@@ -56,17 +56,10 @@ convert_image <- function(input_file_name, output_file_name, new_width = NA)
                       image$GetOrigin(), new_spacing, image$GetDirection(),0,
                       image$GetPixelID())
   }
-  # If a single channel image, rescale to [0,255]. Also modify the intensity values based
-  # on the photomertic interpretation. If MONOCHROME2 (minimum should be displayed as black) we
-  # don't need to do anything, if image has MONOCRHOME1 (minimum should be displayed as white) we flip
-  # the intensities. This is a constraint imposed by ITK which always assumes MONOCHROME2.
+  # If a single channel image, rescale to [0,255] and cast to UInt8.
   if(image$GetNumberOfComponentsPerPixel() == 1)
   {
     image <- RescaleIntensity(image, 0, 255)
-    if(trimws(image_file_reader$GetMetaData('0028|0004')) == 'MONOCHROME1')
-    {
-      image <-  InvertIntensity(image, maximum=255)
-    }
     image <- Cast(image, 'sitkUInt8')
   }
   WriteImage(image, output_file_name)

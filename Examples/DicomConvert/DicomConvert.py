@@ -64,16 +64,9 @@ def convert_image(input_file_name, output_file_name, new_width=None):
                 defaultPixelValue=0,
                 outputPixelType=image.GetPixelID(),
             )
-        # If a single channel image, rescale to [0,255]. Also modify the
-        # intensity values based on the photometric interpretation. If
-        # MONOCHROME2 (minimum should be displayed as black) we don't need to
-        # do anything, if image has MONOCRHOME1 (minimum should be displayed as
-        # white) we flip # the intensities. This is a constraint imposed by ITK
-        # which always assumes MONOCHROME2.
+        # If a single channel image, rescale to [0,255] and cast to UInt8.
         if image.GetNumberOfComponentsPerPixel() == 1:
             image = sitk.RescaleIntensity(image, 0, 255)
-            if image_file_reader.GetMetaData("0028|0004").strip() == "MONOCHROME1":
-                image = sitk.InvertIntensity(image, maximum=255)
             image = sitk.Cast(image, sitk.sitkUInt8)
         sitk.WriteImage(image, output_file_name)
         return True
