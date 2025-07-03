@@ -455,11 +455,11 @@ add_custom_command(
   OUTPUT
     "${_SimpleITK_Python_EXECUTABLE}"
   COMMAND
-    "${_SimpleITK_uv_EXECUTABLE}" "venv" "--python"
+    "${_SimpleITK_uv_EXECUTABLE}" "venv" --no-cache "--python"
     "${_SimpleITK_uv_PYTHON_VERSION}" --managed-python --allow-existing
     "${_Python_venv_home}"
   COMMAND
-    "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}"
+    "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}" "UV_NO_CACHE=1"
     "${_SimpleITK_uv_PATH}/bin/uv" "pip" "install" "jinja2~=3.1"
     "jsonschema~=4.24"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
