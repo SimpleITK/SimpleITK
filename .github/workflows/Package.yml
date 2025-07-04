@@ -7,7 +7,6 @@ on:
       - 'v*'
     branches-ignore:
       - '**'
-    branches: [ master, main ]
   pull_request:
     branches: [ master, main ]
     paths:
@@ -45,7 +44,6 @@ jobs:
           docker build --pull=true --rm=true -t simpleitk_manylinux -f "${{ matrix.dockerfile }}"   .
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
-        working-directory: Utilities/Distribution/manylinux
         env:
           PYTHON_VERSIONS: "cp39-cp39 cp310-cp310"
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
@@ -56,12 +54,13 @@ jobs:
           echo "BUILD_JAVA: ${BUILD_JAVA}"
           docker run --rm \
                --user "$(id -u):$(id -g)" \
-               --env SIMPLEITK_GIT_TAG=${{github.ref}} \
                --env PYTHON_VERSIONS \
                --env BUILD_CSHARP \
                --env BUILD_JAVA \
                --env BUILD_PYTHON_LIMITED_API \
-               -v "$(pwd):/work/io" \
+               --env SIMPLEITK_SRC_DIR="/work/src" \
+               -v "${{ github.workspace }}:/work/src" \
+               -v "${{ github.workspace }}/Utilities/Distribution/manylinux:/work/io" \
                -t simpleitk_manylinux
       - name: ls
         shell: bash

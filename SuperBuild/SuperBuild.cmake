@@ -412,18 +412,11 @@ endif()
 # Python Virtual Environment with uv
 #------------------------------------------------------------------------------
 set(_Python_venv_home "${CMAKE_CURRENT_BINARY_DIR}/venv")
-get_filename_component(_Python_EXECUTABLE_NAME "${Python_EXECUTABLE}" NAME)
 
 if(WIN32)
-  set(
-    _SimpleITK_Python_EXECUTABLE
-    "${_Python_venv_home}/Scripts/${_Python_EXECUTABLE_NAME}"
-  )
+  set(_SimpleITK_Python_EXECUTABLE "${_Python_venv_home}/Scripts/python.exe")
 else()
-  set(
-    _SimpleITK_Python_EXECUTABLE
-    "${_Python_venv_home}/bin/${_Python_EXECUTABLE_NAME}"
-  )
+  set(_SimpleITK_Python_EXECUTABLE "${_Python_venv_home}/bin/python")
 endif()
 
 if(NOT DEFINED SimpleITK_Python_EXECUTABLE)
@@ -462,11 +455,11 @@ add_custom_command(
   OUTPUT
     "${_SimpleITK_Python_EXECUTABLE}"
   COMMAND
-    "${_SimpleITK_uv_EXECUTABLE}" "venv" "--python"
+    "${_SimpleITK_uv_EXECUTABLE}" "venv" --no-cache "--python"
     "${_SimpleITK_uv_PYTHON_VERSION}" --managed-python --allow-existing
     "${_Python_venv_home}"
   COMMAND
-    "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}"
+    "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}" "UV_NO_CACHE=1"
     "${_SimpleITK_uv_PATH}/bin/uv" "pip" "install" "jinja2~=3.1"
     "jsonschema~=4.24"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
