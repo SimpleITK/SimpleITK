@@ -13,6 +13,24 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/DicomConvert/DicomConvert.cs
+       :language: csharp
+       :lines: 19-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/DicomConvert/DicomConvert.cxx
+       :language: c++
+       :lines: 19-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/DicomConvert/DicomConvert.java
+       :language: java
+       :lines: 19-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/DicomConvert/DicomConvert.py
