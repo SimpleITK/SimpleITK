@@ -2,7 +2,7 @@
 
 set -x
 
-export SRC_DIR="/tmp/SimpleITK"
+export SRC_DIR="${SIMPLEITK_SRC_DIR:-"/tmp/SimpleITK"}"
 export BLD_DIR="/tmp/SimpleITK-build"
 export OUT_DIR="/work/io"
 
@@ -25,9 +25,7 @@ mkdir -p ${ExternalData_OBJECT_STORES}
 
 export PIP_NO_CACHE_DIR=1
 
-export PYTHONUSERBASE=${PYTHONUSERBASE:-/tmp/.pylocal}
-mkdir -p ${PYTHONUSERBASE}
-export PATH=${PATH}:/tmp/.pylocal/bin
+export HOME=/tmp
 
 build_simpleitk() {
 
@@ -37,8 +35,6 @@ build_simpleitk() {
               git checkout ${SIMPLEITK_GIT_TAG}
         )
     fi
-
-    PYTHON_EXECUTABLE=/usr/local/bin/python3.12
 
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
@@ -53,7 +49,6 @@ build_simpleitk() {
         -DITK_GIT_REPOSITORY:STRING="https://github.com/InsightSoftwareConsortium/ITK.git" \
         -DITK_C_OPTIMIZATION_FLAGS:STRING="" \
         -DITK_CXX_OPTIMIZATION_FLAGS:STRING="" \
-        -DPython_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
         ${SRC_DIR}/SuperBuild &&
     make  &&
     find ./ -name \*.o -delete
