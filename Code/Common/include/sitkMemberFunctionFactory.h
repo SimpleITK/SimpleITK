@@ -59,9 +59,7 @@ public:
   using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
   using FunctionObjectType = typename Superclass::FunctionObjectType;
 
-  /** \brief Constructor which permanently binds the constructed
-   * object to pObject */
-  MemberFunctionFactory(ObjectType * pObject);
+  MemberFunctionFactory() = default;
 
   /** \brief Registers a specific member function.
    *
@@ -151,7 +149,7 @@ public:
   bool
   HasMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension) const noexcept;
 
-  /** \brief Returns a function object for the PixelIndex, and image
+  /** \brief Returns a function object for the PixelID and image
    *  dimension.
    *
    *  pixelID is the value of Image::GetPixelIDValue(), or
@@ -171,10 +169,7 @@ public:
    *  guaranteed to be valid.
    */
   FunctionObjectType
-  GetMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension);
-
-protected:
-  ObjectType * m_ObjectPointer;
+  GetMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension, ObjectType * objectPointer) const;
 };
 
 } // namespace itk::simple::detail

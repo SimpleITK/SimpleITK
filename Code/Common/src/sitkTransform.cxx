@@ -178,12 +178,12 @@ Transform::Transform(Image & image, TransformEnum txType)
 
     using Addressor = DisplacementInitializationMemberFunctionAddressor<MemberFunctionType>;
 
-    detail::MemberFunctionFactory<MemberFunctionType> initializationMemberFactory(this);
+    detail::MemberFunctionFactory<MemberFunctionType> initializationMemberFactory;
     initializationMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3, Addressor>();
     initializationMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, Addressor>();
 
 
-    initializationMemberFactory.GetMemberFunction(type, dimension)(image);
+    initializationMemberFactory.GetMemberFunction(type, dimension, this)(image);
   }
   else if (txType == sitkBSplineTransform)
   {

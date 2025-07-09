@@ -51,7 +51,7 @@ ImageSeriesWriter::ImageSeriesWriter()
   // list of pixel types supported
   using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
 
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
   // this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
@@ -204,7 +204,7 @@ ImageSeriesWriter::Execute(const Image & image)
   PixelIDValueType type = image.GetPixelIDValue();
   unsigned int     dimension = image.GetDimension();
 
-  this->m_MemberFactory->GetMemberFunction(type, dimension)(image);
+  this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image);
 }
 
 template <class TImageType>

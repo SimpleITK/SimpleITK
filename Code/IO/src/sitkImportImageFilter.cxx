@@ -221,11 +221,9 @@ ImportImageFilter::ImportImageFilter()
   // list of pixel types supported
   using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>(this);
+  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
 
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 4>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
+  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, 4>();
 }
 
 void
@@ -458,7 +456,7 @@ ImportImageFilter::Execute()
                        << "Refusing to load! " << std::endl);
   }
 
-  return this->m_MemberFactory->GetMemberFunction(this->m_PixelIDValue, imageDimension)();
+  return this->m_MemberFactory->GetMemberFunction(this->m_PixelIDValue, imageDimension, this)();
 }
 
 

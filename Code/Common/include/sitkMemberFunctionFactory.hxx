@@ -61,14 +61,6 @@ private:
 };
 
 template <typename TMemberFunctionPointer>
-MemberFunctionFactory<TMemberFunctionPointer>::MemberFunctionFactory(
-  typename MemberFunctionFactory::ObjectType * pObject)
-  : m_ObjectPointer(pObject)
-{
-  assert(pObject);
-}
-
-template <typename TMemberFunctionPointer>
 template <typename TImageType>
 void
 MemberFunctionFactory<TMemberFunctionPointer>::Register(typename MemberFunctionFactory::MemberFunctionType pfunc,
@@ -84,7 +76,7 @@ MemberFunctionFactory<TMemberFunctionPointer>::Register(typename MemberFunctionF
 
   auto key = std::pair<unsigned int, int>(TImageType::GetImageDimension(), pixelID);
 
-  Superclass::m_PFunction[key] = Superclass::BindObject(pfunc, m_ObjectPointer);
+  Superclass::m_PFunction[key] = pfunc;
 }
 
 template <typename TMemberFunctionPointer>
@@ -108,7 +100,7 @@ MemberFunctionFactory<TMemberFunctionPointer>::HasMemberFunction(PixelIDValueTyp
   auto key = typename Superclass::KeyType(imageDimension, pixelID);
   try
   {
-    // check if tr1::function has been set in map
+    // check if function has been set in map
     return Superclass::m_PFunction.find(key) != Superclass::m_PFunction.end();
   }
   // we do not throw exceptions
@@ -120,7 +112,10 @@ MemberFunctionFactory<TMemberFunctionPointer>::HasMemberFunction(PixelIDValueTyp
 
 template <typename TMemberFunctionPointer>
 typename MemberFunctionFactory<TMemberFunctionPointer>::FunctionObjectType
-MemberFunctionFactory<TMemberFunctionPointer>::GetMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension)
+MemberFunctionFactory<TMemberFunctionPointer>::GetMemberFunction(
+  PixelIDValueType                                                     pixelID,
+  unsigned int                                                         imageDimension,
+  typename MemberFunctionFactory<TMemberFunctionPointer>::ObjectType * objectPointer) const
 {
   if (pixelID >= typelist2::length<InstantiatedPixelIDTypeList>::value || pixelID < 0)
   {
@@ -133,7 +128,7 @@ MemberFunctionFactory<TMemberFunctionPointer>::GetMemberFunction(PixelIDValueTyp
   auto ret_pair = Superclass::m_PFunction.find(key);
   if (ret_pair != Superclass::m_PFunction.end())
   {
-    return ret_pair->second;
+    return Superclass::BindObject(ret_pair->second, objectPointer);
   }
 
   sitkExceptionMacro(<< "Pixel type: " << GetPixelIDValueAsString(pixelID) << " is not supported in " << imageDimension

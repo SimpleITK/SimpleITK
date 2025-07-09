@@ -1,4 +1,3 @@
-
 /*=========================================================================*/
 /*
  *  Copyright NumFOCUS
@@ -37,11 +36,11 @@ namespace itk::simple {
   {% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
   {% include "ConstructorVectorPixels.cxx.jinja" %}
 
-  this->m_MemberFactory1.reset( new detail::MemberFunctionFactory<MemberFunction1Type>( this ) );
+  this->m_MemberFactory1.reset( new detail::MemberFunctionFactory<MemberFunction1Type> );
   this->m_MemberFactory1->RegisterMemberFunctions< PixelIDTypeList, 3 >();
   this->m_MemberFactory1->RegisterMemberFunctions< PixelIDTypeList, 2 >();
 
-  this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type>( this ) );
+  this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type> );
   this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 3 >();
   this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 2 >();
 }
@@ -88,14 +87,14 @@ Image {{ name }}::Execute ( {{ constant_type }} constant, const Image& image2 )
 {
   PixelIDValueEnum type = image2.GetPixelID();
   unsigned int dimension = image2.GetDimension();
-  return this->m_MemberFactory1->GetMemberFunction( type, dimension )( constant, image2 );
+  return this->m_MemberFactory1->GetMemberFunction( type, dimension, this )( constant, image2 );
 }
 
 Image {{ name }}::Execute ( const Image& image1, {{ constant_type }} constant )
 {
   PixelIDValueEnum type = image1.GetPixelID();
   unsigned int dimension = image1.GetDimension();
-  return this->m_MemberFactory2->GetMemberFunction( type, dimension )( image1, constant );
+  return this->m_MemberFactory2->GetMemberFunction( type, dimension, this )( image1, constant );
 }
 
 Image {{ name }}::Execute ( Image&& image1, {{ constant_type }} constant )
