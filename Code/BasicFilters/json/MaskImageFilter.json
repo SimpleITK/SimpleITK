@@ -10,7 +10,7 @@
   ],
   "pixel_types": "NonLabelPixelIDTypeList",
   "pixel_types2": "MaskedPixelIDTypeList",
-  "custom_type2": "PixelIDValueEnum type2 = maskImage.GetPixelID();\n  if (!this->m_DualMemberFactory->HasMemberFunction( type1, type2, dimension ) && TypeListHasPixelIDValue<IntegerPixelIDTypeList>(type2)) { type2 = sitkUInt8; }",
+  "custom_type2": "PixelIDValueEnum type2 = maskImage.GetPixelID();\n  if (!this->m_DualMemberFactory.HasMemberFunction( type1, type2, dimension ) && TypeListHasPixelIDValue<IntegerPixelIDTypeList>(type2)) { type2 = sitkUInt8; }",
   "inputs": [
     {
       "name": "Image",

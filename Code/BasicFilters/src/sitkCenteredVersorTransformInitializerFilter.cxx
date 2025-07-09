@@ -48,9 +48,7 @@ CenteredVersorTransformInitializerFilter::CenteredVersorTransformInitializerFilt
 
   this->m_ComputeRotation = false;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3>();
 }
 
 //
@@ -95,7 +93,7 @@ CenteredVersorTransformInitializerFilter::Execute(const Image &     fixedImage,
     sitkExceptionMacro("Transform parameter for " << this->GetName() << " doesn't match dimension!");
   }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(&fixedImage, &movingImage, &transform);
+  return this->m_MemberFactory.GetMemberFunction(type, dimension, this)(&fixedImage, &movingImage, &transform);
 }
 
 

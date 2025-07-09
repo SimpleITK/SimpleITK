@@ -35,7 +35,7 @@
     {%- endfor %}
   {%- endif %}
 
-  return this->m_MemberFactory->GetMemberFunction( type, dimension, this )(
+  return this->m_MemberFactory.GetMemberFunction( type, dimension, this )(
     {#- Pass numbered image arguments #}
     {{- range(1, number_of_inputs+1) | format_list('image{}') | join(', ') }}
     {%- set comma = joiner(', ') %}

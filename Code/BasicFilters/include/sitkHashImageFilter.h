@@ -87,7 +87,7 @@ private:
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
   friend struct detail::ExecuteInternalLabelImageAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  detail::MemberFunctionFactory<MemberFunctionType> m_MemberFactory;
 };
 
 SITKBasicFilters_EXPORT std::string

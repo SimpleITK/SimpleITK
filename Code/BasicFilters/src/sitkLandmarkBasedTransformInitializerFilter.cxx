@@ -52,10 +52,8 @@ LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter
   this->m_ReferenceImage = Image();
   this->m_BSplineNumberOfControlPoints = 4u;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2>();
 }
 
 //
@@ -109,7 +107,7 @@ LandmarkBasedTransformInitializerFilter::Execute(const Transform & transform)
       "ReferenceImage for LandmarkBasedTransformInitializerFilter does not match dimension of the transform!");
   }
 
-  return this->m_MemberFactory->GetMemberFunction(sitkFloat32, dimension, this)(&transform);
+  return this->m_MemberFactory.GetMemberFunction(sitkFloat32, dimension, this)(&transform);
 }
 
 

@@ -39,9 +39,7 @@ namespace itk::simple
 //
 ExtractImageFilter::ExtractImageFilter()
 {
-  this->m_MemberFactory.reset(new detail::MemberFunctionFactory<MemberFunctionType>());
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
 }
 
 //
@@ -80,7 +78,7 @@ ExtractImageFilter::Execute(const Image & image1)
   const PixelIDValueEnum type = image1.GetPixelID();
   const unsigned int     dimension = image1.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image1);
+  return this->m_MemberFactory.GetMemberFunction(type, dimension, this)(image1);
 }
 Image
 ExtractImageFilter::Execute(Image && image1)

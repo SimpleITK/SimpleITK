@@ -49,10 +49,8 @@ BSplineTransformInitializerFilter::BSplineTransformInitializerFilter()
   this->m_TransformDomainMeshSize = std::vector<uint32_t>(3, 1u);
   this->m_Order = 3u;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2>();
 }
 
 //
@@ -89,7 +87,7 @@ BSplineTransformInitializerFilter::Execute(const Image & image1)
   unsigned int     dimension = image1.GetDimension();
 
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image1);
+  return this->m_MemberFactory.GetMemberFunction(type, dimension, this)(image1);
 }
 
 

@@ -111,7 +111,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalCast<TImageType1, TImageType2>;
@@ -127,7 +127,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalToVector<TImageType1, TImageType2>;
@@ -143,7 +143,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalToLabel<TImageType1, TImageType2>;
@@ -159,7 +159,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalLabelToImage<TImageType1, TImageType2>;
@@ -167,30 +167,34 @@ private:
   };
 #endif
 
+  typedef Image (Self::*MemberFunctionType)(const Image &);
+
   /**
    * These methods are used to instantiate and register member functions
    * with the factory. Each function is split into a separate file to
    * make the compilation units smaller, and take less time to compile.
    * @{
    */
-  void
-  RegisterMemberFactory2();
-  void
-  RegisterMemberFactory2v();
-  void
-  RegisterMemberFactory2l();
-  void
-  RegisterMemberFactory3();
-  void
-  RegisterMemberFactory3v();
-  void
-  RegisterMemberFactory3l();
-  void
-  RegisterMemberFactory4();
+  static void
+  RegisterMemberFactory2(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory2v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory2l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory3(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory3v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory3l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory4(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
   /** @} */
 
-  typedef Image (Self::*MemberFunctionType)(const Image &);
-  std::unique_ptr<detail::DualMemberFunctionFactory<MemberFunctionType>> m_DualMemberFactory;
+
+  static detail::DualMemberFunctionFactory<MemberFunctionType>
+                                                                     makeFactory();
+  static const detail::DualMemberFunctionFactory<MemberFunctionType> m_DualMemberFactory;
 };
 
 SITKBasicFilters_EXPORT Image
