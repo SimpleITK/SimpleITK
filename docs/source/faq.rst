@@ -41,6 +41,27 @@ the version of SimpleElastix included in SimpleITK, you will need to
 using the SuperBuild configuration and turn on the SimpleITK_USE_ELASTIX flag in
 addition to the relevant WRAP_LANGUAGE flags for the desired programming languages.
 
+SimpleITK failed to read my DICOM image, what can I do to resolve this issue?
+-----------------------------------------------------------------------------
+
+To understand the reason for this failure we recommend using David Clunie's
+`Dicom3tools <https://dclunie.com/dicom3tools.html>`_. Specifically, the *dcidvfy* program
+to verify standard compliance and identify issues with the file and *dcdump* to look at the
+file's meta-data contents.
+
+SimpleITK binary distributions include the GDCM library which is used by default to
+read DICOM images. In some cases it fails to read the image. Fortunately, there is an additional
+optional DICOM IO module, DCMTK. To use the DCMTK IO you will need to
+:ref:`build SimpleITK <building_simpleitk>` locally using the
+SuperBuild configuration. Set CMake's :ref:`advanced options <advanced_build_options>`
+to include -D Module_ITKIODCMTK:BOOL=ON in addition to turning on the relevant WRAP_LANGUAGE flag
+for your programming language of choice. Then :ref:`install from the build tree <installation_from_build_tree>`.
+
+When you attempt to read the image now, both GDCM and DCMTK
+are available. If you do not specify which one to use, the toolkit will automatically try GDCM and then
+DCMTK. Additional information describing SimpleITK's image IO mechanism and how to select a specific IO is available
+:ref:`here <image-io>`.
+
 
 Installation
 ============

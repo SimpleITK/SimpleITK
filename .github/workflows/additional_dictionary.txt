@@ -1085,8 +1085,10 @@ datastructure
 datastructures
 datatypes
 dave
+dcdump
 dch
 dchen
+dcidvfy
 dcm
 ddots
 de
@@ -1599,8 +1601,8 @@ mockup
 modf
 modularity
 module
-mouthLoc
 morphologic
+mouthLoc
 mozilla
 mpl
 mpleITK
