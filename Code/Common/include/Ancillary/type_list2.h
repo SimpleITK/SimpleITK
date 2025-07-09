@@ -168,7 +168,7 @@ struct visit<typelist<Ts...>>
 {
 
   template <typename Predicate>
-  void
+  constexpr void
   operator()(Predicate && visitor)
   {
     ((visitor.CLANG_TEMPLATE operator()<Ts>()), ...);
@@ -201,7 +201,7 @@ template <typename... Tls, typename... Trs>
 struct dual_visit<typelist<Tls...>, typelist<Trs...>>
 {
   template <typename Visitor>
-  void
+  constexpr void
   operator()(Visitor && visitor) const
   {
     ((right_visit<Tls>(visitor)), ...);
@@ -209,7 +209,7 @@ struct dual_visit<typelist<Tls...>, typelist<Trs...>>
 
 private:
   template <typename tl, typename Predicate>
-  static int
+  static constexpr int
   right_visit(Predicate && visitor)
   {
     ((visitor.CLANG_TEMPLATE operator()<tl, Trs>()), ...);
