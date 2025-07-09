@@ -28,7 +28,7 @@ namespace itk::simple
 struct AllocateMemberFunctionAddressor
 {
   template <typename TImageType>
-  auto
+  constexpr auto
   operator()() const
   {
     return &Image::template AllocateInternal<TImageType>;
@@ -38,7 +38,7 @@ struct AllocateMemberFunctionAddressor
 struct DispatchedInternalInitialiationAddressor
 {
   template <typename TImageType>
-  auto
+  constexpr auto
   operator()() const
   {
     return &Image::template DispatchedInternalInitialization<TImageType>;
@@ -48,7 +48,7 @@ struct DispatchedInternalInitialiationAddressor
 struct ToVectorAddressor
 {
   template <typename TImageType>
-  auto
+  constexpr auto
   operator()() const
   {
     return &Image::template ToVectorInternal<TImageType>;
@@ -58,7 +58,7 @@ struct ToVectorAddressor
 struct ToScalarAddressor
 {
   template <typename TImageType>
-  auto
+  constexpr auto
   operator()() const
   {
     return &Image::template ToScalarInternal<TImageType>;

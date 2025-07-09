@@ -822,7 +822,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template EvaluateInternal<TImageType>;

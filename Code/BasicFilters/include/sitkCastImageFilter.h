@@ -111,7 +111,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalCast<TImageType1, TImageType2>;
@@ -127,7 +127,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalToVector<TImageType1, TImageType2>;
@@ -143,7 +143,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalToLabel<TImageType1, TImageType2>;
@@ -159,7 +159,7 @@ private:
     using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
     template <typename TImageType1, typename TImageType2>
-    TMemberFunctionPointer
+    constexpr TMemberFunctionPointer
     operator()() const
     {
       return &ObjectType::template ExecuteInternalLabelToImage<TImageType1, TImageType2>;
