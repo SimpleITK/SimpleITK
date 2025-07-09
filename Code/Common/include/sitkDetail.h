@@ -31,7 +31,7 @@ struct MemberFunctionAddressor
   using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template <typename TImageType>
-  TMemberFunctionPointer
+  constexpr TMemberFunctionPointer
   operator()() const
   {
     return &ObjectType::template ExecuteInternal<TImageType>;
@@ -44,7 +44,7 @@ struct DualExecuteInternalAddressor
   using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template <typename TImageType1, typename TImageType2>
-  TMemberFunctionPointer
+  constexpr TMemberFunctionPointer
   operator()() const
   {
     return &ObjectType::template DualExecuteInternal<TImageType1, TImageType2>;
@@ -52,7 +52,7 @@ struct DualExecuteInternalAddressor
 
 
   template <typename TImageType>
-  TMemberFunctionPointer
+  constexpr TMemberFunctionPointer
   operator()() const
   {
     return &ObjectType::template DualExecuteInternal<TImageType, TImageType>;
@@ -68,7 +68,7 @@ struct ExecuteInternalVectorImageAddressor
   using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template <typename TImageType>
-  TMemberFunctionPointer
+  constexpr TMemberFunctionPointer
   operator()() const
   {
     return &ObjectType::template ExecuteInternalVectorImage<TImageType>;
@@ -85,7 +85,7 @@ struct DualExecuteInternalVectorAddressor
   using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template <typename TImageType1, typename TImageType2>
-  TMemberFunctionPointer
+  constexpr TMemberFunctionPointer
   operator()() const
   {
     return &ObjectType::template DualExecuteInternalVector<TImageType1, TImageType2>;
@@ -101,7 +101,7 @@ struct ExecuteInternalLabelImageAddressor
   using ObjectType = typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType;
 
   template <typename TImageType>
-  TMemberFunctionPointer
+  constexpr TMemberFunctionPointer
   operator()() const
   {
     return &ObjectType::template ExecuteInternalLabelImage<TImageType>;
