@@ -205,6 +205,7 @@ After proper configuration, SimpleITK can be built:
 
  make -j$(nproc)
 
+.. _advanced_build_options:
 
 Advanced Build Options
 ----------------------
@@ -254,6 +255,7 @@ be the Release configuration, as such:
  cd SimpleITK-build/SimpleITK-build
  ctest -C Release
 
+.. _installation_from_build_tree:
 
 Installation from Build Tree
 ----------------------------
