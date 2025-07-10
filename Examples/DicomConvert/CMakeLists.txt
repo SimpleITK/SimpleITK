@@ -63,6 +63,6 @@ sitk_add_test(
   NAME CXX.Example.DicomConvert
   COMMAND
     $<TARGET_FILE:DicomConvert>
-    DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm} jpg
-    --w 64 --od "${out_dir}"
+    DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/Image0076.dcm}
+    "${out_dir}/result.jpg" --w 64
 )

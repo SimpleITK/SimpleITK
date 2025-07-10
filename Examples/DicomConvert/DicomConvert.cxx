@@ -23,8 +23,6 @@
 
 #include <SimpleITK.h>
 #include <iostream>
-#include <fstream>
-#include <vector>
 #include <filesystem>
 
 namespace sitk = itk::simple;
@@ -82,82 +80,30 @@ ConvertImage(const std::string & inputFile, const std::string & outputFile, unsi
   }
 }
 
-void
-WalkDir(const fs::path & dir, std::vector<std::string> & files)
-{
-  for (const auto & entry : fs::recursive_directory_iterator(dir))
-  {
-    if (fs::is_regular_file(entry))
-    {
-      files.push_back(entry.path().string());
-    }
-  }
-}
 
 int
 main(int argc, char * argv[])
 {
   if (argc < 3)
   {
-    std::cout
-      << "Usage: DicomConvert <root_of_data_directory> <output_file_extension> [--w width] [--od output_directory]\n";
+    std::cout << "Usage: DicomConvert <input_file> <output_file> [--w width]\n";
     return 1;
   }
-  std::string rootDir = argv[1];
-  std::string outputExt = argv[2];
+  std::string inputFile = argv[1];
+  std::string outputFile = argv[2];
   int         width = 0;
-  std::string outDir;
+
   for (int i = 3; i < argc; ++i)
   {
     if (std::string(argv[i]) == "--w" && i + 1 < argc)
     {
       width = std::stoi(argv[++i]);
     }
-    else if (std::string(argv[i]) == "--od" && i + 1 < argc)
-    {
-      outDir = argv[++i];
-    }
   }
-  std::vector<std::string> inputFiles;
-  WalkDir(rootDir, inputFiles);
-  std::vector<std::string> fileNames;
-  if (!outDir.empty())
-  {
-    for (size_t i = 0; i < inputFiles.size(); ++i)
-    {
-      fileNames.push_back((fs::path(outDir) / std::to_string(i)).u8string());
-    }
-  }
-  else
-  {
-    fileNames = inputFiles;
-  }
-  std::vector<std::string> outputFiles;
-  for (const auto & f : fileNames)
-  {
-    outputFiles.push_back(f + "." + outputExt);
-  }
-  std::vector<bool> res;
-  for (size_t i = 0; i < inputFiles.size(); ++i)
-  {
-    res.push_back(ConvertImage(inputFiles[i], outputFiles[i], width));
-  }
-  std::vector<std::string> filteredInput, filteredOutput;
-  for (size_t i = 0; i < res.size(); ++i)
-  {
-    if (res[i])
-    {
-      filteredInput.push_back(inputFiles[i]);
-      filteredOutput.push_back(outputFiles[i]);
-    }
-  }
-  std::string csvDir = !outDir.empty() ? outDir : fs::current_path().string();
 
-  std::ofstream writer(fs::path(csvDir) / "file_names.csv");
-  writer << "input file name,output file name\n";
-  for (size_t i = 0; i < filteredInput.size(); ++i)
+  if (ConvertImage(inputFile, outputFile, width))
   {
-    writer << filteredInput[i] << "," << filteredOutput[i] << std::endl;
+    return 0;
   }
-  return 0;
+  return 1;
 }
