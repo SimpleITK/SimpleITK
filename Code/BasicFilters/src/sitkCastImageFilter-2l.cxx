@@ -24,15 +24,15 @@ namespace itk::simple
 
 
 void
-CastImageFilter::RegisterMemberFactory2l()
+CastImageFilter::RegisterMemberFactory2l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory)
 {
   // basic to Label
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 2, ToLabelAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 2, ToLabelAddressor<MemberFunctionType>>();
 
   // Label to basic
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 2, LabelToAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 2, LabelToAddressor<MemberFunctionType>>();
 }
 
 } // namespace itk::simple

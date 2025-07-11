@@ -24,23 +24,21 @@ namespace itk::simple
 
 
 void
-CastImageFilter::RegisterMemberFactory4()
+CastImageFilter::RegisterMemberFactory4(detail::DualMemberFunctionFactory<MemberFunctionType> & factory
+                                        [[maybe_unused]])
 {
 #if SITK_MAX_DIMENSION >= 4 && defined(SITK_USE_ELASTIX)
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 4, ToLabelAddressor<MemberFunctionType>>();
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 4, LabelToAddressor<MemberFunctionType>>();
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 4, ToVectorAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+  factory.RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+  factory.RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 4, ToLabelAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 4, LabelToAddressor<MemberFunctionType>>();
+  factory.RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 4, ToVectorAddressor<MemberFunctionType>>();
 #endif
 }
 

@@ -24,16 +24,14 @@ namespace itk::simple
 
 
 void
-CastImageFilter::RegisterMemberFactory2v()
+CastImageFilter::RegisterMemberFactory2v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory)
 {
-
   // cast between vector images
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 2, CastAddressor<MemberFunctionType>>();
+  factory.RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 2, CastAddressor<MemberFunctionType>>();
 
   // basic to vector
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 2, ToVectorAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 2, ToVectorAddressor<MemberFunctionType>>();
 }
 
 } // namespace itk::simple

@@ -24,19 +24,17 @@ namespace itk::simple
 
 
 void
-CastImageFilter::RegisterMemberFactory3()
+CastImageFilter::RegisterMemberFactory3(detail::DualMemberFunctionFactory<MemberFunctionType> & factory)
 {
   // cast between complex pixels and complex pixel
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+  factory
+    .RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
 
   // cast between basic pixels and complex number pixels
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+  factory.RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
 
   // cast between basic images
-  m_DualMemberFactory
-    ->RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+  factory.RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
 }
 
 } // namespace itk::simple
