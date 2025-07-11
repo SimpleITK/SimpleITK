@@ -29,6 +29,18 @@
 namespace itk::simple
 {
 
+const detail::MemberFunctionFactory<ImageFileWriter::MemberFunctionType> &
+ImageFileWriter::GetMemberFunctionFactory()
+{
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 1, SITK_MAX_DIMENSION>();
+    return factory;
+  }();
+  return factory;
+}
+
+
 void
 WriteImage(const Image & image, const PathType & inFileName, bool useCompression, int compressionLevel)
 {
@@ -39,16 +51,7 @@ WriteImage(const Image & image, const PathType & inFileName, bool useCompression
 
 ImageFileWriter::~ImageFileWriter() = default;
 
-ImageFileWriter::ImageFileWriter()
-{
-  this->m_UseCompression = false;
-  this->m_KeepOriginalImageUID = false;
-  this->m_CompressionLevel = -1;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 1, SITK_MAX_DIMENSION>();
-}
+ImageFileWriter::ImageFileWriter() = default;
 
 
 std::string
@@ -167,10 +170,10 @@ ImageFileWriter::Execute(const Image & image, const PathType & inFileName, bool 
 void
 ImageFileWriter::Execute(const Image & image)
 {
-  PixelIDValueType type = image.GetPixelIDValue();
-  unsigned int     dimension = image.GetDimension();
+  const PixelIDValueType type = image.GetPixelIDValue();
+  const unsigned int     dimension = image.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image);
+  return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(image);
 }
 
 

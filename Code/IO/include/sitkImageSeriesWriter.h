@@ -170,10 +170,11 @@ private:
 
   // friend to get access to executeInternal member
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 
-  bool        m_UseCompression;
-  int         m_CompressionLevel;
+  bool        m_UseCompression{ false };
+  int         m_CompressionLevel{ -1 };
   std::string m_Compressor;
 
   std::vector<PathType> m_FileNames;

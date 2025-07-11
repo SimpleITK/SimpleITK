@@ -34,7 +34,7 @@ namespace itk::simple
 // private namespace
 namespace
 {
-const unsigned int UnusedDimension = 2;
+constexpr unsigned int UnusedDimension = 2;
 }
 
 
@@ -208,23 +208,21 @@ ImportAsDouble(double *                          buffer,
   return import.Execute();
 }
 
+const detail::MemberFunctionFactory<ImportImageFilter::MemberFunctionType> &
+ImportImageFilter::GetMemberFunctionFactory()
+{
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    // Register the member functions for the pixel types
+    factory.RegisterMemberFunctions<NonLabelPixelIDTypeList, 2, 4>();
+    return factory;
+  }();
+  return factory;
+}
+
 ImportImageFilter::~ImportImageFilter() = default;
 
-ImportImageFilter::ImportImageFilter()
-{
-  m_NumberOfComponentsPerPixel = 0;
-  m_PixelIDValue = sitkUnknown;
-  m_Origin = std::vector<double>(3, 0.0);
-  m_Spacing = std::vector<double>(3, 1.0);
-  this->m_Buffer = NULL;
-
-  // list of pixel types supported
-  using PixelIDTypeList = NonLabelPixelIDTypeList;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, 4>();
-}
+ImportImageFilter::ImportImageFilter() = default;
 
 void
 ImportImageFilter::SetSpacing(const std::vector<double> & spacing)
@@ -449,14 +447,14 @@ ImportImageFilter::Execute()
                        << "Only image of dimension 2 or 3 are supported.");
   }
 
-  if (!this->m_MemberFactory->HasMemberFunction(this->m_PixelIDValue, imageDimension))
+  if (!GetMemberFunctionFactory().HasMemberFunction(this->m_PixelIDValue, imageDimension))
   {
     sitkExceptionMacro(<< "PixelType is not supported!" << std::endl
                        << "Pixel Type: " << GetPixelIDValueAsString(this->m_PixelIDValue) << std::endl
-                       << "Refusing to load! " << std::endl);
+                       << "Refusing to import! " << std::endl);
   }
 
-  return this->m_MemberFactory->GetMemberFunction(this->m_PixelIDValue, imageDimension, this)();
+  return GetMemberFunctionFactory().GetMemberFunction(this->m_PixelIDValue, imageDimension, this)();
 }
 
 

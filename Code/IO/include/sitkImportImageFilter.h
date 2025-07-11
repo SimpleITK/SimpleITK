@@ -120,17 +120,18 @@ private:
 
   // friend to get access to executeInternal member
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 
-  unsigned int     m_NumberOfComponentsPerPixel;
-  PixelIDValueType m_PixelIDValue;
+  unsigned int     m_NumberOfComponentsPerPixel{ 0 };
+  PixelIDValueType m_PixelIDValue{ sitkUnknown };
 
-  std::vector<double>       m_Origin;
-  std::vector<double>       m_Spacing;
+  std::vector<double>       m_Origin{ std::vector<double>(3, 0.0) };
+  std::vector<double>       m_Spacing{ std::vector<double>(3, 1.0) };
   std::vector<unsigned int> m_Size;
   std::vector<double>       m_Direction;
 
-  void * m_Buffer;
+  void * m_Buffer{ nullptr };
 };
 
 Image SITKIO_EXPORT

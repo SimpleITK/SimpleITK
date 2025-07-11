@@ -230,7 +230,7 @@ protected:
   UpdateImageInformationFromImageIO(const itk::ImageIOBase * iobase);
 
 private:
-  // Internal method used implement extracting a region from the reader
+  // Internal method used implements extracting a region from the reader
   template <class TImageType, class TInternalImageType>
   Image
   ExecuteExtract(TInternalImageType * itkImage);
@@ -240,7 +240,8 @@ private:
 
   // friend to get access to executeInternal member
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 
 
   std::function<std::vector<std::string>()>       m_pfGetMetaDataKeys;
@@ -251,9 +252,9 @@ private:
 
   std::unique_ptr<MetaDataDictionary> m_MetaDataDictionary;
 
-  PixelIDValueEnum    m_PixelType;
-  unsigned int        m_Dimension;
-  unsigned int        m_NumberOfComponents;
+  PixelIDValueEnum    m_PixelType{ sitkUnknown };
+  unsigned int        m_Dimension{ 0 };
+  unsigned int        m_NumberOfComponents{ 0 };
   std::vector<double> m_Direction;
   std::vector<double> m_Origin;
   std::vector<double> m_Spacing;

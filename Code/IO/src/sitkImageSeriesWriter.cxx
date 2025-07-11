@@ -40,22 +40,23 @@ WriteImage(const Image & inImage, const std::vector<PathType> & filenames, bool 
   writer.Execute(inImage, filenames, useCompression, compressionLevel);
 }
 
+const detail::MemberFunctionFactory<ImageSeriesWriter::MemberFunctionType> &
+ImageSeriesWriter::GetMemberFunctionFactory()
+{
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+
+    using PixelIDTypeList = NonLabelPixelIDTypeList;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
+    // factory.RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+    return factory;
+  }();
+  return factory;
+}
+
 ImageSeriesWriter::~ImageSeriesWriter() = default;
 
-ImageSeriesWriter::ImageSeriesWriter()
-{
-
-  this->m_UseCompression = false;
-  this->m_CompressionLevel = -1;
-
-  // list of pixel types supported
-  using PixelIDTypeList = NonLabelPixelIDTypeList;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  // this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-}
+ImageSeriesWriter::ImageSeriesWriter() = default;
 
 std::string
 ImageSeriesWriter::ToString() const
@@ -201,10 +202,10 @@ ImageSeriesWriter::Execute(const Image & image)
 {
 
   // check that the number of file names match the slice size
-  PixelIDValueType type = image.GetPixelIDValue();
-  unsigned int     dimension = image.GetDimension();
+  const PixelIDValueType type = image.GetPixelIDValue();
+  const unsigned int     dimension = image.GetDimension();
 
-  this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image);
+  GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(image);
 }
 
 template <class TImageType>

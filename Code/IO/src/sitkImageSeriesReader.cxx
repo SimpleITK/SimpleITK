@@ -32,6 +32,19 @@
 namespace itk::simple
 {
 
+const detail::MemberFunctionFactory<ImageSeriesReader::MemberFunctionType> &
+ImageSeriesReader::GetMemberFunctionFactory()
+{
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+
+    using PixelIDTypeList = NonLabelPixelIDTypeList;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+    return factory;
+  }();
+  return factory;
+}
+
 Image
 ReadImage(const std::vector<PathType> & filenames, PixelIDValueEnum outputPixelType, const std::string & imageIO)
 {
@@ -136,16 +149,7 @@ ImageSeriesReader::ReverseOrderOff()
   this->SetReverseOrder(false);
 }
 
-ImageSeriesReader::ImageSeriesReader()
-{
-
-  // list of pixel types supported
-  using PixelIDTypeList = NonLabelPixelIDTypeList;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
-}
+ImageSeriesReader::ImageSeriesReader() = default;
 
 ImageSeriesReader::~ImageSeriesReader() = default;
 
@@ -229,14 +233,14 @@ ImageSeriesReader::Execute()
     sitkExceptionMacro("The file in the series have unsupported " << dimension - 1 << " dimensions.");
   }
 
-  if (!this->m_MemberFactory->HasMemberFunction(type, dimension))
+  if (!GetMemberFunctionFactory().HasMemberFunction(type, dimension))
   {
     sitkExceptionMacro(<< "PixelType is not supported!" << std::endl
                        << "Pixel Type: " << GetPixelIDValueAsString(type) << std::endl
                        << "Refusing to load! " << std::endl);
   }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(imageio);
+  return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(imageio);
 }
 
 
