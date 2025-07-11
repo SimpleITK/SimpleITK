@@ -42,15 +42,19 @@ namespace itk::simple
 //
 // Default constructor that initializes parameters
 //
-CenteredTransformInitializerFilter::CenteredTransformInitializerFilter()
+CenteredTransformInitializerFilter::CenteredTransformInitializerFilter() = default;
+
+const detail::MemberFunctionFactory<CenteredTransformInitializerFilter::MemberFunctionType> &
+CenteredTransformInitializerFilter::GetMemberFunctionFactory()
 {
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2>();
+    return factory;
+  }();
 
-  this->m_OperationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
+  return factory;
 }
 
 //
@@ -82,8 +86,8 @@ CenteredTransformInitializerFilter::Execute(const Image &     fixedImage,
                                             const Image &     movingImage,
                                             const Transform & transform)
 {
-  PixelIDValueEnum type = fixedImage.GetPixelID();
-  unsigned int     dimension = fixedImage.GetDimension();
+  const PixelIDValueType type = fixedImage.GetPixelIDValue();
+  const unsigned int     dimension = fixedImage.GetDimension();
 
   if (type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension())
   {
@@ -93,8 +97,12 @@ CenteredTransformInitializerFilter::Execute(const Image &     fixedImage,
   {
     sitkExceptionMacro("Transform parameter for " << this->GetName() << " doesn't match dimension!");
   }
-
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(&fixedImage, &movingImage, &transform);
+  if (!GetMemberFunctionFactory().HasMemberFunction(type, dimension))
+  {
+    sitkExceptionMacro("Filter does not support image type: " << GetPixelIDValueAsString(type) << " with dimension "
+                                                              << dimension << ".");
+  }
+  return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(&fixedImage, &movingImage, &transform);
 }
 
 

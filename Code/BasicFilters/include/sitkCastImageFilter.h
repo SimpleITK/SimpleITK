@@ -71,7 +71,7 @@ public:
   Execute(const Image &);
 
 private:
-  PixelIDValueEnum m_OutputPixelType;
+  PixelIDValueEnum m_OutputPixelType{ sitkFloat32 };
 
   /** Methods to actually implement conversion from one image type
    * to another.
@@ -167,30 +167,33 @@ private:
   };
 #endif
 
+  typedef Image (Self::*MemberFunctionType)(const Image &);
+
   /**
    * These methods are used to instantiate and register member functions
    * with the factory. Each function is split into a separate file to
    * make the compilation units smaller, and take less time to compile.
    * @{
    */
-  void
-  RegisterMemberFactory2();
-  void
-  RegisterMemberFactory2v();
-  void
-  RegisterMemberFactory2l();
-  void
-  RegisterMemberFactory3();
-  void
-  RegisterMemberFactory3v();
-  void
-  RegisterMemberFactory3l();
-  void
-  RegisterMemberFactory4();
+  static void
+  RegisterMemberFactory2(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory2v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory2l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory3(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory3v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory3l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
+  static void
+  RegisterMemberFactory4(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
   /** @} */
 
-  typedef Image (Self::*MemberFunctionType)(const Image &);
-  std::unique_ptr<detail::DualMemberFunctionFactory<MemberFunctionType>> m_DualMemberFactory;
+
+  static const detail::DualMemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 };
 
 SITKBasicFilters_EXPORT Image

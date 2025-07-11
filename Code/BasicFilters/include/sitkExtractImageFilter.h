@@ -199,8 +199,8 @@ private:
 
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
-
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 
   template <class TImageType, unsigned int OutputDimension>
   Image

@@ -37,11 +37,19 @@ namespace itk::simple
 //
 // Default constructor that initializes parameters
 //
-ExtractImageFilter::ExtractImageFilter()
-{
-  this->m_MemberFactory.reset(new detail::MemberFunctionFactory<MemberFunctionType>());
+ExtractImageFilter::ExtractImageFilter() = default;
 
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+
+const detail::MemberFunctionFactory<ExtractImageFilter::MemberFunctionType> &
+ExtractImageFilter::GetMemberFunctionFactory()
+{
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+    return factory;
+  }();
+
+  return factory;
 }
 
 //
@@ -77,10 +85,17 @@ ExtractImageFilter::ToString() const
 Image
 ExtractImageFilter::Execute(const Image & image1)
 {
-  const PixelIDValueEnum type = image1.GetPixelID();
+  const PixelIDValueType type = image1.GetPixelIDValue();
   const unsigned int     dimension = image1.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image1);
+
+  if (GetMemberFunctionFactory().HasMemberFunction(type, dimension))
+  {
+    return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(image1);
+  }
+
+  sitkExceptionMacro("Filter does not support image type: " << GetPixelIDValueAsString(type) << " with dimension "
+                                                            << dimension << "."); // Zero tolerance
 }
 Image
 ExtractImageFilter::Execute(Image && image1)

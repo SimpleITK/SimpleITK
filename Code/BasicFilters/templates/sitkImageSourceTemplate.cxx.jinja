@@ -24,15 +24,13 @@ namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
+
+{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+
 //
 // Default constructor that initializes parameters
 //
-{% include "ConstructorSignature.cxx.jinja" %}
-{
-{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
-
-{% include "ConstructorVectorPixels.cxx.jinja" %}
-}
+{% include "ConstructorSignature.cxx.jinja" %} = default;
 
 {% include "DestructorDefinition.cxx.jinja" %}
 
@@ -59,7 +57,7 @@ Image {{ name }}::Execute ( {{ macros.image_parameters(number_of_inputs) }}{{ ma
     if ( type != image{{ inum }}.GetPixelIDValue() || dimension != image{{ inum }}.GetDimension() ) { sitkExceptionMacro ( "Image{{ inum }} for {{ name }} doesn't match type or dimension!" ); }
   {%- endfor %}
 
-  return this->m_MemberFactory->GetMemberFunction( type, dimension, this )(
+  return GetMemberFunctionFactory().GetMemberFunction( type, dimension, this )(
     {%- for inum in range(1, number_of_inputs+1) -%}
       {%- if inum > 1 %}, {% endif -%}
       image{{ inum }}

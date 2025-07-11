@@ -74,7 +74,7 @@ public:
 
 
 private:
-  HashFunction m_HashFunction;
+  HashFunction m_HashFunction{ SHA1 };
 
   template <class TImageType>
   std::string
@@ -87,7 +87,8 @@ private:
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
   friend struct detail::ExecuteInternalLabelImageAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 };
 
 SITKBasicFilters_EXPORT std::string

@@ -41,18 +41,21 @@ namespace itk::simple
 //-----------------------------------------------------------------------------
 
 //
-// Default constructor that initializes parameters
+// Default constructor
 //
-BSplineTransformInitializerFilter::BSplineTransformInitializerFilter()
+BSplineTransformInitializerFilter::BSplineTransformInitializerFilter() = default;
+
+const detail::MemberFunctionFactory<BSplineTransformInitializerFilter::MemberFunctionType> &
+BSplineTransformInitializerFilter::GetMemberFunctionFactory()
 {
+  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2>();
+    return factory;
+  }();
 
-  this->m_TransformDomainMeshSize = std::vector<uint32_t>(3, 1u);
-  this->m_Order = 3u;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
+  return factory;
 }
 
 //
@@ -88,8 +91,13 @@ BSplineTransformInitializerFilter::Execute(const Image & image1)
   PixelIDValueEnum type = image1.GetPixelID();
   unsigned int     dimension = image1.GetDimension();
 
+  if (GetMemberFunctionFactory().HasMemberFunction(type, dimension))
+  {
+    return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(image1);
+  }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image1);
+  sitkExceptionMacro("Filter does not support image type: " << GetPixelIDValueAsString(type) << " with dimension "
+                                                            << dimension << "."); // Zero tolerance
 }
 
 

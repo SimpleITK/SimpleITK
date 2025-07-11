@@ -124,11 +124,11 @@ private:
 
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 
-
-  std::vector<uint32_t> m_TransformDomainMeshSize;
-  unsigned int          m_Order;
+  std::vector<uint32_t> m_TransformDomainMeshSize{ std::vector<uint32_t>(3, 1u) };
+  unsigned int          m_Order{ 3u };
 };
 
 
