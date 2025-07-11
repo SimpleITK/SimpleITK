@@ -7,7 +7,7 @@
   "pixel_types": "NonLabelPixelIDTypeList",
   "filter_type": "itk::PermuteAxesImageFilter< InputImageType >",
   "public_declarations": "static const std::vector<unsigned int> DefaultOrder;",
-  "custom_register": "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();\n",
+  "custom_register": "factory.RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();\n",
   "include_files": [
     "sitkPermuteAxis_Static.hxx"
   ],
