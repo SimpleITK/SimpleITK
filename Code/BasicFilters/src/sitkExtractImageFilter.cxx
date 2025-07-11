@@ -43,13 +43,13 @@ ExtractImageFilter::ExtractImageFilter() = default;
 const detail::MemberFunctionFactory<ExtractImageFilter::MemberFunctionType> &
 ExtractImageFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
   }();
 
-  return factory;
+  return static_factory;
 }
 
 //

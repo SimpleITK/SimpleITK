@@ -48,13 +48,13 @@ CenteredVersorTransformInitializerFilter::CenteredVersorTransformInitializerFilt
 const detail::MemberFunctionFactory<CenteredVersorTransformInitializerFilter::MemberFunctionType> &
 CenteredVersorTransformInitializerFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
     return factory;
   }();
 
-  return factory;
+  return static_factory;
 }
 
 //

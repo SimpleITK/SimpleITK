@@ -1,7 +1,7 @@
 
 const detail::MemberFunctionFactory<{{name}}::MemberFunctionType> &{{name}}::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [](){
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [](){
     detail::MemberFunctionFactory<MemberFunctionType> factory;
 {%- if custom_register %}
     {{ custom_register | indent(4) }}
@@ -15,5 +15,5 @@ const detail::MemberFunctionFactory<{{name}}::MemberFunctionType> &{{name}}::Get
 {% endif %}
     return factory;
   }();
-  return factory;
+  return static_factory;
 }

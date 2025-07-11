@@ -35,14 +35,14 @@ namespace itk::simple
 const detail::MemberFunctionFactory<ImageSeriesReader::MemberFunctionType> &
 ImageSeriesReader::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
 
     using PixelIDTypeList = NonLabelPixelIDTypeList;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
   }();
-  return factory;
+  return static_factory;
 }
 
 Image

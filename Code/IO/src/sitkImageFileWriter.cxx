@@ -32,12 +32,12 @@ namespace itk::simple
 const detail::MemberFunctionFactory<ImageFileWriter::MemberFunctionType> &
 ImageFileWriter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 1, SITK_MAX_DIMENSION>();
     return factory;
   }();
-  return factory;
+  return static_factory;
 }
 
 

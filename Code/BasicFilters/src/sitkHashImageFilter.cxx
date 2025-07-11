@@ -32,7 +32,7 @@ namespace itk::simple
 const detail::MemberFunctionFactory<HashImageFilter::MemberFunctionType> &
 HashImageFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     factory.RegisterMemberFunctions<LabelPixelIDTypeList,
@@ -41,7 +41,7 @@ HashImageFilter::GetMemberFunctionFactory()
                                     detail::ExecuteInternalLabelImageAddressor<MemberFunctionType>>();
     return factory;
   }();
-  return factory;
+  return static_factory;
 }
 
 

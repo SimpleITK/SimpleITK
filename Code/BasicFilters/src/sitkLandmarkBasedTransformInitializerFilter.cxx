@@ -48,15 +48,16 @@ LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter
 const detail::MemberFunctionFactory<LandmarkBasedTransformInitializerFilter::MemberFunctionType> &
 LandmarkBasedTransformInitializerFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
     factory.RegisterMemberFunctions<PixelIDTypeList, 2>();
     return factory;
   }();
 
-  return factory;
+  return static_factory;
 }
+
 
 //
 // Destructor

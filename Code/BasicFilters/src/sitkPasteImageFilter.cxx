@@ -51,25 +51,25 @@ PasteImageFilter::PasteImageFilter() = default;
 const detail::MemberFunctionFactory<PasteImageFilter::MemberFunctionType> &
 PasteImageFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
   }();
 
-  return factory;
+  return static_factory;
 }
 
 const detail::MemberFunctionFactory<PasteImageFilter::MemberFunction2Type> &
 PasteImageFilter::GetMemberFunctionFactory2()
 {
-  static detail::MemberFunctionFactory<MemberFunction2Type> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
   }();
 
-  return factory;
+  return static_factory;
 }
 
 //

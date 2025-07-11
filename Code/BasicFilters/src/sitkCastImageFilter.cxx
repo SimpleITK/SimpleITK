@@ -33,7 +33,7 @@ CastImageFilter::~CastImageFilter() = default;
 const detail::DualMemberFunctionFactory<CastImageFilter::MemberFunctionType> &
 CastImageFilter::GetMemberFunctionFactory()
 {
-  static detail::DualMemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::DualMemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::DualMemberFunctionFactory<MemberFunctionType> factory;
     RegisterMemberFactory2(factory);
     RegisterMemberFactory2v(factory);
@@ -45,7 +45,7 @@ CastImageFilter::GetMemberFunctionFactory()
     return factory;
   }();
 
-  return factory;
+  return static_factory;
 }
 
 CastImageFilter::CastImageFilter() = default;

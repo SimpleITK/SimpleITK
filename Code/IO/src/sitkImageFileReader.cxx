@@ -83,13 +83,13 @@ ImageFileReader::~ImageFileReader() = default;
 const detail::MemberFunctionFactory<ImageFileReader::MemberFunctionType> &
 ImageFileReader::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     using PixelIDTypeList = NonLabelPixelIDTypeList;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_IO_INPUT_MAX_DIMENSION>();
     return factory;
   }();
-  return factory;
+  return static_factory;
 }
 
 ImageFileReader::ImageFileReader() = default;
