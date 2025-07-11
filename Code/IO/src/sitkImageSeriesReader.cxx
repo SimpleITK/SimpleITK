@@ -147,13 +147,7 @@ ImageSeriesReader::ImageSeriesReader()
   this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
 }
 
-ImageSeriesReader::~ImageSeriesReader()
-{
-  if (this->m_Filter != nullptr)
-  {
-    m_Filter->UnRegister();
-  }
-}
+ImageSeriesReader::~ImageSeriesReader() = default;
 
 std::string
 ImageSeriesReader::ToString() const
@@ -268,21 +262,17 @@ ImageSeriesReader::ExecuteInternal(itk::ImageIOBase * imageio)
   reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
   // release the old filter ( and output data )
-  if (this->m_Filter != nullptr)
-  {
-    this->m_pfGetMetaDataKeys = nullptr;
-    this->m_pfHasMetaDataKey = nullptr;
-    this->m_pfGetMetaData = nullptr;
-    this->m_Filter->UnRegister();
-    this->m_Filter = nullptr;
-  }
+  this->m_pfGetMetaDataKeys = nullptr;
+  this->m_pfHasMetaDataKey = nullptr;
+  this->m_pfGetMetaData = nullptr;
+  this->m_Filter = nullptr;
 
 
   this->PreUpdate(reader.GetPointer());
 
   if (m_MetaDataDictionaryArrayUpdate)
   {
-    this->m_Filter = reader;
+    this->m_Filter.reset(reader);
     this->m_Filter->Register();
     this->m_pfGetMetaDataKeys = [capture0 = reader.GetPointer()](auto && PH1) {
       return GetMetaDataKeysCustomCast<Reader>::CustomCast(capture0, std::forward<decltype(PH1)>(PH1));

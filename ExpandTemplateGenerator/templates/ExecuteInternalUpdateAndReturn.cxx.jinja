@@ -2,20 +2,14 @@
 {#- Check if any measurement is active #}
 {% set any_active = measurements | selectattr('active') | list | length > 0 %}
 {% if any_active %}
-
   // release the old filter ( and output data )
-  if ( this->m_Filter != nullptr)
-    {
-  {% for m in measurements %}
-    {% if m.active %}
-        this->m_pfGet{{ m.name }} = nullptr;
-    {% endif %}
-  {% endfor %}
-      this->m_Filter->UnRegister();
-      this->m_Filter = nullptr;
-    }
+{% for m in measurements -%}
+  {% if m.active -%}
+   this->m_pfGet{{ m.name }} = nullptr;
+  {% endif %}
+{%- endfor %}
 
-  this->m_Filter = filter;
+  this->m_Filter.reset(filter);
   this->m_Filter->Register();
 {% endif %}
 

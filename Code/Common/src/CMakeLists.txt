@@ -29,6 +29,7 @@ set(
   sitkInterpolator.cxx
   sitkVersion.cxx
   sitkObjectOwnedBase.cxx
+  sitkProcessObjectDeleter.cxx
   ../include/Ancillary/hl_sha1.cxx
 )
 

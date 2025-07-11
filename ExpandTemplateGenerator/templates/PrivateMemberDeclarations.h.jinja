@@ -29,8 +29,9 @@
 {%- endfor %}
 {# If any measurement is active, add m_Filter #}
 {%- if measurements|selectattr('active')|list|length > 0 %}
+
     // Holder of process object for active measurements
-    itk::ProcessObject *m_Filter{nullptr};
+    std::unique_ptr<itk::ProcessObject, ProcessObjectDeleter> m_Filter{nullptr};
 {%- endif %}
 
 {# In-place logic #}
