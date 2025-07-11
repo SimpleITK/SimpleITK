@@ -1,7 +1,6 @@
-  this->m_MemberFactory =  std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>( );
 
 {%- if custom_register %}
   {{ custom_register }}
 {% else %}
-  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2, 3 > ();
+  this->m_MemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 > ();
 {%- endif %}

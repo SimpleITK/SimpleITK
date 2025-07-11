@@ -832,8 +832,8 @@ private:
   typedef Transform (ImageRegistrationMethod::*MemberFunctionType)(const Image & fixed, const Image & moving);
   typedef double (ImageRegistrationMethod::*EvaluateMemberFunctionType)(const Image & fixed, const Image & moving);
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>>         m_MemberFactory;
-  std::unique_ptr<detail::MemberFunctionFactory<EvaluateMemberFunctionType>> m_EvaluateMemberFactory;
+  detail::MemberFunctionFactory<MemberFunctionType>         m_MemberFactory;
+  detail::MemberFunctionFactory<EvaluateMemberFunctionType> m_EvaluateMemberFactory;
 
   InterpolatorEnum m_Interpolator;
   Transform        m_InitialTransform;

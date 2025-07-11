@@ -240,7 +240,7 @@ private:
 
   // friend to get access to executeInternal member
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  detail::MemberFunctionFactory<MemberFunctionType> m_MemberFactory;
 
 
   std::function<std::vector<std::string>()>       m_pfGetMetaDataKeys;

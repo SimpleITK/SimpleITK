@@ -88,9 +88,7 @@ ImageFileReader::ImageFileReader()
   // list of pixel types supported
   using PixelIDTypeList = NonLabelPixelIDTypeList;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
 }
 
 std::string
@@ -330,14 +328,14 @@ ImageFileReader::Execute()
   }
 
 
-  if (!this->m_MemberFactory->HasMemberFunction(type, dimension))
+  if (!this->m_MemberFactory.HasMemberFunction(type, dimension))
   {
     sitkExceptionMacro(<< "PixelType is not supported!" << std::endl
                        << "Pixel Type: " << GetPixelIDValueAsString(type) << std::endl
                        << "Refusing to load! " << std::endl);
   }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(imageio.GetPointer());
+  return this->m_MemberFactory.GetMemberFunction(type, dimension, this)(imageio.GetPointer());
 }
 
 template <class TImageType>

@@ -195,14 +195,14 @@ private:
 
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  detail::MemberFunctionFactory<MemberFunctionType> m_MemberFactory;
 
   using MemberFunction2Type = Image (Self::*)(const Image * image, double constant);
   template <class TImageType>
   Image
   ExecuteInternal(const Image * image, double constant);
   friend struct detail::MemberFunctionAddressor<MemberFunction2Type>;
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunction2Type>> m_MemberFactory2;
+  detail::MemberFunctionFactory<MemberFunction2Type> m_MemberFactory2;
 
 
   std::vector<unsigned int> m_SourceSize{ std::vector<unsigned int>(SITK_MAX_DIMENSION, 1) };

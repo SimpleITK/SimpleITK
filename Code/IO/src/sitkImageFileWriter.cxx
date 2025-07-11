@@ -45,9 +45,7 @@ ImageFileWriter::ImageFileWriter()
   this->m_KeepOriginalImageUID = false;
   this->m_CompressionLevel = -1;
 
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 1, SITK_MAX_DIMENSION>();
+  this->m_MemberFactory.RegisterMemberFunctions<PixelIDTypeList, 1, SITK_MAX_DIMENSION>();
 }
 
 
@@ -170,7 +168,7 @@ ImageFileWriter::Execute(const Image & image)
   PixelIDValueType type = image.GetPixelIDValue();
   unsigned int     dimension = image.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(image);
+  return this->m_MemberFactory.GetMemberFunction(type, dimension, this)(image);
 }
 
 

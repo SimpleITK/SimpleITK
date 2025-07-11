@@ -199,7 +199,7 @@ private:
 
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  detail::MemberFunctionFactory<MemberFunctionType> m_MemberFactory;
 
 
   template <class TImageType, unsigned int OutputDimension>
