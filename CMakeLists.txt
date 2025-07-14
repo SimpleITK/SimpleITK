@@ -12,6 +12,7 @@ project(SimpleITK)
 foreach(
   p
   CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
+  CMP0175 # add_custom_command() rejects invalid arguments.
 )
   if(POLICY ${p})
     cmake_policy(SET ${p} NEW)

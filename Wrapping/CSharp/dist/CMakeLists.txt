@@ -75,11 +75,9 @@ add_custom_command(
     ${CMAKE_COMMAND} -E copy
     "$<TARGET_FILE:${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}>"
     "${CSHARP_PACKAGE_STAGE_DIR}"
-  COMMENT
-    "Copying $<TARGET_FILE:${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}> to CSharp stage..."
-  #    COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:SimpleITKCSharpManaged>" "${CSHARP_PACKAGE_STAGE_DIR}"
-  #    COMMENT "Copying $<TARGET_FILE:${SimpleITKCSharpManaged}> to CSharp stage..."
-  SimpleITKCSharpManaged
+    #    COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:SimpleITKCSharpManaged>" "${CSHARP_PACKAGE_STAGE_DIR}"
+    #    COMMENT "Copying $<TARGET_FILE:${SimpleITKCSharpManaged}> to CSharp stage..."
+    SimpleITKCSharpManaged
   COMMAND
     ${CMAKE_COMMAND} -E tar cf "${CSHARP_PACKAGE_STAGE_DIR}.zip" --format=zip
     "${CSHARP_PACKAGE_STAGE_DIR}"

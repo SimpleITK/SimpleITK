@@ -21,7 +21,7 @@ cmake_minimum_required(
 )
 project(SuperBuildSimpleITK)
 
-foreach(p "CMP0135")
+foreach(p "CMP0135" "CMP0175")
   if(POLICY ${p})
     cmake_policy(SET ${p} NEW)
   endif()

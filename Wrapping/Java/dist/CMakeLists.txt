@@ -94,8 +94,6 @@ add_custom_command(
     ${CMAKE_COMMAND} -E copy
     "$<TARGET_FILE:${SWIG_MODULE_SimpleITKJava_TARGET_NAME}>"
     "${JAVA_PACKAGE_STAGE_DIR}"
-  COMMENT
-    "Copying $<TARGET_FILE:${SWIG_MODULE_SimpleITKJava_TARGET_NAME}> to Java stage..."
   COMMAND
     ${Java_JAR_EXECUTABLE} cfM "${JAVA_PACKAGE_STAGE_DIR}.zip"
     "${JAVA_PACKAGE_STAGE_DIR}"
