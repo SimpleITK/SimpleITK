@@ -191,6 +191,8 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME} )
 file(GLOB _files "${CSHARP_SOURCE_DIRECTORY}/*.cs")
 add_custom_command(
   TARGET ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}
+  COMMAND
+    ${CMAKE_COMMAND} -E echo "Adding CSharp byproducts."
   POST_BUILD
   BYPRODUCTS
     ${_files}
