@@ -18,6 +18,7 @@
 #ifndef sitkProcessObjectDeleter_h
 #define sitkProcessObjectDeleter_h
 
+#include "sitkCommon.h"
 
 namespace itk
 {
@@ -27,7 +28,14 @@ class LightObject;
 namespace simple
 {
 
-struct ProcessObjectDeleter
+/**
+ * \brief Enable automatic reference removal of itk::LightObject pointers to be used with STL smart pointers.
+ *
+ * This class is used to remove a reference to ITK LightObjects when they are no longer needed.
+ * It is typically used with std::unique_ptr or std::shared_ptr to manage the lifetime
+ * of ITK objects in SimpleITK.
+ */
+struct SITKCommon_EXPORT ProcessObjectDeleter
 {
   void
   operator()(itk::LightObject * ptr) const;
