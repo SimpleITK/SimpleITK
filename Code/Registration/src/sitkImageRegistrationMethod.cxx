@@ -80,16 +80,6 @@ ImageRegistrationMethod::ImageRegistrationMethod()
   , m_ActiveOptimizer(NULL)
 {
 
-  // m_MemberFactory.RegisterMemberFunctions< BasicPixelIDTypeList, 3 > ();
-  // m_MemberFactory.RegisterMemberFunctions< BasicPixelIDTypeList, 2 > ();
-
-  m_MemberFactory.RegisterMemberFunctions<RealPixelIDTypeList, 3>();
-  m_MemberFactory.RegisterMemberFunctions<RealPixelIDTypeList, 2>();
-
-  using EvaluateMemberFunctionAddressorType = EvaluateMemberFunctionAddressor<EvaluateMemberFunctionType>;
-  m_EvaluateMemberFactory.RegisterMemberFunctions<RealPixelIDTypeList, 3, EvaluateMemberFunctionAddressorType>();
-  m_EvaluateMemberFactory.RegisterMemberFunctions<RealPixelIDTypeList, 2, EvaluateMemberFunctionAddressorType>();
-
   this->SetMetricAsMattesMutualInformation();
 }
 
@@ -754,9 +744,16 @@ ImageRegistrationMethod::Execute(const Image & fixed, const Image & moving)
                        << " and " << moving.GetDimension());
   }
 
-  if (this->m_MemberFactory.HasMemberFunction(fixedType, fixedDim))
+  static const auto memberFactory = []() {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<RealPixelIDTypeList, 3>();
+    factory.RegisterMemberFunctions<RealPixelIDTypeList, 2>();
+    return factory;
+  }();
+
+  if (memberFactory.HasMemberFunction(fixedType, fixedDim))
   {
-    return this->m_MemberFactory.GetMemberFunction(fixedType, fixedDim, this)(fixed, moving);
+    return memberFactory.GetMemberFunction(fixedType, fixedDim, this)(fixed, moving);
   }
 
   sitkExceptionMacro(<< "Filter does not support fixed image type: "
@@ -1010,9 +1007,17 @@ ImageRegistrationMethod::MetricEvaluate(const Image & fixed, const Image & movin
                        << " and " << moving.GetDimension());
   }
 
-  if (this->m_MemberFactory.HasMemberFunction(fixedType, fixedDim))
+  static const auto evaluateMemberFactory = []() {
+    using EvaluateMemberFunctionAddressorType = EvaluateMemberFunctionAddressor<EvaluateMemberFunctionType>;
+    detail::MemberFunctionFactory<EvaluateMemberFunctionType> factory;
+    factory.RegisterMemberFunctions<RealPixelIDTypeList, 3, EvaluateMemberFunctionAddressorType>();
+    factory.RegisterMemberFunctions<RealPixelIDTypeList, 2, EvaluateMemberFunctionAddressorType>();
+    return factory;
+  }();
+
+  if (evaluateMemberFactory.HasMemberFunction(fixedType, fixedDim))
   {
-    return this->m_EvaluateMemberFactory.GetMemberFunction(fixedType, fixedDim, this)(fixed, moving);
+    return evaluateMemberFactory.GetMemberFunction(fixedType, fixedDim, this)(fixed, moving);
   }
 
   sitkExceptionMacro(<< "Filter does not support fixed image type: "
