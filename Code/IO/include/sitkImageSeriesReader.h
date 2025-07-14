@@ -22,6 +22,7 @@
 #include "sitkImage.h"
 #include "sitkImageReaderBase.h"
 #include "sitkMemberFunctionFactory.h"
+#include "sitkProcessObjectDeleter.h"
 
 namespace itk::simple
 {
@@ -265,8 +266,8 @@ private:
   std::function<bool(int, const std::string &)>        m_pfHasMetaDataKey;
   std::function<std::string(int, const std::string &)> m_pfGetMetaData;
 
-  // Holder of process object for active measurements
-  itk::ProcessObject * m_Filter{ nullptr };
+  // Holder of a process object for active measurements
+  std::unique_ptr<itk::ProcessObject, ProcessObjectDeleter> m_Filter;
 
 
   std::vector<PathType> m_FileNames;

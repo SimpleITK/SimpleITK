@@ -119,7 +119,10 @@ protected:
 
 } // namespace
 
-LoggerBase::~LoggerBase() {}
+
+LoggerBase::LoggerBase() = default;
+
+LoggerBase::~LoggerBase() = default;
 
 ITKLogger
 LoggerBase::SetAsGlobalITKLogger()
@@ -201,7 +204,7 @@ ITKLogger::ITKLogger(itk::OutputWindow * ow)
 
 ITKLogger::ITKLogger(const ITKLogger & other)
   : LoggerBase(other)
-  , m_OutputWindow(other.m_OutputWindow)
+  , m_OutputWindow(other.m_OutputWindow.get())
 {
   if (m_OutputWindow)
   {
@@ -225,17 +228,13 @@ ITKLogger::operator=(ITKLogger o)
   return *this;
 }
 
+ITKLogger::ITKLogger() = default;
 
 ITKLogger::~ITKLogger()
 {
   if (GetOwnedByObjects())
   {
     sitkWarningMacro("ITKLogger::GetOwnedByObjects is true.")
-  }
-  if (m_OutputWindow)
-  {
-    m_OutputWindow->UnRegister();
-    m_OutputWindow = nullptr;
   }
 }
 
@@ -292,7 +291,7 @@ ITKLogger::SetAsGlobalITKLogger()
     sitkExceptionMacro("Unable to set global ITK logger to nullptr.")
   }
   ITKLogger oldLogger = GetGlobalITKLogger();
-  itk::OutputWindow::SetInstance(m_OutputWindow);
+  itk::OutputWindow::SetInstance(m_OutputWindow.get());
   return oldLogger;
 }
 
