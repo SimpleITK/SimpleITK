@@ -69,6 +69,8 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Warning on CircleCI
   "Warning: Permanently added.*to the list of known hosts"
+
+  "checking for.*single_module is obsolete"
 )
 
 SET(CTEST_CUSTOM_ERROR_EXCEPTION
