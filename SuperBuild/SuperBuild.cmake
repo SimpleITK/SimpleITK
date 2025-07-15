@@ -457,6 +457,7 @@ add_custom_command(
   COMMAND
     "${_SimpleITK_uv_EXECUTABLE}" "venv" --no-cache "--python"
     "${_SimpleITK_uv_PYTHON_VERSION}" --managed-python --allow-existing
+    --link-mode=copy # Suppress working with failure to hardlink files
     "${_Python_venv_home}"
   COMMAND
     "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}" "UV_NO_CACHE=1"
