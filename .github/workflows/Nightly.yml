@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   tag-latest:
-    if: github.event_name == 'schedule'
+    if: ( github.repository == 'SimpleITK/SimpleITK.git' ) &&  ( github.event_name == 'schedule' )
     runs-on: ubuntu-latest
     # Needs write permissions for contents and actions to tag and trigger workflows
     permissions:
@@ -52,6 +52,7 @@ jobs:
         if: steps.check_latest.outputs.uptodate == 'true'
         run: echo "### Latest is uptodate." >> $GITHUB_STEP_SUMMARY
   matrix-jobs:
+    if: github.repository == 'SimpleITK/SimpleITK.git'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     strategy:
@@ -144,6 +145,7 @@ jobs:
             ${{ matrix.ctest-extra-args }}
 
   itk-nightly:
+    if: github.repository == 'SimpleITK/SimpleITK.git'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     timeout-minutes: ${{ matrix.timeout }}
