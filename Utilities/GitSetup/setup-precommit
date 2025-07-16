@@ -50,6 +50,6 @@ fi
 (
     echo "Setting up pre-commit..." &&
     source ${git_dir}/hooks/venv/bin/activate &&
-    python -m pip install --disable-pip-version-check -q -U "pre-commit>=$MIN_PRECOMMIT_VERSION" &&
+    python3 -m pip install --disable-pip-version-check -q -U "pre-commit>=$MIN_PRECOMMIT_VERSION" &&
     pre-commit install -f -t pre-commit -t prepare-commit-msg -t commit-msg
 )
