@@ -8,6 +8,7 @@ list(
   _files
   ${SimpleITK_DOC_FILES}
   "${CSHARP_BINARY_DIRECTORY}/SimpleITKCSharpManaged.dll"
+  "$<TARGET_FILE:${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}>"
 )
 
 if(NOT DEFINED SimpleITK_CSHARP_ARCH)
@@ -57,27 +58,19 @@ add_custom_command(
 )
 
 foreach(_f ${_files})
-  get_filename_component(_f_name ${_f} NAME)
   add_custom_command(
     TARGET dist.CSharp
     POST_BUILD
     COMMAND
       ${CMAKE_COMMAND} -E copy_if_different "${_f}"
-      "${CSHARP_PACKAGE_STAGE_DIR}/${_f_name}"
-    COMMENT "Copying ${_f_name} to CSharp stage..."
+      "${CSHARP_PACKAGE_STAGE_DIR}/"
+    COMMENT "Copying ${_f} to CSharp stage..."
   )
 endforeach()
 
 add_custom_command(
   TARGET dist.CSharp
   POST_BUILD
-  COMMAND
-    ${CMAKE_COMMAND} -E copy
-    "$<TARGET_FILE:${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}>"
-    "${CSHARP_PACKAGE_STAGE_DIR}"
-    #    COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:SimpleITKCSharpManaged>" "${CSHARP_PACKAGE_STAGE_DIR}"
-    #    COMMENT "Copying $<TARGET_FILE:${SimpleITKCSharpManaged}> to CSharp stage..."
-    SimpleITKCSharpManaged
   COMMAND
     ${CMAKE_COMMAND} -E tar cf "${CSHARP_PACKAGE_STAGE_DIR}.zip" --format=zip
     "${CSHARP_PACKAGE_STAGE_DIR}"
