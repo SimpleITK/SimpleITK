@@ -43,20 +43,21 @@ namespace itk::simple
 //
 // Default constructor that initializes parameters
 //
-LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter()
+LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter() = default;
+
+const detail::MemberFunctionFactory<LandmarkBasedTransformInitializerFilter::MemberFunctionType> &
+LandmarkBasedTransformInitializerFilter::GetMemberFunctionFactory()
 {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2>();
+    return factory;
+  }();
 
-  this->m_FixedLandmarks = std::vector<double>();
-  this->m_MovingLandmarks = std::vector<double>();
-  this->m_LandmarkWeight = std::vector<double>();
-  this->m_ReferenceImage = Image();
-  this->m_BSplineNumberOfControlPoints = 4u;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 3>();
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2>();
+  return static_factory;
 }
+
 
 //
 // Destructor
@@ -98,7 +99,7 @@ LandmarkBasedTransformInitializerFilter::ToString() const
 Transform
 LandmarkBasedTransformInitializerFilter::Execute(const Transform & transform)
 {
-  unsigned int dimension = transform.GetDimension();
+  const unsigned int dimension = transform.GetDimension();
 
   // The dimension of the reference image which the user explicitly
   // set (GetSize()!=[0...0]), and the dimension of the transform do not match
@@ -109,7 +110,7 @@ LandmarkBasedTransformInitializerFilter::Execute(const Transform & transform)
       "ReferenceImage for LandmarkBasedTransformInitializerFilter does not match dimension of the transform!");
   }
 
-  return this->m_MemberFactory->GetMemberFunction(sitkFloat32, dimension, this)(&transform);
+  return GetMemberFunctionFactory().GetMemberFunction(sitkFloat32, dimension, this)(&transform);
 }
 
 

@@ -187,12 +187,12 @@ private:
   void
   ExecuteInternal(const Image &);
 
-  bool        m_UseCompression;
-  int         m_CompressionLevel;
+  bool        m_UseCompression{ false };
+  int         m_CompressionLevel{ -1 };
   std::string m_Compressor;
 
   PathType    m_FileName;
-  bool        m_KeepOriginalImageUID;
+  bool        m_KeepOriginalImageUID{ false };
   std::string m_ImageIOName;
 
   // function pointer type
@@ -201,7 +201,8 @@ private:
   // friend to get access to executeInternal member
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 };
 
 /**

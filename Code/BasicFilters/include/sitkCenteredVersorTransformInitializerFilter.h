@@ -121,10 +121,12 @@ private:
 
   friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-  std::unique_ptr<detail::MemberFunctionFactory<MemberFunctionType>> m_MemberFactory;
+  static const detail::MemberFunctionFactory<MemberFunctionType> &
+  GetMemberFunctionFactory();
 
 
-  bool m_ComputeRotation;
+  /*  */
+  bool m_ComputeRotation{ false };
 };
 
 

@@ -46,14 +46,30 @@ namespace itk::simple
 //
 // Default constructor that initializes parameters
 //
-PasteImageFilter::PasteImageFilter()
+PasteImageFilter::PasteImageFilter() = default;
+
+const detail::MemberFunctionFactory<PasteImageFilter::MemberFunctionType> &
+PasteImageFilter::GetMemberFunctionFactory()
 {
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+    return factory;
+  }();
 
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+  return static_factory;
+}
 
-  this->m_MemberFactory2 = std::make_unique<detail::MemberFunctionFactory<MemberFunction2Type>>();
-  this->m_MemberFactory2->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+const detail::MemberFunctionFactory<PasteImageFilter::MemberFunction2Type> &
+PasteImageFilter::GetMemberFunctionFactory2()
+{
+  static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
+    detail::MemberFunctionFactory<MemberFunction2Type> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+    return factory;
+  }();
+
+  return static_factory;
 }
 
 //
@@ -97,15 +113,27 @@ PasteImageFilter::Execute(const Image & destinationImage, const Image & sourceIm
   const unsigned int     dimension = destinationImage.GetDimension();
   CheckImageMatchingPixelType(destinationImage, sourceImage, "sourceImage");
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(&destinationImage, &sourceImage);
+  if (GetMemberFunctionFactory().HasMemberFunction(type, dimension))
+  {
+    return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(&destinationImage, &sourceImage);
+  }
+
+  sitkExceptionMacro("Filter does not support image type: " << GetPixelIDValueAsString(type) << " with dimension "
+                                                            << dimension << ".");
 }
 Image
 PasteImageFilter::Execute(const Image & destinationImage, double constant)
 {
-  const PixelIDValueEnum type = destinationImage.GetPixelID();
+  const PixelIDValueType type = destinationImage.GetPixelIDValue();
   const unsigned int     dimension = destinationImage.GetDimension();
 
-  return this->m_MemberFactory2->GetMemberFunction(type, dimension, this)(&destinationImage, constant);
+  if (GetMemberFunctionFactory2().HasMemberFunction(type, dimension))
+  {
+    return GetMemberFunctionFactory2().GetMemberFunction(type, dimension, this)(&destinationImage, constant);
+  }
+
+  sitkExceptionMacro("Filter does not support image type: " << GetPixelIDValueAsString(type) << " with dimension "
+                                                            << dimension << ".");
 }
 Image
 PasteImageFilter::Execute(Image && destinationImage, const Image & sourceImage)

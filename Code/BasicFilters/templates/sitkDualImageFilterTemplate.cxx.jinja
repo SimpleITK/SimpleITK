@@ -24,32 +24,39 @@ namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
-// Default constructor that initializes parameters
-{% include "ConstructorSignature.cxx.jinja" %}
-{
-  this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType> );
-  {% if pixel_types2 %}
-  using PixelIDTypeList2 = {{ pixel_types2 }};
-  {% endif %}
-  {% if custom_register %}
-  {{ custom_register }}
-  {% else %}
-  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 >();
-  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 >();
-  {% endif %}
 
-  {% if vector_pixel_types_by_component %}
+ const detail::DualMemberFunctionFactory<{{ name }}::MemberFunctionType> &{{ name }}::GetMemberFunctionFactory() {
+   static detail::DualMemberFunctionFactory<MemberFunctionType> static_factory = [] {
+     detail::DualMemberFunctionFactory<MemberFunctionType> factory;
+{% if pixel_types2 %}
+    using PixelIDTypeList2 = {{ pixel_types2 }};
+{% endif %}
+{% if custom_register %}
+  {{ custom_register | indent(4) }}
+{% else %}
+    factory.RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 >();
+    factory.RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 >();
+{% endif %}
+
+{% if vector_pixel_types_by_component %}
     using VectorByComponentsPixelIDTypeList = {{ vector_pixel_types_by_component }};
-    {% if vector_pixel_types_by_component2 %}
+{% if vector_pixel_types_by_component2 %}
       using VectorByComponentsPixelIDTypeList2 = {{ vector_pixel_types_by_component2 }};
-    {% else %}
+{% else %}
       using VectorByComponentsPixelIDTypeList2 = PixelIDTypeList2;
-    {% endif %}
+{% endif %}
     using VectorAddressorType = detail::DualExecuteInternalVectorAddressor<MemberFunctionType>;
-    this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 3, VectorAddressorType >();
-    this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 2, VectorAddressorType >();
-  {% endif %}
-}
+    factory.RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 3, VectorAddressorType >();
+    factory.RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 2, VectorAddressorType >();
+{% endif %}
+
+      return factory;
+    }();
+    return static_factory;
+    }
+
+// Default constructor that initializes parameters
+{% include "ConstructorSignature.cxx.jinja" %} = default;
 
 {% include "DestructorDefinition.cxx.jinja" %}
 
@@ -100,7 +107,7 @@ namespace itk::simple {
         {{ custom_type2 }}
     {% endif %}
 
-    return this->m_DualMemberFactory->GetMemberFunction(type1, type2, dimension, this)(
+    return GetMemberFunctionFactory().GetMemberFunction(type1, type2, dimension, this)(
         {%- for inum in range(1, number_of_inputs+1) -%}
             {%- if inum > 1 %}, {% endif -%}image{{ inum }}
         {%- endfor -%}

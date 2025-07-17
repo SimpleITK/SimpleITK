@@ -70,13 +70,13 @@ Image::InternalInitialization(PixelIDValueType type, unsigned int dimension, itk
 {
   using PixelIDTypeList = AllPixelIDTypeList;
   using Addressor = DispatchedInternalInitialiationAddressor;
-
-
   typedef PimpleImageBase * (Self::*MemberFunctionType)(itk::DataObject *);
 
-  detail::MemberFunctionFactory<MemberFunctionType> memberFactory;
-
-  memberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, Addressor>();
+  static const auto memberFactory = []() {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, Addressor>();
+    return factory;
+  }();
 
   this->m_PimpleImage.reset(memberFactory.GetMemberFunction(type, dimension, this)(image));
 }
@@ -84,17 +84,16 @@ Image::InternalInitialization(PixelIDValueType type, unsigned int dimension, itk
 void
 Image::Allocate(const std::vector<unsigned int> & _size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents)
 {
-  // initialize member function factory for allocating images
-
   // The pixel IDs supported
   using PixelIDTypeList = AllPixelIDTypeList;
-
   typedef void (Self::*MemberFunctionType)(const std::vector<unsigned int> &, unsigned int);
-
   using AllocateAddressor = AllocateMemberFunctionAddressor;
 
-  detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory;
-  allocateMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, AllocateAddressor>();
+  static const auto allocateMemberFactory = []() {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION, AllocateAddressor>();
+    return factory;
+  }();
 
   if (ValueEnum == sitkUnknown)
   {
@@ -118,13 +117,14 @@ Image::ToVectorImage(bool inPlace)
   assert(m_PimpleImage);
 
   using PixelIDTypeList = typelist2::append<ScalarPixelIDTypeList, VectorPixelIDTypeList>::type;
-
   typedef Image (Self::*MemberFunctionType)(bool);
 
-  detail::MemberFunctionFactory<MemberFunctionType> toVectorMemberFactory;
-
-  toVectorMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 3, SITK_MAX_DIMENSION, ToVectorAddressor>();
-  toVectorMemberFactory.RegisterMemberFunctions<VectorPixelIDTypeList, 2, 2, ToVectorAddressor>();
+  static const auto toVectorMemberFactory = []() {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 3, SITK_MAX_DIMENSION, ToVectorAddressor>();
+    factory.RegisterMemberFunctions<VectorPixelIDTypeList, 2, 2, ToVectorAddressor>();
+    return factory;
+  }();
 
   if (!toVectorMemberFactory.HasMemberFunction(this->GetPixelID(), this->GetDimension()))
   {
@@ -141,14 +141,14 @@ Image::ToScalarImage(bool inPlace)
   assert(m_PimpleImage);
 
   using PixelIDTypeList = typelist2::append<ScalarPixelIDTypeList, VectorPixelIDTypeList>::type;
-
   typedef Image (Self::*MemberFunctionType)(bool);
 
-  detail::MemberFunctionFactory<MemberFunctionType> toScalarMemberFactory;
-
-  toScalarMemberFactory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION - 1, ToScalarAddressor>();
-  toScalarMemberFactory
-    .RegisterMemberFunctions<ScalarPixelIDTypeList, SITK_MAX_DIMENSION, SITK_MAX_DIMENSION, ToScalarAddressor>();
+  static const auto toScalarMemberFactory = []() {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION - 1, ToScalarAddressor>();
+    factory.RegisterMemberFunctions<ScalarPixelIDTypeList, SITK_MAX_DIMENSION, SITK_MAX_DIMENSION, ToScalarAddressor>();
+    return factory;
+  }();
 
   if (!toScalarMemberFactory.HasMemberFunction(this->GetPixelID(), this->GetDimension()))
   {

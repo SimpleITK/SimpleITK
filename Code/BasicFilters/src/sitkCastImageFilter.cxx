@@ -30,21 +30,26 @@ CastImageFilter::~CastImageFilter() = default;
 //
 // Default constructor that initializes parameters
 //
-CastImageFilter::CastImageFilter()
+const detail::DualMemberFunctionFactory<CastImageFilter::MemberFunctionType> &
+CastImageFilter::GetMemberFunctionFactory()
 {
-  this->m_OutputPixelType = sitkFloat32;
+  static detail::DualMemberFunctionFactory<MemberFunctionType> static_factory = [] {
+    detail::DualMemberFunctionFactory<MemberFunctionType> factory;
+    RegisterMemberFactory2(factory);
+    RegisterMemberFactory2v(factory);
+    RegisterMemberFactory2l(factory);
+    RegisterMemberFactory3(factory);
+    RegisterMemberFactory3v(factory);
+    RegisterMemberFactory3l(factory);
+    RegisterMemberFactory4(factory);
+    return factory;
+  }();
 
-  m_DualMemberFactory.reset(new detail::DualMemberFunctionFactory<MemberFunctionType>());
-
-  this->RegisterMemberFactory2();
-  this->RegisterMemberFactory2v();
-  this->RegisterMemberFactory2l();
-  this->RegisterMemberFactory3();
-  this->RegisterMemberFactory3v();
-  this->RegisterMemberFactory3l();
-
-  this->RegisterMemberFactory4();
+  return static_factory;
 }
+
+CastImageFilter::CastImageFilter() = default;
+
 
 //
 // ToString
@@ -87,9 +92,9 @@ CastImageFilter::Execute(const Image & image)
   const PixelIDValueEnum outputType = this->m_OutputPixelType;
   const unsigned int     dimension = image.GetDimension();
 
-  if (this->m_DualMemberFactory->HasMemberFunction(inputType, outputType, dimension))
+  if (GetMemberFunctionFactory().HasMemberFunction(inputType, outputType, dimension))
   {
-    return this->m_DualMemberFactory->GetMemberFunction(inputType, outputType, dimension, this)(image);
+    return GetMemberFunctionFactory().GetMemberFunction(inputType, outputType, dimension, this)(image);
   }
 
   sitkExceptionMacro(<< "Filter does not support casting from casting "

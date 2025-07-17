@@ -80,18 +80,19 @@ ReadImage(const PathType & filename, PixelIDValueEnum outputPixelType, const std
 
 ImageFileReader::~ImageFileReader() = default;
 
-ImageFileReader::ImageFileReader()
-  : m_PixelType(sitkUnknown)
-  , m_Dimension(0)
-  , m_NumberOfComponents(0)
+const detail::MemberFunctionFactory<ImageFileReader::MemberFunctionType> &
+ImageFileReader::GetMemberFunctionFactory()
 {
-  // list of pixel types supported
-  using PixelIDTypeList = NonLabelPixelIDTypeList;
-
-  this->m_MemberFactory = std::make_unique<detail::MemberFunctionFactory<MemberFunctionType>>();
-
-  this->m_MemberFactory->RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+    detail::MemberFunctionFactory<MemberFunctionType> factory;
+    using PixelIDTypeList = NonLabelPixelIDTypeList;
+    factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_IO_INPUT_MAX_DIMENSION>();
+    return factory;
+  }();
+  return static_factory;
 }
+
+ImageFileReader::ImageFileReader() = default;
 
 std::string
 ImageFileReader::ToString() const
@@ -330,14 +331,14 @@ ImageFileReader::Execute()
   }
 
 
-  if (!this->m_MemberFactory->HasMemberFunction(type, dimension))
+  if (!GetMemberFunctionFactory().HasMemberFunction(type, dimension))
   {
     sitkExceptionMacro(<< "PixelType is not supported!" << std::endl
                        << "Pixel Type: " << GetPixelIDValueAsString(type) << std::endl
                        << "Refusing to load! " << std::endl);
   }
 
-  return this->m_MemberFactory->GetMemberFunction(type, dimension, this)(imageio.GetPointer());
+  return GetMemberFunctionFactory().GetMemberFunction(type, dimension, this)(imageio.GetPointer());
 }
 
 template <class TImageType>
@@ -352,7 +353,7 @@ ImageFileReader::ExecuteInternal(itk::ImageIOBase * imageio)
     typename ImageType::template RebindImageType<typename ImageType::PixelType, SITK_IO_INPUT_MAX_DIMENSION>;
   using InternalReader = itk::ImageFileReader<InternalImageType>;
 
-  // if the InstantiatedToken is correctly implemented this should
+  // if the InstantiatedToken is correctly implemented, this should
   // not occur
   assert(ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown);
   assert(imageio != nullptr);

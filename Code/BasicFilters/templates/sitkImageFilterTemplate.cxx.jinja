@@ -24,15 +24,13 @@ namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
+
+{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+
 //
 // Default constructor that initializes parameters
 //
-{% include "ConstructorSignature.cxx.jinja" %}
-{
-{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
-
-{%- include "ConstructorVectorPixels.cxx.jinja" %}
-}
+{% include "ConstructorSignature.cxx.jinja" %} = default;
 
 {% include "DestructorDefinition.cxx.jinja" %}
 

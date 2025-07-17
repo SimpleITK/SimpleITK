@@ -30,20 +30,30 @@ namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
-// Default constructor that initializes parameters
-{% include "ConstructorSignature.cxx.jinja" %}
+{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+
+const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}::GetMemberFunctionFactory1()
 {
-  {% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
-  {% include "ConstructorVectorPixels.cxx.jinja" %}
-
-  this->m_MemberFactory1.reset( new detail::MemberFunctionFactory<MemberFunction1Type> );
-  this->m_MemberFactory1->RegisterMemberFunctions< PixelIDTypeList, 3 >();
-  this->m_MemberFactory1->RegisterMemberFunctions< PixelIDTypeList, 2 >();
-
-  this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type> );
-  this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 3 >();
-  this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 2 >();
+  static detail::MemberFunctionFactory<MemberFunction1Type> static_factory = [] {
+    detail::MemberFunctionFactory<MemberFunction1Type> factory;
+    factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+    return factory;
+  }();
+  return static_factory;
 }
+
+const detail::MemberFunctionFactory<{{ name }}::MemberFunction2Type> &{{ name }}::GetMemberFunctionFactory2()
+{
+  static detail::MemberFunctionFactory<MemberFunction2Type> factory = [] {
+    detail::MemberFunctionFactory<MemberFunction2Type> factory;
+    factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+    return factory;
+  }();
+  return factory;
+}
+
+// Default constructor that initializes parameters
+{% include "ConstructorSignature.cxx.jinja" %} = default;
 
 {% include "DestructorDefinition.cxx.jinja" %}
 
@@ -87,14 +97,14 @@ Image {{ name }}::Execute ( {{ constant_type }} constant, const Image& image2 )
 {
   PixelIDValueEnum type = image2.GetPixelID();
   unsigned int dimension = image2.GetDimension();
-  return this->m_MemberFactory1->GetMemberFunction( type, dimension, this )( constant, image2 );
+  return GetMemberFunctionFactory1().GetMemberFunction( type, dimension, this )( constant, image2 );
 }
 
 Image {{ name }}::Execute ( const Image& image1, {{ constant_type }} constant )
 {
   PixelIDValueEnum type = image1.GetPixelID();
   unsigned int dimension = image1.GetDimension();
-  return this->m_MemberFactory2->GetMemberFunction( type, dimension, this )( image1, constant );
+  return GetMemberFunctionFactory2().GetMemberFunction( type, dimension, this )( image1, constant );
 }
 
 Image {{ name }}::Execute ( Image&& image1, {{ constant_type }} constant )
