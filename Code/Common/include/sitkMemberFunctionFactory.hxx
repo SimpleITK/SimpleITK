@@ -38,12 +38,12 @@ namespace itk::simple::detail
 template <typename TMemberFunctionFactory, unsigned int VImageDimension, typename TAddressor>
 struct MemberFunctionInstantiater
 {
-  MemberFunctionInstantiater(TMemberFunctionFactory & factory)
+  constexpr MemberFunctionInstantiater(TMemberFunctionFactory & factory)
     : m_Factory(factory)
   {}
 
   template <class TPixelIDType>
-  void
+  constexpr void
   operator()([[maybe_unused]] TPixelIDType * id = nullptr) const
   {
     if constexpr (IsInstantiated<TPixelIDType, VImageDimension>::Value)
@@ -66,7 +66,7 @@ void
 MemberFunctionFactory<TMemberFunctionPointer>::Register(typename MemberFunctionFactory::MemberFunctionType pfunc,
                                                         TImageType *)
 {
-  PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::value;
+  constexpr PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::value;
 
   // this shouldn't occur, just may be useful for debugging
   assert(pixelID >= 0 && pixelID < typelist2::length<InstantiatedPixelIDTypeList>::value);
@@ -74,7 +74,7 @@ MemberFunctionFactory<TMemberFunctionPointer>::Register(typename MemberFunctionF
   static_assert(IsInstantiated<TImageType>::Value, "UnInstantiated ImageType or dimension");
   static_assert(TImageType::ImageDimension <= SITK_MAX_DIMENSION, "Invalid ImageDimensions");
 
-  auto key = std::pair<unsigned int, int>(TImageType::GetImageDimension(), pixelID);
+  constexpr auto key = std::pair<unsigned int, int>(TImageType::GetImageDimension(), pixelID);
 
   Superclass::m_PFunction[key] = pfunc;
 }

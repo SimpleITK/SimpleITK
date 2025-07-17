@@ -56,14 +56,19 @@ namespace itk::simple::detail
  *
  * \sa MemberFunctionFactory
  */
-template <typename TMemberFunctionPointer>
+template <typename TMemberFunctionPointer,
+          typename TContainer = std::unordered_map<std::tuple<unsigned int, int, unsigned int, int>,
+                                                   TMemberFunctionPointer,
+                                                   hash<std::tuple<unsigned int, int, unsigned int, int>>>>
 class DualMemberFunctionFactory
-  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, std::tuple<unsigned int, int, unsigned int, int>>
+  : protected MemberFunctionFactoryBase<TMemberFunctionPointer,
+                                        std::tuple<unsigned int, int, unsigned int, int>,
+                                        TContainer>
 {
 
 public:
   using Superclass =
-    MemberFunctionFactoryBase<TMemberFunctionPointer, std::tuple<unsigned int, int, unsigned int, int>>;
+    MemberFunctionFactoryBase<TMemberFunctionPointer, std::tuple<unsigned int, int, unsigned int, int>, TContainer>;
   using Self = DualMemberFunctionFactory;
 
   using MemberFunctionType = TMemberFunctionPointer;
@@ -73,6 +78,9 @@ public:
   /** \brief Constructor which permanently binds the constructed
    * object to pObject */
   DualMemberFunctionFactory() = default;
+
+  using Superclass::GetLoadFactor;
+  using Superclass::GetMaximumLoadFactor;
 
   /** \brief Registers a specific member function.
    *
@@ -177,9 +185,6 @@ public:
                     PixelIDValueType pixelID2,
                     unsigned int     imageDimension,
                     ObjectType *     objectPointer) const;
-
-protected:
-  ObjectType * m_ObjectPointer;
 };
 
 } // namespace itk::simple::detail

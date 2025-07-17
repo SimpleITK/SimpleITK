@@ -37,17 +37,14 @@ namespace itk::simple::detail
 template <typename TMemberFunctionFactory, unsigned int VImageDimension, typename TAddressor>
 struct DualMemberFunctionInstantiater
 {
-  DualMemberFunctionInstantiater(TMemberFunctionFactory & factory)
+  constexpr explicit DualMemberFunctionInstantiater(TMemberFunctionFactory & factory)
     : m_Factory(factory)
   {}
 
   template <class TPixelIDType1, class TPixelIDType2 = TPixelIDType1>
-  void
-  operator()(TPixelIDType1 * t1 = nullptr, TPixelIDType2 * t2 = nullptr) const
+  constexpr void
+  operator()(TPixelIDType1 * t1 [[maybe_unused]] = nullptr, TPixelIDType2 * t2 [[maybe_unused]] = nullptr) const
   {
-    (void)t1;
-    (void)t2;
-
     if constexpr (IsInstantiated<TPixelIDType1, VImageDimension>::Value &&
                   IsInstantiated<TPixelIDType2, VImageDimension>::Value)
     {
@@ -59,8 +56,8 @@ struct DualMemberFunctionInstantiater
 
       AddressorType addressor;
       m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType1, ImageType2>(),
-                         (ImageType1 *)(nullptr),
-                         (ImageType2 *)(nullptr));
+                         static_cast<ImageType1 *>(nullptr),
+                         static_cast<ImageType2 *>(nullptr));
     }
   }
 
@@ -68,36 +65,38 @@ private:
   TMemberFunctionFactory & m_Factory;
 };
 
-template <typename TMemberFunctionPointer>
+template <typename TMemberFunctionPointer, typename TContainer>
 template <typename TImageType1, typename TImageType2>
 void
-DualMemberFunctionFactory<TMemberFunctionPointer>::Register(MemberFunctionType pfunc, TImageType1 *, TImageType2 *)
+DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::Register(MemberFunctionType pfunc,
+                                                                        TImageType1 *,
+                                                                        TImageType2 *)
 {
   constexpr PixelIDValueType pixelID1 = ImageTypeToPixelIDValue<TImageType1>::value;
   constexpr PixelIDValueType pixelID2 = ImageTypeToPixelIDValue<TImageType2>::value;
 
   // this shouldn't occur, just may be useful for debugging
-  static_assert(pixelID1 >= 0 && pixelID1 < typelist2::length<InstantiatedPixelIDTypeList>::value, "");
-  static_assert(pixelID2 >= 0 && pixelID2 < typelist2::length<InstantiatedPixelIDTypeList>::value, "");
+  static_assert(pixelID1 >= 0 && pixelID1 < typelist2::length<InstantiatedPixelIDTypeList>::value);
+  static_assert(pixelID2 >= 0 && pixelID2 < typelist2::length<InstantiatedPixelIDTypeList>::value);
 
   static_assert(TImageType1::ImageDimension >= 2 && TImageType1::ImageDimension <= SITK_MAX_DIMENSION,
                 "Image1 Dimension out of range");
   static_assert(TImageType2::ImageDimension >= 2 && TImageType2::ImageDimension <= SITK_MAX_DIMENSION,
                 "Image2 Dimension out of range");
-  static_assert(int(TImageType1::ImageDimension) == int(TImageType2::ImageDimension), "Image Dimensions do not match");
+  static_assert(TImageType1::ImageDimension == TImageType2::ImageDimension, "Image Dimensions do not match");
   static_assert(IsInstantiated<TImageType1>::Value, "invalid pixel type for argument one");
   static_assert(IsInstantiated<TImageType2>::Value, "invalid pixel type for argument two");
 
-  typename Superclass::KeyType key(
+  constexpr typename Superclass::KeyType key(
     TImageType1::GetImageDimension(), pixelID1, TImageType2::GetImageDimension(), pixelID2);
 
   Superclass::m_PFunction[key] = pfunc;
 }
 
-template <typename TMemberFunctionPointer>
+template <typename TMemberFunctionPointer, typename TContainer>
 template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension, typename TAddressor>
 void
-DualMemberFunctionFactory<TMemberFunctionPointer>::RegisterMemberFunctions()
+DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFunctions()
 {
   using InstantiaterType = DualMemberFunctionInstantiater<Self, VImageDimension, TAddressor>;
 
@@ -107,10 +106,10 @@ DualMemberFunctionFactory<TMemberFunctionPointer>::RegisterMemberFunctions()
 }
 
 
-template <typename TMemberFunctionPointer>
+template <typename TMemberFunctionPointer, typename TContainer>
 template <typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor>
 void
-DualMemberFunctionFactory<TMemberFunctionPointer>::RegisterMemberFunctions()
+DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFunctions()
 {
 
   using InstantiaterType = DualMemberFunctionInstantiater<Self, VImageDimension, TAddressor>;
@@ -121,11 +120,12 @@ DualMemberFunctionFactory<TMemberFunctionPointer>::RegisterMemberFunctions()
 }
 
 
-template <typename TMemberFunctionPointer>
+template <typename TMemberFunctionPointer, typename TContainer>
 bool
-DualMemberFunctionFactory<TMemberFunctionPointer>::HasMemberFunction(PixelIDValueType pixelID1,
-                                                                     PixelIDValueType pixelID2,
-                                                                     unsigned int     imageDimension) const noexcept
+DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::HasMemberFunction(
+  PixelIDValueType pixelID1,
+  PixelIDValueType pixelID2,
+  unsigned int     imageDimension) const noexcept
 {
   typename Superclass::KeyType key(imageDimension, pixelID1, imageDimension, pixelID2);
   try
@@ -139,13 +139,13 @@ DualMemberFunctionFactory<TMemberFunctionPointer>::HasMemberFunction(PixelIDValu
   return false;
 }
 
-template <typename TMemberFunctionPointer>
-typename DualMemberFunctionFactory<TMemberFunctionPointer>::FunctionObjectType
-DualMemberFunctionFactory<TMemberFunctionPointer>::GetMemberFunction(
-  PixelIDValueType                                                pixelID1,
-  PixelIDValueType                                                pixelID2,
-  unsigned int                                                    imageDimension,
-  DualMemberFunctionFactory<TMemberFunctionPointer>::ObjectType * objectPointer) const
+template <typename TMemberFunctionPointer, typename TContainer>
+typename DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::FunctionObjectType
+DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::GetMemberFunction(
+  PixelIDValueType                                                                     pixelID1,
+  PixelIDValueType                                                                     pixelID2,
+  unsigned int                                                                         imageDimension,
+  typename DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::ObjectType * objectPointer) const
 {
   if (pixelID1 >= typelist2::length<InstantiatedPixelIDTypeList>::value || pixelID1 < 0)
   {
