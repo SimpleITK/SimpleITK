@@ -52,7 +52,7 @@ jobs:
         if: steps.check_latest.outputs.uptodate == 'true'
         run: echo "### Latest is uptodate." >> $GITHUB_STEP_SUMMARY
   matrix-jobs:
-    if: github.repository == 'SimpleITK/SimpleITK.git'
+    if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     strategy:
@@ -145,7 +145,7 @@ jobs:
             ${{ matrix.ctest-extra-args }}
 
   itk-nightly:
-    if: github.repository == 'SimpleITK/SimpleITK.git'
+    if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     timeout-minutes: ${{ matrix.timeout }}
