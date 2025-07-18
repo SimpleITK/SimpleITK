@@ -43,7 +43,7 @@ WriteImage(const Image & inImage, const std::vector<PathType> & filenames, bool 
 const detail::MemberFunctionFactory<ImageSeriesWriter::MemberFunctionType> &
 ImageSeriesWriter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
 
     using PixelIDTypeList = NonLabelPixelIDTypeList;

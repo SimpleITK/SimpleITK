@@ -48,7 +48,7 @@ BSplineTransformInitializerFilter::BSplineTransformInitializerFilter() = default
 const detail::MemberFunctionFactory<BSplineTransformInitializerFilter::MemberFunctionType> &
 BSplineTransformInitializerFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
     factory.RegisterMemberFunctions<PixelIDTypeList, 2>();
@@ -71,7 +71,10 @@ std::string
 BSplineTransformInitializerFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::BSplineTransformInitializerFilter\n";
+  out << "itk::simple::BSplineTransformInitializerFilter\n"
+      << "Function Factory:" << std::endl
+      << "  Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl
+      << "  Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl;
   out << "  TransformDomainMeshSize: ";
   this->ToStringHelper(out, this->m_TransformDomainMeshSize);
   out << "  Order:";
