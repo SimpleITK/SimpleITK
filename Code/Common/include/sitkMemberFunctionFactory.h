@@ -59,7 +59,7 @@ public:
   using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
   using FunctionObjectType = typename Superclass::FunctionObjectType;
 
-  MemberFunctionFactory() = default;
+  constexpr MemberFunctionFactory() = default;
 
   /** \brief Registers a specific member function.
    *
