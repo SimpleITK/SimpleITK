@@ -51,7 +51,7 @@ PasteImageFilter::PasteImageFilter() = default;
 const detail::MemberFunctionFactory<PasteImageFilter::MemberFunctionType> &
 PasteImageFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
@@ -63,7 +63,7 @@ PasteImageFilter::GetMemberFunctionFactory()
 const detail::MemberFunctionFactory<PasteImageFilter::MemberFunction2Type> &
 PasteImageFilter::GetMemberFunctionFactory2()
 {
-  static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
@@ -85,7 +85,10 @@ std::string
 PasteImageFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::PasteImageFilter\n";
+  out << "itk::simple::PasteImageFilter\n"
+      << "Function Factory:" << std::endl
+      << "  Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl
+      << "  Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl;
   out << "  SourceSize: ";
   this->ToStringHelper(out, this->m_SourceSize);
   out << std::endl;

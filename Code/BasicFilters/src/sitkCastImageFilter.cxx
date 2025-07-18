@@ -16,7 +16,7 @@
  *
  *=========================================================================*/
 #include "sitkCastImageFilter.h"
-
+#include "sitkCastImageFilter.hxx"
 
 namespace itk::simple
 {
@@ -30,26 +30,95 @@ CastImageFilter::~CastImageFilter() = default;
 //
 // Default constructor that initializes parameters
 //
-const detail::DualMemberFunctionFactory<CastImageFilter::MemberFunctionType> &
+
+const auto &
 CastImageFilter::GetMemberFunctionFactory()
 {
-  static detail::DualMemberFunctionFactory<MemberFunctionType> static_factory = [] {
-    detail::DualMemberFunctionFactory<MemberFunctionType> factory;
-    RegisterMemberFactory2(factory);
-    RegisterMemberFactory2v(factory);
-    RegisterMemberFactory2l(factory);
-    RegisterMemberFactory3(factory);
-    RegisterMemberFactory3v(factory);
-    RegisterMemberFactory3l(factory);
-    RegisterMemberFactory4(factory);
+
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
+    constexpr std::size_t MaxHashSize =
+      typelist2::length<InstantiatedPixelIDTypeList>::value * typelist2::length<InstantiatedPixelIDTypeList>::value * 3;
+    using HashMapType =
+      detail::ConstexprHashMap<std::tuple<unsigned int, int, unsigned int, int>, MemberFunctionType, MaxHashSize>;
+    detail::DualMemberFunctionFactory<MemberFunctionType, HashMapType> factory;
+
+    factory
+      .RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 2, CastAddressor<MemberFunctionType>>();
+
+    factory
+      .RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 2, CastAddressor<MemberFunctionType>>();
+    // cast between basic images
+    factory.RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 2, CastAddressor<MemberFunctionType>>();
+
+    // 2D vector registrations
+    // cast between vector images
+    factory
+      .RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 2, CastAddressor<MemberFunctionType>>();
+    // basic to vector
+    factory
+      .RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 2, ToVectorAddressor<MemberFunctionType>>();
+
+    // 2D label registrations
+    // basic to Label
+    factory
+      .RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 2, ToLabelAddressor<MemberFunctionType>>();
+    // Label to basic
+    factory
+      .RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 2, LabelToAddressor<MemberFunctionType>>();
+
+    // 3D registrations
+    // cast between complex pixels and complex pixel
+    factory
+      .RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+    // cast between basic pixels and complex number pixels
+    factory
+      .RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+    // cast between basic images
+    factory.RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+
+    // 3D vector registrations
+    // cast between vector images
+    factory
+      .RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 3, CastAddressor<MemberFunctionType>>();
+    // basic to vector
+    factory
+      .RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 3, ToVectorAddressor<MemberFunctionType>>();
+
+    // 3D label registrations
+    // basic to Label
+    factory
+      .RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 3, ToLabelAddressor<MemberFunctionType>>();
+    // Label to basic
+    factory
+      .RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 3, LabelToAddressor<MemberFunctionType>>();
+
+    // 4D registrations
+#if SITK_MAX_DIMENSION >= 4 && defined(SITK_USE_ELASTIX)
+    factory
+      .RegisterMemberFunctions<ComplexPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+    factory
+      .RegisterMemberFunctions<BasicPixelIDTypeList, ComplexPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+    factory.RegisterMemberFunctions<BasicPixelIDTypeList, BasicPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+    factory
+      .RegisterMemberFunctions<IntegerPixelIDTypeList, LabelPixelIDTypeList, 4, ToLabelAddressor<MemberFunctionType>>();
+    factory
+      .RegisterMemberFunctions<LabelPixelIDTypeList, IntegerPixelIDTypeList, 4, LabelToAddressor<MemberFunctionType>>();
+    factory
+      .RegisterMemberFunctions<VectorPixelIDTypeList, VectorPixelIDTypeList, 4, CastAddressor<MemberFunctionType>>();
+    factory
+      .RegisterMemberFunctions<BasicPixelIDTypeList, VectorPixelIDTypeList, 4, ToVectorAddressor<MemberFunctionType>>();
+#endif
+
+
     return factory;
   }();
+
 
   return static_factory;
 }
 
-CastImageFilter::CastImageFilter() = default;
 
+CastImageFilter::CastImageFilter() = default;
 
 //
 // ToString
@@ -59,7 +128,11 @@ CastImageFilter::ToString() const
 {
   std::ostringstream out;
   out << "itk::simple::CastImageFilter\n"
-      << "\tOutputPixelType: " << this->m_OutputPixelType << std::endl;
+      << "Function Factory:" << std::endl
+      << "  Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl
+      << "  Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl
+      << "  OutputPixelType: " << this->m_OutputPixelType << std::endl;
+
   out << ProcessObject::ToString();
   return out.str();
 }

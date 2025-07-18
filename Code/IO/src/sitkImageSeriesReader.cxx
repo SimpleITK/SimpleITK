@@ -35,7 +35,7 @@ namespace itk::simple
 const detail::MemberFunctionFactory<ImageSeriesReader::MemberFunctionType> &
 ImageSeriesReader::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static const auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
 
     using PixelIDTypeList = NonLabelPixelIDTypeList;

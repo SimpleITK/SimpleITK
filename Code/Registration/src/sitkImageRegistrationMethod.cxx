@@ -744,7 +744,7 @@ ImageRegistrationMethod::Execute(const Image & fixed, const Image & moving)
                        << " and " << moving.GetDimension());
   }
 
-  static const auto memberFactory = []() {
+  static constexpr auto memberFactory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<RealPixelIDTypeList, 3>();
     factory.RegisterMemberFunctions<RealPixelIDTypeList, 2>();
@@ -1007,7 +1007,7 @@ ImageRegistrationMethod::MetricEvaluate(const Image & fixed, const Image & movin
                        << " and " << moving.GetDimension());
   }
 
-  static const auto evaluateMemberFactory = []() {
+  static constexpr auto evaluateMemberFactory = []() SITK_CONSTEVAL {
     using EvaluateMemberFunctionAddressorType = EvaluateMemberFunctionAddressor<EvaluateMemberFunctionType>;
     detail::MemberFunctionFactory<EvaluateMemberFunctionType> factory;
     factory.RegisterMemberFunctions<RealPixelIDTypeList, 3, EvaluateMemberFunctionAddressorType>();

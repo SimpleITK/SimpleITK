@@ -31,7 +31,7 @@
 namespace itk::simple
 {
 
-constexpr unsigned int SITK_IO_INPUT_MAX_DIMENSION = 5 > SITK_MAX_DIMENSION ? 5 : SITK_MAX_DIMENSION;
+constexpr unsigned int SITK_IO_INPUT_MAX_DIMENSION = std::max(5, SITK_MAX_DIMENSION);
 namespace
 {
 
@@ -83,7 +83,7 @@ ImageFileReader::~ImageFileReader() = default;
 const detail::MemberFunctionFactory<ImageFileReader::MemberFunctionType> &
 ImageFileReader::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static const auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     using PixelIDTypeList = NonLabelPixelIDTypeList;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_IO_INPUT_MAX_DIMENSION>();
