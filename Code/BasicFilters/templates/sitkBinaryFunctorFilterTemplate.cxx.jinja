@@ -34,7 +34,7 @@ namespace itk::simple {
 
 const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}::GetMemberFunctionFactory1()
 {
-  static detail::MemberFunctionFactory<MemberFunction1Type> static_factory = [] {
+  static constexpr auto static_factory = []() consteval {
     detail::MemberFunctionFactory<MemberFunction1Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
     return factory;
@@ -44,7 +44,7 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}
 
 const detail::MemberFunctionFactory<{{ name }}::MemberFunction2Type> &{{ name }}::GetMemberFunctionFactory2()
 {
-  static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
+  static constexpr auto static_factory = []() consteval {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
     return factory;
