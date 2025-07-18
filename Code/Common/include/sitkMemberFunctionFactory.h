@@ -61,13 +61,16 @@ public:
 
   constexpr MemberFunctionFactory() = default;
 
+  using Superclass::GetLoadFactor;
+  using Superclass::GetMaximumLoadFactor;
+
   /** \brief Registers a specific member function.
    *
    * Registers a member function which will be dispatched to the
    * TImageType  type
    */
   template <typename TImageType>
-  void
+  constexpr void
   Register(MemberFunctionType pfunc, TImageType *);
 
   /** \brief Registers all member functions in TPixelIDTypeList and
@@ -111,10 +114,10 @@ public:
    * @{
    */
   template <typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor>
-  void
+  constexpr void
   RegisterMemberFunctions();
   template <typename TPixelIDTypeList, unsigned int VImageDimension>
-  void
+  constexpr void
   RegisterMemberFunctions()
   {
     using AddressorType = detail::MemberFunctionAddressor<TMemberFunctionPointer>;
@@ -122,7 +125,7 @@ public:
   }
 
   template <typename TPixelIDTypeList, unsigned int VImageDimension, unsigned int VImageDimensionStop>
-  void
+  constexpr void
   RegisterMemberFunctions()
   {
     using AddressorType = detail::MemberFunctionAddressor<TMemberFunctionPointer>;
@@ -132,7 +135,7 @@ public:
             unsigned int VImageDimension,
             unsigned int VImageDimensionStop,
             typename TAddressor>
-  void
+  constexpr void
   RegisterMemberFunctions()
   {
     this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimensionStop, TAddressor>();
