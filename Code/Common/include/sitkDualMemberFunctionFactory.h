@@ -20,6 +20,7 @@
 
 #include "sitkDetail.h"
 #include "sitkMemberFunctionFactoryBase.h"
+#include <tuple>
 
 
 namespace itk::simple::detail
@@ -57,9 +58,8 @@ namespace itk::simple::detail
  * \sa MemberFunctionFactory
  */
 template <typename TMemberFunctionPointer,
-          typename TContainer = std::unordered_map<std::tuple<unsigned int, int, unsigned int, int>,
-                                                   TMemberFunctionPointer,
-                                                   hash<std::tuple<unsigned int, int, unsigned int, int>>>>
+          typename TContainer =
+            std::unordered_map<std::tuple<unsigned int, int, unsigned int, int>, TMemberFunctionPointer, ConstexprHash>>
 class DualMemberFunctionFactory
   : protected MemberFunctionFactoryBase<TMemberFunctionPointer,
                                         std::tuple<unsigned int, int, unsigned int, int>,

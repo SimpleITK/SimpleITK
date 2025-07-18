@@ -23,63 +23,24 @@
 
 #include "Ancillary/type_list2.h"
 #include "Ancillary/FunctionTraits.h"
+#include "Ancillary/const_expr_hash.h"
 
-#include <unordered_map>
 #include <functional>
-#include <tuple>
 
 namespace itk::simple::detail
 {
 
-// make hash function available in current name space to take priority
-
-template <typename T>
-struct hash : public std::hash<T>
-{};
-
-/** A utility function to chain hashes */
-template <typename T>
-inline void
-hash_combine(std::size_t & seed, const T & val)
-{
-  // Code from boost
-  // Reciprocal of the golden ratio helps spread entropy
-  //     and handles duplicates.
-  std::hash<T> hasher;
-  seed ^= hasher(val) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-}
-
-template <typename S, typename T>
-struct hash<std::pair<S, T>>
-{
-  inline size_t
-  operator()(const std::pair<S, T> & val) const
-  {
-    size_t seed = 0;
-    hash_combine(seed, val.first);
-    hash_combine(seed, val.second);
-    return seed;
-  }
-};
-
-template <class... TupleArgs>
-struct hash<std::tuple<TupleArgs...>>
-{
-
-public:
-  size_t
-  operator()(std::tuple<TupleArgs...> tupleValue) const
-  {
-    size_t seed = 0;
-    std::apply([&seed](auto... tupleElement) { (hash_combine(seed, tupleElement), ...); }, tupleValue);
-    return seed;
-  }
-};
+template <typename TKey, typename TValue>
+using DefaultHashMap =
+  ConstexprHashMap<TKey,
+                   TValue,
+                   (SITK_MAX_DIMENSION - 1) * typelist2::length<InstantiatedPixelIDTypeList>::value,
+                   DimensionPixelHash>;
 
 
 template <typename TMemberFunctionPointer,
           typename TKey,
-          class TContainer = std::unordered_map<TKey, TMemberFunctionPointer, hash<TKey>>>
+          class TContainer = DefaultHashMap<TKey, TMemberFunctionPointer>>
 class MemberFunctionFactoryBase
 {
 protected:
@@ -136,6 +97,7 @@ protected:
       return std::invoke(pfunc, objectPointer, std::forward<Args>(args)...);
     };
   }
+
 
   // maps of Keys to pointers to member functions
   FunctionMapType m_PFunction;
