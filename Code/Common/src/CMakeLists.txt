@@ -75,7 +75,7 @@ target_compile_options(
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
 )
-target_compile_features(SimpleITKCommon PUBLIC cxx_std_17)
+target_compile_features(SimpleITKCommon PUBLIC cxx_std_20)
 
 sitk_install_exported_target( SimpleITKCommon )
 
