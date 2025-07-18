@@ -19,10 +19,7 @@
 #define sitkMemberFunctionFactoryBase_h
 
 #include "sitkConfigure.h"
-#include "sitkPixelIDTypes.h"
 #include "sitkPixelIDTypeLists.h"
-#include "sitkMacro.h"
-#include "sitkNonCopyable.h"
 
 #include "Ancillary/type_list2.h"
 #include "Ancillary/FunctionTraits.h"
@@ -80,23 +77,48 @@ public:
 };
 
 
-template <typename TMemberFunctionPointer, typename TKey>
+template <typename TMemberFunctionPointer,
+          typename TKey,
+          class TContainer = std::unordered_map<TKey, TMemberFunctionPointer, hash<TKey>>>
 class MemberFunctionFactoryBase
 {
 protected:
   using MemberFunctionType = TMemberFunctionPointer;
   using ObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::ClassType;
   using MemberFunctionResultType = typename ::detail::FunctionTraits<MemberFunctionType>::ResultType;
+  using FunctionMapType = TContainer;
 
 
-  MemberFunctionFactoryBase()
-    : m_PFunction(3 * typelist2::length<InstantiatedPixelIDTypeList>::value)
-  {}
+  MemberFunctionFactoryBase() = default;
 
 public:
   /**  the pointer MemberFunctionType redefined as a std::function
    * object */
   using FunctionObjectType = typename ::detail::FunctionTraits<MemberFunctionType>::FunctionObjectType;
+
+  [[nodiscard]] constexpr double
+  GetLoadFactor() const noexcept
+  {
+    return m_PFunction.load_factor();
+  }
+
+  [[nodiscard]] constexpr std::size_t
+  GetMaximumLoadFactor() const noexcept
+  {
+    return m_PFunction.max_load_factor();
+  }
+
+  [[nodiscard]] constexpr std::size_t
+  GetSize() const noexcept
+  {
+    return m_PFunction.size();
+  }
+
+  [[nodiscard]] constexpr std::size_t
+  GetMaxSize() const noexcept
+  {
+    return m_PFunction.max_size();
+  }
 
 protected:
   using KeyType = TKey;
@@ -114,9 +136,6 @@ protected:
       return std::invoke(pfunc, objectPointer, std::forward<Args>(args)...);
     };
   }
-
-
-  using FunctionMapType = std::unordered_map<TKey, MemberFunctionType, hash<TKey>>;
 
   // maps of Keys to pointers to member functions
   FunctionMapType m_PFunction;
