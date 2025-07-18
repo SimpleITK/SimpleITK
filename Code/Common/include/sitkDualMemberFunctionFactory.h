@@ -86,7 +86,7 @@ public:
    *
    * Registers a member function templated over TImageType1 and TImageType2 */
   template <typename TImageType1, typename TImageType2>
-  void
+  constexpr void
   Register(MemberFunctionType pfunc, TImageType1 *, TImageType2 *);
 
   /** \brief Registers the member functions for all combinations of
@@ -127,10 +127,10 @@ public:
    * @{
    */
   template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension, typename TAddressor>
-  void
+  constexpr void
   RegisterMemberFunctions();
   template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension>
-  void
+  constexpr void
   RegisterMemberFunctions()
   {
     using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
@@ -138,10 +138,10 @@ public:
   }
 
   template <typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor>
-  void
+  constexpr void
   RegisterMemberFunctions();
   template <typename TPixelIDTypeList, unsigned int VImageDimension>
-  void
+  constexpr void
   RegisterMemberFunctions()
   {
     using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
