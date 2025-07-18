@@ -1,5 +1,8 @@
   std::ostringstream out;
-  out << "itk::simple::{{ name }}\\n";
+  out << "itk::simple::{{ name }}" << std::endl;
+  out << "  Function Factory:" << std::endl;
+  out << "    Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl;
+  out << "    Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl;
 {% for member in members %}
 {%- if not member.no_print %}
   out << "  {{ member.name }}: ";

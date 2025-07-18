@@ -105,13 +105,6 @@ cache_list_append(SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
 
 # manually written
 cache_list_append( SimpleITKBasicFiltersGeneratedSource_ITKCommon
-  sitkCastImageFilter-2.cxx
-  sitkCastImageFilter-2l.cxx
-  sitkCastImageFilter-2v.cxx
-  sitkCastImageFilter-3.cxx
-  sitkCastImageFilter-3l.cxx
-  sitkCastImageFilter-3v.cxx
-  sitkCastImageFilter-4.cxx
   sitkCastImageFilter.cxx
   sitkExtractImageFilter.cxx
   sitkHashImageFilter.cxx
