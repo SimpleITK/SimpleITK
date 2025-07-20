@@ -20,11 +20,29 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.cs
+       :language: csharp
+       :lines: 19-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.cxx
+       :language: c++
+       :lines: 19-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.java
+       :language: java
+       :lines: 19-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/DicomSeriesFromArray/DicomSeriesFromArray.py
        :language: python
-       :lines: 22-
+       :lines: 19-
 
   .. tab:: R
 
