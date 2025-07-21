@@ -44,12 +44,12 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}
 
 const detail::MemberFunctionFactory<{{ name }}::MemberFunction2Type> &{{ name }}::GetMemberFunctionFactory2()
 {
-  static detail::MemberFunctionFactory<MemberFunction2Type> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
     return factory;
   }();
-  return factory;
+  return static_factory;
 }
 
 // Default constructor that initializes parameters
