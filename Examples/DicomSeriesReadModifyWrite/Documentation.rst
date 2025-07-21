@@ -24,6 +24,24 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/DicomSeriesReadModifyWrite/DicomSeriesReadModifySeriesWrite.cs
+       :language: csharp
+       :lines: 24-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/DicomSeriesReadModifyWrite/DicomSeriesReadModifySeriesWrite.cxx
+       :language: c++
+       :lines: 24-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/DicomSeriesReadModifyWrite/DicomSeriesReadModifySeriesWrite.java
+       :language: java
+       :lines: 24-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/DicomSeriesReadModifyWrite/DicomSeriesReadModifySeriesWrite.py
