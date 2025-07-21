@@ -1,0 +1,84 @@
+name: RegionalMinimaImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: ScalarPixelIDTypeList
+output_pixel_type: uint32_t
+members:
+- name: BackgroundValue
+  type: double
+  default: '0.0'
+  pixeltype: Output
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the value used as "background" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the value used as "background" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() .
+- name: ForegroundValue
+  type: double
+  default: '1.0'
+  pixeltype: Output
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the value in the output image to consider as "foreground". Defaults to maximum value of PixelType.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the value in the output image to consider as "foreground". Defaults to maximum value of PixelType.
+- name: FullyConnected
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity.
+    Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity.
+    Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+- name: FlatIsMinima
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether a flat image must be considered as a minima or not. Defaults to true.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether a flat image must be considered as a minima or not. Defaults to true.
+custom_methods: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: 3be99cf6b3116f16f6663cd2c4edb5b4
+  inputs:
+  - Input/cthead1.png
+briefdescription: Produce a binary image where foreground is the regional minima of the input image.
+detaileddescription: >-
+  Regional minima are flat zones surrounded by pixels of greater value.
+
+
+  If the input image is constant, the entire image can be considered as a minima or not. The SetFlatIsMinima() method let
+  the user choose which behavior to use.
+
+
+  This class was contributed to the Insight Journal by \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction,
+  INRA de Jouy-en-Josas, France. https://doi.org/10.54294/hva3gz
+
+
+
+  \see RegionalMaximaImageFilter
+
+
+
+  \see ValuedRegionalMinimaImageFilter
+
+
+
+  \see HConcaveImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

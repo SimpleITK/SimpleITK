@@ -1,0 +1,48 @@
+name: VectorIndexSelectionCastImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: VectorPixelIDTypeList
+pixel_types2: typelist2::append<BasicPixelIDTypeList,VectorPixelIDTypeList>::type
+custom_type2: 'const PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;'
+output_pixel_type: typename InputImageType2::InternalPixelType
+members:
+- name: Index
+  type: unsigned int
+  default: 0u
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Get/Set methods for the index
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: OutputPixelType
+  type: PixelIDValueEnum
+  default: itk::simple::sitkUnknown
+  custom_itk_cast: ""
+  briefdescriptionSet: Set the output pixel type of the scalar component to extract.
+  briefdescriptionGet: Get the ouput pixel type.
+tests:
+- tag: blue
+  description: Extract blue from VH slice
+  settings:
+  - parameter: Index
+    cxx_value: 2u
+    value: '2'
+  md5hash: da3f74fce21be8b788da331377f7f361
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+briefdescription: Extracts the selected index of the vector that is the input pixel type.
+detaileddescription: >-
+  This filter is templated over the input image type and output image type.
+
+
+  The filter expect the input image pixel type to be a vector and the output image pixel type to be a scalar. The only requirement
+  on the type used for representing the vector is that it must provide an operator[].
+
+
+  \see ComposeImageFilter
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

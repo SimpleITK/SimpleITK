@@ -1,0 +1,57 @@
+name: BoxSigmaImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::RadiusType
+tests:
+- tag: defaults
+  description: Test MeanImageFilter with default parametrs
+  md5hash: 500013c78f4508052b63c072e261b329
+  settings: []
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+- tag: by23
+  description: Test by 23
+  md5hash: e0a8cfe245c47b73047c1c5292beb719
+  settings:
+  - parameter: Radius
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 2
+    - 3
+  inputs:
+  - Input/VM1111Shrink-RGB.png
+- tag: by333
+  description: Test by 333
+  md5hash: aa7be2354551dd5310c9d75ac026400d
+  settings:
+  - parameter: Radius
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 3
+    - 3
+    - 3
+  inputs:
+  - Input/RA-Short.nrrd
+briefdescription: Implements a fast rectangular sigma filter using the accumulator approach.
+detaileddescription: >-
+  This code was contributed in the Insight Journal paper: "Efficient implementation of kernel filtering" by Beare R., Lehmann
+  G https://doi.org/10.54294/igq8fn
+
+
+  \author Gaetan Lehmann
+itk_module: ITKSmoothing
+itk_group: Smoothing
+in_place: false

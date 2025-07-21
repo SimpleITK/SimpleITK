@@ -1,0 +1,117 @@
+name: TileImageFilter
+template_code_filename: MultiInputImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+include_files:
+- sitkToPixelType.hxx
+pixel_types: NonLabelPixelIDTypeList
+members:
+- name: Layout
+  type: uint32_t
+  default: std::vector<uint32_t>(3, 100)
+  dim_vec: true
+  itk_type: typename FilterType::LayoutArrayType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the layout of the tiles. If the last Layout value is 0, the filter will compute a value that will accommodate
+    all of the images.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the layout of the tiles. If the last Layout value is 0, the filter will compute a value that will accommodate
+    all of the images.
+- name: DefaultPixelValue
+  type: double
+  default: '0.0'
+  custom_itk_cast: |-
+    typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, filter->GetInput()->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_DefaultPixelValue, v );  filter->SetDefaultPixelValue( v );
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the pixel value for locations that are not covered by an input image. The default default pixel value is Zero.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the pixel value for locations that are not covered by an input image.
+tests:
+- tag: default
+  description: tile 3 images
+  settings: []
+  md5hash: c70685e01c7409914f7664c248b69785
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: 2by2
+  description: tile 3 images 2x2
+  settings:
+  - parameter: Layout
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 2
+    - 2
+  md5hash: f3015eeed7d0370ba93bdf1bd6630ae0
+  inputs:
+  - Input/cthead1.png
+  - Input/cthead1.png
+  - Input/cthead1.png
+- tag: input1
+  description: one input
+  settings: []
+  md5hash: 6917e69a9b0afebd88d732fccfaf0d24
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: input2
+  description: two input
+  settings: []
+  md5hash: 882bddbd8a2961f76e7f72da9818c1ea
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: input3
+  description: three input
+  settings: []
+  md5hash: 923a6a6697b31ce15b859cddd6f7639f
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: input4
+  description: four input
+  settings: []
+  md5hash: 5498cbc56a48a749470da30c8385ae62
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: input5
+  description: five input
+  settings: []
+  md5hash: 1e935c866ca4327b59cfe6b996993091
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: input4_rgb
+  description: four input of RGB
+  settings: []
+  md5hash: 8c0c3d651b3eb19e16dfc8d21b1bd3a5
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+  - Input/VM1111Shrink-RGBFloat.nrrd
+  - Input/VM1111Shrink-RGBFloat.nrrd
+  - Input/VM1111Shrink-RGBFloat.nrrd
+briefdescription: Tile multiple input images into a single output image.
+detaileddescription: >-
+  This filter will tile multiple images using a user-specified layout. The tile sizes will be large enough to accommodate
+  the largest image for each tile. The layout is specified with the SetLayout method. The layout has the same dimension as
+  the output image. If all entries of the layout are positive, the tiled output will contain the exact number of tiles. If
+  the layout contains a 0 in the last dimension, the filter will compute a size that will accommodate all of the images. Empty
+  tiles are filled with the value specified with the SetDefault value method. The input images must have a dimension less
+  than or equal to the output image. The output image have a larger dimension than the input images. This filter can be used
+  to create a volume from a series of inputs by specifying a layout of 1,1,0.
+itk_module: ITKImageGrid
+itk_group: ImageGrid
+in_place: false

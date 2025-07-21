@@ -1,0 +1,128 @@
+name: ThresholdImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+filter_type: itk::ThresholdImageFilter<InputImageType>
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+doc: ''
+members:
+- name: Lower
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get methods to set the lower threshold.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get methods to set the lower threshold.
+  custom_itk_cast: |-
+    if (this->m_Lower == NumericTraits<double>::NonpositiveMin()) { filter->SetLower( NumericTraits<typename InputImageType::PixelType>::NonpositiveMin());}else{filter->SetLower(static_cast< typename InputImageType::PixelType> ( this->m_Lower ) );}
+- name: Upper
+  type: double
+  default: '1.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get methods to set the upper threshold.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get methods to set the upper threshold.
+  custom_itk_cast: |-
+    if (this->m_Upper == NumericTraits<double>::max()) { filter->SetUpper( NumericTraits<typename InputImageType::PixelType>::max());}else{filter->SetUpper(static_cast< typename InputImageType::PixelType> ( this->m_Upper ) );}
+- name: OutsideValue
+  type: double
+  default: '0.0'
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    The pixel type must support comparison operators. Set the "outside" pixel value. The default value NumericTraits<PixelType>::ZeroValue()
+    .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the "outside" pixel value.
+custom_methods:
+- name: ThresholdAbove
+  briefdescription: ThresholdAbove
+  detaileddescription: >-
+    The values greater than "threshold" are set to OutsideValue.
+  return_type: void
+  parameters:
+  - type: double
+    var_name: threshold
+  body: this->m_Upper = threshold; this->m_Lower = NumericTraits<double>::NonpositiveMin();
+- name: ThresholdBelow
+  briefdescription: ThresholdBelow
+  detaileddescription: >-
+    The values less than "threshold" are set to OutsideValue.
+  return_type: void
+  parameters:
+  - type: double
+    var_name: threshold
+  body: this->m_Lower = threshold; this->m_Upper = NumericTraits<double>::max();
+- name: ThresholdOutside
+  briefdescription: ThresholdOutside
+  detaileddescription: >-
+    The values outside the closed range are set to OutsideValue.
+  return_type: void
+  parameters:
+  - type: double
+    var_name: lower
+  - type: double
+    var_name: upper
+  body: this->m_Lower = lower; this->m_Upper = upper;
+tests:
+- tag: Default
+  description: Default
+  md5hash: 59071590099d21dd439896592338bf95
+  settings: []
+  inputs:
+  - Input/RA-Short.nrrd
+- tag: Threshold1
+  description: Threshold settings 1
+  md5hash: f70a31938657e0163b82521af4f8e3b0
+  settings:
+  - parameter: Lower
+    value: '25000'
+  - parameter: Upper
+    value: '65535'
+  inputs:
+  - Input/RA-Slice-Short.png
+- tag: Threshold2
+  description: Threshold settings 2
+  md5hash: 898743e4ec2e75c0169d025fb29b7ead
+  settings:
+  - parameter: Lower
+    value: '0'
+  - parameter: Upper
+    value: '25000'
+  - parameter: OutsideValue
+    value: '25000'
+  inputs:
+  - Input/RA-Slice-Short.png
+briefdescription: Set image values to a user-specified value if they are below, above, or outside threshold values.
+detaileddescription: >-
+  ThresholdImageFilter sets image values to a user-specified "outside" value (by default, zero) if the image values are below,
+  above, or outside threshold values.
+
+
+  The available methods are:
+
+
+  ThresholdAbove() : The values greater than the threshold value are set to OutsideValue
+
+
+  ThresholdBelow() : The values less than the threshold value are set to OutsideValue
+
+
+  ThresholdOutside() : The values outside the threshold range (less than lower or greater than upper) are set to OutsideValue
+
+
+  Note that these definitions indicate that pixels equal to the threshold value are not set to OutsideValue in any of these
+  methods
+
+
+  The pixels must support the operators >= and <=.
+itk_module: ITKThresholding
+itk_group: Thresholding
+in_place: true

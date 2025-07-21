@@ -1,0 +1,50 @@
+name: ChangeLabelLabelMapFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Docs
+pixel_types: LabelPixelIDTypeList
+filter_type: itk::ChangeLabelLabelMapFilter<InputImageType>
+custom_set_input: |-
+  filter->SetInput(image1);
+    filter->InPlaceOff();
+members:
+- name: ChangeMap
+  type: std::map<double,double>
+  default: std::map<double,double>()
+  no_print: true
+  custom_itk_cast: |-
+    typename FilterType::ChangeMapType cmap; for( std::map<double,double>::const_iterator i = m_ChangeMap.begin(); i != m_ChangeMap.end(); ++i ) { cmap[static_cast<typename FilterType::PixelType>(i->first)] = static_cast<typename FilterType::PixelType>(i->second); } filter->SetChangeMap( cmap );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+tests:
+- tag: defaults
+  description: Just running the filter with no change map.
+  settings: []
+  md5hash: ce4de7d926155a70b234bd05181a5c3e
+  inputA_cast: sitkLabelUInt8
+  inputs:
+  - Input/2th_cthead1.png
+briefdescription: Replace the label Ids of selected LabelObjects with new label Ids.
+detaileddescription: >-
+  This filter takes as input a label map and a list of pairs of Label Ids, to produce as output a new label map where the
+  label Ids have been replaced according to the pairs in the list.
+
+
+  Labels that are relabeled to the same label Id are automatically merged and optimized into a single LabelObject . The background
+  label can also be changed. Any object relabeled to the output background will automatically be removed.
+
+
+  This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  \see ShapeLabelObject , RelabelComponentImageFilter , ChangeLabelImageFilter
+itk_module: ITKLabelMap
+itk_group: LabelMap
+in_place: true

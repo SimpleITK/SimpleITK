@@ -1,0 +1,89 @@
+name: SpeckleNoiseImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members:
+- name: StandardDeviation
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the standard deviation of the gamma distribution. Defaults to 1.0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the standard deviation of the gamma distribution. Defaults to 1.0.
+- name: Seed
+  type: uint32_t
+  default: (uint32_t) itk::simple::sitkWallClock
+  custom_itk_cast: |-
+    if (m_Seed) filter->SetSeed(m_Seed);
+tests:
+- tag: 2d
+  description: 2D - baseline as zero noise
+  no_procedure: true
+  settings:
+  - parameter: Seed
+    cxx_value: 123u
+    value: '123'
+  tolerance: 100.0
+  inputs:
+  - Input/cthead1.png
+- tag: 3d
+  description: 3D - baseline as zero noise
+  no_procedure: true
+  settings:
+  - parameter: Seed
+    cxx_value: 123u
+    value: '123'
+  tolerance: 200000.0
+  inputs:
+  - Input/RA-Short.nrrd
+- tag: rgb
+  description: vector image - baseline as zero noise
+  no_procedure: true
+  settings:
+  - parameter: Seed
+    cxx_value: 123u
+    value: '123'
+  tolerance: 100.0
+  inputs:
+  - Input/VM1111Shrink-RGB.png
+briefdescription: Alter an image with speckle (multiplicative) noise.
+detaileddescription: >-
+  The speckle noise follows a gamma distribution of mean 1 and standard deviation provided by the user. The noise is proportional
+  to the pixel intensity.
+
+
+  It can be modeled as:
+
+
+  \par
+
+  \f$ I = I_0 \ast G \f$
+
+
+
+  \par
+
+  where \f$ G \f$ is a is a gamma distributed random variable of mean 1 and variance proportional to the noise level:
+
+
+
+  \par
+
+  \f$ G \sim \Gamma(\frac{1}{\sigma^2}, \sigma^2) \f$
+
+
+
+  \author Gaetan Lehmann
+
+
+
+  This code was contributed in the Insight Journal paper "Noise
+
+  Simulation". https://doi.org/10.54294/vh6vbw
+itk_module: ITKImageNoise
+itk_group: ImageNoise
+in_place: true

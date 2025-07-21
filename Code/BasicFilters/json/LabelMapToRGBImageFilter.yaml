@@ -1,0 +1,40 @@
+name: LabelMapToRGBImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+include_files:
+- sitkLabelFunctorUtils.hxx
+output_image_type: itk::VectorImage< unsigned char, InputImageType::ImageDimension>
+number_of_inputs: 1
+doc: Docs
+pixel_types: LabelPixelIDTypeList
+members:
+- name: Colormap
+  type: std::vector<uint8_t>
+  default: std::vector<uint8_t>()
+  custom_itk_cast: |-
+    SetLabelFunctorFromColormap(filter->GetFunctor(),this->m_Colormap);
+tests:
+- tag: default
+  description: Simply run with default settings
+  inputA_cast: sitkLabelUInt8
+  md5hash: 850e04c66180956c8a19471309fa2391
+  settings: []
+  inputs:
+  - Input/2th_cthead1.mha
+briefdescription: Convert a LabelMap to a colored image.
+detaileddescription: >-
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
+
+
+  \see LabelToRGBImageFilter , LabelToRGBFunctor
+
+
+
+  \see LabelMapOverlayImageFilter , LabelMapToBinaryImageFilter , LabelMapMaskImageFilter
+itk_module: ITKImageFusion
+itk_group: ImageFusion
+in_place: false

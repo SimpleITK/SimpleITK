@@ -1,0 +1,98 @@
+name: ReinitializeLevelSetImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Reinitialize the level set to the signed distance function.
+pixel_types: RealPixelIDTypeList
+filter_type: itk::ReinitializeLevelSetImageFilter<InputImageType>
+members:
+- name: LevelSetValue
+  type: double
+  default: 0.0
+  doc: Set/Get the value of the level set to be located. The default value is 0.
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the value of the level set to be located. The default value is 0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the value of the level set to be located. The default value is 0.
+- name: NarrowBanding
+  type: bool
+  default: 'false'
+  doc: Set/Get the narrowbanding flag. By default, narrowbanding is switched off.
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the narrowbanding flag. By default, narrowbanding is switched off.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the narrowbanding flag. By default, narrowbanding is switched off.
+- name: InputNarrowBandwidth
+  type: double
+  default: '12.0'
+  doc: Set/Get the input narrow bandwidth. The default value is 12.
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the input narrow bandwidth. The default value is 12.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the input narrow bandwidth. The default value is 12.
+- name: OutputNarrowBandwidth
+  type: double
+  default: '12.0'
+  doc: Set/Get the output narrow bandwidth. The default value is 12.
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the output narrow bandwidth. The default value is 12.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the output narrow bandwidth. The default value is 12.
+measurements: []
+custom_methods:
+- name: NarrowBandwidth
+  doc: Set the bandwidth for both the input and output narrowband, By default, both the input and output are set to 12.
+  return_type: void
+  parameters:
+  - type: double
+    var_name: value
+  body: 'this->SetInputNarrowBandwidth( value );
+
+    this->SetOutputNarrowBandwidth( value );'
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  tolerance: 1.0e-06
+  inputs:
+  - Input/cthead1-ls-seed.nrrd
+- tag: narrowband
+  description: Run with narrowbanding
+  settings:
+  - parameter: NarrowBanding
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  tolerance: 1.0e-06
+  inputs:
+  - Input/cthead1-ls-seed.nrrd
+briefdescription: Reinitialize the level set to the signed distance function.
+detaileddescription: >-
+  ReinitializeLevelSetImageFilter reinitializes the input level set to the approximated signed distance function from a particular
+  level set. The output is a level set of the same type as the input.
+
+
+  For some level set algorithms, it is useful to periodically reinitialize the level set function to prevent numerical accuracy
+  problems in computing derivatives and curvature values where level sets are densely bunched together.
+
+
+  This class is templated over the image type which represents the level set.
+
+
+  This class supports narrowbanding. If the input narrowband is provided, the algorithm will only locate the level set within
+  the input narrowband. For the output, the reinitialize level set is only valid for a distance of OutputNarrowBandwidth /
+  2 of either side of the level set of interest.
+
+
+  Implementation of this class is based on Chapter 11 of "Level Set Methods and Fast Marching Methods", J.A. Sethian, Cambridge
+  Press, Second edition, 1999.
+itk_module: ITKLevelSets
+itk_group: LevelSets

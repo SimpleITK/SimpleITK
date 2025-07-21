@@ -1,0 +1,186 @@
+name: WarpImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+pixel_types: BasicPixelIDTypeList
+pixel_types2: RealVectorPixelIDTypeList
+filter_type: itk::WarpImageFilter<InputImageType,  OutputImageType, InputImageType2 >
+vector_pixel_types_by_component: VectorPixelIDTypeList
+include_files:
+- sitkCreateInterpolator.hxx
+inputs:
+- name: Image
+  type: Image
+- name: DisplacementField
+  type: Image
+  no_size_check: true
+members:
+- name: Interpolator
+  type: InterpolatorEnum
+  default: itk::simple::sitkLinear
+  doc: ''
+  custom_itk_cast: |-
+    filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Get/Set the interpolator function.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get/Set the interpolator function.
+- name: OutputSize
+  type: uint32_t
+  default: std::vector<uint32_t>(3, 0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the size of the output image.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the size of the output image.
+- name: OutputOrigin
+  type: double
+  default: std::vector<double>(3, 0.0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::PointType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image origin.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image origin.
+- name: OutputSpacing
+  type: double
+  default: std::vector<double>(3, 1.0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SpacingType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image spacing.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image spacing.
+- name: OutputDirection
+  type: std::vector<double>
+  default: std::vector<double>()
+  doc: Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix
+    for the dimension of the image.
+  custom_itk_cast: |-
+    filter->SetOutputDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the direction (orientation) of the output image
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the direction (orientation) of the output image
+- name: EdgePaddingValue
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the edge padding value
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the edge padding value
+custom_methods:
+- name: SetOutputParameteresFromImage
+  doc: This methods sets the output size, origin, spacing and direction to that of the provided image
+  return_type: void
+  parameters:
+  - type: const Image &
+    var_name: refImage
+  body: this->SetOutputSize( refImage.GetSize() ); this->SetOutputOrigin( refImage.GetOrigin() ); this->SetOutputSpacing(
+    refImage.GetSpacing() );this->SetOutputDirection( refImage.GetDirection() );
+tests:
+- tag: cthead1
+  description: warp
+  settings:
+  - parameter: OutputSize
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 128
+    - 128
+    - 128
+  - parameter: OutputSpacing
+    type: double
+    dim_vec: true
+    value:
+    - 0.73
+    - 0.73
+  tolerance: 0.001
+  inputs:
+  - Input/cthead1-Float.mha
+  - Input/cthead1-dis1.nrrd
+- tag: vm
+  description: sin warp
+  settings:
+  - parameter: OutputSize
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 297
+    - 371
+  - parameter: Interpolator
+    value: itk::simple::sitkHammingWindowedSinc
+    lua_value: SimpleITK.sitkHammingWindowedSinc
+    python_value: SimpleITK.sitkHammingWindowedSinc
+    ruby_value: Simpleitk::SitkHammingWindowedSinc
+    java_value: InterpolatorEnum.sitkHammingWindowedSinc
+    tcl_value: $sitkHammingWindowedSinc
+    csharp_value: InterpolatorEnum.sitkHammingWindowedSinc
+    R_value: '''sitkHammingWindowedSinc'''
+  tolerance: 0.001
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+  - Input/VM1111Shrink-dis1.nrrd
+briefdescription: Warps an image using an input displacement field.
+detaileddescription: >-
+  WarpImageFilter warps an existing image with respect to a given displacement field.
+
+
+  A displacement field is represented as a image whose pixel type is some vector type with at least N elements, where N is
+  the dimension of the input image. The vector type must support element access via operator [].
+
+
+  The output image is produced by inverse mapping: the output pixels are mapped back onto the input image. This scheme avoids
+  the creation of any holes and overlaps in the output image.
+
+
+  Each vector in the displacement field represent the distance between a geometric point in the input space and a point in
+  the output space such that:
+
+   \f[ p_{in} = p_{out} + d \f]
+
+  Typically the mapped position does not correspond to an integer pixel position in the input image. Interpolation via an
+  image function is used to compute values at non-integer positions. The default interpolation typed used is the LinearInterpolateImageFunction
+  . The user can specify a particular interpolation function via SetInterpolator() . Note that the input interpolator must
+  derive from base class InterpolateImageFunction .
+
+
+  Position mapped to outside of the input image buffer are assigned a edge padding value.
+
+
+  The LargestPossibleRegion for the output is inherited from the input displacement field. The output image spacing, origin
+  and orientation may be set via SetOutputSpacing, SetOutputOrigin and SetOutputDirection. The default are respectively a
+  vector of 1's, a vector of 0's and an identity matrix.
+
+
+  This class is templated over the type of the input image, the type of the output image and the type of the displacement
+  field.
+
+
+  The input image is set via SetInput. The input displacement field is set via SetDisplacementField.
+
+
+  This filter is implemented as a multithreaded filter.
+
+
+  \warning This filter assumes that the input type, output type and displacement field type all have the same number of dimensions.
+itk_module: ITKImageGrid
+itk_group: ImageGrid
+in_place: false

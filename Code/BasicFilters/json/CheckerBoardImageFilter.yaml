@@ -1,0 +1,52 @@
+name: CheckerBoardImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+filter_type: itk::CheckerBoardImageFilter<InputImageType>
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: NonLabelPixelIDTypeList
+members:
+- name: CheckerPattern
+  type: uint32_t
+  default: std::vector<uint32_t>(3, 4)
+  dim_vec: true
+  set_as_scalar: true
+  itk_type: typename FilterType::PatternArrayType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the checker pattern array, i.e. the number of checker boxes per image dimension.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the checker pattern array, i.e. the number of checker boxes per image dimension.
+tests:
+- tag: default
+  description: checker board with default parameters
+  settings: []
+  md5hash: f84fcf68e702d715a4de52821cfa0f5e
+  inputs:
+  - Input/BlackDots.png
+  - Input/WhiteDots.png
+- tag: 2d_with_pattern
+  description: checker board with pattern
+  settings:
+  - parameter: CheckerPattern
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 20
+    - 4
+  md5hash: 379bd66a18b7ae029c101ebdcb20a8b3
+  inputs:
+  - Input/BlackDots.png
+  - Input/WhiteDots.png
+briefdescription: Combines two images in a checkerboard pattern.
+detaileddescription: >-
+  CheckerBoardImageFilter takes two input images that must have the same dimension, size, origin and spacing and produces
+  an output image of the same size by combining the pixels from the two input images in a checkerboard pattern. This filter
+  is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.
+
+
+  This filter is implemented as a multithreaded filter. It provides a DynamicThreadedGenerateData() method for its implementation.
+itk_module: ITKImageCompare
+itk_group: ImageCompare
+in_place: false

@@ -1,0 +1,23 @@
+name: MultiplyImageFilter
+template_code_filename: BinaryFunctorFilter
+template_test_filename: ImageFilter
+constant_type: double
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type
+members: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: 1f733047e37adf9589c695500820110b
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+briefdescription: Pixel-wise multiplication of two images.
+detaileddescription: >-
+  This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings)
+  are done by the C++ defaults.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

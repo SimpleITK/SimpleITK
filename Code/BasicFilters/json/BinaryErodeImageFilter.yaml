@@ -1,0 +1,110 @@
+name: BinaryErodeImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Performs Erosion in a binary image.
+pixel_types: IntegerPixelIDTypeList
+filter_type: itk::BinaryErodeImageFilter<InputImageType, OutputImageType, itk::FlatStructuringElement< InputImageType::ImageDimension
+  > >
+include_files:
+- sitkCreateKernel.h
+members:
+- name: KernelRadius
+  type: unsigned int
+  default: std::vector<uint32_t>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  custom_itk_cast: ""
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the kernel structuring element.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the kernel structuring element.
+- name: KernelType
+  type: KernelEnum
+  default: itk::simple::sitkBall
+  custom_itk_cast: |-
+    auto kernel = CreateKernel<InputImageType::ImageDimension>( m_KernelType, m_KernelRadius );
+      filter->SetKernel( kernel );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the kernel or structuring element used for the morphology.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the kernel or structuring element used for the morphology.
+- name: BackgroundValue
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  doc: ''
+- name: ForegroundValue
+  type: double
+  default: '1.0'
+  pixeltype: Input
+  doc: ''
+- name: BoundaryToForeground
+  type: bool
+  default: 'true'
+  doc: ''
+custom_methods: []
+tests:
+- tag: BinaryErode
+  description: Test binary erosion
+  md5hash: 9e37516c795d7f25847851666ef53ef9
+  settings:
+  - parameter: KernelRadius
+    no_get_method: true
+    value: 1
+  - parameter: KernelType
+    value: itk::simple::sitkBall
+    lua_value: SimpleITK.sitkBall
+    python_value: SimpleITK.sitkBall
+    ruby_value: Simpleitk::SitkBall
+    java_value: KernelEnum.sitkBall
+    tcl_value: $sitkBall
+    csharp_value: KernelEnum.sitkBall
+    R_value: '''sitkBall'''
+  - parameter: ForegroundValue
+    value: '255'
+  inputs:
+  - Input/STAPLE1.png
+briefdescription: Fast binary erosion of a single intensity value in the image.
+detaileddescription: >-
+  BinaryErodeImageFilter is a binary erosion morphologic operation on the foreground of an image. Only the value designated
+  by the intensity value "SetForegroundValue()" (alias as SetErodeValue() ) is considered as foreground, and other intensity
+  values are considered background.
+
+
+  Grayscale images can be processed as binary images by selecting a "ForegroundValue" (alias "ErodeValue"). Pixel values matching
+  the erode value are considered the "foreground" and all other pixels are "background". This is useful in processing segmented
+  images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular "segment number"
+  can be processed. ForegroundValue defaults to the maximum possible value of the PixelType. The eroded pixels will receive
+  the BackgroundValue (defaults to NumericTraits::NonpositiveMin() ).
+
+
+  The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element
+  having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement
+  .
+
+
+  This implementation is based on the papers:
+
+
+  L.Vincent "Morphological transformations of binary images with
+
+  arbitrary structuring elements", and
+
+
+  N.Nikopoulos et al. "An efficient algorithm for 3d binary
+
+  morphological transformations with 3d structuring elements
+
+  for arbitrary size and shape". IEEE Transactions on Image Processing. Vol. 9. No. 3. 2000. pp. 283-286.
+
+
+  \see ImageToImageFilter BinaryDilateImageFilter BinaryMorphologyImageFilter
+itk_module: ITKBinaryMathematicalMorphology
+itk_group: BinaryMathematicalMorphology
+in_place: false

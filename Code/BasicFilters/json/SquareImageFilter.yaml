@@ -1,0 +1,20 @@
+name: SquareImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: 314065b457b66e102b9cafd7c49be6b3
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+briefdescription: Computes the square of the intensity values pixel-wise.
+detaileddescription: ""
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

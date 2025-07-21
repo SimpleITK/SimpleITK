@@ -1,0 +1,194 @@
+name: FastMarchingBaseImageFilter
+itk_name: FastMarchingImageFilterBase
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+include_files:
+- itkFastMarchingThresholdStoppingCriterion.h
+number_of_inputs: 1
+output_pixel_type: float
+doc: Docs
+pixel_types: BasicPixelIDTypeList
+members:
+- name: TrialPoints
+  type: unsigned int
+  point_vec: true
+  default: std::vector< std::vector<unsigned int > >()
+  custom_itk_cast: |-
+    using NodePairType = typename FilterType::NodePairType;
+      using NodeType = typename FilterType::NodeType;
+      using NodePairContainerType = typename FilterType::NodePairContainerType;
+
+      typename NodePairContainerType::Pointer trialNodes = NodePairContainerType::New();
+      trialNodes->reserve( m_TrialPoints.size() );
+
+      for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)
+        {
+        NodePairType node;
+
+        //note: Node type is really an itk Index type
+        NodeType index = sitkSTLVectorToITK<NodeType>( m_TrialPoints[i] );
+        node.SetNode( index );
+        node.SetValue( 0.0 );
+        if (m_TrialPoints[i].size() > NodeType::Dimension)
+          node.SetValue(m_TrialPoints[i][NodeType::Dimension]);
+        trialNodes->push_back( node );
+        }
+      filter->SetTrialPoints( trialNodes );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the container of Trial Points representing the initial front. Trial points are represented as a VectorContainer of
+    LevelSetNodes.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the container of Trial Points representing the initial front.
+- name: NormalizationFactor
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows
+    the use of images with integer pixel types to represent the speed.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows
+    the use of images with integer pixel types to represent the speed.
+- name: StoppingValue
+  type: double
+  default: std::numeric_limits<float>::max()/2.0
+  custom_itk_cast: |-
+    using CriterionType = itk::FastMarchingThresholdStoppingCriterion< InputImageType, OutputImageType >;
+      typename CriterionType::Pointer criterion = CriterionType::New();
+      criterion->SetThreshold( m_StoppingValue );
+    filter->SetStoppingCriterion( criterion );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is terminated when the value of the smallest
+    trial point is greater than the stopping value.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the Fast Marching algorithm Stopping Value.
+- name: TopologyCheck
+  enum:
+  - Nothing
+  - NoHandles
+  - Strict
+  default: itk::simple::FastMarchingBaseImageFilter::Nothing
+  doc: ''
+  itk_type: typename FilterType::TopologyCheckEnum
+- name: InitialTrialValues
+  type: std::vector<double>
+  default: std::vector<double>()
+  custom_itk_cast: |-
+    auto nodes = filter->GetTrialPoints();
+      for( size_t i = 0; i < nodes->Size(); ++i )
+      {
+       if ( i < m_InitialTrialValues.size()) nodes->ElementAt(i).SetValue(m_InitialTrialValues[i]);
+      }
+  briefdescriptionSet: Set the initial seed values for corresponding trial point.
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+tests:
+- tag: default
+  description: Default parameter settings
+  tolerance: 1.0e-05
+  settings:
+  - parameter: TrialPoints
+    point_vec: true
+    value:
+    - '{70,70}'
+    - '{200,180}'
+    tcl_value:
+    - 70 70
+    - 200 180
+    python_value:
+    - '[70,70]'
+    - '[200,180]'
+    ruby_value:
+    - '[70,70]'
+    - '[200,180]'
+    R_value: list(c(70,70), c(200,180))
+  - parameter: NormalizationFactor
+    value: 255.0
+  - parameter: StoppingValue
+    value: 50.0
+  inputs:
+  - Input/cthead1-Float.mha
+briefdescription: Apply the Fast Marching method to solve an Eikonal equation on an image.
+detaileddescription: >-
+  The speed function can be specified as a speed image or a speed constant. The speed image is set using the method SetInput().
+  If the speed image is nullptr, a constant speed function is used and is specified using method the SetSpeedConstant() .
+
+
+  If the speed function is constant and of value one, fast marching results is an approximate distance function from the initial
+  alive points.
+
+
+  There are two ways to specify the output image information (LargestPossibleRegion, Spacing, Origin):
+
+
+  \li it is copied directly from the input speed image
+
+
+
+  \li it is specified by the user. Default values are used if the user does not specify all the information.
+
+
+
+
+  The output information is computed as follows.
+
+
+  If the speed image is nullptr or if the OverrideOutputInformation is set to true, the output information is set from user
+  specified parameters. These parameters can be specified using methods
+
+
+  \li FastMarchingImageFilterBase::SetOutputRegion() ,
+
+
+
+  \li FastMarchingImageFilterBase::SetOutputSpacing() ,
+
+
+
+  \li FastMarchingImageFilterBase::SetOutputDirection() ,
+
+
+
+  \li FastMarchingImageFilterBase::SetOutputOrigin() .
+
+
+
+
+  Else the output information is copied from the input speed image.
+
+
+  Implementation of this class is based on Chapter 8 of "Level Set Methods and Fast Marching Methods", J.A. Sethian, Cambridge
+  Press, Second edition, 1999.
+
+
+  For an alternative implementation, see itk::FastMarchingImageFilter .
+
+
+
+
+  TTraits
+
+
+  traits
+
+
+
+
+  \see FastMarchingImageFilter
+
+
+
+  \see ImageFastMarchingTraits
+
+
+
+  \see ImageFastMarchingTraits2
+itk_module: ITKFastMarching
+itk_group: FastMarching
+in_place: false

@@ -1,0 +1,65 @@
+name: BinaryPruningImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: "\\todo this filter may not work in 3D\n \\note the output of this filter is still the same as the input type eventhough\
+  \ the output is 0 or 1."
+pixel_types: typelist2::typelist<BasicPixelID<uint8_t> >
+members:
+- name: Iteration
+  type: uint32_t
+  default: 3u
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the iteration value
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the iteration value
+custom_methods: []
+tests:
+- tag: default
+  description: Test binary thinning
+  md5hash: 784e596c5f22c6eac7b09c1cdc266d95
+  settings: []
+  inputs:
+  - Input/branchy-lines.png
+- tag: oneHundred
+  description: Test binary thinning with 100
+  md5hash: 4a6958635cc09b4f34f74a31296ef6d7
+  settings:
+  - parameter: Iteration
+    value: 100
+  inputs:
+  - Input/branchy-lines.png
+briefdescription: This filter removes "spurs" of less than a certain length in the input image.
+detaileddescription: >-
+  This class is parameterized over the type of the input image and the type of the output image.
+
+
+  The input is assumed to be a binary image.
+
+
+  This filter is a sequential pruning algorithm and known to be computational time dependable of the image size. The algorithm
+  is the N-dimensional version of that given for two dimensions in:
+
+
+  Rafael C. Gonzales and Richard E. Woods. Digital Image Processing. Addison Wesley, 491-494, (1993).
+
+
+  \see MorphologyImageFilter
+
+
+
+  \see BinaryErodeImageFilter
+
+
+
+  \see BinaryDilateImageFilter
+
+
+
+  \see BinaryThinningImageFilter
+itk_module: ITKBinaryMathematicalMorphology
+itk_group: BinaryMathematicalMorphology
+in_place: false

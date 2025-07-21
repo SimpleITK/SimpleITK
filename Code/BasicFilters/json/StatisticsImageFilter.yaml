@@ -1,0 +1,87 @@
+name: StatisticsImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+doc: Docs
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::StatisticsImageFilter<InputImageType>
+no_procedure: true
+no_return_image: true
+inputs:
+- name: Image
+  type: Image
+members: []
+measurements:
+- name: Minimum
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Minimum.
+- name: Maximum
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Maximum.
+- name: Mean
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Mean.
+- name: Sigma
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Standard Deviation.
+- name: Variance
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Variance.
+- name: Sum
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the compute Sum.
+tests:
+- tag: 2d
+  description: statistics on cthead1
+  settings: []
+  measurements_results:
+  - name: Minimum
+    value: 0
+  - name: Maximum
+    value: 255
+  - name: Mean
+    value: '77.7415618'
+    tolerance: 1.0e-06
+  - name: Sigma
+    value: '78.2619'
+    tolerance: 1000.0
+  - name: Variance
+    value: '6124.9260064656282'
+    tolerance: 1.0e-06
+  - name: Sum
+    value: '5094871'
+  inputs:
+  - Input/cthead1.png
+briefdescription: Compute min, max, variance and mean of an Image .
+detaileddescription: >-
+  StatisticsImageFilter computes the minimum, maximum, sum, sum of squares, mean, variance sigma of an image. The filter needs
+  all of its input image. It behaves as a filter with an input and output. Thus it can be inserted in a pipeline with other
+  filters and the statistics will only be recomputed if a downstream filter changes.
+
+
+  This filter is automatically multi-threaded and can stream its input when NumberOfStreamDivisions is set to more than one.
+  Statistics are independently computed for each streamed and threaded region then merged.
+
+
+  Internally a compensated summation algorithm is used for the accumulation of intensities to improve accuracy for large images.
+itk_module: ITKImageStatistics
+itk_group: ImageStatistics
+in_place: false

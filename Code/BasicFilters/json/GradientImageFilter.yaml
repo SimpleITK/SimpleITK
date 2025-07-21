@@ -1,0 +1,79 @@
+name: GradientImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+output_image_type: itk::VectorImage<float, InputImageType::ImageDimension>
+filter_type: itk::GradientImageFilter<InputImageType, float, float, OutputImageType>
+members:
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether or not the filter will use the spacing of the input image in its calculations. Use On to take the image
+    spacing information into account and to compute the derivatives in physical space; use Off to ignore the image spacing
+    and to compute the derivatives in isotropic voxel space. Default is On.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether or not the filter will use the spacing of the input image in its calculations. Use On to take the image
+    spacing information into account and to compute the derivatives in physical space; use Off to ignore the image spacing
+    and to compute the derivatives in isotropic voxel space. Default is On.
+- name: UseImageDirection
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    The UseImageDirection flag determines whether image derivatives are computed with respect to the image grid or with respect
+    to the physical space. When this flag is ON the derivatives are computed with respect to the coordinate system of physical
+    space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the
+    image direction and will result in an extra matrix multiplication compared to the amount of computation performed when
+    the flag is OFF. The default value of this flag is On.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    The UseImageDirection flag determines whether image derivatives are computed with respect to the image grid or with respect
+    to the physical space. When this flag is ON the derivatives are computed with respect to the coordinate system of physical
+    space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the
+    image direction and will result in an extra matrix multiplication compared to the amount of computation performed when
+    the flag is OFF. The default value of this flag is On.
+tests:
+- tag: default
+  description: Simply run with default settings from 2d image
+  settings: []
+  tolerance: 1.0e-05
+  inputs:
+  - Input/cthead1.png
+- tag: default_float
+  description: Simply run with default settings from float image
+  settings: []
+  tolerance: 1.0e-05
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Computes the gradient of an image using directional derivatives.
+detaileddescription: >-
+  Computes the gradient of an image using directional derivatives. The directional derivative at each pixel location is computed
+  by convolution with a first-order derivative operator.
+
+
+  The second template parameter defines the value type used in the derivative operator (defaults to float). The third template
+  parameter defines the value type used for output image (defaults to float). The output image is defined as a covariant vector
+  image whose value type is specified as this third template parameter.
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKImageGradient
+itk_group: ImageGradient
+in_place: false

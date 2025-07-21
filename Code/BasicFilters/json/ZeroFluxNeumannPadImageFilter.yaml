@@ -1,0 +1,95 @@
+name: ZeroFluxNeumannPadImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: NonLabelPixelIDTypeList
+members:
+- name: PadLowerBound
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 0)
+  dim_vec: true
+  itk_type: typename InputImageType::SizeType
+- name: PadUpperBound
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 0)
+  dim_vec: true
+  itk_type: typename InputImageType::SizeType
+tests:
+- tag: defaults
+  description: Test Pad with default parameters
+  md5hash: a9a0207c759cb8d9e0507414992905d6
+  settings: []
+  inputs:
+  - Input/RA-Slice-Short.png
+- tag: more
+  description: Test Pad reasonable padding
+  md5hash: e75385e0e2c67ff47a8b2d0a1ee87017
+  settings:
+  - parameter: PadLowerBound
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 5
+    - 10
+    - 15
+  - parameter: PadUpperBound
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 3
+    - 6
+    - 9
+  inputs:
+  - Input/Ramp-Down-Short.nrrd
+briefdescription: Increase the image size by padding according to the zero-flux Neumann boundary condition.
+detaileddescription: >-
+  A filter which extends the image size and fill the missing pixels according to a Neumann boundary condition where first,
+  upwind derivatives on the boundary are zero. This is a useful condition in solving some classes of differential equations.
+
+
+  For example, invoking this filter on an image with a corner like: \code
+
+  * * * * * *
+
+
+  * * * * * *
+
+
+  * 1 2 3 4 5 (where * denotes pixels that lie
+
+
+  * 3 3 5 5 6 outside of the image boundary)
+
+
+  * 4 4 6 7 8
+
+
+  \endcode
+   returns the following padded image: \code
+  1 1 1 2 3 4 5
+
+
+  1 1 1 2 3 4 5
+
+
+  1 1 1 2 3 4 5
+
+
+  3 3 3 3 5 5 6 (note the corner values)
+
+
+  4 4 4 4 6 7 8
+
+
+  \endcode
+
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  \see WrapPadImageFilter , MirrorPadImageFilter , ConstantPadImageFilter , ZeroFluxNeumannBoundaryCondition
+itk_module: ITKImageGrid
+itk_group: ImageGrid
+in_place: false

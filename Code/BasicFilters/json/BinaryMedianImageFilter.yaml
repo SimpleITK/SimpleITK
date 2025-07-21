@@ -1,0 +1,82 @@
+name: BinaryMedianImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: IntegerPixelIDTypeList
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::InputSizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the neighborhood used to compute the median.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the neighborhood used to compute the median
+- name: ForegroundValue
+  type: double
+  default: '1.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the value associated with the Foreground (or the object) on the binary input image and the Background .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the value associated with the Foreground (or the object) on the binary input image and the Background .
+- name: BackgroundValue
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the value associated with the Foreground (or the object) on the binary input image and the Background .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the value associated with the Foreground (or the object) on the binary input image and the Background .
+tests:
+- tag: defaults
+  description: Basic voting
+  settings:
+  - parameter: Radius
+    no_get_method: true
+    value: 3
+  - parameter: ForegroundValue
+    value: '255.0'
+  md5hash: 55dd7a167222849c7afb0c5c4f6e096b
+  inputs:
+  - Input/BlackDots.png
+briefdescription: Applies a version of the median filter optimized for binary images.
+detaileddescription: >-
+  This filter was contributed by Bjorn Hanch Sollie after identifying that the generic Median filter performed unnecessary
+  operations when the input image is binary.
+
+
+  This filter computes an image where a given pixel is the median value of the pixels in a neighborhood about the corresponding
+  input pixel. For the case of binary images the median can be obtained by simply counting the neighbors that are foreground.
+
+
+  A median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers
+  or shot noise.
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKLabelVoting
+itk_group: LabelVoting
+in_place: false

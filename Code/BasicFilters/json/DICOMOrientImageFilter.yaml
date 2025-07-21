@@ -1,0 +1,153 @@
+name: DICOMOrientImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: typelist2::append<BasicPixelIDTypeList, VectorPixelIDTypeList>::type
+custom_register: 'factory.RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+
+  '
+public_declarations: "static std::string GetOrientationFromDirectionCosines( const std::vector<double> &direction );\n   static\
+  \ std::vector<double> GetDirectionCosinesFromOrientation( const std::string &str );"
+filter_type: itk::DICOMOrientImageFilter<InputImageType>
+members:
+- name: DesiredCoordinateOrientation
+  type: std::string
+  default: std::string("LPS")
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the desired coordinate orientation for the output image
+  custom_itk_cast: |-
+    filter->SetDesiredCoordinateOrientation( this->m_DesiredCoordinateOrientation );
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the desired coordinate orientation for the output image
+measurements:
+- name: FlipAxes
+  type: std::vector<bool>
+  default: std::vector<bool>()
+  custom_itk_cast: |-
+    this->m_FlipAxes = sitkITKVectorToSTL<bool>(filter->GetFlipAxes());
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get flip axes.
+
+
+    This value is computed during Update.
+- name: PermuteOrder
+  type: std::vector<unsigned int>
+  default: std::vector<unsigned int>()
+  custom_itk_cast: |-
+    this->m_PermuteOrder = sitkITKVectorToSTL<unsigned int>(filter->GetPermuteOrder());
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get axes permute order.
+
+
+    This value is computed during Update.
+tests:
+- tag: default
+  description: default
+  md5hash: a963bd6a755b853103a2d195e01a50d3
+  settings: []
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: FlipAxes
+    dim_vec: true
+    value:
+    - 0
+    - 0
+    - 0
+    tolerance: 1.0e-23
+  - name: PermuteOrder
+    dim_vec: true
+    value:
+    - 0
+    - 1
+    - 2
+    tolerance: 1.0e-23
+- tag: RIP
+  description: default
+  md5hash: 8aa3dce315a62d31f59c084a07f02448
+  settings:
+  - parameter: DesiredCoordinateOrientation
+    type: std::string
+    value: '"RIP"'
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: FlipAxes
+    dim_vec: true
+    value:
+    - 1
+    - 1
+    - 0
+    tolerance: 1.0e-23
+  - name: PermuteOrder
+    dim_vec: true
+    value:
+    - 0
+    - 2
+    - 1
+    tolerance: 1.0e-23
+- tag: RAS
+  description: default
+  md5hash: 33eec76230a501095ab4e6509f76e7de
+  settings:
+  - parameter: DesiredCoordinateOrientation
+    type: std::string
+    value: '"RAS"'
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: FlipAxes
+    dim_vec: true
+    value:
+    - 1
+    - 1
+    - 0
+    tolerance: 1.0e-23
+  - name: PermuteOrder
+    dim_vec: true
+    value:
+    - 0
+    - 1
+    - 2
+    tolerance: 1.0e-23
+itk_module: SimpleITKFilters
+itk_group: SimpleITKFilters
+detaileddescription: >-
+  The physical location of all pixels in the image remains the same, but the meta-data and the ordering of the stored pixels
+  may change.
+
+
+  DICOMOrientImageFilter depends on a set of constants that describe all possible labels. Directions are labeled in terms
+  of following pairs:
+
+
+  \li Left and Right (Subject's left and right)
+
+
+  \li Anterior and Posterior (Subject's front and back)
+
+
+  \li Inferior and Superior (Subject's bottom and top, i.e. feet and head)
+
+
+
+
+
+  The initials of these directions are used in a 3 letter code in the enumerated type OrientationEnum. The initials are given
+  fastest moving index first, second fastest second, third fastest third, where the label's direction indicates increasing
+  values.
+
+
+  An ITK image with an identity direction cosine matrix is in LPS (Left, Posterior, Superior) orientation as defined by the
+  DICOM standard.
+
+   \f[ LPS = \begin{Bmatrix} from\ right\ to\ \textbf{L}eft \\ from\ anterior\ towards\ \textbf{P}osterior \\ from\ inferior\
+  towards\ \textbf{S}uperior \end{Bmatrix} \f]
+
+  The output orientation is specified with SetDesiredCoordinateOrientation. The input coordinate orientation is computed from
+  the input image's direction cosine matrix.
+briefdescription: Permute axes and flip images as needed to obtain an approximation to the desired orientation.

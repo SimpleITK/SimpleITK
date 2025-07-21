@@ -1,0 +1,65 @@
+name: SumProjectionImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: typename itk::NumericTraits<typename InputImageType::PixelType>::RealType
+vector_pixel_types_by_component: VectorPixelIDTypeList
+custom_register: 'factory.RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
+
+  '
+members:
+- name: ProjectionDimension
+  type: unsigned int
+  default: 0u
+tests:
+- tag: z_projection
+  description: project in the 2nd dimension
+  settings:
+  - parameter: ProjectionDimension
+    cxx_value: 2u
+    value: '2'
+  tolerance: 0.0001
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Sum projection.
+detaileddescription: >-
+  This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found at https://doi.org/10.54294/0pjyho
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  \see ProjectionImageFilter
+
+
+
+  \see MedianProjectionImageFilter
+
+
+
+  \see MeanProjectionImageFilter
+
+
+
+  \see MeanProjectionImageFilter
+
+
+
+  \see MaximumProjectionImageFilter
+
+
+
+  \see MinimumProjectionImageFilter
+
+
+
+  \see BinaryProjectionImageFilter
+
+
+
+  \see StandardDeviationProjectionImageFilter
+itk_module: ITKImageStatistics
+itk_group: ImageStatistics
+in_place: false

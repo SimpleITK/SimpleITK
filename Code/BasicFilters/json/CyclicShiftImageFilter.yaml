@@ -1,0 +1,52 @@
+name: CyclicShiftImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: NonLabelPixelIDTypeList
+members:
+- name: Shift
+  type: int
+  default: std::vector<int>(3, 0)
+  dim_vec: true
+  set_as_scalar: true
+  itk_type: typename FilterType::OffsetType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/get the shift. Shifts may be positive or negative.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/get the shift. Shifts may be positive or negative.
+tests:
+- tag: defaults
+  description: Test CyclicShift with default paramters
+  md5hash: a9a0207c759cb8d9e0507414992905d6
+  settings: []
+  inputs:
+  - Input/RA-Slice-Short.png
+- tag: more
+  description: Test shift with some numbers
+  md5hash: 5add8d77a8aec9d1880bcb32f72134fc
+  settings:
+  - parameter: Shift
+    type: int
+    dim_vec: true
+    value:
+    - 5
+    - -10
+    - 0
+  inputs:
+  - Input/Ramp-Down-Short.nrrd
+briefdescription: Perform a cyclic spatial shift of image intensities on the image grid.
+detaileddescription: >-
+  This filter supports arbitrary cyclic shifts of pixel values on the image grid. If the Shift is set to [xOff, yOff], the
+  value of the pixel at [0, 0] in the input image will be the value of the pixel in the output image at index [xOff modulo
+  xSize, yOff modulo ySize] where xSize and ySize are the sizes of the image in the x and y dimensions, respectively. If a
+  pixel value is moved across a boundary, the pixel value is wrapped around that boundary. For example, if the image is 40-by-40
+  and the Shift is [13, 47], then the value of the pixel at [0, 0] in the input image will be the value of the pixel in the
+  output image at index [13, 7].
+
+
+  Negative Shifts are supported. This filter also works with images whose largest possible region starts at a non-zero index.
+itk_module: ITKImageGrid
+itk_group: ImageGrid
+in_place: false

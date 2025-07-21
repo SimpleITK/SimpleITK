@@ -1,0 +1,71 @@
+name: NoiseImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::RadiusType
+tests:
+- tag: defaults
+  description: Test MeanImageFilter with default parametrs
+  md5hash: 76b7e9b810eb9396b7bb636b4f8b5d23
+  settings: []
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+- tag: by23
+  description: Test by 23
+  md5hash: 4d05e86ba6a96eeaf6217e317c85dbfa
+  settings:
+  - parameter: Radius
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 2
+    - 3
+  inputs:
+  - Input/VM1111Shrink-RGB.png
+- tag: by333
+  description: Test by 333
+  md5hash: fc4975287b204ba91dd4d85523b91a06
+  settings:
+  - parameter: Radius
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 3
+    - 3
+    - 3
+  inputs:
+  - Input/RA-Short.nrrd
+briefdescription: Calculate the local noise in an image.
+detaileddescription: >-
+  Computes an image where a given pixel is the standard deviation of the pixels in a neighborhood about the corresponding
+  input pixel. This serves as an estimate of the local noise (or texture) in an image. Currently, this noise estimate assume
+  a piecewise constant image. This filter should be extended to fitting a (hyper) plane to the neighborhood and calculating
+  the standard deviation of the residuals to this (hyper) plane.
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKImageFilterBase
+itk_group: ImageFilterBase
+in_place: false

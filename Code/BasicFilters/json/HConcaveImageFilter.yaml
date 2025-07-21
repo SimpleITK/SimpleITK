@@ -1,0 +1,63 @@
+name: HConcaveImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+members:
+- name: Height
+  type: double
+  default: '2.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing.
+    Local maxima below this value are replaced with an estimate of the local background.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing.
+    Local maxima below this value are replaced with an estimate of the local background.
+- name: FullyConnected
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity.
+    Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity.
+    Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+custom_methods: []
+tests:
+- tag: HConcave
+  description: Test HConcave
+  md5hash: f5eabe457bc96f0b284c324c7d6387a6
+  settings:
+  - parameter: Height
+    value: 10000
+  inputs:
+  - Input/RA-Short.nrrd
+briefdescription: Identify local minima whose depth below the baseline is greater than h.
+detaileddescription: >-
+  HConcaveImageFilter extract local minima that are more than h intensity units below the (local) background. This has the
+  effect of extracting objects that are darker than the background by at least h intensity units.
+
+
+  This filter uses the HMinimaImageFilter .
+
+
+  Geodesic morphology and the H-Convex algorithm is described in Chapter 6 of Pierre Soille's book "Morphological Image Analysis:
+
+  Principles and Applications", Second Edition, Springer, 2003.
+
+
+  \see GrayscaleGeodesicDilateImageFilter , HMaximaImageFilter ,
+
+
+
+  \see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

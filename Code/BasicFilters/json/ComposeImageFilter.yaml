@@ -1,0 +1,60 @@
+name: ComposeImageFilter
+template_code_filename: MultiInputImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+output_image_type: itk::VectorImage< typename InputImageType::PixelType,  InputImageType::ImageDimension >
+members: []
+tests:
+- tag: default_2D
+  description: default composition on 2D
+  settings: []
+  md5hash: c0a5d977f0a9d983831dca858d842087
+  inputs:
+  - Input/STAPLE1.png
+  - Input/STAPLE2.png
+- tag: default_3D
+  description: default composition on 3D
+  settings: []
+  md5hash: b7bce6e5d5f5a65f16e14aed20a664e7
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+briefdescription: ComposeImageFilter combine several scalar images into a multicomponent image.
+detaileddescription: >-
+  ComposeImageFilter combine several scalar images into an itk::Image of vector pixel (itk::Vector , itk::RGBPixel , ...),
+  of std::complex pixel, or in an itk::VectorImage .
+
+
+  \par Inputs and Usage
+
+  \code
+
+  filter->SetInput( 0, image0 );
+
+
+  filter->SetInput( 1, image1 );
+
+
+  ...
+
+
+  filter->Update();
+
+
+  itk::VectorImage< PixelType, dimension >::Pointer = filter->GetOutput();
+
+
+  \endcode
+   All input images are expected to have the same template parameters and have the same size and origin.
+
+
+  \see VectorImage
+
+
+
+  \see VectorIndexSelectionCastImageFilter
+itk_module: ITKImageCompose
+itk_group: ImageCompose
+in_place: false

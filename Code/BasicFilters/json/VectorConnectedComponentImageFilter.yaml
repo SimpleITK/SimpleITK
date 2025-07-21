@@ -1,0 +1,40 @@
+name: VectorConnectedComponentImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: "\todo Add suport for mask image input"
+pixel_types: RealVectorPixelIDTypeList
+filter_type: itk::VectorConnectedComponentImageFilter<InputImageType, OutputImageType, itk::Image<uint8_t, InputImageType::ImageDimension>
+  >
+output_pixel_type: uint32_t
+members:
+- name: DistanceThreshold
+  type: double
+  default: '1.0'
+  custom_itk_cast: |-
+    filter->SetDistanceThreshold( static_cast<typename FilterType::InputValueType>( this->m_DistanceThreshold ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: FullyConnected
+  type: bool
+  default: 'false'
+  doc: ''
+custom_methods: []
+tests:
+- tag: wDistance
+  description: 2D RGB
+  settings:
+  - parameter: DistanceThreshold
+    value: '0.01'
+  md5hash: 0dbaaa98c1da2d8e1865c95e53a542de
+  inputs:
+  - Input/noisy-vector-grid.nrrd
+briefdescription: A connected components filter that labels the objects in a vector image. Two vectors are pointing similar
+  directions if one minus their dot product is less than a threshold. Vectors that are 180 degrees out of phase are similar.
+  Assumes that vectors are normalized.
+detaileddescription: ""
+itk_module: ITKConnectedComponents
+itk_group: ConnectedComponents
+in_place: false

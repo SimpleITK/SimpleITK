@@ -1,0 +1,26 @@
+name: MagnitudeAndPhaseToComplexImageFilter
+template_code_filename: BinaryFunctorFilter
+template_test_filename: ImageFilter
+constant_type: double
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: RealPixelIDTypeList
+output_pixel_type: std::complex<typename InputImageType::PixelType>
+members: []
+tests:
+- tag: defaults
+  description: Test defaults
+  tolerance: 0.0015
+  settings: []
+  inputs:
+  - Input/RA-Slice-Float.nrrd
+  - Input/RA-Slice-Float.nrrd
+briefdescription: Implements pixel-wise conversion of magnitude and phase data into complex voxels.
+detaileddescription: >-
+  This filter is parameterized over the types of the two input images and the type of the output image.
+
+
+  The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

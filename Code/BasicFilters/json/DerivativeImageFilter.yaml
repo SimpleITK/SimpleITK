@@ -1,0 +1,83 @@
+name: DerivativeImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: RealPixelIDTypeList
+vector_pixel_types_by_component: RealVectorPixelIDTypeList
+members:
+- name: Direction
+  type: unsigned int
+  default: 0u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    The output pixel type must be signed. Standard get/set macros for filter parameters.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    The output pixel type must be signed. Standard get/set macros for filter parameters.
+- name: Order
+  type: unsigned int
+  default: 1u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    The output pixel type must be signed. Standard get/set macros for filter parameters.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    The output pixel type must be signed. Standard get/set macros for filter parameters.
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether or not the filter will use the spacing of the input image in its calculations. Use On to compute the derivatives
+    in physical space; use Off to ignore the image spacing and to compute the derivatives in isotropic voxel space. Default
+    is On.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether or not the filter will use the spacing of the input image in its calculations. Use On to compute the derivatives
+    in physical space; use Off to ignore the image spacing and to compute the derivatives in isotropic voxel space. Default
+    is On.
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  tolerance: 0.0001
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+- tag: zsecondorder
+  description: Run with direction and order set
+  tolerance: 0.0001
+  settings:
+  - parameter: Direction
+    cxx_value: 2u
+    value: '2'
+  - parameter: Order
+    cxx_value: 2u
+    value: '2'
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+briefdescription: Computes the directional derivative of an image. The directional derivative at each pixel location is computed
+  by convolution with a derivative operator of user-specified order.
+detaileddescription: >-
+  SetOrder specifies the order of the derivative.
+
+
+  SetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKImageFeature
+itk_group: ImageFeature
+in_place: false

@@ -1,0 +1,116 @@
+name: InverseDisplacementFieldImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: RealVectorPixelIDTypeList
+filter_type: itk::InverseDisplacementFieldImageFilter< itk::Image< itk::Vector<typename InputImageType::InternalPixelType,
+  InputImageType::ImageDimension>, InputImageType::ImageDimension >, itk::Image< itk::Vector< typename InputImageType::InternalPixelType,
+  InputImageType::ImageDimension>, InputImageType::ImageDimension > >
+custom_set_input: |-
+  filter->SetInput( GetImageFromVectorImage(const_cast< InputImageType * >(image1.GetPointer())) );
+include_files:
+- itkVector.h
+- sitkImageConvert.hxx
+members:
+- name: Size
+  type: uint32_t
+  default: std::vector<uint32_t>(3, 0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the size of the output image.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the size of the output image.
+- name: OutputOrigin
+  type: double
+  default: std::vector<double>(3, 0.0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::OriginPointType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image origin.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image origin.
+- name: OutputSpacing
+  type: double
+  default: std::vector<double>(3, 1.0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SpacingType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image spacing.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image spacing.
+- name: SubsamplingFactor
+  type: unsigned int
+  default: 16u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the factor used for subsampling the input displacement field. A large value in this factor will produce a fast
+    computation of the inverse field but with low precision. A small value of this factor will produce a precise computation
+    of the inverse field at the price of large memory consumption and long computational time.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the factor used for subsampling the input displacement field. A large value in this factor will produce a fast
+    computation of the inverse field but with low precision. A small value of this factor will produce a precise computation
+    of the inverse field at the price of large memory consumption and long computational time.
+measurements: []
+custom_methods:
+- name: SetReferenceImage
+  doc: This methods sets the output size, origin, and direction to that of the provided image
+  return_type: void
+  parameters:
+  - type: const Image &
+    var_name: refImage
+  body: this->SetSize( refImage.GetSize() ); this->SetOutputOrigin( refImage.GetOrigin() ); this->SetOutputSpacing( refImage.GetSpacing()
+    );
+tests:
+- tag: 2d
+  description: 2D
+  settings:
+  - parameter: Size
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 100
+    - 100
+  tolerance: 0.001
+  inputs:
+  - Input/displacement.mha
+briefdescription: Computes the inverse of a displacement field.
+detaileddescription: >-
+  InverseDisplacementFieldImageFilter takes a displacement field as input and computes the displacement field that is its
+  inverse. If the input displacement field was mapping coordinates from a space A into a space B, the output of this filter
+  will map coordinates from the space B into the space A.
+
+
+  Given that both the input and output displacement field are represented as discrete images with pixel type vector, the inverse
+  will be only an estimation and will probably not correspond to a perfect inverse. The precision of the inverse can be improved
+  at the price of increasing the computation time and memory consumption in this filter.
+
+
+  The method used for computing the inverse displacement field is to subsample the input field using a regular grid and create
+  Kerned-Base Spline in which the reference landmarks are the coordinates of the deformed point and the target landmarks are
+  the negative of the displacement vectors. The kernel-base spline is then used for regularly sampling the output space and
+  recover vector values for every single pixel.
+
+
+  The subsampling factor used for the regular grid of the input field will determine the number of landmarks in the KernelBased
+  spline and therefore it will have a dramatic effect on both the precision of output displacement field and the computational
+  time required for the filter to complete the estimation. A large subsampling factor will result in few landmarks in the
+  KernelBased spline, therefore on fast computation and low precision. A small subsampling factor will result in a large number
+  of landmarks in the KernelBased spline, therefore a large memory consumption, long computation time and high precision for
+  the inverse estimation.
+
+
+  This filter expects both the input and output images to be of pixel type Vector .
+itk_module: ITKDisplacementField
+itk_group: DisplacementField
+in_place: false

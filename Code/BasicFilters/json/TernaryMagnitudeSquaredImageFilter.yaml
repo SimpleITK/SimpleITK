@@ -1,0 +1,32 @@
+name: TernaryMagnitudeSquaredImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 3
+doc: ''
+filter_type: itk::TernaryMagnitudeSquaredImageFilter<InputImageType, InputImageType2, InputImageType3, OutputImageType >
+pixel_types: BasicPixelIDTypeList
+members: []
+tests:
+- tag: 2d
+  description: 2D
+  inputs:
+  - Input/STAPLE1.png
+  - Input/STAPLE2.png
+  - Input/STAPLE1.png
+  settings: []
+  md5hash: b095bd511398c8d902bf27566760c6dd
+- tag: 3d
+  description: 3D
+  inputs:
+  - Input/RA-Float.nrrd
+  - Input/RA-Float.nrrd
+  - Input/RA-Float.nrrd
+  settings: []
+  tolerance: 100.0
+briefdescription: Compute the pixel-wise squared magnitude of three images.
+detaileddescription: >-
+  This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings)
+  are done by the C++ defaults.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

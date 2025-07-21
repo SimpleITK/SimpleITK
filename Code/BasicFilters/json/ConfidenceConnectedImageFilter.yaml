@@ -1,0 +1,137 @@
+name: ConfidenceConnectedImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: uint8_t
+members:
+- name: SeedList
+  type: unsigned int
+  point_vec: true
+  default: std::vector< std::vector<unsigned int > >()
+  custom_itk_cast: |
+    filter->ClearSeeds();
+      for(auto &&seed : m_SeedList)
+        {
+        using IndexType = typename InputImageType::IndexType;
+        filter->AddSeed(sitkSTLVectorToITK< IndexType >( seed ));
+        }
+  briefdescriptionSet: Set list of image indexes for seeds.
+  detaileddescriptionSet: ""
+  briefdescriptionGet: Get list of seeds
+  detaileddescriptionGet: ""
+- name: NumberOfIterations
+  type: unsigned int
+  default: 4u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the number of iterations
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the number of iterations
+- name: Multiplier
+  type: double
+  default: '4.5'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value
+    is 2.5
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value
+    is 2.5
+- name: InitialNeighborhoodRadius
+  type: unsigned int
+  default: 1u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Get/Set the radius of the neighborhood over which the statistics are evaluated
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get/Set the radius of the neighborhood over which the statistics are evaluated
+- name: ReplaceValue
+  type: uint8_t
+  default: 1u
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get value to replace thresholded pixels
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get value to replace thresholded pixels
+measurements:
+- name: Mean
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Method to get access to the mean of the pixels accepted in the output region. This method should only be invoked after
+    the filter has been executed using the Update() method.
+- name: Variance
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Method to get access to the variance of the pixels accepted in the output region. This method should only be invoked after
+    the filter has been executed using the Update() method.
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: ec87a838931d4d5d2e94a04644788a55
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: 3d
+  description: Run with 2d sample settings
+  settings:
+  - parameter: NumberOfIterations
+    cxx_value: 1u
+    value: 1
+  - parameter: SeedList
+    point_vec: true
+    value:
+    - '{10,10,10}'
+    tcl_value:
+    - 10 10 10
+    python_value:
+    - '[10,10,10]'
+    ruby_value:
+    - '[10,10,10]'
+    R_value:
+    - c(10,10,10)
+  - parameter: InitialNeighborhoodRadius
+    cxx_value: 10u
+    value: '10'
+  measurements_results:
+  - name: Mean
+    value: 25902
+    tolerance: 1.0
+  - name: Variance
+    value: 14123418.0
+    tolerance: 10.0
+  md5hash: e849e1f4740387b3eeedb3a285bc7630
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Segment pixels with similar statistics using connectivity.
+detaileddescription: >-
+  This filter extracts a connected set of pixels whose pixel intensities are consistent with the pixel statistics of a seed
+  point. The mean and variance across a neighborhood (8-connected, 26-connected, etc.) are calculated for a seed point. Then
+  pixels connected to this seed point whose values are within the confidence interval for the seed point are grouped. The
+  width of the confidence interval is controlled by the "Multiplier" variable (the confidence interval is the mean plus or
+  minus the "Multiplier" times the standard deviation). If the intensity variations across a segment were gaussian, a "Multiplier"
+  setting of 2.5 would define a confidence interval wide enough to capture 99% of samples in the segment.
+
+
+  After this initial segmentation is calculated, the mean and variance are re-calculated. All the pixels in the previous segmentation
+  are used to calculate the mean the standard deviation (as opposed to using the pixels in the neighborhood of the seed point).
+  The segmentation is then recalculated using these refined estimates for the mean and variance of the pixel values. This
+  process is repeated for the specified number of iterations. Setting the "NumberOfIterations" to zero stops the algorithm
+  after the initial segmentation from the seed point.
+
+
+  NOTE: the lower and upper threshold are restricted to lie within the valid numeric limits of the input data pixel type.
+  Also, the limits may be adjusted to contain the seed point's intensity.
+itk_module: ITKRegionGrowing
+itk_group: RegionGrowing
+in_place: false

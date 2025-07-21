@@ -1,0 +1,61 @@
+name: HMaximaImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+members:
+- name: Height
+  type: double
+  default: '2.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing.
+    Local maxima below this value are replaced with an estimate of the local background.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing.
+    Local maxima below this value are replaced with an estimate of the local background.
+custom_methods: []
+tests:
+- tag: HMaxima
+  description: Test HMaxima
+  md5hash: b30d403fb1c5948abfb17fa9c346cecd
+  settings:
+  - parameter: Height
+    value: 2000
+  inputs:
+  - Input/RA-Short.nrrd
+briefdescription: Suppress local maxima whose height above the baseline is less than h.
+detaileddescription: >-
+  HMaximaImageFilter suppresses local maxima that are less than h intensity units above the (local) background. This has the
+  effect of smoothing over the "high" parts of the noise in the image without smoothing over large changes in intensity (region
+  boundaries). See the HMinimaImageFilter to suppress the local minima whose depth is less than h intensity units below the
+  (local) background.
+
+
+  If the output of HMaximaImageFilter is subtracted from the original image, the significant "peaks" in the image can be identified.
+  This is what the HConvexImageFilter provides.
+
+
+  This filter uses the ReconstructionByDilationImageFilter . It provides its own input as the "mask" input to the geodesic
+  dilation. The "marker" image for the geodesic dilation is the input image minus the height parameter h.
+
+
+  Geodesic morphology and the H-Maxima algorithm is described in Chapter 6 of Pierre Soille's book "Morphological Image Analysis:
+
+  Principles and Applications", Second Edition, Springer, 2003.
+
+
+  The height parameter is set using SetHeight.
+
+
+  \see ReconstructionByDilationImageFilter , HMinimaImageFilter , HConvexImageFilter
+
+
+
+  \see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

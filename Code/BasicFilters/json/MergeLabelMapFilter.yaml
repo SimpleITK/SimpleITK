@@ -1,0 +1,129 @@
+name: MergeLabelMapFilter
+template_code_filename: MultiInputImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: LabelPixelIDTypeList
+filter_type: itk::MergeLabelMapFilter<InputImageType>
+members:
+- name: Method
+  enum:
+  - Keep
+  - Aggregate
+  - Pack
+  - Strict
+  itk_type: typename itk::ChoiceMethodEnum
+  default: itk::simple::MergeLabelMapFilter::Keep
+  custom_itk_cast: |-
+    filter->SetMethod ( typename itk::ChoiceMethodEnum ( int( this->m_Method ) ) );
+      filter->InPlaceOff();
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the method used to merge the label maps
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the method used to merge the label maps
+tests:
+- tag: default
+  description: ' default parameters'
+  settings: []
+  md5hash: 76cff1a87fc608eb7de7de3dfa450371
+  inputA_cast: sitkLabelUInt32
+  inputB_cast: sitkLabelUInt32
+  inputs:
+  - Input/simple-label-c.png
+  - Input/simple-label-d.png
+- tag: keep
+  description: keep choice
+  settings:
+  - parameter: Method
+    value: itk::simple::MergeLabelMapFilter::Keep
+    lua_value: SimpleITK.MergeLabelMapFilter_Keep
+    python_value: SimpleITK.MergeLabelMapFilter.Keep
+    ruby_value: Simpleitk::MergeLabelMapFilter::Keep
+    java_value: MergeLabelMapFilter.MethodType.Keep
+    tcl_value: $MergeLabelMapFilter_Keep
+    csharp_value: itk.simple.MergeLabelMapFilter.MethodType.Keep
+    R_value: '''Keep'''
+  md5hash: b187de2f27b849a2dffdf8259ccf2e1d
+  inputA_cast: sitkLabelUInt16
+  inputB_cast: sitkLabelUInt16
+  inputs:
+  - Input/simple-label-c.png
+  - Input/simple-label-d.png
+- tag: aggregate
+  description: aggregate choice
+  settings:
+  - parameter: Method
+    value: itk::simple::MergeLabelMapFilter::Aggregate
+    lua_value: SimpleITK.MergeLabelMapFilter_Aggregate
+    python_value: SimpleITK.MergeLabelMapFilter.Aggregate
+    ruby_value: Simpleitk::MergeLabelMapFilter::Aggregate
+    java_value: MergeLabelMapFilter.MethodType.Aggregate
+    tcl_value: $MergeLabelMapFilter_Aggregate
+    csharp_value: itk.simple.MergeLabelMapFilter.MethodType.Aggregate
+    R_value: '''Aggregate'''
+  md5hash: 5cc14523f8ec8e7fc33c23937cbd5839
+  inputA_cast: sitkLabelUInt16
+  inputB_cast: sitkLabelUInt16
+  inputs:
+  - Input/simple-label-c.png
+  - Input/simple-label-d.png
+- tag: pack
+  description: ' default parameters'
+  settings:
+  - parameter: Method
+    value: itk::simple::MergeLabelMapFilter::Pack
+    lua_value: SimpleITK.MergeLabelMapFilter_Pack
+    python_value: SimpleITK.MergeLabelMapFilter.Pack
+    ruby_value: Simpleitk::MergeLabelMapFilter::Pack
+    java_value: MergeLabelMapFilter.MethodType.Pack
+    tcl_value: $MergeLabelMapFilter_Pack
+    csharp_value: itk.simple.MergeLabelMapFilter.MethodType.Pack
+    R_value: '''Pack'''
+  md5hash: 0ca936ce321e43884053c8464197cdda
+  inputA_cast: sitkLabelUInt8
+  inputB_cast: sitkLabelUInt8
+  inputs:
+  - Input/simple-label-c.png
+  - Input/simple-label-d.png
+- tag: strict
+  description: with strict choice
+  settings:
+  - parameter: Method
+    value: itk::simple::MergeLabelMapFilter::Strict
+    lua_value: SimpleITK.MergeLabelMapFilter_Strict
+    python_value: SimpleITK.MergeLabelMapFilter.Strict
+    ruby_value: Simpleitk::MergeLabelMapFilter::Strict
+    java_value: MergeLabelMapFilter.MethodType.Strict
+    tcl_value: $MergeLabelMapFilter_Strict
+    csharp_value: itk.simple.MergeLabelMapFilter.MethodType.Strict
+    R_value: '''Strict'''
+  md5hash: 678ac95f8379073e4c747952dc7abf7c
+  inputA_cast: sitkLabelUInt16
+  inputB_cast: sitkLabelUInt16
+  inputs:
+  - Input/simple-label-d.png
+  - Input/simple-label-e.png
+briefdescription: Merges several Label Maps.
+detaileddescription: >-
+  This filter takes one or more input Label Map and merges them.
+
+
+  SetMethod() can be used to change how the filter manage the labels from the different label maps. KEEP (0): MergeLabelMapFilter
+  do its best to keep the label unchanged, but if a label is already used in a previous label map, a new label is assigned.
+  AGGREGATE (1): If the same label is found several times in the label maps, the label objects with the same label are merged.
+  PACK (2): MergeLabelMapFilter relabel all the label objects by order of processing. No conflict can occur. STRICT (3): MergeLabelMapFilter
+  keeps the labels unchanged and raises an exception if the same label is found in several images.
+
+
+  This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  \see ShapeLabelObject , RelabelComponentImageFilter
+itk_module: ITKLabelMap
+itk_group: LabelMap
+in_place: true

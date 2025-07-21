@@ -1,0 +1,112 @@
+name: NeighborhoodConnectedImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: uint8_t
+members:
+- name: SeedList
+  type: unsigned int
+  point_vec: true
+  default: std::vector< std::vector<unsigned int > >()
+  custom_itk_cast: |
+    filter->ClearSeeds();
+      for(auto &&seed : m_SeedList)
+        {
+        using IndexType = typename InputImageType::IndexType;
+        filter->AddSeed(sitkSTLVectorToITK< IndexType >( seed ));
+        }
+  briefdescriptionSet: Set list of image indexes for seeds.
+  detaileddescriptionSet: ""
+  briefdescriptionGet: Get list of seeds
+  detaileddescriptionGet: ""
+- name: Lower
+  type: double
+  default: 0
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the lower threshold. The default is 0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the lower threshold. The default is 0.
+- name: Upper
+  type: double
+  default: 1
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  doc: Radius of the neighborhood used to compute the median
+  dim_vec: true
+  set_as_scalar: true
+  itk_type: typename InputImageType::SizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the neighborhood used for a mask.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the neighborhood used to compute the median
+- name: ReplaceValue
+  type: double
+  default: 1
+  pixeltype: Output
+  doc: "Pixels that lie within Lower and Upper (inclusive)\n       will be replaced with this value. The default is 1."
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with
+    this value. The default is 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with
+    this value. The default is 1.
+tests:
+- tag: 2d
+  description: Run with 2d sample settings
+  md5hash: 52670ac422db7416c4020c8fbd58c254
+  settings:
+  - parameter: SeedList
+    point_vec: true
+    value:
+    - '{100,100}'
+    - '{95,85}'
+    tcl_value:
+    - 100 100
+    - 95 85
+    python_value:
+    - '[100,100]'
+    - '[95,85]'
+    ruby_value:
+    - '[100,100]'
+    - '[95,85]'
+    R_value:
+    - c(100,100)
+    - c(95,85)
+  - parameter: Upper
+    value: 255
+  - parameter: Lower
+    value: 150
+  - parameter: ReplaceValue
+    value: 255
+  - parameter: Radius
+    dim_vec: true
+    type: unsigned int
+    value:
+    - 5
+    - 5
+  inputs:
+  - Input/STAPLE1.png
+briefdescription: Label pixels that are connected to a seed and lie within a neighborhood.
+detaileddescription: >-
+  NeighborhoodConnectedImageFilter labels pixels with ReplaceValue that are connected to an initial Seed AND whose neighbors
+  all lie within a Lower and Upper threshold range.
+itk_module: ITKRegionGrowing
+itk_group: RegionGrowing
+in_place: false

@@ -1,0 +1,29 @@
+name: MinimumImageFilter
+template_code_filename: BinaryFunctorFilter
+template_test_filename: ImageFilter
+constant_type: double
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+custom_register: 'factory.RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
+
+  '
+members: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: 35088a16227bda50ff5c93baa2199a17
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+briefdescription: Implements a pixel-wise operator Min(a,b) between two images.
+detaileddescription: >-
+  The pixel values of the output image are the minimum between the corresponding pixels of the two input images.
+
+
+  This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings)
+  are done by the C++ defaults.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

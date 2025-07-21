@@ -1,0 +1,145 @@
+name: SLICImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: typelist2::append<BasicPixelIDTypeList, VectorPixelIDTypeList>::type
+output_pixel_type: uint32_t
+members:
+- name: SuperGridSize
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 50)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SuperGridSizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: SpatialProximityWeight
+  type: double
+  default: '10.0'
+  briefdescriptionSet: The spatial weight for the distance function.
+  detaileddescriptionSet: >-
+    Increasing this value makes the superpixel shape more regular, but more varied in image values. The range of the pixel
+    values and image dimension can effect the appropriate value.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: MaximumNumberOfIterations
+  type: uint32_t
+  default: 5u
+  doc: Number of iterations to run
+  briefdescriptionSet: Number of iterations to run.
+  detaileddescriptionSet: >-
+    Specify the number of iterations to run when optimizing the clusters.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: EnforceConnectivity
+  type: bool
+  default: 'true'
+  briefdescriptionSet: Post processing step to enforce superpixel morphology.
+  detaileddescriptionSet: >-
+    Enable an additional computation which ensures all label pixels of the same value are spatially connected. Disconnected
+    labeled components are assigned a new value if of sufficient size, or are relabeled to the previously encountered value
+    if small.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: InitializationPerturbation
+  type: bool
+  default: 'true'
+  briefdescriptionSet: Enable perturbation of initial cluster center location.
+  detaileddescriptionSet: >-
+    After grid based initialization, this option enables moving the initial cluster center location to the minimum gradient
+    in a small neighborhood. If the grid size is less than three this is automatically disabled.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+measurements:
+- name: AverageResidual
+  type: double
+  active: true
+  default: 0
+  briefdescriptionGet: Get the current average cluster residual.
+  detaileddescriptionGet: >-
+    After each iteration the residual is computed as the distance between the current clusters and the previous. This is averaged
+    so that the value is independent of the number of clusters.
+custom_methods: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  inputs:
+  - Input/VM1111Shrink-RGB.png
+  tolerance: 0.05
+  measurements_results:
+  - name: AverageResidual
+    value: '0.160679'
+    tolerance: 1.0e-05
+- tag: minimum
+  description: Do minimal amount of work, 1 iteration, no connectivity
+  settings:
+  - parameter: MaximumNumberOfIterations
+    value: 1
+    cxx_value: 1u
+  - parameter: EnforceConnectivity
+    value: 'false'
+    python_value: 'False'
+    R_value: 'FALSE'
+  inputs:
+  - Input/VM1111Shrink-RGB.png
+  tolerance: 0.05
+  measurements_results:
+  - name: AverageResidual
+    value: '0.709816'
+    tolerance: 1.0e-05
+- tag: gray_scale
+  description: Run on scalar image, minimal number of iterations to improve consistency of results.
+  settings:
+  - parameter: SuperGridSize
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 20
+    - 20
+  - parameter: MaximumNumberOfIterations
+    value: 2
+    cxx_value: 2u
+  - parameter: EnforceConnectivity
+    value: 'false'
+    python_value: 'False'
+    R_value: 'FALSE'
+  - parameter: InitializationPerturbation
+    value: 'false'
+    python_value: 'False'
+    R_value: 'FALSE'
+  inputs:
+  - Input/cthead1.png
+  tolerance: 1.0
+  measurements_results:
+  - name: AverageResidual
+    value: '0.20'
+    tolerance: 0.05
+itk_module: ITKSuperPixel
+detaileddescription: >-
+  The Simple Linear Iterative Clustering (SLIC) algorithm groups pixels into a set of labeled regions or super-pixels. Super-pixels
+  follow natural image boundaries, are compact, and are nearly uniform regions which can be used as a larger primitive for
+  more efficient computation. The SLIC algorithm can be viewed as a spatially constrained iterative k-means method.
+
+
+  The original algorithm was designed to cluster on the joint domain of the images index space and its CIELAB color space.
+  This implementation works with images of arbitrary dimension as well as scalar, single channel, images and most multi-component
+  image types including ITK's arbitrary length VectorImage .
+
+
+  The distance between a pixel and a cluster is the sum of squares of the difference between their joint range and domains
+  ( index and value ). The computation is done in index space with scales provided by the SpatialProximityWeight parameters.
+
+
+  The output is a label image with each label representing a superpixel cluster. Every pixel in the output is labeled, and
+  the starting label id is zero.
+
+
+  This code was contributed in the Insight Journal paper: "Scalable Simple Linear Iterative Clustering (SSLIC) Using a
+
+  Generic and Parallel Approach" by Lowekamp B. C., Chen D. T., Yaniv Z., Yoo T. S. https://doi.org/10.54294/8hic7f
+briefdescription: Simple Linear Iterative Clustering (SLIC) super-pixel segmentation.
+itk_group: SuperPixel
+in_place: false

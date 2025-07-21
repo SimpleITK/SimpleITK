@@ -1,0 +1,20 @@
+name: RoundImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 1
+pixel_types: RealPixelIDTypeList
+members: []
+tests:
+- tag: default
+  description: Simply run with default settings
+  settings: []
+  md5hash: 3ccccde44efaa3d688a86e94335c1f16
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Rounds the value of each pixel.
+detaileddescription: >-
+  The computations are performed using itk::Math::Round(x).
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

@@ -1,0 +1,80 @@
+name: BlackTopHatImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::BlackTopHatImageFilter<InputImageType, OutputImageType, itk::FlatStructuringElement< InputImageType::ImageDimension
+  > >
+include_files:
+- sitkCreateKernel.h
+members:
+- name: KernelRadius
+  type: unsigned int
+  default: std::vector<uint32_t>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  custom_itk_cast: ""
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the kernel structuring element.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the kernel structuring element.
+- name: KernelType
+  type: KernelEnum
+  default: itk::simple::sitkBall
+  custom_itk_cast: |-
+    auto kernel = CreateKernel<InputImageType::ImageDimension>( m_KernelType, m_KernelRadius );
+      filter->SetKernel( kernel );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the kernel or structuring element used for the morphology.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the kernel or structuring element used for the morphology.
+- name: SafeBorder
+  type: bool
+  default: 'true'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    A safe border is added to input image to avoid borders effects and remove it once the closing is done
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    A safe border is added to input image to avoid borders effects and remove it once the closing is done
+custom_methods: []
+tests:
+- tag: BlackTopHapErode
+  description: Test black top hat
+  md5hash: 445a5da6221f6d976d169b70c5538614
+  settings:
+  - parameter: KernelRadius
+    no_get_method: true
+    value: 1
+  - parameter: KernelType
+    value: itk::simple::sitkBall
+    lua_value: SimpleITK.sitkBall
+    python_value: SimpleITK.sitkBall
+    ruby_value: Simpleitk::SitkBall
+    java_value: KernelEnum.sitkBall
+    tcl_value: $sitkBall
+    csharp_value: KernelEnum.sitkBall
+    R_value: '''sitkBall'''
+  inputs:
+  - Input/STAPLE1.png
+briefdescription: Black top hat extracts local minima that are smaller than the structuring element.
+detaileddescription: >-
+  Black top hat extracts local minima that are smaller than the structuring element. It subtracts the background from the
+  input image. The output of the filter transforms the black valleys into white peaks.
+
+
+  Top-hats are described in Chapter 4.5 of Pierre Soille's book "Morphological Image Analysis: Principles and Applications",
+  Second Edition, Springer, 2003.
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

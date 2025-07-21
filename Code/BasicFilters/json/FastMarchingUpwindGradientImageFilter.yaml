@@ -1,0 +1,248 @@
+name: FastMarchingUpwindGradientImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+output_pixel_type: typename itk::NumericTraits<typename InputImageType::PixelType>::RealType
+filter_type: itk::FastMarchingUpwindGradientImageFilter<OutputImageType,InputImageType>
+doc: Docs
+pixel_types: BasicPixelIDTypeList
+include_files:
+- sitkImageConvert.hxx
+members:
+- name: TrialPoints
+  type: unsigned int
+  point_vec: true
+  default: std::vector< std::vector<unsigned int > >()
+  custom_itk_cast: |-
+    using NodeType = typename FilterType::NodeType;
+      using NodeContainerType = typename FilterType::NodeContainer;
+
+      typename NodeContainerType::Pointer trialPoints = NodeContainerType::New();
+      trialPoints->reserve( m_TrialPoints.size() );
+
+      for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)
+        {
+        NodeType node;
+
+        typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TrialPoints[i] );
+        node.SetIndex( index );
+        node.SetValue( 0.0 );
+        if (m_TrialPoints[i].size() > NodeType::SetDimension)
+          node.SetValue(m_TrialPoints[i][NodeType::SetDimension]);
+
+        trialPoints->push_back( node );
+        }
+      filter->SetTrialPoints( trialPoints );
+- name: NumberOfTargets
+  type: unsigned int
+  default: 0u
+  custom_itk_cast: ""
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the number of targets.
+- name: TargetPoints
+  type: unsigned int
+  point_vec: true
+  default: std::vector< std::vector<unsigned int > >()
+  custom_itk_cast: |-
+    using NodeType = typename FilterType::NodeType;
+      using NodeContainerType = typename FilterType::NodeContainer;
+
+      typename NodeContainerType::Pointer targetPoints = NodeContainerType::New();
+      targetPoints->reserve( m_TargetPoints.size() );
+
+      for (unsigned int i = 0; i < m_TargetPoints.size(); ++i)
+        {
+        NodeType node;
+
+        typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TargetPoints[i] );
+        node.SetIndex( index );
+        node.SetValue( 0.0 );
+
+        targetPoints->push_back( node );
+        }
+      filter->SetTargetPoints( targetPoints );
+      if (this->m_NumberOfTargets==0) {filter->SetTargetReachedModeToNoTargets();}
+      else if (this->m_NumberOfTargets==1) {filter->SetTargetReachedModeToOneTarget();}
+     else {filter->SetTargetReachedModeToSomeTargets(std::min<size_t>(this->m_TargetPoints.size(), this->m_NumberOfTargets));}
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Backwards compatibility for enum values Set the container of Target Points. If a target point is reached, the propagation
+    stops. Trial points are represented as a VectorContainer of LevelSetNodes.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the container of Target Points.
+- name: TargetOffset
+  type: double
+  default: 1.0
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set how long (in terms of arrival times) after targets are reached the front must stop. This is useful to ensure that
+    the level set of target arrival time is smooth.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the TargetOffset ivar.
+- name: NormalizationFactor
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows
+    the use of images with integer pixel types to represent the speed.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows
+    the use of images with integer pixel types to represent the speed.
+- name: InitialTrialValues
+  type: std::vector<double>
+  default: std::vector<double>()
+  custom_itk_cast: |-
+    auto nodes = filter->GetTrialPoints();
+      for( size_t i = 0; i < nodes->Size(); ++i )
+      {
+       if ( i < m_InitialTrialValues.size()) nodes->ElementAt(i).SetValue(m_InitialTrialValues[i]);
+      }
+  briefdescriptionSet: Set the initial seed values for corresponding trial point.
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+measurements:
+- name: GradientImage
+  type: Image
+  default: Image()
+  custom_itk_cast: |-
+    this->CastITKToImage(filter->GetGradientImage().GetPointer());
+  briefdescriptionGet: ''
+  no_print: true
+  detaileddescriptionGet: >-
+    Get the gradient image.
+- name: TargetValue
+  type: double
+  default: 0.0
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the arrival time corresponding to the last reached target. If TargetReachedMode is set to TargetConditionEnum::NoTargets
+    , TargetValue contains the last (aka largest) Eikonal solution value generated.
+tests:
+- tag: default
+  description: Default parameter settings
+  tolerance: 1.0e-06
+  settings:
+  - parameter: TrialPoints
+    point_vec: true
+    value:
+    - '{70,70}'
+    - '{200,180}'
+    tcl_value:
+    - 70 70
+    - 200 180
+    python_value:
+    - '[70,70]'
+    - '[200,180]'
+    ruby_value:
+    - '[70,70]'
+    - '[200,180]'
+    R_value: list(c(70,70), c(200,180))
+  - parameter: NormalizationFactor
+    value: 255.0
+  inputs:
+  - Input/cthead1-Float.mha
+- tag: target_points
+  description: Setting TrialPoints and TargetPoints
+  settings:
+  - parameter: TrialPoints
+    point_vec: true
+    value:
+    - '{70,70}'
+    - '{200,180}'
+    tcl_value:
+    - 70 70
+    - 200 180
+    python_value:
+    - '[70,70]'
+    - '[200,180]'
+    ruby_value:
+    - '[70,70]'
+    - '[200,180]'
+    R_value: list(c(70,70), c(200,180))
+  - parameter: NumberOfTargets
+    value: 1
+  - parameter: NormalizationFactor
+    value: 255.0
+  - parameter: TargetPoints
+    point_vec: true
+    type: unsigned int
+    value:
+    - '{70,170}'
+    tcl_value:
+    - 70 170
+    python_value: '[(70,170)]'
+    ruby_value: '[ [70,170] ]'
+    R_value: list(c(70,170))
+  inputs:
+  - Input/cthead1-Float.mha
+  measurements_results:
+  - name: TargetValue
+    value: 50.567
+    tolerance: 0.001
+- tag: initial_values
+  description: Default parameter settings
+  tolerance: 1.0e-06
+  settings:
+  - parameter: TrialPoints
+    point_vec: true
+    value:
+    - '{70,70}'
+    - '{200,180}'
+    tcl_value:
+    - 70 70
+    - 200 180
+    python_value:
+    - '[70,70]'
+    - '[200,180]'
+    ruby_value:
+    - '[70,70]'
+    - '[200,180]'
+    R_value: list(c(70,70), c(200,180))
+  - parameter: NormalizationFactor
+    value: 255.0
+  - parameter: InitialTrialValues
+    dim_vec: true
+    type: double
+    value:
+    - 10.0
+    - 11.0
+  inputs:
+  - Input/cthead1-Float.mha
+briefdescription: Generates the upwind gradient field of fast marching arrival times.
+detaileddescription: >-
+  This filter adds some extra functionality to its base class. While the solution T(x) of the Eikonal equation is being generated
+  by the base class with the fast marching method, the filter generates the upwind gradient vectors of T(x), storing them
+  in an image.
+
+
+  Since the Eikonal equation generates the arrival times of a wave traveling at a given speed, the generated gradient vectors
+  can be interpreted as the slowness (1/velocity) vectors of the front (the quantity inside the modulus operator in the Eikonal
+  equation).
+
+
+  Gradient vectors are computed using upwind finite differences, that is, information only propagates from points where the
+  wavefront has already passed. This is consistent with how the fast marching method works.
+
+
+  One more extra feature is the possibility to define a set of Target points where the propagation stops. This can be used
+  to avoid computing the Eikonal solution for the whole domain. The front can be stopped either when one Target point is reached
+  or all Target points are reached. The propagation can stop after a time TargetOffset has passed since the stop condition
+  is met. This way the solution is computed a bit downstream the Target points, so that the level sets of T(x) corresponding
+  to the Target are smooth.
+
+
+  For an alternative implementation, see itk::FastMarchingUpwindGradientImageFilterBase .
+
+
+  \author Luca Antiga Ph.D. Biomedical Technologies Laboratory, Bioengineering Department, Mario Negri Institute, Italy.
+itk_module: ITKFastMarching
+itk_group: FastMarching
+in_place: false

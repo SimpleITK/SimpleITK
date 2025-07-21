@@ -1,0 +1,74 @@
+name: LabelOverlayImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+include_files:
+- sitkLabelFunctorUtils.hxx
+number_of_inputs: 0
+doc: ''
+pixel_types: BasicPixelIDTypeList
+pixel_types2: IntegerPixelIDTypeList
+output_image_type: itk::VectorImage< typename InputImageType::PixelType, InputImageType::ImageDimension >
+filter_type: itk::LabelOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>
+inputs:
+- name: Image
+  type: Image
+- name: LabelImage
+  type: Image
+members:
+- name: Opacity
+  type: double
+  default: 0.5
+  doc: Value assigned to pixels outside of the mask
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the opacity of the colored label image. The value must be between 0 and 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the opacity of the colored label image. The value must be between 0 and 1.
+- name: BackgroundValue
+  type: double
+  default: '0.0'
+  custom_itk_cast: |-
+    filter->SetBackgroundValue(static_cast< typename InputImageType2::PixelType>( m_BackgroundValue ) );
+  briefdescriptionSet: ''
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the background value.
+  detaileddescriptionSet: >-
+    Set/Get the background value.
+- name: Colormap
+  type: std::vector<uint8_t>
+  default: std::vector<uint8_t>()
+  custom_itk_cast: |-
+    SetLabelFunctorFromColormap(filter->GetFunctor(),this->m_Colormap);
+tests:
+- tag: default
+  description: Simply run with default settings
+  md5hash: 299b2f5dbf018c868d65d9d5511fe470
+  settings: []
+  inputs:
+  - Input/cthead1.png
+  - Input/2th_cthead1.mha
+briefdescription: Apply a colormap to a label image and put it on top of the input image.
+detaileddescription: >-
+  Apply a colormap to a label image and put it on top of the input image. The set of colors is a good selection of distinct
+  colors. The opacity of the label image can be defined by the user. The user can also choose if the want to use a background
+  and which label value is the background. A background label produce a gray pixel with the same intensity than the input
+  one.
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  This class was contributed to the Insight Journal https://doi.org/10.54294/xr1bvx
+
+
+  \see LabelToRGBImageFilter
+
+
+
+  \see LabelMapOverlayImageFilter , LabelOverlayFunctor
+itk_module: ITKImageFusion
+itk_group: ImageFusion
+in_place: true

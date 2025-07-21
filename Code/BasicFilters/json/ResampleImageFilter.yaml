@@ -1,0 +1,277 @@
+name: ResampleImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+pixel_types2: BasicPixelIDTypeList
+custom_type2: 'PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;'
+output_image_type: InputImageType2
+vector_pixel_types_by_component: VectorPixelIDTypeList
+vector_pixel_types_by_component2: VectorPixelIDTypeList
+filter_type: itk::ResampleImageFilter<InputImageType, OutputImageType, double>
+no_procedure: true
+include_files:
+- sitkCreateInterpolator.hxx
+- sitkTransform.h
+- itkNearestNeighborExtrapolateImageFunction.h
+members:
+- name: Size
+  type: uint32_t
+  default: std::vector<uint32_t>(3, 0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Get/Set the size of the output image.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get/Set the size of the output image.
+- name: Transform
+  type: Transform
+  default: itk::simple::Transform()
+  custom_itk_cast: |-
+    const typename FilterType::TransformType *itkTx;
+        if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) {
+          if( this->m_Transform.GetITKBase()->GetNameOfClass() != std::string("IdentityTransform") )
+          sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+         }
+        else { filter->SetTransform( itkTx ); }
+  no_print: true
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: Interpolator
+  type: InterpolatorEnum
+  default: itk::simple::sitkLinear
+  doc: ''
+  custom_itk_cast: |-
+    filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Get/Set the interpolator function. The default is LinearInterpolateImageFunction <InputImageType, TInterpolatorPrecisionType>.
+    Some other options are NearestNeighborInterpolateImageFunction (useful for binary masks and other images with a small
+    number of possible pixel values), and BSplineInterpolateImageFunction (which provides a higher order of interpolation).
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get/Set the interpolator function. The default is LinearInterpolateImageFunction <InputImageType, TInterpolatorPrecisionType>.
+    Some other options are NearestNeighborInterpolateImageFunction (useful for binary masks and other images with a small
+    number of possible pixel values), and BSplineInterpolateImageFunction (which provides a higher order of interpolation).
+- name: OutputOrigin
+  type: double
+  default: std::vector<double>(3, 0.0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::OriginPointType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image origin.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image origin.
+- name: OutputSpacing
+  type: double
+  default: std::vector<double>(3, 1.0)
+  dim_vec: true
+  doc: ''
+  itk_type: typename FilterType::SpacingType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image spacing.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image spacing.
+- name: OutputDirection
+  type: std::vector<double>
+  default: std::vector<double>()
+  doc: Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix
+    for the dimension of the image.
+  custom_itk_cast: |-
+    filter->SetOutputDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output direction cosine matrix.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set the output direction cosine matrix.
+- name: DefaultPixelValue
+  type: double
+  default: '0.0'
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Get/Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get/Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.
+- name: OutputPixelType
+  type: PixelIDValueEnum
+  default: itk::simple::sitkUnknown
+  custom_itk_cast: ""
+  briefdescriptionSet: Set the output pixel type, if sitkUnknown then the input type is used.
+  briefdescriptionGet: Get the ouput pixel type.
+- name: UseNearestNeighborExtrapolator
+  type: bool
+  default: 'false'
+  custom_itk_cast: |-
+    if (m_UseNearestNeighborExtrapolator) {filter->SetExtrapolator(itk::NearestNeighborExtrapolateImageFunction<InputImageType, double>::New());}
+  briefdescriptionSet: Enables the nearest neighbor extrapolator as opposed to the constant pixel value.
+custom_methods:
+- name: SetReferenceImage
+  doc: This methods sets the output size, origin, spacing and direction to that of the provided image
+  return_type: void
+  parameters:
+  - type: const Image &
+    var_name: refImage
+  body: this->SetSize( refImage.GetSize() ); this->SetOutputOrigin( refImage.GetOrigin() ); this->SetOutputSpacing( refImage.GetSpacing()
+    );this->SetOutputDirection( refImage.GetDirection() );
+tests:
+- tag: defaults
+  description: run with some defaults
+  settings:
+  - parameter: Size
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 64
+    - 64
+    - 64
+  tolerance: 0.001
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: bspline_resample
+  description: use the bspline resampler iterpolator in a coefficient image
+  settings:
+  - parameter: Size
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 5
+    - 5
+    - 5
+  - parameter: OutputSpacing
+    type: double
+    dim_vec: true
+    value:
+    - 13.8281
+    - 16.0781
+  - parameter: Interpolator
+    value: itk::simple::sitkBSplineResamplerOrder3
+    lua_value: SimpleITK.sitkBSplineResamplerOrder3
+    python_value: SimpleITK.sitkBSplineResamplerOrder3
+    ruby_value: Simpleitk::SitkBSplineResamplerOrder3
+    java_value: InterpolatorEnum.sitkBSplineResamplerOrder3
+    tcl_value: $sitkBSplineResamplerOrder3
+    csharp_value: InterpolatorEnum.sitkBSplineResamplerOrder3
+    R_value: '''sitkBSplineResamplerOrder3'''
+  tolerance: 0.001
+  inputs:
+  - Input/xforms/bspline_ceoff0.mha
+- tag: wCastwInterpolator
+  description: Resample With Cast and Interpolator
+  settings:
+  - parameter: Size
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 64
+    - 64
+    - 64
+  - parameter: OutputPixelType
+    value: itk::simple::sitkUInt16
+    lua_value: SimpleITK.sitkUInt16
+    python_value: SimpleITK.sitkUInt16
+    ruby_value: Simpleitk::SitkUInt16
+    java_value: PixelIDValueEnum.sitkUInt16
+    tcl_value: $sitkUInt16
+    csharp_value: PixelIDValueEnum.sitkUInt16
+    R_value: '''sitkUInt16'''
+  - parameter: Interpolator
+    value: itk::simple::sitkGaussian
+    lua_value: SimpleITK.sitkGaussian
+    python_value: SimpleITK.sitkGaussian
+    ruby_value: Simpleitk::SitkGaussian
+    java_value: InterpolatorEnum.sitkGaussian
+    tcl_value: $sitkGaussian
+    csharp_value: InterpolatorEnum.sitkGaussian
+    R_value: '''sitkGaussian'''
+  tolerance: 0.001
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: vector
+  description: resample a vector image
+  settings:
+  - parameter: Size
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 512
+    - 512
+    tcl_value: '[list 512 512 ]'
+  - parameter: OutputSpacing
+    type: double
+    dim_vec: true
+    value:
+    - 0.73
+    - 0.73
+  tolerance: 0.001
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+- tag: NearestNeighborExtrapolator
+  description: enable nearest neighbort extrapolator
+  settings:
+  - parameter: Size
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 520
+    - 540
+  - parameter: OutputOrigin
+    type: double
+    dim_vec: true
+    value:
+    - -40.0
+    - -140.0
+  - parameter: UseNearestNeighborExtrapolator
+    type: bool
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  tolerance: 0.001
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+briefdescription: Resample an image via a coordinate transform.
+detaileddescription: >-
+  ResampleImageFilter resamples an existing image through some coordinate transform, interpolating via some image function.
+  The class is templated over the types of the input and output images.
+
+
+  Note that the choice of interpolator function can be important. This function is set via SetInterpolator() . The default
+  is LinearInterpolateImageFunction <InputImageType, TInterpolatorPrecisionType>, which is reasonable for ordinary medical
+  images. However, some synthetic images have pixels drawn from a finite prescribed set. An example would be a mask indicating
+  the segmentation of a brain into a small number of tissue types. For such an image, one does not want to interpolate between
+  different pixel values, and so NearestNeighborInterpolateImageFunction < InputImageType, TCoordRep > would be a better choice.
+
+
+  If an sample is taken from outside the image domain, the default behavior is to use a default pixel value. If different
+  behavior is desired, an extrapolator function can be set with SetExtrapolator() .
+
+
+  Output information (spacing, size and direction) for the output image should be set. This information has the normal defaults
+  of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference
+  image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference
+  image will be used.
+
+
+  Since this filter produces an image which is a different size than its input, it needs to override several of the methods
+  defined in ProcessObject in order to properly manage the pipeline execution model. In particular, this filter overrides
+  ProcessObject::GenerateInputRequestedRegion() and ProcessObject::GenerateOutputInformation() .
+
+
+  This filter is implemented as a multithreaded filter. It provides a DynamicThreadedGenerateData() method for its implementation.
+  \warning For multithreading, the TransformPoint method of the user-designated coordinate transform must be threadsafe.
+itk_module: ITKImageGrid
+itk_group: ImageGrid
+in_place: false
