@@ -211,13 +211,13 @@ ImportAsDouble(double *                          buffer,
 const detail::MemberFunctionFactory<ImportImageFilter::MemberFunctionType> &
 ImportImageFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> factory = [] {
+  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     // Register the member functions for the pixel types
     factory.RegisterMemberFunctions<NonLabelPixelIDTypeList, 2, 4>();
     return factory;
   }();
-  return factory;
+  return static_factory;
 }
 
 ImportImageFilter::~ImportImageFilter() = default;
