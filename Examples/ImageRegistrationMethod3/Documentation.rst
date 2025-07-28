@@ -64,6 +64,24 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod3/ImageRegistrationMethod3.cs
+       :language: c#
+       :lines: 18-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod3/ImageRegistrationMethod3.cxx
+       :language: c++
+       :lines: 18-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod3/ImageRegistrationMethod3.java
+       :language: java
+       :lines: 18-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethod3/ImageRegistrationMethod3.py
