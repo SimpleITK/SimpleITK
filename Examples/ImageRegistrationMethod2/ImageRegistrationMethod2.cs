@@ -61,7 +61,7 @@ namespace itk.simple.examples
             reader.SetFileName(args[0]);
             Image fixedImage = reader.Execute();
             fixedImage = SimpleITK.Normalize(fixedImage);
-            SimpleITK.DiscreteGaussian(fixedImage, 2.0);
+            fixedImage = SimpleITK.DiscreteGaussian(fixedImage, 2.0);
 
             reader.SetFileName(args[1]);
             Image movingImage = reader.Execute();
