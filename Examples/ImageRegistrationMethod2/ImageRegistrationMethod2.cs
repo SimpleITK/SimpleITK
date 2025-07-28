@@ -51,7 +51,7 @@ namespace itk.simple.examples
 
             if (args.Length < 3)
             {
-                Console.WriteLine("Usage: %s <fixedImageFilter> <movingImageFile> <outputTransformFile>\n", "ImageRegistrationMethod2");
+                Console.WriteLine("Usage: {0} <fixedImageFile> <movingImageFile> <outputTransformFile>", "ImageRegistrationMethod2");
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace itk.simple.examples
             reader.SetFileName(args[0]);
             Image fixedImage = reader.Execute();
             fixedImage = SimpleITK.Normalize(fixedImage);
-            SimpleITK.DiscreteGaussian(fixedImage, 2.0);
+            fixedImage = SimpleITK.DiscreteGaussian(fixedImage, 2.0);
 
             reader.SetFileName(args[1]);
             Image movingImage = reader.Execute();
@@ -89,7 +89,13 @@ namespace itk.simple.examples
 
             Transform outTx = R.Execute(fixedImage, movingImage);
 
-            outTx.WriteTransform(args[2]);
+            Console.WriteLine("-------");
+            Console.WriteLine(outTx.ToString());
+            Console.WriteLine("Optimizer stop condition: " + R.GetOptimizerStopConditionDescription());
+            Console.WriteLine(" Iteration: " + R.GetOptimizerIteration());
+            Console.WriteLine(" Metric value: " + R.GetMetricValue());
+
+            SimpleITK.WriteTransform(outTx, args[2]);
 
         }
 
