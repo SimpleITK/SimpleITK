@@ -76,6 +76,12 @@ Code
        :language: c++
        :lines: 18-
 
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod2/ImageRegistrationMethod2.java
+       :language: java
+       :lines: 18-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethod2/ImageRegistrationMethod2.py
