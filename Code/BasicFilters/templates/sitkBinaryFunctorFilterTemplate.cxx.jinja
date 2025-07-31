@@ -44,7 +44,7 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}
 
 const detail::MemberFunctionFactory<{{ name }}::MemberFunction2Type> &{{ name }}::GetMemberFunctionFactory2()
 {
-  static constexpr auto static_factory = []() consteval {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
     return factory;
