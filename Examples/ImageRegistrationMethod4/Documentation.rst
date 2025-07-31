@@ -66,14 +66,32 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod4/ImageRegistrationMethod4.cs
+       :language: csharp
+       :lines: 24-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod4/ImageRegistrationMethod4.cxx
+       :language: c++
+       :lines: 21-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethod4/ImageRegistrationMethod4.java
+       :language: java
+       :lines: 19-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethod4/ImageRegistrationMethod4.py
        :language: python
-       :lines: 1,19-91
+       :lines: 1,22-91
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethod4/ImageRegistrationMethod4.R
        :language: R
-       :lines: 18-
+       :lines: 23-
