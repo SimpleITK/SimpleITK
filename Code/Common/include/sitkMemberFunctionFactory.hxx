@@ -62,7 +62,7 @@ private:
 
 template <typename TMemberFunctionPointer>
 template <typename TImageType>
-void
+constexpr void
 MemberFunctionFactory<TMemberFunctionPointer>::Register(typename MemberFunctionFactory::MemberFunctionType pfunc,
                                                         TImageType *)
 {
@@ -81,7 +81,7 @@ MemberFunctionFactory<TMemberFunctionPointer>::Register(typename MemberFunctionF
 
 template <typename TMemberFunctionPointer>
 template <typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor>
-void
+constexpr void
 MemberFunctionFactory<TMemberFunctionPointer>::RegisterMemberFunctions()
 {
   using InstantiaterType = MemberFunctionInstantiater<MemberFunctionFactory, VImageDimension, TAddressor>;

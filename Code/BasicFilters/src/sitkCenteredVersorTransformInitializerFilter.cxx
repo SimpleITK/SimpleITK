@@ -48,7 +48,7 @@ CenteredVersorTransformInitializerFilter::CenteredVersorTransformInitializerFilt
 const detail::MemberFunctionFactory<CenteredVersorTransformInitializerFilter::MemberFunctionType> &
 CenteredVersorTransformInitializerFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
     return factory;
@@ -70,7 +70,10 @@ std::string
 CenteredVersorTransformInitializerFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::CenteredVersorTransformInitializerFilter\n";
+  out << "itk::simple::CenteredVersorTransformInitializerFilter\n"
+      << "Function Factory:" << std::endl
+      << "  Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl
+      << "  Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl;
   out << "  ComputeRotation: ";
   this->ToStringHelper(out, this->m_ComputeRotation);
   out << std::endl;
