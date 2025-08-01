@@ -35,7 +35,7 @@ namespace itk::simple {
 {%- endif %}
  *
 {%- if detaileddescription %}
- * {{ detaileddescription | wordwrap(117) | indent(" * ", blank=True) }}
+ * {{ detaileddescription | wordwrap(DOXYGEN_WORDWRAP_WIDTH) | indent(" * ", blank=True) }}
 {%- endif %}
  * \sa itk::simple::{{ name|regex_replace('(ImageFilter|Filter)$', '') }} for the procedural interface
  */
