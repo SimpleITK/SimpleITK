@@ -28,30 +28,30 @@
 
 namespace itk::simple {
 
-   /**\class {{ name }}
-{% if briefdescription and briefdescription|length > 0 %}
-\brief {{ briefdescription }}
-{% endif %}
-{% if detaileddescription and detaileddescription|length > 0 %}
-{{ detaileddescription }}
-{% endif %}
-\sa itk::simple::{{ name|regex_replace('(ImageFilter|Filter)$', '') }} for the procedural interface
-   */
-    class SITKBasicFilters_EXPORT {{ name }}
-      : public ImageFilter
-    {
-    public:
-      using Self = {{ name }};
+/**
+ * \class {{ name }}
+{%- if briefdescription %}
+ * \brief {{ briefdescription }}
+{%- endif %}
+ *
+{%- if detaileddescription %}
+ * {{ detaileddescription | wordwrap(117) | indent(" * ", blank=True) }}
+{%- endif %}
+ * \sa itk::simple::{{ name|regex_replace('(ImageFilter|Filter)$', '') }} for the procedural interface
+ */
+class SITKBasicFilters_EXPORT {{ name }} : public ImageFilter {
+public:
+  using Self = {{ name }};
 
-      /** Destructor */
-      virtual ~{{ name }}();
+  /** Destructor */
+  virtual ~{{ name }}();
 
-      /** Default Constructor that takes no arguments and initializes
-       * default parameters */
-      {{ name }}();
+  /** Default Constructor that takes no arguments and initializes
+   * default parameters */
+  {{ name }}();
 
-      /** Define the pixels types supported by this filter */
-      using PixelIDTypeList = {{ pixel_types }};
+  /** Define the pixels types supported by this filter */
+  using PixelIDTypeList = {{ pixel_types }};
 
 {% include "PublicDeclarations.h.jinja" %}
 {% include "MemberGetSetDeclarations.h.jinja" %}
@@ -81,23 +81,23 @@ namespace itk::simple {
 };
 
 
-   /**
-{% if briefdescription and briefdescription|length > 0 %}
-     * \brief {{ briefdescription }}
-{% else %}
-     * \brief itk::simple::{{ name }} Procedural Interface
-{% endif %}
-     *
-     * This function directly calls the execute method of {{ name }}
-     * in order to support a procedural API
-     *
-     * \sa itk::simple::{{ name }} for the object oriented interface
-     * @{ */
-     SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(const std::vector<Image> &images{% include "MemberParametersWithDefaults.jinja" %});
+/**
+{%- if briefdescription %}
+ * \brief {{ briefdescription }}
+{%- else %}
+ * \brief itk::simple::{{ name }} Procedural Interface
+{%- endif %}
+ *
+ * This function directly calls the execute method of {{ name }}
+ * in order to support a procedural API
+ *
+ * \sa itk::simple::{{ name }} for the object oriented interface
+ * @{ */
+SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(const std::vector<Image> &images{% include "MemberParametersWithDefaults.jinja" %});
 {% for inum in range(1, 6) %}
-     SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(const Image& image1{% for jnum in range(2, inum+1) %}, const Image& image{{ jnum }}{% endfor %}{% include "MemberParametersWithDefaults.jinja" %});
+SITKBasicFilters_EXPORT Image {{ name|regex_replace('(ImageFilter|Filter)$', '') }}(const Image& image1{% for jnum in range(2, inum+1) %}, const Image& image{{ jnum }}{% endfor %}{% include "MemberParametersWithDefaults.jinja" %});
 {% endfor %}
-     /** @{ */
+/** @{ */
 
 }
 #endif

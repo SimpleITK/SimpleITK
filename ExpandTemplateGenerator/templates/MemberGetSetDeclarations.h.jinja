@@ -14,7 +14,7 @@
    * \brief {{ member.briefdescriptionSet }}
     {%- endif %}
     {%- if member.detaileddescriptionSet %}
-   * {{ member.detaileddescriptionSet }}
+   * {{ member.detaileddescriptionSet | wordwrap(117) | indent(" * ", blank=True)  }}
     {%- endif %}
    */
   void
@@ -57,7 +57,7 @@
    * \brief {{ member.briefdescriptionGet }}
     {%- endif %}
     {%- if member.detaileddescriptionGet %}
-   * {{ member.detaileddescriptionGet }}
+   * {{ member.detaileddescriptionGet | wordwrap(117) | indent(" * ", blank=True) }}
     {%- endif %}
    */
     {%- if not member.type and member.enum %}
