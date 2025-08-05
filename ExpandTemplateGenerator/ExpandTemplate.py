@@ -8,6 +8,10 @@ import logging
 
 import re
 
+# Constants for template generation
+WORD_WRAP_WIDTH = 120
+DOXYGEN_WORDWRAP_WIDTH = WORD_WRAP_WIDTH - 3 # Subtracting for the Doxygen comment prefix
+
 
 def quote_string(s:str) -> str: # pragma: no cover
     """A Jinja2 filter that quotes a string."""
@@ -75,6 +79,9 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
     env.filters['ruby_capitalize'] = ruby_capitalize
     env.filters['quote'] = quote_string
     env.filters['format_list'] = format_list
+
+    # Add global constants for templates
+    env.globals['DOXYGEN_WORDWRAP_WIDTH'] = DOXYGEN_WORDWRAP_WIDTH
 
 
     try:
