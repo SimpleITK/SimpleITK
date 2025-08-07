@@ -25,14 +25,32 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.cs
+       :language: csharp
+       :lines: 23-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.cxx
+       :language: c++
+       :lines: 21-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.java
+       :language: java
+       :lines: 19-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,22-
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethodExhaustive/ImageRegistrationMethodExhaustive.R
        :language: R
-       :lines: 18-
+       :lines: 23-
