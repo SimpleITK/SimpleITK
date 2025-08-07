@@ -25,14 +25,32 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationOptimizerWeights/ImageRegistrationOptimizerWeights.cs
+       :language: csharp
+       :lines: 23-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageRegistrationOptimizerWeights/ImageRegistrationOptimizerWeights.cxx
+       :language: c++
+       :lines: 20-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationOptimizerWeights/ImageRegistrationOptimizerWeights.java
+       :language: java
+       :lines: 19-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationOptimizerWeights/ImageRegistrationOptimizerWeights.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,23-
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/ImageRegistrationOptimizerWeights/ImageRegistrationOptimizerWeights.R
        :language: r
-       :lines:  18-
+       :lines:  24-
