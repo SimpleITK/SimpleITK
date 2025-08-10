@@ -26,6 +26,7 @@ import org.itk.simple.*;
 class SimpleIO {
 
 static void example1(String inputImageFileName, String outputImageFileName) {
+  //START_OO_IMAGE_READER_WRITER_EXAMPLE
   ImageFileReader reader = new ImageFileReader();
   reader.setImageIO("PNGImageIO");
   reader.setFileName(inputImageFileName);
@@ -34,14 +35,18 @@ static void example1(String inputImageFileName, String outputImageFileName) {
   ImageFileWriter writer = new ImageFileWriter();
   writer.setFileName(outputImageFileName);
   writer.execute(image);
+  //END_OO_IMAGE_READER_WRITER_EXAMPLE
 }
 
 static void example2(String inputImageFileName, String outputImageFileName) {
+  //START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
   Image image = SimpleITK.readImage(inputImageFileName, PixelIDValueEnum.sitkUnknown, "PNGImageIO");
   SimpleITK.writeImage(image, outputImageFileName);
+  //END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 }
 
 static void example3() {
+  //START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
   Euler2DTransform basic_transform = new Euler2DTransform();
   double[] t = {2.0, 3.0};
   VectorDouble trans = new VectorDouble(t);
@@ -51,6 +56,7 @@ static void example3() {
   Transform read_result = SimpleITK.readTransform("euler2D.tfm");
 
   assert basic_transform.getClass() != read_result.getClass();
+  //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 }
 
 public static void main(String argv[]) {

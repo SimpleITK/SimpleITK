@@ -21,6 +21,7 @@
 # change in the line numbers of the code below will break the I/O page.
 
 proc example1 {inputImageFileName outputImageFileName} {
+  #START_OO_IMAGE_READER_WRITER_EXAMPLE
   ImageFileReader reader
   reader SetImageIO "PNGImageIO"
   reader SetFileName $inputImageFileName
@@ -33,17 +34,21 @@ proc example1 {inputImageFileName outputImageFileName} {
   reader -delete
   writer -delete
   $image -delete
+  #END_OO_IMAGE_READER_WRITER_EXAMPLE
 }
 
 proc example2 {inputImageFileName outputImageFileName} {
   global sitkUnknown
+  #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
   set image [ ReadImage $inputImageFileName $sitkUnknown "PNGImageIO" ]
   WriteImage $image $outputImageFileName
 
   $image -delete
+  #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 }
 
 proc example3 {} {
+  #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
   Euler2DTransform basic_transform
   set trans { 2.0 3.0 }
   basic_transform SetTranslation $trans
@@ -57,6 +62,7 @@ proc example3 {} {
 
   basic_transform -delete
   $read_result -delete
+  #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 }
 
 if { $argc < 2 } {

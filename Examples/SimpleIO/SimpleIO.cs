@@ -28,6 +28,7 @@ namespace itk.simple.examples {
     class SimpleIO {
 
 static void example1(string inputImageFileName, string outputImageFileName) {
+  //START_OO_IMAGE_READER_WRITER_EXAMPLE
   ImageFileReader reader = new ImageFileReader();
   reader.SetImageIO("PNGImageIO");
   reader.SetFileName(inputImageFileName);
@@ -36,14 +37,18 @@ static void example1(string inputImageFileName, string outputImageFileName) {
   ImageFileWriter writer = new ImageFileWriter();
   writer.SetFileName(outputImageFileName);
   writer.Execute(image);
+  //END_OO_IMAGE_READER_WRITER_EXAMPLE
 }
 
 static void example2(string inputImageFileName, string outputImageFileName) {
+  //START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
   Image image = sitk.ReadImage(inputImageFileName, PixelIDValueEnum.sitkUnknown, "PNGImageIO");
   sitk.WriteImage(image, outputImageFileName);
+  //END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 }
 
 static void example3() {
+  //START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
   Euler2DTransform basic_transform = new Euler2DTransform();
   VectorDouble trans = new VectorDouble( new double[] {2.0, 3.0} );
   basic_transform.SetTranslation(trans);
@@ -53,6 +58,7 @@ static void example3() {
   Transform read_result = sitk.ReadTransform("euler2D.tfm");
 
   Debug.Assert( basic_transform.GetName() != read_result.GetName() );
+  //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 }
 
 static void Main(string[] args) {

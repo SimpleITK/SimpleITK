@@ -34,6 +34,7 @@ def example1(inputImageFileName, outputImageFileName):
 
     import SimpleITK as sitk
 
+    #START_OO_IMAGE_READER_WRITER_EXAMPLE
     reader = sitk.ImageFileReader()
     reader.SetImageIO("PNGImageIO")
     reader.SetFileName(inputImageFileName)
@@ -42,6 +43,7 @@ def example1(inputImageFileName, outputImageFileName):
     writer = sitk.ImageFileWriter()
     writer.SetFileName(outputImageFileName)
     writer.Execute(image)
+    #END_OO_IMAGE_READER_WRITER_EXAMPLE
 
 
 # A simple procedural image input/output example
@@ -51,8 +53,10 @@ def example2(inputImageFileName, outputImageFileName):
 
     import SimpleITK as sitk
 
+    #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
     image = sitk.ReadImage(inputImageFileName, imageIO="PNGImageIO")
     sitk.WriteImage(image, outputImageFileName)
+    #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
 
 # A simple transform input/output example
@@ -62,6 +66,7 @@ def example3():
 
     import SimpleITK as sitk
 
+    #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
     basic_transform = sitk.Euler2DTransform()
     basic_transform.SetTranslation((2, 3))
 
@@ -69,6 +74,7 @@ def example3():
     read_result = sitk.ReadTransform("euler2D.tfm")
 
     assert isinstance(read_result, sitk.Euler2DTransform)
+    #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
 
 if __name__ == "__main__":

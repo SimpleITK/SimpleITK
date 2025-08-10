@@ -31,6 +31,7 @@
 void
 example1(std::string inputImageFileName, std::string outputImageFileName)
 {
+  // START_OO_IMAGE_READER_WRITER_EXAMPLE
   itk::simple::ImageFileReader reader;
   reader.SetImageIO("PNGImageIO");
   reader.SetFileName(inputImageFileName);
@@ -41,20 +42,24 @@ example1(std::string inputImageFileName, std::string outputImageFileName)
   itk::simple::ImageFileWriter writer;
   writer.SetFileName(outputImageFileName);
   writer.Execute(image);
+  // END_OO_IMAGE_READER_WRITER_EXAMPLE
 }
 
 void
 example2(std::string inputImageFileName, std::string outputImageFileName)
 {
+  // START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
   itk::simple::Image image;
   image = itk::simple::ReadImage(inputImageFileName, itk::simple::sitkUnknown, "PNGImageIO");
 
   itk::simple::WriteImage(image, outputImageFileName);
+  // END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 }
 
 void
 example3()
 {
+  // START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
   itk::simple::Euler2DTransform basic_transform;
   basic_transform.SetTranslation(std::vector<double>{ 2.0, 3.0 });
 
@@ -62,6 +67,7 @@ example3()
   itk::simple::Transform read_result = itk::simple::ReadTransform("euler2D.tfm");
 
   assert(typeid(basic_transform) != typeid(read_result));
+  // END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 }
 
 
