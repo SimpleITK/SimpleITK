@@ -15,6 +15,24 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline2/ImageRegistrationMethodBSpline2.cs
+       :language: csharp
+       :lines: 22-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline2/ImageRegistrationMethodBSpline2.cxx
+       :language: c++
+       :lines: 22-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline2/ImageRegistrationMethodBSpline2.java
+       :language: java
+       :lines: 22-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline2/ImageRegistrationMethodBSpline2.py
