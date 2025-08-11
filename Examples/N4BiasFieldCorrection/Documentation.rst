@@ -101,6 +101,12 @@ Code
        :language: c#
        :lines: 18-
 
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.java
+       :language: java
+       :lines: 23-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/N4BiasFieldCorrection/N4BiasFieldCorrection.py

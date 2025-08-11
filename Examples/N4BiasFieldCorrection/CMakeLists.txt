@@ -21,6 +21,22 @@ sitk_add_csharp_test(
   "1"
 )
 
+sitk_add_java_test(
+  Example.N4BiasFieldCorrection
+  "${CMAKE_CURRENT_SOURCE_DIR}/N4BiasFieldCorrection.java"
+  DATA{${SimpleITK_DATA_ROOT}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Java.Example.N4BiasFieldCorrection.nrrd"
+  "1"
+)
+
+sitk_add_java_test(
+  Example.N4BiasFieldCorrection_2
+  "${CMAKE_CURRENT_SOURCE_DIR}/N4BiasFieldCorrection.java"
+  DATA{${SimpleITK_DATA_ROOT}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd}
+  "${SimpleITK_TEST_OUTPUT_DIR}/Java.Example.N4BiasFieldCorrection_2.nrrd"
+  "2"
+)
+
 sitk_add_python_test(
   Example.N4BiasFieldCorrection
   "${CMAKE_CURRENT_SOURCE_DIR}/N4BiasFieldCorrection.py"
