@@ -28,6 +28,7 @@
 example1 <- function(inputImageFileName, outputImageFileName) {
   library(SimpleITK)
 
+  #START_OO_IMAGE_READER_WRITER_EXAMPLE
   reader <- ImageFileReader()
   reader$SetImageIO("PNGImageIO")
   reader$SetFileName(inputImageFileName)
@@ -36,18 +37,22 @@ example1 <- function(inputImageFileName, outputImageFileName) {
   writer <- ImageFileWriter()
   writer$SetFileName(outputImageFileName)
   writer$Execute(image)
+  #END_OO_IMAGE_READER_WRITER_EXAMPLE
 }
 
 example2 <- function(inputImageFileName, outputImageFileName) {
   library(SimpleITK)
 
+  #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
   image <- ReadImage(inputImageFileName)
   WriteImage(image, outputImageFileName)
+  #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 }
 
 example3 <- function() {
   library(SimpleITK)
 
+  #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
   basic_transform <- Euler2DTransform()
   basic_transform$SetTranslation(c(2,3))
 
@@ -55,6 +60,7 @@ example3 <- function() {
   read_result = ReadTransform('euler2D.tfm')
 
   stopifnot(read_result$GetName() != basic_transform$GetName())
+  #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 }
 
 args <- commandArgs( TRUE )

@@ -43,49 +43,57 @@ A read and write example using SimpleITK's `ImageFileReader <https://simpleitk.o
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cs
        :language: csharp
-       :lines: 31-38
+       :start-after: //START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: //END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: cpp
-       :lines: 33-41
+       :start-after: //START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: //END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Java
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
        :language: java
-       :lines: 29-36
+       :start-after: //START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: //END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Lua
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.lua
        :language: lua
-       :lines: 25-34
+       :start-after: --START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: --END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
-       :lines: 31-40
+       :start-after: #START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
        :language: r
-       :lines: 29-38
+       :start-after: #START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Ruby
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.rb
        :language: ruby
-       :lines: 24-33
+       :start-after: #START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_OO_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Tcl
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.tcl
        :language: tcl
-       :lines: 24-35
+       :start-after: #START_OO_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_OO_IMAGE_READER_WRITER_EXAMPLE
 
 The above example specifies using the PNGImageIO to read the file.
 If that line is omitted, SimpleITK would determine which IO to use automatically,
@@ -98,49 +106,57 @@ A more compact example using SimpleITK's procedural interface:
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cs
        :language: csharp
-       :lines: 42-43
+       :start-after: //START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: //END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
        :language: cpp
-       :lines: 47-49
+       :start-after: //START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: //END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Java
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
        :language: java
-       :lines: 40-41
+       :start-after: //START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: //END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Lua
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.lua
        :language: lua
-       :lines: 38-41
+       :start-after: --START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: --END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
-       :lines: 47-50
+       :start-after: #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
        :language: r
-       :lines: 42-45
+       :start-after: #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Ruby
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.rb
        :language: ruby
-       :lines: 37-40
+       :start-after: #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
   .. tab:: Tcl
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.tcl
        :language: tcl
-       :lines: 39-43
+       :start-after: #START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 
 Similarly, if the imageIO parameter is omitted, SimpleITK will determine
 which IO to use automatically.
@@ -194,49 +210,57 @@ reading it back, and then comparing the results.
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cs
        :language: csharp
-       :lines: 47-55
+       :start-after: //START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.cxx
-       :language: python
-       :lines: 55-60
+       :language: c++
+       :start-after: //START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: Java
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.java
        :language: java
-       :lines: 45-53
+       :start-after: //START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: Lua
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.lua
        :language: lua
-       :lines: 45-56
+       :start-after: --START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: --END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.py
        :language: python
-       :lines: 57-65
+       :start-after: #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: R
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.R
        :language: r
-       :lines: 49-57
+       :start-after: #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: Ruby
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.rb
        :language: ruby
-       :lines: 44-55
+       :start-after: #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
   .. tab:: Tcl
 
     .. literalinclude:: ../../Examples/SimpleIO/SimpleIO.tcl
        :language: tcl
-       :lines: 47-59
+       :start-after: #START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
+       :end-before: #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 
 In all languages, except Python, ``read_result`` returns an object of the
 generic ``sitk.Transform()`` class and ``basic_transform`` creates a

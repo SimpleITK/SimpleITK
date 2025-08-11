@@ -24,6 +24,7 @@
 function example1(inputImageFileName, outputImageFileName)
   require "SimpleITK"
 
+  --START_OO_IMAGE_READER_WRITER_EXAMPLE
   reader = SimpleITK.ImageFileReader()
   reader:SetImageIO("PNGImageIO")
   reader:SetFileName(inputImageFileName)
@@ -32,18 +33,22 @@ function example1(inputImageFileName, outputImageFileName)
   writer = SimpleITK.ImageFileWriter()
   writer:SetFileName(outputImageFileName)
   writer:Execute(image);
+  --END_OO_IMAGE_READER_WRITER_EXAMPLE
 end
 
 function example2(inputImageFileName, outputImageFileName)
   require "SimpleITK"
 
+  --START_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
   image = SimpleITK.ReadImage(inputImageFileName, SimpleITK.sitkUnknown, "PNGImageIO")
   SimpleITK.WriteImage(image, outputImageFileName)
+  --END_PROCEDURAL_IMAGE_READER_WRITER_EXAMPLE
 end
 
 function example3()
   require "SimpleITK"
 
+  --START_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
   basic_transform = SimpleITK.Euler2DTransform()
   trans = SimpleITK.VectorDouble()
   trans:push_back(2.0)
@@ -54,6 +59,7 @@ function example3()
   read_result = SimpleITK.ReadTransform('euler2D.tfm')
 
   assert(read_result:GetName() ~= basic_transform:GetName(), "type error")
+  --END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
 end
 
 if #arg < 2 then
