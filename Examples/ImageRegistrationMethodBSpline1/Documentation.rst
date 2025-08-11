@@ -72,6 +72,18 @@ Code
        :language: c++
        :lines: 18-
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline1/ImageRegistrationMethodBSpline1.cs
+       :language: csharp
+       :lines: 1,18-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline1/ImageRegistrationMethodBSpline1.java
+       :language: java
+       :lines: 1,18-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline1/ImageRegistrationMethodBSpline1.py

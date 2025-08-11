@@ -21,6 +21,30 @@ sitk_add_test(
     0.02
 )
 
+sitk_add_csharp_test(
+  Example.ImageRegistrationMethodBSpline1
+  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethodBSpline1.cs"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
+  ${SimpleITK_TEST_OUTPUT_DIR}/CSharpImageRegistrationMethodBSpline1.hdf5
+  TRANSFORM_COMPARE
+    ${SimpleITK_TEST_OUTPUT_DIR}/CSharpImageRegistrationMethodBSpline1.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline1.mha}
+    0.02
+)
+
+sitk_add_java_test(
+  Example.ImageRegistrationMethodBSpline1
+  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethodBSpline1.java"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
+  ${SimpleITK_TEST_OUTPUT_DIR}/JavaImageRegistrationMethodBSpline1.hdf5
+  TRANSFORM_COMPARE
+    ${SimpleITK_TEST_OUTPUT_DIR}/JavaImageRegistrationMethodBSpline1.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline1.mha}
+    0.02
+)
+
 sitk_add_python_test(
   Example.ImageRegistrationMethodBSpline1
   "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethodBSpline1.py"
