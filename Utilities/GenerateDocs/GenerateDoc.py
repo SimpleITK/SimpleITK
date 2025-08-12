@@ -81,48 +81,29 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def usage():
-    print("")
-    print(
-        "usage: GenerateDoc.py [options] <SimpleITKClass.json|yaml> <Path/To/ITK-build/With/Doxygen>"
-    )
-    print("")
-    print("   -h, --help    This help message")
-    print("   -D, --Debug   Enable debugging messages")
-    print("   -b, --backup  Backup JSON/YAML file")
-    print("")
-
 
 def find_xml_file(itk_path, data_obj) -> str:
-    itk_name = ""
-    if "itk_name" in data_obj:
-        itk_name = data_obj["itk_name"]
-
-    name = ""
-    if "name" in data_obj:
-        name = data_obj["name"]
-
-    template_code_filename = ""
-    if "template_code_filename" in data_obj:
-        template_code_filename = data_obj["template_code_filename"]
+    itk_name = data_obj.get("itk_name", "")
+    name = data_obj.get("name", "")
+    template_code_filename = data_obj.get("template_code_filename", "")
 
     xml_file_options = [
-        "classitk_1_1" + itk_name + ".xml",
-        "classitk_1_1" + name + template_code_filename + ".xml",
-        "classitk_1_1" + name + ".xml",
+        f"classitk_1_1{itk_name}.xml",
+        f"classitk_1_1{name}{template_code_filename}.xml",
+        f"classitk_1_1{name}.xml",
     ]
 
     for xf in xml_file_options:
-        xname = itk_path + "/" + xf
+        xname = os.path.join(itk_path, xf)
         if os.path.isfile(xname):
             try:
-                with open(xname, "r", encoding="utf8"):
-                    print("xml file: ", xname)
+                with open(xname, "r", encoding="utf-8"):
+                    print(f"xml file: {xname}")
                     return xname
             except IOError:
-                print("Failed to open file: ", xname)
+                print(f"Failed to open file: {xname}")
 
-    print("Tried to read a file for " + name)
+    print(f"Tried to read a file for {name}")
     print(xml_file_options)
     sys.exit(1)
 
@@ -131,10 +112,10 @@ def load_data_file(file_path):
     """Load a JSON or YAML file and return the data."""
     file_ext = os.path.splitext(file_path)[1].lower()
 
-    with io.open(file_path, "r", encoding="utf8") as fp:
+    with open(file_path, "r", encoding="utf-8") as fp:
         if file_ext == '.json':
             return json.load(fp, object_pairs_hook=OrderedDict)
-        elif file_ext == '.yaml' or file_ext == '.yml':
+        elif file_ext in ('.yaml', '.yml'):
             return yaml.load(fp, Loader=yaml.SafeLoader)
         else:
             raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
@@ -145,16 +126,16 @@ def save_data_file(file_path, data_obj, backup=False):
     file_ext = os.path.splitext(file_path)[1].lower()
 
     if backup:
-        os.rename(file_path, file_path + ".BAK")
+        os.rename(file_path, f"{file_path}.BAK")
 
-    with io.open(file_path, "w", encoding="utf8") as fp:
+    with open(file_path, "w", encoding="utf-8") as fp:
         if file_ext == '.json':
             json_string = json.dumps(
                 data_obj, indent=2, separators=(",", " : "), ensure_ascii=False
             )
             fp.write(json_string)
             print("", file=fp)
-        elif file_ext == '.yaml' or file_ext == '.yml':
+        elif file_ext in ('.yaml', '.yml'):
             # Apply block styles for documentation fields
             folded_keys = ["detaileddescription", "detaileddescriptionSet", "detaileddescriptionGet"]
             literal_keys = ["custom_itk_cast", "custom_set_input"]
@@ -180,10 +161,10 @@ def process_xml(root, debug=False):
         par = ws.getparent()
 
         if debug:
-            print("\nBefore:", ElementTree.tostring(par), "\n")
+            print(f"\nBefore: {ElementTree.tostring(par)}\n")
         par.remove(ws)
         if debug:
-            print("After:", ElementTree.tostring(par), "\n")
+            print(f"After: {ElementTree.tostring(par)}\n")
 
 
 #
@@ -208,10 +189,8 @@ def traverse_xml(xml_node, depth=0, debug=False):
         "sp": " ",
     }
     if debug:
-        print("\nNode: ", xml_node)
-        for i in range(depth):
-            sys.stdout.write("  ")
-        print(xml_node.tag, ": ", xml_node.attrib, xml_node.text)
+        print(f"\nNode: {xml_node}")
+        print("  " * depth + f"{xml_node.tag}: {xml_node.attrib} {xml_node.text}")
 
     # handle simplesection nodes (particularly See nodes)
     if xml_node.tag == "simplesect":
@@ -219,18 +198,18 @@ def traverse_xml(xml_node, depth=0, debug=False):
             for child in xml_node:
                 child_desc = traverse_xml(child, depth + 1, debug)
                 if len(child_desc):
-                    result = result + "\\see " + child_desc + "\n"
+                    result = result + f"\\see {child_desc}\n"
                     if debug:
-                        print("See result: ", repr(result))
+                        print(f"See result: {repr(result)}")
             return result
         else:
             # other, non-see, simplesect nodes
-            result = result + "\\" + xml_node.attrib["kind"] + " "
+            result = result + f"\\{xml_node.attrib['kind']} "
 
     # iterate through the children
     for child in xml_node:
         if debug:
-            print("Child: ", child, child.tag, child.text)
+            print(f"Child: {child} {child.tag} {child.text}")
         result = result + traverse_xml(child, depth + 1, debug)
 
     text = xml_node.text
@@ -238,7 +217,7 @@ def traverse_xml(xml_node, depth=0, debug=False):
     # handle formula nodes
     if xml_node.tag == "formula":
         if debug:
-            print(blue_text, "\nFormula", end_color)
+            print(f"{blue_text}\nFormula{end_color}")
             print(text)
         text = text.replace("\\[", " \\f[", 1)
         text = text.replace("\\]", "\\f] ")
@@ -258,9 +237,7 @@ def traverse_xml(xml_node, depth=0, debug=False):
 
     # finished
     if debug:
-        for i in range(depth):
-            sys.stdout.write("  ")
-        print("result: ", repr(result))
+        print("  " * depth + f"result: {repr(result)}")
 
     return result
 
@@ -307,7 +284,7 @@ if __name__ == "__main__":
 
     # Find and load the XML file
     xml_filename = find_xml_file(itk_path, data_obj)
-    with open(xml_filename, "r", encoding="utf8") as xml_file:
+    with open(xml_filename, "r", encoding="utf-8") as xml_file:
         tree = ElementTree.parse(xml_file)
     root = tree.getroot()
 
@@ -323,72 +300,62 @@ if __name__ == "__main__":
     # Set the class detailed description in the data to the formatted text from the XML tree
     #
     data_obj["detaileddescription"] = format_description(detaileddesc, debug)
-    print(
-        blue_text,
-        "\nDetailed description\n",
-        end_color,
-        repr(data_obj["detaileddescription"]),
-    )
+    print(f"{blue_text}\nDetailed description\n{end_color}{repr(data_obj['detaileddescription'])}")
 
     #
     # Set the class brief description in the data to the formatted text from the XML tree
     #
     data_obj["briefdescription"] = format_description(briefdesc, debug)
-    print(
-        blue_text,
-        "\nBrief description\n",
-        end_color,
-        repr(data_obj["briefdescription"]),
-    )
+    print(f"{blue_text}\nBrief description\n{end_color}{repr(data_obj['briefdescription'])}")
 
     #
     # Build a dict of class member functions in the XML
     #
     member_dict = {}
-    print(blue_text, "\nBuilding XML member function dict\n", end_color)
+    print(f"{blue_text}\nBuilding XML member function dict\n{end_color}")
     for m in root.findall("./compounddef/sectiondef/memberdef[@kind='function']"):
         name_node = m.find("./name")
         if name_node is not None:
-            print(name_node.text, " : ", repr(m))
+            print(f"{name_node.text} : {repr(m)}")
             member_dict[name_node.text] = m
 
     #
     # Loop through the class members and measurements in the data
     #
-    print(blue_text, "\nClass members and measurements\n", end_color)
+    print(f"{blue_text}\nClass members and measurements\n{end_color}")
     obj_list = []
 
     # Create a list of members and measurements
     if "members" in data_obj:
-        obj_list = obj_list + data_obj["members"]
+        obj_list.extend(data_obj["members"])
     if "measurements" in data_obj:
-        obj_list = obj_list + data_obj["measurements"]
+        obj_list.extend(data_obj["measurements"])
 
     for m in obj_list:
         name = m["name"]
-        print(blue_text, name, end_color)
+        print(f"{blue_text}{name}{end_color}")
 
         # Iterate through the possible prefixes
         for prefix in ["", "Set", "Get"]:
-            funcname = prefix + name
+            funcname = f"{prefix}{name}"
 
             if funcname in member_dict:
                 # find the item in the XML that corresponds to the JSON member
                 # function
                 m_xml = member_dict[funcname]
-                print(funcname, repr(m_xml))
+                print(f"{funcname} {repr(m_xml)}")
 
                 # pull the brief and detailed descriptions from the XML to the
                 # data object
                 for dtype in ["briefdescription", "detaileddescription"]:
-                    desc_prefix = dtype + prefix
-                    print("Setting", desc_prefix)
-                    desc_node = m_xml.find("./" + dtype)
+                    desc_prefix = f"{dtype}{prefix}"
+                    print(f"Setting {desc_prefix}")
+                    desc_node = m_xml.find(f"./{dtype}")
                     if desc_node is not None:
                         m[desc_prefix] = format_description(desc_node, debug)
-                        print("  ", m[desc_prefix])
+                        print(f"  {m[desc_prefix]}")
                     else:
-                        print("./" + dtype + " not found in the XML")
+                        print(f"./{dtype} not found in the XML")
 
     #
     # We done.  Write out the results.
