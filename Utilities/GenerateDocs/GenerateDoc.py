@@ -4,47 +4,84 @@ import os
 import sys
 import io
 import json
+import yaml
 import re
 import getopt
 from xml.etree import ElementTree
 from collections import OrderedDict
 
 
+# YAML block style classes
+class folded_str(str):
+    pass
+
+class literal_str(str):
+    pass
+
+def folded_presenter(dumper, data):
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='>')
+
+def literal_presenter(dumper, data):
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+
+yaml.add_representer(folded_str, folded_presenter)
+yaml.add_representer(literal_str, literal_presenter)
+
+def apply_block_styles(obj, *, folded_style_keys=[], literal_style_keys=[]):
+    """Apply block styles to specified keys in a data structure."""
+    if isinstance(obj, dict):
+        result = {}
+        for k, v in obj.items():
+            if k in folded_style_keys and isinstance(v, str):
+                # Convert to folded string for block-style YAML
+                result[k] = folded_str(v)
+            elif k in literal_style_keys and isinstance(v, str):
+                # Convert to literal string for block-style YAML
+                result[k] = literal_str(v)
+            else:
+                result[k] = apply_block_styles(v, folded_style_keys=folded_style_keys, literal_style_keys=literal_style_keys)
+        return result
+    elif isinstance(obj, list):
+        return [apply_block_styles(item, folded_style_keys=folded_style_keys, literal_style_keys=literal_style_keys) for item in obj]
+    else:
+        return obj
+
+
 #
 #  This script updates the documentation of a SimpleITK class in its
-#  JSON file.  The documentation is pulled from the corresponding ITK
-#  class XML file.  The SimpleITKClass.json file is modified in place.
+#  JSON or YAML file.  The documentation is pulled from the corresponding ITK
+#  class XML file.  The SimpleITKClass.json/yaml file is modified in place.
 #
 #  The script is a re-write of the GenerateDocumentation.groovy script in python.
 #
-#  usage: GenerateDoc.py <SimpleITKClass.json> <Path/To/ITK-build/With/Doxygen>
+#  usage: GenerateDoc.py <SimpleITKClass.json|yaml> <Path/To/ITK-build/With/Doxygen>
 #
 
 
 def usage():
     print("")
     print(
-        "usage: GenerateDoc.py [options] <SimpleITKClass.json> <Path/To/ITK-build/With/Doxygen>"
+        "usage: GenerateDoc.py [options] <SimpleITKClass.json|yaml> <Path/To/ITK-build/With/Doxygen>"
     )
     print("")
     print("   -h, --help    This help message")
     print("   -D, --Debug   Enable debugging messages")
-    print("   -b, --backup  Backup JSON file")
+    print("   -b, --backup  Backup JSON/YAML file")
     print("")
 
 
-def find_xml_file(itk_path, json_obj) -> str:
+def find_xml_file(itk_path, data_obj) -> str:
     itk_name = ""
-    if "itk_name" in json_obj:
-        itk_name = json_obj["itk_name"]
+    if "itk_name" in data_obj:
+        itk_name = data_obj["itk_name"]
 
     name = ""
-    if "name" in json_obj:
-        name = json_obj["name"]
+    if "name" in data_obj:
+        name = data_obj["name"]
 
     template_code_filename = ""
-    if "template_code_filename" in json_obj:
-        template_code_filename = json_obj["template_code_filename"]
+    if "template_code_filename" in data_obj:
+        template_code_filename = data_obj["template_code_filename"]
 
     xml_file_options = [
         "classitk_1_1" + itk_name + ".xml",
@@ -65,6 +102,45 @@ def find_xml_file(itk_path, json_obj) -> str:
     print("Tried to read a file for " + name)
     print(xml_file_options)
     sys.exit(1)
+
+
+def load_data_file(file_path):
+    """Load a JSON or YAML file and return the data."""
+    file_ext = os.path.splitext(file_path)[1].lower()
+
+    with io.open(file_path, "r", encoding="utf8") as fp:
+        if file_ext == '.json':
+            return json.load(fp, object_pairs_hook=OrderedDict)
+        elif file_ext == '.yaml' or file_ext == '.yml':
+            return yaml.load(fp, Loader=yaml.SafeLoader)
+        else:
+            raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
+
+
+def save_data_file(file_path, data_obj, backup=False):
+    """Save data to a JSON or YAML file with appropriate formatting."""
+    file_ext = os.path.splitext(file_path)[1].lower()
+
+    if backup:
+        os.rename(file_path, file_path + ".BAK")
+
+    with io.open(file_path, "w", encoding="utf8") as fp:
+        if file_ext == '.json':
+            json_string = json.dumps(
+                data_obj, indent=2, separators=(",", " : "), ensure_ascii=False
+            )
+            fp.write(json_string)
+            print("", file=fp)
+        elif file_ext == '.yaml' or file_ext == '.yml':
+            # Apply block styles for documentation fields
+            folded_keys = ["detaileddescription", "detaileddescriptionSet", "detaileddescriptionGet"]
+            literal_keys = ["custom_itk_cast", "custom_set_input"]
+            styled_data = apply_block_styles(data_obj, folded_style_keys=folded_keys, literal_style_keys=literal_keys)
+
+            yaml_content = yaml.dump(styled_data, default_flow_style=False, sort_keys=False, width=120)
+            fp.write(yaml_content)
+        else:
+            raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
 
 
 #
@@ -102,7 +178,7 @@ def traverse_xml(xml_node, depth=0, debug=False):
         "para": "\n\n",
         "title": "\n",
         "computeroutput": " ",
-        "ref": " ",
+        "ref": "",
         "ulink": " ",
         "codeline": "\n",
         "programlisting": "\\endcode\n",
@@ -172,9 +248,13 @@ def traverse_xml(xml_node, depth=0, debug=False):
 #
 def format_description(xml_node, debug=False):
     result = traverse_xml(xml_node, 0, debug)
-    result = result.replace("\n\n\n", "\n\n")
+    # Replace more than 2 consecutive newlines with two
+    result = re.sub(r'\n\n+', '\n\n', result)
     result = re.sub(" +", " ", result)
+    # Remove any whitespace (spaces, tabs) before newlines
+    result = re.sub(r'[ \t]+\n', '\n', result)
     result = result.strip()
+
     return result
 
 
@@ -221,18 +301,17 @@ if __name__ == "__main__":
         usage()
         sys.exit(1)
 
-    sitk_json = args[0]
+    sitk_file = args[0]
     itk_path = args[1]
 
     #
-    # Load the JSON file
-    with io.open(sitk_json, "r", encoding="utf8") as fp:
-        json_obj = json.load(fp, object_pairs_hook=OrderedDict)
+    # Load the JSON or YAML file
+    data_obj = load_data_file(sitk_file)
 
-    # print(json.dumps(json_obj, indent=1))
+    # print(json.dumps(data_obj, indent=1))
 
     # Find and load the XML file
-    xml_filename = find_xml_file(itk_path, json_obj)
+    xml_filename = find_xml_file(itk_path, data_obj)
     with open(xml_filename, "r", encoding="utf8") as xml_file:
         tree = ElementTree.parse(xml_file)
     root = tree.getroot()
@@ -246,25 +325,25 @@ if __name__ == "__main__":
     detaileddesc = root.find("./compounddef/detaileddescription")
 
     #
-    # Set the class detailed description in the JSON to the formatted text from the XML tree
+    # Set the class detailed description in the data to the formatted text from the XML tree
     #
-    json_obj["detaileddescription"] = format_description(detaileddesc, debug)
+    data_obj["detaileddescription"] = format_description(detaileddesc, debug)
     print(
         blue_text,
         "\nDetailed description\n",
         end_color,
-        repr(json_obj["detaileddescription"]),
+        repr(data_obj["detaileddescription"]),
     )
 
     #
-    # Set the class brief description in the JSON to the formatted text from the XML tree
+    # Set the class brief description in the data to the formatted text from the XML tree
     #
-    json_obj["briefdescription"] = format_description(briefdesc, debug)
+    data_obj["briefdescription"] = format_description(briefdesc, debug)
     print(
         blue_text,
         "\nBrief description\n",
         end_color,
-        repr(json_obj["briefdescription"]),
+        repr(data_obj["briefdescription"]),
     )
 
     #
@@ -279,16 +358,16 @@ if __name__ == "__main__":
             member_dict[name_node.text] = m
 
     #
-    # Loop through the class members and measurements in the JSON
+    # Loop through the class members and measurements in the data
     #
-    print(blue_text, "\nJSON class members and measurements\n", end_color)
+    print(blue_text, "\nClass members and measurements\n", end_color)
     obj_list = []
 
     # Create a list of members and measurements
-    if "members" in json_obj:
-        obj_list = obj_list + json_obj["members"]
-    if "measurements" in json_obj:
-        obj_list = obj_list + json_obj["measurements"]
+    if "members" in data_obj:
+        obj_list = obj_list + data_obj["members"]
+    if "measurements" in data_obj:
+        obj_list = obj_list + data_obj["measurements"]
 
     for m in obj_list:
         name = m["name"]
@@ -305,7 +384,7 @@ if __name__ == "__main__":
                 print(funcname, repr(m_xml))
 
                 # pull the brief and detailed descriptions from the XML to the
-                # JSON
+                # data object
                 for dtype in ["briefdescription", "detaileddescription"]:
                     desc_prefix = dtype + prefix
                     print("Setting", desc_prefix)
@@ -319,12 +398,4 @@ if __name__ == "__main__":
     #
     # We done.  Write out the results.
     #
-    if backup_flag:
-        os.rename(sitk_json, sitk_json + ".BAK")
-
-    with io.open(sitk_json, "w", encoding="utf8") as fp:
-        json_string = json.dumps(
-            json_obj, indent=2, separators=(",", " : "), ensure_ascii=False
-        )
-        fp.write(json_string)
-        print("", file=fp)
+    save_data_file(sitk_file, data_obj, backup_flag)
