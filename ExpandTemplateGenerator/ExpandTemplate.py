@@ -7,6 +7,7 @@ from pathlib import Path
 import logging
 
 import re
+import yaml
 
 # Constants for template generation
 WORD_WRAP_WIDTH = 120
@@ -56,15 +57,31 @@ def format_list(list_, pattern):
     """
     return [pattern.format(s) for s in list_]
 
+def load_configuration(config_file: Path):
+    """Load configuration from JSON or YAML file."""
+    try:
+        with open(config_file, 'r', encoding='utf-8') as f:
+            if config_file.suffix.lower() == '.yaml' or config_file.suffix.lower() == '.yml':
+                return yaml.safe_load(f)
+            elif config_file.suffix.lower() == '.json':
+                return json.load(f)
+            else:
+                logging.error(f"Unsupported configuration file format: {config_file.suffix}")
+                return None
+    except Exception as e:
+        logging.error(f"Error loading configuration file {config_file}: {e}")
+        return None
+
 def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, verbose= False, clobber:bool=True):
     """
-    Expands a template using the provided JSON configuration and Jinja2.
+    Expands a template using the provided JSON or YAML configuration and Jinja2.
 
 
     """
-    # Load JSON configuration
-    with open(config_file, 'r') as f:
-        filter_description = json.load(f)
+    # Load configuration
+    filter_description = load_configuration(config_file)
+    if filter_description is None:
+        return -1
 
     # check all paths exist, print a warning if they do not
     for template_dir in template_dirs:
@@ -104,12 +121,12 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
         return -1
 
     if output_file.exists():
-        with open(output_file, 'r') as f:
+        with open(output_file, 'r', encoding='utf-8') as f:
             existing_content = f.read()
         if existing_content == output_content:
             logging.info(f"Output file {output_file} already exists and content is identical. Skipping write.")
             return 0
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write(output_content)
     return 0
 
