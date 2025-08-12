@@ -6,7 +6,7 @@ import io
 import json
 import yaml
 import re
-import getopt
+import argparse
 from xml.etree import ElementTree
 from collections import OrderedDict
 
@@ -56,6 +56,29 @@ def apply_block_styles(obj, *, folded_style_keys=[], literal_style_keys=[]):
 #
 #  usage: GenerateDoc.py <SimpleITKClass.json|yaml> <Path/To/ITK-build/With/Doxygen>
 #
+
+
+def parse_arguments():
+    """Parse command line arguments using argparse."""
+    parser = argparse.ArgumentParser(
+        description='Update the documentation of a SimpleITK class in its JSON or YAML file. '
+                   'The documentation is pulled from the corresponding ITK class XML file.',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='This script is a re-write of the GenerateDocumentation.groovy script in Python.'
+    )
+
+    parser.add_argument('sitk_file',
+                       help='Path to the SimpleITK class JSON or YAML file')
+    parser.add_argument('itk_path',
+                       help='Path to ITK build directory with Doxygen XML files')
+    parser.add_argument('-D', '--debug',
+                       action='store_true',
+                       help='Enable debugging messages')
+    parser.add_argument('-b', '--backup',
+                       action='store_true',
+                       help='Backup JSON/YAML file before modification')
+
+    return parser.parse_args()
 
 
 def usage():
@@ -263,46 +286,18 @@ def format_description(xml_node, debug=False):
 #
 if __name__ == "__main__":
 
-    # settings
-    debug = False
-    backup_flag = False
+    # Parse command line arguments using argparse
+    args = parse_arguments()
+
+    # Extract settings from parsed arguments
+    debug = args.debug
+    backup_flag = args.backup
+    sitk_file = args.sitk_file
+    itk_path = args.itk_path
+
+    # Color constants for output
     blue_text = "\033[0;34m"
     end_color = "\033[0m"
-
-    # Parse command line arguments
-    try:
-        opts, args = getopt.getopt(
-            sys.argv[1:],
-            "hD",
-            [
-                "help",
-                "debug",
-            ],
-        )
-    except getopt.GetoptError as err:
-        print(str(err))
-        usage()
-        sys.exit(2)
-
-    for o, a in opts:
-        if o in ("-D", "--debug"):
-            print("Debug")
-            debug = True
-        elif o in ("-b", "--backup"):
-            backup_flag = True
-        elif o in ("-h", "--help"):
-            usage()
-            sys.exit()
-        else:
-            assert False, "unhandled options"
-
-    if len(args) != 2:
-        print(args)
-        usage()
-        sys.exit(1)
-
-    sitk_file = args[0]
-    itk_path = args[1]
 
     #
     # Load the JSON or YAML file
