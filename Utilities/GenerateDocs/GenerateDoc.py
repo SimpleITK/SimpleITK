@@ -7,6 +7,7 @@ import json
 import yaml
 import re
 import argparse
+from pathlib import Path
 from xml.etree import ElementTree
 from collections import OrderedDict
 
@@ -67,9 +68,9 @@ def parse_arguments():
         epilog='This script is a re-write of the GenerateDocumentation.groovy script in Python.'
     )
 
-    parser.add_argument('sitk_file',
+    parser.add_argument('sitk_file', type=Path,
                        help='Path to the SimpleITK class JSON or YAML file')
-    parser.add_argument('itk_path',
+    parser.add_argument('itk_path', type=Path,
                        help='Path to ITK build directory with Doxygen XML files')
     parser.add_argument('-D', '--debug',
                        action='store_true',
@@ -82,7 +83,7 @@ def parse_arguments():
 
 
 
-def find_xml_file(itk_path, data_obj) -> str:
+def find_xml_file(itk_path: Path, data_obj) -> Path:
     itk_name = data_obj.get("itk_name", "")
     name = data_obj.get("name", "")
     template_code_filename = data_obj.get("template_code_filename", "")
@@ -94,8 +95,8 @@ def find_xml_file(itk_path, data_obj) -> str:
     ]
 
     for xf in xml_file_options:
-        xname = os.path.join(itk_path, xf)
-        if os.path.isfile(xname):
+        xname = itk_path / xf
+        if xname.is_file():
             try:
                 with open(xname, "r", encoding="utf-8"):
                     print(f"xml file: {xname}")
@@ -108,9 +109,9 @@ def find_xml_file(itk_path, data_obj) -> str:
     sys.exit(1)
 
 
-def load_data_file(file_path):
+def load_data_file(file_path: Path):
     """Load a JSON or YAML file and return the data."""
-    file_ext = os.path.splitext(file_path)[1].lower()
+    file_ext = file_path.suffix.lower()
 
     with open(file_path, "r", encoding="utf-8") as fp:
         if file_ext == '.json':
@@ -121,12 +122,13 @@ def load_data_file(file_path):
             raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
 
 
-def save_data_file(file_path, data_obj, backup=False):
+def save_data_file(file_path: Path, data_obj, backup=False):
     """Save data to a JSON or YAML file with appropriate formatting."""
-    file_ext = os.path.splitext(file_path)[1].lower()
+    file_ext = file_path.suffix.lower()
 
     if backup:
-        os.rename(file_path, f"{file_path}.BAK")
+        backup_path = file_path.with_suffix(f"{file_path.suffix}.BAK")
+        file_path.rename(backup_path)
 
     with open(file_path, "w", encoding="utf-8") as fp:
         if file_ext == '.json':
