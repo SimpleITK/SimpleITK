@@ -5,10 +5,15 @@ import json
 import yaml
 import re
 import argparse
+import tempfile
+import urllib.request
+import tarfile
+import shutil
+import ssl
 from pathlib import Path
 from xml.etree import ElementTree
 from collections import OrderedDict
-from typing import Dict, List, Any, Union
+from typing import Dict, List, Any, Union, Optional
 
 
 # YAML block style classes
@@ -27,13 +32,77 @@ def literal_presenter(dumper, data):
 yaml.add_representer(folded_str, folded_presenter)
 yaml.add_representer(literal_str, literal_presenter)
 
+
+def download_itk_doxygen(temp_dir: Path, version="latest") -> Path:
+    """Download and extract the latest ITK Doxygen XML from GitHub releases."""
+
+    # Try to use system certificates properly
+    import certifi
+    import ssl
+
+    # Create SSL context with proper certificate verification
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+
+    # Fallback to a known working URL pattern
+    download_url = "https://github.com/InsightSoftwareConsortium/ITKDoxygen/releases/download/latest/InsightDoxygenDocXml-latest.tar.gz"
+
+    print(f"Downloading ITK Doxygen XML from: {download_url}")
+
+    # Download the tar.gz file
+    tar_path = temp_dir / "InsightDoxygenDocXml.tar.gz"
+    try:
+        request = urllib.request.Request(download_url)
+        with urllib.request.urlopen(request, context=ssl_context) as response:
+            with open(tar_path, 'wb') as f:
+                shutil.copyfileobj(response, f)
+    except Exception as e:
+        # If certifi fails, try with default system certificates
+        print(f"Download with certifi failed: {e}")
+        print("Trying with system default SSL context...")
+        try:
+            ssl_context = ssl.create_default_context()
+            request = urllib.request.Request(download_url)
+            with urllib.request.urlopen(request, context=ssl_context) as response:
+                with open(tar_path, 'wb') as f:
+                    shutil.copyfileobj(response, f)
+        except Exception as e2:
+            raise RuntimeError(f"Failed to download ITK Doxygen XML with both certifi and system certs: {e2}")
+
+    # Extract the tar.gz file
+    xml_dir = temp_dir / "xml"
+    xml_dir.mkdir(exist_ok=True)
+
+    try:
+        with tarfile.open(tar_path, 'r:gz') as tar:
+            tar.extractall(path=temp_dir)
+    except Exception as e:
+        raise RuntimeError(f"Failed to extract ITK Doxygen XML: {e}")
+
+    # Clean up the tar file
+    tar_path.unlink()
+
+    # Return the path to the extracted XML directory
+    if xml_dir.exists():
+        return xml_dir
+    else:
+        # Some archives might extract to a different structure
+        extracted_dirs = [d for d in temp_dir.iterdir() if d.is_dir()]
+        for d in extracted_dirs:
+            if (d / "xml").exists():
+                return d / "xml"
+            if any(f.name.endswith('.xml') for f in d.iterdir() if f.is_file()):
+                return d
+
+        raise RuntimeError("Could not find XML files in extracted archive")
+
+
 def apply_block_styles(obj: Any, *, folded_style_keys: List[str] = None, literal_style_keys: List[str] = None) -> Any:
     """Apply block styles to specified keys in a data structure."""
     if folded_style_keys is None:
         folded_style_keys = []
     if literal_style_keys is None:
         literal_style_keys = []
-        
+
     if isinstance(obj, dict):
         result = {}
         for k, v in obj.items():
@@ -74,8 +143,9 @@ def parse_arguments():
 
     parser.add_argument('sitk_file', type=Path,
                        help='Path to the SimpleITK class JSON or YAML file')
-    parser.add_argument('itk_path', type=Path,
-                       help='Path to ITK build directory with Doxygen XML files')
+    parser.add_argument('itk_path', type=Path, nargs='?',
+                       help='Path to ITK build directory with Doxygen XML files. '
+                            'If not provided, the latest ITK Doxygen XML will be downloaded automatically.')
     parser.add_argument('-D', '--debug',
                        action='store_true',
                        help='Enable debugging messages')
@@ -271,92 +341,107 @@ if __name__ == "__main__":
     sitk_file = args.sitk_file
     itk_path = args.itk_path
 
-    # Color constants for output
-    blue_text = "\033[0;34m"
-    end_color = "\033[0m"
+    # Handle optional itk_path - download if not provided
+    temp_dir = None
+    try:
+        if itk_path is None:
+            print("No ITK path provided, downloading latest ITK Doxygen XML...")
+            temp_dir = Path(tempfile.mkdtemp(prefix="itk_doxygen_"))
+            itk_path = download_itk_doxygen(temp_dir)
+            print(f"Downloaded and extracted ITK Doxygen XML to: {itk_path}")
 
-    #
-    # Load the JSON or YAML file
-    data_obj = load_data_file(sitk_file)
+        # Color constants for output
+        blue_text = "\033[0;34m"
+        end_color = "\033[0m"
 
-    # print(json.dumps(data_obj, indent=1))
+        #
+        # Load the JSON or YAML file
+        data_obj = load_data_file(sitk_file)
 
-    # Find and load the XML file
-    xml_filename = find_xml_file(itk_path, data_obj)
-    with open(xml_filename, "r", encoding="utf-8") as xml_file:
-        tree = ElementTree.parse(xml_file)
-    root = tree.getroot()
+        # print(json.dumps(data_obj, indent=1))
 
-    # Filter the XML to remove extraneous stuff
-    process_xml(root, debug)
+        # Find and load the XML file
+        xml_filename = find_xml_file(itk_path, data_obj)
+        with open(xml_filename, "r", encoding="utf-8") as xml_file:
+            tree = ElementTree.parse(xml_file)
+        root = tree.getroot()
 
-    # Get the class brief description node
-    briefdesc = root.find("./compounddef/briefdescription")
-    # Get the class detailed description node
-    detaileddesc = root.find("./compounddef/detaileddescription")
+        # Filter the XML to remove extraneous stuff
+        process_xml(root, debug)
 
-    #
-    # Set the class detailed description in the data to the formatted text from the XML tree
-    #
-    data_obj["detaileddescription"] = format_description(detaileddesc, debug)
-    print(f"{blue_text}\nDetailed description\n{end_color}{repr(data_obj['detaileddescription'])}")
+        # Get the class brief description node
+        briefdesc = root.find("./compounddef/briefdescription")
+        # Get the class detailed description node
+        detaileddesc = root.find("./compounddef/detaileddescription")
 
-    #
-    # Set the class brief description in the data to the formatted text from the XML tree
-    #
-    data_obj["briefdescription"] = format_description(briefdesc, debug)
-    print(f"{blue_text}\nBrief description\n{end_color}{repr(data_obj['briefdescription'])}")
+        #
+        # Set the class detailed description in the data to the formatted text from the XML tree
+        #
+        data_obj["detaileddescription"] = format_description(detaileddesc, debug)
+        print(f"{blue_text}\nDetailed description\n{end_color}{repr(data_obj['detaileddescription'])}")
 
-    #
-    # Build a dict of class member functions in the XML
-    #
-    member_dict = {}
-    print(f"{blue_text}\nBuilding XML member function dict\n{end_color}")
-    for m in root.findall("./compounddef/sectiondef/memberdef[@kind='function']"):
-        name_node = m.find("./name")
-        if name_node is not None:
-            print(f"{name_node.text} : {repr(m)}")
-            member_dict[name_node.text] = m
+        #
+        # Set the class brief description in the data to the formatted text from the XML tree
+        #
+        data_obj["briefdescription"] = format_description(briefdesc, debug)
+        print(f"{blue_text}\nBrief description\n{end_color}{repr(data_obj['briefdescription'])}")
 
-    #
-    # Loop through the class members and measurements in the data
-    #
-    print(f"{blue_text}\nClass members and measurements\n{end_color}")
-    obj_list = []
+        #
+        # Build a dict of class member functions in the XML
+        #
+        member_dict = {}
+        print(f"{blue_text}\nBuilding XML member function dict\n{end_color}")
+        for m in root.findall("./compounddef/sectiondef/memberdef[@kind='function']"):
+            name_node = m.find("./name")
+            if name_node is not None:
+                print(f"{name_node.text} : {repr(m)}")
+                member_dict[name_node.text] = m
 
-    # Create a list of members and measurements
-    if "members" in data_obj:
-        obj_list.extend(data_obj["members"])
-    if "measurements" in data_obj:
-        obj_list.extend(data_obj["measurements"])
+        #
+        # Loop through the class members and measurements in the data
+        #
+        print(f"{blue_text}\nClass members and measurements\n{end_color}")
+        obj_list = []
 
-    for m in obj_list:
-        name = m["name"]
-        print(f"{blue_text}{name}{end_color}")
+        # Create a list of members and measurements
+        if "members" in data_obj:
+            obj_list.extend(data_obj["members"])
+        if "measurements" in data_obj:
+            obj_list.extend(data_obj["measurements"])
 
-        # Iterate through the possible prefixes
-        for prefix in ["", "Set", "Get"]:
-            funcname = f"{prefix}{name}"
+        for m in obj_list:
+            name = m["name"]
+            print(f"{blue_text}{name}{end_color}")
 
-            if funcname in member_dict:
-                # find the item in the XML that corresponds to the JSON member
-                # function
-                m_xml = member_dict[funcname]
-                print(f"{funcname} {repr(m_xml)}")
+            # Iterate through the possible prefixes
+            for prefix in ["", "Set", "Get"]:
+                funcname = f"{prefix}{name}"
 
-                # pull the brief and detailed descriptions from the XML to the
-                # data object
-                for dtype in ["briefdescription", "detaileddescription"]:
-                    desc_prefix = f"{dtype}{prefix}"
-                    print(f"Setting {desc_prefix}")
-                    desc_node = m_xml.find(f"./{dtype}")
-                    if desc_node is not None:
-                        m[desc_prefix] = format_description(desc_node, debug)
-                        print(f"  {m[desc_prefix]}")
-                    else:
-                        print(f"./{dtype} not found in the XML")
+                if funcname in member_dict:
+                    # find the item in the XML that corresponds to the JSON member
+                    # function
+                    m_xml = member_dict[funcname]
+                    print(f"{funcname} {repr(m_xml)}")
 
-    #
-    # We done.  Write out the results.
-    #
-    save_data_file(sitk_file, data_obj, backup_flag)
+                    # pull the brief and detailed descriptions from the XML to the
+                    # data object
+                    for dtype in ["briefdescription", "detaileddescription"]:
+                        desc_prefix = f"{dtype}{prefix}"
+                        print(f"Setting {desc_prefix}")
+                        desc_node = m_xml.find(f"./{dtype}")
+                        if desc_node is not None:
+                            m[desc_prefix] = format_description(desc_node, debug)
+                            print(f"  {m[desc_prefix]}")
+                        else:
+                            print(f"./{dtype} not found in the XML")
+
+        #
+        # We done.  Write out the results.
+        #
+        save_data_file(sitk_file, data_obj, backup_flag)
+
+    finally:
+        # Clean up temporary directory if it was created
+        if temp_dir and temp_dir.exists():
+            print(f"Cleaning up temporary directory: {temp_dir}")
+            shutil.rmtree(temp_dir)
