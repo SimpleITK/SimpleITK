@@ -47,14 +47,32 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.cs
+       :language: csharp
+       :lines: 23-
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.cxx
        :language: c++
-       :lines: 18-
+       :lines: 21-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.java
+       :language: java
+       :lines: 22-
 
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.py
        :language: python
-       :lines: 1,19-
+       :lines: 1,22-
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/ImageRegistrationMethodBSpline3/ImageRegistrationMethodBSpline3.R
+       :language: R
+       :lines: 18-
