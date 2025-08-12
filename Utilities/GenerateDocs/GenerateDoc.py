@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import os
 import sys
-import io
 import json
 import yaml
 import re
@@ -10,6 +8,7 @@ import argparse
 from pathlib import Path
 from xml.etree import ElementTree
 from collections import OrderedDict
+from typing import Dict, List, Any, Union
 
 
 # YAML block style classes
@@ -28,8 +27,13 @@ def literal_presenter(dumper, data):
 yaml.add_representer(folded_str, folded_presenter)
 yaml.add_representer(literal_str, literal_presenter)
 
-def apply_block_styles(obj, *, folded_style_keys=[], literal_style_keys=[]):
+def apply_block_styles(obj: Any, *, folded_style_keys: List[str] = None, literal_style_keys: List[str] = None) -> Any:
     """Apply block styles to specified keys in a data structure."""
+    if folded_style_keys is None:
+        folded_style_keys = []
+    if literal_style_keys is None:
+        literal_style_keys = []
+        
     if isinstance(obj, dict):
         result = {}
         for k, v in obj.items():
@@ -83,7 +87,7 @@ def parse_arguments():
 
 
 
-def find_xml_file(itk_path: Path, data_obj) -> Path:
+def find_xml_file(itk_path: Path, data_obj: Dict[str, Any]) -> Path:
     itk_name = data_obj.get("itk_name", "")
     name = data_obj.get("name", "")
     template_code_filename = data_obj.get("template_code_filename", "")
@@ -101,15 +105,15 @@ def find_xml_file(itk_path: Path, data_obj) -> Path:
                 with open(xname, "r", encoding="utf-8"):
                     print(f"xml file: {xname}")
                     return xname
-            except IOError:
-                print(f"Failed to open file: {xname}")
+            except OSError as e:
+                print(f"Failed to open file: {xname} - {e}")
 
     print(f"Tried to read a file for {name}")
     print(xml_file_options)
     sys.exit(1)
 
 
-def load_data_file(file_path: Path):
+def load_data_file(file_path: Path) -> Union[Dict[str, Any], OrderedDict]:
     """Load a JSON or YAML file and return the data."""
     file_ext = file_path.suffix.lower()
 
@@ -122,7 +126,7 @@ def load_data_file(file_path: Path):
             raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
 
 
-def save_data_file(file_path: Path, data_obj, backup=False):
+def save_data_file(file_path: Path, data_obj: Union[Dict[str, Any], OrderedDict], backup: bool = False) -> None:
     """Save data to a JSON or YAML file with appropriate formatting."""
     file_ext = file_path.suffix.lower()
 
@@ -149,10 +153,8 @@ def save_data_file(file_path: Path, data_obj, backup=False):
             raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
 
 
-#
-# Prunes any simplesect nodes that have a title node containing the text 'Wiki Examples'
-#
-def process_xml(root, debug=False):
+def process_xml(root: ElementTree.Element, debug: bool = False) -> None:
+    """Prune any simplesect nodes that have a title node containing the text 'Wiki Examples'."""
     if debug:
         print(root)
 
@@ -169,10 +171,8 @@ def process_xml(root, debug=False):
             print(f"After: {ElementTree.tostring(par)}\n")
 
 
-#
-# Recursively traverse an XML subtree to produced a formatted description string
-#
-def traverse_xml(xml_node, depth=0, debug=False):
+def traverse_xml(xml_node: ElementTree.Element, depth: int = 0, debug: bool = False) -> str:
+    """Recursively traverse an XML subtree to produce a formatted description string."""
     result = ""
     prefix = {
         "listitem": "\\li ",
@@ -244,11 +244,8 @@ def traverse_xml(xml_node, depth=0, debug=False):
     return result
 
 
-#
-# Call the recursive XML traversal function to get a description string,
-# then clean up some white space
-#
-def format_description(xml_node, debug=False):
+def format_description(xml_node: ElementTree.Element, debug: bool = False) -> str:
+    """Call the recursive XML traversal function to get a description string, then clean up whitespace."""
     result = traverse_xml(xml_node, 0, debug)
     # Replace more than 2 consecutive newlines with two
     result = re.sub(r'\n\n+', '\n\n', result)
