@@ -119,7 +119,6 @@ main(int argc, char * argv[])
 
   R.SetMetricAsJointHistogramMutualInformation(20);
   R.MetricUseFixedImageGradientFilterOff();
-  R.MetricUseFixedImageGradientFilterOff();
 
   {
     double                                                  learningRate = 1.0;
