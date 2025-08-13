@@ -10,10 +10,11 @@ import urllib.request
 import tarfile
 import shutil
 import ssl
+import logging
 from pathlib import Path
 from xml.etree import ElementTree
 from collections import OrderedDict
-from typing import Dict, List, Any, Union, Optional
+from typing import Dict, List, Any, Union
 
 
 # YAML block style classes
@@ -39,7 +40,7 @@ def download_itk_doxygen(temp_dir: Path, version="latest") -> Path:
     # Fallback to a known working URL pattern
     download_url = "https://github.com/InsightSoftwareConsortium/ITKDoxygen/releases/download/latest/InsightDoxygenDocXml-latest.tar.gz"
 
-    print(f"Downloading ITK Doxygen XML from: {download_url}")
+    logging.info(f"Downloading ITK Doxygen XML from: {download_url}")
 
     # Download the tar.gz file
     tar_path = temp_dir / "InsightDoxygenDocXml.tar.gz"
@@ -129,15 +130,32 @@ def parse_arguments():
     parser.add_argument('--xml-path', type=Path,
                        help='Path to ITK build directory with Doxygen XML files. '
                             'If not provided, the latest ITK Doxygen XML will be downloaded automatically.')
-    parser.add_argument('-D', '--debug',
-                       action='store_true',
-                       help='Enable debugging messages')
-    parser.add_argument('-b', '--backup',
-                       action='store_true',
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                       help='Increase verbosity level (use -v, -vv, or -vvv)')
+    parser.add_argument('--quiet', '-q', action='store_true',
+                       help='Suppress all output except errors')
+    parser.add_argument('--backup', action='store_true',
                        help='Backup JSON/YAML file before modification')
 
     return parser.parse_args()
 
+
+def configure_logging(verbose: int, quiet: bool) -> None:
+    """Configure logging based on command line arguments."""
+    if quiet:
+        level = logging.ERROR
+    elif verbose == 0:
+        level = logging.WARNING
+    elif verbose == 1:
+        level = logging.INFO
+    else:  # verbose >= 2
+        level = logging.DEBUG
+
+    logging.basicConfig(
+        level=level,
+        format='%(levelname)s: %(message)s',
+        stream=sys.stdout
+    )
 
 
 def find_xml_file(xml_path: Path, data_obj: Dict[str, Any]) -> Path:
@@ -153,8 +171,9 @@ def find_xml_file(xml_path: Path, data_obj: Dict[str, Any]) -> Path:
 
     for xml_file in xml_file_options:
         xml_filename = xml_path / xml_file
-        print(f"xml file: {xml_filename}")
+        logging.debug(f"Looking for XML file: {xml_filename}")
         if xml_filename.exists():
+            logging.info(f"Found XML file: {xml_filename}")
             return xml_filename
 
     raise FileNotFoundError(f"Could not find XML file for {name} in {xml_path}")
@@ -200,10 +219,9 @@ def save_data_file(file_path: Path, data_obj: Union[Dict[str, Any], OrderedDict]
             raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
 
 
-def process_xml(root: ElementTree.Element, debug: bool = False) -> None:
+def process_xml(root: ElementTree.Element) -> None:
     """Prune any simplesect nodes that have a title node containing the text 'Wiki Examples'."""
-    if debug:
-        print(root)
+    logging.debug(f"XML root: {root}")
 
     # Find nodes with 'Wiki Examples' and 'ITK Sphinx Examples' in their title
     wiki_sect = root.findall(".//title[.='Wiki Examples']/..")
@@ -211,19 +229,13 @@ def process_xml(root: ElementTree.Element, debug: bool = False) -> None:
     for ws in wiki_sect:
         par = ws.getparent()
 
-        if debug:
-            print(f"\nBefore: {ElementTree.tostring(par)}\n")
+        logging.debug(f"\nBefore: {ElementTree.tostring(par)}\n")
         par.remove(ws)
-        if debug:
-            print(f"After: {ElementTree.tostring(par)}\n")
+        logging.debug(f"After: {ElementTree.tostring(par)}\n")
 
 
-def traverse_xml(xml_node: ElementTree.Element, depth: int = 0, debug: bool = False) -> str:
+def traverse_xml(xml_node: ElementTree.Element, depth: int = 0) -> str:
     """Recursively traverse an XML subtree to produce a formatted description string."""
-
-    # Color constants for debug output
-    blue_text = "\033[0;34m"
-    end_color = "\033[0m"
 
     result = ""
     prefix = {
@@ -242,19 +254,17 @@ def traverse_xml(xml_node: ElementTree.Element, depth: int = 0, debug: bool = Fa
         "programlisting": "\\endcode\n",
         "sp": " ",
     }
-    if debug:
-        print(f"\nNode: {xml_node}")
-        print("  " * depth + f"{xml_node.tag}: {xml_node.attrib} {xml_node.text}")
+    logging.debug(f"\nNode: {xml_node}")
+    logging.debug("  " * depth + f"{xml_node.tag}: {xml_node.attrib} {xml_node.text}")
 
     # handle simplesection nodes (particularly See nodes)
     if xml_node.tag == "simplesect":
         if xml_node.attrib["kind"] == "see":
             for child in xml_node:
-                child_desc = traverse_xml(child, depth + 1, debug)
+                child_desc = traverse_xml(child, depth + 1)
                 if len(child_desc):
                     result = result + f"\\see {child_desc}\n"
-                    if debug:
-                        print(f"See result: {repr(result)}")
+                    logging.debug(f"See result: {repr(result)}")
             return result
         else:
             # other, non-see, simplesect nodes
@@ -262,22 +272,18 @@ def traverse_xml(xml_node: ElementTree.Element, depth: int = 0, debug: bool = Fa
 
     # iterate through the children
     for child in xml_node:
-        if debug:
-            print(f"Child: {child} {child.tag} {child.text}")
-        result = result + traverse_xml(child, depth + 1, debug)
+        logging.debug(f"Child: {child} {child.tag} {child.text}")
+        result = result + traverse_xml(child, depth + 1)
 
     text = xml_node.text
 
     # handle formula nodes
     if xml_node.tag == "formula":
-        if debug:
-            print(f"{blue_text}\nFormula{end_color}")
-            print(text)
+        logging.debug(f"\nFormula: {text}")
         text = text.replace("\\[", " \\f[", 1)
         text = text.replace("\\]", "\\f] ")
         text = text.replace("$", "\\f$") + " "
-        if debug:
-            print(text)
+        logging.debug(f"Formula after replacement: {text}")
 
     # add the prefix and postfixes
     if xml_node.tag in prefix:
@@ -290,26 +296,20 @@ def traverse_xml(xml_node: ElementTree.Element, depth: int = 0, debug: bool = Fa
         result = result + xml_node.tail
 
     # finished
-    if debug:
-        print("  " * depth + f"result: {repr(result)}")
+    logging.debug("  " * depth + f"result: {repr(result)}")
 
     return result
 
 
-def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, backup_flag: bool = False) -> None:
+def process_sitk_file(sitk_file: Path, xml_path: Path, backup_flag: bool = False) -> None:
     """Process a single SimpleITK JSON/YAML file to update its documentation from ITK XML.
 
     Args:
         sitk_file: Path to the SimpleITK JSON or YAML file
         xml_path: Path to ITK build directory with Doxygen XML files
-        debug: Enable debugging messages
         backup_flag: Backup the file before modification
     """
-    # Color constants for output
-    blue_text = "\033[0;34m"
-    end_color = "\033[0m"
-
-    print(f"{blue_text}\nProcessing: {sitk_file}{end_color}")
+    logging.info(f"Processing: {sitk_file}")
 
     # Load the JSON or YAML file
     data_obj = load_data_file(sitk_file)
@@ -321,7 +321,7 @@ def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, back
     root = tree.getroot()
 
     # Filter the XML to remove extraneous stuff
-    process_xml(root, debug)
+    process_xml(root)
 
     # Get the class brief description node
     briefdesc = root.find("./compounddef/briefdescription")
@@ -331,30 +331,30 @@ def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, back
     #
     # Set the class detailed description in the data to the formatted text from the XML tree
     #
-    data_obj["detaileddescription"] = format_description(detaileddesc, debug)
-    print(f"{blue_text}\nDetailed description\n{end_color}{repr(data_obj['detaileddescription'])}")
+    data_obj["detaileddescription"] = format_description(detaileddesc)
+    logging.debug(f"\nDetailed description: {repr(data_obj['detaileddescription'])}")
 
     #
     # Set the class brief description in the data to the formatted text from the XML tree
     #
-    data_obj["briefdescription"] = format_description(briefdesc, debug)
-    print(f"{blue_text}\nBrief description\n{end_color}{repr(data_obj['briefdescription'])}")
+    data_obj["briefdescription"] = format_description(briefdesc)
+    logging.debug(f"\nBrief description: {repr(data_obj['briefdescription'])}")
 
     #
     # Build a dict of class member functions in the XML
     #
     member_dict = {}
-    print(f"{blue_text}\nBuilding XML member function dict\n{end_color}")
+    logging.debug("\nBuilding XML member function dict")
     for m in root.findall("./compounddef/sectiondef/memberdef[@kind='function']"):
         name_node = m.find("./name")
         if name_node is not None:
-            print(f"{name_node.text} : {repr(m)}")
+            logging.debug(f"{name_node.text} : {repr(m)}")
             member_dict[name_node.text] = m
 
     #
     # Loop through the class members and measurements in the data
     #
-    print(f"{blue_text}\nClass members and measurements\n{end_color}")
+    logging.debug("\nClass members and measurements")
     obj_list = []
 
     # Create a list of members and measurements
@@ -365,7 +365,7 @@ def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, back
 
     for m in obj_list:
         name = m["name"]
-        print(f"{blue_text}{name}{end_color}")
+        logging.debug(f"Processing member: {name}")
 
         # Iterate through the possible prefixes
         for prefix in ["", "Set", "Get"]:
@@ -375,19 +375,19 @@ def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, back
                 # find the item in the XML that corresponds to the JSON member
                 # function
                 m_xml = member_dict[funcname]
-                print(f"{funcname} {repr(m_xml)}")
+                logging.debug(f"{funcname} {repr(m_xml)}")
 
                 # pull the brief and detailed descriptions from the XML to the
                 # data object
                 for dtype in ["briefdescription", "detaileddescription"]:
                     desc_prefix = f"{dtype}{prefix}"
-                    print(f"Setting {desc_prefix}")
+                    logging.debug(f"Setting {desc_prefix}")
                     desc_node = m_xml.find(f"./{dtype}")
                     if desc_node is not None:
-                        m[desc_prefix] = format_description(desc_node, debug)
-                        print(f"  {m[desc_prefix]}")
+                        m[desc_prefix] = format_description(desc_node)
+                        logging.debug(f"  {m[desc_prefix]}")
                     else:
-                        print(f"./{dtype} not found in the XML")
+                        logging.debug(f"./{dtype} not found in the XML")
 
     #
     # We done.  Write out the results.
@@ -395,9 +395,9 @@ def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, back
     save_data_file(sitk_file, data_obj, backup_flag)
 
 
-def format_description(xml_node: ElementTree.Element, debug: bool = False) -> str:
+def format_description(xml_node: ElementTree.Element) -> str:
     """Call the recursive XML traversal function to get a description string, then clean up whitespace."""
-    result = traverse_xml(xml_node, 0, debug)
+    result = traverse_xml(xml_node, 0)
     # Replace more than 2 consecutive newlines with two
     result = re.sub(r'\n\n+', '\n\n', result)
     result = re.sub(" +", " ", result)
@@ -416,8 +416,10 @@ if __name__ == "__main__":
     # Parse command line arguments using argparse
     args = parse_arguments()
 
+    # Configure logging
+    configure_logging(args.verbose, args.quiet)
+
     # Extract settings from parsed arguments
-    debug = args.debug
     backup_flag = args.backup
     sitk_files = args.sitk_files
     xml_path = args.xml_path
@@ -426,22 +428,22 @@ if __name__ == "__main__":
     temp_dir = None
     try:
         if xml_path is None:
-            print("No ITK path provided, downloading latest ITK Doxygen XML...")
+            logging.info("No ITK path provided, downloading latest ITK Doxygen XML...")
             temp_dir = Path(tempfile.mkdtemp(prefix="itk_doxygen_"))
             xml_path = download_itk_doxygen(temp_dir)
-            print(f"Downloaded and extracted ITK Doxygen XML to: {xml_path}")
+            logging.info(f"Downloaded and extracted ITK Doxygen XML to: {xml_path}")
 
         # Process each file
         for sitk_file in sitk_files:
             try:
-                process_sitk_file(sitk_file, xml_path, debug, backup_flag)
-                print(f"Successfully processed: {sitk_file}")
+                process_sitk_file(sitk_file, xml_path, backup_flag)
+                logging.info(f"Successfully processed: {sitk_file}")
             except Exception as e:
-                print(f"Error processing {sitk_file}: {e}")
+                logging.error(f"Error processing {sitk_file}: {e}")
                 # Continue with other files instead of stopping
 
     finally:
         # Clean up temporary directory if it was created
         if temp_dir and temp_dir.exists():
-            print(f"Cleaning up temporary directory: {temp_dir}")
+            logging.debug(f"Cleaning up temporary directory: {temp_dir}")
             shutil.rmtree(temp_dir)
