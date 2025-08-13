@@ -1,5 +1,4 @@
 import argparse
-import json
 from jinja2 import Environment, FileSystemLoader
 import os
 from typing import List

@@ -38,7 +38,7 @@ set(
   "Python executable used for code generation."
 )
 
-# Check for Python jsonschema module
+# Check for Python jsonschema module (used to validate YAML config files)
 sitk_check_python_module_version(
   MODULE_NAME jsonschema
   MINIMUM_VERSION 4.0
@@ -75,7 +75,7 @@ set(
 )
 
 # Sets "out_var" variable name to the value in the config path specified
-# to the json/yaml file name. If an error is encountered than the variable
+# to the yaml file name. If an error is encountered than the variable
 # is not updated.
 #
 function(get_config_path out_var config_file path)
@@ -95,17 +95,11 @@ function(get_config_path out_var config_file path)
       ERROR_STRIP_TRAILING_WHITESPACE
     )
   else()
-    execute_process(
-      COMMAND
-        ${SimpleITK_Python_EXECUTABLE} -c
-        "import sys, json; d=json.load(open(sys.argv[1])); v=d;\nfor k in sys.argv[2].split('.'):\n    v = v[k]\nprint(v)"
-        ${config_file} ${path}
-      OUTPUT_VARIABLE value
-      RESULT_VARIABLE ret
-      ERROR_VARIABLE error_var
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-      ERROR_STRIP_TRAILING_WHITESPACE
+    message(
+      WARNING
+      "Unsupported configuration file format: ${extension}. Only YAML files are supported."
     )
+    return()
   endif()
 
   if(NOT ret)
@@ -167,15 +161,13 @@ function(expand_template FILENAME input_dir output_dir library_name)
   set(output_h "${output_dir}/include/sitk${FILENAME}.h")
   set(output_cxx "${output_dir}/src/sitk${FILENAME}.cxx")
 
-  # Check if JSON or YAML file exists (preferring JSON if both exist)
-  if(EXISTS ${input_dir}/json/${FILENAME}.json)
-    set(input_config_file ${input_dir}/json/${FILENAME}.json)
-  elseif(EXISTS ${input_dir}/json/${FILENAME}.yaml)
-    set(input_config_file ${input_dir}/json/${FILENAME}.yaml)
-  elseif(EXISTS ${input_dir}/json/${FILENAME}.yml)
-    set(input_config_file ${input_dir}/json/${FILENAME}.yml)
+  # Check if YAML file exists
+  if(EXISTS ${input_dir}/yaml/${FILENAME}.yaml)
+    set(input_config_file ${input_dir}/yaml/${FILENAME}.yaml)
+  elseif(EXISTS ${input_dir}/yaml/${FILENAME}.yml)
+    set(input_config_file ${input_dir}/yaml/${FILENAME}.yml)
   else()
-    message(WARNING "No JSON or YAML configuration file found for ${FILENAME}")
+    message(WARNING "No YAML configuration file found for ${FILENAME}")
     return()
   endif()
 
@@ -205,7 +197,7 @@ function(expand_template FILENAME input_dir output_dir library_name)
     ""
   )
 
-  # validate config files if requirements available
+  # validate YAML config files if requirements available
   if(SimpleITK_Python_JSONSCHEMA_VERSION)
     set(
       JSON_SCHEMA_FILE
@@ -325,20 +317,15 @@ macro(generate_filter_source)
 
   message(STATUS "Processing configuration files...")
 
-  # Glob all json and yaml files in the current directory
-  file(GLOB json_config_files ${generated_code_input_path}/json/[a-zA-Z]*.json)
+  # Glob all yaml files in the current directory
   file(
     GLOB yaml_config_files
-    ${generated_code_input_path}/json/[a-zA-Z]*.yaml
-    ${generated_code_input_path}/json/[a-zA-Z]*.yml
+    ${generated_code_input_path}/yaml/[a-zA-Z]*.yaml
+    ${generated_code_input_path}/yaml/[a-zA-Z]*.yml
   )
 
-  # Combine the file lists, JSON files will be processed first
-  set(
-    config_files
-    ${json_config_files}
-    ${yaml_config_files}
-  )
+  # Use only YAML config files
+  set(config_files ${yaml_config_files})
 
   # Loop through config files and expand each one
   foreach(f ${config_files})

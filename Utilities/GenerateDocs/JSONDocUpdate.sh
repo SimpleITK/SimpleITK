@@ -6,7 +6,7 @@
 # config_vars.sh file. The ITK Doxygen XML will automatically be
 # downloaded if needed.
 #
-# Usage: JSONDocUpdate.sh Code/BasicFilters/json/SomeFilter.json
+# Usage: JSONDocUpdate.sh Code/BasicFilters/yaml/SomeFilter.yaml
 #
 
 die() {
