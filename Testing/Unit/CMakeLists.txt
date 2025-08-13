@@ -128,10 +128,9 @@ set(_stride 50)
 set(_exec_i 1) # exec 0 is the manual tests
 set(_i 0)
 
-# Initialize the list of all config file extensions we support
+# Only support YAML configuration files
 set(
   CONFIG_EXTENSIONS
-  ".json"
   ".yaml"
   ".yml"
 )
@@ -160,31 +159,23 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
     set(_i 0)
   endif()
 
-  # Set up some convenience variables - check for either JSON or YAML file
-  # Define supported file extensions in order of preference
+  # Only check for YAML configuration files
   set(
     CONFIG_EXTENSIONS
-    ".json"
     ".yaml"
     ".yml"
   )
-
-  # Initialize config file variable
   set(filter_config_file "")
-
-  # Check for each extension in order of preference
   foreach(ext ${CONFIG_EXTENSIONS})
     set(
       potential_file
-      ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/json/${FILTERNAME}${ext}
+      ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/yaml/${FILTERNAME}${ext}
     )
     if(EXISTS ${potential_file})
       set(filter_config_file ${potential_file})
       break()
     endif()
   endforeach()
-
-  # For compatibility with existing code
   set(filter_json_file ${filter_config_file})
 
   ######
@@ -193,10 +184,7 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
 
   # Skip if the config file doesn't exist
   if(NOT EXISTS ${filter_json_file})
-    message(
-      STATUS
-      "Skipping ${FILTERNAME} - no JSON or YAML configuration file found"
-    )
+    message(STATUS "Skipping ${FILTERNAME} - no YAML configuration file found")
     continue()
   endif()
 
