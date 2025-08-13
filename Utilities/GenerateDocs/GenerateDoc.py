@@ -126,7 +126,7 @@ def parse_arguments():
 
     parser.add_argument('sitk_files', type=Path, nargs='+',
                        help='Path(s) to the SimpleITK class JSON or YAML file(s)')
-    parser.add_argument('itk_path', type=Path, nargs='?',
+    parser.add_argument('--xml-path', type=Path,
                        help='Path to ITK build directory with Doxygen XML files. '
                             'If not provided, the latest ITK Doxygen XML will be downloaded automatically.')
     parser.add_argument('-D', '--debug',
@@ -140,7 +140,7 @@ def parse_arguments():
 
 
 
-def find_xml_file(itk_path: Path, data_obj: Dict[str, Any]) -> Path:
+def find_xml_file(xml_path: Path, data_obj: Dict[str, Any]) -> Path:
     itk_name = data_obj.get("itk_name", "")
     name = data_obj.get("name", "")
     template_code_filename = data_obj.get("template_code_filename", "")
@@ -151,19 +151,13 @@ def find_xml_file(itk_path: Path, data_obj: Dict[str, Any]) -> Path:
         f"classitk_1_1{name}.xml",
     ]
 
-    for xf in xml_file_options:
-        xname = itk_path / xf
-        if xname.is_file():
-            try:
-                with open(xname, "r", encoding="utf-8"):
-                    print(f"xml file: {xname}")
-                    return xname
-            except OSError as e:
-                print(f"Failed to open file: {xname} - {e}")
+    for xml_file in xml_file_options:
+        xml_filename = xml_path / xml_file
+        print(f"xml file: {xml_filename}")
+        if xml_filename.exists():
+            return xml_filename
 
-    print(f"Tried to read a file for {name}")
-    print(xml_file_options)
-    sys.exit(1)
+    raise FileNotFoundError(f"Could not find XML file for {name} in {xml_path}")
 
 
 def load_data_file(file_path: Path) -> Union[Dict[str, Any], OrderedDict]:
@@ -190,7 +184,7 @@ def save_data_file(file_path: Path, data_obj: Union[Dict[str, Any], OrderedDict]
     with open(file_path, "w", encoding="utf-8") as fp:
         if file_ext == '.json':
             json_string = json.dumps(
-                data_obj, indent=2, separators=(",", " : "), ensure_ascii=False
+                data_obj, indent=2, separators=(",", ": "), ensure_ascii=False
             )
             fp.write(json_string)
             print("", file=fp)
@@ -302,12 +296,12 @@ def traverse_xml(xml_node: ElementTree.Element, depth: int = 0, debug: bool = Fa
     return result
 
 
-def process_sitk_file(sitk_file: Path, itk_path: Path, debug: bool = False, backup_flag: bool = False) -> None:
+def process_sitk_file(sitk_file: Path, xml_path: Path, debug: bool = False, backup_flag: bool = False) -> None:
     """Process a single SimpleITK JSON/YAML file to update its documentation from ITK XML.
 
     Args:
         sitk_file: Path to the SimpleITK JSON or YAML file
-        itk_path: Path to ITK build directory with Doxygen XML files
+        xml_path: Path to ITK build directory with Doxygen XML files
         debug: Enable debugging messages
         backup_flag: Backup the file before modification
     """
@@ -321,7 +315,7 @@ def process_sitk_file(sitk_file: Path, itk_path: Path, debug: bool = False, back
     data_obj = load_data_file(sitk_file)
 
     # Find and load the XML file
-    xml_filename = find_xml_file(itk_path, data_obj)
+    xml_filename = find_xml_file(xml_path, data_obj)
     with open(xml_filename, "r", encoding="utf-8") as xml_file:
         tree = ElementTree.parse(xml_file)
     root = tree.getroot()
@@ -426,21 +420,21 @@ if __name__ == "__main__":
     debug = args.debug
     backup_flag = args.backup
     sitk_files = args.sitk_files
-    itk_path = args.itk_path
+    xml_path = args.xml_path
 
-    # Handle optional itk_path - download if not provided
+    # Handle optional xml_path - download if not provided
     temp_dir = None
     try:
-        if itk_path is None:
+        if xml_path is None:
             print("No ITK path provided, downloading latest ITK Doxygen XML...")
             temp_dir = Path(tempfile.mkdtemp(prefix="itk_doxygen_"))
-            itk_path = download_itk_doxygen(temp_dir)
-            print(f"Downloaded and extracted ITK Doxygen XML to: {itk_path}")
+            xml_path = download_itk_doxygen(temp_dir)
+            print(f"Downloaded and extracted ITK Doxygen XML to: {xml_path}")
 
         # Process each file
         for sitk_file in sitk_files:
             try:
-                process_sitk_file(sitk_file, itk_path, debug, backup_flag)
+                process_sitk_file(sitk_file, xml_path, debug, backup_flag)
                 print(f"Successfully processed: {sitk_file}")
             except Exception as e:
                 print(f"Error processing {sitk_file}: {e}")
