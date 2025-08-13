@@ -120,6 +120,43 @@ section of the SimpleITK Visual Studio/C# build instructions.
 How to Use
 ==========
 
+How many threads should I use when using SimpleITK and performing multiprocessing?
+----------------------------------------------------------------------------------
+
+SimpleITK multi-threads most image filters to utilize all virtual cores
+available to the process. By default the number of threads used by these multi-threaded
+filters is equivalent to the number of detected cores. If code is run in a container,
+`docker <https://www.docker.com/>`_, or using a virtual machine this may not match
+the actual number of available cores. When this behavior is combined with
+multi-processing, particularly in Python, it can overwhelm the underlying machine
+as the number of concurrent threads is multiplied by the number of processes.
+Therefore, there are cases where you may want to set the default number of threads in
+SimpleITK to 1 and only use multiprocessing to obtain the benefits of parallel
+processing in a well controlled manner.
+
+Controlling the number of processes is external to SimpleITK.
+Controlling the number of threads is done via the `ProcessObject interface <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html>`_ which allows for getting and setting a specific filter instance's number of threads or the
+global default number of threads for all filters. Both options are shown below.
+
+.. code-block :: python
+
+  import SimpleITK as sitk
+
+  print(f"Global default number of threads: {sitk.ProcessObject.GetGlobalDefaultNumberOfThreads()}")
+  filter = sitk.DiscreteGaussianImageFilter()
+  print(f"Filter number of threads, default: {filter.GetNumberOfThreads()}")
+
+  # Set the number of threads for a specific filter
+  filter.SetNumberOfThreads(3)
+  print(f"Filter number of threads, modified: {filter.GetNumberOfThreads()}")
+
+  # Set the default number of threads for all filters
+  sitk.ProcessObject.SetGlobalDefaultNumberOfThreads(6)
+  filter2 = sitk.RecursiveGaussianImageFilter()
+  print(f"Second filter number of threads, default: {filter2.GetNumberOfThreads()}")
+
+
+
 What filters are currently available in SimpleITK?
 --------------------------------------------------
 
