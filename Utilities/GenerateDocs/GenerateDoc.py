@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-import json
 import yaml
 import re
 import argparse
@@ -107,12 +106,12 @@ def apply_block_styles(obj: Any, *, folded_style_keys: List[str] = None, literal
 
 #
 #  This script updates the documentation of a SimpleITK class in its
-#  JSON or YAML file.  The documentation is pulled from the corresponding ITK
-#  class XML file.  The SimpleITKClass.json/yaml file is modified in place.
+#  YAML file.  The documentation is pulled from the corresponding ITK
+#  class XML file.  The SimpleITKClass.yaml file is modified in place.
 #
 #  The script is a re-write of the GenerateDocumentation.groovy script in python.
 #
-#  usage: GenerateDoc.py <SimpleITKClass.json|yaml> <Path/To/ITK-build/With/Doxygen>
+#  usage: GenerateDoc.py <SimpleITKClass.yaml> <Path/To/ITK-build/With/Doxygen>
 #
 
 
@@ -126,7 +125,7 @@ def parse_arguments():
     )
 
     parser.add_argument('sitk_files', type=Path, nargs='+',
-                       help='Path(s) to the SimpleITK class JSON or YAML file(s)')
+                       help='Path(s) to the SimpleITK class YAML file(s)')
     parser.add_argument('--xml-path', type=Path,
                        help='Path to ITK build directory with Doxygen XML files. '
                             'If not provided, the latest ITK Doxygen XML will be downloaded automatically.')
@@ -135,7 +134,7 @@ def parse_arguments():
     parser.add_argument('--quiet', '-q', action='store_true',
                        help='Suppress all output except errors')
     parser.add_argument('--backup', action='store_true',
-                       help='Backup JSON/YAML file before modification')
+                       help='Backup YAML file before modification')
 
     return parser.parse_args()
 
@@ -180,43 +179,34 @@ def find_xml_file(xml_path: Path, data_obj: Dict[str, Any]) -> Path:
 
 
 def load_data_file(file_path: Path) -> Union[Dict[str, Any], OrderedDict]:
-    """Load a JSON or YAML file and return the data."""
+    """Load a YAML file and return the data."""
     file_ext = file_path.suffix.lower()
 
+    if file_ext not in ('.yaml', '.yml'):
+        raise ValueError(f"Unsupported file format: {file_ext}. Expected .yaml or .yml")
     with open(file_path, "r", encoding="utf-8") as fp:
-        if file_ext == '.json':
-            return json.load(fp, object_pairs_hook=OrderedDict)
-        elif file_ext in ('.yaml', '.yml'):
-            return yaml.load(fp, Loader=yaml.SafeLoader)
-        else:
-            raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
+        return yaml.load(fp, Loader=yaml.SafeLoader)
 
 
 def save_data_file(file_path: Path, data_obj: Union[Dict[str, Any], OrderedDict], backup: bool = False) -> None:
-    """Save data to a JSON or YAML file with appropriate formatting."""
+    """Save data to a YAML file with appropriate formatting."""
     file_ext = file_path.suffix.lower()
+
+    if file_ext not in ('.yaml', '.yml'):
+        raise ValueError(f"Unsupported file format: {file_ext}. Expected .yaml or .yml")
 
     if backup:
         backup_path = file_path.with_suffix(f"{file_path.suffix}.BAK")
         file_path.rename(backup_path)
 
     with open(file_path, "w", encoding="utf-8") as fp:
-        if file_ext == '.json':
-            json_string = json.dumps(
-                data_obj, indent=2, separators=(",", ": "), ensure_ascii=False
-            )
-            fp.write(json_string)
-            print("", file=fp)
-        elif file_ext in ('.yaml', '.yml'):
-            # Apply block styles for documentation fields
-            folded_keys = ["detaileddescription", "detaileddescriptionSet", "detaileddescriptionGet"]
-            literal_keys = ["custom_itk_cast", "custom_set_input"]
-            styled_data = apply_block_styles(data_obj, folded_style_keys=folded_keys, literal_style_keys=literal_keys)
+        # Apply block styles for documentation fields
+        folded_keys = ["detaileddescription", "detaileddescriptionSet", "detaileddescriptionGet"]
+        literal_keys = ["custom_itk_cast", "custom_set_input"]
+        styled_data = apply_block_styles(data_obj, folded_style_keys=folded_keys, literal_style_keys=literal_keys)
 
-            yaml_content = yaml.dump(styled_data, default_flow_style=False, sort_keys=False, width=120)
-            fp.write(yaml_content)
-        else:
-            raise ValueError(f"Unsupported file format: {file_ext}. Expected .json or .yaml/.yml")
+        yaml_content = yaml.dump(styled_data, default_flow_style=False, sort_keys=False, width=120)
+        fp.write(yaml_content)
 
 
 def process_xml(root: ElementTree.Element) -> None:
@@ -302,16 +292,16 @@ def traverse_xml(xml_node: ElementTree.Element, depth: int = 0) -> str:
 
 
 def process_sitk_file(sitk_file: Path, xml_path: Path, backup_flag: bool = False) -> None:
-    """Process a single SimpleITK JSON/YAML file to update its documentation from ITK XML.
+    """Process a single SimpleITK YAML file to update its documentation from ITK XML.
 
     Args:
-        sitk_file: Path to the SimpleITK JSON or YAML file
+        sitk_file: Path to the SimpleITK YAML file
         xml_path: Path to ITK build directory with Doxygen XML files
         backup_flag: Backup the file before modification
     """
     logging.info(f"Processing: {sitk_file}")
 
-    # Load the JSON or YAML file
+    # Load the YAML file
     data_obj = load_data_file(sitk_file)
 
     # Find and load the XML file
