@@ -615,7 +615,7 @@ TEST(IO, ImageSeriesReader_Spacing)
   }
   reader.SetFileNames(filenames);
 
-  MockLogger logger;
+  MockLogger logger(true); // Redirect context methods to simple logging streams
   logger.SetAsGlobalITKLogger();
   EXPECT_NEAR(1e-4, reader.GetSpacingWarningRelThreshold(), 1e-10)
     << "Checking default value of GetSpacingWarningRelThreshold";

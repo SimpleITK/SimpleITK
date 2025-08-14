@@ -19,6 +19,7 @@
 #include "sitkLogger.h"
 #include "sitkExceptionObject.h"
 #include <iostream>
+#include <sstream>
 #include "itkOutputWindow.h"
 #include "itkObjectFactory.h"
 
@@ -71,6 +72,23 @@ public:
   }
 
   void
+  DisplayErrorText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override
+  {
+    if (m_That)
+    {
+      m_That->DisplayErrorText(message, file, line, className, objectAddress);
+    }
+    else
+    {
+      Superclass::DisplayErrorText(file, line, className, objectAddress, message);
+    }
+  }
+
+  void
   DisplayWarningText(const char * t) override
   {
     if (m_That)
@@ -80,6 +98,23 @@ public:
     else
     {
       Superclass::DisplayWarningText(t);
+    }
+  }
+
+  void
+  DisplayWarningText(const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress,
+                     const char * message) override
+  {
+    if (m_That)
+    {
+      m_That->DisplayWarningText(message, file, line, className, objectAddress);
+    }
+    else
+    {
+      Superclass::DisplayWarningText(file, line, className, objectAddress, message);
     }
   }
 
@@ -97,6 +132,23 @@ public:
   }
 
   void
+  DisplayDebugText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override
+  {
+    if (m_That)
+    {
+      m_That->DisplayDebugText(message, file, line, className, objectAddress);
+    }
+    else
+    {
+      Superclass::DisplayDebugText(file, line, className, objectAddress, message);
+    }
+  }
+
+  void
   DisplayGenericOutputText(const char * t) override
   {
     if (m_That)
@@ -106,6 +158,19 @@ public:
     else
     {
       Superclass::DisplayGenericOutputText(t);
+    }
+  }
+
+  void
+  DisplayGenericOutputText(const char * file, unsigned int line, const char * message) override
+  {
+    if (m_That)
+    {
+      m_That->DisplayGenericOutputText(message, file, line);
+    }
+    else
+    {
+      Superclass::DisplayGenericOutputText(file, line, message);
     }
   }
 
@@ -163,9 +228,37 @@ LoggerBase::DisplayErrorText(const char * txt)
 }
 
 void
+LoggerBase::DisplayErrorText(const char * message,
+                             const char * file,
+                             unsigned int line,
+                             const char * className,
+                             const void * objectAddress)
+{
+  // Default implementation formats the message and calls the simple version
+  std::ostringstream formattedMessage;
+  formattedMessage << "ERROR: In " << file << ", line " << line << '\n'
+                   << className << " (" << objectAddress << "): " << message << "\n\n";
+  this->DisplayErrorText(formattedMessage.str().c_str());
+}
+
+void
 LoggerBase::DisplayWarningText(const char * txt)
 {
   return this->DisplayText(txt);
+}
+
+void
+LoggerBase::DisplayWarningText(const char * message,
+                               const char * file,
+                               unsigned int line,
+                               const char * className,
+                               const void * objectAddress)
+{
+  // Default implementation formats the message and calls the simple version
+  std::ostringstream formattedMessage;
+  formattedMessage << "WARNING: In " << file << ", line " << line << '\n'
+                   << className << " (" << objectAddress << "): " << message << "\n\n";
+  this->DisplayWarningText(formattedMessage.str().c_str());
 }
 
 void
@@ -175,9 +268,32 @@ LoggerBase::DisplayGenericOutputText(const char * txt)
 }
 
 void
+LoggerBase::DisplayGenericOutputText(const char * message, const char * file, unsigned int line)
+{
+  // Default implementation formats the message and calls the simple version
+  std::ostringstream formattedMessage;
+  formattedMessage << "INFO: In " << file << ", line " << line << "\n" << message << "\n\n";
+  this->DisplayGenericOutputText(formattedMessage.str().c_str());
+}
+
+void
 LoggerBase::DisplayDebugText(const char * txt)
 {
   return this->DisplayText(txt);
+}
+
+void
+LoggerBase::DisplayDebugText(const char * message,
+                             const char * file,
+                             unsigned int line,
+                             const char * className,
+                             const void * objectAddress)
+{
+  // Default implementation formats the message and calls the simple version
+  std::ostringstream formattedMessage;
+  formattedMessage << "DEBUG: In " << file << ", line " << line << '\n'
+                   << className << " (" << objectAddress << "): " << message << "\n\n";
+  this->DisplayDebugText(formattedMessage.str().c_str());
 }
 
 std::string
@@ -257,11 +373,37 @@ ITKLogger::DisplayErrorText(const char * t)
 }
 
 void
+ITKLogger::DisplayErrorText(const char * message,
+                            const char * file,
+                            unsigned int line,
+                            const char * className,
+                            const void * objectAddress)
+{
+  if (m_OutputWindow)
+  {
+    m_OutputWindow->DisplayErrorText(file, line, className, objectAddress, message);
+  }
+}
+
+void
 ITKLogger::DisplayWarningText(const char * t)
 {
   if (m_OutputWindow)
   {
     m_OutputWindow->DisplayWarningText(t);
+  }
+}
+
+void
+ITKLogger::DisplayWarningText(const char * message,
+                              const char * file,
+                              unsigned int line,
+                              const char * className,
+                              const void * objectAddress)
+{
+  if (m_OutputWindow)
+  {
+    m_OutputWindow->DisplayWarningText(file, line, className, objectAddress, message);
   }
 }
 
@@ -275,11 +417,33 @@ ITKLogger::DisplayGenericOutputText(const char * t)
 }
 
 void
+ITKLogger::DisplayGenericOutputText(const char * message, const char * file, unsigned int line)
+{
+  if (m_OutputWindow)
+  {
+    m_OutputWindow->DisplayGenericOutputText(file, line, message);
+  }
+}
+
+void
 ITKLogger::DisplayDebugText(const char * t)
 {
   if (m_OutputWindow)
   {
     m_OutputWindow->DisplayDebugText(t);
+  }
+}
+
+void
+ITKLogger::DisplayDebugText(const char * message,
+                            const char * file,
+                            unsigned int line,
+                            const char * className,
+                            const void * objectAddress)
+{
+  if (m_OutputWindow)
+  {
+    m_OutputWindow->DisplayDebugText(file, line, className, objectAddress, message);
   }
 }
 
