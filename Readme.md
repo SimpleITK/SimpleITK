@@ -4,7 +4,7 @@ SimpleITK
 |         |                                                                                            GithubActions                                                                                             |                                                           ReadTheDocs                                                           |
 |:-------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:|
 | release | [![Batch Build and Test](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml/badge.svg?branch=release)](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml) | [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=release)](http://simpleitk.readthedocs.io/en/release/) |
-| master  | [![Batch Build and Test](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml/badge.svg?branch=master)](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml)  |  [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=master)](http://simpleitk.readthedocs.io/en/master/)  |
+| main  | [![Batch Build and Test](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml/badge.svg?branch=main)](https://github.com/SimpleITK/SimpleITK/actions/workflows/BatchBuild.yml)  |  [![ReadTheDoc](https://readthedocs.org/projects/simpleitk/badge/?version=main)](http://simpleitk.readthedocs.io/en/main/)  |
 
 SimpleITK is an image analysis toolkit with a large number of components supporting general filtering operations, image segmentation and registration. It is built on top of the Insight Segmentation and Registration Toolkit [ITK](https://www.itk.org) with the intent of providing a simplified interface to ITK. SimpleITK itself is written in C++ but is available for a large number of programming languages. Currently, these include:
 
@@ -37,7 +37,7 @@ SimpleITK development has been supported by:
 License and Copyright
 ---------------------
 
-The SimpleITK project  is part of the [Insight Software Consortium](https://www.insightsoftwareconsortium.org/)(ISC) a non-profit educational consortium dedicated to promoting and maintaining open-source, freely available software for bio-medical image analysis. The copyright is held by [NumFOCUS](https://numfocus.org/). The SimpleITK software is distributed under the [Apache License 2.0](https://github.com/SimpleITK/SimpleITK/blob/master/LICENSE).
+The SimpleITK project  is part of the [Insight Software Consortium](https://www.insightsoftwareconsortium.org/)(ISC) a non-profit educational consortium dedicated to promoting and maintaining open-source, freely available software for bio-medical image analysis. The copyright is held by [NumFOCUS](https://numfocus.org/). The SimpleITK software is distributed under the [Apache License 2.0](https://github.com/SimpleITK/SimpleITK/blob/main/LICENSE).
 
 
 How to Cite
@@ -57,7 +57,7 @@ Documentation
 -------------
 With massive libraries like SimpleITK, good documentation is a must. The documentation for SimpleITK is split up into multiple levels:
 1. [API Documentation](https://simpleitk.org/doxygen/latest/html/) - This contains class and function documentation. The descriptions for functions and classes are primarily borrowed from the original ITK C++ classes.
-2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/master/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages.
+2. [SimpleITK Documentation](http://simpleitk.readthedocs.io/en/main/) - This site contains high-level guides (fundamental SimpleITK concepts, common conventions, etc.), details with respect to the toolkit's binary distributions, instructions for building the toolkit, as well as SimpleITK examples in all supported programming languages.
 3. [Jupyter Notebook Repository](http://insightsoftwareconsortium.github.io/SimpleITK-Notebooks/) - This repository contains a collection of Jupyter Notebooks illustrating the use of SimpleITK for educational and research activities. The notebooks demonstrate the use of SimpleITK for interactive image analysis using the Python and R programming languages. Recommended reading, if you are starting with SimpleITK.
 
 

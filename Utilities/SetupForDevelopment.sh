@@ -91,9 +91,12 @@ Utilities/GitSetup/github-tips
 
 ### LOCAL CONFIG TO REVIEW
 
-# Rebase master by default
+# Rebase main by default
 git config rebase.stat true
-git config branch.master.rebase true
+git config branch.main.rebase true
+
+# Rename the master branch to main
+Utilities/GitSetup/setup-main
 
 
 # Disable legacy Gerrit hooks
@@ -112,5 +115,5 @@ git config --get remote.stage.url > /dev/null &&
 
 
 # Record the version of this setup so Hooks/pre-commit can check it.
-SetupForDevelopment_VERSION=5
+SetupForDevelopment_VERSION=6
 git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}
