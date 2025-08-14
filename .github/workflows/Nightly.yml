@@ -23,7 +23,7 @@ jobs:
       contents: write
       actions: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Check if latest tag is up to date
@@ -88,11 +88,11 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.sha }}"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -185,7 +185,7 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/ITK-dashboard"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: InsightSoftwareConsortium/ITK
           path: ITK-dashboard
