@@ -42,6 +42,7 @@ operator<<(std::ostream & os, const std::vector<T> & v)
 
 #include <string>
 #include <vector>
+#include <cstdint>
 #include <gtest/gtest.h>
 
 #include "sitkImage.h"
@@ -125,9 +126,31 @@ public:
   }
 
   void
+  DisplayErrorText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override
+  {
+    m_DisplayErrorTextContext << "ERROR: In " << file << ", line " << line << '\n'
+                              << className << " (" << std::hex << objectAddress << "): " << message << "\n\n";
+  }
+
+  void
   DisplayWarningText(const char * t) override
   {
     m_DisplayWarningText << t;
+  }
+
+  void
+  DisplayWarningText(const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress,
+                     const char * message) override
+  {
+    m_DisplayWarningTextContext << "WARNING: In " << file << ", line " << line << '\n'
+                                << className << " (" << std::hex << objectAddress << "): " << message << "\n\n";
   }
 
   void
@@ -137,9 +160,26 @@ public:
   }
 
   void
+  DisplayGenericOutputText(const char * file, unsigned int line, const char * message) override
+  {
+    m_DisplayGenericOutputTextContext << "INFO: In " << file << ", line " << line << "\n" << message << "\n\n";
+  }
+
+  void
   DisplayDebugText(const char * t) override
   {
     m_DisplayDebugText << t;
+  }
+
+  void
+  DisplayDebugText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override
+  {
+    m_DisplayDebugTextContext << "DEBUG: In " << file << ", line " << line << '\n'
+                              << className << " (" << std::hex << objectAddress << "): " << message << "\n\n";
   }
 
   void
@@ -150,6 +190,10 @@ public:
     m_DisplayWarningText.str("");
     m_DisplayGenericOutputText.str("");
     m_DisplayDebugText.str("");
+    m_DisplayErrorTextContext.str("");
+    m_DisplayWarningTextContext.str("");
+    m_DisplayGenericOutputTextContext.str("");
+    m_DisplayDebugTextContext.str("");
   }
 
   std::stringstream m_DisplayText;
@@ -157,6 +201,10 @@ public:
   std::stringstream m_DisplayWarningText;
   std::stringstream m_DisplayGenericOutputText;
   std::stringstream m_DisplayDebugText;
+  std::stringstream m_DisplayErrorTextContext;
+  std::stringstream m_DisplayWarningTextContext;
+  std::stringstream m_DisplayGenericOutputTextContext;
+  std::stringstream m_DisplayDebugTextContext;
 };
 
 /** Base Command Class which holds onto a process object
