@@ -64,13 +64,37 @@ public:
   DisplayErrorText(const char * t);
 
   virtual void
+  DisplayErrorText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message);
+
+  virtual void
   DisplayWarningText(const char * t);
+
+  virtual void
+  DisplayWarningText(const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress,
+                     const char * message);
 
   virtual void
   DisplayGenericOutputText(const char * t);
 
   virtual void
+  DisplayGenericOutputText(const char * file, unsigned int line, const char * message);
+
+  virtual void
   DisplayDebugText(const char * t);
+
+  virtual void
+  DisplayDebugText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message);
 
   std::string
   GetName() const override;
@@ -125,13 +149,37 @@ public:
   DisplayErrorText(const char * t) override;
 
   void
+  DisplayErrorText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override;
+
+  void
   DisplayWarningText(const char * t) override;
+
+  void
+  DisplayWarningText(const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress,
+                     const char * message) override;
 
   void
   DisplayGenericOutputText(const char * t) override;
 
   void
+  DisplayGenericOutputText(const char * file, unsigned int line, const char * message) override;
+
+  void
   DisplayDebugText(const char * t) override;
+
+  void
+  DisplayDebugText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override;
 
   /** Set the ITK logger to the ITK OutputWindow instance held.
    *
