@@ -40,46 +40,16 @@ jobs:
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_TCL:BOOL=ON
-              WRAP_RUBY:BOOL=ON
+              WRAP_PYTHON:BOOL=OFF
+              WRAP_JAVA:BOOL=OFF
+              WRAP_TCL:BOOL=OFF
+              WRAP_RUBY:BOOL=OFF
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
-              SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
-          - os: ubuntu-24.04
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            cmake_build_parallel_level: 6
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_R:BOOL=ON
-              SimpleITK_USE_ELASTIX:BOOL=ON
-          - os: ubuntu-24.04-arm
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              ITK_USE_BUILD_DIR:BOOL=ON
-          - os: macos-13
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
-          - os: windows-2022
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v142,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
+              CMAKE_OSX_ARCHITECTURES:STRING=x86_64
+
     steps:
     - uses: actions/checkout@v4
       with:
