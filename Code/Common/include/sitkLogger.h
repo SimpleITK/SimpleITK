@@ -40,9 +40,9 @@ class ITKLogger;
  *
  * In ITK this function is implemented by the itk::OutputWindow, but in SimpleITK it is called a logger.
  *
- * Provides a base class for SimpleITK to provide the "DisplayText" methods that match the interface of
- * itk::OutputWindow. Derived instances of LoggerBase are used by an internal adaptor derived from the itk::OutputWindow
- * so that this object instances can be used in ITK.
+ * Provides a base class for SimpleITK to provide the "DisplayText" methods similar to the itk::OutputWindow. Derived
+ * instances of LoggerBase are used by an internal adaptor derived from the itk::OutputWindow so that this object
+ * instances can be used in ITK.
  *
  * \sa itk::OutputWindow
  */
@@ -62,15 +62,43 @@ public:
 
   virtual void
   DisplayErrorText(const char * t);
-
   virtual void
   DisplayWarningText(const char * t);
+
 
   virtual void
   DisplayGenericOutputText(const char * t);
 
   virtual void
   DisplayDebugText(const char * t);
+
+  virtual void
+  DisplayErrorText(const char * message,
+                   const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress);
+
+
+  virtual void
+  DisplayWarningText(const char * message,
+                     const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress);
+
+
+  virtual void
+  DisplayGenericOutputText(const char * message, const char * file, unsigned int line);
+
+
+  virtual void
+  DisplayDebugText(const char * message,
+                   const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress);
+
 
   std::string
   GetName() const override;
@@ -125,13 +153,37 @@ public:
   DisplayErrorText(const char * t) override;
 
   void
+  DisplayErrorText(const char * message,
+                   const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress) override;
+
+  void
   DisplayWarningText(const char * t) override;
+
+  void
+  DisplayWarningText(const char * message,
+                     const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress) override;
 
   void
   DisplayGenericOutputText(const char * t) override;
 
   void
+  DisplayGenericOutputText(const char * message, const char * file, unsigned int line) override;
+
+  void
   DisplayDebugText(const char * t) override;
+
+  void
+  DisplayDebugText(const char * message,
+                   const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress) override;
 
   /** Set the ITK logger to the ITK OutputWindow instance held.
    *
