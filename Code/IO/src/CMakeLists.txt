@@ -21,7 +21,6 @@ set(
   ITKIOTransformBase
   ITKIOGDCM
   ITKImageIO
-  ITKTransformIO
 )
 
 find_package(ITK COMPONENTS ${use_itk_modules})
@@ -29,7 +28,6 @@ find_package(ITK COMPONENTS ${use_itk_modules})
 add_library(SimpleITKIO ${SimpleITKIOSource})
 sitk_target_use_itk(SimpleITKIO PRIVATE ${use_itk_modules})
 sitk_target_use_itk_factory(SimpleITKIO ImageIO)
-sitk_target_use_itk_factory(SimpleITKIO TransformIO)
 target_link_libraries(SimpleITKIO PUBLIC SimpleITKCommon)
 if(SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries(SimpleITKIO PRIVATE SimpleITKExplicit)

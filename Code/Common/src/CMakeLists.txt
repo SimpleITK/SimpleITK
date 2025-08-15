@@ -40,6 +40,7 @@ set(
   ITKImageIntensity
   ITKLabelMap
   ITKTransform
+  ITKTransformIO
   ITKIOTransformBase
   ITKDisplacementField
 )
@@ -57,6 +58,8 @@ add_library(
   ${SimpleITKCommonSource}
   ${SimpleITKAncillarySource}
 )
+
+sitk_target_use_itk_factory(SimpleITKCommon TransformIO)
 sitk_target_use_itk(SimpleITKCommon PRIVATE ${ITK_MODULES_REQUESTED})
 if(SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries(SimpleITKCommon PRIVATE SimpleITKExplicit)
