@@ -40,7 +40,7 @@ jobs:
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             ctest-cache: |
-              WRAP_PYTHON:BOOL=OFF
+              WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=OFF
               WRAP_TCL:BOOL=OFF
               WRAP_RUBY:BOOL=OFF
