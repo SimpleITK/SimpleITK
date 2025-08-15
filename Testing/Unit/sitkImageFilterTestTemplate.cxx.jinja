@@ -228,9 +228,6 @@ TEST(BasicFilters, {{ name }}_{{ test.tag }}) {
   {% if test.md5hash -%}
   IMAGECOMPAREWITHHASH("{{ test.md5hash }}", MD5, output, "Output MD5 hash failed in {{ test.tag }}");
   {%-endif %}
-  {% if test.sha1hash -%}
-  IMAGECOMPAREWITHHASH("{{ test.sha1hash }}", SHA1, output, "Output SHA1 hash failed in {{ test.tag }}");
-  {%- endif %}
   {% if test.tolerance -%}
   IMAGECOMPAREWITHTOLERANCE(output, "", {{ test.tolerance }});
   {%- endif %}

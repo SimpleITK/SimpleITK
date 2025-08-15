@@ -8,7 +8,6 @@
     typedef enum { {{ member.enum | join(', ') }} } {{ member.type if member.type else member.name ~ 'Type' }};
   {%- endif %}
 
-  {%- if not member.no_set_method %}
   /**
     {%- if member.briefdescriptionSet %}
    * \brief {{ member.briefdescriptionSet }}
@@ -49,7 +48,6 @@
   void
   {{ member.name }}Off() { return this->Set{{ member.name }}(false); }
     {%- endif %}
-  {%- endif %}
 
   {%- if not member.no_get_method %}
   /**
