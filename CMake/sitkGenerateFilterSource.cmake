@@ -38,7 +38,7 @@ set(
   "Python executable used for code generation."
 )
 
-# Check for Python jsonschema module
+# Check for Python jsonschema module (used to validate YAML config files)
 sitk_check_python_module_version(
   MODULE_NAME jsonschema
   MINIMUM_VERSION 4.0
@@ -52,7 +52,17 @@ sitk_check_python_module_version(
         MINIMUM_VERSION 3.1
         MAXIMUM_VERSION 4.0
         PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
-        RESULT_VERSION_VAR SimpleITK_Python_JSONSCHEMA_VERSION
+        RESULT_VERSION_VAR SimpleITK_Python_JINJA2_VERSION
+        REQUIRED
+)
+
+# Check for PyYAML module
+sitk_check_python_module_version(
+        MODULE_NAME pyyaml
+        MINIMUM_VERSION 5.0
+        MAXIMUM_VERSION 7.0
+        PYTHON_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"
+        RESULT_VERSION_VAR SimpleITK_Python_PYYAML_VERSION
         REQUIRED
 )
 
@@ -64,22 +74,33 @@ set(
   FORCE
 )
 
-# Sets "out_var" variable name to the value in the json path specified
-# to the json file name. If an error is encountered than the variable
+# Sets "out_var" variable name to the value in the config path specified
+# to the yaml file name. If an error is encountered than the variable
 # is not updated.
 #
-function(get_json_path out_var json_file path)
-  execute_process(
-    COMMAND
-      ${SimpleITK_Python_EXECUTABLE} -c
-      "import sys, json; d=json.load(open(sys.argv[1])); v=d;\nfor k in sys.argv[2].split('.'):\n    v = v[k]\nprint(v)"
-      ${json_file} ${path}
-    OUTPUT_VARIABLE value
-    RESULT_VARIABLE ret
-    ERROR_VARIABLE error_var
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    ERROR_STRIP_TRAILING_WHITESPACE
-  )
+function(get_config_path out_var config_file path)
+  get_filename_component(extension ${config_file} EXT)
+  string(TOLOWER "${extension}" ext_lower)
+
+  if("${ext_lower}" STREQUAL ".yaml" OR "${ext_lower}" STREQUAL ".yml")
+    execute_process(
+      COMMAND
+        ${SimpleITK_Python_EXECUTABLE} -c
+        "import sys, yaml; d=yaml.safe_load(open(sys.argv[1])); v=d;\nfor k in sys.argv[2].split('.'):\n    v = v[k]\nprint(v)"
+        ${config_file} ${path}
+      OUTPUT_VARIABLE value
+      RESULT_VARIABLE ret
+      ERROR_VARIABLE error_var
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_STRIP_TRAILING_WHITESPACE
+    )
+  else()
+    message(
+      WARNING
+      "Unsupported configuration file format: ${extension}. Only YAML files are supported."
+    )
+    return()
+  endif()
 
   if(NOT ret)
     set(${out_var} "${value}" PARENT_SCOPE)
@@ -87,7 +108,7 @@ function(get_json_path out_var json_file path)
     message(
       WARNING
       "ERROR VAR: ${error_var}\n ERROR CODE: ${ret}\n"
-      "Unable to find path \"${path}\" in json file \"${json_file}\"."
+      "Unable to find path \"${path}\" in configuration file \"${config_file}\"."
     )
   endif()
 endfunction()
@@ -96,14 +117,14 @@ endfunction()
 # This macro returns the list of template components used by a specific
 # template file
 #
-macro(get_dependent_template_components out_var_name json_file input_dir)
+macro(get_dependent_template_components out_var_name config_file input_dir)
   set(${out_var_name})
 
   ######
   # Figure out which template file gets used
   ######
 
-  get_json_path( template_code_filename ${json_file} "template_code_filename")
+  get_config_path( template_code_filename ${config_file} "template_code_filename")
 
   if(template_code_filename)
     set(
@@ -123,7 +144,7 @@ macro(get_dependent_template_components out_var_name json_file input_dir)
   else()
     message(
       WARNING
-      "Error processing ${json_file}, unable to locate template_code_filename"
+      "Error processing ${config_file}, unable to locate template_code_filename"
     )
   endif()
 endmacro()
@@ -140,23 +161,32 @@ function(expand_template FILENAME input_dir output_dir library_name)
   set(output_h "${output_dir}/include/sitk${FILENAME}.h")
   set(output_cxx "${output_dir}/src/sitk${FILENAME}.cxx")
 
-  set(input_json_file ${input_dir}/json/${FILENAME}.json)
+  # Check if YAML file exists
+  if(EXISTS ${input_dir}/yaml/${FILENAME}.yaml)
+    set(input_config_file ${input_dir}/yaml/${FILENAME}.yaml)
+  elseif(EXISTS ${input_dir}/yaml/${FILENAME}.yml)
+    set(input_config_file ${input_dir}/yaml/${FILENAME}.yml)
+  else()
+    message(WARNING "No YAML configuration file found for ${FILENAME}")
+    return()
+  endif()
+
   set(template_file_h ${input_dir}/templates/sitkImageFilterTemplate.h.in)
   set(template_file_cxx ${input_dir}/templates/sitkImageFilterTemplate.cxx.in)
 
-  get_json_path( itk_module ${input_json_file} itk_module)
+  get_config_path( itk_module ${input_config_file} itk_module)
 
   list(FIND ITK_MODULES_ENABLED "${itk_module}" _index)
 
   if("${itk_module}" STREQUAL "")
-    message(WARNING "Missing \"itk_module\" field in ")
+    message(WARNING "Missing \"itk_module\" field in ${input_config_file}")
   elseif(NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
     # required module is not enabled, don't process
     return()
   endif()
 
   # Get the list of template component files for this template
-  get_dependent_template_components(template_deps ${input_json_file} ${input_dir})
+  get_dependent_template_components(template_deps ${input_config_file} ${input_dir})
 
   # Make a global list of ImageFilter template filters
   set(
@@ -167,19 +197,20 @@ function(expand_template FILENAME input_dir output_dir library_name)
     ""
   )
 
-  # validate json files if requirements available
+  # validate YAML config files if requirements available
   if(SimpleITK_Python_JSONSCHEMA_VERSION)
     set(
       JSON_SCHEMA_FILE
       "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/simpleitk_filter_description.schema.json"
     )
+
     set(
       JSON_VALIDATE_COMMAND
       COMMAND
       "${SimpleITK_Python_EXECUTABLE}"
-      "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py"
+      "${SimpleITK_SOURCE_DIR}/Utilities/JSON/ConfigValidate.py"
       "${JSON_SCHEMA_FILE}"
-      "${input_json_file}"
+      "${input_config_file}"
     )
   endif()
 
@@ -195,10 +226,10 @@ function(expand_template FILENAME input_dir output_dir library_name)
       ${CMAKE_COMMAND} -E remove -f ${output_h}
     COMMAND
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-      ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir}
+      ${input_config_file} -D ${input_dir}/templates -D ${jinja_include_dir}
       sitk${template_code_filename}Template.h.jinja ${output_h}
     DEPENDS
-      ${input_json_file}
+      ${input_config_file}
       ${template_deps}
       ${jinja_files}
       ${input_dir}/templates/sitk${template_code_filename}Template.h.jinja
@@ -212,10 +243,10 @@ function(expand_template FILENAME input_dir output_dir library_name)
       ${CMAKE_COMMAND} -E remove -f ${output_cxx}
     COMMAND
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-      ${input_json_file} -D ${input_dir}/templates -D ${jinja_include_dir}
+      ${input_config_file} -D ${input_dir}/templates -D ${jinja_include_dir}
       sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
     DEPENDS
-      ${input_json_file}
+      ${input_config_file}
       ${template_deps}
       ${jinja_files}
       ${input_dir}/templates/sitk${template_code_filename}Template.cxx.jinja
@@ -284,13 +315,20 @@ macro(generate_filter_source)
     file(MAKE_DIRECTORY ${generated_code_output_path}/src)
   endif()
 
-  message(STATUS "Processing json files...")
+  message(STATUS "Processing configuration files...")
 
-  # Glob all json files in the current directory
-  file(GLOB json_config_files ${generated_code_input_path}/json/[a-zA-Z]*.json)
+  # Glob all yaml files in the current directory
+  file(
+    GLOB yaml_config_files
+    ${generated_code_input_path}/yaml/[a-zA-Z]*.yaml
+    ${generated_code_input_path}/yaml/[a-zA-Z]*.yml
+  )
 
-  # Loop through json files and expand each one
-  foreach(f ${json_config_files})
+  # Use only YAML config files
+  set(config_files ${yaml_config_files})
+
+  # Loop through config files and expand each one
+  foreach(f ${config_files})
     get_filename_component(class ${f} NAME_WE)
     expand_template( ${class}
                       ${generated_code_input_path}
@@ -299,7 +337,7 @@ macro(generate_filter_source)
     )
   endforeach()
 
-  message(STATUS "Processing json files...done")
+  message(STATUS "Processing configuration files...done")
 
   ######
   # Make target for generated source and headers

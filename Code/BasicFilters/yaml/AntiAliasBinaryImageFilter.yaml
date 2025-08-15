@@ -1,0 +1,133 @@
+name: AntiAliasBinaryImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: IntegerPixelIDTypeList
+output_pixel_type: typename itk::NumericTraits<typename InputImageType::PixelType>::RealType
+members:
+- name: MaximumRMSError
+  type: double
+  default: 0.07
+  doc: Value of RMS change below which the filter should stop. This is a convergence criterion.
+- name: NumberOfIterations
+  type: uint32_t
+  default: 1000u
+  doc: Number of iterations to run
+measurements:
+- name: ElapsedIterations
+  type: uint32_t
+  default: 0
+  briefdescriptionGet: Number of iterations run.
+- name: RMSChange
+  type: double
+  default: 0.0
+  briefdescriptionGet: The Root Mean Square of the levelset upon termination.
+tests:
+- tag: cthead
+  description: Segmentation of brain in CT
+  settings: []
+  tolerance: 1000000.0
+  measurements_results:
+  - name: ElapsedIterations
+    value: 3
+    tolerance: 3
+  - name: RMSChange
+    value: 0.015
+    tolerance: 0.006
+  inputs:
+  - Input/2th_cthead1.png
+briefdescription: A method for estimation of a surface from a binary volume.
+detaileddescription: >-
+  \par
+
+  This filter implements a surface-fitting method for estimation of a surface from a binary volume. This process can be used
+  to reduce aliasing artifacts which result in visualization of binary partitioned surfaces.
+
+
+
+  \par
+
+  The binary volume (filter input) is used as a set of constraints in an iterative relaxation process of an estimated ND surface.
+  The surface is described implicitly as the zero level set of a volume \f$ \phi \f$ and allowed to deform under curvature
+  flow. A set of constraints is imposed on this movement as follows:
+
+
+
+  \par
+   \f[ u_{i,j,k}^{n+1} = \left\{ \begin{array}{ll} \mbox{max} (u_{i,j,k}^{n} + \Delta t H_{i,j,k}^{n}, 0) & \mbox{\f$B_{i,j,k}
+  = 1\f$} \\ \mbox{min} (u_{i,j,k}^{n} + \Delta t H_{i,j,k}^{n}, 0) & \mbox{\f$B_{i,j,k} = -1\f$} \end{array}\right. \f]
+
+
+  \par
+
+  where \f$ u_{i,j,k}^{n} \f$ is the value of \f$ \phi \f$ at discrete index \f$ (i,j,k) \f$ and iteration \f$ n \f$ , \f$
+  H \f$ is the gradient magnitude times mean curvature of \f$ \phi \f$ , and \f$ B \f$ is the binary input volume, with 1
+  denoting an inside pixel and -1 denoting an outside pixel.
+
+
+
+  \par NOTES
+
+  This implementation uses a sparse field level set solver instead of the narrow band implementation described in the reference
+  below, which may introduce some differences in how fast and how accurately (in terms of RMS error) the solution converges.
+
+
+
+  \par REFERENCES
+
+  Whitaker, Ross. "Reducing Aliasing Artifacts In Iso-Surfaces of Binary
+
+  Volumes" IEEE Volume Visualization and Graphics Symposium, October 2000, pp.23-32.
+
+
+
+  \par PARAMETERS
+
+  The MaximumRMSChange parameter is used to determine when the solution has converged. A lower value will result in a tighter-fitting
+  solution, but will require more computations. Too low a value could put the solver into an infinite loop. Values should
+  always be less than 1.0. A value of 0.07 is a good starting estimate.
+
+
+
+  \par
+
+  The MaximumIterations parameter can be used to halt the solution after a specified number of iterations.
+
+
+
+  \par INPUT
+
+  The input is an N-dimensional image of any type. It is assumed to be a binary image. The filter will use an isosurface value
+  that is halfway between the min and max values in the image. A signed data type is not necessary for the input.
+
+
+
+  \par OUTPUT
+
+  The filter will output a level set image of real, signed values. The zero crossings of this (N-dimensional) image represent
+  the position of the isosurface value of interest. Values outside the zero level set are negative and values inside the zero
+  level set are positive values.
+
+
+
+  \par IMPORTANT!
+
+  The output image type you use to instantiate this filter should be a real valued scalar type. In other words: doubles or
+  floats.
+
+
+
+  \par USING THIS FILTER
+
+  The filter is relatively straightforward to use. Tests and examples exist to illustrate. The important thing is to understand
+  the input and output types so you can properly interpret your results.
+
+
+
+  \par
+
+  In the common case, the only parameter that will need to be set is the MaximumRMSChange parameter, which determines when
+  the solver halts.
+itk_module: ITKAntiAlias
+itk_group: AntiAlias
+in_place: true

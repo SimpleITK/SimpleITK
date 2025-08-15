@@ -1,0 +1,163 @@
+name: RelabelComponentImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: IntegerPixelIDTypeList
+members:
+- name: MinimumObjectSize
+  type: uint64_t
+  default: 0u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the minimum size in pixels for an object. All objects smaller than this size will be discarded and will not appear
+    in the output label map. NumberOfObjects will count only the objects whose pixel counts are greater than or equal to the
+    minimum size. Call GetOriginalNumberOfObjects to find out how many objects were present in the original label map.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the caller-defined minimum size of an object in pixels. If the caller has not set the minimum, 0 will be returned,
+    which is to be interpreted as meaning that no minimum exists, and all objects in the original label map will be passed
+    through to the output.
+- name: SortByObjectSize
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Controls whether the object labels are sorted by size. If false, initial order of labels is kept.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Controls whether the object labels are sorted by size. If false, initial order of labels is kept.
+measurements:
+- name: NumberOfObjects
+  type: uint32_t
+  default: 0u
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the number of objects in the image. This information is only valid after the filter has executed.
+- name: OriginalNumberOfObjects
+  type: uint32_t
+  default: 0u
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the original number of objects in the image before small objects were discarded. This information is only valid after
+    the filter has executed. If the caller has not specified a minimum object size, OriginalNumberOfObjects is the same as
+    NumberOfObjects.
+- name: SizeOfObjectsInPhysicalUnits
+  type: std::vector<float>
+  default: std::vector<float>()
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the size of each object in physical space (in units of pixel size). This information is only valid after the filter
+    has executed. Size of the background is not calculated. Size of object #1 is GetSizeOfObjectsInPhysicalUnits() [0]. Size
+    of object #2 is GetSizeOfObjectsInPhysicalUnits() [1]. Etc.
+- name: SizeOfObjectsInPixels
+  type: std::vector<uint64_t>
+  default: std::vector<uint64_t>()
+  custom_itk_cast: |-
+    this->m_SizeOfObjectsInPixels = std::vector<uint64_t>(filter->GetSizeOfObjectsInPixels().begin(), filter->GetSizeOfObjectsInPixels().end());
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the size of each object in pixels. This information is only valid after the filter has executed. Size of the background
+    is not calculated. Size of object #1 is GetSizeOfObjectsInPixels() [0]. Size of object #2 is GetSizeOfObjectsInPixels()
+    [1]. Etc.
+custom_methods: []
+tests:
+- tag: default
+  description: 2D
+  settings: []
+  measurements_results:
+  - name: NumberOfObjects
+    value: 2u
+  - name: OriginalNumberOfObjects
+    value: 2u
+  - name: SizeOfObjectsInPhysicalUnits
+    dim_vec: true
+    value:
+    - 23061
+    - 9085
+    tolerance: 1.0e-23
+  md5hash: 58af064e929f08f9d5bacc8be44ed92e
+  inputs:
+  - Input/2th_cthead1.png
+- tag: no_sorting
+  description: 2D without size sorting
+  settings:
+  - parameter: SortByObjectSize
+    value: 'false'
+    python_value: 'False'
+    R_value: 'FALSE'
+  measurements_results:
+  - name: NumberOfObjects
+    value: 3u
+  - name: OriginalNumberOfObjects
+    value: 3u
+  - name: SizeOfObjectsInPhysicalUnits
+    dim_vec: true
+    value:
+    - 146
+    - 126
+    - 200
+    tolerance: 1.0e-23
+  md5hash: 0231da8387aa665ddff9c2645e71f213
+  inputs:
+  - Input/simple-label-d.png
+- tag: no_sorting2
+  description: 2D without size sorting
+  settings:
+  - parameter: SortByObjectSize
+    value: 'false'
+    python_value: 'False'
+    R_value: 'FALSE'
+  - parameter: MinimumObjectSize
+    type: uint64_t
+    value: '140'
+  measurements_results:
+  - name: NumberOfObjects
+    value: 2u
+  - name: OriginalNumberOfObjects
+    value: 3u
+  - name: SizeOfObjectsInPhysicalUnits
+    dim_vec: true
+    value:
+    - 146
+    - 200
+    tolerance: 1.0e-23
+  md5hash: 4c81464832a0270041334abd744b94b0
+  inputs:
+  - Input/simple-label-d.png
+briefdescription: Relabel the components in an image such that consecutive labels are used.
+detaileddescription: >-
+  RelabelComponentImageFilter remaps the labels associated with the objects in an image (as from the output of ConnectedComponentImageFilter
+  ) such that the label numbers are consecutive with no gaps between the label numbers used. By default, the relabeling will
+  also sort the labels based on the size of the object: the largest object will have label #1, the second largest will have
+  label #2, etc. If two labels have the same size their initial order is kept. The sorting by size can be disabled using SetSortByObjectSize.
+
+
+  Label #0 is assumed to be the background and is left unaltered by the relabeling.
+
+
+  RelabelComponentImageFilter is typically used on the output of the ConnectedComponentImageFilter for those applications
+  that want to extract the largest object or the "k" largest objects. Any particular object can be extracted from the relabeled
+  output using a BinaryThresholdImageFilter . A group of objects can be extracted from the relabeled output using a ThresholdImageFilter
+  .
+
+
+  Once all the objects are relabeled, the application can query the number of objects and the size of each object. Object
+  sizes are returned in a vector. The size of the background is not calculated. So the size of object #1 is GetSizeOfObjectsInPixels()
+  [0], the size of object #2 is GetSizeOfObjectsInPixels() [1], etc.
+
+
+  If user sets a minimum object size, all objects with fewer pixels than the minimum will be discarded, so that the number
+  of objects reported will be only those remaining. The GetOriginalNumberOfObjects method can be called to find out how many
+  objects were present before the small ones were discarded.
+
+
+  RelabelComponentImageFilter can be run as an "in place" filter, where it will overwrite its output. The default is run out
+  of place (or generate a separate output). "In place" operation can be controlled via methods in the superclass, InPlaceImageFilter::InPlaceOn()
+  and InPlaceImageFilter::InPlaceOff().
+
+
+  \see ConnectedComponentImageFilter , BinaryThresholdImageFilter , ThresholdImageFilter
+itk_module: ITKConnectedComponents
+itk_group: ConnectedComponents
+in_place: true

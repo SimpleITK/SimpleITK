@@ -1,0 +1,65 @@
+name: HausdorffDistanceImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+pixel_types2: BasicPixelIDTypeList
+filter_type: itk::HausdorffDistanceImageFilter<InputImageType, InputImageType2 >
+no_procedure: true
+no_return_image: true
+members: []
+measurements:
+- name: HausdorffDistance
+  type: double
+  default: 0.0
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Hausdorff distance.
+- name: AverageHausdorffDistance
+  type: double
+  default: 0.0
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Hausdorff distance.
+tests:
+- tag: 2d
+  description: 2d
+  settings: []
+  measurements_results:
+  - name: AverageHausdorffDistance
+    value: 10.25
+    tolerance: 0.1
+  - name: HausdorffDistance
+    value: 49.04
+    tolerance: 0.1
+  inputs:
+  - Input/SmallWhiteCircle.nrrd
+  - Input/LargeWhiteCircle.nrrd
+briefdescription: Computes the Hausdorff distance between the set of non-zero pixels of two images.
+detaileddescription: >-
+  HausdorffDistanceImageFilter computes the distance between the set non-zero pixels of two images using the following formula:
+  \f[ H(A,B) = \max(h(A,B),h(B,A)) \f] where \f[ h(A,B) = \max_{a \in A} \min_{b \in B} \| a - b\| \f] is the directed Hausdorff
+  distance and \f$A\f$ and \f$B\f$ are respectively the set of non-zero pixels in the first and second input images.
+
+
+  In particular, this filter uses the DirectedHausdorffImageFilter inside to compute the two directed distances and then select
+  the largest of the two.
+
+
+  The Hausdorff distance measures the degree of mismatch between two sets and behaves like a metric over the set of all closed
+  bounded sets - with properties of identity, symmetry and triangle inequality.
+
+
+  This filter requires the largest possible region of the first image and the same corresponding region in the second image.
+  It behaves as filter with two inputs and one output. Thus it can be inserted in a pipeline with other filters. The filter
+  passes the first input through unmodified.
+
+
+  This filter is templated over the two input image types. It assume both images have the same number of dimensions.
+
+
+  \see DirectedHausdorffDistanceImageFilter
+itk_module: ITKDistanceMap
+itk_group: DistanceMap
+in_place: false

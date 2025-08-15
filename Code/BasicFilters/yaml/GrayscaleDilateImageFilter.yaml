@@ -1,0 +1,69 @@
+name: GrayscaleDilateImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Performs Dilation in a grayscale image.
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::GrayscaleDilateImageFilter<InputImageType, OutputImageType, itk::FlatStructuringElement< InputImageType::ImageDimension
+  > >
+include_files:
+- sitkCreateKernel.h
+members:
+- name: KernelRadius
+  type: unsigned int
+  default: std::vector<uint32_t>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  custom_itk_cast: ""
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the kernel structuring element.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the kernel structuring element.
+- name: KernelType
+  type: KernelEnum
+  default: itk::simple::sitkBall
+  custom_itk_cast: |-
+    auto kernel = CreateKernel<InputImageType::ImageDimension>( m_KernelType, m_KernelRadius );
+      filter->SetKernel( kernel );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the kernel or structuring element used for the morphology.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the kernel or structuring element used for the morphology.
+custom_methods: []
+tests:
+- tag: GrayscaleDilate
+  description: Test grayscale dilation
+  settings:
+  - parameter: KernelRadius
+    no_get_method: true
+    value: 1
+  - parameter: KernelType
+    value: itk::simple::sitkBall
+    lua_value: SimpleITK.sitkBall
+    python_value: SimpleITK.sitkBall
+    ruby_value: Simpleitk::SitkBall
+    java_value: KernelEnum.sitkBall
+    tcl_value: $sitkBall
+    csharp_value: KernelEnum.sitkBall
+    R_value: '''sitkBall'''
+  md5hash: cb692559f1eb21e4c932f6bbb3850ad3
+  inputs:
+  - Input/STAPLE1.png
+briefdescription: Grayscale dilation of an image.
+detaileddescription: >-
+  Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.
+
+
+  The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element
+  having values > 0 are candidates for affecting the center pixel.
+
+
+  \see MorphologyImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

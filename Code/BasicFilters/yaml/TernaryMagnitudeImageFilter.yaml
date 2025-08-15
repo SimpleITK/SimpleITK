@@ -1,0 +1,32 @@
+name: TernaryMagnitudeImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 3
+doc: ''
+filter_type: itk::TernaryMagnitudeImageFilter<InputImageType, InputImageType2, InputImageType3, OutputImageType >
+pixel_types: BasicPixelIDTypeList
+members: []
+tests:
+- tag: 2d
+  description: 2D
+  inputs:
+  - Input/STAPLE1.png
+  - Input/STAPLE2.png
+  - Input/STAPLE1.png
+  settings: []
+  md5hash: eca4bb7103117968b758a3f24f60a01a
+- tag: 3d
+  description: 3D
+  inputs:
+  - Input/RA-Float.nrrd
+  - Input/RA-Float.nrrd
+  - Input/RA-Float.nrrd
+  settings: []
+  tolerance: 0.002
+briefdescription: Compute the pixel-wise magnitude of three images.
+detaileddescription: >-
+  This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings)
+  are done by the C++ defaults.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

@@ -1,5 +1,4 @@
 import argparse
-import json
 from jinja2 import Environment, FileSystemLoader
 import os
 from typing import List
@@ -7,6 +6,7 @@ from pathlib import Path
 import logging
 
 import re
+import yaml
 
 # Constants for template generation
 WORD_WRAP_WIDTH = 120
@@ -56,15 +56,27 @@ def format_list(list_, pattern):
     """
     return [pattern.format(s) for s in list_]
 
+def load_configuration(config_file: Path):
+    """Load configuration from a YAML file."""
+    try:
+        with open(config_file, 'r', encoding='utf-8') as f:
+            if config_file.suffix.lower() in ['.yaml', '.yml']:
+                return yaml.safe_load(f)
+            else:
+                logging.error(f"Unsupported configuration file format: {config_file.suffix}. Only YAML is supported.")
+                return None
+    except Exception as e:
+        logging.error(f"Error loading configuration file {config_file}: {e}")
+        return None
+
 def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, verbose= False, clobber:bool=True):
     """
-    Expands a template using the provided JSON configuration and Jinja2.
-
-
+    Expands a template using the provided YAML configuration and Jinja2.
     """
-    # Load JSON configuration
-    with open(config_file, 'r') as f:
-        filter_description = json.load(f)
+    # Load configuration
+    filter_description = load_configuration(config_file)
+    if filter_description is None:
+        return -1
 
     # check all paths exist, print a warning if they do not
     for template_dir in template_dirs:
@@ -104,19 +116,19 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
         return -1
 
     if output_file.exists():
-        with open(output_file, 'r') as f:
+        with open(output_file, 'r', encoding='utf-8') as f:
             existing_content = f.read()
         if existing_content == output_content:
             logging.info(f"Output file {output_file} already exists and content is identical. Skipping write.")
             return 0
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write(output_content)
     return 0
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Expand a template using a JSON configuration file and Jinja2.")
-    parser.add_argument("config_file", type=Path, help="Path to the JSON configuration file.")
+    parser = argparse.ArgumentParser(description="Expand a template using a YAML configuration file and Jinja2.")
+    parser.add_argument("config_file", type=Path, help="Path to the YAML configuration file.")
     parser.add_argument("template", type=Path, help="JINJA template file")
     # Update the argument to accept a list of directories with multiple `-D` flags, allowing it to be used zero or more times.
     parser.add_argument("-D", "--template_dir", action='append', type=Path, default=[], help="Directory containing the main template files.")

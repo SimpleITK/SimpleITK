@@ -1,0 +1,507 @@
+name: LabelIntensityStatisticsImageFilter
+itk_name: LabelImageToStatisticsLabelMapFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+doc: Docs
+pixel_types: IntegerPixelIDTypeList
+pixel_types2: BasicPixelIDTypeList
+filter_type: itk::LabelImageToStatisticsLabelMapFilter<InputImageType,InputImageType2, itk::LabelMap< itk::StatisticsLabelObject<
+  int64_t, InputImageType::ImageDimension > > >
+no_procedure: true
+no_return_image: true
+include_files: []
+inputs:
+- name: Image
+  type: Image
+- name: FeatureImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetFeatureImage( this->CastImageToITK<typename FilterType::FeatureImageType>(*inFeatureImage) );
+members:
+- name: BackgroundValue
+  type: double
+  default: '0'
+  doc: ''
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the value used as "background" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the value used as "background" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() .
+- name: ComputeFeretDiameter
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the maximum Feret diameter should be computed or not. The default value is false, because of the high
+    computation time required.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the maximum Feret diameter should be computed or not. The default value is false, because of the high
+    computation time required.
+- name: ComputePerimeter
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the perimeter should be computed or not. The default value is false, because of the high computation time
+    required.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the perimeter should be computed or not. The default value is false, because of the high computation time
+    required.
+- name: NumberOfBins
+  type: uint32_t
+  default: 128u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the number of bins in the histogram. Note that the histogram is used to compute the median value, and that this
+    option may have an effect on the value of the median.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the number of bins in the histogram. Note that the histogram is used to compute the median value, and that this
+    option may have an effect on the value of the median.
+custom_methods:
+- name: HasLabel
+  doc: Does the specified label exist? Can only be called after a call a call to Update().
+  return_type: bool
+  parameters:
+  - type: int64_t
+    var_name: label
+  body: return std::find(m_Labels.begin(),m_Labels.end(), label) != m_Labels.end();
+- name: GetNumberOfLabels
+  doc: Return the number of labels after execution.
+  return_type: uint64_t
+  body: return m_Labels.size();
+  parameters: []
+measurements:
+- name: BoundingBox
+  type: std::vector<unsigned int>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKImageRegionToSTL(value)
+  label_map: true
+  detaileddescriptionGet: >-
+    Get the bounding box of a labeled object.  The bounding box is returned following the common convention for returning
+    an itk::ImageRegion as a 1 dimensional array containing the index values followed by the size values. For example, a 2D
+    image region would have the array \f[[x, y, width, height]\f].
+- name: Region
+  type: std::vector<unsigned int>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKImageRegionToSTL(value)
+  label_map: true
+- name: Centroid
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<double>(value)
+  label_map: true
+- name: Elongation
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: EquivalentEllipsoidDiameter
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<double>(value)
+  label_map: true
+- name: EquivalentSphericalPerimeter
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: EquivalentSphericalRadius
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: FeretDiameter
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Flatness
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Labels
+  type: std::vector<int64_t>
+  custom_itk_cast: |-
+    const std::vector<typename FilterType::OutputImageType::LabelType> tempLabels = filter->GetOutput()->GetLabels();
+      this->m_Labels = std::vector<int64_t>(tempLabels.begin(), tempLabels.end());
+  default: std::vector<int64_t>()
+- name: NumberOfPixels
+  type: uint64_t
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: NumberOfPixelsOnBorder
+  type: uint64_t
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Perimeter
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: PerimeterOnBorder
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: PerimeterOnBorderRatio
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: PhysicalSize
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: PrincipalAxes
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: std::vector<double>(value[0], value[T::RowDimensions-1]+T::ColumnDimensions)
+  label_map: true
+- name: PrincipalMoments
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<double>(value)
+  label_map: true
+- name: Roundness
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: CenterOfGravity
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<double>(value)
+  label_map: true
+- name: Kurtosis
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Maximum
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: MaximumIndex
+  type: std::vector<uint32_t>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<uint32_t>(value)
+  label_map: true
+- name: Mean
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Median
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Minimum
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: MinimumIndex
+  type: std::vector<uint32_t>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<uint32_t>(value)
+  label_map: true
+- name: Skewness
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: StandardDeviation
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Sum
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: Variance
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: WeightedElongation
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: WeightedFlatness
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  label_map: true
+- name: WeightedPrincipalAxes
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: std::vector<double>(value[0], value[T::RowDimensions-1]+T::ColumnDimensions)
+  label_map: true
+- name: WeightedPrincipalMoments
+  type: std::vector<double>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKVectorToSTL<double>(value)
+  label_map: true
+tests:
+- tag: cthead1
+  description: cthead1 with defaults
+  settings: []
+  inputs:
+  - Input/2th_cthead1.mha
+  - Input/cthead1.png
+  measurements_results:
+  - name: Elongation
+    value: 1.1422985238962327
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: EquivalentSphericalPerimeter
+    value: 194.2969857
+    tolerance: 1.0e-06
+    parameters:
+    - 1
+  - name: EquivalentSphericalRadius
+    value: 30.9233257
+    tolerance: 1.0e-06
+    parameters:
+    - 1
+  - name: FeretDiameter
+    value: 0
+    parameters:
+    - 1
+  - name: Flatness
+    value: 1.1422985238962327
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: NumberOfLabels
+    value: 2u
+  - name: NumberOfPixels
+    value: 24139u
+    parameters:
+    - 1
+  - name: NumberOfPixelsOnBorder
+    value: 0u
+    parameters:
+    - 1
+  - name: Perimeter
+    value: 1254.3608035
+    tolerance: 1.0e-06
+    parameters:
+    - 1
+  - name: PerimeterOnBorder
+    value: 0
+    parameters:
+    - 1
+  - name: PerimeterOnBorderRatio
+    value: 0
+    parameters:
+    - 1
+  - name: PhysicalSize
+    value: 3004.1544869
+    tolerance: 1.0e-06
+    parameters:
+    - 1
+  - name: Roundness
+    value: 0.15489720755458994
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: Kurtosis
+    value: 5.491040986144835
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: Maximum
+    value: 199
+    parameters:
+    - 1
+  - name: Mean
+    value: 138.56282364638136
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: Mean
+    value: 244.31961722488037
+    tolerance: 1.0e-08
+    parameters:
+    - '2'
+  - name: Median
+    value: 136.46484375
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: Minimum
+    value: 100
+    parameters:
+    - 1
+  - name: Skewness
+    value: 1
+    tolerance: 1.8728484943852783
+    parameters:
+    - 1
+  - name: StandardDeviation
+    value: 14.051474145970603
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: Sum
+    value: 3344768
+    parameters:
+    - 1
+  - name: Variance
+    value: 197.44392567488032
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: WeightedElongation
+    value: 1.1454453590786724
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+  - name: WeightedFlatness
+    value: 1.1454453590786724
+    tolerance: 1.0e-08
+    parameters:
+    - 1
+briefdescription: a convenient class to convert a label image to a label map and valuate the statistics attributes at once
+detaileddescription: >-
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
+
+
+  \see StatisticsLabelObject , LabelStatisticsOpeningImageFilter , LabelStatisticsOpeningImageFilter
+itk_module: ITKLabelMap
+itk_group: LabelMap
+in_place: false

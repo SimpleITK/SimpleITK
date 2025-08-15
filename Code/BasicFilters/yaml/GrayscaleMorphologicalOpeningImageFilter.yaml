@@ -1,0 +1,123 @@
+name: GrayscaleMorphologicalOpeningImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Performs morphological opening in a grayscale image.
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::GrayscaleMorphologicalOpeningImageFilter<InputImageType, OutputImageType, itk::FlatStructuringElement< InputImageType::ImageDimension
+  > >
+include_files:
+- sitkCreateKernel.h
+members:
+- name: KernelRadius
+  type: unsigned int
+  default: std::vector<uint32_t>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  custom_itk_cast: ""
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the kernel structuring element.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the kernel structuring element.
+- name: KernelType
+  type: KernelEnum
+  default: itk::simple::sitkBall
+  custom_itk_cast: |-
+    auto kernel = CreateKernel<InputImageType::ImageDimension>( m_KernelType, m_KernelRadius );
+      filter->SetKernel( kernel );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the kernel or structuring element used for the morphology.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the kernel or structuring element used for the morphology.
+- name: SafeBorder
+  type: bool
+  default: 'true'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    A safe border is added to input image to avoid borders effects and remove it once the closing is done
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    A safe border is added to input image to avoid borders effects and remove it once the closing is done
+custom_methods: []
+tests:
+- tag: GrayscaleMorphologicalOpening
+  description: Test grayscale morphological opening
+  md5hash: 867de5ed8cf49c4657e1545bd57f2c23
+  settings:
+  - parameter: KernelRadius
+    no_get_method: true
+    value: 1
+  - parameter: KernelType
+    value: itk::simple::sitkBall
+    lua_value: SimpleITK.sitkBall
+    python_value: SimpleITK.sitkBall
+    ruby_value: Simpleitk::SitkBall
+    java_value: KernelEnum.sitkBall
+    tcl_value: $sitkBall
+    csharp_value: KernelEnum.sitkBall
+    R_value: '''sitkBall'''
+  inputs:
+  - Input/STAPLE1.png
+- tag: GrayscaleMorphologicalOpeningVectorRadius1
+  description: Test grayscale morphological opening with vector 3D radius
+  md5hash: 5651a92320cfd9f01be4463131a4e573
+  settings:
+  - parameter: KernelRadius
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 20
+    - 5
+    - 2
+    python_value: '[ 20, 5, 2 ]'
+  - parameter: KernelType
+    value: itk::simple::sitkCross
+    lua_value: SimpleITK.sitkCross
+    python_value: SimpleITK.sitkCross
+    ruby_value: Simpleitk::SitkCross
+    java_value: KernelEnum.sitkCross
+    tcl_value: $sitkCross
+    csharp_value: KernelEnum.sitkCross
+    R_value: '''sitkCross'''
+  inputs:
+  - Input/STAPLE1.png
+- tag: GrayscaleMorphologicalOpeningVectorRadius2
+  description: Test grayscale morphological opening with vector 2D radius expecting padding of 1
+  md5hash: 0a5ac0dbca31e1b92eb6d48e990582a7
+  settings:
+  - parameter: KernelRadius
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 20
+    - 5
+  - parameter: KernelType
+    value: itk::simple::sitkBox
+    lua_value: SimpleITK.sitkBox
+    python_value: SimpleITK.sitkBox
+    ruby_value: Simpleitk::SitkBox
+    java_value: KernelEnum.sitkBox
+    tcl_value: $sitkBox
+    csharp_value: KernelEnum.sitkBox
+    R_value: '''sitkBox'''
+  inputs:
+  - Input/STAPLE1.png
+briefdescription: Grayscale opening of an image.
+detaileddescription: >-
+  Open an image using grayscale morphology.
+
+
+  The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element
+  having values > 0 are candidates for affecting the center pixel.
+
+
+  \see MorphologyImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

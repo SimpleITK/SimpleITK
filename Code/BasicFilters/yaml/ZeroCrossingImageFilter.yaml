@@ -1,0 +1,92 @@
+name: ZeroCrossingImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: SignedPixelIDTypeList
+output_pixel_type: uint8_t
+members:
+- name: ForegroundValue
+  type: uint8_t
+  default: 1u
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the label value for zero-crossing pixels.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the label value for zero-crossing pixels.
+- name: BackgroundValue
+  type: uint8_t
+  default: 0u
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the label value for non-zero-crossing pixels.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the label value for non-zero-crossing pixels.
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: 1b5cea61ceb46ebf606eb9e63de1e75f
+  inputs:
+  - Input/2th_cthead1_distance.nrrd
+- tag: inverted
+  description: Run image with backwards foreground and background
+  settings:
+  - parameter: ForegroundValue
+    value: '0'
+    java_value: (short) 0
+  - parameter: BackgroundValue
+    value: '2'
+    java_value: '(short) 2 '
+  md5hash: 17cf4374c03d958e13506db9799c4789
+  inputs:
+  - Input/2th_cthead1_distance.nrrd
+briefdescription: This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image .
+detaileddescription: >-
+  Pixels closest to zero-crossings are labeled with a foreground value. All other pixels are marked with a background value.
+  The algorithm works by detecting differences in sign among neighbors using city-block style connectivity (4-neighbors in
+  2d, 6-neighbors in 3d, etc.).
+
+
+  \par Inputs and Outputs
+
+  The input to this filter is an itk::Image of arbitrary dimension. The algorithm assumes a signed data type (zero-crossings
+  are not defined for unsigned int data types), and requires that operator>, operator<, operator==, and operator!= are defined.
+
+
+
+  \par
+
+  The output of the filter is a binary, labeled image of user-specified type. By default, zero-crossing pixels are labeled
+  with a default "foreground" value of itk::NumericTraits<OutputDataType>::OneValue() , where OutputDataType is the data type
+  of the output image. All other pixels are labeled with a default "background" value of OutputDataType{}.
+
+
+
+  \par Parameters
+
+  There are two parameters for this filter. ForegroundValue is the value that marks zero-crossing pixels. The BackgroundValue
+  is the value given to all other pixels.
+
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKImageFeature
+itk_group: ImageFeature
+in_place: false

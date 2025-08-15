@@ -1,0 +1,63 @@
+name: EqualImageFilter
+itk_name: BinaryFunctorImageFilter
+template_code_filename: BinaryFunctorFilter
+template_test_filename: ImageFilter
+constant_type: double
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: uint8_t
+filter_type: itk::BinaryFunctorImageFilter<InputImageType,InputImageType2,OutputImageType, itk::Functor::Equal< typename InputImageType::PixelType,
+  typename InputImageType2::PixelType, typename OutputImageType::PixelType> >
+include_files:
+- itkLogicOpsFunctors.h
+members:
+- name: BackgroundValue
+  type: uint8_t
+  default: 0u
+  custom_itk_cast: |-
+    filter->GetFunctor().SetBackgroundValue( static_cast<typename OutputImageType::PixelType>( this->m_BackgroundValue ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >
+    Set/Get the value used to mark the false pixels of the operator.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >
+    Set/Get the value used to mark the false pixels of the operator.
+- name: ForegroundValue
+  type: uint8_t
+  default: 1u
+  custom_itk_cast: |-
+    filter->GetFunctor().SetForegroundValue( static_cast<typename OutputImageType::PixelType>( this->m_ForegroundValue ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >
+    Set/Get the value used to mark the true pixels of the operator.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >
+    Set/Get the value used to mark the true pixels of the operator.
+tests:
+- tag: default
+  description: same images
+  settings: []
+  md5hash: ae5c932ab2e19291dd20c2c4ac382428
+  inputs:
+  - Input/cthead1.png
+  - Input/cthead1.png
+briefdescription: Implements pixel-wise generic operation of two images, or of an image and a constant.
+detaileddescription: >-
+  This class is parameterized over the types of the two input images and the type of the output image. It is also parameterized
+  by the operation to be applied. A Functor style is used.
+
+
+  The constant must be of the same type than the pixel type of the corresponding image. It is wrapped in a SimpleDataObjectDecorator
+  so it can be updated through the pipeline. The SetConstant() and GetConstant() methods are provided as shortcuts to set
+  or get the constant value without manipulating the decorator.
+
+
+  \see BinaryGeneratorImagFilter
+
+
+
+  \see UnaryFunctorImageFilter TernaryFunctorImageFilter
+itk_module: ITKImageFilterBase
+itk_group: ImageFilterBase
+in_place: true

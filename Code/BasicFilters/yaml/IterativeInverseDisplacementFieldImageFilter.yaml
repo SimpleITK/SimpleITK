@@ -1,0 +1,60 @@
+name: IterativeInverseDisplacementFieldImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: RealVectorPixelIDTypeList
+filter_type: itk::IterativeInverseDisplacementFieldImageFilter< itk::Image< itk::Vector<typename InputImageType::InternalPixelType,
+  InputImageType::ImageDimension>, InputImageType::ImageDimension >, itk::Image< itk::Vector< typename InputImageType::InternalPixelType,
+  InputImageType::ImageDimension>, InputImageType::ImageDimension > >
+custom_set_input: |-
+  filter->SetInput( GetImageFromVectorImage(const_cast< InputImageType * >(image1.GetPointer())) );
+include_files:
+- itkVector.h
+- sitkImageConvert.hxx
+members:
+- name: NumberOfIterations
+  type: uint32_t
+  default: 5u
+  doc: Number of iterations to run
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: StopValue
+  type: double
+  default: '0.0'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+measurements: []
+custom_methods: []
+tests:
+- tag: 2d
+  description: 2D
+  settings: []
+  tolerance: 0.001
+  inputs:
+  - Input/displacement.mha
+briefdescription: Computes the inverse of a displacement field.
+detaileddescription: >-
+  IterativeInverseDisplacementFieldImageFilter takes a displacement field as input and computes the displacement field that
+  is its inverse. If the input displacement field was mapping coordinates from a space A into a space B, the output of this
+  filter will map coordinates from the space B into the space A.
+
+
+  The algorithm implemented in this filter uses an iterative method for progressively refining the values of the inverse field.
+  Starting from the direct field, at every pixel the direct mapping of this point is found, and a the negative of the current
+  displacement is stored in the inverse field at the nearest pixel. Then, subsequent iterations verify if any of the neighbor
+  pixels provide a better return to the current pixel, in which case its value is taken for updating the vector in the inverse
+  field.
+
+
+  This method was discussed in the users-list during February 2004.
+
+
+  \author Corinne Mattmann
+itk_module: ITKDisplacementField
+itk_group: DisplacementField
+in_place: false

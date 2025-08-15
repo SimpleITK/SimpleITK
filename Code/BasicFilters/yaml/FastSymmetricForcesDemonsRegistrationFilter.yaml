@@ -1,0 +1,235 @@
+name: FastSymmetricForcesDemonsRegistrationFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+no_procedure: true
+number_of_inputs: 0
+pixel_types: BasicPixelIDTypeList
+output_image_type: itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >
+filter_type: itk::FastSymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>
+include_files:
+- sitkImageConvert.hxx
+inputs:
+- name: FixedImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );
+- name: MovingImage
+  type: Image
+- name: InitialDisplacementField
+  type: Image
+  optional: true
+  custom_itk_cast: |2-
+      using VectorImageType = itk::VectorImage<double, FilterType::DisplacementFieldType::ImageDimension>;
+          filter->SetInitialDisplacementField( GetImageFromVectorImage(const_cast<VectorImageType*>(CastImageToITK<VectorImageType>(*inInitialDisplacementField).GetPointer()) ) );
+members:
+- name: StandardDeviations
+  type: double
+  dim_vec: true
+  set_as_scalar: true
+  default: std::vector<double>(3, 1.0)
+  itk_type: typename FilterType::StandardDeviationsType
+  detaileddescriptionSet: >-
+    Set/Get the Gaussian smoothing standard deviations for the displacement field. The values are set with respect to pixel
+    coordinates.
+  detaileddescriptionGet: >-
+    Set/Get the Gaussian smoothing standard deviations for the displacement field. The values are set with respect to pixel
+    coordinates.
+- name: NumberOfIterations
+  type: uint32_t
+  default: 10u
+  doc: Number of iterations to run
+- name: MaximumRMSError
+  type: double
+  default: 0.02
+  doc: Value of RMS change below which the filter should stop. This is a convergence criterion.
+- name: UseGradientType
+  enum:
+  - Symmetric
+  - Fixed
+  - WarpedMoving
+  - MappedMoving
+  default: itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Symmetric
+  custom_itk_cast: |-
+    filter->SetUseGradientType( static_cast<typename FilterType::GradientType>( this->GetUseGradientType()) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: MaximumUpdateStepLength
+  type: double
+  default: 0.5
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the maximum update step length.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: SmoothDisplacementField
+  type: bool
+  default: 'true'
+  detaileddescriptionSet: >-
+    Set/Get whether the displacement field is smoothed (regularized). Smoothing the displacement yields a solution elastic
+    in nature. If SmoothDisplacementField is on, then the displacement field is smoothed with a Gaussian whose standard deviations
+    are specified with SetStandardDeviations()
+  detaileddescriptionGet: >-
+    Set/Get whether the displacement field is smoothed (regularized). Smoothing the displacement yields a solution elastic
+    in nature. If SmoothDisplacementField is on, then the displacement field is smoothed with a Gaussian whose standard deviations
+    are specified with SetStandardDeviations()
+- name: SmoothUpdateField
+  type: bool
+  default: 'false'
+  detaileddescriptionSet: >-
+    Set/Get whether the update field is smoothed (regularized). Smoothing the update field yields a solution viscous in nature.
+    If SmoothUpdateField is on, then the update field is smoothed with a Gaussian whose standard deviations are specified
+    with SetUpdateFieldStandardDeviations()
+  detaileddescriptionGet: >-
+    Set/Get whether the update field is smoothed (regularized). Smoothing the update field yields a solution viscous in nature.
+    If SmoothUpdateField is on, then the update field is smoothed with a Gaussian whose standard deviations are specified
+    with SetUpdateFieldStandardDeviations()
+- name: UpdateFieldStandardDeviations
+  type: double
+  dim_vec: true
+  set_as_scalar: true
+  default: std::vector<double>(3, 1.0)
+  itk_type: typename FilterType::StandardDeviationsType
+  detaileddescriptionSet: >-
+    Set the Gaussian smoothing standard deviations for the update field. The values are set with respect to pixel coordinates.
+  detaileddescriptionGet: >-
+    Set the Gaussian smoothing standard deviations for the update field. The values are set with respect to pixel coordinates.
+- name: MaximumKernelWidth
+  type: unsigned int
+  default: 30u
+  detaileddescriptionSet: >-
+    Set/Get the desired limits of the Gaussian kernel width.
+  detaileddescriptionGet: >-
+    Set/Get the desired limits of the Gaussian kernel width.
+- name: MaximumError
+  type: double
+  default: '0.1'
+  detaileddescriptionSet: >-
+    Set/Get the desired maximum error of the Guassian kernel approximate.
+  detaileddescriptionGet: >-
+    Set/Get the desired maximum error of the Guassian kernel approximate.
+- name: IntensityDifferenceThreshold
+  type: double
+  default: '0.001'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the threshold below which the absolute difference of intensity yields a match. When the intensities match between
+    a moving and fixed image pixel, the update vector (for that iteration) will be the zero vector. Default is 0.001.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+measurements:
+- name: ElapsedIterations
+  active: true
+  type: uint32_t
+  default: 0
+  briefdescriptionGet: Number of iterations run.
+- name: RMSChange
+  type: double
+  default: 0.0
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the root mean squared change of the previous iteration. May not be used by all solvers.
+- name: Metric
+  type: double
+  active: true
+  default: 0.0
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the metric value. The metric value is the mean square difference in intensity between the fixed image and transforming
+    moving image computed over the overlapping region between the two images. This value is calculated for the current iteration
+- name: StopRegistration
+  function_name: StopRegistration
+  non_const: true
+  type: void
+  active: true
+  itk_get: f->StopRegistration()
+  no_print: true
+  briefdescriptionGet: Stop the registration after the current iteration.
+tests:
+- tag: 2d
+  description: 2D
+  settings: []
+  tolerance: 0.001
+  inputs:
+  - Input/BrainProtonDensitySliceBorder20.png
+  - Input/BrainProtonDensitySliceBSplined10.png
+  measurements_results:
+  - name: ElapsedIterations
+    value: 10u
+  - name: RMSChange
+    value: 0.288325
+    tolerance: 1.0e-05
+  - name: Metric
+    value: 492.46166170748455
+    tolerance: 0.0001
+- tag: 2d_with_initial
+  description: 2D With Initial Displacement
+  settings: []
+  tolerance: 1.0e-08
+  inputs:
+  - Input/BrainProtonDensitySliceBorder20.png
+  - Input/BrainProtonDensitySliceBSplined10.png
+  - Input/BrainProtonDensitySlice20InitialDisplacement.mha
+  measurements_results:
+  - name: ElapsedIterations
+    value: 10u
+  - name: RMSChange
+    value: 0.2879341
+    tolerance: 1.0e-06
+  - name: Metric
+    value: 365.72938
+    tolerance: 0.0001
+briefdescription: Deformably register two images using a symmetric forces demons algorithm.
+detaileddescription: >-
+  This class was contributed by Tom Vercauteren, INRIA & Mauna Kea Technologies based on a variation of the DemonsRegistrationFilter
+  .
+
+
+  FastSymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images by computing
+  the deformation field which will map a moving image onto a fixed image.
+
+
+  A deformation field is represented as a image whose pixel type is some vector type with at least N elements, where N is
+  the dimension of the fixed image. The vector type must support element access via operator []. It is assumed that the vector
+  elements behave like floating point scalars.
+
+
+  This class is templated over the fixed image type, moving image type and the deformation field type.
+
+
+  The input fixed and moving images are set via methods SetFixedImage and SetMovingImage respectively. An initial deformation
+  field maybe set via SetInitialDisplacementField or SetInput. If no initial field is set, a zero field is used as the initial
+  condition.
+
+
+  The output deformation field can be obtained via methods GetOutput or GetDisplacementField.
+
+
+  This class make use of the finite difference solver hierarchy. Update for each iteration is computed in DemonsRegistrationFunction
+  .
+
+
+  \author Tom Vercauteren, INRIA & Mauna Kea Technologies
+
+
+
+  This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/ux2obj
+
+
+  \warning This filter assumes that the fixed image type, moving image type and deformation field type all have the same number
+  of dimensions.
+
+
+
+  \see DemonsRegistrationFilter
+
+
+
+  \see DemonsRegistrationFunction
+itk_module: ITKPDEDeformableRegistration
+itk_group: PDEDeformable
+in_place: false

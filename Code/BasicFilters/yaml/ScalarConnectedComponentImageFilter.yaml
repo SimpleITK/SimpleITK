@@ -1,0 +1,66 @@
+name: ScalarConnectedComponentImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::ScalarConnectedComponentImageFilter<InputImageType, OutputImageType, itk::Image<uint8_t, InputImageType::ImageDimension>
+  >
+output_pixel_type: uint32_t
+inputs:
+- name: Image
+  type: Image
+- name: MaskImage
+  type: Image
+  optional: true
+members:
+- name: DistanceThreshold
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: FullyConnected
+  type: bool
+  default: 'false'
+  doc: ''
+custom_methods: []
+tests:
+- tag: default
+  description: 2D
+  settings: []
+  md5hash: 3a73df13adc18671b6981494fd337750
+  inputs:
+  - Input/cthead1.png
+- tag: wDistance
+  description: 3D
+  settings:
+  - parameter: DistanceThreshold
+    value: '500.0'
+  md5hash: d119778b306a4f744899f917c8f10814
+  inputs:
+  - Input/RA-Short.nrrd
+- tag: 2th_cthead
+  description: split cthead
+  settings:
+  - parameter: DistanceThreshold
+    value: '1.0'
+  md5hash: c7a41eaca76bf64f4308bb17ca03c141
+  inputs:
+  - Input/2th_cthead1.png
+- tag: mask
+  description: threshold with mask
+  settings:
+  - parameter: DistanceThreshold
+    value: '1.0'
+  md5hash: 91338bae073d58caeddaaf11d6f276a3
+  inputs:
+  - Input/2th_cthead1.png
+  - Input/2th_cthead1.png
+briefdescription: A connected components filter that labels the objects in an arbitrary image. Two pixels are similar if they
+  are within threshold of each other. Uses ConnectedComponentFunctorImageFilter .
+detaileddescription: ""
+itk_module: ITKConnectedComponents
+itk_group: ConnectedComponents
+in_place: false

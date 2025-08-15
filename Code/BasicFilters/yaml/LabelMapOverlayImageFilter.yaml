@@ -1,0 +1,71 @@
+name: LabelMapOverlayImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+include_files:
+- sitkLabelFunctorUtils.hxx
+number_of_inputs: 0
+doc: ''
+pixel_types: LabelPixelIDTypeList
+pixel_types2: BasicPixelIDTypeList
+output_image_type: itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >
+filter_type: itk::LabelMapOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>
+inputs:
+- name: LabelMapImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetInput1( this->CastImageToITK<typename FilterType::LabelMapType>(*inLabelMapImage) );
+- name: FeatureImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetFeatureImage( this->CastImageToITK<typename FilterType::FeatureImageType>(*inFeatureImage) );
+members:
+- name: Opacity
+  type: double
+  default: 0.5
+  doc: Value assigned to pixels outside of the mask
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the opacity of the colored label image. The value must be between 0 and 1
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the opacity of the colored label image. The value must be between 0 and 1
+- name: Colormap
+  type: std::vector<unsigned char>
+  default: std::vector<unsigned char>()
+  custom_itk_cast: |-
+    SetLabelFunctorFromColormap(filter->GetFunctor(),this->m_Colormap);
+tests:
+- tag: default
+  description: Simply run with default settings
+  inputA_cast: sitkLabelUInt8
+  md5hash: 299b2f5dbf018c868d65d9d5511fe470
+  settings: []
+  inputs:
+  - Input/2th_cthead1.mha
+  - Input/cthead1.png
+briefdescription: Apply a colormap to a label map and superimpose it on an image.
+detaileddescription: >-
+  Apply a colormap to a label map and put it on top of the feature image. The feature image is typically the image from which
+  the labeling was produced. Use the SetInput function to set the LabelMap , and the SetFeatureImage function to set the feature
+  image.
+
+
+  The set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background
+  label produce a gray pixel with the same intensity than the input one.
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  This implementation was taken from the Insight Journal paper: https://doi.org/10.54294/q6auw4
+
+
+  \see LabelOverlayImageFilter , LabelOverlayFunctor
+
+
+
+  \see LabelMapToRGBImageFilter , LabelMapToBinaryImageFilter , LabelMapToLabelImageFilter
+itk_module: ITKImageFusion
+itk_group: ImageFusion
+in_place: false

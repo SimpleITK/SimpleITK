@@ -1,0 +1,54 @@
+name: AreaClosingImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::AreaClosingImageFilter<InputImageType,OutputImageType>
+members:
+- name: Lambda
+  type: double
+  default: 0.0
+  doc: ''
+  briefdescriptionSet: The size of the area opening
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the image spacing is used or not - defaults to true.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the image spacing is used or not - defaults to true.
+- name: FullyConnected
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+custom_methods: []
+tests:
+- tag: basic
+  description: Test area closing
+  md5hash: 83928600f9346290ecb6ccacb6b41d3a
+  settings:
+  - parameter: Lambda
+    cxx_value: 20
+    value: 20.0
+  inputs:
+  - Input/cthead1.png
+briefdescription: Morphological closing by attributes.
+detaileddescription: >-
+  An attribute closing removes blobs according to criteria such as area. When applied to grayscale images they have the effect
+  of filling valleys (regions darker than their surroundings) based on area while leaving the rest of the image unchanged.
+
+
+  This code was contributed in the Insight Journal paper
+
+
+  "Grayscale morphological attribute operations" by Beare R. https://doi.org/10.54294/ifvjls
+
+
+  \author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+itk_module: ITKReview
+itk_group: ITKReview
+in_place: false

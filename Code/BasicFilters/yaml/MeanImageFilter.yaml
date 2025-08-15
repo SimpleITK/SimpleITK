@@ -1,0 +1,61 @@
+name: MeanImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: NonLabelPixelIDTypeList
+custom_register: 'factory.RegisterMemberFunctions< PixelIDTypeList, 2, SITK_MAX_DIMENSION > ();
+
+  '
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::RadiusType
+tests:
+- tag: defaults
+  description: Test MeanImageFilter with default parametrs
+  md5hash: 4abff9cea3d1bfdd10bceb8893a35d3a
+  settings: []
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+- tag: by23
+  description: Test by 23
+  md5hash: 4feffebe7656f267b2bc27b966f00a63
+  settings:
+  - parameter: Radius
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 2
+    - 3
+  inputs:
+  - Input/VM1111Shrink-RGB.png
+briefdescription: Applies an averaging filter to an image.
+detaileddescription: >-
+  Computes an image where a given pixel is the mean value of the the pixels in a neighborhood about the corresponding input
+  pixel.
+
+
+  A mean filter is one of the family of linear filters.
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKSmoothing
+itk_group: Smoothing
+in_place: false

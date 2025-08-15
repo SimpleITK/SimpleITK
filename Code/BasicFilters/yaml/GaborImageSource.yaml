@@ -1,0 +1,90 @@
+name: GaborImageSource
+template_code_filename: ImageSource
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 0
+pixel_types: BasicPixelIDTypeList
+output_image_type: TImageType
+filter_type: itk::GaborImageSource<OutputImageType>
+members:
+- name: OutputPixelType
+  type: PixelIDValueEnum
+  default: itk::simple::sitkFloat32
+  custom_itk_cast: ""
+- name: Size
+  type: unsigned int
+  dim_vec: true
+  default: std::vector<unsigned int>(3, 64)
+  itk_type: typename FilterType::SizeType
+- name: Sigma
+  type: double
+  dim_vec: true
+  set_as_scalar: true
+  default: std::vector<double>(3, 16.0)
+  itk_type: typename FilterType::ArrayType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the standard deviation in each direction.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the standard deviation in each direction.
+- name: Mean
+  type: double
+  dim_vec: true
+  set_as_scalar: true
+  default: std::vector<double>(3, 32.0)
+  itk_type: typename FilterType::ArrayType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the mean in each direction.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the mean in each direction.
+- name: Frequency
+  type: double
+  default: '0.4'
+  itk_type: typename FilterType::ArrayType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the modulation frequency of the sine or cosine component.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the modulation frequency of the sine or cosine component.
+- name: Origin
+  type: double
+  dim_vec: true
+  default: std::vector<double>(3, 0.0)
+  itk_type: typename FilterType::PointType
+- name: Spacing
+  type: double
+  dim_vec: true
+  default: std::vector<double>(3, 1.0)
+  itk_type: typename FilterType::SpacingType
+- name: Direction
+  type: std::vector<double>
+  default: std::vector<double>()
+  doc: Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix
+    for the dimension of the image.
+  custom_itk_cast: |-
+    filter->SetDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_Direction ) );
+tests:
+- tag: default
+  description: Simply run with default settings
+  settings: []
+  tolerance: 1.0e-05
+  inputs: []
+briefdescription: Generate an n-dimensional image of a Gabor filter.
+detaileddescription: >-
+  GaborImageSource generates an image of either the real (i.e. symmetric) or complex (i.e. antisymmetric) part of the Gabor
+  filter with the orientation directed along the x-axis. The GaborKernelFunction is used to evaluate the contribution along
+  the x-axis whereas a non-normalized 1-D Gaussian envelope provides the contribution in each of the remaining N dimensions.
+  Orientation can be manipulated via the Transform classes of the toolkit.
+
+
+  The output image may be of any dimension.
+
+
+  This implementation was contributed as a paper to the Insight Journal https://doi.org/10.54294/dhogdz
+itk_module: ITKImageSources
+itk_group: ImageSources
+in_place: false

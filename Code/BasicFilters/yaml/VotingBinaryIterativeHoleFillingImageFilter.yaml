@@ -1,0 +1,118 @@
+name: VotingBinaryIterativeHoleFillingImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: IntegerPixelIDTypeList
+filter_type: itk::VotingBinaryIterativeHoleFillingImageFilter<InputImageType>
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::InputSizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the neighborhood used to compute the median.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the neighborhood used to compute the median
+- name: MaximumNumberOfIterations
+  type: unsigned int
+  default: 10u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Maximum number of iterations. This filter is executed iteratively as long as at least one pixel has changed in a previous
+    iteration, or until the maximum number of iterations has been reached.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Maximum number of iterations. This filter is executed iteratively as long as at least one pixel has changed in a previous
+    iteration, or until the maximum number of iterations has been reached.
+- name: MajorityThreshold
+  type: unsigned int
+  default: 1u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Majority threshold. It is the number of pixels over 50% that will decide whether an OFF pixel will become ON or not. For
+    example, if the neighborhood of a pixel has 124 pixels (excluding itself), the 50% will be 62, and if you set up a Majority
+    threshold of 5, that means that the filter will require 67 or more neighbor pixels to be ON in order to switch the current
+    OFF pixel to ON. The default value is 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Majority threshold. It is the number of pixels over 50% that will decide whether an OFF pixel will become ON or not. For
+    example, if the neighborhood of a pixel has 124 pixels (excluding itself), the 50% will be 62, and if you set up a Majority
+    threshold of 5, that means that the filter will require 67 or more neighbor pixels to be ON in order to switch the current
+    OFF pixel to ON. The default value is 1.
+- name: ForegroundValue
+  type: double
+  default: '1.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the value associated with the Foreground (or the object) on the binary input image and the Background .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the value associated with the Foreground (or the object) on the binary input image and the Background .
+- name: BackgroundValue
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the value associated with the Foreground (or the object) on the binary input image and the Background .
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the value associated with the Foreground (or the object) on the binary input image and the Background .
+tests:
+- tag: VotingBinaryIterativeHoleFiling
+  description: Basic voting interative hole filling
+  settings:
+  - parameter: Radius
+    no_get_method: true
+    value: 5
+  - parameter: ForegroundValue
+    value: '255.0'
+  md5hash: eb63dfddd313064b7b816a8c0b8aaa73
+  inputs:
+  - Input/BlackDots.png
+briefdescription: Fills in holes and cavities by iteratively applying a voting operation.
+detaileddescription: >-
+  This filter uses internally the VotingBinaryHoleFillingImageFilter , and runs it iteratively until no pixels are being changed
+  or until it reaches the maximum number of iterations. The purpose of the filter is to fill in holes of medium size (tens
+  of pixels in radius). In principle the number of iterations is related to the size of the holes to be filled in. The larger
+  the holes, the more iteration must be run with this filter in order to fill in the full hole. The size of the neighborhood
+  is also related to the curvature of the hole borders and therefore the hole size. Note that as a collateral effect this
+  filter may also fill in cavities in the external side of structures.
+
+
+  This filter is templated over a single image type because the output image type must be the same as the input image type.
+  This is required in order to make the iterations possible, since the output image of one iteration is taken as the input
+  image for the next iteration.
+
+
+  \see Image
+
+
+
+  \see VotingBinaryImageFilter
+
+
+
+  \see VotingBinaryHoleFillingImageFilter
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+itk_module: ITKLabelVoting
+itk_group: LabelVoting
+in_place: false

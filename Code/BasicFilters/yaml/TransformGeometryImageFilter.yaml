@@ -1,0 +1,125 @@
+name: TransformGeometryImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+doc: ''
+pixel_types: NonLabelPixelIDTypeList
+filter_type: itk::TransformGeometryImageFilter<InputImageType, OutputImageType>
+inputs:
+- name: Image
+  type: Image
+- name: Transform
+  type: Transform
+  custom_itk_cast: |-
+    const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );
+      if ( !itkTx )
+        {
+        sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+        }
+      else { filter->SetTransform( itkTx ); }
+  no_size_check: true
+members: []
+custom_methods: []
+tests: []
+briefdescription: Modify an image's geometric meta-data, changing its "physical" extent.
+detaileddescription: >-
+  The TransformGeometryImageFilter "physically" changes the image in space using the given transformation. The resulting image
+  is an image with the same voxel values as the input, but with different physical space representation as affected by the
+  transform.
+
+
+  The specific transformation type can be any type derived from the MatrixOffsetTransformBase and the TranslationTransform
+  . The modification of the geometric meta-data is an alternative to resampling the moving image onto the fixed image grid,
+  after registration. The advantages of using this approach over resampling are two-fold, it does not introduce artifacts
+  into the result because the original intensity information is not modified, and it is computationally more efficient.
+
+
+  When the filter is used with a rigid or translation transformation the resulting image can be saved in any desired format.
+  When the filter is used with an affine transformation the resulting image should be saved in a format that supports a non
+  ortho-normal direction cosine matrix (e.g. nrrd).
+
+
+  Let us call the transform operation from the fixed image to moving image TfmF2M . Given a set of points from the fixed image
+  in physical space (i.e. physicalFixedImagePoints ), the aim is to convert those points into the moving image physical space
+  as physicalMovingImagePoints = TfmF2M( physicalFixedImagePoints ) , and then be able to get the image values as movingContinuousIndexPoints
+  = movingImage->TransformPhysicalPointToContinuousIndex( physicalMovingImagePoints
+
+  ) .
+
+
+  We desire to change the moving image direction cosine \f$\mathbf{D}\f$ and origin \f$\mathbf{o}\f$ such that we can compute
+  the moving image points as movingContinuousIndexPoints = newMovingImage->TransformPhysicalPointToContinuousIndex( physicalFixedImagePoints
+
+  )
+
+
+  Let us introduce the notation that will be used to formalize the transformation:
+
+
+  \li Image-related parameters:
+
+
+  \li \f$\mathbf{D}\f$ : direction cosine matrix
+
+
+  \li \f$\mathbf{o}\f$ : origin vector
+
+
+  \li \f$\mathbf{S}\f$ : spacing
+
+
+  \li \f$\mathbf{ci}\f$ : continuous index
+
+
+  \li \f$\mathbf{D}^{'}\f$ : new direction cosine matrix
+
+
+  \li \f$\mathbf{o}^{'}\f$ : new origin vector
+
+
+
+
+
+  \li Image content in corresponding space:
+
+
+  \li \f$\mathbf{f}_{p}\f$ : fixed image points in physical space
+
+
+  \li \f$\mathbf{m}_{p}\f$ : moving image points in physical space
+
+
+
+
+
+  \li Rigid transform-related parameters:
+
+
+  \li \f$\mathbf{R}\f$ : rotation matrix
+
+
+  \li \f$\mathbf{c}\f$ : center of rotation vector
+
+
+  \li \f$\mathbf{t}\f$ : translation vector
+
+
+
+
+
+
+
+
+  The TransformPhysicalPointToContinuousIndex method performs then: \begin{eqnarray*} \mathbf{ci} &= \mathbf{S}^{-1}\mathbf{D}^{-1}(
+  \mathbf{m}_{p} - \mathbf{o} ) \\ \mathbf{m}_{p} &= \mathbf{R}(\mathbf{f}_{p} - \mathbf{c}) + \mathbf{c} + \mathbf{t} \end{eqnarray*}
+
+
+  After substitution:
+
+
+  \begin{eqnarray*} \mathbf{m}_{c} &= \underbrace{\mathbf{R}^{-1}\mathbf{D}}_\text{new cosine}\mathbf{S} * \mathbf{i} + \underbrace{\mathbf{R}^{-1}
+  * \mathbf{o} - \mathbf{R}^{-1} * \mathbf{c} - \mathbf{R}^{-1}*t}_\text{new origin} + \mathbf{c} \\ \\ \mathbf{D}^{'} &=
+  \mathbf{R}^{-1}\mathbf{D} \\ \mathbf{o}^{'} &= \mathbf{R}^{-1} * ( \mathbf{o} - \mathbf{c} - \mathbf{t} ) + \mathbf{c} \end{eqnarray*}
+itk_module: ITKTransform
+itk_group: Transform
+in_place: true

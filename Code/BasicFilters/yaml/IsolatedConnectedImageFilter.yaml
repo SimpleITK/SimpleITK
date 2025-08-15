@@ -1,0 +1,158 @@
+name: IsolatedConnectedImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: uint8_t
+members:
+- name: Seed1
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 0)
+  dim_vec: true
+  itk_type: typename FilterType::IndexType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set a single seed point 1.
+
+
+    This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue.
+- name: Seed2
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 0)
+  dim_vec: true
+  itk_type: typename FilterType::IndexType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set a single seed point 2.
+
+
+    This seed will be isolated from Seed1 (if possible).
+- name: Lower
+  type: double
+  default: 0
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.
+- name: Upper
+  type: double
+  default: 1
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.
+- name: ReplaceValue
+  type: uint8_t
+  default: 1u
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The
+    default is 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The
+    default is 1.
+- name: IsolatedValueTolerance
+  type: double
+  default: '1.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the precision required for the intensity threshold value. The default is 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the precision required for the intensity threshold value. The default is 1.
+- name: FindUpperThreshold
+  type: bool
+  default: 'true'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).
+measurements:
+- name: ThresholdingFailed
+  type: bool
+  default: 'false'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the flag that tells whether the algorithm failed to find a threshold.
+- name: IsolatedValue
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get value that isolates the two seeds.
+tests:
+- tag: cthead
+  description: cthead segmentation
+  md5hash: 0c332a386d0e62411f375627e3958feb
+  settings:
+  - parameter: Seed1
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 150
+    - 150
+  - parameter: Seed2
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 201
+    - 132
+  - parameter: Lower
+    value: '0'
+  - parameter: Upper
+    value: '255'
+    java_value: (short) 255
+  measurements_results:
+  - name: ThresholdingFailed
+    value: 'false'
+    python_value: 'False'
+    r_value: 'FALSE'
+  - name: IsolatedValue
+    value: 173
+    tolerance: 0
+  inputs:
+  - Input/cthead1.png
+briefdescription: Label pixels that are connected to one set of seeds but not another.
+detaileddescription: >-
+  IsolatedConnectedImageFilter finds the optimal threshold to separate two regions. It has two modes, one to separate dark
+  regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate
+  bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be
+  chosen by setting FindUpperThresholdOn() /Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue()
+  .
+
+
+  The algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the
+  threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the
+  upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold,
+  starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest
+  possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.
+
+
+  The user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it
+  could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless
+  the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity
+  values in the image, respectively.
+
+
+  The user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures
+  that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in
+  the segmentation.
+
+
+  It is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The
+  user can check for this by querying the GetThresholdingFailed() flag.
+itk_module: ITKRegionGrowing
+itk_group: RegionGrowing
+in_place: false

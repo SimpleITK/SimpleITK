@@ -1,0 +1,153 @@
+name: ConnectedThresholdImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: uint8_t
+members:
+- name: SeedList
+  type: unsigned int
+  point_vec: true
+  default: std::vector< std::vector<unsigned int > >()
+  custom_itk_cast: |
+    filter->ClearSeeds();
+      for(auto &&seed : m_SeedList)
+        {
+        using IndexType = typename InputImageType::IndexType;
+        filter->AddSeed(sitkSTLVectorToITK< IndexType >( seed ));
+        }
+  briefdescriptionSet: Set list of image indexes for seeds.
+  detaileddescriptionSet: ""
+  briefdescriptionGet: Get list of seeds
+  detaileddescriptionGet: ""
+- name: Lower
+  type: double
+  default: 0
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set Upper and Lower Threshold inputs as values
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get Upper and Lower Threshold inputs as values.
+- name: Upper
+  type: double
+  default: 1
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set Upper and Lower Threshold inputs as values
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get Upper and Lower Threshold inputs as values.
+- name: ReplaceValue
+  type: uint8_t
+  default: 1u
+  pixeltype: Output
+  doc: 'Pixels that lie within Lower and Upper (inclusive)
+
+    will be replaced with this value. The default is 1.'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with
+    this value. The default is 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with
+    this value. The default is 1.
+- name: Connectivity
+  enum:
+  - FaceConnectivity
+  - FullConnectivity
+  default: itk::simple::ConnectedThresholdImageFilter::FaceConnectivity
+  itk_type: typename FilterType::ConnectivityEnum
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity).
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity).
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: ec87a838931d4d5d2e94a04644788a55
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: 2d
+  description: Run with 2d sample settings
+  settings:
+  - parameter: SeedList
+    point_vec: true
+    value:
+    - '{100,100}'
+    - '{95,85}'
+    tcl_value:
+    - 100 100
+    - 95 85
+    python_value:
+    - '[100,100]'
+    - '[95,85]'
+    ruby_value:
+    - '[100,100]'
+    - '[95,85]'
+    R_value:
+    - c(100,100)
+    - c(95,85)
+  - parameter: Upper
+    value: 255
+  - parameter: Lower
+    value: 150
+  - parameter: ReplaceValue
+    value: '255'
+    java_value: (short) 255
+  md5hash: 5119a1fef13206c4a28fcfa0c55b5c13
+  inputs:
+  - Input/STAPLE1.png
+- tag: 2dwconnectivity
+  description: Run with 2d sample settings and connectivity
+  settings:
+  - parameter: SeedList
+    point_vec: true
+    value:
+    - '{100,100}'
+    - '{95,85}'
+    tcl_value:
+    - 100 100
+    - 95 85
+    python_value:
+    - '[100,100]'
+    - '[95,85]'
+    ruby_value:
+    - '[100,100]'
+    - '[95,85]'
+    R_value:
+    - c(100,100)
+    - c(95,85)
+  - parameter: Upper
+    value: 255
+  - parameter: Lower
+    value: 150
+  - parameter: ReplaceValue
+    value: '255'
+    java_value: (short) 255
+  - parameter: Connectivity
+    value: itk::simple::ConnectedThresholdImageFilter::FullConnectivity
+    lua_value: SimpleITK.ConnectedThresholdImageFilter_FullConnectivity
+    python_value: SimpleITK.ConnectedThresholdImageFilter.FullConnectivity
+    ruby_value: Simpleitk::ConnectedThresholdImageFilter::FullConnectivity
+    java_value: ConnectedThresholdImageFilter.ConnectivityType.FullConnectivity
+    tcl_value: $ConnectedThresholdImageFilter_FullConnectivity
+    csharp_value: ConnectedThresholdImageFilter.ConnectivityType.FullConnectivity
+    R_value: '''FullConnectivity'''
+  md5hash: 5119a1fef13206c4a28fcfa0c55b5c13
+  inputs:
+  - Input/STAPLE1.png
+briefdescription: Label pixels that are connected to a seed and lie within a range of values.
+detaileddescription: >-
+  ConnectedThresholdImageFilter labels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower
+  and Upper threshold range.
+itk_module: ITKRegionGrowing
+itk_group: RegionGrowing
+in_place: false

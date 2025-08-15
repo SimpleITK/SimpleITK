@@ -1,0 +1,44 @@
+name: ChangeLabelImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Docs
+pixel_types: IntegerPixelIDTypeList
+members:
+- name: ChangeMap
+  type: std::map<double,double>
+  default: std::map<double,double>()
+  no_print: true
+  custom_itk_cast: |-
+    typename FilterType::ChangeMapType cmap; for( std::map<double,double>::const_iterator i = m_ChangeMap.begin(); i != m_ChangeMap.end(); ++i ) { cmap[static_cast<typename FilterType::InputPixelType>(i->first)] = static_cast<typename FilterType::OutputPixelType>(i->second); } filter->SetChangeMap( cmap );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the entire change map
+tests:
+- tag: defaults
+  description: Just running the filter with no change map.
+  settings: []
+  md5hash: ce4de7d926155a70b234bd05181a5c3e
+  inputs:
+  - Input/2th_cthead1.png
+briefdescription: Change Sets of Labels.
+detaileddescription: >-
+  This filter produces an output image whose pixels are either copied from the input if they are not being changed or are
+  rewritten based on the change parameters
+
+
+  This filter is templated over the input image type and the output image type.
+
+
+  The filter expect both images to have the same number of dimensions.
+
+
+  \author Tim Kelliher. GE Research, Niskayuna, NY.
+
+
+
+  \note This work was supported by a grant from DARPA, executed by the U.S. Army Medical Research and Materiel Command/TATRC
+  Assistance Agreement, Contract::W81XWH-05-2-0059.
+itk_module: ITKImageLabel
+itk_group: ImageLabel
+in_place: true

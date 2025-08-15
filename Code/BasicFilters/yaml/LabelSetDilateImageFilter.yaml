@@ -1,0 +1,45 @@
+name: LabelSetDilateImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: IntegerPixelIDTypeList
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::RadiusType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the radius of the neighborhood used to compute the median.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the radius of the neighborhood used to compute the median
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+custom_methods: []
+tests:
+- tag: default
+  description: Simply run with default settings
+  settings: []
+  md5hash: 4c42732d6c4bd9e1bfab8ac2d7cd32e3
+  inputs:
+  - Input/2th_cthead1.mha
+briefdescription: Class for binary morphological erosion of label images.
+detaileddescription: >-
+  This filter is threaded.
+
+
+  \see itkLabelSetDilateErodeImageFilter
+
+
+  \author Richard Beare, Department of Medicine, Monash University, Australia. Richard.Beare@monash.edu
+itk_module: LabelErodeDilate
+itk_group: LabelErodeDilate

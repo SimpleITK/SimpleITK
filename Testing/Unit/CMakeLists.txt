@@ -17,6 +17,7 @@ set(TEST_HARNESS_DATA_DIRECTORY ${ExternalData_BINARY_ROOT}/Testing/Data)
 add_subdirectory(TestBase)
 
 include(sitkUseGTest)
+include(sitkGenerateFilterSource) # Include for get_config_path function
 
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
@@ -126,6 +127,14 @@ message(STATUS "Generating tests...")
 set(_stride 50)
 set(_exec_i 1) # exec 0 is the manual tests
 set(_i 0)
+
+# Only support YAML configuration files
+set(
+  CONFIG_EXTENSIONS
+  ".yaml"
+  ".yml"
+)
+
 foreach(FILTERNAME ${GENERATED_FILTER_LIST})
   if(NOT _i LESS _stride)
     add_executable(
@@ -150,18 +159,37 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
     set(_i 0)
   endif()
 
-  # Set up some convenience variables
+  # Only check for YAML configuration files
   set(
-    filter_json_file
-    ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/json/${FILTERNAME}.json
+    CONFIG_EXTENSIONS
+    ".yaml"
+    ".yml"
   )
+  set(filter_config_file "")
+  foreach(ext ${CONFIG_EXTENSIONS})
+    set(
+      potential_file
+      ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/yaml/${FILTERNAME}${ext}
+    )
+    if(EXISTS ${potential_file})
+      set(filter_config_file ${potential_file})
+      break()
+    endif()
+  endforeach()
+  set(filter_json_file ${filter_config_file})
 
   ######
   # Figure out which template file gets used
   ######
 
-  # Get the attribute from the json file that indicates the correct template
-  get_json_path(template_name ${filter_json_file} "template_test_filename")
+  # Skip if the config file doesn't exist
+  if(NOT EXISTS ${filter_json_file})
+    message(STATUS "Skipping ${FILTERNAME} - no YAML configuration file found")
+    continue()
+  endif()
+
+  # Get the attribute from the config file that indicates the correct template
+  get_config_path(template_name ${filter_json_file} "template_test_filename")
 
   if(template_name)
     set(

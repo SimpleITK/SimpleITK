@@ -1,0 +1,41 @@
+name: DivideRealImageFilter
+itk_name: BinaryFunctorImageFilter
+template_code_filename: BinaryFunctorFilter
+template_test_filename: ImageFilter
+constant_type: double
+output_pixel_type: typename itk::NumericTraits<typename InputImageType::PixelType>::RealType
+include_files:
+- itkArithmeticOpsFunctors.h
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::BinaryFunctorImageFilter< InputImageType, InputImageType2, OutputImageType, Functor::DivReal< typename InputImageType::PixelType,
+  typename InputImageType2::PixelType, typename OutputImageType::PixelType> >
+members: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  tolerance: 1.0e-08
+  inputs:
+  - Input/Ramp-Up-Short.nrrd
+  - Input/Ramp-Down-Short.nrrd
+briefdescription: Implements pixel-wise generic operation of two images, or of an image and a constant.
+detaileddescription: >-
+  This class is parameterized over the types of the two input images and the type of the output image. It is also parameterized
+  by the operation to be applied. A Functor style is used.
+
+
+  The constant must be of the same type than the pixel type of the corresponding image. It is wrapped in a SimpleDataObjectDecorator
+  so it can be updated through the pipeline. The SetConstant() and GetConstant() methods are provided as shortcuts to set
+  or get the constant value without manipulating the decorator.
+
+
+  \see BinaryGeneratorImagFilter
+
+
+
+  \see UnaryFunctorImageFilter TernaryFunctorImageFilter
+itk_module: ITKImageFilterBase
+itk_group: ImageFilterBase
+in_place: true

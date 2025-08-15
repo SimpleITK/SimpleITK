@@ -1,0 +1,165 @@
+name: OtsuMultipleThresholdsImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: uint8_t
+members:
+- name: NumberOfThresholds
+  type: uint8_t
+  default: 1u
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the number of thresholds. Default is 1.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the number of thresholds. Default is 1.
+- name: LabelOffset
+  type: uint8_t
+  default: 0u
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the offset which labels have to start from. Default is 0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the offset which labels have to start from. Default is 0.
+- name: NumberOfHistogramBins
+  type: uint32_t
+  default: 128u
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the number of histogram bins. Default is 128.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the number of histogram bins. Default is 128.
+- name: ValleyEmphasis
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the use of valley emphasis. Default is false.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the use of valley emphasis. Default is false.
+- name: ReturnBinMidpoint
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Should the threshold value be mid-point of the bin or the maximum? Default is to return bin maximum.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Should the threshold value be mid-point of the bin or the maximum? Default is to return bin maximum.
+measurements:
+- name: Thresholds
+  type: std::vector<double>
+  default: std::vector<double>()
+  custom_itk_cast: |-
+    this->m_Thresholds = std::vector<double>( filter->GetThresholds().begin(), filter->GetThresholds().end() );
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the computed threshold.
+tests:
+- tag: default
+  description: Default parameter settings
+  settings: []
+  md5hash: a9c3b0c0971c5cbda12b29db916451c6
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: Thresholds
+    dim_vec: true
+    value:
+    - 27735.29492
+    tolerance: 0.0001
+- tag: two_on_float
+  description: Default parameter settings
+  settings:
+  - parameter: NumberOfThresholds
+    value: 2
+    java_value: (short) 2
+  - parameter: ReturnBinMidpoint
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  md5hash: 1ab20d3cd9a354b45ac07ec59c0413b3
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+  measurements_results:
+  - name: Thresholds
+    dim_vec: true
+    value:
+    - 0.3242341
+    - 0.6601876
+    tolerance: 1.0e-06
+- tag: three_on
+  description: Default parameter settings
+  settings:
+  - parameter: NumberOfThresholds
+    value: '3'
+    java_value: (short) 3
+  - parameter: NumberOfHistogramBins
+    cxx_value: 256u
+    value: '256'
+  - parameter: ReturnBinMidpoint
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  md5hash: b61c3f4e063fcdd24dba76227129ae34
+  inputs:
+  - Input/cthead1.png
+- tag: valley_emphasis
+  description: Default parameter settings
+  settings:
+  - parameter: NumberOfThresholds
+    value: '3'
+    java_value: (short) 3
+  - parameter: ValleyEmphasis
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  - parameter: ReturnBinMidpoint
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  md5hash: fb65e730472c8001185f355fb626ca3f
+  inputs:
+  - Input/cthead1.png
+  measurements_results:
+  - name: Thresholds
+    dim_vec: true
+    value:
+    - 48.812408
+    - 102.605674
+    - 186.284088
+    tolerance: 1.0e-05
+briefdescription: Threshold an image using multiple Otsu Thresholds.
+detaileddescription: >-
+  This filter creates a labeled image that separates the input image into various classes. The filter computes the thresholds
+  using the OtsuMultipleThresholdsCalculator and applies those thresholds to the input image using the ThresholdLabelerImageFilter
+  . The NumberOfHistogramBins and NumberOfThresholds can be set for the Calculator. The LabelOffset can be set for the ThresholdLabelerImageFilter
+  .
+
+
+  This filter also includes an option to use the valley emphasis algorithm from H.F. Ng, "Automatic thresholding for defect
+  detection", Pattern Recognition Letters, (27): 1644-1649, 2006. The valley emphasis algorithm is particularly effective
+  when the object to be thresholded is small. See the following tests for examples: itkOtsuMultipleThresholdsImageFilterTest3
+  and itkOtsuMultipleThresholdsImageFilterTest4 To use this algorithm, simple call the setter: SetValleyEmphasis(true) It
+  is turned off by default.
+
+
+  \see ScalarImageToHistogramGenerator
+
+
+
+  \see OtsuMultipleThresholdsCalculator
+
+
+
+  \see ThresholdLabelerImageFilter
+itk_module: ITKThresholding
+itk_group: Thresholding
+in_place: false

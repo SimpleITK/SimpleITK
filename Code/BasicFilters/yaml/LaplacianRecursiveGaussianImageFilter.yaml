@@ -1,0 +1,42 @@
+name: LaplacianRecursiveGaussianImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+output_pixel_type: float
+members:
+- name: Sigma
+  type: double
+  default: '1.0'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get Sigma value. Sigma is measured in the units of image spacing.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get Sigma value. Sigma is measured in the units of image spacing.
+- name: NormalizeAcrossScale
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Define which normalization factor will be used for the Gaussian \see RecursiveGaussianImageFilter::SetNormalizeAcrossScale
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Define which normalization factor will be used for the Gaussian \see RecursiveGaussianImageFilter::SetNormalizeAcrossScale
+tests:
+- tag: default
+  description: Simply run with default settings
+  settings: []
+  tolerance: 0.0001
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Computes the Laplacian of Gaussian (LoG) of an image.
+detaileddescription: >-
+  Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter
+  is implemented using the recursive gaussian filters.
+itk_module: ITKImageFeature
+itk_group: ImageFeature
+in_place: false

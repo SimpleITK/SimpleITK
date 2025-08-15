@@ -1,0 +1,54 @@
+name: FFTShiftImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: NonLabelPixelIDTypeList
+members:
+- name: Inverse
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the filter must invert the transform or not. This option has no effect if none of the size of the input
+    image is even, but is required to restore the original image if at least one of the dimensions has an odd size.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the filter must invert the transform or not. This option has no effect if none of the size of the input
+    image is even, but is required to restore the original image if at least one of the dimensions has an odd size.
+tests:
+- tag: defaults_complex
+  description: Test FFTShift complex
+  md5hash: 9b4b0f11dd58a03d94d0e246e14cf63d
+  settings: []
+  inputs:
+  - Input/RA-FFT-Complex.nrrd
+- tag: defaults_float
+  description: Test FFTShift float
+  md5hash: 94409cf6d85e17a3dba2f2aba214d4ac
+  settings: []
+  inputs:
+  - Input/RA-Slice-Float.nrrd
+briefdescription: Shift the zero-frequency components of a Fourier transform to the center of the image.
+detaileddescription: >-
+  The Fourier transform produces an image where the zero frequency components are in the corner of the image, making it difficult
+  to understand. This filter shifts the component to the center of the image.
+
+
+  \note For images with an odd-sized dimension, applying this filter twice will not produce the same image as the original
+  one without using SetInverse(true) on one (and only one) of the two filters.
+
+
+
+  https://doi.org/10.54294/xd0lzg
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  \see ForwardFFTImageFilter , InverseFFTImageFilter
+itk_module: ITKFFT
+itk_group: FFT
+in_place: false

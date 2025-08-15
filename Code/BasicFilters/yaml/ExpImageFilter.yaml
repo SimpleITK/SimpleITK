@@ -1,0 +1,21 @@
+name: ExpImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members: []
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  tolerance: 0.01
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+briefdescription: Computes the exponential function of each pixel.
+detaileddescription: >-
+  The computation is performed using std::exp(x).
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

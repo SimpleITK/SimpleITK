@@ -1,0 +1,108 @@
+name: LandweberDeconvolutionImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+include_files:
+- sitkBoundaryConditions.hxx
+custom_set_input: |-
+  filter->SetInput( image1 ); filter->SetKernelImage( image2 );
+members:
+- name: Alpha
+  type: double
+  default: '0.1'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/get relaxation factor.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/get relaxation factor.
+- name: NumberOfIterations
+  type: int
+  default: 1
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the number of iterations.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the number of iterations.
+- name: Normalize
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >
+    Normalize the output image by the sum of the kernel components
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: BoundaryCondition
+  enum:
+  - ZERO_PAD
+  - ZERO_FLUX_NEUMANN_PAD
+  - PERIODIC_PAD
+  default: itk::simple::LandweberDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD
+  custom_itk_cast: |
+    std::unique_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );
+- name: OutputRegionMode
+  enum:
+  - SAME
+  - VALID
+  default: itk::simple::LandweberDeconvolutionImageFilter::SAME
+  itk_type: typename FilterType::OutputRegionModeEnum
+tests:
+- tag: defaults
+  description: Landweber deconvolution of image blurred with a Gaussian kernel
+  settings:
+  - parameter: Normalize
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  tolerance: 0.0001
+  inputs:
+  - Input/DeconvolutionInput.nrrd
+  - Input/DeconvolutionKernel.nrrd
+briefdescription: Deconvolve an image using the Landweber deconvolution algorithm.
+detaileddescription: >-
+  This filter implements the Landweber deconvolution algorithm as defined in Bertero M and Boccacci P, "Introduction to Inverse
+
+  Problems in Imaging", 1998. The algorithm assumes that the input image has been formed by a linear shift-invariant system
+  with a known kernel.
+
+
+  The Landweber algorithm converges to a solution that minimizes the sum of squared errors \f$||f \otimes h - g||\f$ where
+  \f$f\f$ is the estimate of the unblurred image, \f$\otimes\f$ is the convolution operator, \f$h\f$ is the blurring kernel,
+  and \f$g\f$ is the blurred input image. As such, it is best suited for images that have zero-mean Gaussian white noise.
+
+
+  This is the base implementation of the Landweber algorithm. It may produce results with negative values. For a version of
+  this algorithm that enforces a positivity constraint on each intermediate solution, see ProjectedLandweberDeconvolutionImageFilter
+  .
+
+
+  This code was adapted from the Insight Journal contribution:
+
+
+  "Deconvolution: infrastructure and reference algorithms" by Gaetan Lehmann https://doi.org/10.54294/tvgfv1
+
+
+  \author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France
+
+
+
+  \author Cory Quammen, The University of North Carolina at Chapel Hill
+
+
+
+  \see IterativeDeconvolutionImageFilter
+
+
+
+  \see RichardsonLucyDeconvolutionImageFilter
+
+
+
+  \see ProjectedLandweberDeconvolutionImageFilter
+itk_module: ITKDeconvolution
+itk_group: Deconvolution
+in_place: false

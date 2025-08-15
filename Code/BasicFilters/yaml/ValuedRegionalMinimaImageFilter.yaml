@@ -1,0 +1,44 @@
+name: ValuedRegionalMinimaImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: ScalarPixelIDTypeList
+members:
+- name: FullyConnected
+  type: bool
+  default: 'false'
+custom_methods: []
+measurements:
+- name: Flat
+  type: bool
+  default: 'false'
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: 8297d018757b1477e31293ab8a8f0db1
+  inputs:
+  - Input/cthead1.png
+briefdescription: Transforms the image so that any pixel that is not a regional minima is set to the maximum value for the
+  pixel type. Pixels that are regional minima retain their value.
+detaileddescription: >-
+  Regional minima are flat zones surrounded by pixels of higher value. A completely flat image will be marked as a regional
+  minima by this filter.
+
+
+  This code was contributed in the Insight Journal paper: "Finding regional extrema - methods and performance" by Beare R.,
+  Lehmann G. https://doi.org/10.54294/hva3gz
+
+
+  \author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+
+
+
+  \see ValuedRegionalMaximaImageFilter , ValuedRegionalExtremaImageFilter ,
+
+
+
+  \see HMinimaImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

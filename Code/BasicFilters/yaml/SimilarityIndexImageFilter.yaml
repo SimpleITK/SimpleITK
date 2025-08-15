@@ -1,0 +1,62 @@
+name: SimilarityIndexImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::SimilarityIndexImageFilter<InputImageType, InputImageType2 >
+no_procedure: true
+no_return_image: true
+members: []
+measurements:
+- name: SimilarityIndex
+  type: double
+  default: 0.0
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed similarity index.
+tests:
+- tag: 2d
+  description: 2d
+  settings: []
+  measurements_results:
+  - name: SimilarityIndex
+    value: 0.88424
+    tolerance: 1.0e-05
+  inputs:
+  - Input/STAPLE1.png
+  - Input/STAPLE2.png
+- tag: 3d
+  description: 3d
+  settings: []
+  measurements_results:
+  - name: SimilarityIndex
+    value: 0.8120552
+    tolerance: 1.0e-06
+  inputs:
+  - Input/OAS1_0001_MR1_mpr-1_anon.nrrd
+  - Input/OAS1_0002_MR1_mpr-1_anon.nrrd
+briefdescription: Measures the similarity between the set of non-zero pixels of two images.
+detaileddescription: >-
+  SimilarityIndexImageFilter measures the similarity between the set non-zero pixels of two images using the following formula:
+  \f[ S = \frac{2 | A \cap B |}{|A| + |B|} \f] where \f$A\f$ and \f$B\f$ are respectively the set of non-zero pixels in the
+  first and second input images. Operator \f$|\cdot|\f$ represents the size of a set and \f$\cap\f$ represents the intersection
+  of two sets.
+
+
+  The measure is derived from a reliability measure known as the kappa statistic. \f$S\f$ is sensitive to both differences
+  in size and in location and have been in the literature for comparing two segmentation masks. For more information see:
+  "Morphometric Analysis of White Matter Lesions in MR Images: Method and
+
+  Validation", A. P. Zijdenbos, B. M. Dawant, R. A. Margolin and A. C. Palmer, IEEE Trans. on Medical Imaging, 13(4) pp 716-724,1994
+
+
+  This filter requires the largest possible region of the first image and the same corresponding region in the second image.
+  It behaves as filter with two input and one output. Thus it can be inserted in a pipeline with other filters. The filter
+  passes the first input through unmodified.
+
+
+  This filter is templated over the two input image type. It assume both image have the same number of dimensions.
+itk_module: ITKImageCompare
+itk_group: ImageCompare
+in_place: false

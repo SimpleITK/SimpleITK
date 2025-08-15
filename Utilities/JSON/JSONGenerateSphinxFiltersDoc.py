@@ -5,7 +5,7 @@
 # This scripts read in the SimpleITK JSON descriptions of filters, and
 # the text output produces a reStructuredText file for Sphinx documentation.
 #
-# Usage: Utilities/JSON/JSONGenerateSphinxFiltersDoc.py Code/BasicFilters/json/*.json
+# Usage: Utilities/JSON/JSONGenerateSphinxFiltersDoc.py Code/BasicFilters/yaml/*.yaml
 #
 
 import json

@@ -1,0 +1,83 @@
+name: IntensityWindowingImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+doc: ''
+members:
+- name: WindowMinimum
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the values of the maximum and minimum intensities of the input intensity window.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the values of the maximum and minimum intensities of the input intensity window.
+- name: WindowMaximum
+  type: double
+  default: 255.0
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the values of the maximum and minimum intensities of the input intensity window.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the values of the maximum and minimum intensities of the input intensity window.
+- name: OutputMinimum
+  type: double
+  default: 0.0
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the values of the maximum and minimum intensities of the output image.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the values of the maximum and minimum intensities of the output image.
+- name: OutputMaximum
+  type: double
+  default: 255.0
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the values of the maximum and minimum intensities of the output image.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the values of the maximum and minimum intensities of the output image.
+tests:
+- tag: 2d
+  description: 2D
+  settings: []
+  md5hash: 095f00a68a84df4396914fa758f34dcc
+  inputs:
+  - Input/STAPLE1.png
+- tag: 3dFloat
+  description: 3D
+  settings: []
+  md5hash: 199c966fabac791c758766e14df9974c
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: 3dShort
+  description: 3D
+  settings: []
+  md5hash: 2790c2bdfeb8610821e9ec8751f95516
+  inputs:
+  - Input/RA-Short.nrrd
+briefdescription: Applies a linear transformation to the intensity levels of the input Image that are inside a user-defined
+  interval. Values below this interval are mapped to a constant. Values over the interval are mapped to another constant.
+detaileddescription: >-
+  IntensityWindowingImageFilter applies pixel-wise a linear transformation to the intensity values of input image pixels.
+  The linear transformation is defined by the user in terms of the minimum and maximum values that the output image should
+  have and the lower and upper limits of the intensity window of the input image. This operation is very common in visualization,
+  and can also be applied as a convenient preprocessing operation for image segmentation.
+
+
+  All computations are performed in the precision of the input pixel's RealType. Before assigning the computed value to the
+  output pixel.
+
+
+  \see RescaleIntensityImageFilter
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

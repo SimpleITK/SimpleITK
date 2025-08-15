@@ -1,0 +1,74 @@
+name: LaplacianSharpeningImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members:
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether or not the filter will use the spacing information of the input image in its calculations. Use this option
+    if derivatives are required in physical space.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether or not the filter will use the spacing information of the input image in its calculations. Use this option
+    if derivatives are required in physical space.
+tests:
+- tag: default
+  description: Simply run with default settings with a floating point image
+  settings: []
+  tolerance: 0.0001
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: shortdefault
+  description: Simply run with default settings on a short image
+  settings: []
+  tolerance: 1.0e-08
+  inputs:
+  - Input/RA-Short.nrrd
+- tag: vectordefault
+  description: Run with defaults setting on an RGB image
+  settings: []
+  tolerance: 0.075
+  inputs:
+  - Input/fruit.png
+briefdescription: This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity
+  change and therefore highlights or enhances the edges. The result is an image that appears more in focus.
+detaileddescription: >-
+  \par The LaplacianSharpening at each pixel location is computed by
+
+  convolution with the itk::LaplacianOperator .
+
+
+
+  \par Inputs and Outputs
+
+  The input to this filter is a scalar-valued itk::Image of arbitrary dimension. The output is a scalar-valued itk::Image
+  .
+
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+
+
+
+  \see NeighborhoodIterator
+
+
+
+  \see LaplacianOperator
+itk_module: ITKImageFeature
+itk_group: ImageFeature
+in_place: false

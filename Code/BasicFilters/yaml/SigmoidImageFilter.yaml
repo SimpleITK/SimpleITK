@@ -1,0 +1,58 @@
+name: SigmoidImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+members:
+- name: Alpha
+  type: double
+  default: 1
+  doc: Alpha
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: Beta
+  type: double
+  default: 0
+  doc: Alpha
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: OutputMaximum
+  type: double
+  default: 255
+  pixeltype: Output
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: OutputMinimum
+  type: double
+  default: 0
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  settings: []
+  md5hash: c9222b9c9150e0d7a07e9de184c10167
+  inputs:
+  - Input/Ramp-Zero-One-Float.nrrd
+briefdescription: Computes the sigmoid function pixel-wise.
+detaileddescription: >-
+  A linear transformation is applied first on the argument of the sigmoid function. The resulting total transform is given
+  by
+
+   \f[ f(x) = (Max-Min) \cdot \frac{1}{\left(1+e^{- \frac{ x - \beta }{\alpha}}\right)} + Min \f]
+
+  Every output pixel is equal to f(x). Where x is the intensity of the homologous input pixel, and alpha and beta are user-provided
+  constants.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

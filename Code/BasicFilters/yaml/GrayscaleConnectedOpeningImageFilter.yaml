@@ -1,0 +1,68 @@
+name: GrayscaleConnectedOpeningImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+members:
+- name: Seed
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 0)
+  dim_vec: true
+  itk_type: typename FilterType::InputImageIndexType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the seed pixel for the segmentation
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the seed pixel for the segmentation
+- name: FullyConnected
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity.
+    Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity.
+    Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+tests:
+- tag: default
+  description: Default parameter settings
+  settings: []
+  md5hash: fcd6bcb56c1689fcef28b57c22475bad
+  inputs:
+  - Input/cthead1.png
+- tag: seed
+  description: with seed parameter set
+  settings:
+  - parameter: Seed
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 142
+    - 170
+  md5hash: 941071ff8cfdb338c553bab6f9e511e5
+  inputs:
+  - Input/cthead1.png
+briefdescription: Enhance pixels associated with a bright object (identified by a seed pixel) where the bright object is surrounded
+  by a darker object.
+detaileddescription: >-
+  GrayscaleConnectedOpeningImageFilter is useful for enhancing bright objects that are surrounded by dark borders. This filter
+  makes it easier to threshold the image and extract just the object of interest.
+
+
+  Geodesic morphology and the connected opening algorithm is described in Chapter 6 of Pierre Soille's book "Morphological
+  Image
+
+  Analysis: Principles and Applications", Second Edition, Springer, 2003.
+
+
+  \see GrayscaleGeodesicDilateImageFilter
+
+
+
+  \see MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
+itk_module: ITKMathematicalMorphology
+itk_group: MathematicalMorphology
+in_place: false

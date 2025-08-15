@@ -1,0 +1,161 @@
+name: ScalarChanAndVeseDenseLevelSetImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+pixel_types: RealPixelIDTypeList
+filter_type: itk::ScalarChanAndVeseDenseLevelSetImageFilter<InputImageType, InputImageType, InputImageType, itk::ScalarChanAndVeseLevelSetFunction<
+  InputImageType, InputImageType > >
+include_files:
+- itkAtanRegularizedHeavisideStepFunction.h
+- itkSinRegularizedHeavisideStepFunction.h
+- itkHeavisideStepFunction.h
+inputs:
+- name: InitialImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetFunctionCount( 1 ); filter->SetLevelSet(0, this->CastImageToITK<typename FilterType::InputImageType>(*inInitialImage));
+- name: FeatureImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetInput(this->CastImageToITK<typename FilterType::FeatureImageType>(*inFeatureImage));
+members:
+- name: MaximumRMSError
+  type: double
+  default: 0.02
+  doc: Value of RMS change below which the filter should stop. This is a convergence criterion.
+- name: NumberOfIterations
+  type: uint32_t
+  default: 1000u
+  doc: Number of iterations to run
+- name: Lambda1
+  type: double
+  default: '1.0'
+  doc: Lambda1. Internal intensity difference weight
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetLambda1(m_Lambda1);
+- name: Lambda2
+  type: double
+  default: '1.0'
+  doc: Lambda2. External intensity difference weight
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetLambda2(m_Lambda2);
+- name: Epsilon
+  type: double
+  default: '1.0'
+  doc: Width of regularization of Heaviside function.
+  custom_itk_cast: ""
+- name: CurvatureWeight
+  type: double
+  default: '1.0'
+  doc: 'Gamma. Scales all curvature weight values '
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetCurvatureWeight(m_CurvatureWeight);
+- name: AreaWeight
+  type: double
+  default: '0.0'
+  doc: Nu. Area regularization values
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetAreaWeight(m_AreaWeight);
+- name: ReinitializationSmoothingWeight
+  type: double
+  default: '0.0'
+  doc: Weight of the laplacian smoothing term
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetReinitializationSmoothingWeight(m_ReinitializationSmoothingWeight);
+- name: Volume
+  type: double
+  default: '0.0'
+  doc: ' Pixel Volume = Number of pixels inside the level-set'
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetVolume(m_Volume);
+- name: VolumeMatchingWeight
+  type: double
+  default: '0.0'
+  doc: Volume matching weight.
+  custom_itk_cast: |-
+    filter->GetDifferenceFunction(0)->SetVolumeMatchingWeight(m_VolumeMatchingWeight);
+- name: HeavisideStepFunction
+  enum:
+  - AtanRegularizedHeaviside
+  - SinRegularizedHeaviside
+  - Heaviside
+  default: itk::simple::ScalarChanAndVeseDenseLevelSetImageFilter::AtanRegularizedHeaviside
+  doc: Step functions
+  custom_itk_cast: |-
+    if (m_HeavisideStepFunction == AtanRegularizedHeaviside) {
+        using DomainFunctionType =  itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >;
+        typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();
+        domainFunction->SetEpsilon(m_Epsilon);
+        filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );
+      } else if ( m_HeavisideStepFunction == SinRegularizedHeaviside ) {
+        using DomainFunctionType = itk::SinRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >;
+        typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();
+        domainFunction->SetEpsilon(m_Epsilon);
+        filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );
+      } else {
+        using DomainFunctionType = itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >;
+        typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();
+        filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );
+      }
+- name: UseImageSpacing
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >
+    Use the image spacing information in calculations. Use this option if you want derivatives in physical space. Default
+    is UseImageSpacingOn.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >
+    Use the image spacing information in calculations. Use this option if you want derivatives in physical space. Default
+    is UseImageSpacingOn.
+measurements:
+- name: ElapsedIterations
+  type: uint32_t
+  default: 0
+  briefdescriptionGet: Number of iterations run.
+- name: RMSChange
+  type: double
+  default: 0.0
+  briefdescriptionGet: The Root Mean Square of the levelset upon termination.
+tests:
+- tag: cthead
+  description: Segmentation of head in CT
+  no_procedure: true
+  settings:
+  - parameter: NumberOfIterations
+    cxx_value: 2u
+    value: '2'
+  tolerance: 0.001
+  measurements_results:
+  - name: ElapsedIterations
+    value: 2u
+  - name: RMSChange
+    value: 721.33
+    tolerance: 0.5
+  inputs:
+  - Input/cthead1-ls-seed.nrrd
+  - Input/cthead1-Float.mha
+briefdescription: Dense implementation of the Chan and Vese multiphase level set image filter.
+detaileddescription: >-
+  This code was adapted from the paper: "An active contour model without edges"
+   T. Chan and L. Vese.
+   In Scale-Space Theories in Computer Vision, pages 141-151, 1999.
+   \author Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.
+
+
+  This code was taken from the Insight Journal paper: "Cell Tracking using Coupled Active Surfaces for Nuclei and Membranes"
+
+  https://doi.org/10.54294/wvwmf8
+   That is based on the papers: "Level Set Segmentation: Active Contours without edge"
+  https://doi.org/10.54294/8jk6oy
+
+
+  and
+
+
+  "Level set segmentation using coupled active surfaces"
+
+  https://doi.org/10.54294/23ugmy
+itk_module: ITKReview
+itk_group: Review
+in_place: false

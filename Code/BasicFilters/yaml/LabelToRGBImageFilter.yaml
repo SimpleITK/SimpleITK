@@ -1,0 +1,78 @@
+name: LabelToRGBImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+include_files:
+- sitkLabelFunctorUtils.hxx
+number_of_inputs: 1
+output_image_type: itk::VectorImage< uint8_t, InputImageType::ImageDimension>
+doc: Docs
+pixel_types: IntegerPixelIDTypeList
+members:
+- name: BackgroundValue
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the background value
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the background value
+- name: Colormap
+  type: std::vector<uint8_t>
+  default: std::vector<uint8_t>()
+  custom_itk_cast: |-
+    SetLabelFunctorFromColormap(filter->GetFunctor(),this->m_Colormap);
+tests:
+- tag: default
+  description: Simply run with default settings
+  md5hash: 850e04c66180956c8a19471309fa2391
+  settings: []
+  inputs:
+  - Input/2th_cthead1.mha
+- tag: custom_color
+  description: Setting custom color map
+  md5hash: af9bc977b86bfdf2e87d989958f6771f
+  settings:
+  - parameter: Colormap
+    type: uint8_t
+    dim_vec: true
+    value:
+    - 255
+    - 0
+    - 0
+    - 255
+    - 255
+    - 255
+    - 0
+    - 0
+    - 255
+  inputs:
+  - Input/2th_cthead1.mha
+briefdescription: Apply a colormap to a label image.
+detaileddescription: >-
+  Apply a colormap to a label image. The set of colors is a good selection of distinct colors. The user can choose to use
+  a background value. In that case, a gray pixel with the same intensity than the background label is produced.
+
+
+  This code was contributed in the Insight Journal paper: "The watershed transform in ITK - discussion and new developments"
+  by Beare R., Lehmann G. https://doi.org/10.54294/lf8u75
+
+
+  \author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+
+
+
+  \author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+
+
+
+  \see LabelOverlayImageFilter
+
+
+
+  \see LabelMapToRGBImageFilter , LabelToRGBFunctor, ScalarToRGBPixelFunctor
+itk_module: ITKImageFusion
+itk_group: ImageFusion
+in_place: true

@@ -1,0 +1,83 @@
+name: NaryAddImageFilter
+template_code_filename: MultiInputImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+pixel_types: typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type
+members: []
+tests:
+- tag: default2
+  description: adding of 2 images
+  settings: []
+  md5hash: d83255b0121596228f3c23a312d9af69
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-Zero-One-Float.nrrd
+- tag: default3
+  description: adding of 3 images
+  settings: []
+  md5hash: 4628b3b09af910ac432e2a740b20c742
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: default4
+  description: adding of 4 images
+  settings: []
+  md5hash: 64140d8b2b8826dbfa6f3bb1d3fbe3eb
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+- tag: default5
+  description: adding of 5 images
+  settings: []
+  md5hash: c0b3778cf51f4311678a2c9e0561daed
+  inputs:
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-Zero-One-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+  - Input/Ramp-One-Zero-Float.nrrd
+briefdescription: Pixel-wise addition of N images.
+detaileddescription: >-
+  This class is templated over the types of the input images and the type of the output image. Numeric conversions (castings)
+  are done by the C++ defaults.
+
+
+  The pixel type of the input images must have a valid definition of the operator+ with each other. This condition is required
+  because internally this filter will perform the operation
+
+
+  \code
+
+  pixel_from_image_N + pixel_from_image_(N+1)
+
+
+  \endcode
+
+
+
+  Additionally the type resulting from the sum, will be cast to the pixel type of the output image.
+
+
+  The total operation over one pixel will be
+
+
+  \code
+
+  output_pixel = static_cast<OutputPixelType>( input_pixel_N + input_pixel_(N+1) )
+
+
+  \endcode
+
+
+
+  For example, this filter could be used directly for adding images whose pixels are vectors of the same dimension, and to
+  store the resulting vector in an output image of vector pixels.
+
+
+  \warning No numeric overflow checking is performed in this filter.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: true

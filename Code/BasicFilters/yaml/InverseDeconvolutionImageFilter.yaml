@@ -1,0 +1,77 @@
+name: InverseDeconvolutionImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 2
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+include_files:
+- sitkBoundaryConditions.hxx
+custom_set_input: |-
+  filter->SetInput( image1 ); filter->SetKernelImage( image2 );
+members:
+- name: KernelZeroMagnitudeThreshold
+  type: double
+  default: '1.0e-4'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/get the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered
+    to be zero. Default value is 1.0e-4.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/get the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered
+    to be zero. Default value is 1.0e-4.
+- name: Normalize
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >
+    Normalize the output image by the sum of the kernel components
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+- name: BoundaryCondition
+  enum:
+  - ZERO_PAD
+  - ZERO_FLUX_NEUMANN_PAD
+  - PERIODIC_PAD
+  default: itk::simple::InverseDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD
+  custom_itk_cast: |
+    std::unique_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );
+- name: OutputRegionMode
+  enum:
+  - SAME
+  - VALID
+  default: itk::simple::InverseDeconvolutionImageFilter::SAME
+  itk_type: typename FilterType::OutputRegionModeEnum
+tests:
+- tag: defaults
+  description: Inverse deconvolution of image blurred with a Gaussian kernel
+  settings:
+  - parameter: Normalize
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  tolerance: 0.0001
+  inputs:
+  - Input/DeconvolutionInput.nrrd
+  - Input/DeconvolutionKernel.nrrd
+briefdescription: The direct linear inverse deconvolution filter.
+detaileddescription: >-
+  The inverse filter is the most straightforward deconvolution method. Considering that convolution of two images in the spatial
+  domain is equivalent to multiplying the Fourier transform of the two images, the inverse filter consists of inverting the
+  multiplication. In other words, this filter computes the following: \f[ hat{F}(\omega) = \begin{cases} G(\omega) / H(\omega)
+  & \text{if \f$|H(\omega)| \geq \epsilon\f$} \\ 0 & \text{otherwise} \end{cases} \f] where \f$\hat{F}(\omega)\f$ is the Fourier
+  transform of the estimate produced by this filter, \f$G(\omega)\f$ is the Fourier transform of the input blurred image,
+  \f$H(\omega)\f$ is the Fourier transform of the blurring kernel, and \f$\epsilon\f$ is a constant real non-negative threshold
+  (called KernelZeroMagnitudeThreshold in this filter) that determines when the magnitude of a complex number is considered
+  zero.
+
+
+  \author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France
+
+
+
+  \author Cory Quammen, The University of North Carolina at Chapel Hill
+itk_module: ITKDeconvolution
+itk_group: Deconvolution
+in_place: false

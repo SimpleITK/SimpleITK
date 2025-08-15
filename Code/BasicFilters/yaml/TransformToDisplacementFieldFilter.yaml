@@ -1,0 +1,108 @@
+name: TransformToDisplacementFieldFilter
+template_code_filename: ImageSource
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 0
+pixel_types: RealVectorPixelIDTypeList
+output_image_type: ' itk::Image< Vector<typename NumericTraits<typename TImageType::PixelType>::ValueType, TImageType::ImageDimension
+  >, TImageType::ImageDimension >'
+filter_type: itk::TransformToDisplacementFieldFilter<OutputImageType>
+include_files:
+- sitkTransform.h
+inputs:
+- name: Transform
+  type: Transform
+  custom_itk_cast: |-
+    const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );
+      if ( !itkTx )
+        {
+        sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+        }
+      else { filter->SetTransform( itkTx ); }
+members:
+- name: OutputPixelType
+  type: PixelIDValueEnum
+  default: itk::simple::sitkVectorFloat64
+  custom_itk_cast: ""
+  briefdescriptionSet: Set the output pixel type, only sitkVectorFloat32 and sitkVectorFloat64 are supported.
+  briefdescriptionGet: Get the ouput pixel type.
+- name: Size
+  type: unsigned int
+  dim_vec: true
+  default: std::vector<unsigned int>(3, 64)
+  itk_type: typename FilterType::SizeType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the size of the output image.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the size of the output image.
+- name: OutputOrigin
+  type: double
+  dim_vec: true
+  default: std::vector<double>(3, 0.0)
+  itk_type: typename FilterType::PointType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image origin.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image origin.
+- name: OutputSpacing
+  type: double
+  dim_vec: true
+  default: std::vector<double>(3, 1.0)
+  itk_type: typename FilterType::SpacingType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output image spacing.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the output image spacing.
+- name: OutputDirection
+  type: std::vector<double>
+  default: std::vector<double>()
+  doc: Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix
+    for the dimension of the image.
+  custom_itk_cast: |-
+    filter->SetOutputDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the output direction cosine matrix.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set the output direction cosine matrix.
+custom_methods:
+- name: SetReferenceImage
+  doc: This methods sets the size, origin, spacing and direction to that of the provided image
+  return_type: void
+  parameters:
+  - type: const Image &
+    var_name: refImage
+  body: this->SetSize( refImage.GetSize() ); this->SetOutputOrigin( refImage.GetOrigin() ); this->SetOutputSpacing( refImage.GetSpacing()
+    );this->SetOutputDirection( refImage.GetDirection() );
+tests: []
+briefdescription: Generate a displacement field from a coordinate transform.
+detaileddescription: >-
+  Output information (spacing, size and direction) for the output image should be set. This information has the normal defaults
+  of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference
+  image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference
+  image will be used.
+
+
+  Since this filter produces an image which is a different size than its input, it needs to override several of the methods
+  defined in ProcessObject in order to properly manage the pipeline execution model. In particular, this filter overrides
+  ProcessObject::GenerateOutputInformation() .
+
+
+  This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData() method for its implementation.
+
+
+  \author Marius Staring, Leiden University Medical Center, The Netherlands.
+
+
+
+  This class was taken from the Insight Journal paper: https://doi.org/10.54294/4ids6q
+itk_module: ITKDisplacementField
+itk_group: DisplacementField
+in_place: false

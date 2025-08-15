@@ -1,0 +1,226 @@
+name: LabelStatisticsImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 0
+pixel_types: BasicPixelIDTypeList
+pixel_types2: IntegerPixelIDTypeList
+filter_type: itk::LabelStatisticsImageFilter<InputImageType,InputImageType2>
+no_procedure: true
+no_return_image: true
+include_files:
+- sitkMinimumMaximumImageFilter.h
+- algorithm
+inputs:
+- name: Image
+  type: Image
+- name: LabelImage
+  type: Image
+  custom_itk_cast: |-
+    filter->SetLabelInput( this->CastImageToITK<typename FilterType::LabelImageType>(*inLabelImage) );
+members:
+- name: UseHistograms
+  type: bool
+  default: 'true'
+  custom_itk_cast: |
+    if( m_UseHistograms)
+        {
+        using PixelType = typename TImageType::PixelType;
+        if( std::is_same< PixelType, uint8_t >::value || std::is_same< PixelType, int8_t >::value )
+          {
+          //NOTE:  This is a heuristic that works exact median only for
+          //(unsigned) char images.
+          filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );
+          }
+        else
+          {
+          itk::simple::MinimumMaximumImageFilter stats;
+          stats.Execute( *inImage );
+          filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );
+          }
+        }
+  briefdescriptionSet: ''
+  detaileddescriptionSet: ""
+  briefdescriptionGet: ''
+  detaileddescriptionGet: ""
+custom_methods:
+- name: HasLabel
+  doc: Does the specified label exist? Can only be called after a call a call to Update().
+  return_type: bool
+  parameters:
+  - type: int64_t
+    var_name: label
+  body: return std::find(m_Labels.begin(),m_Labels.end(), label) != m_Labels.end();
+- name: GetNumberOfLabels
+  doc: Return the number of labels after execution .
+  return_type: uint64_t
+  body: return m_Labels.size();
+  parameters: []
+measurements:
+- name: Minimum
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Minimum for a label.
+- name: Maximum
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Maximum for a label.
+- name: Mean
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Mean for a label.
+- name: Median
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Median for a label. Requires histograms to be enabled!
+- name: Sigma
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Standard Deviation for a label.
+- name: Variance
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed Variance for a label.
+- name: Sum
+  type: double
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the compute Sum for a label.
+- name: Count
+  type: uint64_t
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the number of pixels for a label.
+- name: BoundingBox
+  type: std::vector<int>
+  no_print: true
+  custom_cast: std::vector<int>(value.begin(), value.end())
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed bounding box for a label. A vector of minIndex, maxIndex pairs for each axis. The intervals include
+    the endpoints.
+- name: Region
+  type: std::vector<unsigned int>
+  no_print: true
+  active: true
+  parameters:
+  - name: label
+    type: int64_t
+  custom_cast: sitkITKImageRegionToSTL(value)
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the computed region.
+- name: Labels
+  type: std::vector<int64_t>
+  custom_itk_cast: |-
+    const std::vector<typename FilterType::LabelPixelType> tempLabels = filter->GetValidLabelValues();
+      this->m_Labels = std::vector<int64_t>(tempLabels.begin(), tempLabels.end());
+  default: std::vector<int64_t>()
+tests:
+- tag: cthead1
+  description: cthead1 with defaults
+  settings: []
+  inputs:
+  - Input/cthead1.png
+  - Input/2th_cthead1.mha
+  measurements_results:
+  - name: Minimum
+    value: 100
+    parameters:
+    - '1'
+  - name: Maximum
+    value: 199
+    parameters:
+    - '1'
+  - name: Mean
+    value: 138.56282364638136
+    tolerance: 1.0e-08
+    parameters:
+    - '1'
+  - name: Median
+    value: 137
+    parameters:
+    - '1'
+  - name: Sigma
+    value: 14.051474145970603
+    tolerance: 1.0e-08
+    parameters:
+    - '1'
+  - name: Sum
+    value: 3344768
+    parameters:
+    - '1'
+  - name: Variance
+    value: 197.44392567488032
+    tolerance: 1.0e-06
+    parameters:
+    - '1'
+briefdescription: Given an intensity image and a label map, compute min, max, variance and mean of the pixels associated with
+  each label or segment.
+detaileddescription: >-
+  LabelStatisticsImageFilter computes the minimum, maximum, sum, mean, median, variance and sigma of regions of an intensity
+  image, where the regions are defined via a label map (a second input). The label image should be integral type. The filter
+  needs all of its input image. It behaves as a filter with an input and output. Thus it can be inserted in a pipeline with
+  other filters and the statistics will only be recomputed if a downstream filter changes.
+
+
+  Optionally, the filter also computes intensity histograms on each object. If histograms are enabled, a median intensity
+  value can also be computed, although its accuracy is limited to the bin width of the histogram. If histograms are not enabled,
+  the median returns zero.
+
+
+  This filter is automatically multi-threaded and can stream its input when NumberOfStreamDivisions is set to more than
+
+  \li Statistics are independently computed for each streamed and threaded region then merged.
+itk_module: ITKImageStatistics
+itk_group: ImageStatistics
+in_place: false

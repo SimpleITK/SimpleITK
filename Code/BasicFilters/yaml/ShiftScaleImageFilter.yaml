@@ -1,0 +1,137 @@
+name: ShiftScaleImageFilter
+template_code_filename: DualImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: Some global documentation
+pixel_types: BasicPixelIDTypeList
+pixel_types2: BasicPixelIDTypeList
+custom_type2: 'PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;'
+output_image_type: InputImageType2
+vector_pixel_types_by_component: VectorPixelIDTypeList
+members:
+- name: Shift
+  type: double
+  default: 0
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.
+- name: Scale
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.
+- name: OutputPixelType
+  type: PixelIDValueEnum
+  default: itk::simple::sitkUnknown
+  custom_itk_cast: ""
+  briefdescriptionSet: Set the output pixel type, if sitkUnknown then the input type is used.
+  briefdescriptionGet: Get the output pixel type.
+measurements:
+- name: UnderflowCount
+  type: int64_t
+  default: 0u
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the number of pixels that underflowed and overflowed.
+- name: OverflowCount
+  type: int64_t
+  default: 0u
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the number of pixels that underflowed and overflowed.
+tests:
+- tag: default
+  description: ' default parameters'
+  settings: []
+  md5hash: a963bd6a755b853103a2d195e01a50d3
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: UnderflowCount
+    value: 0
+  - name: OverflowCount
+    value: 0
+- tag: params
+  description: ' default parameters'
+  settings:
+  - parameter: Shift
+    type: double
+    value: '100'
+  - parameter: Scale
+    type: double
+    value: '0.5'
+  md5hash: e3bee902dc9339d28359ebfb96a70186
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: UnderflowCount
+    value: 0
+  - name: OverflowCount
+    value: 0
+- tag: OutputPixel
+  description: Shift and scale to pixel type with smaller range.
+  settings:
+  - parameter: Shift
+    type: double
+    value: '32769'
+  - parameter: Scale
+    type: double
+    value: '0.00389099121'
+  - parameter: OutputPixelType
+    value: itk::simple::sitkUInt8
+    lua_value: SimpleITK.sitkUInt8
+    python_value: SimpleITK.sitkUInt8
+    ruby_value: Simpleitk::SitkUInt8
+    java_value: PixelIDValueEnum.sitkUInt8
+    tcl_value: $sitkUInt8
+    csharp_value: PixelIDValueEnum.sitkUInt8
+    R_value: '''sitkUInt8'''
+  md5hash: be9651a54b488ced65c15abc55b86c05
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: UnderflowCount
+    value: 0
+  - name: OverflowCount
+    value: 0
+- tag: OutputOverflow
+  description: Shift and scale with smaller output pixel type
+  settings:
+  - parameter: Shift
+    type: double
+    value: '-1000'
+  - parameter: Scale
+    type: double
+    value: '2'
+  - parameter: OutputPixelType
+    value: itk::simple::sitkInt8
+    lua_value: SimpleITK.sitkInt8
+    python_value: SimpleITK.sitkInt8
+    ruby_value: Simpleitk::SitkInt8
+    java_value: PixelIDValueEnum.sitkInt8
+    tcl_value: $sitkInt8
+    csharp_value: PixelIDValueEnum.sitkInt8
+    R_value: '''sitkInt8'''
+  md5hash: 07273b18059cf2259cc6f0be2eb50d04
+  inputs:
+  - Input/RA-Short.nrrd
+  measurements_results:
+  - name: UnderflowCount
+    value: 64
+  - name: OverflowCount
+    value: 262080
+briefdescription: Shift and scale the pixels in an image.
+detaileddescription: >-
+  ShiftScaleImageFilter shifts the input pixel by Shift (default 0.0) and then scales the pixel by Scale (default 1.0). All
+  computations are performed in the precision of the input pixel's RealType. Before assigning the computed value to the output
+  pixel, the value is clamped at the NonpositiveMin and max of the pixel type.
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
+in_place: false
