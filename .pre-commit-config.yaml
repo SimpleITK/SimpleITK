@@ -8,7 +8,7 @@
 # be skipped such as `black`.
 
 fail_fast: true
-default_stages: [commit]
+default_stages: [pre-commit]
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
@@ -54,7 +54,7 @@ repos:
     - id: check-jsonschema
       name: Validate meta files
       args: ["--schemafile", "ExpandTemplateGenerator/simpleitk_filter_description.schema.json"]
-      files: ^Code/BasicFilters/.*\.json$
+      files: ^Code/BasicFilters/.*\.yaml$
 - repo: https://github.com/SimpleITK/CommentSpellCheck.git
   rev: v0.4.2
   hooks:
