@@ -43,11 +43,8 @@ namespace itk.simple.examples
 
     class MultiResolutionIterationUpdate : Command
     {
-        private ImageRegistrationMethod m_Method;
-
-        public MultiResolutionIterationUpdate(ImageRegistrationMethod m)
+        public MultiResolutionIterationUpdate()
         {
-            m_Method = m;
         }
 
         public override void Execute()
@@ -110,7 +107,7 @@ namespace itk.simple.examples
             IterationUpdate cmd1 = new IterationUpdate(R);
             R.AddCommand(EventEnum.sitkIterationEvent, cmd1);
 
-            MultiResolutionIterationUpdate cmd2 = new MultiResolutionIterationUpdate(R);
+            MultiResolutionIterationUpdate cmd2 = new MultiResolutionIterationUpdate();
             R.AddCommand(EventEnum.sitkMultiResolutionIterationEvent, cmd2);
 
             Transform outTx = R.Execute(fixedImage, movingImage);
