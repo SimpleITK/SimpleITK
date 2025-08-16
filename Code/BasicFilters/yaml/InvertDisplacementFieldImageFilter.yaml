@@ -1,15 +1,23 @@
 name: InvertDisplacementFieldImageFilter
 template_code_filename: ImageFilter
 template_test_filename: ImageFilter
-number_of_inputs: 1
+number_of_inputs: 0
 pixel_types: RealVectorPixelIDTypeList
 filter_type: itk::InvertDisplacementFieldImageFilter< itk::Image< itk::Vector< typename InputImageType::InternalPixelType,
   InputImageType::ImageDimension>, InputImageType::ImageDimension > >
-custom_set_input: |-
-  filter->SetDisplacementField( GetImageFromVectorImage(const_cast< InputImageType * >(image1.GetPointer())) );
 include_files:
 - itkVector.h
 - sitkImageConvert.hxx
+inputs:
+- name: DisplacementField
+  type: Image
+  custom_itk_cast: |-
+    filter->SetDisplacementField( GetImageFromVectorImage(const_cast< InputImageType * >(this->CastImageToITK<InputImageType>(*inDisplacementField).GetPointer())) );;
+- name: InverseFieldInitialEstimate
+  type: Image
+  optional: true
+  custom_itk_cast: |-
+    filter->SetInverseFieldInitialEstimate( GetImageFromVectorImage(const_cast< InputImageType * >(this->CastImageToITK<InputImageType>(*inInverseFieldInitialEstimate).GetPointer())));
 members:
 - name: MaximumNumberOfIterations
   type: uint32_t
