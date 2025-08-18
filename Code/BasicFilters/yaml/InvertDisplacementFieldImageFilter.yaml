@@ -62,10 +62,36 @@ measurements:
 tests:
 - tag: 2d
   description: 2D
-  settings: []
+  settings:
+  - parameter: MaximumNumberOfIterations
+    type: uint32_t
+    value: 10
+  measurements_results:
+   - name: MaxErrorNorm
+     value: 0.32968580
+     tolerance: 1.0e-7
+   - name: MeanErrorNorm
+     value: 0.0253612
+     tolerance: 1.0e-6
   tolerance: 0.001
   inputs:
   - Input/displacement.mha
+- tag: 2d_initial
+  description: 2D with an initial estimate
+  settings:
+  - parameter: MaximumNumberOfIterations
+    type: uint32_t
+    value: 5
+  measurements_results:
+   - name: MaxErrorNorm
+     value: 0.32968580
+     tolerance: 1.0e-7
+   - name: MeanErrorNorm
+     value: 0.0055629
+     tolerance: 1.0e-6
+  inputs:
+  - Input/displacement.mha
+  - Input/inverse_displacement_10.nrrd
 briefdescription: Iteratively estimate the inverse field of a displacement field.
 detaileddescription: >-
   \author Nick Tustison
