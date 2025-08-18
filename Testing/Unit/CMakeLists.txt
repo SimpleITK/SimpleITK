@@ -277,7 +277,9 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ -g
+          TEST_HARNESS_DATA_DIRECTORY=${TEST_HARNESS_DATA_DIRECTORY} -g
+          TEST_HARNESS_TEMP_DIRECTORY=${TEST_HARNESS_TEMP_DIRECTORY}
           ${PYTHON_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_json_file}
