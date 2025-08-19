@@ -146,7 +146,7 @@ tests:
   - Input/BrainProtonDensitySliceBSplined10.png
   measurements_results:
   - name: ElapsedIterations
-    value: 10u
+    value: 10
   - name: RMSChange
     value: 0.28376284179066474
     tolerance: 1.0e-06
@@ -163,7 +163,7 @@ tests:
   - Input/BrainProtonDensitySlice20InitialDisplacement.mha
   measurements_results:
   - name: ElapsedIterations
-    value: 10u
+    value: 10
   - name: RMSChange
     value: 0.2829118
     tolerance: 1.0e-06

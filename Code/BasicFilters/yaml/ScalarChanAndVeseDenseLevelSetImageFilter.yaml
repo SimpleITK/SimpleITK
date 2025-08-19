@@ -123,12 +123,12 @@ tests:
   no_procedure: true
   settings:
   - parameter: NumberOfIterations
-    cxx_value: 2u
+    cxx_value: 2
     value: '2'
   tolerance: 0.001
   measurements_results:
   - name: ElapsedIterations
-    value: 2u
+    value: 2
   - name: RMSChange
     value: 721.33
     tolerance: 0.5

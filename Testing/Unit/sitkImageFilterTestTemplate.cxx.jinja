@@ -236,6 +236,7 @@ TEST(BasicFilters, {{ name }}_{{ test.tag }}) {
   {%- endif %}
 
   {% for result in test.measurements_results -%}
+  {% set measurement = measurements | selectattr('name', 'equalto', result.name) | first %}
   {% if result.tolerance %}
   {% if result.dim_vec -%}
   {
@@ -243,7 +244,7 @@ TEST(BasicFilters, {{ name }}_{{ test.tag }}) {
         EXPECT_VECTOR_NEAR(vec1, filter.Get{{ result.name }}({{ result.parameters | join(", ") }}), {{ result.tolerance }}) << "Measurement failure";
   }
   {%- else %}
-  EXPECT_NEAR({{ result.value }}, filter.Get{{ result.name }}({{ result.parameters | join(", ") }}), {{ result.tolerance }}) << "Measurement failure";
+  EXPECT_NEAR({% if measurement and measurement.type %}static_cast<{{ measurement.type }}>({{ result.value }}){% else %}{{ result.value }}{% endif %}, filter.Get{{ result.name }}({{ result.parameters | join(", ") }}), {{ result.tolerance }}) << "Measurement failure";
   {% endif %}
   {% else %}
   {% if result.value == "true" %}
@@ -251,7 +252,7 @@ TEST(BasicFilters, {{ name }}_{{ test.tag }}) {
   {% elif result.value == "false" %}
   EXPECT_FALSE(filter.Get{{ result.name }}({{ result.parameters | join(", ") }})) << "Measurement failure";
   {% else %}
-  EXPECT_EQ({{ result.value }}, filter.Get{{ result.name }}({{ result.parameters | join(", ") }})) << "Measurement failure";
+  EXPECT_EQ({% if measurement and measurement.type %}static_cast<{{ measurement.type }}>({{ result.value }}){% else %}{{ result.value }}{% endif %}, filter.Get{{ result.name }}({{ result.parameters | join(", ") }})) << "Measurement failure";
   {% endif %}
   {% endif %}
   {%- endfor %}
