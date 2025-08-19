@@ -69,7 +69,7 @@ def load_configuration(config_file: Path):
         logging.error(f"Error loading configuration file {config_file}: {e}")
         return None
 
-def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, verbose= False, clobber:bool=True):
+def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, verbose= False, clobber:bool=True, globals_dict=None):
     """
     Expands a template using the provided YAML configuration and Jinja2.
     """
@@ -94,6 +94,10 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
 
     # Add global constants for templates
     env.globals['DOXYGEN_WORDWRAP_WIDTH'] = DOXYGEN_WORDWRAP_WIDTH
+
+    # Add any additional globals from command line
+    if globals_dict:
+        env.globals.update(globals_dict)
 
 
     try:
@@ -126,6 +130,39 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
     return 0
 
 
+def parse_global_variable(global_string):
+    """Parse a global variable string in the format 'NAME=VALUE'"""
+    if '=' not in global_string:
+        raise argparse.ArgumentTypeError(f"Global variable must be in format 'NAME=VALUE', got: {global_string}")
+
+    name, value = global_string.split('=', 1)
+    if not name.strip():
+        raise argparse.ArgumentTypeError(f"Global variable name cannot be empty: {global_string}")
+
+    # Try to convert value to appropriate type
+    name = name.strip()
+    value = value.strip()
+
+    # Try to parse as number or boolean, otherwise keep as string
+    if value.lower() in ('true', 'false'):
+        return name, value.lower() == 'true'
+
+    try:
+        # Try integer first
+        return name, int(value)
+    except ValueError:
+        try:
+            # Try float
+            return name, float(value)
+        except ValueError:
+            # Keep as string, removing quotes if present
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+            elif value.startswith("'") and value.endswith("'"):
+                value = value[1:-1]
+            return name, value
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Expand a template using a YAML configuration file and Jinja2.")
     parser.add_argument("config_file", type=Path, help="Path to the YAML configuration file.")
@@ -136,8 +173,9 @@ def main() -> int:
     parser.add_argument("-o", "--overwrite", action='store_true', default=True, help="Overwrite the output file if it exists.")
     parser.add_argument("-n", "--no-overwrite", action='store_false', dest='overwrite', help="Do not overwrite the output file if it exists.")
     parser.add_argument("-v", "--verbose", action='store_true', help="Enable verbose output.")
-
-
+    # Add support for global variables like TEST_HARNESS_DATA_DIRECTORY
+    parser.add_argument("-g", "--global", action='append', type=parse_global_variable, default=[],
+                       dest='globals', help="Define global variables for templates in format 'NAME=VALUE' (e.g., 'TEST_HARNESS_DATA_DIRECTORY=/path/to/data')")
 
     parser.add_argument("output_file", type=Path, help="Path to the output file to be generated.")
 
@@ -145,12 +183,16 @@ def main() -> int:
 
     template = Path(args.template)
 
+    # Convert list of (name, value) tuples to dictionary
+    globals_dict = dict(args.globals) if args.globals else None
+
     return expand_template(args.config_file,
                     template,
                     args.template_dir,
                     args.output_file,
                     verbose=args.verbose,
-                    clobber=args.overwrite)
+                    clobber=args.overwrite,
+                    globals_dict=globals_dict)
 
 if __name__ == "__main__":
     import sys
