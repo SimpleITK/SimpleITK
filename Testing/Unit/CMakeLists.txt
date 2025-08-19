@@ -76,6 +76,13 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 
+# Configure the conftest.py file for Python tests
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/conftest.py.in
+  ${CMAKE_CURRENT_BINARY_DIR}/PythonTests/conftest.py
+  @ONLY
+)
+
 # Adjust Python to run in the virtualenv
 set(
   PythonVirtualenvHome
