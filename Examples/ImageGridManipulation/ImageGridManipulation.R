@@ -42,26 +42,31 @@ joined_image <- join$Execute( image_1, image_2 )
 
 # Extract first three channels of joined image (assuming RGB)
 select <- VectorIndexSelectionCastImageFilter()
-channel1_image <- select$Execute(joined_image, 0, "sitkUInt8")
-channel2_image <- select$Execute(joined_image, 1, "sitkUInt8")
-channel3_image <- select$Execute(joined_image, 2, "sitkUInt8")
+select$SetOutputPixelType("sitkUInt8")
+
+select$SetIndex(0)
+channel1_image <- select$Execute(joined_image)
+select$SetIndex(1)
+channel2_image <- select$Execute(joined_image)
+select$SetIndex(2)
+channel3_image <- select$Execute(joined_image)
 
 # Recompose image (should be same as joined_image)
 compose <- ComposeImageFilter()
 composed_image <- compose$Execute(channel1_image, channel2_image, channel3_image)
 
 # Select same subregion using image slicing operator
-sliced_image = composed_image[101:400, 101:400, 1]
+sliced_image = composed_image[11:40, 11:40, 1]
 
 # Select same subregion using ExtractImageFilter
 extract <- ExtractImageFilter()
-extract$SetSize( list(300, 300, 0) )
-extract$SetIndex( list(100, 100, 0) )
+extract$SetSize( list(30, 30, 0) )
+extract$SetIndex( list(10, 10, 0) )
 extracted_image <- extract$Execute(composed_image)
 
 # Select same subregion using CropImageFilter (NOTE: CropImageFilter cannot reduce dimensions
 # unlike ExtractImageFilter, so cropped_image is a three dimensional image with depth of 1)
 crop <- CropImageFilter()
-crop$SetLowerBoundaryCropSize( list(100, 100, 0) )
-crop$SetUpperBoundaryCropSize( list(composed_image$GetWidth()-400, composed_image$GetHeight()-400, 1) )
+crop$SetLowerBoundaryCropSize( list(10, 10, 0) )
+crop$SetUpperBoundaryCropSize( list(composed_image$GetWidth()-40, composed_image$GetHeight()-40, 1) )
 cropped_image <- crop$Execute(composed_image)
