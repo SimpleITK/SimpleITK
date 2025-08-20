@@ -57,7 +57,7 @@ tests:
   - Input/WhiteDots.png
   measurements_results:
   - name: NumberOfObjects
-    value: 23u
+    value: 23
 - tag: white_dots_full
   description: with foreground some white dots
   md5hash: e40b7cdfc1b34ae2e6b13660d626cc29
@@ -72,7 +72,7 @@ tests:
   - Input/WhiteDots.png
   measurements_results:
   - name: NumberOfObjects
-    value: 21u
+    value: 21
 briefdescription: Label the connected components in a binary image and produce a collection of label objects.
 detaileddescription: >-
   BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is assigned a unique label. The final

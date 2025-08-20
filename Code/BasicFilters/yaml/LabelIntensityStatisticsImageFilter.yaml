@@ -403,13 +403,13 @@ tests:
     parameters:
     - 1
   - name: NumberOfLabels
-    value: 2u
+    value: 2
   - name: NumberOfPixels
-    value: 24139u
+    value: 24139
     parameters:
     - 1
   - name: NumberOfPixelsOnBorder
-    value: 0u
+    value: 0
     parameters:
     - 1
   - name: Perimeter

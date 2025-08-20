@@ -39,7 +39,7 @@ tests:
   settings: []
   measurements_results:
   - name: ObjectCount
-    value: 23u
+    value: 23
   md5hash: 548f5184428db10d93e3bf377dee5253
   inputs:
   - Input/WhiteDots.png
@@ -48,7 +48,7 @@ tests:
   settings: []
   measurements_results:
   - name: ObjectCount
-    value: 10u
+    value: 10
   md5hash: 769315132e427a391edd779191db446d
   inputs:
   - Input/2th_cthead1.png

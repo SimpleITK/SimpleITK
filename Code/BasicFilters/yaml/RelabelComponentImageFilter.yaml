@@ -67,9 +67,9 @@ tests:
   settings: []
   measurements_results:
   - name: NumberOfObjects
-    value: 2u
+    value: 2
   - name: OriginalNumberOfObjects
-    value: 2u
+    value: 2
   - name: SizeOfObjectsInPhysicalUnits
     dim_vec: true
     value:
@@ -88,9 +88,9 @@ tests:
     R_value: 'FALSE'
   measurements_results:
   - name: NumberOfObjects
-    value: 3u
+    value: 3
   - name: OriginalNumberOfObjects
-    value: 3u
+    value: 3
   - name: SizeOfObjectsInPhysicalUnits
     dim_vec: true
     value:
@@ -113,9 +113,9 @@ tests:
     value: '140'
   measurements_results:
   - name: NumberOfObjects
-    value: 2u
+    value: 2
   - name: OriginalNumberOfObjects
-    value: 3u
+    value: 3
   - name: SizeOfObjectsInPhysicalUnits
     dim_vec: true
     value:

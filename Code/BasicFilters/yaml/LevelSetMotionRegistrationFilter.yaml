@@ -156,7 +156,7 @@ tests:
   - Input/BrainProtonDensitySliceBSplined10.png
   measurements_results:
   - name: ElapsedIterations
-    value: 10u
+    value: 10
   - name: RMSChange
     value: 10.422647280222545
     tolerance: 1.0e-06

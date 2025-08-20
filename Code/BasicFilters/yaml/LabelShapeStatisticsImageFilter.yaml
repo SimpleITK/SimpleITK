@@ -362,13 +362,13 @@ tests:
     parameters:
     - '50'
   - name: NumberOfLabels
-    value: 2u
+    value: 2
   - name: NumberOfPixels
-    value: 527u
+    value: 527
     parameters:
     - '50'
   - name: NumberOfPixelsOnBorder
-    value: 0u
+    value: 0
     parameters:
     - '50'
   - name: Perimeter
