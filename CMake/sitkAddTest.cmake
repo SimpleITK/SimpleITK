@@ -170,16 +170,22 @@ function(sitk_add_pytest_test name)
       LABELS
         Python
   )
+  # Set up environment variables for the test
+  set(
+    _ENVIRONMENT
+    SITK_COMPARE_DRIVER_EXECUTABLE=$<TARGET_FILE:sitkCompareDriver>
+  )
   if(NOT SimpleITK_PYTHON_USE_VIRTUALENV)
-    set_property(
-      TEST
-        Python.${name}
-      APPEND
-      PROPERTY
-        ENVIRONMENT
-          PYTHONPATH=${SimpleITK_Python_BINARY_DIR}
-    )
+    list(APPEND _ENVIRONMENT PYTHONPATH=${SimpleITK_Python_BINARY_DIR})
   endif()
+  set_property(
+    TEST
+      Python.${name}
+    APPEND
+    PROPERTY
+      ENVIRONMENT
+        ${_ENVIRONMENT}
+  )
 endfunction()
 
 #
