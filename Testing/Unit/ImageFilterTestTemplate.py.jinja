@@ -114,8 +114,10 @@ class Test{{ name }}(SimpleITKTestBase):
 
         # Image tolerance comparison using assert function
         {% if test.tolerance -%}
-        baseline_filename = "BasicFilters_{{ name }}_{{ test.tag }}.nrrd"
-        self.assert_image_tolerance_match(output, baseline_filename, {{ test.tolerance }}, "{{ test.tag }}", data_finder)
+        baseline_filename = data_finder.data_directory/"Baseline"/"BasicFilters_{{ name }}_{{ test.tag }}.nrrd"
+        output_filename = data_finder.output_directory/f"Python-{{ name }}-{{ test.tag }}.nrrd"
+        SimpleITK.WriteImage(output, str(output_filename), useCompression=True)
+        self.assert_image_tolerance_match(output_filename, baseline_filename, {{ test.tolerance }}, "{{ test.tag }}", data_finder)
         {%- endif %}
         {% endif %}
 
