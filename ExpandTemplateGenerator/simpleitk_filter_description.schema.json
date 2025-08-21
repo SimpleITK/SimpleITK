@@ -5,19 +5,19 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Name of the filter as a SimpleITK class."
+      "description": "Name of the filter as a SimpleITK class. This must be the name of the ITK filter."
     },
     "itk_name": {
       "type": "string",
-      "description": "Name of the filter in ITK class, if not provided then the name properties will be used."
+      "description": "Name of the filter in ITK class, pamameter if not provided then the name properties will be used."
     },
     "template_code_filename": {
       "type": "string",
-      "description": "The JINJA template code filename"
+      "description": "The JINJA template template files used to generate the filter. The 'ImageFilter' is the baseline one."
     },
     "template_test_filename": {
       "type": "string",
-      "description": "The JINJA template test filename"
+      "description": "The JINJA template template files used to generate the test. The 'ImageFilter' is the baseline one."
     },
     "constant_type": {
       "type": "string",
@@ -29,7 +29,7 @@
     },
     "filter_type": {
       "type": "string",
-      "description": "The ITK filter type including template arguments. (optional)"
+      "description": "The ITK filter type including template arguments. This allows for overriding template parameterization of the ITK class. (optional)"
     },
     "number_of_inputs": {
       "type": "integer",
@@ -38,7 +38,7 @@
     },
     "public_declarations": {
       "type": "string",
-      "description": "Public declarations for the filter, can be used to declare and define a public member function in one line."
+      "description": "Public declarations for the filter, can be used to declare and define a public member function."
     },
     "doc": {
       "type": "string",
@@ -46,11 +46,11 @@
     },
     "pixel_types": {
       "type": "string",
-      "description": "Allowed pixel types (enum or type list)"
+      "description": "Allowed pixel types (enum or type list) for the filter. The type lists are defined in sitkPixelIDTypeLists.h. Examples: 'BasicPixelIDTypeList', 'IntegerPixelIDTypeList'."
     },
     "output_pixel_type": {
       "type": "string",
-      "description": "Output pixel type (optional)"
+      "description": "Output pixel type used for the output image template of the filter (optional)."
     },
     "vector_pixel_types_by_component": {
       "type": "string",
@@ -63,18 +63,18 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Member/parameter name"
+            "description": "The name of the member variable. A variable named 'Var' will be accessible with the methods 'GetVar' and 'SetVar'."
           },
           "type": {
             "type": "string",
-            "description": "Data type (optional)"
+            "description": "The C++ type for this member. If using a type contained in a certain namespace (itk::simple for example), this must be included. If the member variable is of type bool, the additional ${name}On and ${name}Off member functions are added (optional)."
           },
           "default": {
-            "description": "Default value (string, number, array, etc.)"
+            "description": "The default value for this member. Can be a number for numerical types or a string specifying the constructor for non-basic types (std::vector< unsigned int >{} for example)."
           },
           "dim_vec": {
             "type": "boolean",
-            "description": "Is this a vector parameter? (optional)",
+            "description": "If set to true, indicates the member is a std::vector with size equal to the dimension of the input image. As such, it will be printed out correctly and cast to its corresponding ITK type correctly (optional).",
             "default": false
           },
           "point_vec": {
@@ -87,11 +87,11 @@
             "items": {
               "type": "string"
             },
-            "description": "Enumeration values (optional)"
+            "description": "Creates a member type of the class with the array of strings with a type defined by the name of this parameter. This field makes the 'type' parameter optional. It is recommended to add a test to ensure the SimpleITK values correspond to the ITK values (optional)."
           },
           "set_as_scalar": {
             "type": "boolean",
-            "description": "Can be set as scalar? (optional)",
+            "description": "If parameter is a dim_vec, then this method adds an additional set member method to set the variable as a scalar so that all components are the same (optional).",
             "default": false
           },
           "doc": {
@@ -120,7 +120,7 @@
           },
           "custom_itk_cast": {
             "type": "string",
-            "description": "Custom ITK cast code (optional)"
+            "description": "Some non-basic types will require a custom cast before the corresponding ITK filter's member can be set. Allows specification how the ITK filter sets the member's value from the SimpleITK member's value, for example: 'filter->SetObjectValue(static_cast<typename FilterType::PixelType>(this->GetObjectValue()) );' (optional)."
           },
           "no_print": {
             "type": "boolean",
@@ -142,11 +142,11 @@
         "properties": {
           "tag": {
             "type": "string",
-            "description": "Test tag"
+            "description": "The tag to identify this specific test for the filter."
           },
           "description": {
             "type": "string",
-            "description": "Test description"
+            "description": "Documentation to describe this specific test."
           },
           "no_procedure": {
             "type": "boolean",
@@ -155,7 +155,7 @@
           },
           "md5hash": {
             "type": "string",
-            "description": "MD5 hash for output validation (optional)"
+            "description": "An MD5 hash value to compare the resulting image against (optional)."
           },
           "settings": {
             "type": "array",
@@ -224,15 +224,15 @@
           },
           "tolerance": {
             "type": "number",
-            "description": "Tolerance for test (optional)"
+            "description": "Enables image comparison of output. The tolerance is root mean squared error between the baseline image and the output (optional)."
           },
           "inputA_cast": {
             "type": "string",
-            "description": "Input A cast type (optional)"
+            "description": "An sitkPixelIDEnum. After input 1 is read, the CastImageFilter is run to convert the image type (optional)."
           },
           "inputB_cast": {
             "type": "string",
-            "description": "Input B cast type (optional)"
+            "description": "An sitkPixelIDEnum for the second input, after input 2 is read the CastImageFilter is run to convert the image type (optional)."
           },
           "measurements_results": {
             "type": "array",
@@ -310,11 +310,11 @@
     },
     "itk_module": {
       "type": "string",
-      "description": "ITK module name"
+      "description": "A string naming the ITK module the filter originates from. If the ITK installation used for building SimpleITK does not have this named module then the filter will be omitted in SimpleITK. This field is maintained by JSONUpdateITKModules.py script."
     },
     "itk_group": {
       "type": "string",
-      "description": "ITK group name"
+      "description": "A string naming the ITK group the ITK filter originates from."
     },
     "in_place": {
       "type": "boolean",
@@ -323,7 +323,7 @@
     },
     "custom_methods": {
       "type": "array",
-      "description": "Custom methods (optional)",
+      "description": "This is a list of objects specifying custom methods that should be added to the filter (optional).",
       "items": {
         "type": "object",
         "properties": {
@@ -333,7 +333,7 @@
           },
           "doc": {
             "type": "string",
-            "description": "Method documentation"
+            "description": "Documentation for this custom method."
           },
           "briefdescription": {
             "type": "string",
@@ -359,11 +359,11 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "description": "Parameter type"
+                  "description": "The parameter's type."
                 },
                 "var_name": {
                   "type": "string",
-                  "description": "Parameter variable name"
+                  "description": "The name of the variable to be used in the body field for the custom method."
                 }
               },
               "required": [
@@ -375,7 +375,7 @@
           },
           "body": {
             "type": "string",
-            "description": "Method body"
+            "description": "This string is the body of the method and will be placed directly into the header file. The parameter names specified with var_name in each of the parameter objects can be used in this body."
           }
         },
         "additionalProperties": false,
@@ -389,7 +389,7 @@
     },
     "custom_set_input": {
       "type": "string",
-      "description": "Custom code for setting filter input (optional)"
+      "description": "Code which is used to set input or multiple inputs to the filter. This overrides the standard setting of the inputs (optional)."
     },
     "no_procedure": {
       "type": "boolean",
@@ -492,7 +492,7 @@
       "items": {
         "type": "string"
       },
-      "description": "List of include files (optional)"
+      "description": "This list of strings specifies additional header files to include in the cxx file for this filter (optional)."
     },
     "output_image_type": {
       "type": "string",
