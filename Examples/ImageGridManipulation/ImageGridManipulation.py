@@ -27,7 +27,6 @@ if len(sys.argv) < 3:
     print("Usage: " + sys.argv[0] + " <input-1> <input-2>")
     sys.exit(1)
 
-# Two vector images of same pixel type and dimension expected
 image_1 = sitk.ReadImage(sys.argv[1])
 image_2 = sitk.ReadImage(sys.argv[2])
 
@@ -37,29 +36,34 @@ joined_image = join.Execute(image_1, image_2)
 
 # Extract first three channels of joined image (assuming RGB)
 select = sitk.VectorIndexSelectionCastImageFilter()
-channel1_image = select.Execute(joined_image, 0, sitk.sitkUInt8)
-channel2_image = select.Execute(joined_image, 1, sitk.sitkUInt8)
-channel3_image = select.Execute(joined_image, 2, sitk.sitkUInt8)
+select.SetOutputPixelType(sitk.sitkUInt8)
+
+select.SetIndex(0)
+channel1_image = select.Execute(joined_image)
+select.SetIndex(1)
+channel2_image = select.Execute(joined_image)
+select.SetIndex(2)
+channel3_image = select.Execute(joined_image)
 
 # Recompose image (should be same as joined_image)
 compose = sitk.ComposeImageFilter()
 composed_image = compose.Execute(channel1_image, channel2_image, channel3_image)
 
 # Select same subregion using image slicing operator
-sliced_image = composed_image[100:400, 100:400, 0]
+sliced_image = composed_image[10:40, 10:40, 0]
 
 # Select same subregion using ExtractImageFilter
 extract = sitk.ExtractImageFilter()
-extract.SetSize([300, 300, 0])
-extract.SetIndex([100, 100, 0])
+extract.SetSize([30, 30, 0])
+extract.SetIndex([10, 10, 0])
 extracted_image = extract.Execute(composed_image)
 
 # Select same sub-region using CropImageFilter (NOTE: CropImageFilter cannot
 # reduce dimensions unlike ExtractImageFilter, so cropped_image is a three
 # dimensional image with depth of 1)
 crop = sitk.CropImageFilter()
-crop.SetLowerBoundaryCropSize([100, 100, 0])
+crop.SetLowerBoundaryCropSize([10, 10, 0])
 crop.SetUpperBoundaryCropSize(
-    [composed_image.GetWidth() - 400, composed_image.GetHeight() - 400, 1]
+    [composed_image.GetWidth() - 40, composed_image.GetHeight() - 40, 1]
 )
 cropped_image = crop.Execute(composed_image)

@@ -50,11 +50,29 @@ Code
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/ImageGridManipulation/ImageGridManipulation.cs
+       :language: csharp
+       :lines: 24-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/ImageGridManipulation/ImageGridManipulation.cxx
+       :language: c++
+       :lines: 21-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/ImageGridManipulation/ImageGridManipulation.java
+       :language: java
+       :lines: 21-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/ImageGridManipulation/ImageGridManipulation.py
        :language: python
-       :lines: 1,23-
+       :lines: 1,22-
 
   .. tab:: R
 
