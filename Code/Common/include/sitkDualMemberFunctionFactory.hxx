@@ -67,7 +67,7 @@ private:
 
 template <typename TMemberFunctionPointer, typename TContainer>
 template <typename TImageType1, typename TImageType2>
-void
+constexpr void
 DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::Register(MemberFunctionType pfunc,
                                                                         TImageType1 *,
                                                                         TImageType2 *)
@@ -95,7 +95,7 @@ DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::Register(MemberFu
 
 template <typename TMemberFunctionPointer, typename TContainer>
 template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension, typename TAddressor>
-void
+constexpr void
 DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFunctions()
 {
   using InstantiaterType = DualMemberFunctionInstantiater<Self, VImageDimension, TAddressor>;
@@ -108,7 +108,7 @@ DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFun
 
 template <typename TMemberFunctionPointer, typename TContainer>
 template <typename TPixelIDTypeList, unsigned int VImageDimension, typename TAddressor>
-void
+constexpr void
 DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFunctions()
 {
 

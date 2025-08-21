@@ -165,35 +165,12 @@ private:
       return &ObjectType::template ExecuteInternalLabelToImage<TImageType1, TImageType2>;
     }
   };
+
+  static const auto &
+  GetMemberFunctionFactory();
 #endif
 
   typedef Image (Self::*MemberFunctionType)(const Image &);
-
-  /**
-   * These methods are used to instantiate and register member functions
-   * with the factory. Each function is split into a separate file to
-   * make the compilation units smaller, and take less time to compile.
-   * @{
-   */
-  static void
-  RegisterMemberFactory2(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  static void
-  RegisterMemberFactory2v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  static void
-  RegisterMemberFactory2l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  static void
-  RegisterMemberFactory3(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  static void
-  RegisterMemberFactory3v(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  static void
-  RegisterMemberFactory3l(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  static void
-  RegisterMemberFactory4(detail::DualMemberFunctionFactory<MemberFunctionType> & factory);
-  /** @} */
-
-
-  static const detail::DualMemberFunctionFactory<MemberFunctionType> &
-  GetMemberFunctionFactory();
 };
 
 SITKBasicFilters_EXPORT Image

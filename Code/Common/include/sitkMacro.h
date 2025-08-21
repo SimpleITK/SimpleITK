@@ -57,6 +57,12 @@
 #  define CLANG_TEMPLATE
 #endif
 
+#if __cplusplus >= 202002L
+#  define SITK_CONSTEVAL consteval
+#else
+#  define SITK_CONSTEVAL constexpr
+#endif
+
 namespace itk::simple
 {
 

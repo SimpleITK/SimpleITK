@@ -43,7 +43,7 @@ ExtractImageFilter::ExtractImageFilter() = default;
 const detail::MemberFunctionFactory<ExtractImageFilter::MemberFunctionType> &
 ExtractImageFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 2, SITK_MAX_DIMENSION>();
     return factory;
@@ -64,7 +64,10 @@ std::string
 ExtractImageFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::ExtractImageFilter\n";
+  out << "itk::simple::ExtractImageFilter\n"
+      << "Function Factory:" << std::endl
+      << "  Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl
+      << "  Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl;
   out << "  Size: ";
   this->ToStringHelper(out, this->m_Size);
   out << std::endl;

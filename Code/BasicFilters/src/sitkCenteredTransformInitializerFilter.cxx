@@ -47,7 +47,7 @@ CenteredTransformInitializerFilter::CenteredTransformInitializerFilter() = defau
 const detail::MemberFunctionFactory<CenteredTransformInitializerFilter::MemberFunctionType> &
 CenteredTransformInitializerFilter::GetMemberFunctionFactory()
 {
-  static detail::MemberFunctionFactory<MemberFunctionType> static_factory = [] {
+  static constexpr auto static_factory = []() SITK_CONSTEVAL {
     detail::MemberFunctionFactory<MemberFunctionType> factory;
     factory.RegisterMemberFunctions<PixelIDTypeList, 3>();
     factory.RegisterMemberFunctions<PixelIDTypeList, 2>();
@@ -69,7 +69,10 @@ std::string
 CenteredTransformInitializerFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::CenteredTransformInitializerFilter\n";
+  out << "itk::simple::CenteredTransformInitializerFilter\n"
+      << "Function Factory:" << std::endl
+      << "  Load Factor: " << GetMemberFunctionFactory().GetLoadFactor() << std::endl
+      << "  Maximum Load Factor: " << GetMemberFunctionFactory().GetMaximumLoadFactor() << std::endl;
   out << "  OperationMode: ";
   this->ToStringHelper(out, this->m_OperationMode);
   out << std::endl;
