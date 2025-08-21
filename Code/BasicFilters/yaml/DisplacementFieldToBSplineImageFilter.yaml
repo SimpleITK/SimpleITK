@@ -142,7 +142,63 @@ custom_methods:
     this->SetBSplineDomainOrigin( refImage.GetOrigin() );
     this->SetBSplineDomainSpacing( refImage.GetSpacing() );
     this->SetBSplineDomainDirection( refImage.GetDirection() );
-tests: []
+tests:
+- tag: displacement
+  description: Test with displacement field data
+  settings:
+  - parameter: SplineOrder
+    type: uint32_t
+    value: 3
+  - parameter: NumberOfControlPoints
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 4
+    - 4
+  - parameter: NumberOfFittingLevels
+    type: uint32_t
+    value: 1
+  - parameter: UseInputFieldToDefineTheBSplineDomain
+    type: bool
+    value: "true"
+    python_value: True
+  tolerance: 0.01
+  inputs:
+  - Input/displacement.mha
+- tag: displacement_manual_domain
+  description: Test with manually specified B-spline domain
+  settings:
+  - parameter: SplineOrder
+    type: uint32_t
+    value: 3
+  - parameter: NumberOfFittingLevels
+    type: uint32_t
+    value: 2
+  - parameter: UseInputFieldToDefineTheBSplineDomain
+    type: bool
+    value: "false"
+    python_value: False
+  - parameter: BSplineDomainOrigin
+    type: double
+    dim_vec: true
+    value:
+    - 0.0
+    - 0.0
+  - parameter: BSplineDomainSpacing
+    type: double
+    dim_vec: true
+    value:
+    - 10.0
+    - 10.0
+  - parameter: BSplineDomainSize
+    type: uint32_t
+    dim_vec: true
+    value:
+    - 13
+    - 13
+  tolerance: 0.01
+  inputs:
+  - Input/displacement.mha
 briefdescription: Class which takes a dense displacement field image and/or a set of points with associated displacements
   and smooths them using B-splines. The inverse can also be estimated.
 detaileddescription: >-
