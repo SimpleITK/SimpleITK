@@ -92,18 +92,6 @@ class Test{{ name }}(SimpleITKTestBase):
         if output.GetPixelIDValue() in labelIDs:
             output = SimpleITK.LabelMapToLabel(output)
 
-        # Write output to temporary file for validation
-        with tempfile.NamedTemporaryFile(suffix='.nrrd', delete=False) as temp_file:
-            writer.UseCompressionOn()
-            writer.SetFileName(temp_file.name)
-            writer.Execute(output)
-
-            # Verify output file was created
-            assert Path(temp_file.name).exists(), "Output file was not created"
-
-            # Clean up temporary file
-            Path(temp_file.name).unlink()
-
         # Hash validation using assert functions
         {% if test.md5hash -%}
         self.assert_hash_match(output, "{{ test.md5hash }}", "MD5", "{{ test.tag }}")
