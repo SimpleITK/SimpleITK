@@ -33,8 +33,14 @@ yaml.add_representer(folded_str, folded_presenter)
 yaml.add_representer(literal_str, literal_presenter)
 
 
-def download_itk_doxygen(temp_dir: Path, version="latest") -> Path:
-    """Download and extract the latest ITK Doxygen XML from GitHub releases."""
+def download_itk_doxygen(temp_dir: Path, version="latest", disable_ssl: bool = False) -> Path:
+    """Download and extract the latest ITK Doxygen XML from GitHub releases.
+
+    Args:
+        temp_dir: Temporary directory to download and extract files
+        version: Version to download (default: "latest")
+        disable_ssl: Disable SSL certificate verification (default: False)
+    """
 
     # Fallback to a known working URL pattern
     download_url = "https://github.com/InsightSoftwareConsortium/ITKDoxygen/releases/download/latest/InsightDoxygenDocXml-latest.tar.gz"
@@ -45,7 +51,15 @@ def download_itk_doxygen(temp_dir: Path, version="latest") -> Path:
     tar_path = temp_dir / "InsightDoxygenDocXml.tar.gz"
     try:
         request = urllib.request.Request(download_url)
-        with urllib.request.urlopen(request) as response:
+
+        # Conditionally disable SSL verification if requested
+        ssl_context = None
+        if disable_ssl:
+            logging.warning("SSL certificate verification disabled - this is insecure!")
+            ssl_context = ssl.create_default_context()
+            ssl_context.check_hostname = False
+            ssl_context.verify_mode = ssl.CERT_NONE
+        with urllib.request.urlopen(request, context=ssl_context) as response:
             with open(tar_path, 'wb') as f:
                 shutil.copyfileobj(response, f)
     except Exception as e:
@@ -135,6 +149,8 @@ def parse_arguments():
                        help='Suppress all output except errors')
     parser.add_argument('--backup', action='store_true',
                        help='Backup YAML file before modification')
+    parser.add_argument('--disable-ssl', action='store_true',
+                       help='Disable SSL certificate verification (insecure, use only for development/testing)')
 
     return parser.parse_args()
 
@@ -413,6 +429,7 @@ if __name__ == "__main__":
     backup_flag = args.backup
     sitk_files = args.sitk_files
     xml_path = args.xml_path
+    disable_ssl = args.disable_ssl
 
     # Handle optional xml_path - download if not provided
     temp_dir = None
@@ -420,7 +437,7 @@ if __name__ == "__main__":
         if xml_path is None:
             logging.info("No ITK path provided, downloading latest ITK Doxygen XML...")
             temp_dir = Path(tempfile.mkdtemp(prefix="itk_doxygen_"))
-            xml_path = download_itk_doxygen(temp_dir)
+            xml_path = download_itk_doxygen(temp_dir, disable_ssl=disable_ssl)
             logging.info(f"Downloaded and extracted ITK Doxygen XML to: {xml_path}")
 
         # Process each file
