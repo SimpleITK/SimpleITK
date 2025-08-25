@@ -76,6 +76,24 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 
+# Generate conftest_constants.py
+file(
+  CONFIGURE
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/PythonTests/conftest_constants.py
+  CONTENT
+    [[
+TEST_HARNESS_DATA_DIRECTORY = "@TEST_HARNESS_DATA_DIRECTORY@"
+TEST_HARNESS_TEMP_DIRECTORY = "@TEST_HARNESS_TEMP_DIRECTORY@"
+]]
+)
+
+# Copy conftest.py without substitution
+file(
+  COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/conftest.py
+  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/PythonTests
+)
+
 # Adjust Python to run in the virtualenv
 set(
   PythonVirtualenvHome
@@ -277,7 +295,9 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/ -g
+          TEST_HARNESS_DATA_DIRECTORY=${TEST_HARNESS_DATA_DIRECTORY} -g
+          TEST_HARNESS_TEMP_DIRECTORY=${TEST_HARNESS_TEMP_DIRECTORY}
           ${PYTHON_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_json_file}
