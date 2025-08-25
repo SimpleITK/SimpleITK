@@ -159,6 +159,7 @@
           },
           "settings": {
             "type": "array",
+            "description": "Test parameter settings. For parameters defined with dim_vec=true in members, must also specify dim_vec=true here with base element type.",
             "items": {
               "type": "object",
               "properties": {
@@ -172,7 +173,8 @@
                 },
                 "dim_vec": {
                   "type": "boolean",
-                  "description": "Is this a vector parameter? (optional)"
+                  "description": "If true then the value is exepected to be a YAML array, and the type is the vector component type e.g., 'uint32_t' part of 'std::vector<uint32_t>'.(optional)",
+                  "default": false
                 },
                 "point_vec": {
                   "type": "boolean",
@@ -185,7 +187,7 @@
                   "default": false
                 },
                 "value": {
-                  "description": "Value (number, string, array, etc.)"
+                  "description": "Value (number, string, or array). For dim_vec parameters, use YAML array format."
                 },
                 "python_value": {
                   "description": "Language-specific value (optional)"
