@@ -116,7 +116,7 @@ def apply_block_styles(obj: Any, *, folded_style_keys: List[str] = None, literal
 
 
 def parse_arguments():
-    """Parse command line arguments using argparse."""
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description='Update the documentation of a SimpleITK class in its JSON or YAML file. '
                    'The documentation is pulled from the corresponding ITK class XML file.',
@@ -403,7 +403,7 @@ def format_description(xml_node: ElementTree.Element) -> str:
 #
 if __name__ == "__main__":
 
-    # Parse command line arguments using argparse
+    # Parse command line arguments
     args = parse_arguments()
 
     # Configure logging

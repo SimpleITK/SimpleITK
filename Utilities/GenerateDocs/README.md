@@ -62,7 +62,7 @@ Building the documentation target from the SuperBuild framework requires:
 ### Requirements
 
 - `GenerateDoc.py` requires Python 3 and the `pyyaml` package.
-- `SwigDocUpdate.sh` requires Python and the `regex` library. The regex library is required for a recursive regular expression used to match bracket pairs of mbox in LaTeX maths. R documentation doesn't implement all LaTeX, and leaving the `\mbox` and `\text` fields causes problems when creating PDF versions of documentation in the package build process.
+- `SwigDocUpdate.sh` requires Python and the `regex` library. The regex library is required for a recursive regular expression used to match bracket pairs of mbox in LaTeX math. R documentation doesn't implement all LaTeX, and leaving the `\mbox` and `\text` fields causes problems when creating PDF versions of documentation in the package build process.
 
 ## Usage: GenerateDoc.py
 
