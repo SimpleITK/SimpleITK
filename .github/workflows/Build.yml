@@ -64,13 +64,13 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               ITK_USE_BUILD_DIR:BOOL=ON
-          - os: macos-13
+          - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
+              WRAP_CSHARP:BOOL=OFF
           - os: windows-2022
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"
