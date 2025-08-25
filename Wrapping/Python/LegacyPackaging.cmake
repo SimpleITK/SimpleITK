@@ -101,16 +101,29 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
       "${VIRTUAL_PYTHON_EXECUTABLE}"
   )
 
+  set(PYTHON_COMMAND_PREFIX "")
+  # add extra command which may be needed on some systems
+  if(CMAKE_OSX_ARCHITECTURES)
+    list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+    set(
+      PYTHON_COMMAND_PREFIX
+      arch
+      -${test_arch}
+    )
+  endif()
+
   add_custom_command(
     OUTPUT
       "${VIRTUAL_PYTHON_EXECUTABLE}"
     COMMAND
-      "${Python_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
+      ${PYTHON_COMMAND_PREFIX} "${Python_EXECUTABLE}" "-m" "venv" "--clear"
+      "${PythonVirtualenvHome}"
     COMMAND
-      "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
+      ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip"
+      "install" "--upgrade" "pip"
     COMMAND
-      "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "wheel"
-      "numpy!=1.24.1,!=1.24.0" "setuptools" "pytest" "."
+      ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip"
+      "install" "wheel" "numpy!=1.24.1,!=1.24.0" "setuptools" "pytest" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
