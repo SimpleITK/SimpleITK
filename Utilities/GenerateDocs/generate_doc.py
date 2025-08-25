@@ -126,7 +126,7 @@ def apply_block_styles(obj: Any, *, folded_style_keys: List[str] = None, literal
 #
 #  The script is a re-write of the GenerateDocumentation.groovy script in python.
 #
-#  usage: GenerateDoc.py <SimpleITKClass.yaml> <Path/To/ITK-build/With/Doxygen>
+#  usage: generate_doc.py <SimpleITKClass.yaml> <Path/To/ITK-build/With/Doxygen>
 #
 
 

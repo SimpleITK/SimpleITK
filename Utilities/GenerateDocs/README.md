@@ -1,12 +1,12 @@
 # SimpleITK Documentation Generation
 
-This directory contains scripts used to process and generate documentation for SimpleITK.
+This directory contains scripts used to process and generate API documentation for SimpleITK.
 
 ## Overview
 
 - Much of the SimpleITK documentation (Doxygen strings and API language docs) is derived from ITK's Doxygen.
 - The process begins by running Doxygen on ITK to produce ITK Doxygen XML files. These can be generated locally or downloaded as nightly builds.
-- Use the `GenerateDoc.py` script to extract documentation from the ITK Doxygen XML and update the SimpleITK YAML filter description files.
+- Use the `generate_doc.py` script to extract documentation from the ITK Doxygen XML and update the SimpleITK YAML filter description files.
 - When SimpleITK is built, the YAML files serve as the source for generating C++ code with embedded documentation.
 - Building the SimpleITK Documentation target generates SimpleITK's own Doxygen XML files.
 - The `SwigDocUpdate.sh` script can then be run to convert the SimpleITK Doxygen XML into Swig `.i` files, enabling inline documentation for some wrapped languages when SimpleITK is built.
@@ -56,26 +56,26 @@ Building the documentation target from the SuperBuild framework requires:
 
 ## Important Scripts
 
-- **`GenerateDoc.py`** - Updates the documentation of a SimpleITK class in its YAML file. Documentation is pulled from the corresponding ITK class XML file. This script replaces the old `JSONDocUpdate.sh` and now works with YAML only.
+- **`generate_doc.py`** - Updates the documentation of a SimpleITK class in its YAML file. Documentation is pulled from the corresponding ITK class XML file.
 - **`SwigDocUpdate.sh`** - Copies SimpleITK Doxygen into Swig .i files and R .Rd files.
 
 ### Requirements
 
-- `GenerateDoc.py` requires Python 3 and the `pyyaml` package.
-- `SwigDocUpdate.sh` requires Python and the `regex` library. The regex library is required for a recursive regular expression used to match bracket pairs of mbox in LaTeX math. R documentation doesn't implement all LaTeX, and leaving the `\mbox` and `\text` fields causes problems when creating PDF versions of documentation in the package build process.
+- `generate_doc.py` requires Python 3 and the `pyyaml` package.
 
-## Usage: GenerateDoc.py
+
+## Usage: generate_doc.py
 
 Update one or more YAML filter description files with documentation from ITK Doxygen XML:
 
 ```bash
-python3 GenerateDoc.py [options] <SimpleITKClass.yaml> [<SimpleITKClass2.yaml> ...]
+python3 generate_doc.py [options] <SimpleITKClass.yaml> [<SimpleITKClass2.yaml> ...]
 ```
 
 - To specify the ITK Doxygen XML path, use:
 
 ```bash
-python3 GenerateDoc.py --xml-path /path/to/itk-build/Documentation/xml MyFilter.yaml
+python3 generate_doc.py --xml-path /path/to/itk-build/Documentation/xml MyFilter.yaml
 ```
 
 - If `--xml-path` is not provided, the script will automatically download the latest ITK Doxygen XML from GitHub.
@@ -83,7 +83,7 @@ python3 GenerateDoc.py --xml-path /path/to/itk-build/Documentation/xml MyFilter.
 For more options, run:
 
 ```bash
-python3 GenerateDoc.py --help
+python3 generate_doc.py --help
 ```
 
 ## Configuration
