@@ -105,6 +105,7 @@ def apply_block_styles(obj: Any, *, folded_style_keys: List[str] = None, literal
         for k, v in obj.items():
             if k in folded_style_keys and isinstance(v, str):
                 # Convert to folded string for block-style YAML
+                v = re.sub(r'[ \t]+\n', '\n', v)
                 result[k] = folded_str(v)
             elif k in literal_style_keys and isinstance(v, str):
                 # Convert to literal string for block-style YAML
@@ -221,7 +222,7 @@ def save_data_file(file_path: Path, data_obj: Union[Dict[str, Any], OrderedDict]
         literal_keys = ["custom_itk_cast", "custom_set_input"]
         styled_data = apply_block_styles(data_obj, folded_style_keys=folded_keys, literal_style_keys=literal_keys)
 
-        yaml_content = yaml.dump(styled_data, default_flow_style=False, sort_keys=False, width=120)
+        yaml_content = yaml.dump(styled_data, default_flow_style=False, sort_keys=False, allow_unicode=True, width=120)
         fp.write(yaml_content)
 
 

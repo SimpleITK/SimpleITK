@@ -122,7 +122,7 @@ def convert_file(json_file_path, clobber=False, dry_run=False):
         data = apply_block_styles(data, folded_style_keys=folded_keys, literal_style_keys=literal_keys)
 
         # Convert to YAML
-        yaml_content = yaml.dump(data, default_flow_style=False, sort_keys=False, width=120)
+        yaml_content = yaml.dump(data, default_flow_style=False, sort_keys=False, width=120, allow_unicode=True)
 
         # If dry run, just test that we can write but don't actually write
         if dry_run:
