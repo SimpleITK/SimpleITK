@@ -162,6 +162,7 @@ Django
 Djava
 Djikstra
 Dnext
+Dockerfile
 Docstring
 Docstrings
 DontShrinkToFit
@@ -815,6 +816,7 @@ Xuan
 Xue
 YY
 Yagers
+YAML
 Yaniv
 Yoo
 Yoshida
@@ -1211,6 +1213,7 @@ endverbatim
 eng
 enthought
 entrancy
+entrypoint
 enum
 enums
 env
@@ -1652,6 +1655,7 @@ netlib
 neurodegenerative
 neuroimage
 new
+newlines
 newdocumentation
 nhdr
 ni
@@ -1806,12 +1810,14 @@ ptr
 ptrdiff
 public
 putback
+pwd
 pv
 py
 pydata
 pypa
 pypi
 pyplot
+pyyaml
 qe
 ql
 qs
@@ -1836,6 +1842,7 @@ reentrant
 register
 registrator
 regridding
+regex
 reimplement
 reimplemented
 reimplements
@@ -2099,6 +2106,7 @@ uintmax
 uintp
 ul
 ulonglong
+un
 unadapted
 unary
 unblurred
