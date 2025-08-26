@@ -22,24 +22,15 @@ sitk_add_lua_test( {{ name }}.{{ test.tag }}
   "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
   {% endfor %}
   "${SimpleITK_TEST_OUTPUT_DIR}/Lua-{{ name }}-{{ test.tag }}.nrrd"
-  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}}/Lua-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
-  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}}/Lua-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
+  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Lua-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
+  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Lua-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
 )
 {% endfor %}
 
-# Python Tests
-{% for test in tests %}
-sitk_add_python_test( {{ name }}.{{ test.tag }}
+# Python Tests with PyTest
+sitk_add_pytest_test( {{ name }}
   "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/{{ name }}Test.py"
-  {{ test.tag }}
-  {% for input in test.inputs %}
-  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
-  {% endfor %}
-  "${SimpleITK_TEST_OUTPUT_DIR}/Python-{{ name }}-{{ test.tag }}.nrrd"
-  {% if test.md5hash -%}IMAGE_MD5_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Python-{{ name }}-{{ test.tag }}.nrrd" {{ test.md5hash }}{%- endif %}
-  {% if test.tolerance -%}IMAGE_COMPARE "${SimpleITK_TEST_OUTPUT_DIR}/Python-{{ name }}-{{ test.tag }}.nrrd" "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}" {{ test.tolerance }}{%- endif %}
 )
-{% endfor %}
 
 
 # Ruby Tests

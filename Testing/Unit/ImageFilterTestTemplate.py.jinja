@@ -21,71 +21,131 @@
 
 # This is Python code to test {{ name }}
 import SimpleITK
-import sys
+import pytest
+import tempfile
+from pathlib import Path
+from conftest import SimpleITKTestBase
 
-inputs = {{ number_of_inputs | default(1) }}
 
-if len(sys.argv) < inputs + 2:
-    print("Usage: {{ name }} tag <input(s)> output")
-    sys.exit(1)
-
-tag = sys.argv[1]
-
-reader = SimpleITK.ImageFileReader()
-writer = SimpleITK.ImageFileWriter()
-filter = SimpleITK.{{ name }}()
+class Test{{ name }}(SimpleITKTestBase):
+    """Test class for {{ name }}"""
 
 {% if tests|length == 0 %}
-print("No tests defined!")
-sys.exit(1)
+    def test_no_tests_defined(self):
+        """Test that fails when no tests are defined"""
+        # pytest.fail("No tests defined for {{ name }}")
 {% endif %}
 
 {% for test in tests %}
-if tag == "{{ test.tag }}":
-    {% for setting in test.settings %}
-    {% if setting.parameter == "SeedList" and setting.python_value %}
-    filter.ClearSeeds()
-    {% for value in setting.python_value %}
-    filter.AddSeed({{ value }})
-    {% endfor %}
-    {% elif setting.parameter == "TrialPoints" and setting.python_value %}
-    filter.ClearTrialPoints()
-    {% for value in setting.python_value %}
-    filter.AddTrialPoint({{ value }})
-    {% endfor %}
-    {% elif setting.python_value %}
-    filter.Set{{ setting.parameter }}({{ setting.python_value }})
-    {% elif setting.dim_vec and setting.dim_vec == 1 %}
-    filter.Set{{ setting.parameter }}(({{ setting.value | join(", ") }}))
-    {% else %}
-    filter.Set{{ setting.parameter }}({{ setting.value }})
-    {% endif %}
-    {% endfor %}
+    def test_{{ test.tag }}(self, data_finder):
+        """{{ test.description }}"""
+        writer = SimpleITK.ImageFileWriter()
+        filter = SimpleITK.{{ name }}()
 
-    inputs = []
+        # Configure filter settings
+        {% for setting in test.settings %}
+        {% if setting.parameter == "SeedList" and setting.python_value %}
+        filter.ClearSeeds()
+        {% for value in setting.python_value %}
+        filter.AddSeed({{ value }})
+        {% endfor %}
+        {% elif setting.parameter == "TrialPoints" and setting.python_value %}
+        filter.ClearTrialPoints()
+        {% for value in setting.python_value %}
+        filter.AddTrialPoint({{ value }})
+        {% endfor %}
+        {% elif setting.python_value %}
+        filter.Set{{ setting.parameter }}({{ setting.python_value }})
+        {% elif setting.dim_vec and setting.dim_vec == 1 %}
+        filter.Set{{ setting.parameter }}(({{ setting.value | join(", ") }}))
+        {% else %}
+        filter.Set{{ setting.parameter }}({{ setting.value }})
+        {% endif %}
+        {% endfor %}
 
-    for i in range(2, len(sys.argv) - 1):
-        print("reading", sys.argv[i])
-        inputs.append(SimpleITK.ReadImage(sys.argv[i]))
+        # Load input images
+        input_files = [{{ test.inputs|map('quote')|join(", ") }}]
+        inputs = []
 
-    {% if test.inputA_cast %}
-    inputs[0] = SimpleITK.Cast(inputs[0], SimpleITK.{{ test.inputA_cast }})
-    {% endif %}
+        for input_file in input_files:
+            file_path = data_finder.get_file(input_file)
+            assert Path(file_path).exists(), f"Input file not found: {file_path}"
+            inputs.append(SimpleITK.ReadImage(file_path))
 
-    {% if test.inputB_cast %}
-    inputs[1] = SimpleITK.Cast(inputs[1], SimpleITK.{{ test.inputB_cast }})
-    {% endif %}
+        # Apply input casts if specified
+        {% if test.inputA_cast %}
+        if len(inputs) > 0:
+            inputs[0] = SimpleITK.Cast(inputs[0], SimpleITK.{{ test.inputA_cast }})
+        {% endif %}
 
-    {% if not no_return_image %}output = {% endif %}filter.Execute(*tuple(inputs))
+        {% if test.inputB_cast %}
+        if len(inputs) > 1:
+            inputs[1] = SimpleITK.Cast(inputs[1], SimpleITK.{{ test.inputB_cast }})
+        {% endif %}
 
-    labelIDs = [SimpleITK.sitkLabelUInt8, SimpleITK.sitkLabelUInt16, SimpleITK.sitkLabelUInt32, SimpleITK.sitkLabelUInt64]
-    {% if not no_return_image %}
-    # no_return_image: {{ no_return_image }}
-    if output.GetPixelIDValue() in labelIDs:
-        output = SimpleITK.LabelMapToLabel(output)
+        # Execute filter
+        {% if not no_return_image %}output = {% endif %}filter.Execute(*tuple(inputs))
 
-    writer.UseCompressionOn()
-    writer.SetFileName(sys.argv[-1])
-    writer.Execute(output)
-    {% endif %}
+        # Handle label images
+        {% if not no_return_image %}
+        labelIDs = [SimpleITK.sitkLabelUInt8, SimpleITK.sitkLabelUInt16, SimpleITK.sitkLabelUInt32, SimpleITK.sitkLabelUInt64]
+        if output.GetPixelIDValue() in labelIDs:
+            output = SimpleITK.LabelMapToLabel(output)
+
+        # Hash validation using assert functions
+        {% if test.md5hash -%}
+        self.assert_hash_match(output, "{{ test.md5hash }}", "MD5", "{{ test.tag }}")
+        {%- endif %}
+        {% if test.sha1hash -%}
+        self.assert_hash_match(output, "{{ test.sha1hash }}", "SHA1", "{{ test.tag }}")
+        {%- endif %}
+
+        # Image tolerance comparison using assert function
+        {% if test.tolerance -%}
+        baseline_filename = data_finder.data_directory/"Baseline"/"BasicFilters_{{ name }}_{{ test.tag }}.nrrd"
+        output_filename = data_finder.output_directory/f"Python-{{ name }}-{{ test.tag }}.nrrd"
+        SimpleITK.WriteImage(output, str(output_filename), useCompression=True)
+        self.assert_image_tolerance_match(output_filename, baseline_filename, {{ test.tolerance }}, "{{ test.tag }}", data_finder)
+        {%- endif %}
+        {% endif %}
+
+        # Test measurements
+        {% if test.measurements_results %}
+        {% for result in test.measurements_results -%}
+        {% if result.tolerance %}
+        {% if result.dim_vec -%}
+        # Test vector measurement {{ result.name }}
+        expected_vec = [{{ result.value | join(", ") }}]
+        actual_vec = filter.Get{{ result.name }}({{ result.parameters | join(", ") }})
+        assert len(expected_vec) == len(actual_vec), f"{{ result.name }} vector length mismatch"
+        for i in range(len(expected_vec)):
+            assert abs(expected_vec[i] - actual_vec[i]) <= {{ result.tolerance }}, \
+                f"{{ result.name }} vector element {i}: expected {expected_vec[i]}, got {actual_vec[i]}, tolerance {{ result.tolerance }}"
+        {%- else %}
+        # Test scalar measurement {{ result.name }}
+        expected = {% if result.python_value is defined %}{{ result.python_value }}{% else %}{{ result.value }}{% endif %}
+        actual = filter.Get{{ result.name }}({{ result.parameters | join(", ") }})
+        assert abs(expected - actual) <= {{ result.tolerance }}, \
+            f"{{ result.name }}: expected {expected}, got {actual}, tolerance {{ result.tolerance }}"
+        {% endif %}
+        {% else %}
+        {% if result.value == "true" %}
+        # Test boolean measurement {{ result.name }} (expected True)
+        assert filter.Get{{ result.name }}({{ result.parameters | join(", ") }}), \
+            "{{ result.name }} expected True"
+        {% elif result.value == "false" %}
+        # Test boolean measurement {{ result.name }} (expected False)
+        assert not filter.Get{{ result.name }}({{ result.parameters | join(", ") }}), \
+            "{{ result.name }} expected False"
+        {% else %}
+        # Test exact measurement {{ result.name }}
+        expected = {{ result.python_value  | default( result.value ) }}
+        actual = filter.Get{{ result.name }}({{ result.parameters | join(", ") }})
+        assert expected == actual, \
+            f"{{ result.name }}: expected {expected}, got {actual}"
+        {% endif %}
+        {% endif %}
+        {%- endfor %}
+        {% endif %}
+
 {% endfor %}
