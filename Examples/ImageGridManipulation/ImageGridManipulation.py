@@ -67,3 +67,8 @@ crop.SetUpperBoundaryCropSize(
     [composed_image.GetWidth() - 40, composed_image.GetHeight() - 40, 1]
 )
 cropped_image = crop.Execute(composed_image)
+
+# Print image information to demonstrate variable usage
+print(f"Sliced image size: {sliced_image.GetWidth()}x{sliced_image.GetHeight()}x{sliced_image.GetDepth()}")
+print(f"Extracted image size: {extracted_image.GetWidth()}x{extracted_image.GetHeight()}x{extracted_image.GetDepth()}")
+print(f"Cropped image size: {cropped_image.GetWidth()}x{cropped_image.GetHeight()}x{cropped_image.GetDepth()}")

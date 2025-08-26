@@ -60,6 +60,11 @@ namespace itk.simple.examples
             ComposeImageFilter compose = new ComposeImageFilter();
             Image composedImage = compose.Execute(channel1Image, channel2Image, channel3Image);
 
+            // Select same subregion using image slicing operator
+            VectorInt32 sliceStart = new VectorInt32(new int[] { 10, 10, 0 });
+            VectorInt32 sliceStop = new VectorInt32(new int[] { 40, 40, 1 });
+            Image slicedImage = SimpleITK.Slice(composedImage, sliceStart, sliceStop);
+
             // Select same subregion using ExtractImageFilter
             ExtractImageFilter extract = new ExtractImageFilter();
             VectorUInt32 size = new VectorUInt32(new uint[] { 30, 30, 0 });
@@ -67,6 +72,7 @@ namespace itk.simple.examples
             extract.SetSize(size);
             extract.SetIndex(index);
             Image extractedImage = extract.Execute(composedImage);
+
 
             // Select same sub-region using CropImageFilter (NOTE: CropImageFilter cannot
             // reduce dimensions unlike ExtractImageFilter, so cropped_image is a three
@@ -81,6 +87,13 @@ namespace itk.simple.examples
             crop.SetLowerBoundaryCropSize(lowerBoundary);
             crop.SetUpperBoundaryCropSize(upperBoundary);
             Image croppedImage = crop.Execute(composedImage);
+
+            Console.WriteLine("Sliced image size: {0}x{1}x{2}",
+                slicedImage.GetWidth(), slicedImage.GetHeight(), slicedImage.GetDepth());
+            Console.WriteLine("Extracted image size: {0}x{1}x{2}",
+                extractedImage.GetWidth(), extractedImage.GetHeight(), extractedImage.GetDepth());
+            Console.WriteLine("Cropped image size: {0}x{1}x{2}",
+                croppedImage.GetWidth(), croppedImage.GetHeight(), croppedImage.GetDepth());
         }
     }
 }
