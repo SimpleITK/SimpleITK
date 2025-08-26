@@ -37,7 +37,7 @@ To build SimpleITK you need:
    -  Windows users may prefer `Git For Windows <https://gitforwindows.org/>`__
 
 - If you are wrapping SimpleITK for a language, that language's development libraries are
-also required.
+  also required.
 
 System Requirements
 ===================
