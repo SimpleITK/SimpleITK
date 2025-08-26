@@ -70,5 +70,11 @@ main(int argc, char * argv[])
   crop.SetUpperBoundaryCropSize({ composedImage.GetWidth() - 40, composedImage.GetHeight() - 40, 1 });
   sitk::Image croppedImage = crop.Execute(composedImage);
 
+  // Print image information to demonstrate variable usage
+  std::cout << "Extracted image size: " << extractedImage.GetWidth() << "x" << extractedImage.GetHeight() << "x"
+            << extractedImage.GetDepth() << std::endl;
+  std::cout << "Cropped image size: " << croppedImage.GetWidth() << "x" << croppedImage.GetHeight() << "x"
+            << croppedImage.GetDepth() << std::endl;
+
   return 0;
 }

@@ -70,3 +70,8 @@ crop <- CropImageFilter()
 crop$SetLowerBoundaryCropSize( list(10, 10, 0) )
 crop$SetUpperBoundaryCropSize( list(composed_image$GetWidth()-40, composed_image$GetHeight()-40, 1) )
 cropped_image <- crop$Execute(composed_image)
+
+# Print image information to demonstrate variable usage
+cat("Sliced image size:", sliced_image$GetWidth(), "x", sliced_image$GetHeight(), "x", sliced_image$GetDepth(), "\n")
+cat("Extracted image size:", extracted_image$GetWidth(), "x", extracted_image$GetHeight(), "x", extracted_image$GetDepth(), "\n")
+cat("Cropped image size:", cropped_image$GetWidth(), "x", cropped_image$GetHeight(), "x", cropped_image$GetDepth(), "\n")

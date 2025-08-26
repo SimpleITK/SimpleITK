@@ -76,5 +76,11 @@ class ImageGridManipulation {
         crop.setLowerBoundaryCropSize(lowerBoundary);
         crop.setUpperBoundaryCropSize(upperBoundary);
         Image croppedImage = crop.execute(composedImage);
+
+        // Print image information to demonstrate variable usage
+        System.out.println("Extracted image size: " + extractedImage.getWidth() + "x" +
+                          extractedImage.getHeight() + "x" + extractedImage.getDepth());
+        System.out.println("Cropped image size: " + croppedImage.getWidth() + "x" +
+                          croppedImage.getHeight() + "x" + croppedImage.getDepth());
     }
 }
