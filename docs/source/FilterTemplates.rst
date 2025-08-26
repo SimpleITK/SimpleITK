@@ -4,8 +4,8 @@ Developer
 Image Filter Templates ReadMe
 =============================
 
-This document outlines the system used to generate SimpleITK files using
-json data files in conjunction with the template .h and .cxx files.
+This section outlines the system used to generate SimpleITK  source code using an "Expand Template Generator" system. It uses `Jinja <https://jinja.palletsprojects.com/>`_ as a template engine with
+YAML configuration files, template files for .h and .cxx files.
 
 ..
     .. contents:: On this page
@@ -17,451 +17,40 @@ Overview
 
 In order to create a uniform body of image filters, we use an automated
 code generation system to wrap existing ITK filters into SimpleITK
-filters. The development process consists of writing a JSON data file
+filters. The development process consists of writing a YAML configuration file
 which specifies the information needed to fill in the fields of the
-template file. During compilation, all of the .json files are parsed
-using a lua template engine which fills in the appropriate template file
-from the provided fields. This ReadMe provides a detailed description of
-the fields that can be used in the json data files and what effect each
-field has on the resulting image filter. When writing your own json
-file, it should be saved in:
-``SimpleITK_SOURCE_DIR/Code/$FILTER_DIR/json``
-
-Here ``$FILTER_DIR`` is the directory in which the code for the
-generated filter should live. For simple filters this is the
-“BasicFilters” directory.
-
-JSON File Structure
-===================
-
-JSON (JavaScript Object Notation) is a simple text formatting system
-used to specify data values. A full description of the specification can
-be found at http://www.json.org/. For the purposes of SimpleITK, a json
-file consists of a single data object (denoted by {}) which contains
-several string : value pairs (here value may be a list denoted by [])
-and sub-objects. Here is an example from LaplacianRecursiveGaussian:
-
-::
-
-   {
-     "name" : "LaplacianRecursiveGaussianImageFilter",
-     "template_code_filename" : "ImageFilter",
-     "template_test_filename" : "ImageFilter",
-     "doc" : "",
-     "number_of_inputs" : 1,
-     "pixel_types" : "BasicPixelIDTypeList",
-     "output_pixel_type" : "float",
-     "members" : [
-       {
-         "name" : "Sigma",
-         "type" : "double",
-         "default" : "1.0",
-         "doc" : "",
-         "briefdescriptionSet" : "",
-         "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.",
-         "briefdescriptionGet" : "",
-         "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing."
-       },
-       {
-         "name" : "NormalizeAcrossScale",
-         "type" : "bool",
-         "default" : "false",
-         "doc" : "",
-         "briefdescriptionSet" : "",
-         "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian \\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
-         "briefdescriptionGet" : "",
-         "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian \\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
-       }
-     ],
-     "tests" : [
-       {
-         "tag" : "default",
-         "description" : "Simply run with default settings",
-         "settings" : [],
-         "tolerance" : 0.0001,
-         "inputs" : [
-           "Input/RA-Float.nrrd"
-         ]
-       }
-     ],
-     "briefdescription" : "Computes the Laplacian of Gaussian (LoG) of an image.",
-     "detaileddescription" : "Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.",
-     "itk_module" : "ITKImageFeature",
-     "itk_group" : "ImageFeature"
-   }
-
-In this example, we see that all pairs must use a string as the key, but
-may have any valid type as the value (string - “Abs”, number - 1, list -
-[], object - {}).
-
-Fields For All Templates
-------------------------
-
-This section describes the minimal set of fields required to wrap an ITK
-filter into SimpleITK.
-
-Top Level Fields
-----------------
-
--  **name**: (*string*) This must be the name of the ITK filter.
-
--  **template_code_filename**: (*string*) Which of the template files
-   should be used to generate the filter. Choices are: “ImageFilter”,
-   “RegionGrowingImageFilter”, “StructuringElementImageFilter”,
-   “LevelSetImageFilter”, “MathematicalMorphologyImageFilter”
-
--  **template_test_filename**: (*string*) Which of the template files
-   should be used to generate the test for this filter. Choices are:
-   “ImageFilter”, “RegionGrowingImageFilter”
-
--  **number_of_inputs**: (*integer*) How many input images are used for
-   this filter. Currently, the template system only supports filters
-   with 1 or 2 input images
-
--  **briefdescription**: (*string*) Brief description of the class
-   (Doxygen format). This string is automatically generated by the
-   Utilities/BuildDocs and Utilities/GenerateDocumentation.groovy
-   scripts. If no corresponding ITK class exists, this field will not be
-   modified. This field is maintained with the JSONDocUpdate.sh script.
-
--  **detaileddescription**: (*string*) More detailed description of the
-   class (Doxygen format). This string is automatically generated by the
-   Utilities/BuildDocs and Utilities/GenerateDocumentation.groovy
-   scripts. If no corresponding ITK class exists, this field will not be
-   modified. This field is maintained with the JSONDocUpdate.sh script.
+template file. During the SimpleITK build process, each .yaml files are parsed
+using a `Jinja <https://jinja.palletsprojects.com/>`_ template engine, with a header (.h) and a implementation (.cxx). Additionally, for each enabled language and C++, there is a test `Jinja <https://jinja.palletsprojects.com/>`_  template that is used to generate testing source code.
 
--  **pixel_types**: (*string*) Which of the pixel type lists should be
-   supported for this filter. The type lists are defined in
-   sitkPixelIDTypeLists.h
-
--  **members**: (*list*) This list specifies all member variables that
-   should be accessible to the user with a Get/Set mechanism and should
-   be part of the Execute signature for the filter. Each entry in the
-   list must be an object
-
--  **tests**: (*list*) This list specifies all automatic tests that
-   should be generated for the filter. Each entry in the list must be an
-   object. If no tests are specified, a test will be generated that
-   fails with the message that a test must be written for the filter
 
--  **itk_module**: (*string*) A string naming the ITK module the filter
-   originates from. If the ITK installation used for building SimpleITK
-   does not have this named module then the filter will be omitted in
-   SimpleITK. This filed is maintained JSONUpdateITKModules.py script.
-
--  **itk_group**: (*string*) A string naming the ITK group the ITK
-   filter originates.
-
--  [OPTIONAL] **include_files**: (*list*) This list of strings specifies
-   additional header files to include in the cxx file for this filter.
-
--  [OPTIONAL] **custom_set_input**: (*string*) Code which is used to
-   set input or multiple inputs to the filter. This overrides the
-   standard setting of the inputs.
-
--  [OPTIONAL] **output_pixel_type**: (*string*) String representing the
-   specific pixel type to use for the output image of the filter.
-
--  [OPTIONAL] **filter_type**: (*string*) Explicitly sets the FilterType
-   used. This method overrides additional_template_types. Useful
-   typedefs are InputImageType, and OutputImageType.
-
--  [OPTIONAL] **public_declarations**: (*string*) Any c++ code written
-   in this field will be placed into the public section of the filter’s
-   header file
-
--  [OPTIONAL] **additional_template_types**: (*list*) The standard ITK
-   image filter template signature is:
-
-::
-
-   <InputImageType, (if 2 inputs)InputImageType, OutputImageType)>
-
-Some filters require additional template types between the list of input
-image types and the output image type such as the input type of a
-constant. This list allows these additional parameters to be added so
-that the template signature looks like:
-
-::
-
-   <InputImageType, (if 2 inputs)InputImageType, (ADDITIONAL TYPES), OutputImageType)>
-
-Each type in the list is specified by an object with a only a **type**
-field which is a string specifying the type to be used.
-
--  [OPTIONAL] **custom_methods**: (*list*) This is a list of objects
-   specifying custom methods that should be added to the filter. The
-   fields required for a custom method are:
-
-   -  **doc**: (*string*) Documentation for this custom method
-   -  **name**: (*string*) The name of the method
-   -  **return_type:** (*string*) the return type of the method
-   -  [OPTIONAL] **parameters**: (*list*) A list of parameters for the
-      method. Each method is specified by an object with the following
-      fields:
-
-      -  **type**: (*string*) The parameter’s type
-      -  **var_name**: (*string*) The name of the variable to be used in
-         the \**body field for the custom method
-
-   -  **body**: (*string*) This string is the body of the method and
-      will be placed directly into the header file. The parameter names
-      specified with **var_name** in each of the parameter objects can
-      be used in this body
-
-A sample custom method might look like:
-
-::
-
-   { "name" : "Foo",
-     "doc" : "This method checks if a string is equal to Foo"
-     "return_type" : "bool",
-     "parameters" : [
-       { "type" : "std::string",
-         "var_name" : "inString"
-       }
-     ],
-     "body" : "if (!strcmp(inString.c_str(), "Foo")) { return true; } else { return false; }"
-   }
-
-This will translate to a custom method that looks like:
-
-::
-
-     /**
-      * This method checks if a string is equal to Foo
-      */
-     bool Foo( std::string inString )
-       {
-       if (!strcmp(inString.c_str(), "Foo")) { return true; } else { return false; }
-       }
-
-MemberFields Member Fields
---------------------------
-
-A basic member object looks like:
-
-::
-
-   {
-     "name" : "Sigma",
-     "type" : "double",
-     "default" : 1.0,
-     "briefdescriptionSet" : "",
-     "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
-     "briefdescriptionGet" : "",
-     "detaileddescriptionGet" : ""
-    }
-
--  **name**: (*string*) The name of the member variable. A variable
-   named “Var” will be accessible with the methods “GetVar” and “SetVar”
-
--  **type**: (*string*) The c++ type for this member. If using a type
-   contained in a certain namespace (itk::simple for example), this must
-   be included in the type description. If the member variable is of
-   type bool, the additional ${name}On, and ${name}Off member functions
-   are added.
-
--  **default**: (*string* or *number*) The default value for this
-   member. This can be a number for numerical types or a string
-   specifying the constructor for non-basic types (std::vector< unsigned
-   int >() for example)
+Available Templates
+-------------------
 
--  **briefdescriptionSet/briefdescriptionGet**: (*string*) Brief Doxygen
-   documentation for this individual parameter. The two forms (Set/Get)
-   are used for the SetMember and GetMember functions. This field is
-   automatically generated from ITK’s Doxygen for members that mirror
-   ITK’s members. If the member if a custom, this field will not be
-   modified.
+The following template types are available in ``Code/BasicFilters/templates/`` for generating SimpleITK filters:
 
--  **detaileddescriptionSet/detaileddescriptionGet**: (*string*)
-   Detailed Doxygen documentation for this individual parameter. The two
-   forms (Set/Get) are used for the SetMember and GetMember functions.
-   This field is automatically generated from ITK’s Doxygen for members
-   that mirror ITK’s members. If the member if a custom, this field will
-   not be modified.
-
--  [OPTIONAL] **no_set_method**: (0 or 1) If set to 1, the filter will
-   not have a Set method for this member
-
--  [OPTIONAL] **no_get_method**: (0 or 1) If set to 1, the filter will
-   not have a Get method for this member
-
--  [OPTIONAL] **no_print**: (0 or 1) If set to 1, this member will not
-   be printed in the ToString method
-
--  [OPTIONAL] **dim_vec**: (0 or 1) If set to 1, this indicates that the
-   member is a std::vector with size equal to the dimension of the input
-   image. As such, it will be printed out correctly and cast to its
-   corresponding ITK type correctly
-
--  [OPTIONAL] **set_as_scalar**: (0 or 1) If parameter is a dim_vec,
-   then this method adds an additional set member method to set the
-   variable as a scalar so that all components are the same
-
--  [OPTIONAL] **enum**: ``[ "enum1", "enum2", ... ]`` Creates a member
-   type of the class with the array of strings with a type defined by
-   the name of this parameter. This field makes the “type” parameter
-   optional. It is recommended to add a test to ensure the SimpleITK
-   values correspond to the ITK values.
-
--  [OPTIONAL] **custom_itk_cast**: (*string*) Some non-basic types will
-   require a custom cast before the corresponding ITK filter’s member
-   can be set. This field allows the developer to specify exactly how
-   the ITK filter sets the member’s value from the SimpleITK member’s
-   value for example:
-
-::
-
-   "custom_itk_cast" :
-     "filter->SetObjectValue(static_cast<typename FilterType::PixelType>(this->GetObjectValue()) );"
-
-TestFields Test Fields
-----------------------
-
-A basic test object looks like:
-
-::
-
-   {
-     "tag" : "float",
-     "description" : "Dilate a float image",
-     "inputA" : "Input/RA-Slice-Float.nrrd",
-     "tolerance" : 0.01,
-     "settings" : []
-   }
-
-There are three ways of checking the resulting image: against a baseline
-image, a sha1 hash, or an md5 hash. At least one of these options must
-be used for each test.
-
--  **tag**: (*string*) The tag to identify this specific test for the
-   filter
-
--  **description**: (*string*) Documentation to describe this specific
-   test
-
--  **inputA**: (*string*) The path from the SOURCE_DIR/Testing/Data
-   directory for the (first) input image
-
--  **inputA_cast**: (*string*) an ``sitkPixelIDEnum``, after inputA is
-   read the CastImageFilter is run, to covert the image type.
-
--  [OPTIONAL] **inputB**: (*string*) If **number_of_inputs** is 2, this
-   specifies the path from SOURCE_DIR/Testing/Data to the second input
-   image
-
--  [OPTIONAL] **tolerance**: (*float*) An error tolerance fo be used
-   when comparing the resulting image to the baseline. This is used to
-   specify that the result should be checked against a baseline image
-
--  [OPTIONAL] **md5hash**: (*string*) An md5 hash value to compare the
-   resulting image against.
-
--  [OPTIONAL] **sha1hash**: (*string*) A sha1 hash value to compare the
-   resulting image against.
-
--  [OPTIONAL] **settings**: (*list*) A list of any specific parameters
-   values for this test. Each entry is an object of the form:
-
-::
-
-   { "parameter" : "Sigma",
-     "value" : 1.0
-   }
-
-Settings Options
-~~~~~~~~~~~~~~~~
-
--  **parameter**: (*string*) The name of the parameter. This must match
-   the name used when creating the filter
--  **value**: (*string* or *number*) The value to assign to the
-   parameter. This can be a number for numerical types or a string
-   representing the constructor for more complex types
--  [OPTIONAL] **python_value**: (*string*) For types that require a
-   different syntax for setting the value in python, this will override
-   the string in **value**
--  [OPTIONAL] **lua_value**: (*string*) For types that require a
-   different syntax for setting the value in lua, this will override the
-   string in **value**
--  [OPTIONAL] **ruby_value**: (*string*) For types that require a
-   different syntax for setting the value in ruby, this will override
-   the string in **value**
--  [OPTIONAL] **java_value**: (*string*) For types that require a
-   different syntax for setting the value in java, this will override
-   the string in **value**
--  [OPTIONAL] **tcl_value**: (*string*) For types that require a
-   different syntax for setting the value in tcl, this will override the
-   string in **value**
--  [OPTIONAL] **R_value**: (*string*) For types that require a different
-   syntax for setting the value in R, this will override the string in
-   **value**
--  [OPTIONAL] **dim_vec** (0 or 1): Use this flag if this parameter is a
-   std::vector. If set to 1, the **type** option must also be set
--  [OPTIONAL] **no_get_method**: (0 or 1). Set to 1 when the filter does
-   not have a get method, so that this method will not be tested.
--  [OPTIONAL] **type**: (*string*): What type the vector should be. Due
-   to constraints with java, this should only be a primitive type. For
-   unsigned types, the java test will convert to the signed equivalent.
-   An example for a ``dim_vec`` parameter is:
-
-::
-
-   { "parameter" : "Size",
-     "dim_vec" : 1,
-     "type" : "unsigned int"
-     "value" : "{1,2}",
-     "java_value" : "{1,2}",
-     "tcl_value" : "[list 1 2]",
-     "python_value" : "[1,2]",
-     "lua_value" : "{1,2}",
-     "ruby_value" : "[1,2]"
-   }
-
-Structure Directory Structure
------------------------------
-
-The code generation system is designed to be agnostic of what
-subdirectory is being parsed. An example of this is BasicFilters. Here
-will just refer to ``$FILTER_DIR``
-
-There are four important subdirectories in
-``$SimpleITK_SOURCE_DIR/Code/$FILTER_DIR``:
-
--  include: Manually written header files
--  src: Manually written c++ files
--  json: The input json files used to generate new filters at build time
--  templates: The code templates that can be used to generate filters
-   for this directory
-
-When a filter is generated, it produces a .h and a .cxx file that are
-placed in ``$SimpleITK_BUILD_DIR/Code/$FILTER_DIR/include`` and
-``$SimpleITK_BUILD_DIR/Code/$FILTER_DIR/src`` respectively.
-
-It is also worth noting that the template files in the templates
-directory are comprised of a combination of c++ code, lua template
-expansion directives, and ``$(include xxx)`` statements. These include
-statements each pull in a section of template code from a file in
-$SimpleITK_SOURCE_DIR/ExpandTemplateGenerator/Components. These
-component files represent pieces of templates that are shared by
-multiple unique filter template types.
-
-Templates Specialized Templates
--------------------------------
-
-The standard template is ImageFilter. This section describes the
-differences for each of the other template types.
-
--  **Region Growing Image Filters**: The region growing filters support
-   an additional set of methods for manipulating the seed list. Each
-   region growing filter has the SetSeed, AddSeed, and ClearSeeds
-   methods. See sitkConnectedThresholdImageFilter.h for details.
-
--  **Kernel Image Filters**: The kernel image filters use a KernelType
-   and have an external enum which allows the user to select which
-   kernel to use. See sitkErodeObjectMorphologyImageFilter.h for
-   details.
-
--  **Dual Image Filter**: The dual image filter template’s usage should
-   be avoided because it instantiates the combination of two pixel type
-   lists.
+-  **ImageFilter**: The standard template for most image filters with a single input image type or template. This is the most commonly used template and supports filters that take one input image and produce one output image.
+
+-  **BinaryFunctorFilter**: Template for filters that perform pixel-wise operations between two input images using a functor (mathematical operation). Examples include arithmetic operations like addition, subtraction, multiplication, etc.
+
+-  **MultiInputImageFilter**: Template for filters that accepts a variable number of input images. This template provides support for a variable number of inputs and a vector of images as input.
+
+-  **ImageSource**: Template for filters that generate images without requiring input images. These are source filters that create images from parameters or mathematical functions.
+
+-  **DualImageFilter**: Template that instantiates filters with combinations of different pixel types. This template should be used with caution as it can significantly increase compilation time and binary size due to the combinatorial explosion of type instantiations.
+
+
+
+YAML Schema
+===========
+
+YAML (YAML Ain't Markup Language) is a human-readable data serialization format that is often used for configuration files and data exchange between languages with different data structures. For the purposes of SimpleITK, a yaml file consists of a single document which contains key-value pairs, lists, and nested structures.
+
+The schema used for SimpleITK filter generation is defined in the ``ExpandTemplateGenerator/simpleitk_filter_description.schema.json`` file. This Schema document provides formal validation rules and documentation for all the fields that can be used in YAML filter description files.
+
+
+The schema defines the structure for filter descriptions including required fields, optional parameters, data types, and validation constraints. It serves as both documentation and validation for YAML filter files used in the code generation process.
+
+
+.. literalinclude:: ../../ExpandTemplateGenerator/simpleitk_filter_description.schema.json
+   :language: json
+   :caption: SimpleITK Filter Description Schema
