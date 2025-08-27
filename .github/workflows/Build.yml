@@ -67,6 +67,7 @@ jobs:
           - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            cmake_osx_architectures: "x86_64"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON

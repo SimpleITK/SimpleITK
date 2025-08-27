@@ -15,21 +15,25 @@ PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0
 OS_NAME=$(uname -s)
 
 # Detect version (for macOS)
-if [ "$OS_NAME" == "Darwin" ]; then
-    OS_ARCH=$(uname -m)
-    if [ "$OS_ARCH" == "x86_64" ]; then
-        OS_VERSION="10.9"
-    elif [ "$OS_ARCH" == "arm64" ]; then
-        OS_VERSION="11.0"
-    else
-        echo "Unsupported architecture: $OS_ARCH"
-        exit 1
-    fi
-    SIMPLEITK_PYTHON_PLAT_NAME="macosx-$OS_VERSION-$OS_ARCH"
-else
+if [ "$OS_NAME" != "Darwin" ]; then
     echo "Unsupported OS: $OS_NAME"
     exit 1
 fi
+
+if [ -n "${CMAKE_OSX_ARCHITECTURES}" ]; then
+    OS_ARCH="${CMAKE_OSX_ARCHITECTURES}"
+else
+    OS_ARCH=$(uname -m)
+fi
+if [ "$OS_ARCH" == "x86_64" ]; then
+    OS_VERSION="10.9"
+elif [ "$OS_ARCH" == "arm64" ]; then
+    OS_VERSION="11.0"
+else
+    echo "Unsupported architecture: $OS_ARCH"
+    exit 1
+fi
+SIMPLEITK_PYTHON_PLAT_NAME="macosx-$OS_VERSION-$OS_ARCH"
 
 read -r -d '' CTEST_CACHE << EOM || true
 CMAKE_PREFIX_PATH:PATH=${COREBINARYDIRECTORY}
@@ -46,6 +50,12 @@ SimpleITK_BUILD_STRIP:BOOL=1
 Python_EXECUTABLE:FILEPATH=$(which python)
 SimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API}
 EOM
+
+# Conditionally add CMAKE_OSX_ARCHITECTURES if set
+if [ ! -z "${CMAKE_OSX_ARCHITECTURES}" ]; then
+    CTEST_CACHE="${CTEST_CACHE}
+CMAKE_OSX_ARCHITECTURES:STRING=${CMAKE_OSX_ARCHITECTURES}"
+fi
 
 export CTEST_CACHE
 export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/py${PYTHON_VERSION}"
