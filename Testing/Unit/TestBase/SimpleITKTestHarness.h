@@ -42,6 +42,7 @@ operator<<(std::ostream & os, const std::vector<T> & v)
 
 #include <string>
 #include <vector>
+#include <cstdint>
 #include <gtest/gtest.h>
 
 #include "sitkImage.h"
@@ -108,7 +109,9 @@ extern DataFinder dataFinder;
 class MockLogger : public itk::simple::LoggerBase
 {
 public:
-  MockLogger() = default;
+  MockLogger(bool redirectContextToSimple = false)
+    : m_RedirectContextToSimple(redirectContextToSimple)
+  {}
 
   ~MockLogger() override = default;
 
@@ -125,9 +128,47 @@ public:
   }
 
   void
+  DisplayErrorText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override
+  {
+    if (m_RedirectContextToSimple)
+    {
+      // Use parent class implementation which redirects to simple method
+      LoggerBase::DisplayErrorText(file, line, className, objectAddress, message);
+    }
+    else
+    {
+      m_DisplayErrorTextContext << "ERROR: In " << file << ", line " << line << '\n'
+                                << className << " (" << std::hex << objectAddress << "): " << message << "\n\n";
+    }
+  }
+
+  void
   DisplayWarningText(const char * t) override
   {
     m_DisplayWarningText << t;
+  }
+
+  void
+  DisplayWarningText(const char * file,
+                     unsigned int line,
+                     const char * className,
+                     const void * objectAddress,
+                     const char * message) override
+  {
+    if (m_RedirectContextToSimple)
+    {
+      // Use parent class implementation which redirects to simple method
+      LoggerBase::DisplayWarningText(file, line, className, objectAddress, message);
+    }
+    else
+    {
+      m_DisplayWarningTextContext << "WARNING: In " << file << ", line " << line << '\n'
+                                  << className << " (" << std::hex << objectAddress << "): " << message << "\n\n";
+    }
   }
 
   void
@@ -137,9 +178,42 @@ public:
   }
 
   void
+  DisplayGenericOutputText(const char * file, unsigned int line, const char * message) override
+  {
+    if (m_RedirectContextToSimple)
+    {
+      // Use parent class implementation which redirects to simple method
+      LoggerBase::DisplayGenericOutputText(file, line, message);
+    }
+    else
+    {
+      m_DisplayGenericOutputTextContext << "INFO: In " << file << ", line " << line << "\n" << message << "\n\n";
+    }
+  }
+
+  void
   DisplayDebugText(const char * t) override
   {
     m_DisplayDebugText << t;
+  }
+
+  void
+  DisplayDebugText(const char * file,
+                   unsigned int line,
+                   const char * className,
+                   const void * objectAddress,
+                   const char * message) override
+  {
+    if (m_RedirectContextToSimple)
+    {
+      // Use parent class implementation which redirects to simple method
+      LoggerBase::DisplayDebugText(file, line, className, objectAddress, message);
+    }
+    else
+    {
+      m_DisplayDebugTextContext << "DEBUG: In " << file << ", line " << line << '\n'
+                                << className << " (" << std::hex << objectAddress << "): " << message << "\n\n";
+    }
   }
 
   void
@@ -150,6 +224,10 @@ public:
     m_DisplayWarningText.str("");
     m_DisplayGenericOutputText.str("");
     m_DisplayDebugText.str("");
+    m_DisplayErrorTextContext.str("");
+    m_DisplayWarningTextContext.str("");
+    m_DisplayGenericOutputTextContext.str("");
+    m_DisplayDebugTextContext.str("");
   }
 
   std::stringstream m_DisplayText;
@@ -157,6 +235,13 @@ public:
   std::stringstream m_DisplayWarningText;
   std::stringstream m_DisplayGenericOutputText;
   std::stringstream m_DisplayDebugText;
+  std::stringstream m_DisplayErrorTextContext;
+  std::stringstream m_DisplayWarningTextContext;
+  std::stringstream m_DisplayGenericOutputTextContext;
+  std::stringstream m_DisplayDebugTextContext;
+
+private:
+  bool m_RedirectContextToSimple;
 };
 
 /** Base Command Class which holds onto a process object
