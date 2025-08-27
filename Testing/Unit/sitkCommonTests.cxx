@@ -28,6 +28,8 @@
 #include <itkConfigure.h>
 #include "sitkLogger.h"
 #include <cctype>
+#include <cstdint>
+#include <regex>
 
 #include "itkMacro.h"
 
@@ -875,21 +877,27 @@ TEST(Logger, ContextMethods)
   MockLogger logger;
 
   // Test context-aware methods directly
-  logger.DisplayErrorText("testfile.cpp", 42, "TestClass", (void *)0x12345678, "Error message");
-  logger.DisplayWarningText("testfile.cpp", 43, "TestClass", (void *)0x12345678, "Warning message");
-  logger.DisplayGenericOutputText("testfile.cpp", 44, "Generic message");
-  logger.DisplayDebugText("testfile.cpp", 45, "TestClass", (void *)0x12345678, "Debug message");
+  logger.DisplayErrorText(
+    "Error message", "testfile.cpp", 42, "TestClass", reinterpret_cast<void *>(static_cast<uintptr_t>(0x12345678)));
+  logger.DisplayWarningText(
+    "Warning message", "testfile.cpp", 43, "TestClass", reinterpret_cast<void *>(static_cast<uintptr_t>(0x12345678)));
+  logger.DisplayGenericOutputText("Generic message", "testfile.cpp", 44);
+  logger.DisplayDebugText(
+    "Debug message", "testfile.cpp", 45, "TestClass", reinterpret_cast<void *>(static_cast<uintptr_t>(0x12345678)));
 
-  // Check that context methods format correctly
-  std::string expectedError = "ERROR: In testfile.cpp, line 42\nTestClass (0x12345678): Error message\n\n";
-  std::string expectedWarning = "WARNING: In testfile.cpp, line 43\nTestClass (0x12345678): Warning message\n\n";
-  std::string expectedGeneric = "INFO: In testfile.cpp, line 44\nGeneric message\n\n";
-  std::string expectedDebug = "DEBUG: In testfile.cpp, line 45\nTestClass (0x12345678): Debug message\n\n";
+  // Check that context methods format correctly using regex for pointer values
+  std::string expectedErrorRegex =
+    R"(ERROR: In testfile\.cpp, line 42\nTestClass \((0x)?0*12345678\): Error message\n\n)";
+  std::string expectedWarningRegex =
+    R"(WARNING: In testfile\.cpp, line 43\nTestClass \((0x)?0*12345678\): Warning message\n\n)";
+  std::string expectedGenericRegex = R"(INFO: In testfile\.cpp, line 44\nGeneric message\n\n)";
+  std::string expectedDebugRegex =
+    R"(DEBUG: In testfile\.cpp, line 45\nTestClass \((0x)?0*12345678\): Debug message\n\n)";
 
-  EXPECT_EQ(logger.m_DisplayErrorTextContext.str(), expectedError);
-  EXPECT_EQ(logger.m_DisplayWarningTextContext.str(), expectedWarning);
-  EXPECT_EQ(logger.m_DisplayGenericOutputTextContext.str(), expectedGeneric);
-  EXPECT_EQ(logger.m_DisplayDebugTextContext.str(), expectedDebug);
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayErrorTextContext.str(), std::regex(expectedErrorRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayWarningTextContext.str(), std::regex(expectedWarningRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayGenericOutputTextContext.str(), std::regex(expectedGenericRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayDebugTextContext.str(), std::regex(expectedDebugRegex)));
 
   // Test that original methods still work and don't interfere with context methods
   logger.DisplayErrorText("Simple error\n");
@@ -903,10 +911,10 @@ TEST(Logger, ContextMethods)
   EXPECT_EQ(logger.m_DisplayDebugText.str(), "Simple debug\n");
 
   // Context streams should be unchanged by simple methods
-  EXPECT_EQ(logger.m_DisplayErrorTextContext.str(), expectedError);
-  EXPECT_EQ(logger.m_DisplayWarningTextContext.str(), expectedWarning);
-  EXPECT_EQ(logger.m_DisplayGenericOutputTextContext.str(), expectedGeneric);
-  EXPECT_EQ(logger.m_DisplayDebugTextContext.str(), expectedDebug);
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayErrorTextContext.str(), std::regex(expectedErrorRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayWarningTextContext.str(), std::regex(expectedWarningRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayGenericOutputTextContext.str(), std::regex(expectedGenericRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayDebugTextContext.str(), std::regex(expectedDebugRegex)));
 }
 
 
@@ -919,23 +927,29 @@ TEST(Logger, ContextMethodsWithITKLogger)
   auto logger = sitk::LoggerBase::GetGlobalITKLogger();
 
   // Test context-aware methods with the ITK logger
-  logger.DisplayErrorText("testfile.cpp", 100, "ITKTestClass", (void *)0xABCDEF00, "ITK Error");
-  logger.DisplayWarningText("testfile.cpp", 101, "ITKTestClass", (void *)0xABCDEF00, "ITK Warning");
-  logger.DisplayGenericOutputText("testfile.cpp", 102, "ITK Generic");
-  logger.DisplayDebugText("testfile.cpp", 103, "ITKTestClass", (void *)0xABCDEF00, "ITK Debug");
+  logger.DisplayErrorText(
+    "ITK Error", "testfile.cpp", 100, "ITKTestClass", reinterpret_cast<void *>(static_cast<uintptr_t>(0xABCDEF00)));
+  logger.DisplayWarningText(
+    "ITK Warning", "testfile.cpp", 101, "ITKTestClass", reinterpret_cast<void *>(static_cast<uintptr_t>(0xABCDEF00)));
+  logger.DisplayGenericOutputText("ITK Generic", "testfile.cpp", 102);
+  logger.DisplayDebugText(
+    "ITK Debug", "testfile.cpp", 103, "ITKTestClass", reinterpret_cast<void *>(static_cast<uintptr_t>(0xABCDEF00)));
 
   std::string capturedOutput = testing::internal::GetCapturedStderr();
+  // Should contain formatted context information using regex for pointer values
+  std::string expectedErrorRegex =
+    R"(ERROR: In testfile\.cpp, line 100\nITKTestClass \((0x)?0*abcdef00\): ITK Error\n\n)";
+  std::string expectedWarningRegex =
+    R"(WARNING: In testfile\.cpp, line 101\nITKTestClass \((0x)?0*abcdef00\): ITK Warning\n\n)";
+  std::string expectedGenericRegex = R"(INFO: In testfile\.cpp, line 102\nITK Generic\n\n)";
+  std::string expectedDebugRegex =
+    R"(Debug: In testfile\.cpp, line 103\nITKTestClass \((0x)?0*abcdef00\): ITK Debug\n\n)";
 
-  // Should contain formatted context information
-  EXPECT_TRUE(capturedOutput.find("ERROR: In testfile.cpp, line 100") != std::string::npos);
-  EXPECT_TRUE(capturedOutput.find("ITKTestClass (0xabcdef00): ITK Error") != std::string::npos);
-  EXPECT_TRUE(capturedOutput.find("WARNING: In testfile.cpp, line 101") != std::string::npos);
-  EXPECT_TRUE(capturedOutput.find("ITKTestClass (0xabcdef00): ITK Warning") != std::string::npos);
-  EXPECT_TRUE(capturedOutput.find("INFO: In testfile.cpp, line 102") != std::string::npos);
-  EXPECT_TRUE(capturedOutput.find("ITK Generic") != std::string::npos);
-  EXPECT_TRUE(capturedOutput.find("Debug: In testfile.cpp, line 103") != std::string::npos)
-    << "Actual: " << capturedOutput;
-  EXPECT_TRUE(capturedOutput.find("ITKTestClass (0xabcdef00): ITK Debug") != std::string::npos);
+  EXPECT_TRUE(std::regex_search(capturedOutput, std::regex(expectedErrorRegex)));
+  EXPECT_TRUE(std::regex_search(capturedOutput, std::regex(expectedWarningRegex)));
+  EXPECT_TRUE(std::regex_search(capturedOutput, std::regex(expectedGenericRegex)));
+  std::cout << "Captured: " << capturedOutput << std::endl;
+  EXPECT_TRUE(std::regex_search(capturedOutput, std::regex(expectedDebugRegex))) << "Actual: " << capturedOutput;
 }
 
 
@@ -949,11 +963,22 @@ TEST(Logger, MockLoggerWithContextMethods)
   auto oldLogger = logger.SetAsGlobalITKLogger();
 
   // Now test that ITK's new context functions work through our adapter
-  itk::OutputWindowDisplayErrorText("adapter_test.cpp", 200, "AdapterTestClass", (void *)0x87654321, "Adapter Error");
-  itk::OutputWindowDisplayWarningText(
-    "adapter_test.cpp", 201, "AdapterTestClass", (void *)0x87654321, "Adapter Warning");
+  itk::OutputWindowDisplayErrorText("adapter_test.cpp",
+                                    200,
+                                    "AdapterTestClass",
+                                    reinterpret_cast<void *>(static_cast<uintptr_t>(0x87654321)),
+                                    "Adapter Error");
+  itk::OutputWindowDisplayWarningText("adapter_test.cpp",
+                                      201,
+                                      "AdapterTestClass",
+                                      reinterpret_cast<void *>(static_cast<uintptr_t>(0x87654321)),
+                                      "Adapter Warning");
   itk::OutputWindowDisplayGenericOutputText("adapter_test.cpp", 202, "Adapter Generic");
-  itk::OutputWindowDisplayDebugText("adapter_test.cpp", 203, "AdapterTestClass", (void *)0x87654321, "Adapter Debug");
+  itk::OutputWindowDisplayDebugText("adapter_test.cpp",
+                                    203,
+                                    "AdapterTestClass",
+                                    reinterpret_cast<void *>(static_cast<uintptr_t>(0x87654321)),
+                                    "Adapter Debug");
 
   // Check that the context methods were called and formatted correctly
   std::string expectedError = "ERROR: In adapter_test.cpp, line 200\nAdapterTestClass (0x87654321): Adapter Error\n\n";
@@ -981,27 +1006,35 @@ TEST(Logger, MockLoggerWithRedirectToSimple)
   auto oldLogger = logger.SetAsGlobalITKLogger();
 
   // Now test that ITK's context functions redirect to simple streams
-  itk::OutputWindowDisplayErrorText(
-    "redirect_test.cpp", 100, "RedirectTestClass", (void *)0x12345678, "Redirect Error");
-  itk::OutputWindowDisplayWarningText(
-    "redirect_test.cpp", 101, "RedirectTestClass", (void *)0x12345678, "Redirect Warning");
+  itk::OutputWindowDisplayErrorText("redirect_test.cpp",
+                                    100,
+                                    "RedirectTestClass",
+                                    reinterpret_cast<void *>(static_cast<uintptr_t>(0x12345678)),
+                                    "Redirect Error");
+  itk::OutputWindowDisplayWarningText("redirect_test.cpp",
+                                      101,
+                                      "RedirectTestClass",
+                                      reinterpret_cast<void *>(static_cast<uintptr_t>(0x12345678)),
+                                      "Redirect Warning");
   itk::OutputWindowDisplayGenericOutputText("redirect_test.cpp", 102, "Redirect Generic");
-  itk::OutputWindowDisplayDebugText(
-    "redirect_test.cpp", 103, "RedirectTestClass", (void *)0x12345678, "Redirect Debug");
-
+  itk::OutputWindowDisplayDebugText("redirect_test.cpp",
+                                    103,
+                                    "RedirectTestClass",
+                                    reinterpret_cast<void *>(static_cast<uintptr_t>(0x12345678)),
+                                    "Redirect Debug");
   // Check that the context methods were redirected to simple streams
-  std::string expectedError =
-    "ERROR: In redirect_test.cpp, line 100\nRedirectTestClass (0x12345678): Redirect Error\n\n";
-  std::string expectedWarning =
-    "WARNING: In redirect_test.cpp, line 101\nRedirectTestClass (0x12345678): Redirect Warning\n\n";
-  std::string expectedGeneric = "INFO: In redirect_test.cpp, line 102\nRedirect Generic\n\n";
-  std::string expectedDebug =
-    "DEBUG: In redirect_test.cpp, line 103\nRedirectTestClass (0x12345678): Redirect Debug\n\n";
+  std::string expectedErrorRegex =
+    R"(ERROR: In redirect_test\.cpp, line 100\nRedirectTestClass \((0x)?0*12345678\): Redirect Error\n\n)";
+  std::string expectedWarningRegex =
+    R"(WARNING: In redirect_test\.cpp, line 101\nRedirectTestClass \((0x)?0*12345678\): Redirect Warning\n\n)";
+  std::string expectedGenericRegex = R"(INFO: In redirect_test\.cpp, line 102\nRedirect Generic\n\n)";
+  std::string expectedDebugRegex =
+    R"(DEBUG: In redirect_test\.cpp, line 103\nRedirectTestClass \((0x)?0*12345678\): Redirect Debug\n\n)";
 
-  EXPECT_EQ(logger.m_DisplayErrorText.str(), expectedError);
-  EXPECT_EQ(logger.m_DisplayWarningText.str(), expectedWarning);
-  EXPECT_EQ(logger.m_DisplayGenericOutputText.str(), expectedGeneric);
-  EXPECT_EQ(logger.m_DisplayDebugText.str(), expectedDebug);
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayErrorText.str(), std::regex(expectedErrorRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayWarningText.str(), std::regex(expectedWarningRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayGenericOutputText.str(), std::regex(expectedGenericRegex)));
+  EXPECT_TRUE(std::regex_match(logger.m_DisplayDebugText.str(), std::regex(expectedDebugRegex)));
 
   // Verify context streams are empty when redirecting
   EXPECT_EQ(logger.m_DisplayErrorTextContext.str(), "");
