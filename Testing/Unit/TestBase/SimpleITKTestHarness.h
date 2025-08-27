@@ -128,16 +128,16 @@ public:
   }
 
   void
-  DisplayErrorText(const char * file,
+  DisplayErrorText(const char * message,
+                   const char * file,
                    unsigned int line,
                    const char * className,
-                   const void * objectAddress,
-                   const char * message) override
+                   const void * objectAddress) override
   {
     if (m_RedirectContextToSimple)
     {
       // Use parent class implementation which redirects to simple method
-      LoggerBase::DisplayErrorText(file, line, className, objectAddress, message);
+      LoggerBase::DisplayErrorText(message, file, line, className, objectAddress);
     }
     else
     {
@@ -153,16 +153,16 @@ public:
   }
 
   void
-  DisplayWarningText(const char * file,
+  DisplayWarningText(const char * message,
+                     const char * file,
                      unsigned int line,
                      const char * className,
-                     const void * objectAddress,
-                     const char * message) override
+                     const void * objectAddress) override
   {
     if (m_RedirectContextToSimple)
     {
       // Use parent class implementation which redirects to simple method
-      LoggerBase::DisplayWarningText(file, line, className, objectAddress, message);
+      LoggerBase::DisplayWarningText(message, file, line, className, objectAddress);
     }
     else
     {
@@ -178,12 +178,12 @@ public:
   }
 
   void
-  DisplayGenericOutputText(const char * file, unsigned int line, const char * message) override
+  DisplayGenericOutputText(const char * message, const char * file, unsigned int line) override
   {
     if (m_RedirectContextToSimple)
     {
       // Use parent class implementation which redirects to simple method
-      LoggerBase::DisplayGenericOutputText(file, line, message);
+      LoggerBase::DisplayGenericOutputText(message, file, line);
     }
     else
     {
@@ -198,16 +198,16 @@ public:
   }
 
   void
-  DisplayDebugText(const char * file,
+  DisplayDebugText(const char * message,
+                   const char * file,
                    unsigned int line,
                    const char * className,
-                   const void * objectAddress,
-                   const char * message) override
+                   const void * objectAddress) override
   {
     if (m_RedirectContextToSimple)
     {
       // Use parent class implementation which redirects to simple method
-      LoggerBase::DisplayDebugText(file, line, className, objectAddress, message);
+      LoggerBase::DisplayDebugText(message, file, line, className, objectAddress);
     }
     else
     {
