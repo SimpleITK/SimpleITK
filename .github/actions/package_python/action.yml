@@ -13,6 +13,10 @@ inputs:
     description: "Use limited API"
     required: false
     default: false
+  cmake_osx_architectures:
+    description: "CMAKE_OSX_ARCHITECTURES value for macOS builds"
+    required: false
+    default: ""
   VCVAR_OPTIONS:
     description: "Visual Studio vcvarsall.bat options"
     required: false
@@ -31,6 +35,7 @@ runs:
       if: runner.os == 'macOS'
       env:
         USE_LIMITED_API: ${{ inputs.use_limited_api }}
+        CMAKE_OSX_ARCHITECTURES: ${{ inputs.cmake_osx_architectures }}
       run: |
         ${{ github.action_path }}/scripts/mac_build_python.sh
     - name: Build Python ${{ steps.cpy.outputs.python-version }}

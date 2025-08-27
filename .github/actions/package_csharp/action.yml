@@ -4,6 +4,10 @@ inputs:
   continue-on-error:
     description: "Continue on error"
     required: false
+  cmake_osx_architectures:
+    description: "CMAKE_OSX_ARCHITECTURES value for macOS builds"
+    required: false
+    default: ""
   VCVAR_OPTIONS:
     description: "Visual Studio vcvarsall.bat options"
     required: false
@@ -15,6 +19,8 @@ runs:
       continue-on-error: ${{ inputs.continue-on-error }}
       shell: bash
       if: runner.os == 'macOS'
+      env:
+        CMAKE_OSX_ARCHITECTURES: ${{ inputs.cmake_osx_architectures }}
       run: |
         ${{ github.action_path }}/scripts/mac_build_csharp.sh
     - name: Build CSharp
