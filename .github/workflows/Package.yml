@@ -101,7 +101,7 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
-          - os: mac-arm64
+          - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
