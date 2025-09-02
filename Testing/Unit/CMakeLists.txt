@@ -188,20 +188,19 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
       break()
     endif()
   endforeach()
-  set(filter_json_file ${filter_config_file})
 
   ######
   # Figure out which template file gets used
   ######
 
   # Skip if the config file doesn't exist
-  if(NOT EXISTS ${filter_json_file})
+  if(NOT EXISTS ${filter_config_file})
     message(STATUS "Skipping ${FILTERNAME} - no YAML configuration file found")
     continue()
   endif()
 
   # Get the attribute from the config file that indicates the correct template
-  get_config_path(template_name ${filter_json_file} "template_test_filename")
+  get_config_path(template_name ${filter_config_file} "template_test_filename")
 
   if(template_name)
     set(
@@ -213,7 +212,7 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
       cmd
       ${SimpleITK_Python_EXECUTABLE}
       ${SimpleITK_EXPANSION_SCRIPT}
-      ${filter_json_file}
+      ${filter_config_file}
       -D
       ${SimpleITK_SOURCE_DIR}/Testing/Unit/
       ImageFilterCTestTemplate.cmake.jinja
@@ -238,10 +237,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
         ${OUTPUT_TEST_FILENAME}
       COMMAND
         ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-        ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+        ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
         ${CXX_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
       DEPENDS
-        ${filter_json_file}
+        ${filter_config_file}
         ${CXX_TEMPLATE_FILE}
     )
     add_test(
@@ -266,10 +265,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${LUA_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${LUA_TEMPLATE_FILE}
       )
       set(
@@ -289,10 +288,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${PYTHON_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${PYTHON_TEMPLATE_FILE}
       )
       set(
@@ -312,10 +311,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${TCL_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${TCL_TEMPLATE_FILE}
       )
       set(
@@ -335,10 +334,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${R_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${R_TEMPLATE_FILE}
       )
       set(
@@ -358,10 +357,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${RUBY_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${RUBY_TEMPLATE_FILE}
       )
       set(
@@ -384,10 +383,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${JAVA_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${JAVA_TEMPLATE_FILE}
           ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
       )
@@ -411,10 +410,10 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
           ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_json_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
+          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
           ${CSHARP_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
         DEPENDS
-          ${filter_json_file}
+          ${filter_config_file}
           ${CSHARP_TEMPLATE_FILE}
       )
       set(
