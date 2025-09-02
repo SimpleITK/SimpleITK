@@ -89,9 +89,10 @@ jobs:
       max-parallel: 5
       matrix:
         include:
-          - os: macos-13
+          - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            cmake_osx_architectures: "x86_64"
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
@@ -174,6 +175,7 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
             BUILD_TESTING:BOOL=ON
+            ${{ matrix.cmake_osx_architectures && format('CMAKE_OSX_ARCHITECTURES:STRING={0}', matrix.cmake_osx_architectures) || '' }}
             ${{ matrix.ctest-cache }}
         run: |
           cmake --version
@@ -182,7 +184,7 @@ jobs:
 
       - name: Generate Source and Data Archives
         shell: bash
-        if: matrix.os == 'macos-13'
+        if: matrix.os == 'mac-15'
         run: |
           set -xe
 
@@ -197,31 +199,35 @@ jobs:
         run: |
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
           rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
-
       - name: Package CSharp
+        if: ${{ !matrix.cmake_osx_architectures }}
         uses: ./.github/actions/package_csharp
         with:
           continue-on-error: true
-
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Package Java
+        if: ${{ !matrix.cmake_osx_architectures }}
         uses: ./.github/actions/package_java
         with:
           continue-on-error: true
-
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Package Python 3.11
         uses: ./.github/actions/package_python
         with:
           python-version: 3.11
           use_limited_api: true
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Package Python 3.10
         uses: ./.github/actions/package_python
         with:
           python-version: "3.10"
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
 
       - name: Package Python 3.9
         uses: ./.github/actions/package_python
         with:
           python-version: 3.9
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
