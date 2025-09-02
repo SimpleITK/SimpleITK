@@ -94,12 +94,6 @@ file(
   DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/PythonTests
 )
 
-# Adjust Python to run in the virtualenv
-set(
-  PythonVirtualenvHome
-  ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv
-)
-
 add_executable(
   SimpleITKUnitTestDriver0
   SimpleITKUnitTestDriver.cxx
