@@ -19,6 +19,9 @@ permissions:
   contents: read
   actions: read
 
+env:
+  DEFAULT_PYTHON_VERSION: "3.11"
+
 jobs:
   build:
     # The CMake configure and build commands are platform-agnostic and should work a cross
@@ -132,6 +135,7 @@ jobs:
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             xcode-version: 15.4
+            python-version: "3.10"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
 
@@ -139,6 +143,7 @@ jobs:
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
             xcode-version: 16.2
+            python-version: "3.13"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
@@ -164,11 +169,11 @@ jobs:
           enableCrossOsArchive: true
           restore-keys: |
             external-data-v1-
-      - name: Set up Python 3.11
+      - name: Set up Python ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
         uses: actions/setup-python@v5
         id: cpy
         with:
-          python-version: 3.11
+          python-version: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
       - name: Update Path for shared libraries
         shell: bash
         if: contains( ${{ matrix.ctest-cache }}, 'BUILD_SHARED_LIBS:BOOL=ON' ) && contains( ${{ matrix.os }}, 'windows' )
