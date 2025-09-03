@@ -183,19 +183,6 @@ if(SimpleITK_EXPLICIT_INSTANTIATION)
   #list ( APPEND SimpleITK_LIBRARIES  SimpleITKExplicit )
 endif()
 
-# Be sure to clear these each time
-set(GENERATED_TEST_LIST "" CACHE INTERNAL "")
-set(GENERATED_FILTER_LIST "" CACHE INTERNAL "")
-set(GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "")
-
-# Create cached list of all template components
-file(
-  GLOB _template_components
-  ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/[^.]*.h.in
-  ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/[^.]*.cxx.in
-)
-set(template_components ${_template_components} CACHE INTERNAL "")
-
 #------------------------------------------------------------------------------
 # Variables for use in install rules:
 

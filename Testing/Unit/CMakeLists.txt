@@ -115,12 +115,14 @@ set(CSHARP_TEMPLATE_FILE ImageFilterTestTemplate.cs.jinja)
 #
 # Break all these source files into a bunch of separate executables
 # base on every n files in the list.
-message(STATUS "Generating tests...")
+message(CHECK_START "Configuring test generation...")
 set(_stride 50)
 set(_exec_i 1) # exec 0 is the manual tests
 set(_i 0)
 
-foreach(FILTERNAME ${GENERATED_FILTER_LIST})
+foreach(filter_config_file ${GENERATED_CONFIG_LIST})
+  get_filename_component(FILTERNAME ${filter_config_file} NAME_WE)
+
   if(NOT _i LESS _stride)
     add_executable(
       SimpleITKUnitTestDriver${_exec_i}
@@ -142,34 +144,6 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
     math(EXPR _exec_i "${_exec_i}+1")
     set(GENERATED_TEST_SOURCE "")
     set(_i 0)
-  endif()
-
-  # Only check for YAML configuration files
-  set(
-    CONFIG_EXTENSIONS
-    ".yaml"
-    ".yml"
-  )
-  set(filter_config_file "")
-  foreach(ext ${CONFIG_EXTENSIONS})
-    set(
-      potential_file
-      ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/yaml/${FILTERNAME}${ext}
-    )
-    if(EXISTS ${potential_file})
-      set(filter_config_file ${potential_file})
-      break()
-    endif()
-  endforeach()
-
-  ######
-  # Figure out which template file gets used
-  ######
-
-  # Skip if the config file doesn't exist
-  if(NOT EXISTS ${filter_config_file})
-    message(STATUS "Skipping ${FILTERNAME} - no YAML configuration file found")
-    continue()
   endif()
 
   # Get the attribute from the config file that indicates the correct template
@@ -375,7 +349,7 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
   math(EXPR _i "${_i}+1")
 endforeach()
 
-message(STATUS "Generating tests...Done")
+message(CHECK_PASS "done")
 
 add_executable(
   SimpleITKUnitTestDriver${_exec_i}

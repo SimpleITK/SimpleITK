@@ -87,6 +87,8 @@ set(TEST_HARNESS_DATA_DIRECTORY ${ExternalData_BINARY_ROOT}/Testing/Data)
 # Define the Python template file
 set(PYTHON_TEMPLATE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/)
 
+message(CHECK_START "Configuring python tests")
+
 # Generate conftest_constants.py
 file(
   CONFIGURE
@@ -155,3 +157,4 @@ add_custom_target(
   DEPENDS
     ${WRAPPED_GENERATED_TEST_SOURCE}
 )
+message(CHECK_PASS "done")
