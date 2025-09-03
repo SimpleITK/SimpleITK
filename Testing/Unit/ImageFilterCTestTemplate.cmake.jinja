@@ -27,12 +27,6 @@ sitk_add_lua_test( {{ name }}.{{ test.tag }}
 )
 {% endfor %}
 
-# Python Tests with PyTest
-sitk_add_pytest_test( {{ name }}
-  "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/{{ name }}Test.py"
-)
-
-
 # Ruby Tests
 {% for test in tests %}
 sitk_add_ruby_test( {{ name }}.{{ test.tag }}

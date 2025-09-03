@@ -333,13 +333,12 @@ else()
   include(LegacyPackaging.cmake)
 endif()
 
+if(BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
+
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
   set(WRAP_PYTHON 1)
-
-  add_subdirectory(
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/Python"
-    "${CMAKE_BINARY_DIR}/Testing/Unit"
-  )
 
   if(BUILD_EXAMPLES)
     add_subdirectory(
