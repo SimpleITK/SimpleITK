@@ -81,7 +81,10 @@ sitk_add_pytest_test(
 )
 
 # Test data directory
-set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
+set(
+  TEST_HARNESS_TEMP_DIRECTORY
+  ${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Temporary
+)
 set(TEST_HARNESS_DATA_DIRECTORY ${ExternalData_BINARY_ROOT}/Testing/Data)
 
 # Define the Python template file

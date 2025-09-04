@@ -1,0 +1,6 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+
+[tool.pytest.ini_options]
+python_files = ["*Test.py"]
+testpaths = ["tests"]

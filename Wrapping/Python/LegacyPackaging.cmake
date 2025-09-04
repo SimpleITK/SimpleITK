@@ -33,10 +33,12 @@ add_custom_command(
   COMMENT "Generating setup.py..."
 )
 
-configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml"
+# Use file(GENERATE) instead of configure_file to handle generator expressions
+file(
+  GENERATE
+  OUTPUT
   "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
-  COPYONLY
+  INPUT "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
 )
 
 foreach(_file ${SimpleITK_Py_Files})
