@@ -1,0 +1,19 @@
+# Jinja2 template for CTest driver of Python tests
+
+# Data for External Tests
+ExternalData_Expand_Arguments( SimpleITKData
+  outVar
+{% for test in tests %}
+  {%- for input in test.inputs %}
+  "DATA{${SimpleITK_DATA_ROOT}/{{ input }}}"
+  {% endfor %}
+  {% if test.tolerance -%}
+  "DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_{{ name }}_{{ test.tag }}.nrrd,:}"
+  {%- endif %}
+{% endfor %}
+)
+
+# Python Tests with PyTest
+sitk_add_pytest_test( {{ name }}
+  "${CMAKE_CURRENT_BINARY_DIR}/{{ name }}Test.py"
+)

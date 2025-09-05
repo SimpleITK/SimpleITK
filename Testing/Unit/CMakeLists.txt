@@ -68,31 +68,12 @@ configure_file(
 )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CTest)
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
-
-# Generate conftest_constants.py
-file(
-  CONFIGURE
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/PythonTests/conftest_constants.py
-  CONTENT
-    [[
-TEST_HARNESS_DATA_DIRECTORY = "@TEST_HARNESS_DATA_DIRECTORY@"
-TEST_HARNESS_TEMP_DIRECTORY = "@TEST_HARNESS_TEMP_DIRECTORY@"
-]]
-)
-
-# Copy conftest.py without substitution
-file(
-  COPY
-    ${CMAKE_CURRENT_SOURCE_DIR}/conftest.py
-  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/PythonTests
-)
 
 add_executable(
   SimpleITKUnitTestDriver0
@@ -123,7 +104,6 @@ target_compile_options(
 #
 set(CXX_TEMPLATE_FILE sitkImageFilterTestTemplate.cxx.jinja)
 set(LUA_TEMPLATE_FILE ImageFilterTestTemplate.lua.jinja)
-set(PYTHON_TEMPLATE_FILE ImageFilterTestTemplate.py.jinja)
 set(TCL_TEMPLATE_FILE ImageFilterTestTemplate.tcl.jinja)
 set(R_TEMPLATE_FILE ImageFilterTestTemplate.R.jinja)
 set(RUBY_TEMPLATE_FILE ImageFilterTestTemplate.rb.jinja)
@@ -135,19 +115,14 @@ set(CSHARP_TEMPLATE_FILE ImageFilterTestTemplate.cs.jinja)
 #
 # Break all these source files into a bunch of separate executables
 # base on every n files in the list.
-message(STATUS "Generating tests...")
+message(CHECK_START "Configuring test generation...")
 set(_stride 50)
 set(_exec_i 1) # exec 0 is the manual tests
 set(_i 0)
 
-# Only support YAML configuration files
-set(
-  CONFIG_EXTENSIONS
-  ".yaml"
-  ".yml"
-)
+foreach(filter_config_file ${GENERATED_CONFIG_LIST})
+  get_filename_component(FILTERNAME ${filter_config_file} NAME_WE)
 
-foreach(FILTERNAME ${GENERATED_FILTER_LIST})
   if(NOT _i LESS _stride)
     add_executable(
       SimpleITKUnitTestDriver${_exec_i}
@@ -171,34 +146,6 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
     set(_i 0)
   endif()
 
-  # Only check for YAML configuration files
-  set(
-    CONFIG_EXTENSIONS
-    ".yaml"
-    ".yml"
-  )
-  set(filter_config_file "")
-  foreach(ext ${CONFIG_EXTENSIONS})
-    set(
-      potential_file
-      ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/yaml/${FILTERNAME}${ext}
-    )
-    if(EXISTS ${potential_file})
-      set(filter_config_file ${potential_file})
-      break()
-    endif()
-  endforeach()
-
-  ######
-  # Figure out which template file gets used
-  ######
-
-  # Skip if the config file doesn't exist
-  if(NOT EXISTS ${filter_config_file})
-    message(STATUS "Skipping ${FILTERNAME} - no YAML configuration file found")
-    continue()
-  endif()
-
   # Get the attribute from the config file that indicates the correct template
   get_config_path(template_name ${filter_config_file} "template_test_filename")
 
@@ -207,7 +154,6 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
       OUTPUT_TEST_FILENAME
       "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake"
     )
-    file(REMOVE "${OUTPUT_TEST_FILENAME}")
     set(
       cmd
       ${SimpleITK_Python_EXECUTABLE}
@@ -270,29 +216,6 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
         DEPENDS
           ${filter_config_file}
           ${LUA_TEMPLATE_FILE}
-      )
-      set(
-        WRAPPED_GENERATED_TEST_SOURCE
-        ${WRAPPED_GENERATED_TEST_SOURCE}
-        ${OUTPUT_TEST_FILENAME}
-      )
-    endif()
-
-    if(WRAP_PYTHON)
-      set(
-        OUTPUT_TEST_FILENAME
-        "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}Test.py"
-      )
-      add_custom_command(
-        OUTPUT
-          "${OUTPUT_TEST_FILENAME}"
-        COMMAND
-          ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-          ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${PYTHON_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
-        DEPENDS
-          ${filter_config_file}
-          ${PYTHON_TEMPLATE_FILE}
       )
       set(
         WRAPPED_GENERATED_TEST_SOURCE
@@ -426,7 +349,7 @@ foreach(FILTERNAME ${GENERATED_FILTER_LIST})
   math(EXPR _i "${_i}+1")
 endforeach()
 
-message(STATUS "Generating tests...Done")
+message(CHECK_PASS "done")
 
 add_executable(
   SimpleITKUnitTestDriver${_exec_i}
@@ -553,7 +476,6 @@ ExternalData_Expand_Arguments(
   DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
 )
 
-add_subdirectory(Python)
 add_subdirectory(R)
 add_subdirectory(Java)
 add_subdirectory(CSharp)

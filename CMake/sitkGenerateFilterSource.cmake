@@ -1,3 +1,4 @@
+include_guard(GLOBAL)
 include("sitkCheckPythonModuleVersion")
 
 # Find a Python executable for code generation
@@ -73,6 +74,9 @@ set(
   "Python script used to expand templates."
   FORCE
 )
+
+# clear cache variable _SITK_JINJA_FILES
+unset(_SITK_JINJA_FILES CACHE)
 
 # Sets "out_var" variable name to the value in the config path specified
 # to the yaml file name. If an error is encountered than the variable
@@ -150,23 +154,49 @@ macro(get_dependent_template_components out_var_name config_file input_dir)
 endmacro()
 
 ###############################################################################
+# Internal function to get jinja include directory
+#
+function(_sitk_get_jinja_include_dir out_var)
+  set(
+    ${out_var}
+    "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/templates"
+    PARENT_SCOPE
+  )
+endfunction()
+
+###############################################################################
+# Internal function to get jinja template dependencies (cached)
+#
+function(_sitk_get_jinja_dependencies out_var)
+  # Check if we've already cached the jinja files
+  if(NOT DEFINED CACHE{_SITK_JINJA_FILES})
+    _sitk_get_jinja_include_dir(_sitk_jinja_include_dir)
+    file(GLOB_RECURSE _sitk_jinja_files "${_sitk_jinja_include_dir}/*.jinja")
+    set(
+      _SITK_JINJA_FILES
+      "${_sitk_jinja_files}"
+      CACHE INTERNAL
+      "Cached list of jinja template files"
+    )
+  endif()
+  set(${out_var} "${_SITK_JINJA_FILES}" PARENT_SCOPE)
+endfunction()
+
+###############################################################################
 # This macro expands the .h and .cxx files for a given input template
 #
-function(expand_template FILENAME input_dir output_dir library_name)
-  # Set common variables
-  set(
-    jinja_include_dir
-    ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/templates
-  )
+function(expand_template input_config_file input_dir output_dir library_name)
+  get_filename_component(FILENAME ${input_config_file} NAME_WE)
+
+  # Get jinja template dependencies and include directory
+  _sitk_get_jinja_include_dir(_sitk_jinja_include_dir)
+  _sitk_get_jinja_dependencies(_sitk_jinja_files)
+
   set(output_h "${output_dir}/include/sitk${FILENAME}.h")
   set(output_cxx "${output_dir}/src/sitk${FILENAME}.cxx")
 
   # Check if YAML file exists
-  if(EXISTS ${input_dir}/yaml/${FILENAME}.yaml)
-    set(input_config_file ${input_dir}/yaml/${FILENAME}.yaml)
-  elseif(EXISTS ${input_dir}/yaml/${FILENAME}.yml)
-    set(input_config_file ${input_dir}/yaml/${FILENAME}.yml)
-  else()
+  if(NOT EXISTS ${input_config_file})
     message(WARNING "No YAML configuration file found for ${FILENAME}")
     return()
   endif()
@@ -174,48 +204,8 @@ function(expand_template FILENAME input_dir output_dir library_name)
   set(template_file_h ${input_dir}/templates/sitkImageFilterTemplate.h.in)
   set(template_file_cxx ${input_dir}/templates/sitkImageFilterTemplate.cxx.in)
 
-  get_config_path( itk_module ${input_config_file} itk_module)
-
-  list(FIND ITK_MODULES_ENABLED "${itk_module}" _index)
-
-  if("${itk_module}" STREQUAL "")
-    message(WARNING "Missing \"itk_module\" field in ${input_config_file}")
-  elseif(NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
-    # required module is not enabled, don't process
-    return()
-  endif()
-
   # Get the list of template component files for this template
   get_dependent_template_components(template_deps ${input_config_file} ${input_dir})
-
-  # Make a global list of ImageFilter template filters
-  set(
-    IMAGE_FILTER_LIST
-    ${IMAGE_FILTER_LIST}
-    ${FILENAME}
-    CACHE INTERNAL
-    ""
-  )
-
-  # validate YAML config files if requirements available
-  if(SimpleITK_Python_JSONSCHEMA_VERSION)
-    set(
-      JSON_SCHEMA_FILE
-      "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/simpleitk_filter_description.schema.json"
-    )
-
-    set(
-      JSON_VALIDATE_COMMAND
-      COMMAND
-      "${SimpleITK_Python_EXECUTABLE}"
-      "${SimpleITK_SOURCE_DIR}/Utilities/JSON/ConfigValidate.py"
-      "${JSON_SCHEMA_FILE}"
-      "${input_config_file}"
-    )
-  endif()
-
-  # glob on jinja files in ${jinja_include_dir}
-  file(GLOB_RECURSE jinja_files "${jinja_include_dir}/*.jinja")
 
   # header
   add_custom_command(
@@ -223,15 +213,14 @@ function(expand_template FILENAME input_dir output_dir library_name)
       "${output_h}"
       ${JSON_VALIDATE_COMMAND}
     COMMAND
-      ${CMAKE_COMMAND} -E remove -f ${output_h}
-    COMMAND
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-      ${input_config_file} -D ${input_dir}/templates -D ${jinja_include_dir}
-      sitk${template_code_filename}Template.h.jinja ${output_h}
+      ${input_config_file} -D ${input_dir}/templates -D
+      ${_sitk_jinja_include_dir} sitk${template_code_filename}Template.h.jinja
+      ${output_h}
     DEPENDS
       ${input_config_file}
       ${template_deps}
-      ${jinja_files}
+      ${_sitk_jinja_files}
       ${input_dir}/templates/sitk${template_code_filename}Template.h.jinja
   )
 
@@ -240,15 +229,14 @@ function(expand_template FILENAME input_dir output_dir library_name)
     OUTPUT
       "${output_cxx}"
     COMMAND
-      ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-    COMMAND
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
-      ${input_config_file} -D ${input_dir}/templates -D ${jinja_include_dir}
-      sitk${template_code_filename}Template.cxx.jinja ${output_cxx}
+      ${input_config_file} -D ${input_dir}/templates -D
+      ${_sitk_jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja
+      ${output_cxx}
     DEPENDS
       ${input_config_file}
       ${template_deps}
-      ${jinja_files}
+      ${_sitk_jinja_files}
       ${input_dir}/templates/sitk${template_code_filename}Template.cxx.jinja
   )
 
@@ -268,19 +256,98 @@ function(expand_template FILENAME input_dir output_dir library_name)
     ""
   )
 
+  get_config_path( itk_module ${input_config_file} itk_module)
   if(NOT "${itk_module}" STREQUAL "")
     cache_list_append(${library_name}GeneratedSource_${itk_module}  ${output_cxx})
   endif()
-
-  # Make the list visible at the global scope
-  set(
-    GENERATED_FILTER_LIST
-    ${GENERATED_FILTER_LIST}
-    ${FILENAME}
-    CACHE INTERNAL
-    ""
-  )
 endfunction()
+
+###############################################################################
+# Macro: generate_filter_list
+#
+# Description:
+#   This macro is used to generate the list of usage configuration files for the project.
+#   If a filter configuration file exists in repository but the ITK module is not enabled it will not be in the output list.
+#
+# Usage:
+#   generate_filter_list()
+#
+# Arguments:
+#   None.
+#
+# Outputs:
+#   Sets GENERATED_CONFIG_LIST as a cache variable.
+#
+macro(generate_filter_list)
+  set(GENERATED_CONFIG_LIST "" CACHE INTERNAL "")
+
+  message(CHECK_START "Processing configuration files")
+
+  set(generated_code_input_path ${SimpleITK_SOURCE_DIR}/Code/BasicFilters)
+
+  set(
+    JSON_SCHEMA_FILE
+    "${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/simpleitk_filter_description.schema.json"
+  )
+
+  # Glob all yaml files in the current directory
+  file(
+    GLOB yaml_config_files
+    ${generated_code_input_path}/yaml/[a-zA-Z]*.yaml
+    ${generated_code_input_path}/yaml/[a-zA-Z]*.yml
+  )
+
+  # Use only YAML config files
+  set(config_files ${yaml_config_files})
+
+  # Loop through config files and expand each one
+  foreach(input_config_file ${config_files})
+    get_config_path( itk_module ${input_config_file} itk_module)
+
+    list(FIND ITK_MODULES_ENABLED "${itk_module}" _index)
+    if("${itk_module}" STREQUAL "")
+      message(WARNING "Missing \"itk_module\" field in ${input_config_file}")
+    elseif(NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
+      # required module is not enabled, don't process
+    else()
+      # validate YAML config files if requirements available
+      if(SimpleITK_Python_JSONSCHEMA_VERSION AND 0)
+        set(
+          VALIDATE_COMMAND
+          "${SimpleITK_Python_EXECUTABLE}"
+          "${SimpleITK_SOURCE_DIR}/Utilities/JSON/ConfigValidate.py"
+          "${JSON_SCHEMA_FILE}"
+          "${input_config_file}"
+        )
+
+        execute_process(
+          COMMAND
+            ${VALIDATE_COMMAND}
+          RESULT_VARIABLE failed
+          ERROR_VARIABLE error
+        )
+        if(failed)
+          message(
+            SEND_ERROR
+            "Faild to validate filter configuration file ${input_config_file}\n${error}"
+          )
+        endif()
+      endif()
+
+      get_filename_component(FILENAME ${input_config_file} NAME_WE)
+      # Make the list visible at the global scope
+      set(
+        GENERATED_CONFIG_LIST
+        ${GENERATED_CONFIG_LIST}
+        ${input_config_file}
+        CACHE INTERNAL
+        ""
+      )
+    endif()
+  endforeach()
+
+  message(CHECK_PASS "done")
+endmacro(generate_filter_list)
 
 ###############################################################################
 # Macro to do all code generation for a given directory
@@ -290,8 +357,8 @@ macro(generate_filter_source)
   get_filename_component(directory_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
   # Clear out the GeneratedSource list in the cache
-  set(SimpleITK${directory_name}GeneratedSource "" CACHE INTERNAL "")
-  set(SimpleITK${directory_name}GeneratedHeader "" CACHE INTERNAL "")
+  unset(SimpleITK${directory_name}GeneratedSource CACHE)
+  unset(SimpleITK${directory_name}GeneratedHeader CACHE)
   get_cmake_property(_varNames VARIABLES)
   foreach(_varName ${_varNames})
     if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
@@ -307,37 +374,16 @@ macro(generate_filter_source)
   set(generated_code_input_path ${CMAKE_CURRENT_SOURCE_DIR})
   set(generated_code_output_path ${SimpleITK_BINARY_DIR}/Code/${directory_name})
 
-  # Make sure include and src directories exist
-  if(NOT EXISTS ${generated_code_output_path}/include)
-    file(MAKE_DIRECTORY ${generated_code_output_path}/include)
-  endif()
-  if(NOT EXISTS ${generated_code_output_path}/src)
-    file(MAKE_DIRECTORY ${generated_code_output_path}/src)
-  endif()
-
-  message(STATUS "Processing configuration files...")
-
-  # Glob all yaml files in the current directory
-  file(
-    GLOB yaml_config_files
-    ${generated_code_input_path}/yaml/[a-zA-Z]*.yaml
-    ${generated_code_input_path}/yaml/[a-zA-Z]*.yml
-  )
-
-  # Use only YAML config files
-  set(config_files ${yaml_config_files})
+  message(CHECK_START "Configuring C++ file generation")
 
   # Loop through config files and expand each one
-  foreach(f ${config_files})
-    get_filename_component(class ${f} NAME_WE)
-    expand_template( ${class}
+  foreach(f ${GENERATED_CONFIG_LIST})
+    expand_template( ${f}
                       ${generated_code_input_path}
                       ${generated_code_output_path}
                       SimpleITK${directory_name}
     )
   endforeach()
-
-  message(STATUS "Processing configuration files...done")
 
   ######
   # Make target for generated source and headers
@@ -374,23 +420,33 @@ macro(generate_filter_source)
     ${CMAKE_CURRENT_BINARY_DIR}/CMakeTmp/include/SimpleITK${directory_name}GeneratedHeaders.i
   )
 
-  file(WRITE ${generated_headers_i} "")
+  #delete tmp files
+  file(
+    REMOVE
+    "${tmp_generated_headers_h}"
+    "${tmp_generated_headers_i}"
+  )
 
   # Add ifndefs
   file(
     WRITE
     "${tmp_generated_headers_h}"
     "#ifndef SimpleITK${directory_name}GeneratedHeaders_h\n"
-  )
-  file(
-    APPEND
-    "${tmp_generated_headers_h}"
     "#define SimpleITK${directory_name}GeneratedHeaders_h\n"
   )
 
-  foreach(filter ${GENERATED_FILTER_LIST})
-    file(APPEND "${tmp_generated_headers_h}" "#include \"sitk${filter}.h\"\n")
-    file(APPEND "${tmp_generated_headers_i}" "%include \"sitk${filter}.h\"\n")
+  foreach(config_file ${GENERATED_CONFIG_LIST})
+    get_filename_component(filtername ${config_file} NAME_WE)
+    file(
+      APPEND
+      "${tmp_generated_headers_h}"
+      "#include \"sitk${filtername}.h\"\n"
+    )
+    file(
+      APPEND
+      "${tmp_generated_headers_i}"
+      "%include \"sitk${filtername}.h\"\n"
+    )
   endforeach()
 
   file(APPEND "${tmp_generated_headers_h}" "#endif\n")
@@ -406,4 +462,8 @@ macro(generate_filter_source)
     DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
     COMPONENT Development
   )
+  message(CHECK_PASS "done")
 endmacro()
+
+# Process yaml files to produce the GENERATED_CONFIG_LIST cache variable
+generate_filter_list()
