@@ -56,11 +56,11 @@ build_simpleitk() {
 
 build_simpleitk_python() {
 
-    PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
-    PYTHON_INCLUDE_DIR="$( find -L /opt/python/${PYTHON}/include/ -name Python.h -exec dirname {} \; )"
+    Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    Python_INCLUDE_DIR="$( find -L /opt/python/${PYTHON}/include/ -name Python.h -exec dirname {} \; )"
 
     echo ""
-    echo "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}"
+    echo "Python_EXECUTABLE:${Python_EXECUTABLE}"
 
     BLD_PY_DIR="${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}"
     rm -rf  ${BLD_PY_DIR} &&
@@ -79,8 +79,9 @@ build_simpleitk_python() {
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
         -DSimpleITK_PYTHON_EGG:BOOL=OFF \
-        -DPython_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE} \
-        -DPython_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR} \
+        -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE} \
+        -DPython_EXECUTABLE:FILEPATH=${Python_EXECUTABLE} \
+        -DPython_INCLUDE_DIR:PATH=${Python_INCLUDE_DIR} \
         ${SRC_DIR}/Wrapping/Python &&
     make &&
     make dist
@@ -89,6 +90,7 @@ build_simpleitk_python() {
 
 build_simpleitk || exit 1
 
+SimpleITK_Python_EXECUTABLE="${BLD_DIR}/venv/bin/python"
 
 if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-csharp &&
@@ -129,8 +131,8 @@ fi
 if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0 ]]; then
     USE_LIMITED_API=ON
     PYTHON=cp311-cp311
-    PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
-    PLATFORM=$(${PYTHON_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
+    Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    PLATFORM=$(${Python_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
     build_simpleitk_python &&
        ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
          ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
@@ -141,8 +143,8 @@ fi
 
 
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PYTHON_EXECUTABLE=/opt/python/${PYTHON}/bin/python
-    PLATFORM=$(${PYTHON_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
+    Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    PLATFORM=$(${Python_EXECUTABLE} -c "import distutils.util; print(distutils.util.get_platform())")
     build_simpleitk_python &&
         ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
           ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}.log &&
