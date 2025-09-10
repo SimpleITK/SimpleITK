@@ -14,12 +14,17 @@ PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0
 Python_EXECUTABLE=$(python -c "import sys; print(sys.executable)")
 echo $Python_EXECUTABLE
 
-
+SimpleITK_Python_EXECUTABLE=${Python_EXECUTABLE}
+# if COREBINARYDIRECTORY/venv exists use that python
+if [ -f "${COREBINARYDIRECTORY}/venv/Scripts/python.exe" ]; then
+    SimpleITK_Python_EXECUTABLE="${COREBINARYDIRECTORY}/venv/Scripts/python.exe"
+fi
 
 read -r -d '' CTEST_CACHE << EOM || true
 CMAKE_PREFIX_PATH:PATH=${COREBINARYDIRECTORY}
 SWIG_EXECUTABLE:FILEPATH=${COREBINARYDIRECTORY}\swigwin\swig.exe
 Python_EXECUTABLE:FILEPATH=${Python_EXECUTABLE}
+SimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE}
 BUILD_TESTING:BOOL=ON
 BUILD_EXAMPLES:BOOL=ON
 SimpleITK_BUILD_DISTRIBUTE:BOOL=ON

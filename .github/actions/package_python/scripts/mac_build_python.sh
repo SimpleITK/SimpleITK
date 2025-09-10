@@ -11,6 +11,13 @@ which python
 python --version
 PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
 
+Python_EXECUTABLE=$(which python)
+SimpleITK_Python_EXECUTABLE=${Python_EXECUTABLE}
+# if COREBINARYDIRECTORY/venv exists use that python
+if [ -f "${COREBINARYDIRECTORY}/venv/bin/python" ]; then
+    SimpleITK_Python_EXECUTABLE="${COREBINARYDIRECTORY}/venv/bin/python"
+fi
+
 # Detect OS
 OS_NAME=$(uname -s)
 
@@ -48,6 +55,7 @@ SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
 SimpleITK_PYTHON_WHEEL:BOOL=1
 SimpleITK_BUILD_STRIP:BOOL=1
 Python_EXECUTABLE:FILEPATH=$(which python)
+SimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE}
 SimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API}
 EOM
 
