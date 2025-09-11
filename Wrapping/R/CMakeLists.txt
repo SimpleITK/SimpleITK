@@ -248,8 +248,6 @@ add_custom_command(
 )
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
-  set(WRAP_R 1)
-
   add_subdirectory(
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/R"
     "${CMAKE_BINARY_DIR}/Testing/Unit"

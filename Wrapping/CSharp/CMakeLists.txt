@@ -219,8 +219,6 @@ add_dependencies(
 add_subdirectory(dist)
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
-  set(WRAP_CSHARP 1)
-
   add_subdirectory(
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp"
     "${CMAKE_BINARY_DIR}/Testing/Unit"
