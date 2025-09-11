@@ -338,8 +338,6 @@ if(BUILD_TESTING)
 endif()
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
-  set(WRAP_PYTHON 1)
-
   if(BUILD_EXAMPLES)
     add_subdirectory(
       "${SimpleITK_SOURCE_DIR}/Examples"

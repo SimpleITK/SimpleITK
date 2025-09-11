@@ -96,7 +96,7 @@ endfunction()
 # This is a function which set up the environment for executing python examples and tests
 #
 function(sitk_add_python_test name)
-  if(NOT WRAP_PYTHON)
+  if(NOT WRAP_PYTHON AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_Python")
     return()
   endif()
 
@@ -141,7 +141,7 @@ endfunction()
 # This is a function which set up the environment for executing python examples and tests
 #
 function(sitk_add_pytest_test name)
-  if(NOT WRAP_PYTHON)
+  if(NOT WRAP_PYTHON AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_Python")
     return()
   endif()
 
@@ -192,7 +192,7 @@ endfunction()
 # This is a function which set up the enviroment for executing lua examples and tests
 #
 function(sitk_add_lua_test name)
-  if(NOT WRAP_LUA)
+  if(NOT WRAP_LUA AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_Lua")
     return()
   endif()
 
@@ -235,7 +235,7 @@ endfunction()
 # This is a function which set up the enviroment for executing ruby examples and tests
 #
 function(sitk_add_ruby_test name)
-  if(NOT WRAP_RUBY)
+  if(NOT WRAP_RUBY AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_Ruby")
     return()
   endif()
 
@@ -278,7 +278,7 @@ endfunction()
 # This is a function which set up the enviroment for executing TCL examples and tests
 #
 function(sitk_add_tcl_test name)
-  if(NOT WRAP_TCL)
+  if(NOT WRAP_TCL AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_Tcl")
     return()
   endif()
 
@@ -313,7 +313,7 @@ endfunction()
 # This is a function which set up the enviroment for executing JAVA examples and tests
 #
 function(sitk_add_java_test name java_file)
-  if(NOT WRAP_JAVA)
+  if(NOT WRAP_JAVA AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_Java")
     return()
   endif()
 
@@ -383,7 +383,7 @@ endfunction()
 # This is a function which set up the enviroment for executing R examples and tests
 #
 function(sitk_add_r_test name)
-  if(NOT WRAP_R)
+  if(NOT WRAP_R AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_R")
     return()
   endif()
 
@@ -438,7 +438,7 @@ endfunction()
 # enviroment for executing CSharp examples and tests.
 #
 function(sitk_add_csharp_test name csharp_file)
-  if(NOT WRAP_CSHARP)
+  if(NOT WRAP_CSHARP AND NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK_CSharp")
     return()
   endif()
 
