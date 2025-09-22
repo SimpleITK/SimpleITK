@@ -928,6 +928,7 @@ IsBadCharacter(char c)
     case ':':
     case '\"':
     case '\'':
+    case '%':
       return true;
     default:
       return false;
@@ -954,7 +955,7 @@ FormatFileName(const std::string & TempDirectory,
   if (!name.empty())
   {
     std::string n = name;
-    // remove whitespace
+    // remove invalid characters
     n.erase(std::remove_if(n.begin(), n.end(), &IsBadCharacter), n.end());
 
     tmp << n << "-" << pid << "-" << tagID;
@@ -962,8 +963,6 @@ FormatFileName(const std::string & TempDirectory,
   }
   else
   {
-
-
     tmp << "TempFile-" << pid << "-" << tagID;
     TempFile = TempFile + tmp.str() + extension;
   }
