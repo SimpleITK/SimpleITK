@@ -133,13 +133,12 @@ template <typename TType, typename TVectorOfITKVector>
 std::vector<TType> SITKCommon_HIDDEN
 sitkVectorOfITKVectorToSTL(const TVectorOfITKVector & in)
 {
-  using ITKVectorType = typename TVectorOfITKVector::ValueType;
+  using ITKVectorType = typename std::iterator_traits<decltype(std::begin(in))>::value_type;
   std::vector<TType> out;
   out.reserve(in.Size() * ITKVectorType::Dimension);
-  for (unsigned int i = 0; i < in.Size(); ++i)
+  for (const auto & v : in)
   {
-    const std::vector<TType> & temp = sitkITKVectorToSTL<TType>(in[i]);
-    out.insert(out.end(), temp.begin(), temp.end());
+    out.insert(out.end(), v.begin(), v.end());
   }
   return out;
 }
