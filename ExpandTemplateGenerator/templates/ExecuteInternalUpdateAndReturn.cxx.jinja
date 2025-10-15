@@ -3,9 +3,9 @@
 {% set any_active = measurements | selectattr('active') | list | length > 0 %}
 {% if any_active %}
   // release the old filter ( and output data )
-{% for m in measurements -%}
-  {% if m.active -%}
-   this->m_pfGet{{ m.name }} = nullptr;
+{%- for m in measurements -%}
+  {%- if m.active %}
+  this->m_pfGet{{ m.name }} = nullptr;
   {% endif %}
 {%- endfor %}
 
