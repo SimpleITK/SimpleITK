@@ -1,5 +1,5 @@
   std::ostringstream out;
-  out << "itk::simple::{{ name }}\\n";
+  out << "itk::simple::{{ name }}" << std::endl;
 {% for member in members %}
 {%- if not member.no_print %}
   out << "  {{ member.name }}: ";
