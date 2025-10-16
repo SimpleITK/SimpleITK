@@ -57,24 +57,24 @@ public:
 {% include "MemberGetSetDeclarations.h.jinja" %}
 {% include "ClassNameAndPrint.h.jinja" %}
 
-      /** Execute the filter on the input images */
-      Image Execute(const std::vector<Image> &images);
+   /** Execute the filter on the input images */
+   Image Execute(const std::vector<Image> &images);
 {% for inum in range(1, 6) %}
-      Image Execute(const Image& image1{% for jnum in range(2, inum+1) %}, const Image& image{{ jnum }}{% endfor %});
+   Image Execute(const Image& image1{% for jnum in range(2, inum+1) %}, const Image& image{{ jnum }}{% endfor %});
 {% endfor %}
 
 {% include "CustomMethods.h.jinja" %}
 
-    private:
+private:
 
-      /** Setup for member function dispatching */
-      using MemberFunctionType = Image (Self::*)(const std::vector<Image> &);
-      template <class TImageType> Image ExecuteInternal(const std::vector<Image> &images);
+    /** Setup for member function dispatching */
+    using MemberFunctionType = Image (Self::*)(const std::vector<Image> &);
+    template <class TImageType> Image ExecuteInternal(const std::vector<Image> &images);
 
-      {# vector_pixel_types_by_component is not supported for multi image filters #}
-      {% if vector_pixel_types_by_component %}
-      static_assert(false, "vector_pixel_types_by_component must not be set with multi image filters");
-      {% endif %}
+    {# vector_pixel_types_by_component is not supported for multi image filters #}
+    {% if vector_pixel_types_by_component %}
+    static_assert(false, "vector_pixel_types_by_component must not be set with multi image filters");
+    {% endif %}
 
 {% include "MemberFunctionDispatch.h.jinja" %}
 {% include "PrivateMemberDeclarations.h.jinja" %}

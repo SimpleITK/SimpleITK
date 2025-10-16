@@ -49,8 +49,8 @@ namespace itk::simple {
   {# Overloads with member parameters if present #}
   {% if members and members|length > 0 %}
   /** Execute the filter on an image and a constant with the given parameters */
-Image Execute(const Image& image1, {{ constant_type }} constant{{ macros.member_parameters(members, number_of_inputs, name) }});
-Image Execute({{ constant_type }} constant, const Image& image2{{ macros.member_parameters(members, number_of_inputs, name) }});
+  Image Execute(const Image& image1, {{ constant_type }} constant{{ macros.member_parameters(members, number_of_inputs, name) }});
+  Image Execute({{ constant_type }} constant, const Image& image2{{ macros.member_parameters(members, number_of_inputs, name) }});
 {% endif %}
 
 {% include "ExecuteInternalMethod.h.jinja" %}
