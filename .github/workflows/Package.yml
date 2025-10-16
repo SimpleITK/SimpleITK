@@ -89,10 +89,9 @@ jobs:
       max-parallel: 5
       matrix:
         include:
-          - os: macos-15
+          - os: macos-15-intel
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            cmake_osx_architectures: "x86_64"
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
@@ -200,7 +199,7 @@ jobs:
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
           rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
       - name: Package CSharp
-        if: ${{ !matrix.cmake_osx_architectures }}
+        if: runner.os != 'macOS'
         uses: ./.github/actions/package_csharp
         with:
           continue-on-error: true
