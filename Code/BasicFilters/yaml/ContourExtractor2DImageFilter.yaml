@@ -1,0 +1,149 @@
+name: ContourExtractor2DImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::ContourExtractor2DImageFilter<InputImageType>
+custom_register: factory.RegisterMemberFunctions< PixelIDTypeList, 2, 2 > ();
+no_return_image: true
+no_procedure: true
+members:
+- name: ContourValue
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the image intensity value that the contours should follow. This is the equivalent of an iso-value in Marching
+    Squares.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the image intensity value that the contours should follow. This is the equivalent of an iso-value in Marching
+    Squares.
+- name: ReverseContourOrientation
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Control the orientation of the contours with reference to the image gradient. (See class documentation.)
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Control the orientation of the contours with reference to the image gradient. (See class documentation.)
+- name: VertexConnectHighPixels
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Control whether high- or low-valued pixels are vertex-connected. Default is for low-valued pixels to be vertex-connected.
+    (See class documentation.)
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Control whether high- or low-valued pixels are vertex-connected. Default is for low-valued pixels to be vertex-connected.
+    (See class documentation.)
+- name: LabelContours
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Return contours for all distinct labels
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return contours for all distinct labels
+measurements:
+- name: NumberOfCountours
+  type: unsigned int
+  custom_itk_cast: |-
+    m_NumberOfCountours = filter->GetNumberOfOutputs();
+  default: '0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the number of contour paths generated. Multiple contours may be produced because an image can have multiple contours
+    at a given level.
+- name: Contour
+  type: std::vector<double>
+  default: std::vector<double>()
+  active: true
+  no_print: true
+  parameters:
+  - name: n
+    type: unsigned int
+  itk_get: f->GetOutput(n)->GetVertexList()
+  custom_cast: sitkVectorOfITKVectorToSTL<double>(*value)
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the coordinates of the n-th contour path as a flat vector of doubles in the format (x1, y1, x2, y2, ...). The index
+    n should be less than the number of outputs returned by GetNumberOfOutputs().
+tests:
+- tag: default
+  description: Extract contours with default settings
+  settings:
+  - parameter: ContourValue
+    value: '1.0'
+  measurements_results:
+  - name: NumberOfCountours
+    value: 18
+  inputs:
+  - Input/2th_cthead1_distance.nrrd
+- tag: label_mode
+  description: Extract contours in label mode
+  settings:
+  - parameter: LabelContours
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  - parameter: ContourValue
+    value: '0.0'
+  measurements_results:
+  - name: NumberOfCountours
+    value: 216
+  inputs:
+  - Input/2th_cthead1.png
+briefdescription: Computes a list of PolyLineParametricPath objects from the contours in a 2D image.
+detaileddescription: >-
+  Uses the "marching squares" method to compute a the iso-valued contours of the input 2D image for a given intensity value.
+  Multiple outputs may be produced because an image can have multiple contours at a given level, so it is advised to call
+  GetNumberOfIndexedOutputs() and GetOutput(n) to retrieve all of the contours. The contour value to be extracted can be set
+  with SetContourValue(). Image intensities will be linearly interpolated to provide sub-pixel resolution for the output contours.
+
+
+  The marching squares algorithm is a special case of the marching cubes algorithm [73]. A simple explanation is available
+  here: http://users.polytech.unice.fr/~lingrand/MarchingCubes/algo.html
+
+
+  There is an ambiguous case in the marching squares algorithm: if a given 2x2-pixel square has two high-valued and two low-valued
+  pixels, each pair diagonally adjacent. (Note that high-valued and low-valued are with respect to the contour value sought
+  when LabelContours is false. When LabelContours is true, high-valued means the label being traced and low-valued means any
+  other label.) In this case, the default behavior is that the low-valued pixels are connected into the same contour via an
+  isthmus that separates the high-valued pixels into separate contours. To reverse this, call VertexConnectHighPixelsOn().
+  Note that when LabelContours is true, the default behavior will leave all four pixels in separate contours. In this case,
+  VertexConnectHighPixels equal to true can instead create contours that are crossing barbells.
+
+
+  Outputs are not guaranteed to be closed paths: contours which intersect the image edge will be left open. All other paths
+  will be closed. (The closedness of a path can be tested by checking whether the beginning point is the same as the end point.)
+
+
+  Produced paths are oriented. Following the path from beginning to end, image intensity values lower than the contour value
+  are to the left of the path and intensity values greater than the contour value are to the right. In other words, the image
+  gradient at a path segment is (approximately) in the direct of that segment rotated right by 90 degrees, because the image
+  intensity values increase from left-to-right across the segment. This means that the generated contours will circle clockwise
+  around "hills" of above-contour-value intensity, and counter-clockwise around "depressions" of below-contour-value intensity.
+  This convention can be reversed by calling ReverseContourOrientationOn().
+
+
+  By default values are interpreted as intensities relative to a contour value. First calling LabelContoursOn() changes this
+  behavior to instead interpret each value as a label. Boundaries are computed for each label separately and all are returned.
+  The value of LabelContours affects the interpretation of VertexConnectHighPixels; see above.
+
+
+  By default the input image's largest possible region will be processed; call SetRequestedRegion() to process a different
+  region, or ClearRequestedRegion() to revert to the default value. Note that the requested regions are usually set on the
+  output; however since paths have no notion of a "region", this must be set at the filter level.
+
+
+  This class was contributed to the Insight Journal by Zachary Pincus. https://doi.org/10.54294/olkmog
+
+itk_module: ITKPath
+itk_group: Path
+in_place: false
