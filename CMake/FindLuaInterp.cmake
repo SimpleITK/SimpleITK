@@ -39,8 +39,7 @@ if(LUA_EXECUTABLE)
   )
   if(NOT LUA_VERSION_RESULT_VARIABLE)
     string(
-      REGEX
-      MATCH
+      REGEX MATCH
       "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
       LUA_EXECUTABLE_VERSION
       ${LUA_EXECUTABLE_VERSION_STRING}

@@ -106,8 +106,7 @@ macro(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
   set(swig_source_file_fullname "${infile}")
   if(${swig_source_file_path} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}")
     string(
-      REGEX
-      REPLACE
+      REGEX REPLACE
       "^${CMAKE_CURRENT_SOURCE_DIR}"
       ""
       swig_source_file_relative_path
@@ -116,8 +115,7 @@ macro(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
   else(${swig_source_file_path} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}")
     if(${swig_source_file_path} MATCHES "^${CMAKE_CURRENT_BINARY_DIR}")
       string(
-        REGEX
-        REPLACE
+        REGEX REPLACE
         "^${CMAKE_CURRENT_BINARY_DIR}"
         ""
         swig_source_file_relative_path

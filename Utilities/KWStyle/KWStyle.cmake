@@ -42,24 +42,21 @@ if(KWSTYLE_EXECUTABLE)
 
     # now parse the parts of the user given version string into variables
     string(
-      REGEX
-      REPLACE
+      REGEX REPLACE
       "^([0-9]+)\\.[0-9]+\\.[0-9]+"
       "\\1"
       KWSTYLE_MAJOR_VERSION
       "${KWSTYLE_VERSION}"
     )
     string(
-      REGEX
-      REPLACE
+      REGEX REPLACE
       "^[0-9]+\\.([0-9])+\\.[0-9]+"
       "\\1"
       KWSTYLE_MINOR_VERSION
       "${KWSTYLE_VERSION}"
     )
     string(
-      REGEX
-      REPLACE
+      REGEX REPLACE
       "^[0-9]+\\.[0-9]+\\.([0-9]+)"
       "\\1"
       KWSTYLE_PATCH_VERSION

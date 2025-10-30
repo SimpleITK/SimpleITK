@@ -551,8 +551,7 @@ install(
   DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}/
   COMPONENT Development
   FILES_MATCHING
-  PATTERN
-  "*.h"
+  PATTERN "*.h"
 )
 
 install(
