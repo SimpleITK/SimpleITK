@@ -123,8 +123,7 @@ add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
 
 # Get the location of the extension directory
 string(
-  REGEX
-  REPLACE
+  REGEX REPLACE
   "include"
   "jre/lib/ext"
   JAVA_EXTENSION_DIR

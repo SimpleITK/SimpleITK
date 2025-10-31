@@ -35,8 +35,7 @@ add_custom_command(
 
 # Use file(GENERATE) instead of configure_file to handle generator expressions
 file(
-  GENERATE
-  OUTPUT
+  GENERATE OUTPUT
   "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
   INPUT "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
 )

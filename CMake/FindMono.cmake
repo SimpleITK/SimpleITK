@@ -95,8 +95,7 @@ if(WIN32)
     if(csharp_mono_valid)
       # Extract version number (eg. 2.10.2)
       string(
-        REGEX
-        MATCH
+        REGEX MATCH
         "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
         csharp_mono_version_temp
         ${csharp_mono_bin_dir}
@@ -204,8 +203,7 @@ else(UNIX)
         OUTPUT_VARIABLE csharp_mono_version_string
       )
       string(
-        REGEX
-        MATCH
+        REGEX MATCH
         "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
         csharp_mono_version_temp
         ${csharp_mono_version_string}

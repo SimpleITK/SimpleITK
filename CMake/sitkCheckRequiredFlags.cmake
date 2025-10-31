@@ -38,8 +38,7 @@ if(MSVC)
   )
     if(DEFINED ${_varName})
       string(
-        REGEX
-        REPLACE
+        REGEX REPLACE
         "INCREMENTAL(:[a-zA-Z]+)?"
         "INCREMENTAL:NO"
         ${_varName}
