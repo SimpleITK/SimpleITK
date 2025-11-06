@@ -62,7 +62,7 @@ Using unknown versions of pip, setuptools and/or wheel packages/"
     add_dependencies(dist.Python PythonVirtualEnv)
   endif()
   add_dependencies(dist dist.Python)
-elseif()
+else()
   message(
     STATUS
     "Not creating dist.Python target since SimpleITK_FORBID_DOWNLOADS is enabled"
