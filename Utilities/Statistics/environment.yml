@@ -1,11 +1,9 @@
-name: sitk_stats
-
-channels:
-  - conda-forge
+name: github_releases_download_stats
 
 dependencies:
-  - matplotlib
-  - numpy
-  - cartopy
-  - pandas
-  - requests
+  - python=3.12
+  - pip
+  - pip:
+    - requests
+    - pandas
+    - matplotlib
