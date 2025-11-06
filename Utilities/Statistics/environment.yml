@@ -1,9 +1,0 @@
-name: github_releases_download_stats
-
-dependencies:
-  - python=3.12
-  - pip
-  - pip:
-    - requests
-    - pandas
-    - matplotlib
