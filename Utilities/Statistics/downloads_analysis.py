@@ -1,3 +1,13 @@
+
+# /// script
+# requires-python = "==3.12"
+# dependencies = [
+#   "requests",
+#   "pandas",
+#   "matplotlib"
+# ]
+# ///
+
 import argparse
 import pandas as pd
 import re
@@ -12,6 +22,10 @@ This script retrieves release download statistics from github.com/SimpleITK/Simp
 and generates a csv output file "download_counts.csv" and two figures in PDF format,
 bargraphs showing download counts per release categorized by programming language,
 "download_counts_per_language.pdf" and operating system, "download_counts_per_os.pdf".
+
+Usage (without explicitly creating a virtual environment or installing dependencies):
+Run the script using the uv (https://docs.astral.sh/uv/) tool as follows:
+uv run downloads_analysis.py
 """
 
 
