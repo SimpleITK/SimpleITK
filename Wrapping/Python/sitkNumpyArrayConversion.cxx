@@ -32,63 +32,6 @@ extern "C"
 {
 #endif
 
-  /** An internal function that returns a memory-view object to the
-   * SimpleITK Image's buffer (shallow). The correct copy and writing
-   * policies need to be done by the end-user method.
-   */
-  static PyObject *
-  sitk_GetMemoryViewFromImage(PyObject * SWIGUNUSEDPARM(self), PyObject * args)
-  {
-    const void * sitkBufferPtr;
-    Py_ssize_t   len;
-
-    /* Cast over to a sitk Image. */
-    PyObject *    pyImage;
-    void *        voidImage;
-    sitk::Image * sitkImage;
-    int           res = 0;
-
-    PyObject * memoryView = NULL;
-    Py_buffer  pyBuffer;
-    memset(&pyBuffer, 0, sizeof(Py_buffer));
-
-
-    if (!PyArg_ParseTuple(args, "O", &pyImage))
-    {
-      SWIG_fail; // SWIG_fail is a macro that says goto: fail (return NULL)
-    }
-    res = SWIG_ConvertPtr(pyImage, &voidImage, SWIGTYPE_p_itk__simple__Image, 0);
-    if (!SWIG_IsOK(res))
-    {
-      SWIG_exception_fail(SWIG_ArgError(res),
-                          "in method 'GetByteArrayFromImage', argument needs to be of type 'sitk::Image *'");
-    }
-    sitkImage = reinterpret_cast<sitk::Image *>(voidImage);
-
-    if (sitkImage->GetPixelIDValue() == sitk::sitkUnknown)
-    {
-      PyErr_SetString(PyExc_RuntimeError, "Unknown pixel type.");
-      SWIG_fail;
-    }
-    sitkBufferPtr = sitkImage->GetBufferAsVoid();
-
-    len = size_t(sitkImage->GetNumberOfPixels()) * sitkImage->GetSizeOfPixelComponent();
-    len *= sitkImage->GetNumberOfComponentsPerPixel();
-
-    if (PyBuffer_FillInfo(&pyBuffer, NULL, (void *)sitkBufferPtr, len, true, PyBUF_CONTIG_RO) != 0)
-    {
-      SWIG_fail;
-    }
-    memoryView = PyMemoryView_FromBuffer(&pyBuffer);
-
-    PyBuffer_Release(&pyBuffer);
-    return memoryView;
-
-  fail:
-    Py_XDECREF(memoryView);
-    return NULL;
-  }
-
   /** An internal function that performs a deep copy of the image buffer
    * into a python byte array. The byte array can later be converted
    * into a numpy array with the frombuffer method.

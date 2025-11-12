@@ -18,7 +18,6 @@
 
 from pathlib import Path
 from SimpleITK.SimpleITK import *
-from SimpleITK.SimpleITK import _GetMemoryViewFromImage
 from SimpleITK.SimpleITK import _SetImageFromArray
 
 from typing import Iterable, List, Optional, Type, Union, Tuple
@@ -259,31 +258,14 @@ def _get_sitk_vector_pixelid(numpy_array_type: Type["numpy.ndarray"]) -> int:
 def GetArrayViewFromImage(image: Image) -> "numpy.ndarray":
     """Get a NumPy ndarray view of a SimpleITK Image.
 
-    Returns a Numpy ndarray object as a "view" of the SimpleITK's Image buffer. This reduces pixel buffer copies, but
-     requires that the SimpleITK image object is kept around while the buffer is being used.
+    Returns a a read-only view of the image buffer. The behavior of modifying the underlying
+    SimpleITK image while the NumPy array view exists is undefined.
     """
 
     if not HAVE_NUMPY:
         raise ImportError("NumPy not available.")
 
-    pixel_id = image.GetPixelIDValue()
-    assert (
-        pixel_id != sitkUnknown
-    ), "An SimpleITK image of Unknown pixel type should not exists!"
-
-    dtype = _get_numpy_dtype(image)
-
-    shape = image.GetSize()
-    if image.GetNumberOfComponentsPerPixel() > 1:
-        shape = (image.GetNumberOfComponentsPerPixel(),) + shape
-
-    image.MakeUnique()
-
-    image_memory_view = _GetMemoryViewFromImage(image)
-    array_view = numpy.asarray(image_memory_view).view(dtype=dtype)
-    array_view.shape = shape[::-1]
-
-    return array_view
+    return numpy.asarray(image, copy=False)
 
 
 def GetArrayFromImage(image: Image) -> "numpy.ndarray":
@@ -292,11 +274,11 @@ def GetArrayFromImage(image: Image) -> "numpy.ndarray":
     This is a deep copy of the image buffer and is completely safe and without potential side effects.
     """
 
-    # TODO: If the image is already not unique then a second copy may be made before the numpy copy is done.
-    array_view = GetArrayViewFromImage(image)
+    if not HAVE_NUMPY:
+        raise ImportError("NumPy not available.")
 
     # perform deep copy of the image buffer
-    return numpy.array(array_view, copy=True)
+    return numpy.array(image, copy=True)
 
 
 def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> Image:

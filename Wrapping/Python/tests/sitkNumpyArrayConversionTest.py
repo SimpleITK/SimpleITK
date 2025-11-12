@@ -19,6 +19,7 @@
 import pytest
 import numpy as np
 import SimpleITK as sitk
+import SimpleITK._pixel_types as pixel_types
 
 # Test dimensions
 sizeX = 4
@@ -28,10 +29,16 @@ sizeZ = 3
 
 def _check_sitk_to_numpy_type(sitkType, numpyType):
     """Helper to check SimpleITK to numpy type conversion"""
+
     image = sitk.Image((9, 10), sitkType, 1)
     a = sitk.GetArrayFromImage(image)
+    # For vector types, create with 1 component and expect 3D shape
+    # For scalar types, don't pass component count
     assert numpyType == a.dtype, f"Expected numpy type {numpyType}, got {a.dtype}"
-    assert (10, 9) == a.shape, f"Expected shape (10, 9), got {a.shape}"
+    if pixel_types.is_vector(sitkType):
+        assert (10, 9, 1) == a.shape, f"Expected shape (10, 9, 1) for vector type, got {a.shape}"
+    else:
+        assert (10, 9) == a.shape, f"Expected shape (10, 9) for scalar type, got {a.shape}"
 
 
 @pytest.mark.parametrize("sitk_type,numpy_type", [

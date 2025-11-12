@@ -86,7 +86,6 @@ itk::simple::Image* sitk_GetImagePointerFromPyObject(PyObject* pyImage)
 
 %}
 // Numpy array conversion support
-%native(_GetMemoryViewFromImage) PyObject *sitk_GetMemoryViewFromImage( PyObject *self, PyObject *args );
 %native(_SetImageFromArray) PyObject *sitk_SetImageFromArray( PyObject *self, PyObject *args );
 
 // Enable Python classes derived from Command Execute method to be
