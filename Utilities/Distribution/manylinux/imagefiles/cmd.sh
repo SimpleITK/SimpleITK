@@ -2,7 +2,7 @@
 
 set -x
 
-export SRC_DIR="/tmp/SimpleITK"
+export SRC_DIR="${SIMPLEITK_SRC_DIR:-"/tmp/SimpleITK"}"
 export BLD_DIR="/tmp/SimpleITK-build"
 export OUT_DIR="/work/io"
 
@@ -24,9 +24,7 @@ export ExternalData_OBJECT_STORES=${ExternalData_OBJECT_STORES:-/tmp/.ExternalDa
 mkdir -p ${ExternalData_OBJECT_STORES}
 
 
-export PYTHONUSERBASE=${PYTHONUSERBASE:-/tmp/.pylocal}
-mkdir -p ${PYTHONUSERBASE}
-export PATH=${PATH}:/tmp/.pylocal/bin
+export HOME=/tmp
 
 function build_simpleitk {
 
