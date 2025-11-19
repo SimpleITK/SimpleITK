@@ -213,6 +213,122 @@
 
 
         %pythoncode %{
+        def __buffer__(self, flags=None, /) -> memoryview:
+          """
+          Provide a buffer interface to the image data according to PEP 688.
+
+          This method implements the Python-level buffer protocol as specified
+          in PEP 688.
+
+          The Python PEP 688 creates a strong reference to the returned
+          memoryview, and the self object. The returned memoryview does not
+          contain a strong reference to the Image or another object. Directly
+          calling this method may result in undefined behavior due to dangling
+          references.
+
+          It is a programming error to modify the image while an exported
+          memoryview exists, and may result in undefined behavior.
+
+          Parameters:
+          -----------
+          flags : int, optional
+              Buffer protocol flags indicating what features are requested.
+              Uses constants from inspect.BufferFlags (Python 3.12+).
+              Defaults to BufferFlags.FULL_RO if not provided.
+
+          Returns:
+          --------
+          memoryview
+              A memoryview object providing access to the image data.
+
+          Raises:
+          -------
+          BufferError
+              If the requested buffer configuration is not supported.
+          """
+
+          # Set default flags if None provided (PEP 688 compliance)
+          if flags is None:
+              from inspect import BufferFlags
+              flags = BufferFlags.FULL_RO
+
+          image_buffer = _SimpleITK.ImageBuffer(self)
+
+          return image_buffer.get_weak_memoryview(flags)
+
+
+        @property
+        def __array_interface__(self):
+          """
+          Provide a NumPy-compatible array interface to the image data.
+
+          This property implements the legacy NumPy array interface protocol,
+          which is used by NumPy's asarray() and array() functions to create
+          arrays from objects.
+
+          MEMORY MANAGEMENT: The returned memoryview indirectly holds a strong reference to self (Image).
+
+          It is a programming error to modify the image while the array interface
+          is being used, and may result in undefined behavior.
+
+          Returns:
+          --------
+          dict
+              A dictionary with keys 'version', 'shape', 'typestr', and 'data'
+              conforming to the NumPy array interface specification. The 'data'
+              field contains a memoryview that holds a strong reference to the
+              source Image via an ImageBuffer object.
+
+          Raises:
+          -------
+          TypeError
+              If the image pixel type is not compatible with the array interface.
+          """
+          _sitk_typestr = {
+              sitkUInt8: '|u1',
+              sitkUInt16: '|u2',
+              sitkUInt32: '|u4',
+              sitkUInt64: '|u8',
+              sitkInt8: '|i1',
+              sitkInt16: '|i2',
+              sitkInt32: '|i4',
+              sitkInt64: '|i8',
+              sitkFloat32: '|f4',
+              sitkFloat64: '|f8',
+              sitkComplexFloat32: '|c8',
+              sitkComplexFloat64: '|c16',
+              sitkVectorUInt8: '|u1',
+              sitkVectorInt8: '|i1',
+              sitkVectorUInt16: '|u2',
+              sitkVectorInt16: '|i2',
+              sitkVectorUInt32: '|u4',
+              sitkVectorInt32: '|i4',
+              sitkVectorUInt64: '|u8',
+              sitkVectorInt64: '|i8',
+              sitkVectorFloat32: '|f4',
+              sitkVectorFloat64: '|f8'
+          }
+          sitk_pixel_id = self.GetPixelIDValue()
+
+          typestrt = _sitk_typestr.get(sitk_pixel_id, None)
+
+          if typestrt is None:
+            raise TypeError("The SimpleITK image pixel type is not compatible with the array interface")
+
+          shape = self.GetSize()
+          if sitk_pixel_id in { sitkVectorUInt8, sitkVectorInt8, sitkVectorUInt16, sitkVectorInt16,
+                               sitkVectorUInt32, sitkVectorInt32, sitkVectorUInt64, sitkVectorInt64,
+                               sitkVectorFloat32, sitkVectorFloat64 }:
+            shape = (self.GetNumberOfComponentsPerPixel(),) + shape
+
+          # NOTE: the construction of the memoryview from the ImageBuffer object, creates a dependency of the returned memoryview on the ImageBuffer object
+
+          return {
+              'version': 3,
+              'shape': shape[::-1], # reverse for row-major order
+              'typestr': typestrt,
+              'data': memoryview(_SimpleITK.ImageBuffer(self))
+          }
 
         def __copy__(self):
           """Create a SimpleITK shallow copy, where the internal image share is shared with copy on write implementation."""
@@ -243,7 +359,7 @@
           t = int(self.GetPixelIDValue())
           ncomponents = int(self.GetNumberOfComponentsPerPixel())
 
-          mv = _GetMemoryViewFromImage(self)
+          ib = _SimpleITK.ImageBuffer(self) # Python >=3.12 is required for PickleBuffer(self)
           origin = tuple(self.GetOrigin())
           spacing = tuple(self.GetSpacing())
           direction = tuple(self.GetDirection())
@@ -258,9 +374,9 @@
                 import pickle5 as pickle
               except ImportError:
                 raise ImportError("Pickle protocol 5 requires the pickle5 module for Python 3.6, 3.7")
-            P = (version, pickle.PickleBuffer(mv), origin, spacing, direction, metadata)
+            P = (version, pickle.PickleBuffer(ib), origin, spacing, direction, metadata)
           else:
-            P = (version, mv.tobytes(), origin, spacing, direction, metadata)
+            P = (version, bytes(ib), origin, spacing, direction, metadata)
 
           return self.__class__, (size, t, ncomponents), P
 
