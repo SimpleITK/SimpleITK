@@ -94,7 +94,8 @@ set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkPathType.i)
 SWIG_add_module ( SimpleITK python
   SimpleITK.i
-  sitkPyCommand.cxx )
+  sitkPyCommand.cxx
+  sitkImageBuffer.cxx )
 set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 target_link_libraries( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 if(NOT Python_DEBUG_LIBRARY AND MSVC)

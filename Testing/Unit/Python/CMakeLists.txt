@@ -14,6 +14,9 @@ sitk_add_python_test( Test.TransformTests
 sitk_add_python_test( Test.ImageIndexing
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageIndexingTest.py" )
 
+sitk_add_python_test( Test.ImageBuffer
+  "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageBufferTest.py" )
+
 sitk_add_python_test( Test.IOTest
   "${CMAKE_CURRENT_SOURCE_DIR}/IOTest.py"
   "${SimpleITK_TEST_OUTPUT_DIR}")
