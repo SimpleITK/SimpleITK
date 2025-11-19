@@ -297,6 +297,7 @@ set(
   SimpleITK_Py_Files
   "__init__.py"
   "extra.py"
+  "_pixel_types.py"
   "py.typed"
 )
 
