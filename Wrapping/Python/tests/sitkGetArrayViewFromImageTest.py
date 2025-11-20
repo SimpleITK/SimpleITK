@@ -20,6 +20,7 @@ import timeit
 import pytest
 import numpy as np
 import SimpleITK as sitk
+import SimpleITK._pixel_types as pixel_types
 
 # Test dimensions
 sizeX = 4
@@ -40,7 +41,10 @@ def check_sitk_to_numpy_type(sitkType: int, numpyType: np.dtype) -> None:
     image = sitk.Image((9, 10), sitkType, 1)
     a = sitk.GetArrayViewFromImage(image)
     assert numpyType == a.dtype, f"Expected numpy type {numpyType}, got {a.dtype}"
-    assert (10, 9) == a.shape, f"Expected shape (10, 9), got {a.shape}"
+    if pixel_types.is_vector(sitkType):
+        assert (10, 9, 1) == a.shape, f"Expected shape (10, 9, 1), got {a.shape}"
+    else:
+        assert (10, 9) == a.shape, f"Expected shape (10, 9), got {a.shape}"
 
 
 @pytest.mark.parametrize(

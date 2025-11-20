@@ -151,6 +151,7 @@ set(
 swig_add_module( SimpleITK python
   SimpleITK.i
   sitkPyCommand.cxx
+  sitkImageBuffer.cxx
 )
 set(
   SWIG_MODULE_SimpleITKPython_TARGET_NAME
@@ -296,6 +297,7 @@ set(
   SimpleITK_Py_Files
   "__init__.py"
   "extra.py"
+  "_pixel_types.py"
   "py.typed"
 )
 
