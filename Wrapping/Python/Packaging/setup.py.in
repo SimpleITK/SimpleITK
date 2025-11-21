@@ -4,86 +4,47 @@ import os
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 
-import re
-import os.path as osp
 
-with open(os.path.join("SimpleITK", "_version.py")) as fp:
-    exec(fp.read())
-
-with open('Readme.md', encoding='utf-8') as f:
-    long_description = f.read()
-
-def is_cmake_true(value: str)->bool:
-    """ Check if a string value is a CMake true value. """
+def is_cmake_true(value: str) -> bool:
+    """Check if a string value is a CMake true value."""
     return value.upper() in ("1", "ON", "TRUE", "YES", "Y")
 
+
 def get_py_limited_api_arg() -> dict:
+    """Get py_limited_api argument if enabled by CMake."""
     if is_cmake_true("@SimpleITK_PYTHON_USE_LIMITED_API@"):
         return {"py_limited_api": True}
     return {}
 
+
 class build_ext(_build_ext):
-    """ Override standard command class to build an extension, to
+    """Override standard command class to build an extension, to
     simply copy an existing compiled library into the packaging
     directory structure.
     """
 
     def build_extension(self, ext):
-        """
-        """
+        """Copy pre-compiled library into package structure."""
         from distutils.errors import DistutilsSetupError
 
         sources = ext.sources
         if sources is None or not len(sources) == 1:
-            raise DistutilsSetupError( "Expected only one compiled library." )
-
-        expected_ext_filename = os.path.split(self.get_ext_filename(ext.name))[1]
+            raise DistutilsSetupError("Expected only one compiled library.")
 
         ext_file = self.get_ext_fullpath(ext.name)
-
-        abs_sources = list( map(os.path.abspath, sources) )
+        abs_sources = list(map(os.path.abspath, sources))
 
         self.copy_file(abs_sources[0], ext_file)
 
 
+# Minimal setup.py - all metadata is in pyproject.toml
 setup(
-    name = 'simpleitk',
-    version = __version__,
-    author = 'Insight Software Consortium',
-    author_email = 'insight-users@itk.org',
-    ext_modules=[Extension('SimpleITK._SimpleITK', [r'SimpleITK/@SimpleITK_BINARY_MODULE@'],
-            **get_py_limited_api_arg())
-            ],
-    packages= ['SimpleITK'],
-    package_data = {"SimpleITK": ["py.typed"]},
-    platforms = [],
-    description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
-    long_description = long_description,
-    long_description_content_type='text/markdown',
-    classifiers=[
-        "License :: OSI Approved :: Apache Software License",
-        "Programming Language :: Python",
-        "Programming Language :: C++",
-        "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: Education",
-        "Intended Audience :: Healthcare Industry",
-        "Intended Audience :: Science/Research",
-        "Topic :: Scientific/Engineering",
-        "Topic :: Scientific/Engineering :: Medical Science Apps.",
-        "Topic :: Scientific/Engineering :: Information Analysis",
-        "Topic :: Software Development :: Libraries",
-        "Operating System :: Microsoft :: Windows",
-        "Operating System :: POSIX",
-        "Operating System :: Unix",
-        "Operating System :: MacOS"
-        ],
-    license='Apache',
-    keywords = 'SimpleITK ITK InsightToolkit segmentation registration',
-    url = r'http://simpleitk.org/',
-    project_urls={
-        "Bug Tracker": "https://github.com/SimpleITK/SimpleITK/issues",
-        "Documentation": "https://simpleitk.readthedocs.io/en/release/",
-        "Source Code": "https://github.com/SimpleITK/SimpleITK",
-    },
-    cmdclass={'build_ext':build_ext}
-    )
+    ext_modules=[
+        Extension(
+            'SimpleITK._SimpleITK',
+            [r'SimpleITK/@SimpleITK_BINARY_MODULE@'],
+            **get_py_limited_api_arg()
+        )
+    ],
+    cmdclass={'build_ext': build_ext}
+)
