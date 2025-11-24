@@ -43,10 +43,8 @@ Upcoming (in person)
 
 Past (in person)
 ++++++++++++++++
-.. admonition:: Canceled by ISBI organizers due to COVID-19
 
-  * International Symposium on Biomedical Imaging (ISBI)2020 Tutorial, Iowa City IA, USA: "SimpleITK: image analysis for all levels of programming expertise" [`git repository <https://github.com/SimpleITK/ISBI2020_TUTORIAL>`__].
-
+* International Symposium on Biomedical Imaging (ISBI)2020 Tutorial, Iowa City IA, USA: "SimpleITK: image analysis for all levels of programming expertise" [`git repository <https://github.com/SimpleITK/ISBI2020_TUTORIAL>`__]. Canceled by ISBI organizers due to COVID-19.
 * IEEE Engineering in Medicine and Biology Conference (EMBC) 2019, Berlin Germany: "SimpleITK: A Tool for Biomedical Image Processing, from Cells to Anatomical Structures" [`git repository <https://github.com/SimpleITK/EMBC2019_WORKSHOP>`__].
 * SPIE Medical Imaging 2019 Course, San Diego CA, USA: "SimpleITK Jupyter Notebooks: Biomedical Image Analysis in Python" [`git repository <https://github.com/SimpleITK/SPIE2019_COURSE>`__].
 * IEEE International Symposium on Biomedical Imaging (ISBI)2018 Tutorial, Washington DC, USA: "Biomedical Image Analysis in Python and R using SimpleITK Jupyter Notebooks" [`git repository <https://github.com/SimpleITK/ISBI2018_TUTORIAL>`__].
