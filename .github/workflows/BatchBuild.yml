@@ -149,11 +149,11 @@ jobs:
               WRAP_JAVA:BOOL=ON
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.sha }}"
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           path: SimpleITK-dashboard
           ref: dashboard
