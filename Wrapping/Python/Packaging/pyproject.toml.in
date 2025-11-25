@@ -1,5 +1,50 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simpleitk"
+dynamic = ["version"]
+authors = [
+    {name = "Insight Software Consortium", email = "insight-users@itk.org"}
+]
+description = "SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation"
+readme = {file = "Readme.md", content-type = "text/markdown"}
+license = {text = "Apache"}
+keywords = ["SimpleITK", "ITK", "InsightToolkit", "segmentation", "registration", "medical imaging", "image processing", "computer vision", "DICOM"]
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: C++",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: MacOS"
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "http://simpleitk.org/"
+"Bug Tracker" = "https://github.com/SimpleITK/SimpleITK/issues"
+Documentation = "https://simpleitk.readthedocs.io/en/release/"
+"Source Code" = "https://github.com/SimpleITK/SimpleITK"
+
+[tool.setuptools]
+packages = ["SimpleITK"]
+
+[tool.setuptools.package-data]
+SimpleITK = ["py.typed"]
+
+[tool.setuptools.dynamic]
+version = {attr = "SimpleITK._version.__version__"}
 
 [tool.pytest.ini_options]
 python_files = ["*Test.py"]
