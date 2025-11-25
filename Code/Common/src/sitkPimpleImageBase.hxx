@@ -436,6 +436,19 @@ public:
     return this->m_Image->GetReferenceCount();
   }
 
+  bool
+  GetContainerManageMemory() const override
+  {
+    if constexpr (IsLabel<TImageType>::Value)
+    {
+      return true;
+    }
+    else
+    {
+      return this->m_Image->GetPixelContainer()->GetContainerManageMemory();
+    }
+  }
+
   int8_t
   GetPixelAsInt8(const std::vector<uint32_t> & idx) const override
   {
