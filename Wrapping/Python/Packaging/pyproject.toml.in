@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=77.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -10,10 +10,9 @@ authors = [
 ]
 description = "SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation"
 readme = {file = "Readme.md", content-type = "text/markdown"}
-license = {text = "Apache"}
+license = "Apache-2.0"
 keywords = ["SimpleITK", "ITK", "InsightToolkit", "segmentation", "registration", "medical imaging", "image processing", "computer vision", "DICOM"]
 classifiers = [
-    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python",
     "Programming Language :: C++",
     "Development Status :: 5 - Production/Stable",
