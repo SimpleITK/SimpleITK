@@ -124,6 +124,9 @@ public:
   virtual int
   GetReferenceCountOfImage() const = 0;
 
+  virtual bool
+  GetContainerManageMemory() const = 0;
+
   virtual int8_t
   GetPixelAsInt8(const std::vector<uint32_t> & idx) const = 0;
   virtual uint8_t
