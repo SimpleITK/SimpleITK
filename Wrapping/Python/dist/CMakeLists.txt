@@ -28,22 +28,6 @@ Using unknown versions of pip, setuptools and/or wheel packages/"
     endif()
   endif()
 
-  set(
-    SimpleITK_PYTHON_PLAT_NAME
-    ""
-    CACHE STRING
-    "Optional value passed to setup.py with the '--plat-name' argument"
-  )
-
-  if(NOT "${SimpleITK_PYTHON_PLAT_NAME}" STREQUAL "")
-    set(
-      bdist_commands
-      ${bdist_commands}
-      "--plat-name"
-      "${SimpleITK_PYTHON_PLAT_NAME}"
-    )
-  endif()
-
   add_custom_target(
     dist.Python
     ${PYTHON_COMMAND_PREFIX} ${VIRTUAL_PYTHON_EXECUTABLE} ${bdist_setup}

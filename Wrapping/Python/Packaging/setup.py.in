@@ -17,6 +17,14 @@ def get_py_limited_api_arg() -> dict:
     return {}
 
 
+def get_bdist_wheel_options() -> dict:
+    """Get bdist_wheel options if platform name is configured."""
+    plat_name = "@SimpleITK_PYTHON_PLAT_NAME@"
+    if plat_name:
+        return {"bdist_wheel": {"plat_name": plat_name}}
+    return {}
+
+
 class build_ext(_build_ext):
     """Override standard command class to build an extension, to
     simply copy an existing compiled library into the packaging
@@ -46,5 +54,6 @@ setup(
             **get_py_limited_api_arg()
         )
     ],
-    cmdclass={'build_ext': build_ext}
+    cmdclass={'build_ext': build_ext},
+    options=get_bdist_wheel_options()
 )

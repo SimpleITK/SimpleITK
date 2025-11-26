@@ -18,6 +18,14 @@ if(SimpleITK_DOC_FILES)
   file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/MANIFEST.in" "${MANIFEST_DOCS}")
 endif()
 
+set(
+  SimpleITK_PYTHON_PLAT_NAME
+  ""
+  CACHE STRING
+  "Optional value passed to pip wheel with the '--platform' argument"
+)
+mark_as_advanced(SimpleITK_PYTHON_PLAT_NAME)
+
 # Do file configuration during compilation with generator expressions
 add_custom_command(
   TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
@@ -27,6 +35,7 @@ add_custom_command(
     ${CMAKE_COMMAND}
     "-DSimpleITK_BINARY_MODULE=$<TARGET_FILE_NAME:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>"
     "-DSimpleITK_PYTHON_USE_LIMITED_API=${SimpleITK_PYTHON_USE_LIMITED_API}"
+    "-DSimpleITK_PYTHON_PLAT_NAME=${SimpleITK_PYTHON_PLAT_NAME}"
     "-DCONFIGUREBUILDTIME_filename=${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
     "-DCONFIGUREBUILDTIME_out_filename=${CMAKE_CURRENT_BINARY_DIR}/setup.py" -P
     "${SimpleITK_SOURCE_DIR}/CMake/configure_file_build_time.cmake"
