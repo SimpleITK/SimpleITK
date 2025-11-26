@@ -133,7 +133,7 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
       "install" "--upgrade" "pip"
     COMMAND
       ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip"
-      "install" "wheel" "numpy!=1.24.1,!=1.24.0" "setuptools" "pytest" "."
+      "install" "numpy!=1.24.1,!=1.24.0" "pytest" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
