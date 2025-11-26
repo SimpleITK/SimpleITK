@@ -814,9 +814,9 @@ Xiaodong
 Xsize
 Xuan
 Xue
+YAML
 YY
 Yagers
-YAML
 Yaniv
 Yoo
 Yoshida
@@ -912,6 +912,7 @@ ba
 backlinks
 backrub
 badbit
+bargraphs
 barycenter
 barycenters
 barycentric
@@ -924,6 +925,7 @@ beginpoint
 behaviour
 bellew
 bigcup
+bigquery
 bigwww
 bilinear
 binom
@@ -946,13 +948,13 @@ branchy
 break
 briefdescription
 bspline
+buf
 buildplatform
 buildsystem
 buildsystems
 burton
 bwh
 byteorder
-buf
 cacheline
 callables
 cardinality
@@ -990,6 +992,7 @@ chamfer
 char
 char16_t
 char32_t
+choropleth
 cin
 cindex
 circ
@@ -1003,6 +1006,7 @@ classe
 classitk
 classname
 cli
+clickpy
 clientdata
 clinit
 closedness
@@ -1477,12 +1481,12 @@ issubdtype
 istream
 isub
 isupper
+itemsize
 iterable
 iteratively
 iterators
 iteritems
 itertools
-itemsize
 ith
 itk
 itkDefaultImageToImageMetricTraitsv
@@ -1508,6 +1512,7 @@ jpg
 json
 jsrt
 jupyter
+kaleido
 kd
 keio
 kron
@@ -1659,8 +1664,8 @@ netlib
 neurodegenerative
 neuroimage
 new
-newlines
 newdocumentation
+newlines
 nhdr
 ni
 nia
@@ -1764,6 +1769,7 @@ piecewise
 pixelIDs
 pixeltype
 pixelwise
+plotly
 plt
 pmt
 pn
@@ -1799,6 +1805,7 @@ preprocess
 preprocessed
 preprocessing
 preprocessor
+prereleases
 preselected
 println
 priori
@@ -1814,12 +1821,14 @@ ptr
 ptrdiff
 public
 putback
-pwd
 pv
+pwd
 py
+pycountry
 pydata
 pypa
 pypi
+pypistats
 pyplot
 pyyaml
 qe
@@ -1835,8 +1844,8 @@ rc
 rdbuf
 rdstate
 readme
-readthedocs
 readonly
+readthedocs
 reallocations
 recalibrate
 recoded
@@ -1844,10 +1853,11 @@ recognised
 recomputation
 recursing
 reentrant
+refcount
+regex
 register
 registrator
 regridding
-regex
 reimplement
 reimplemented
 reimplements
@@ -1879,7 +1889,6 @@ rindex
 rint
 rjwagner
 rms
-refcount
 roberto
 rockspec
 roi
@@ -1912,6 +1921,7 @@ searchbox
 seekg
 seekp
 seg
+segfault
 segmentations
 seriesIDs
 setdefault
@@ -2058,6 +2068,7 @@ thresholding
 tif
 timeit
 timepoints
+timestamp
 timestap
 timestep
 tk
@@ -2235,6 +2246,6 @@ yn
 yy
 yyy
 yz
+zorder
 zz
 zzz
-segfault
