@@ -36,6 +36,7 @@ add_custom_command(
     "-DSimpleITK_BINARY_MODULE=$<TARGET_FILE_NAME:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>"
     "-DSimpleITK_PYTHON_USE_LIMITED_API=${SimpleITK_PYTHON_USE_LIMITED_API}"
     "-DSimpleITK_PYTHON_PLAT_NAME=${SimpleITK_PYTHON_PLAT_NAME}"
+    "-DSimpleITK_PYTHON_USE_LIMITED_API=${SimpleITK_PYTHON_USE_LIMITED_API}"
     "-DCONFIGUREBUILDTIME_filename=${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
     "-DCONFIGUREBUILDTIME_out_filename=${CMAKE_CURRENT_BINARY_DIR}/setup.py" -P
     "${SimpleITK_SOURCE_DIR}/CMake/configure_file_build_time.cmake"

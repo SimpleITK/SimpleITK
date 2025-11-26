@@ -19,9 +19,14 @@ def get_py_limited_api_arg() -> dict:
 
 def get_bdist_wheel_options() -> dict:
     """Get bdist_wheel options if platform name is configured."""
+    options = {}
     plat_name = "@SimpleITK_PYTHON_PLAT_NAME@"
     if plat_name:
-        return {"bdist_wheel": {"plat_name": plat_name}}
+        options["plat_name"] = plat_name
+    if is_cmake_true("@SimpleITK_PYTHON_USE_LIMITED_API@"):
+        options["py_limited_api"] = "cp311"
+    if options:
+        return {"bdist_wheel": options}
     return {}
 
 
