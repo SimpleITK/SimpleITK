@@ -1,7 +1,7 @@
 #
 # Packaging
 #
-if(SimpleITK_PYTHON_EGG OR SimpleITK_PYTHON_WHEEL)
+if(SimpleITK_PYTHON_WHEEL)
   if(NOT SimpleITK_PYTHON_USE_VIRTUALENV)
     message(
       STATUS
@@ -12,10 +12,6 @@ Using unknown versions of pip, setuptools and/or wheel packages/"
 
   set(bdist_setup "${SimpleITK_Python_BINARY_DIR}/setup.py")
   set(bdist_commands "")
-
-  if(SimpleITK_PYTHON_EGG)
-    set(bdist_commands "bdist_egg")
-  endif()
 
   if(SimpleITK_PYTHON_WHEEL)
     set(
