@@ -18,6 +18,14 @@ if(SimpleITK_DOC_FILES)
   file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/MANIFEST.in" "${MANIFEST_DOCS}")
 endif()
 
+set(
+  SimpleITK_PYTHON_PLAT_NAME
+  ""
+  CACHE STRING
+  "Optional value passed to pip wheel with the '--platform' argument"
+)
+mark_as_advanced(SimpleITK_PYTHON_PLAT_NAME)
+
 # Do file configuration during compilation with generator expressions
 add_custom_command(
   TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
@@ -26,6 +34,8 @@ add_custom_command(
   COMMAND
     ${CMAKE_COMMAND}
     "-DSimpleITK_BINARY_MODULE=$<TARGET_FILE_NAME:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>"
+    "-DSimpleITK_PYTHON_USE_LIMITED_API=${SimpleITK_PYTHON_USE_LIMITED_API}"
+    "-DSimpleITK_PYTHON_PLAT_NAME=${SimpleITK_PYTHON_PLAT_NAME}"
     "-DSimpleITK_PYTHON_USE_LIMITED_API=${SimpleITK_PYTHON_USE_LIMITED_API}"
     "-DCONFIGUREBUILDTIME_filename=${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
     "-DCONFIGUREBUILDTIME_out_filename=${CMAKE_CURRENT_BINARY_DIR}/setup.py" -P
@@ -124,7 +134,7 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
       "install" "--upgrade" "pip"
     COMMAND
       ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip"
-      "install" "wheel" "numpy!=1.24.1,!=1.24.0" "setuptools" "pytest" "."
+      "install" "numpy!=1.24.1,!=1.24.0" "pytest" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"

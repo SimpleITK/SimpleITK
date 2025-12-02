@@ -1,7 +1,7 @@
 #
 # Packaging
 #
-if(SimpleITK_PYTHON_EGG OR SimpleITK_PYTHON_WHEEL)
+if(SimpleITK_PYTHON_WHEEL)
   if(NOT SimpleITK_PYTHON_USE_VIRTUALENV)
     message(
       STATUS
@@ -10,53 +10,35 @@ Using unknown versions of pip, setuptools and/or wheel packages/"
     )
   endif()
 
-  set(bdist_setup "${SimpleITK_Python_BINARY_DIR}/setup.py")
-  set(bdist_commands "")
-
-  if(SimpleITK_PYTHON_EGG)
-    set(bdist_commands "bdist_egg")
-  endif()
+  set(pip_wheel_commands "")
 
   if(SimpleITK_PYTHON_WHEEL)
     set(
-      bdist_commands
-      ${bdist_commands}
-      "bdist_wheel"
+      pip_wheel_commands
+      "-m"
+      "pip"
+      "wheel"
+      "--no-deps"
+      "--wheel-dir"
+      "dist"
     )
-    if(SimpleITK_PYTHON_USE_LIMITED_API)
-      set(
-        bdist_commands
-        ${bdist_commands}
-        "--py-limited-api=cp311"
-      )
-    endif()
-  endif()
 
-  set(
-    SimpleITK_PYTHON_PLAT_NAME
-    ""
-    CACHE STRING
-    "Optional value passed to setup.py with the '--plat-name' argument"
-  )
-
-  if(NOT "${SimpleITK_PYTHON_PLAT_NAME}" STREQUAL "")
     set(
-      bdist_commands
-      ${bdist_commands}
-      "--plat-name"
-      "${SimpleITK_PYTHON_PLAT_NAME}"
+      pip_wheel_commands
+      ${pip_wheel_commands}
+      "."
+    )
+
+    add_custom_target(
+      dist.Python
+      ${PYTHON_COMMAND_PREFIX} ${VIRTUAL_PYTHON_EXECUTABLE}
+      ${pip_wheel_commands}
+      WORKING_DIRECTORY ${SimpleITK_Python_BINARY_DIR}
+      DEPENDS
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      COMMENT "Creating Python binary distribution"
     )
   endif()
-
-  add_custom_target(
-    dist.Python
-    ${PYTHON_COMMAND_PREFIX} ${VIRTUAL_PYTHON_EXECUTABLE} ${bdist_setup}
-    ${bdist_commands}
-    WORKING_DIRECTORY ${SimpleITK_Python_BINARY_DIR}
-    DEPENDS
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    COMMENT "Creating Python binary distribution"
-  )
 
   if(SimpleITK_PYTHON_USE_VIRTUALENV)
     add_dependencies(dist.Python PythonVirtualEnv)

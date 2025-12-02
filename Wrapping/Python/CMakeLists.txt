@@ -37,12 +37,12 @@ option(
   ON
 )
 mark_as_advanced(SimpleITK_PYTHON_THREADS)
-option(
-  SimpleITK_PYTHON_EGG
-  "Add building of python eggs to the dist target."
-  OFF
-)
-mark_as_advanced(SimpleITK_PYTHON_EGG)
+if(SimpleITK_PYTHON_EGG)
+  message(
+    WARNING
+    "SimpleITK_PYTHON_EGG option is deprecated and no longer used."
+  )
+endif()
 option(
   SimpleITK_PYTHON_WHEEL
   "Add building of python wheels to the dist target."
