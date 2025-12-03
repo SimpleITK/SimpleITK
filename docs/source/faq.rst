@@ -428,8 +428,8 @@ Compilation
 Is my compiler supported?
 -------------------------
 
-SimpleITK uses advanced C++ meta-programming to instantiate ITK's Images
-and Filters. SimpleITK is developed to require the C++11 standard.
+SimpleITK uses modern C++ and template meta-programming to instantiate ITK's Images
+and Filters. SimpleITK is developed to require the C++17 standard.
 
 In practice the list of compilers actively supported are those that are used for continuous
 testing and integration. These can be seen on the `SimpleITK
@@ -437,11 +437,6 @@ dashboard <https://open.cdash.org/index.php?project=SimpleITK>`__. We
 welcome user contributions to the nightly dashboard to expand the list
 of these compilers and contributions to fix additional compilation problems.
 
-Noted Problems
-~~~~~~~~~~~~~~
-
--  Microsoft compilers before Visual Studio 14 (2015) have had memory
-   limitation issues.
 
 
 Are 32-bits architectures supported?

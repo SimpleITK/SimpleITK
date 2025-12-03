@@ -375,15 +375,6 @@ add_custom_target(
     ${WRAPPED_GENERATED_TEST_SOURCE}
 )
 
-if(MSVC_VERSION EQUAL 1700)
-  # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
-  # templates are not deep enough by default. We are not currently
-  # using the GTest features which require tuple, so just disable them
-  # and hope that upstream permanently addresses the problem, without
-  # required more CMake core for compiler issues.
-  add_definitions(-DGTEST_HAS_TR1_TUPLE=0)
-endif()
-
 add_executable(sitkShowTest sitkShowTest.cxx)
 target_link_libraries(
   sitkShowTest
