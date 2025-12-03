@@ -87,7 +87,7 @@ target_include_directories(
 )
 target_link_libraries(
   SimpleITKUnitTestDriver0
-  GTest::GTest
+  GTest::gtest
   SimpleITKUnitTestBase
   ${SimpleITK_LIBRARIES}
   ${ITK_LIBRARIES}
@@ -131,7 +131,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
     )
     target_link_libraries(
       SimpleITKUnitTestDriver${_exec_i}
-      GTest::GTest
+      GTest::gtest
       SimpleITKUnitTestBase
       ${SimpleITK_LIBRARIES}
     )
@@ -358,7 +358,7 @@ add_executable(
 )
 target_link_libraries(
   SimpleITKUnitTestDriver${_exec_i}
-  GTest::GTest
+  GTest::gtest
   SimpleITKUnitTestBase
   ${SimpleITK_LIBRARIES}
 )
@@ -387,7 +387,7 @@ endif()
 add_executable(sitkShowTest sitkShowTest.cxx)
 target_link_libraries(
   sitkShowTest
-  GTest::GTest
+  GTest::gtest
   ${SimpleITK_LIBRARIES}
   SimpleITKUnitTestBase
 )

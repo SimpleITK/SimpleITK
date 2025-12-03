@@ -9,7 +9,7 @@ add_library(SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestBaseSource})
 target_link_libraries(
   SimpleITKUnitTestBase
   PUBLIC
-    GTest::GTest
+    GTest::gtest
     ${SimpleITK_LIBRARIES}
   PRIVATE
     ${ITK_LIBRARIES}

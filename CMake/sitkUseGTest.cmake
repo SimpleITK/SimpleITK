@@ -5,7 +5,7 @@
 # recommendation to add the Google Test source tree as a subdirectory
 # of the project.
 #
-# This file is designed to provide the "GTest::GTest" target.
+# This file is designed to provide the "GTest::gtest" target.
 #
 # The follow cache variable is used to find GTest:
 #
@@ -15,7 +15,7 @@
 
 include(GoogleTest)
 
-if(TARGET GTest::Main AND TARGET GTest::GTest)
+if(TARGET GTest::gtest_main AND TARGET GTest::gtest)
   message(STATUS "GTest targets already defined.")
   return()
 endif()
@@ -87,8 +87,8 @@ if(DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
     target_compile_features(${GTEST_LIBRARIES} PUBLIC cxx_std_11)
     target_compile_features(${GTEST_MAIN_LIBRARIES} PUBLIC cxx_std_11)
 
-    add_library(GTest::GTest ALIAS ${GTEST_LIBRARIES})
-    add_library(GTest::Main ALIAS ${GTEST_MAIN_LIBRARIES})
+    add_library(GTest::gtest ALIAS ${GTEST_LIBRARIES})
+    add_library(GTest::gtest_main ALIAS ${GTEST_MAIN_LIBRARIES})
   else()
     message(
       WARNING
