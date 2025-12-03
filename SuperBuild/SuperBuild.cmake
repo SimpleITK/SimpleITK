@@ -359,28 +359,15 @@ endif()
 #------------------------------------------------------------------------------
 # Google Test
 #------------------------------------------------------------------------------
-option(SimpleITK_USE_SYSTEM_GTEST "Use an external version of GoogleTest. " OFF)
-sitk_legacy_naming( SimpleITK_USE_SYSTEM_GTEST USE_SYSTEM_GTEST )
-mark_as_advanced(SimpleITK_USE_SYSTEM_GTEST)
-if(BUILD_TESTING)
-  if(SimpleITK_USE_SYSTEM_GTEST)
-    if(DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
-      list(APPEND SimpleITK_VARS GTEST_ROOT)
-    else()
-      find_package(GTest REQUIRED)
-      list(
-        APPEND
-        SimpleITK_VARS
-        GTEST_LIBRARIES
-        GTEST_INCLUDE_DIRS
-        GTEST_MAIN_LIBRARIES
-      )
-    endif()
-  else()
-    include(External_GTest)
-    list(APPEND SimpleITK_VARS GTEST_ROOT)
-    list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES GTest)
+
+if(DEFINED GOOGLETEST_ROOT)
+  if(NOT EXISTS "${GOOGLETEST_ROOT}")
+    message(
+      FATAL_ERROR
+      "The specified GOOGLETEST_ROOT '${GOOGLETEST_ROOT}' does not exist."
+    )
   endif()
+  list(APPEND SimpleITK_VARS GOOGLETEST_ROOT)
 endif()
 
 #------------------------------------------------------------------------------
