@@ -4,10 +4,6 @@
 #
 
 set(SimpleITK_MAX_DIMENSION_DEFAULT 5)
-# 1900 = VS 14.0 (Visual Studio 2015)
-if(MSVC AND MSVC_VERSION VERSION_LESS 1900)
-  set(SimpleITK_MAX_DIMENSION_DEFAULT 3)
-endif()
 
 if(DEFINED SimpleITK_4D_Image)
   message(
