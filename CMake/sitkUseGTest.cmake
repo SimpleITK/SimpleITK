@@ -1,102 +1,73 @@
 #
 # sitkUseGTest
 #
-#  This file is a wrapper of CMake's FindGTest and GoogleTest's
-# recommendation to add the Google Test source tree as a subdirectory
-# of the project.
+#  This file uses FetchContent to download and configbuild Google Test
+#  for SimpleITK.
 #
-# This file is designed to provide the "GTest::GTest" target.
+# This file provides the "GTest::gtest" target.
 #
-# The follow cache variable is used to find GTest:
+# To specify a local Google Test installation set the following cache variable:
 #
-# ``GTEST_ROOT``
-#   The root directory of the Google Test installation or a source
-# directory.
+# ``GOOGLETEST_ROOT``
+#   The root directory of the Google Test installation. If not specified, Google Test will be fetched automatically.
+
+# find_package() uses upper-case <PACKAGENAME>_ROOT variables.
+if(POLICY "CMP0144")
+  cmake_policy(SET "CMP0144" NEW)
+endif()
 
 include(GoogleTest)
+include(FetchContent)
 
-if(TARGET GTest::Main AND TARGET GTest::GTest)
-  message(STATUS "GTest targets already defined.")
+if(TARGET GTest::main AND TARGET GTest::gtest)
+  message(STATUS "Google Test targets already exist.")
   return()
 endif()
 
+# Fetch GTest using FetchContent
 set(
-  GTEST_ROOT
-  ""
-  CACHE PATH
-  "Path to the root of a binary gtest \
-installation where GTEST_ROOT/include/gtest/gtest.h can be found OR \
-path to a Google Test source tree."
+  GOOGLETEST_GIT_REPOSITORY
+  "https://github.com/google/googletest.git"
+  CACHE STRING
+  "Google Test repository"
+)
+set(GOOGLETEST_VERSION "1.17.0" CACHE STRING "Google Test version tag")
+mark_as_advanced(
+  GOOGLETEST_GIT_REPOSITORY
+  GOOGLETEST_VERSION
 )
 
-function(_sitk_gtest_use_gtest_source)
-  # Prevent overriding the parent project's compiler/linker
-  # settings on Windows
-  set(gtest_force_shared_crt ON CACHE INTERNAL "")
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY "${GOOGLETEST_GIT_REPOSITORY}"
+  GIT_TAG "v${GOOGLETEST_VERSION}"
+  EXCLUDE_FROM_ALL
+  FIND_PACKAGE_ARGS
+    "${GOOGLETEST_VERSION}"
+    NAMES
+    GTest
+    COMPONENTS
+    GTest::gtest
+)
 
-  # Avoid CMP0063 warning
-  set(CMAKE_C_VISIBILITY_PRESET)
-  set(CMAKE_CXX_VISIBILITY_PRESET)
-  set(CMAKE_VISIBILITY_INLINES_HIDDEN)
+# Prevent overriding the parent project's compiler/linker settings on Windows
+set(gtest_force_shared_crt ON CACHE INTERNAL "" FORCE)
+set(BUILD_GMOCK OFF CACHE INTERNAL "")
+set(BUILD_GTEST ON CACHE INTERNAL "")
 
-  set(BUILD_GTEST ON CACHE INTERNAL "" FORCE)
-  set(BUILD_GMOCK OFF CACHE INTERNAL "" FORCE)
+set(BUILD_SHARED_LIBS OFF)
 
-  # google test does not properly use pthreads on mingw
-  if(MINGW)
-    set(gtest_disable_pthreads ON CACHE INTERNAL "" FORCE)
-  endif()
+FetchContent_MakeAvailable(googletest)
 
-  # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
-  # needed GTest shared libraries from being installed.
-  set(BUILD_SHARED_LIBS OFF)
-
-  # Add googletest directly to our build but exclude from using it's
-  # target's and installation unless referenced by other dependencies.
-  add_subdirectory(
-    "${GTEST_ROOT}"
-    "${CMAKE_CURRENT_BINARY_DIR}/GTest-build"
-    EXCLUDE_FROM_ALL
+# Check if FetchContent used find_package() or fetched from source
+FetchContent_GetProperties(googletest)
+if(googletest_SOURCE_DIR)
+  message(
+    STATUS
+    "Google Test fetched from ${GOOGLETEST_GIT_REPOSITORY} and built from source"
   )
-endfunction()
-
-#
-
-if(DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
-  find_path(
-    GTEST_INCLUDE_DIRS
-    gtest/gtest.h
-    PATHS
-      "${GTEST_ROOT}"
-    NO_DEFAULT_PATH
-  )
-
-  if(NOT "${GTEST_INCLUDE_DIRS}" STREQUAL "")
-    message(STATUS "Adding Google Test source directory as subdirectory.")
-    set(GTEST_FOUND 1)
-    set(GTEST_LIBRARIES gtest)
-    set(GTEST_MAIN_LIBRARIES gtest_main)
-    set(
-      GTEST_BOTH_LIBRARIES
-      ${GTEST_LIBRARIES}
-      ${GTEST_MAIN_LIBRARIES}
-    )
-
-    _sitk_gtest_use_gtest_source()
-
-    target_compile_features(${GTEST_LIBRARIES} PUBLIC cxx_std_11)
-    target_compile_features(${GTEST_MAIN_LIBRARIES} PUBLIC cxx_std_11)
-
-    add_library(GTest::GTest ALIAS ${GTEST_LIBRARIES})
-    add_library(GTest::Main ALIAS ${GTEST_MAIN_LIBRARIES})
-  else()
-    message(
-      WARNING
-      "GTEST_ROOT appears to be a source directory \
-    but \"gtest/gtest.h\"  can not be found in source directory: \
-    ${GTEST_ROOT}"
-    )
-  endif()
+elseif(TARGET GTest::gtest)
+  message(STATUS "Google Test found and using existing local package")
 else()
-  find_package(GTest REQUIRED)
+  message(STATUS "Google Test configured")
 endif()
