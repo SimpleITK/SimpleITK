@@ -303,6 +303,12 @@ set(
   "_pixel_types.py"
   "py.typed"
 )
+# for each file in SimpleITK_Py_Files, prefix with "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+list(
+  TRANSFORM SimpleITK_Py_Files
+  PREPEND
+    "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+)
 
 # Currently this installation
 install(
@@ -310,20 +316,11 @@ install(
     ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
     ${SimpleITK_DOC_FILES}
     "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+    ${SimpleITK_Py_Files}
   DESTINATION SimpleITK
   COMPONENT Python
   EXCLUDE_FROM_ALL
 )
-
-foreach(_file ${SimpleITK_Py_Files})
-  install(
-    DIRECTORY
-      "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_dir}"
-    DESTINATION SimpleITK/${_dir}
-    COMPONENT Python
-    EXCLUDE_FROM_ALL
-  )
-endforeach()
 
 install(
   TARGETS
@@ -337,8 +334,17 @@ install(
     COMPONENT Python
     EXCLUDE_FROM_ALL
 )
-
 include(LegacyPackaging.cmake)
+include(TestingEnvironment.cmake)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
+)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/scikit-build-Packaging.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt"
+  COPYONLY
+)
 
 if(BUILD_TESTING)
   add_subdirectory(tests)
