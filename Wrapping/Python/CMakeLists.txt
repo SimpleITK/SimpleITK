@@ -307,7 +307,6 @@ set(
   "_pixel_types.py"
   "py.typed"
 )
-
 # for each file in SimpleITK_Py_Files, prefix with "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
 list(
   TRANSFORM SimpleITK_Py_Files
@@ -339,8 +338,35 @@ install(
     COMPONENT Python
     EXCLUDE_FROM_ALL
 )
-
 include(LegacyPackaging.cmake)
+include(sitkPythonTestingEnvironment)
+
+set(PYPROJECT_TOML_EXTRA "")
+
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  set(
+    PYPROJECT_TOML_EXTRA
+    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"cp311\"\n"
+  )
+endif()
+
+if(CMAKE_OSX_DEPLOYMENT_TARGET)
+  set(
+    PYPROJECT_TOML_EXTRA
+    "${PYPROJECT_TOML_EXTRA}\n
+    [tool.scikit-build.cmake.define]\nCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}\n"
+  )
+endif()
+
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
+)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/scikit-build-Packaging.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt"
+  COPYONLY
+)
 
 if(BUILD_TESTING)
   add_subdirectory(tests)
