@@ -308,39 +308,39 @@ set(
   "py.typed"
 )
 
-if(DEFINED SKBUILD)
-  # Currently this installation
-  install(
-    FILES
-      ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
-      ${SimpleITK_DOC_FILES}
-      "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+# for each file in SimpleITK_Py_Files, prefix with "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+list(
+  TRANSFORM SimpleITK_Py_Files
+  PREPEND
+    "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+)
+
+# Currently this installation
+install(
+  FILES
+    ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
+    ${SimpleITK_DOC_FILES}
+    "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+    ${SimpleITK_Py_Files}
+  DESTINATION SimpleITK
+  COMPONENT Python
+  EXCLUDE_FROM_ALL
+)
+
+install(
+  TARGETS
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  RUNTIME
     DESTINATION SimpleITK
-    COMPONENT Runtime
-  )
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  LIBRARY
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+)
 
-  foreach(_file ${SimpleITK_Py_Files})
-    install(
-      FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    )
-  endforeach()
-
-  install(
-    TARGETS
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    LIBRARY
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-  )
-else()
-  include(LegacyPackaging.cmake)
-endif()
+include(LegacyPackaging.cmake)
 
 if(BUILD_TESTING)
   add_subdirectory(tests)
