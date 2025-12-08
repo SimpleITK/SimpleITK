@@ -289,7 +289,7 @@ set(
 )
 
 include(sitkPythonVersion)
-sitk_get_pep386_version(SITK_PYTHON_VERSION)
+sitk_get_pep440_version(SITK_PYTHON_VERSION)
 message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
@@ -304,39 +304,41 @@ set(
   "py.typed"
 )
 
-if(DEFINED SKBUILD)
-  # Currently this installation
+# Currently this installation
+install(
+  FILES
+    ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
+    ${SimpleITK_DOC_FILES}
+    "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+  DESTINATION SimpleITK
+  COMPONENT Python
+  EXCLUDE_FROM_ALL
+)
+
+foreach(_file ${SimpleITK_Py_Files})
   install(
-    FILES
-      ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
-      ${SimpleITK_DOC_FILES}
-      "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+    DIRECTORY
+      "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_dir}"
+    DESTINATION SimpleITK/${_dir}
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  )
+endforeach()
+
+install(
+  TARGETS
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  RUNTIME
     DESTINATION SimpleITK
-    COMPONENT Runtime
-  )
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  LIBRARY
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+)
 
-  foreach(_file ${SimpleITK_Py_Files})
-    install(
-      FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    )
-  endforeach()
-
-  install(
-    TARGETS
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    LIBRARY
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-  )
-else()
-  include(LegacyPackaging.cmake)
-endif()
+include(LegacyPackaging.cmake)
 
 if(BUILD_TESTING)
   add_subdirectory(tests)
