@@ -292,6 +292,9 @@ set(
   FORCE
 )
 
+include(sitkPythonVersion)
+sitk_get_pep440_version(SITK_PYTHON_VERSION)
+message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
   "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"

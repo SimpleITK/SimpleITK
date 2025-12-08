@@ -16,39 +16,4 @@
 #
 # ========================================================================
 
-
-def _get_pep386version():
-    """Uses configured CMake version variable to construct a pep 386 compliant version string."""
-
-    sitk_major = "@SimpleITK_VERSION_MAJOR@"
-    sitk_minor = "@SimpleITK_VERSION_MINOR@"
-    sitk_patch = "@SimpleITK_VERSION_PATCH@"
-    sitk_tweak = "@SimpleITK_VERSION_TWEAK@"
-    sitk_rc = "@SimpleITK_VERSION_RC@"
-    sitk_post = "@SimpleITK_VERSION_POST@"
-    sitk_dev = "@SimpleITK_VERSION_DEV@"
-    sitk_hash = "@SimpleITK_VERSION_HASH@"
-
-    version = sitk_major + "." + sitk_minor
-
-    if sitk_patch:
-        version += "." + sitk_patch
-        if sitk_tweak:
-            version += "." + sitk_tweak
-
-    if sitk_rc:
-        version += sitk_rc
-
-    if sitk_post:
-        version += ".post" + sitk_post
-    elif sitk_dev:
-        version += ".dev" + sitk_dev
-
-    # Local Version Identifier
-    if sitk_hash and "@SimpleITK_BUILD_DISTRIBUTE@" not in ['1', 'ON']:
-        version += "+g" + sitk_hash
-
-    return version
-
-
-__version__ = _get_pep386version()
+__version__ = "@SITK_PYTHON_VERSION@"
