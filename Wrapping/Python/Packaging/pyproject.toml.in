@@ -1,3 +1,5 @@
+# This file is configured to install SimpleITK from the build directory.
+
 [build-system]
 requires = [
   "scikit-build-core>=0.10"
@@ -7,7 +9,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "simpleitk"
 version = "@SITK_PYTHON_VERSION@"
-readme = {file = "${SimpleITK_SOURCE_DIR}/Readme.md", content-type = "text/markdown"}
+readme = {file = "@SimpleITK_SOURCE_DIR@/Readme.md", content-type = "text/markdown"}
 authors = [
     {name = "Insight Software Consortium", email = "insight-users@itk.org"}
 ]
@@ -37,6 +39,8 @@ Homepage = "http://simpleitk.org/"
 "Bug Tracker" = "https://github.com/SimpleITK/SimpleITK/issues"
 Documentation = "https://simpleitk.readthedocs.io/en/release/"
 "Source Code" = "https://github.com/SimpleITK/SimpleITK"
+
+@PYPROJECT_TOML_EXTRA@
 
 [tool.pytest.ini_options]
 python_files = ["*Test.py"]
