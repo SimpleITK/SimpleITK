@@ -19,7 +19,7 @@ endif()
 include(GoogleTest)
 include(FetchContent)
 
-if(TARGET GTest::main AND TARGET GTest::gtest)
+if(TARGET GTest::gtest)
   message(STATUS "Google Test targets already exist.")
   return()
 endif()
@@ -41,6 +41,7 @@ FetchContent_Declare(
   googletest
   GIT_REPOSITORY "${GOOGLETEST_GIT_REPOSITORY}"
   GIT_TAG "v${GOOGLETEST_VERSION}"
+  GIT_SHALLOW 1
   EXCLUDE_FROM_ALL
   FIND_PACKAGE_ARGS
     "${GOOGLETEST_VERSION}"
