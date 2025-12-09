@@ -90,7 +90,7 @@ if(
     NOT
       _SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT
 )
-  message(WARNING "SWIG_VERSION (>=3.26): ${SWIG_VERSION}")
+  message(WARNING "SWIG_VERSION (>=4.2.0): ${SWIG_VERSION}")
   message(WARNING "Python_VERSION (>=3.11.0): ${Python_VERSION}")
   message(WARNING "CMAKE_VERSION (>=3.26): ${CMAKE_VERSION}")
   message(
