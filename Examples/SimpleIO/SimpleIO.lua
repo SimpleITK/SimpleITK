@@ -55,8 +55,9 @@ function example3()
   trans:push_back(3.0)
   basic_transform:SetTranslation(trans)
 
-  SimpleITK.WriteTransform(basic_transform, 'euler2D.tfm')
-  read_result = SimpleITK.ReadTransform('euler2D.tfm')
+  file_name = 'euler2D_lua.tfm'
+  SimpleITK.WriteTransform(basic_transform, file_name)
+  read_result = SimpleITK.ReadTransform(file_name)
 
   assert(read_result:GetName() ~= basic_transform:GetName(), "type error")
   --END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE

@@ -52,8 +52,9 @@ static void example3() {
   VectorDouble trans = new VectorDouble(t);
   basic_transform.setTranslation(trans);
 
-  SimpleITK.writeTransform(basic_transform, "euler2D.tfm");
-  Transform read_result = SimpleITK.readTransform("euler2D.tfm");
+  String file_name = "euler2D_java.tfm";
+  SimpleITK.writeTransform(basic_transform, file_name);
+  Transform read_result = SimpleITK.readTransform(file_name);
 
   assert basic_transform.getClass() != read_result.getClass();
   //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE

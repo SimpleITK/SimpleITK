@@ -63,8 +63,9 @@ example3()
   itk::simple::Euler2DTransform basic_transform;
   basic_transform.SetTranslation(std::vector<double>{ 2.0, 3.0 });
 
-  itk::simple::WriteTransform(basic_transform, "euler2D.tfm");
-  itk::simple::Transform read_result = itk::simple::ReadTransform("euler2D.tfm");
+  std::string file_name = "euler2D_cxx.tfm";
+  itk::simple::WriteTransform(basic_transform, file_name);
+  itk::simple::Transform read_result = itk::simple::ReadTransform(file_name);
 
   assert(typeid(basic_transform) != typeid(read_result));
   // END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE
