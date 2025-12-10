@@ -54,8 +54,9 @@ def example3()
   trans << 3.0
   basic_transform.set_translation(trans)
 
-  Simpleitk::write_transform(basic_transform, 'euler2D.tfm')
-  read_result = Simpleitk::read_transform('euler2D.tfm')
+  file_name = 'euler2D_rb.tfm'
+  Simpleitk::write_transform(basic_transform, file_name)
+  read_result = Simpleitk::read_transform(file_name)
 
   raise "This shouldn't happen." unless basic_transform.class != read_result.class
   #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE

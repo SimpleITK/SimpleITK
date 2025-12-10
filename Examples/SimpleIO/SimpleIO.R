@@ -56,8 +56,9 @@ example3 <- function() {
   basic_transform <- Euler2DTransform()
   basic_transform$SetTranslation(c(2,3))
 
-  WriteTransform(basic_transform, 'euler2D.tfm')
-  read_result = ReadTransform('euler2D.tfm')
+  file_name <- 'euler2D_r.tfm'
+  WriteTransform(basic_transform, file_name)
+  read_result = ReadTransform(file_name)
 
   stopifnot(read_result$GetName() != basic_transform$GetName())
   #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE

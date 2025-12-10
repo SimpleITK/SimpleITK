@@ -70,8 +70,9 @@ def example3():
     basic_transform = sitk.Euler2DTransform()
     basic_transform.SetTranslation((2, 3))
 
-    sitk.WriteTransform(basic_transform, "euler2D.tfm")
-    read_result = sitk.ReadTransform("euler2D.tfm")
+    file_name = "euler2D_py.tfm"
+    sitk.WriteTransform(basic_transform, file_name)
+    read_result = sitk.ReadTransform(file_name)
 
     assert isinstance(read_result, sitk.Euler2DTransform)
     #END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE

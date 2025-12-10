@@ -53,9 +53,10 @@ static void example3() {
   VectorDouble trans = new VectorDouble( new double[] {2.0, 3.0} );
   basic_transform.SetTranslation(trans);
 
-  sitk.WriteTransform(basic_transform, "euler2D.tfm");
+  string file_name = "euler2D_cs.tfm";
+  sitk.WriteTransform(basic_transform, file_name);
 
-  Transform read_result = sitk.ReadTransform("euler2D.tfm");
+  Transform read_result = sitk.ReadTransform(file_name);
 
   Debug.Assert( basic_transform.GetName() != read_result.GetName() );
   //END_PROCEDURAL_TRANSFORM_READER_WRITER_EXAMPLE

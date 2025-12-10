@@ -53,8 +53,9 @@ proc example3 {} {
   set trans { 2.0 3.0 }
   basic_transform SetTranslation $trans
 
-  WriteTransform basic_transform "euler2D.tfm"
-  set read_result [ ReadTransform "euler2D.tfm" ]
+  set file_name "euler2D_tcl.tfm"
+  WriteTransform basic_transform $file_name
+  set read_result [ ReadTransform $file_name ]
 
   if { [basic_transform GetName] == [$read_result GetName] } {
     error "This should not happen" 1
