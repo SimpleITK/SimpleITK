@@ -62,6 +62,8 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 include(sitkCompilerWarningsSettings)
 
+include(sitkITKFetchContent)
+
 include(sitkSITKLegacyNaming)
 include(sitkForbidDownloadsOption)
 include(sitkTargetUseITK)
