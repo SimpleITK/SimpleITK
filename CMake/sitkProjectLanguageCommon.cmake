@@ -12,7 +12,11 @@ endforeach()
 #
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
-  set(SimpleITK_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../..")
+  get_filename_component(
+    SimpleITK_SOURCE_DIR
+    "${CMAKE_CURRENT_SOURCE_DIR}/../.."
+    ABSOLUTE
+  )
   list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 
   find_package(SimpleITK REQUIRED)
