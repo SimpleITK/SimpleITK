@@ -216,7 +216,7 @@ function(expand_template input_config_file input_dir output_dir library_name)
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
       ${input_config_file} -D ${input_dir}/templates -D
       ${_sitk_jinja_include_dir} sitk${template_code_filename}Template.h.jinja
-      ${output_h}
+      -o ${output_h}
     DEPENDS
       ${input_config_file}
       ${template_deps}
@@ -232,7 +232,7 @@ function(expand_template input_config_file input_dir output_dir library_name)
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
       ${input_config_file} -D ${input_dir}/templates -D
       ${_sitk_jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja
-      ${output_cxx}
+      -o ${output_cxx}
     DEPENDS
       ${input_config_file}
       ${template_deps}

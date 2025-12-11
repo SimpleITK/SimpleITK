@@ -132,6 +132,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
     -D
     ${CMAKE_CURRENT_SOURCE_DIR}
     ImageFilterCTestTemplate.cmake.jinja
+    -o
     "${OUTPUT_TEST_FILENAME}"
   )
   execute_process(COMMAND ${cmd} RESULT_VARIABLE failed ERROR_VARIABLE error)
@@ -152,7 +153,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
     COMMAND
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
       ${filter_config_file} -D ${CMAKE_CURRENT_SOURCE_DIR}
-      ImageFilterTestTemplate.py.jinja "${OUTPUT_TEST_FILENAME}"
+      ImageFilterTestTemplate.py.jinja -o "${OUTPUT_TEST_FILENAME}"
     DEPENDS
       ${filter_config_file}
       ImageFilterTestTemplate.py.jinja

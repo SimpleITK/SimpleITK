@@ -162,6 +162,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
       -D
       ${SimpleITK_SOURCE_DIR}/Testing/Unit/
       ImageFilterCTestTemplate.cmake.jinja
+      -o
       "${OUTPUT_TEST_FILENAME}"
     )
     execute_process(COMMAND ${cmd} RESULT_VARIABLE failed ERROR_VARIABLE error)
@@ -184,7 +185,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
       COMMAND
         ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
         ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-        ${CXX_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+        ${CXX_TEMPLATE_FILE} -o "${OUTPUT_TEST_FILENAME}"
       DEPENDS
         ${filter_config_file}
         ${CXX_TEMPLATE_FILE}
@@ -212,7 +213,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
           ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${LUA_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+          ${LUA_TEMPLATE_FILE} -o "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_config_file}
           ${LUA_TEMPLATE_FILE}
@@ -235,7 +236,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
           ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${TCL_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+          ${TCL_TEMPLATE_FILE} -o "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_config_file}
           ${TCL_TEMPLATE_FILE}
@@ -258,7 +259,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
           ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${R_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+          ${R_TEMPLATE_FILE} -o "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_config_file}
           ${R_TEMPLATE_FILE}
@@ -281,7 +282,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
           ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${RUBY_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+          ${RUBY_TEMPLATE_FILE} -o "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_config_file}
           ${RUBY_TEMPLATE_FILE}
@@ -307,7 +308,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
           ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${JAVA_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+          ${JAVA_TEMPLATE_FILE} -o"${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_config_file}
           ${JAVA_TEMPLATE_FILE}
@@ -334,7 +335,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
         COMMAND
           ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
           ${filter_config_file} -D ${SimpleITK_SOURCE_DIR}/Testing/Unit/
-          ${CSHARP_TEMPLATE_FILE} "${OUTPUT_TEST_FILENAME}"
+          ${CSHARP_TEMPLATE_FILE} -o "${OUTPUT_TEST_FILENAME}"
         DEPENDS
           ${filter_config_file}
           ${CSHARP_TEMPLATE_FILE}
