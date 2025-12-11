@@ -9,7 +9,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "simpleitk"
 version = "@SITK_PYTHON_VERSION@"
-readme = {file = "${SimpleITK_SOURCE_DIR}/Readme.md", content-type = "text/markdown"}
+readme = {file = "@SimpleITK_SOURCE_DIR@/Readme.md", content-type = "text/markdown"}
 authors = [
     {name = "Insight Software Consortium", email = "insight-users@itk.org"}
 ]
