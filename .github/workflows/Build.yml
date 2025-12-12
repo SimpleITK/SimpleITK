@@ -52,7 +52,6 @@ jobs:
           - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
-            cmake_build_parallel_level: 6
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_R:BOOL=ON
@@ -145,4 +144,4 @@ jobs:
         fi
         cmake --version
         ninja --version
-        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
+        ctest -D dashboard_source_config_dir="" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
