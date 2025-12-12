@@ -106,7 +106,7 @@ jobs:
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
-              ITK_GIT_TAG:STRING=master
+              ITK_GIT_TAG:STRING=main
 
           - os: ubuntu-22.04
             cmake-build-type: "Release"
