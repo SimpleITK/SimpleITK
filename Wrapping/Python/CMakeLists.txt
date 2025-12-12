@@ -86,11 +86,15 @@ if (SimpleITK_PYTHON_USE_LIMITED_API)
   target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -DPy_LIMITED_API=0x030b0000)
 
   message(STATUS "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}")
-  set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOSABI}${_suffix}")
+  if(NOT Python_SOSABI STREQUAL "")
+    set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOSABI}${_suffix}")
+  endif()
 else()
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module )
   message(STATUS "Setting ABI suffix for Python module to: '${Python_SOABI}${_suffix}' ")
-  set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOABI}${_suffix}")
+  if(NOT Python_SOABI STREQUAL "")
+    set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOABI}${_suffix}")
+  endif()
 endif()
 
 
