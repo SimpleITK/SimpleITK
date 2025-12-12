@@ -119,6 +119,7 @@ message(CHECK_START "Configuring test generation...")
 set(_stride 50)
 set(_exec_i 1) # exec 0 is the manual tests
 set(_i 0)
+set(_CMAKE_OUTPUT_CONTENT "")
 
 foreach(filter_config_file ${GENERATED_CONFIG_LIST})
   get_filename_component(FILTERNAME ${filter_config_file} NAME_WE)
@@ -151,10 +152,6 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
 
   if(template_name)
     set(
-      OUTPUT_TEST_FILENAME
-      "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake"
-    )
-    set(
       cmd
       ${SimpleITK_Python_EXECUTABLE}
       ${SimpleITK_EXPANSION_SCRIPT}
@@ -162,18 +159,22 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
       -D
       ${SimpleITK_SOURCE_DIR}/Testing/Unit/
       ImageFilterCTestTemplate.cmake.jinja
-      -o
-      "${OUTPUT_TEST_FILENAME}"
     )
-    execute_process(COMMAND ${cmd} RESULT_VARIABLE failed ERROR_VARIABLE error)
+    execute_process(
+      COMMAND
+        ${cmd}
+      RESULT_VARIABLE failed
+      OUTPUT_VARIABLE output
+      ERROR_VARIABLE error
+    )
     if(failed)
       string(REPLACE ";" " " cmd "${cmd}")
       message(
         FATAL_ERROR
-        "Failed to generate \"${OUTPUT_TEST_FILENAME}\"\nCOMMAND: ${cmd} \n${error}"
+        "Failed to generate CMake output for ${FILTERNAME}\nCOMMAND: ${cmd} \n${error}"
       )
     endif()
-    include("${OUTPUT_TEST_FILENAME}")
+    string(APPEND _CMAKE_OUTPUT_CONTENT "${output}")
 
     set(
       OUTPUT_TEST_FILENAME
@@ -349,6 +350,13 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
   endif() # if template_name
   math(EXPR _i "${_i}+1")
 endforeach()
+
+# Write accumulated CMake content to a single file
+set(UNIT_TESTS_CMAKE_FILE "${CMAKE_CURRENT_BINARY_DIR}/AddTests.cmake")
+file(WRITE "${UNIT_TESTS_CMAKE_FILE}" "${_CMAKE_OUTPUT_CONTENT}")
+
+# Include the generated CMake file once
+include("${UNIT_TESTS_CMAKE_FILE}")
 
 message(CHECK_PASS "done")
 
