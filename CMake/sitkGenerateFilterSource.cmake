@@ -279,7 +279,7 @@ endfunction()
 #   Sets GENERATED_CONFIG_LIST as a cache variable.
 #
 macro(generate_filter_list)
-  set(GENERATED_CONFIG_LIST "" CACHE INTERNAL "")
+  set(GENERATED_CONFIG_LIST "")
 
   message(CHECK_START "Processing configuration files")
 

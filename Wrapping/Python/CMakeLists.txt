@@ -90,7 +90,7 @@ if(
     NOT
       _SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT
 )
-  message(WARNING "SWIG_VERSION (>=3.26): ${SWIG_VERSION}")
+  message(WARNING "SWIG_VERSION (>=4.2.0): ${SWIG_VERSION}")
   message(WARNING "Python_VERSION (>=3.11.0): ${Python_VERSION}")
   message(WARNING "CMAKE_VERSION (>=3.26): ${CMAKE_VERSION}")
   message(
@@ -193,26 +193,30 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
     STATUS
     "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}"
   )
-  set_property(
-    TARGET
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    PROPERTY
-      SUFFIX
-        ".${Python_SOSABI}${_suffix}"
-  )
+  if(NOT Python_SOSABI STREQUAL "")
+    set_property(
+      TARGET
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PROPERTY
+        SUFFIX
+          ".${Python_SOSABI}${_suffix}"
+    )
+  endif()
 else()
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module)
   message(
     STATUS
     "Setting ABI suffix for Python module to: '${Python_SOABI}${_suffix}' "
   )
-  set_property(
-    TARGET
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    PROPERTY
-      SUFFIX
-        ".${Python_SOABI}${_suffix}"
-  )
+  if(NOT Python_SOABI STREQUAL "")
+    set_property(
+      TARGET
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PROPERTY
+        SUFFIX
+          ".${Python_SOABI}${_suffix}"
+    )
+  endif()
 endif()
 
 target_include_directories(
@@ -288,6 +292,9 @@ set(
   FORCE
 )
 
+include(sitkPythonVersion)
+sitk_get_pep440_version(SITK_PYTHON_VERSION)
+message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
   "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
@@ -300,40 +307,66 @@ set(
   "_pixel_types.py"
   "py.typed"
 )
+# for each file in SimpleITK_Py_Files, prefix with "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+list(
+  TRANSFORM SimpleITK_Py_Files
+  PREPEND
+    "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+)
 
-if(DEFINED SKBUILD)
-  # Currently this installation
-  install(
-    FILES
-      ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
-      ${SimpleITK_DOC_FILES}
-      "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+# Currently this installation
+install(
+  FILES
+    ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
+    ${SimpleITK_DOC_FILES}
+    "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+    ${SimpleITK_Py_Files}
+  DESTINATION SimpleITK
+  COMPONENT Python
+  EXCLUDE_FROM_ALL
+)
+
+install(
+  TARGETS
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  RUNTIME
     DESTINATION SimpleITK
-    COMPONENT Runtime
-  )
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  LIBRARY
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+)
+include(TestingEnvironment.cmake)
+include(LegacyPackaging.cmake)
 
-  foreach(_file ${SimpleITK_Py_Files})
-    install(
-      FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    )
-  endforeach()
+set(PYPROJECT_TOML_EXTRA "")
 
-  install(
-    TARGETS
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    LIBRARY
-      DESTINATION SimpleITK
-      COMPONENT Runtime
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  set(
+    PYPROJECT_TOML_EXTRA
+    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"cp311\"\n"
   )
-else()
-  include(LegacyPackaging.cmake)
 endif()
+
+if(CMAKE_OSX_DEPLOYMENT_TARGET)
+  set(
+    PYPROJECT_TOML_EXTRA
+    "${PYPROJECT_TOML_EXTRA}\n
+    [tool.scikit-build.cmake.define]\nCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}\n"
+  )
+endif()
+
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
+)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/scikit-build-Packaging.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt"
+  COPYONLY
+)
 
 if(BUILD_TESTING)
   add_subdirectory(tests)
