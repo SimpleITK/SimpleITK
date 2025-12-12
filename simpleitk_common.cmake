@@ -121,12 +121,7 @@ if(NOT DEFINED dashboard_git_url)
   set(dashboard_git_url "https://github.com/SimpleITK/SimpleITK.git")
 endif()
 if(NOT DEFINED dashboard_git_branch)
-# SimpleITK currently doesn't have a nightly-master
-#  if("${dashboard_model}" STREQUAL "Nightly")
-#    set(dashboard_git_branch nightly-master)
-#  else()
-    set(dashboard_git_branch master)
-#  endif()
+  set(dashboard_git_branch main)
 endif()
 if(NOT DEFINED dashboard_git_crlf)
   if(UNIX)
@@ -187,7 +182,7 @@ if(EXISTS ${CTEST_SOURCE_DIRECTORY})
 endif()
 
 # make sure build end in branch name
-if( NOT CTEST_BUILD_NAME MATCHES "-${dashboard_git_branch}" )
+if( NOT CTEST_UPDATE_VERSION_ONLY AND NOT CTEST_BUILD_NAME MATCHES "-${dashboard_git_branch}" )
   set(CTEST_BUILD_NAME "${CTEST_BUILD_NAME}-${dashboard_git_branch}")
 endif()
 
