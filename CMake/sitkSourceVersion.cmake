@@ -26,7 +26,15 @@
 # _GIT_VERSION_POST is defined as the number of commits since the tag.
 #
 
-block(SCOPE_FOR VARIABLES)
+block(
+  SCOPE_FOR
+    VARIABLES
+  PROPAGATE
+    _GIT_VERSION_HASH
+    _GIT_VERSION_RC
+    _GIT_VERSION_POST
+    _GIT_VERSION_DEV
+)
   include(sitkGetGitRevisionDescription)
 
   get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
