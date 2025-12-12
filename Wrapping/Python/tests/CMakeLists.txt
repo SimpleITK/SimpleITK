@@ -120,10 +120,11 @@ file(
   DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/
 )
 
+set(_CMAKE_OUTPUT_CONTENT "")
+
 foreach(filter_config_file ${GENERATED_CONFIG_LIST})
   get_filename_component(FILTERNAME ${filter_config_file} NAME_WE)
 
-  set(OUTPUT_TEST_FILENAME "${CMAKE_CURRENT_BINARY_DIR}/${FILTERNAME}.cmake")
   set(
     cmd
     ${SimpleITK_Python_EXECUTABLE}
@@ -132,18 +133,22 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
     -D
     ${CMAKE_CURRENT_SOURCE_DIR}
     ImageFilterCTestTemplate.cmake.jinja
-    -o
-    "${OUTPUT_TEST_FILENAME}"
   )
-  execute_process(COMMAND ${cmd} RESULT_VARIABLE failed ERROR_VARIABLE error)
+  execute_process(
+    COMMAND
+      ${cmd}
+    RESULT_VARIABLE failed
+    OUTPUT_VARIABLE output
+    ERROR_VARIABLE error
+  )
   if(failed)
     string(REPLACE ";" " " cmd "${cmd}")
     message(
       FATAL_ERROR
-      "Failed to generate \"${OUTPUT_TEST_FILENAME}\"\nCOMMAND: ${cmd} \n${error}"
+      "Failed to generate CMake output for ${FILTERNAME}\nCOMMAND: ${cmd} \n${error}"
     )
   endif()
-  include("${OUTPUT_TEST_FILENAME}")
+  string(APPEND _CMAKE_OUTPUT_CONTENT "${output}")
 
   set(OUTPUT_TEST_FILENAME "${CMAKE_CURRENT_BINARY_DIR}/${FILTERNAME}Test.py")
 
@@ -164,6 +169,13 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
     ${OUTPUT_TEST_FILENAME}
   )
 endforeach()
+
+# Write accumulated CMake content to a single file
+set(PYTHON_TESTS_CMAKE_FILE "${CMAKE_CURRENT_BINARY_DIR}/PythonTests.cmake")
+file(WRITE "${PYTHON_TESTS_CMAKE_FILE}" "${_CMAKE_OUTPUT_CONTENT}")
+
+# Include the generated CMake file once
+include("${PYTHON_TESTS_CMAKE_FILE}")
 
 add_custom_target(
   PythonGeneratedTests
