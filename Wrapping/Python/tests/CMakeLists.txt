@@ -157,11 +157,7 @@ foreach(filter_config_file ${GENERATED_CONFIG_LIST})
       ${filter_config_file}
       ImageFilterTestTemplate.py.jinja
   )
-  set(
-    WRAPPED_GENERATED_TEST_SOURCE
-    ${WRAPPED_GENERATED_TEST_SOURCE}
-    ${OUTPUT_TEST_FILENAME}
-  )
+  list(APPEND WRAPPED_GENERATED_TEST_SOURCE "${OUTPUT_TEST_FILENAME}")
 endforeach()
 
 add_custom_target(
