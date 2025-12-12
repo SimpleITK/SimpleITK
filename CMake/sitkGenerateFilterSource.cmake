@@ -279,7 +279,7 @@ endfunction()
 #   Sets GENERATED_CONFIG_LIST as a cache variable.
 #
 macro(generate_filter_list)
-  set(GENERATED_CONFIG_LIST "" CACHE INTERNAL "")
+  set(GENERATED_CONFIG_LIST "")
 
   message(CHECK_START "Processing configuration files")
 
@@ -336,15 +336,11 @@ macro(generate_filter_list)
 
       get_filename_component(FILENAME ${input_config_file} NAME_WE)
       # Make the list visible at the global scope
-      set(
-        GENERATED_CONFIG_LIST
-        ${GENERATED_CONFIG_LIST}
-        ${input_config_file}
-        CACHE INTERNAL
-        ""
-      )
+      list(APPEND GENERATED_CONFIG_LIST ${input_config_file})
     endif()
   endforeach()
+
+  set(GENERATED_CONFIG_LIST ${GENERATED_CONFIG_LIST} CACHE INTERNAL "" FORCE)
 
   message(CHECK_PASS "done")
 endmacro(generate_filter_list)
