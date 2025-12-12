@@ -1,7 +1,8 @@
 import argparse
 from jinja2 import Environment, FileSystemLoader
 import os
-from typing import List
+import sys
+from typing import List, TextIO
 from pathlib import Path
 import logging
 
@@ -69,9 +70,17 @@ def load_configuration(config_file: Path):
         logging.error(f"Error loading configuration file {config_file}: {e}")
         return None
 
-def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:Path, verbose= False, clobber:bool=True, globals_dict=None):
+def expand_template(config_file:Path, template:Path, template_dirs: List[Path], output_file:TextIO, verbose= False, globals_dict=None):
     """
     Expands a template using the provided YAML configuration and Jinja2.
+
+    Args:
+        config_file: Path to the YAML configuration file
+        template: Path to the Jinja2 template file
+        template_dirs: List of directories to search for templates
+        output_file: An open file object to write the output to (can be sys.stdout)
+        verbose: Enable verbose output
+        globals_dict: Dictionary of global variables to pass to the template
     """
     # Load configuration
     filter_description = load_configuration(config_file)
@@ -115,18 +124,8 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
         logging.error(f"Jinja2 error: {e}")
         return -1
 
-    if output_file.exists() and not clobber:
-        logging.error(f"Output file {output_file} already exists and cannot be overwritten.")
-        return -1
-
-    if output_file.exists():
-        with open(output_file, 'r', encoding='utf-8') as f:
-            existing_content = f.read()
-        if existing_content == output_content:
-            logging.info(f"Output file {output_file} already exists and content is identical. Skipping write.")
-            return 0
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(output_content)
+    # Write the output to the provided file object
+    output_file.write(output_content)
     return 0
 
 
@@ -169,15 +168,13 @@ def main() -> int:
     parser.add_argument("template", type=Path, help="JINJA template file")
     # Update the argument to accept a list of directories with multiple `-D` flags, allowing it to be used zero or more times.
     parser.add_argument("-D", "--template_dir", action='append', type=Path, default=[], help="Directory containing the main template files.")
-    # add overwrite option defaulting to true and an additional no-overwrite option
-    parser.add_argument("-o", "--overwrite", action='store_true', default=True, help="Overwrite the output file if it exists.")
-    parser.add_argument("-n", "--no-overwrite", action='store_false', dest='overwrite', help="Do not overwrite the output file if it exists.")
     parser.add_argument("-v", "--verbose", action='store_true', help="Enable verbose output.")
     # Add support for global variables like TEST_HARNESS_DATA_DIRECTORY
     parser.add_argument("-g", "--global", action='append', type=parse_global_variable, default=[],
                        dest='globals', help="Define global variables for templates in format 'NAME=VALUE' (e.g., 'TEST_HARNESS_DATA_DIRECTORY=/path/to/data')")
 
-    parser.add_argument("output_file", type=Path, help="Path to the output file to be generated.")
+    parser.add_argument("-o", "--output", type=Path, dest='output_file', default=None, help="Path to the output file to be generated. If not specified, writes to stdout.")
+    parser.add_argument("--no-overwrite", action='store_false', dest='overwrite', help="Do not overwrite the output file if it exists.")
 
     args = parser.parse_args()
 
@@ -186,15 +183,26 @@ def main() -> int:
     # Convert list of (name, value) tuples to dictionary
     globals_dict = dict(args.globals) if args.globals else None
 
-    return expand_template(args.config_file,
-                    template,
-                    args.template_dir,
-                    args.output_file,
-                    verbose=args.verbose,
-                    clobber=args.overwrite,
-                    globals_dict=globals_dict)
+    # Open the output file or use stdout
+    if args.output_file is not None:
+        # Check if file exists and overwrite is False
+        if not args.overwrite and args.output_file.exists():
+            logging.error(f"Output file {args.output_file} already exists and cannot be overwritten.")
+            return -1
+        with open(args.output_file, 'w', encoding='utf-8') as output_file:
+            return expand_template(args.config_file,
+                            template,
+                            args.template_dir,
+                            output_file,
+                            verbose=args.verbose,
+                            globals_dict=globals_dict)
+    else:
+        return expand_template(args.config_file,
+                        template,
+                        args.template_dir,
+                        sys.stdout,
+                        verbose=args.verbose,
+                        globals_dict=globals_dict)
 
 if __name__ == "__main__":
-    import sys
-
     sys.exit(main())

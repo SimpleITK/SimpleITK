@@ -90,8 +90,7 @@ function(get_config_path out_var config_file path)
     execute_process(
       COMMAND
         ${SimpleITK_Python_EXECUTABLE} -c
-        "import sys, yaml; d=yaml.safe_load(open(sys.argv[1])); v=d;\nfor k in sys.argv[2].split('.'):\n    v = v[k]\nprint(v)"
-        ${config_file} ${path}
+        "import yaml; d=yaml.safe_load(open('${config_file}')); v=d;\nfor k in '${path}'.split('.'):\n    v = v[k]\nprint(v)"
       OUTPUT_VARIABLE value
       RESULT_VARIABLE ret
       ERROR_VARIABLE error_var
@@ -216,7 +215,7 @@ function(expand_template input_config_file input_dir output_dir library_name)
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
       ${input_config_file} -D ${input_dir}/templates -D
       ${_sitk_jinja_include_dir} sitk${template_code_filename}Template.h.jinja
-      ${output_h}
+      -o ${output_h}
     DEPENDS
       ${input_config_file}
       ${template_deps}
@@ -232,7 +231,7 @@ function(expand_template input_config_file input_dir output_dir library_name)
       ${SimpleITK_Python_EXECUTABLE} ${SimpleITK_EXPANSION_SCRIPT}
       ${input_config_file} -D ${input_dir}/templates -D
       ${_sitk_jinja_include_dir} sitk${template_code_filename}Template.cxx.jinja
-      ${output_cxx}
+      -o ${output_cxx}
     DEPENDS
       ${input_config_file}
       ${template_deps}
@@ -279,7 +278,7 @@ endfunction()
 #   Sets GENERATED_CONFIG_LIST as a cache variable.
 #
 macro(generate_filter_list)
-  set(GENERATED_CONFIG_LIST "" CACHE INTERNAL "")
+  set(GENERATED_CONFIG_LIST "")
 
   message(CHECK_START "Processing configuration files")
 
@@ -336,15 +335,11 @@ macro(generate_filter_list)
 
       get_filename_component(FILENAME ${input_config_file} NAME_WE)
       # Make the list visible at the global scope
-      set(
-        GENERATED_CONFIG_LIST
-        ${GENERATED_CONFIG_LIST}
-        ${input_config_file}
-        CACHE INTERNAL
-        ""
-      )
+      list(APPEND GENERATED_CONFIG_LIST ${input_config_file})
     endif()
   endforeach()
+
+  set(GENERATED_CONFIG_LIST ${GENERATED_CONFIG_LIST} CACHE INTERNAL "" FORCE)
 
   message(CHECK_PASS "done")
 endmacro(generate_filter_list)
