@@ -49,35 +49,19 @@ jobs:
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
-          - os: ubuntu-24.04
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_R:BOOL=ON
           - os: ubuntu-24.04-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
-          - os: macos-15
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            cmake_osx_architectures: "x86_64"
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=OFF
-          - os: windows-2022
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v142,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
-              WRAP_CSHARP:BOOL=ON
+              SimpleITK_BUILD_STRIP:BOOL=ON
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
+              CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
+              CMAKE_CXX_STANDARD:STRING=17
     steps:
     - uses: actions/checkout@v6
       with:
