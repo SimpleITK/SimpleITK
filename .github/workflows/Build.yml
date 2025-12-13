@@ -33,6 +33,7 @@ jobs:
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
     strategy:
+      fail-fast: false
       max-parallel: 5
       matrix:
         include:
