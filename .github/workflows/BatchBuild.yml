@@ -106,7 +106,7 @@ jobs:
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             ctest-cache: |
-              ITK_GIT_TAG:STRING=master
+              ITK_GIT_TAG:STRING=main
 
           - os: ubuntu-22.04
             cmake-build-type: "Release"
@@ -176,7 +176,7 @@ jobs:
           python-version: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
       - name: Update Path for shared libraries
         shell: bash
-        if: contains( ${{ matrix.ctest-cache }}, 'BUILD_SHARED_LIBS:BOOL=ON' ) && contains( ${{ matrix.os }}, 'windows' )
+        if: ${{ contains(matrix.ctest-cache, 'BUILD_SHARED_LIBS:BOOL=ON') && contains(matrix.os, 'windows') }}
         run: |
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\ITK-prefix\bin" >> $GITHUB_PATH
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\SimpleITK-build\bin\${{ matrix.cmake-build-type }}" >> $GITHUB_PATH
