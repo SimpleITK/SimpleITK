@@ -90,7 +90,21 @@ function(get_config_path out_var config_file path)
     execute_process(
       COMMAND
         ${SimpleITK_Python_EXECUTABLE} -c
-        "import yaml; d=yaml.safe_load(open('${config_file}')); v=d;\nfor k in '${path}'.split('.'):\n    v = v[k]\nprint(v)"
+        [=[
+import sys
+import yaml
+try:
+    from yaml import CSafeLoader as Loader
+except ImportError:
+    from yaml import SafeLoader as Loader
+
+d = yaml.load(open(sys.argv[1]), Loader=Loader)
+v = d
+for k in sys.argv[2].split('.'):
+    v = v[k]
+print(v)
+]=]
+        ${config_file} ${path}
       OUTPUT_VARIABLE value
       RESULT_VARIABLE ret
       ERROR_VARIABLE error_var
