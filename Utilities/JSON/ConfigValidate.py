@@ -13,9 +13,14 @@ from jsonschema import validate, ValidationError, SchemaError, Draft7Validator
 
 try:
     import yaml
+    try:
+        from yaml import CSafeLoader as Loader
+    except ImportError:
+        from yaml import SafeLoader as Loader
     YAML_SUPPORT = True
 except ImportError:
     YAML_SUPPORT = False
+    Loader = None
 
 
 def load_config(file_path):
@@ -25,7 +30,7 @@ def load_config(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             if suffix in ['.yaml', '.yml'] and YAML_SUPPORT:
-                return yaml.safe_load(f)
+                return yaml.load(f, Loader=Loader)
             else:
                 return json.load(f)
     except Exception as e:

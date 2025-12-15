@@ -8,6 +8,10 @@ import logging
 
 import re
 import yaml
+try:
+    from yaml import CSafeLoader as Loader
+except ImportError:
+    from yaml import SafeLoader as Loader
 
 # Constants for template generation
 WORD_WRAP_WIDTH = 120
@@ -62,7 +66,7 @@ def load_configuration(config_file: Path):
     try:
         with open(config_file, 'r', encoding='utf-8') as f:
             if config_file.suffix.lower() in ['.yaml', '.yml']:
-                return yaml.safe_load(f)
+                return yaml.load(f, Loader=Loader)
             else:
                 logging.error(f"Unsupported configuration file format: {config_file.suffix}. Only YAML is supported.")
                 return None
