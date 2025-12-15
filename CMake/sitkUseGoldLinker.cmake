@@ -27,12 +27,18 @@ endif()
 
 option(
   USE_GOLD_LINKER
-  "Use ld.gold linker (decreases linking time if available)"
+  "Use ld.gold linker (CMAKE_LINKER_TYPE=${CMAKE_LINKER_TYPE} overrides)"
   ${_USE_GOLD_LINKER_default}
 )
 mark_as_advanced(USE_GOLD_LINKER)
 if(USE_GOLD_LINKER)
-  set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_EXE_LINKER_FLAGS}")
-  set(CMAKE_MODULE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_MODULE_LINKER_FLAGS}")
-  set(CMAKE_SHARED_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_SHARED_LINKER_FLAGS}")
+  if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.29")
+    if(NOT DEFINED CMAKE_LINKER_TYPE)
+      set(CMAKE_LINKER_TYPE "GOLD")
+    endif()
+  else()
+    set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_EXE_LINKER_FLAGS}")
+    set(CMAKE_MODULE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_MODULE_LINKER_FLAGS}")
+    set(CMAKE_SHARED_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_SHARED_LINKER_FLAGS}")
+  endif()
 endif()
