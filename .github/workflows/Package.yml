@@ -68,7 +68,7 @@ jobs:
         run: |
           ls -lhR .
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: artifacts-${{ matrix.os }}
           path: |
@@ -229,7 +229,7 @@ jobs:
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: artifacts-${{ matrix.os }}
           path: |
@@ -256,7 +256,7 @@ jobs:
           docker cp sitk-dox:/SimpleITKDoxygen.tar.gz artifacts/SimpleITKDoxygen-${TAG}.tar.gz
           docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz artifacts/SimpleITKDoxygenXML-${TAG}.tar.gz
       - name: Archive Doxygen Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: doxygen-xml
           path: |
