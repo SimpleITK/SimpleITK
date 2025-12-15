@@ -22,7 +22,6 @@ if [ "$OS_NAME" == "Darwin" ]; then
         exit 1
     fi
 
-    SIMPLEITK_PYTHON_PLAT_NAME="macosx-$OS_VERSION-$OS_ARCH"
 else
     echo "Unsupported OS: $OS_NAME"
     exit 1
