@@ -25,16 +25,13 @@ if(NOT DEFINED ITK_BUILD_DEFAULT_MODULES)
   set(ITK_BUILD_DEFAULT_MODULES ON)
 endif()
 
-if(NOT DEFINED Module_ITKReview)
-  set(Module_ITKReview ON)
-endif()
-
 set(
   _SimpleITK_DEFAULT_MODULES
   "Module_SimpleITKFilters"
   "Module_ITKIOTransformMINC"
   "Module_GenericLabelInterpolator"
   "Module_LabelErodeDilate"
+  "Module_ITKReview"
 )
 foreach(_module ${_SimpleITK_DEFAULT_MODULES})
   if(NOT DEFINED ${_module})
