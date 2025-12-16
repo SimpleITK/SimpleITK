@@ -25,6 +25,8 @@
 #include <sitkAdditiveGaussianNoiseImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkRegionOfInterestImageFilter.h>
+#include <itkDataObject.h>
+#include <itkMetaDataObject.h>
 
 #include <itksys/SystemTools.hxx>
 
@@ -1194,4 +1196,42 @@ TEST(IO, ImageFileReader_5DExtract)
   reader.SetExtractSize(extractSize);
   reader.SetExtractIndex(extractIndex);
   EXPECT_ANY_THROW(reader.Execute());
+}
+
+TEST(IO, ReadWrite_non_ascii )
+{
+  const std::string testName = ::testing::UnitTest::GetInstance()->current_test_info()->name();
+  std::string outputFilename = dataFinder.GetOutputFile( testName + ".mha" );
+
+  namespace  sitk = itk::simple;
+  sitk::Image img( 10, 10, sitk::sitkUInt8 );
+
+  const std::string value1 = "des caractères spéciaux";
+  const std::string value2 = "des caractères spéciö";
+
+  img.SetMetaData( "test1", value1 );
+  img.SetMetaData( "test2", value2 );
+
+  EXPECT_EQ(img.GetMetaData("test1"), value1);
+  EXPECT_EQ(img.GetMetaData("test2"), value2);
+
+  std::string value;
+
+  sitk::WriteImage( img, outputFilename );
+
+  sitk::Image img2 = sitk::ReadImage( outputFilename );
+
+  itk::DataObject::Pointer itkImage = img2.GetITKBase();
+
+  // Test directly with ITK's loaded metadata dictionary.
+  ASSERT_TRUE( itkImage.IsNotNull() );
+  auto mdd =  itkImage->GetMetaDataDictionary();
+  EXPECT_TRUE(itk::ExposeMetaData(mdd,"test1", value));
+  EXPECT_EQ(value1, value);
+  EXPECT_TRUE(itk::ExposeMetaData(mdd,"test2", value));
+  EXPECT_EQ(value2, value);
+
+  EXPECT_EQ(img2.GetMetaData("test1"), value1);
+  EXPECT_EQ(img2.GetMetaData("test2"), value2);
+
 }
