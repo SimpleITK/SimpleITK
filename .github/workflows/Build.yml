@@ -131,6 +131,9 @@ jobs:
         ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
         CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
         CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
+        CTEST_CMAKE_GENERATOR_TOOLSET: "${{ matrix.cmake-generator-toolset }}"
+        CTEST_CMAKE_GENERATOR_PLATFORM: "${{ matrix.cmake-generator-platform }}"
+        CMAKE_BUILD_PARALLEL_LEVEL: ${{ matrix.cmake_build_parallel_level }}
         CTEST_OUTPUT_ON_FAILURE: 1
         CTEST_CACHE: |
           WRAP_DEFAULT:BOOL=OFF
@@ -141,9 +144,6 @@ jobs:
           SimpleITK_Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           ${{ matrix.ctest-cache }}
       run: |
-        if [ ! -z "${{ matrix.cmake_build_parallel_level }}" ]; then
-          export CMAKE_BUILD_PARALLEL_LEVEL=${{ matrix.cmake_build_parallel_level }}
-        fi
         cmake --version
         ninja --version
         ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
