@@ -5,25 +5,20 @@ include("sitkCheckPythonModuleVersion")
 ## If SimpleITK_Python_EXECUTABLE is defined, use it, otherwise use Python_EXECUTABLE or find it.
 if(DEFINED SimpleITK_Python_EXECUTABLE)
   # check if the variable is a valid executable
-  if(
-    NOT
-      EXISTS
-        "${SimpleITK_Python_EXECUTABLE}"
-    OR
-      (
-        CMAKE_VERSION
-          VERSION_GREATER_EQUAL
-          "3.29"
-        AND
-          NOT
-            IS_EXECUTABLE
-              "${SimpleITK_Python_EXECUTABLE}"
-      )
-  )
+  if(NOT EXISTS "${SimpleITK_Python_EXECUTABLE}")
     message(
       FATAL_ERROR
       "SimpleITK_Python_EXECUTABLE is set to an invalid executable: ${SimpleITK_Python_EXECUTABLE}"
     )
+  endif()
+  # Additional check for CMake 3.29+ using IS_EXECUTABLE
+  if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.29")
+    if(NOT (IS_EXECUTABLE "${SimpleITK_Python_EXECUTABLE}"))
+      message(
+        FATAL_ERROR
+        "SimpleITK_Python_EXECUTABLE is set to a non-executable file: ${SimpleITK_Python_EXECUTABLE}"
+      )
+    endif()
   endif()
 else()
   if(NOT DEFINED Python_EXECUTABLE)
