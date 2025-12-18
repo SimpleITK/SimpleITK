@@ -54,7 +54,6 @@ cmake \
     -D "BUILD_EXAMPLES:BOOL=ON" \
     -D "BUILD_TESTING:BOOL=ON" \
     -D "Python_EXECUTABLE:FILEPATH=${PY_DIR}/bin/python${PY_MAJOR}" \
-    -D "SimpleITK_PYTHON_PLAT_NAME:STRING=macosx-11.0-arm64" \
     -D "SimpleITK_BUILD_DISTRIBUTE:BOOL=ON" \
     -D "SimpleITK_PYTHON_WHEEL:BOOL=1" \
     -D "SimpleITK_BUILD_STRIP:BOOL=1" \
