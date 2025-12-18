@@ -34,7 +34,11 @@ mkdir -p "$git_dir/hooks" &&
 cd "$git_dir/hooks" &&
 # remove venv if python version is different
 if [ -d venv ]; then
-    source venv/bin/activate &&
+    if [ -f venv/Scripts/activate ]; then
+      source venv/Scripts/activate
+    else
+      source venv/bin/activate
+    fi &&
     python_version_venv=$(python --version | cut -d ' ' -f 2) &&
     if [ "$python_version" != "$python_version_venv" ]; then
       deactivate &&
@@ -49,7 +53,11 @@ fi
 # activate the venv and install pre-commit with the min version in subshell
 (
     echo "Setting up pre-commit..." &&
-    source ${git_dir}/hooks/venv/bin/activate &&
+    if [ -f ${git_dir}/hooks/venv/Scripts/activate ]; then
+	    source ${git_dir}/hooks/venv/Scripts/activate
+    else
+	    source ${git_dir}/hooks/venv/bin/activate
+    fi &&
     python3 -m pip install --disable-pip-version-check -q -U "pre-commit>=$MIN_PRECOMMIT_VERSION" &&
     pre-commit install -f -t pre-commit -t prepare-commit-msg -t commit-msg
 )
