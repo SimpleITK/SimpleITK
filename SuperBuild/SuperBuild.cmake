@@ -435,7 +435,7 @@ if(WIN32)
       "${UV_INSTALLER}"
   )
 else()
-  set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_PATH}/bin/uv")
+  set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_PATH}/uv")
   sitksourcedownload(UV_INSTALLER "uv_install.sh")
   add_custom_command(
     OUTPUT
