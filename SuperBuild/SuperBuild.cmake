@@ -419,25 +419,35 @@ endif()
 add_custom_target(SimpleITK_VENV DEPENDS "${SimpleITK_Python_EXECUTABLE}")
 
 set(_SimpleITK_uv_PATH "${CMAKE_CURRENT_BINARY_DIR}/uv")
-set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_PATH}/bin/uv")
-if(WIN32)
-  set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_EXECUTABLE}.exe")
-endif()
 set(_SimpleITK_uv_PYTHON_VERSION "3.12")
 
-sitksourcedownload(UV_INSTALLER "uv_install.sh")
-
-add_custom_command(
-  OUTPUT
-    "${_SimpleITK_uv_EXECUTABLE}"
-  COMMAND
-    "${CMAKE_COMMAND}" -E env "XDG_BIN_HOME=${_SimpleITK_uv_PATH}/bin"
-    "XDG_CONFIG_HOME=${CMAKE_CURRENT_BINARY_DIR}" UV_NO_MODIFY_PATH=1 sh
-    ${UV_INSTALLER} ${UV_INSTALLER} --quiet
-  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-  DEPENDS
-    "${UV_INSTALLER}"
-)
+if(WIN32)
+  set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_PATH}/uv.exe")
+  sitksourcedownload(UV_INSTALLER "uv_install.ps1")
+  add_custom_command(
+    OUTPUT
+      "${_SimpleITK_uv_EXECUTABLE}"
+    COMMAND
+      "${CMAKE_COMMAND}" -E env "UV_UNMANAGED_INSTALL=${_SimpleITK_uv_PATH}"
+      powershell -ExecutionPolicy Bypass -File "${UV_INSTALLER}"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    DEPENDS
+      "${UV_INSTALLER}"
+  )
+else()
+  set(_SimpleITK_uv_EXECUTABLE "${_SimpleITK_uv_PATH}/bin/uv")
+  sitksourcedownload(UV_INSTALLER "uv_install.sh")
+  add_custom_command(
+    OUTPUT
+      "${_SimpleITK_uv_EXECUTABLE}"
+    COMMAND
+      "${CMAKE_COMMAND}" -E env "UV_UNMANAGED_INSTALL=${_SimpleITK_uv_PATH}" sh
+      ${UV_INSTALLER} --quiet
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    DEPENDS
+      "${UV_INSTALLER}"
+  )
+endif()
 
 add_custom_command(
   OUTPUT
@@ -449,7 +459,7 @@ add_custom_command(
     "${_Python_venv_home}"
   COMMAND
     "${CMAKE_COMMAND}" -E env "VIRTUAL_ENV=${_Python_venv_home}" "UV_NO_CACHE=1"
-    "${_SimpleITK_uv_PATH}/bin/uv" "pip" "install" "jinja2~=3.1"
+    "${_SimpleITK_uv_EXECUTABLE}" "pip" "install" "jinja2~=3.1"
     "jsonschema~=4.24" "pyyaml~=6.0"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
   DEPENDS
