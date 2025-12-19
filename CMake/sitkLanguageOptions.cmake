@@ -92,7 +92,32 @@ if(WRAP_LUA)
   )
   mark_as_advanced(LUA_ADDITIONAL_LIBRARIES)
 
-  find_package(LuaInterp REQUIRED)
+  # Find Lua interpreter with matching version
+  if(LUA_VERSION_MAJOR AND LUA_VERSION_MINOR)
+    # Request interpreter matching the library major.minor version
+    find_package(LuaInterp ${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR} REQUIRED)
+  else()
+    find_package(LuaInterp REQUIRED)
+  endif()
+
+  # Validate that interpreter and library versions match
+  if(
+    NOT
+      (
+        "${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}"
+          VERSION_EQUAL
+          "${LUA_EXECUTABLE_VERSION_MAJOR}.${LUA_EXECUTABLE_VERSION_MINOR}"
+      )
+  )
+    message(
+      WARNING
+      "Lua library version (${LUA_VERSION_MAJOR}.${LUA_VERSION_MINOR}) "
+      "does not match Lua interpreter version "
+      "(${LUA_EXECUTABLE_VERSION_MAJOR}.${LUA_EXECUTABLE_VERSION_MINOR}). "
+      "This may cause runtime errors. Please install matching versions."
+    )
+  endif()
+
   list(
     APPEND
     SITK_LANGUAGES_VARS
