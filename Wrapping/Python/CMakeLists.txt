@@ -284,14 +284,6 @@ file(
   SimpleITK_PYTHON_PACKAGE_DIR
 )
 
-set(
-  SimpleITK_PYTHON_TEST_EXECUTABLE
-  "${Python_EXECUTABLE}"
-  CACHE INTERNAL
-  "Python executable for testing."
-  FORCE
-)
-
 include(sitkPythonVersion)
 sitk_get_pep440_version(SITK_PYTHON_VERSION)
 message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
@@ -338,8 +330,8 @@ install(
     COMPONENT Python
     EXCLUDE_FROM_ALL
 )
-include(LegacyPackaging.cmake)
 include(sitkPythonTestingEnvironment)
+include(LegacyPackaging.cmake)
 
 set(PYPROJECT_TOML_EXTRA "")
 
