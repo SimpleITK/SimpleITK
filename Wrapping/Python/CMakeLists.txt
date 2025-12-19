@@ -43,12 +43,6 @@ if(SimpleITK_PYTHON_EGG)
     "SimpleITK_PYTHON_EGG option is deprecated and no longer used."
   )
 endif()
-option(
-  SimpleITK_PYTHON_WHEEL
-  "Add building of python wheels to the dist target."
-  ON
-)
-mark_as_advanced(SimpleITK_PYTHON_WHEEL)
 
 if(
   CMAKE_VERSION
@@ -331,7 +325,7 @@ install(
     EXCLUDE_FROM_ALL
 )
 include(sitkPythonTestingEnvironment)
-include(LegacyPackaging.cmake)
+include(sitkPythonDistribution)
 
 set(PYPROJECT_TOML_EXTRA "")
 
