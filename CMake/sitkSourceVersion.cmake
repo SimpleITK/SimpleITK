@@ -26,15 +26,7 @@
 # _GIT_VERSION_POST is defined as the number of commits since the tag.
 #
 
-block(
-  SCOPE_FOR
-    VARIABLES
-  PROPAGATE
-    _GIT_VERSION_HASH
-    _GIT_VERSION_RC
-    _GIT_VERSION_POST
-    _GIT_VERSION_DEV
-)
+function(_sitk_set_source_version)
   include(sitkGetGitRevisionDescription)
 
   get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
@@ -150,4 +142,20 @@ Please use the git repository or an official source distribution.\n"
     "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake"
     @ONLY
   )
-endblock()
+
+  # Propagate variables to parent scope
+  set(_GIT_VERSION_HASH "${_GIT_VERSION_HASH}" PARENT_SCOPE)
+  set(_GIT_VERSION_MAJOR "${_GIT_VERSION_MAJOR}" PARENT_SCOPE)
+  set(_GIT_VERSION_MINOR "${_GIT_VERSION_MINOR}" PARENT_SCOPE)
+  set(_GIT_VERSION_PATCH "${_GIT_VERSION_PATCH}" PARENT_SCOPE)
+  set(_GIT_VERSION_TWEAK "${_GIT_VERSION_TWEAK}" PARENT_SCOPE)
+  set(_GIT_VERSION_RC "${_GIT_VERSION_RC}" PARENT_SCOPE)
+  if(DEFINED _GIT_VERSION_POST)
+    set(_GIT_VERSION_POST "${_GIT_VERSION_POST}" PARENT_SCOPE)
+  endif()
+  if(DEFINED _GIT_VERSION_DEV)
+    set(_GIT_VERSION_DEV "${_GIT_VERSION_DEV}" PARENT_SCOPE)
+  endif()
+endfunction()
+
+_sitk_set_source_version()
