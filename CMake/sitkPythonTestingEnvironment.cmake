@@ -17,6 +17,17 @@ option(
 mark_as_advanced(SimpleITK_PYTHON_USE_VIRTUALENV)
 sitk_legacy_naming(SimpleITK_PYTHON_USE_VIRTUALENV)
 
+set(PYTHON_COMMAND_PREFIX "")
+# add extra command which may be needed on some systems
+if(CMAKE_OSX_ARCHITECTURES)
+  list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+  set(
+    PYTHON_COMMAND_PREFIX
+    arch
+    -${test_arch}
+  )
+endif()
+
 if(SimpleITK_PYTHON_USE_VIRTUALENV)
   #TODO Check python version
 
@@ -48,7 +59,6 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
     "${VIRTUAL_PYTHON_EXECUTABLE}"
     CACHE INTERNAL
     "Python executable for testing."
-    FORCE
   )
 
   set(PythonVirtualEnv_ALL "")
@@ -62,17 +72,6 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
     DEPENDS
       "${VIRTUAL_PYTHON_EXECUTABLE}"
   )
-
-  set(PYTHON_COMMAND_PREFIX "")
-  # add extra command which may be needed on some systems
-  if(CMAKE_OSX_ARCHITECTURES)
-    list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
-    set(
-      PYTHON_COMMAND_PREFIX
-      arch
-      -${test_arch}
-    )
-  endif()
 
   add_custom_command(
     OUTPUT
@@ -90,5 +89,12 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
     DEPENDS
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
     COMMENT "Creating python virtual environment..."
+  )
+else()
+  set(
+    SimpleITK_PYTHON_TEST_EXECUTABLE
+    "${Python_EXECUTABLE}"
+    CACHE INTERNAL
+    "Python executable for testing."
   )
 endif()
