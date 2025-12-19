@@ -45,7 +45,7 @@ if tag == "{{ test.tag }}" then
   {% for value in setting.lua_value %}
   filter:AddSeed({{ value }})
   {% endfor %}
-  {% elseif setting.lua_value %}
+  {% elif setting.lua_value %}
   filter:Set{{ setting.parameter }}({{ setting.lua_value }})
   {% else %}
   filter:Set{{ setting.parameter }}({{ setting.value }})
