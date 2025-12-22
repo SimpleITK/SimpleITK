@@ -40,11 +40,34 @@ filter = SimpleITK.{{ name }}()
 {% for test in tests %}
 if tag == "{{ test.tag }}" then
   {% for setting in test.settings %}
-  {% if setting.parameter == "SeedList" and setting.lua_value %}
-  filter:ClearSeeds()
+  {% if setting.point_vec and setting.lua_value %}
+  filter:Clear{{ setting.parameter | replace('List', 's') }}()
   {% for value in setting.lua_value %}
-  filter:AddSeed({{ value }})
+  idx = SimpleITK.VectorUInt32()
+  for _,v in ipairs({{ value }}) do idx:push_back(v) end
+  filter:Add{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') }}(idx)
   {% endfor %}
+  {% elif setting.point_vec %}
+  filter:Clear{{ setting.parameter | replace('List', 's') }}()
+  {% for value in setting.value %}
+  pts = SimpleITK.VectorUInt32()
+  for _,v in ipairs({{ value }}) do pts:push_back(v) end
+  filter:Add{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') }}(pts)
+  {% endfor %}
+  {% elif setting.dim_vec %}
+  {% if setting.type == "bool" %}
+  idx = SimpleITK.VectorBool()
+  {% elif setting.type == "uint8_t" %}
+  idx = SimpleITK.VectorUInt8()
+  {% elif setting.type == "int" %}
+  idx = SimpleITK.VectorInt32()
+  {% elif setting.type == "double" %}
+  idx = SimpleITK.VectorDouble()
+  {% else %}
+  idx = SimpleITK.VectorUInt32()
+  {% endif %}
+  for _,v in ipairs({% if setting.lua_value %}{{ setting.lua_value }}{% else %}{{"{"}}{{ setting.value | join(', ') }}{{"}"}}{% endif %}) do idx:push_back(v) end
+  filter:Set{{ setting.parameter }}(idx)
   {% elif setting.lua_value %}
   filter:Set{{ setting.parameter }}({{ setting.lua_value }})
   {% else %}
@@ -59,9 +82,24 @@ if tag == "{{ test.tag }}" then
     table.insert(inputs, reader:Execute())
   end
 
+  {% if test.inputA_cast %}
+  inputs[1] = SimpleITK.Cast(inputs[1], SimpleITK.{{ test.inputA_cast }})
+  {% endif %}
+  {% if test.inputB_cast %}
+  inputs[2] = SimpleITK.Cast(inputs[2], SimpleITK.{{ test.inputB_cast }})
+  {% endif %}
+
   output = filter:Execute(unpack(inputs))
+  {% if not no_return_image -%}
+  labelIDs = {SimpleITK.sitkLabelUInt8, SimpleITK.sitkLabelUInt16, SimpleITK.sitkLabelUInt32, SimpleITK.sitkLabelUInt64}
+  for _,v in pairs(labelIDs) do
+    if v == output:GetPixelID() then
+      output = SimpleITK.LabelMapToLabel(output)
+    end
+  end
   writer:UseCompressionOn()
   writer:SetFileName(arg[#arg])
   writer:Execute(output)
+  {%- endif %}
 end
 {% endfor %}
