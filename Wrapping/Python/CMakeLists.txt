@@ -267,7 +267,12 @@ if(UNIX AND NOT APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   )
 endif()
 
-target_compile_options(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -w)
+target_compile_options(
+  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 
 # Installation

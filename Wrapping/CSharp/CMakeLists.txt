@@ -122,6 +122,11 @@ target_link_libraries(
   ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}
   ${SimpleITK_LIBRARIES}
 )
+target_compile_options(
+  ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+)
 set_target_properties(
   ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME}
   PROPERTIES

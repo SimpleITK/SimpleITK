@@ -48,7 +48,12 @@ if(APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
       "-Wno-register"
   )
 endif()
-target_compile_options(${SWIG_MODULE_simpleitk_TARGET_NAME} PRIVATE -w)
+target_compile_options(
+  ${SWIG_MODULE_simpleitk_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 
 sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_simpleitk_TARGET_NAME} ${Ruby_LIBRARY})
 target_include_directories(
