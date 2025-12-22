@@ -21,7 +21,11 @@ function(sitk_target_use_itk target_name interface_keyword)
   itk_module_config(_itk ${itk_modules})
 
   if(_itk_LIBRARY_DIRS)
-    link_libraries(${_itk_LIBRARY_DIRS})
+    target_link_directories(
+      ${target_name}
+      ${interface_keyword}
+      ${_itk_LIBRARY_DIRS}
+    )
   endif()
 
   if(_itk_LIBRARIES)
@@ -31,11 +35,35 @@ function(sitk_target_use_itk target_name interface_keyword)
       ${_itk_LIBRARIES}
     )
   endif()
+
   if(_itk_INCLUDE_DIRS)
     target_include_directories(
       ${target_name}
       ${interface_keyword}
       ${_itk_INCLUDE_DIRS}
+    )
+  endif()
+
+  # Add ITK required compiler and linker flags
+  if(ITK_REQUIRED_CXX_FLAGS)
+    separate_arguments(_itk_cxx_flags UNIX_COMMAND "${ITK_REQUIRED_CXX_FLAGS}")
+    target_compile_options(
+      ${target_name}
+      ${interface_keyword}
+      ${_itk_cxx_flags}
+    )
+  endif()
+
+  if(ITK_REQUIRED_LINK_FLAGS)
+    separate_arguments(
+      _itk_link_flags
+      UNIX_COMMAND
+      "${ITK_REQUIRED_LINK_FLAGS}"
+    )
+    target_link_options(
+      ${target_name}
+      ${interface_keyword}
+      ${_itk_link_flags}
     )
   endif()
 endfunction()

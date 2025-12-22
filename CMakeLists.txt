@@ -70,32 +70,6 @@ find_package(ITK REQUIRED)
 #we require certain packages be turned on in ITK
 include(sitkCheckForITKModuleDependencies)
 
-if(ITK_FOUND)
-  # NOTE: We are purposely not calling UseITK yet. However, we must make
-  # sure the required compilation and linker flags are set. Since, we
-  # are trying to encapsulate ITK, we need to very carefully control
-  # in access to the headers and libraries, hence each SimpleITK
-  # library will call UseITK.
-
-  # Add compiler flags needed to use ITK.
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ITK_REQUIRED_C_FLAGS}")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ITK_REQUIRED_CXX_FLAGS}")
-  set(
-    CMAKE_EXE_LINKER_FLAGS
-    "${CMAKE_EXE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}"
-  )
-  set(
-    CMAKE_SHARED_LINKER_FLAGS
-    "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}"
-  )
-  set(
-    CMAKE_MODULE_LINKER_FLAGS
-    "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}"
-  )
-
-  link_directories("${ITK_LIBRARY_DIRS}")
-endif()
-
 list(APPEND SimpleITK_PRIVATE_COMPILE_OPTIONS ${CXX_ADDITIONAL_WARNING_FLAGS})
 
 #----------------------------------------------------------
