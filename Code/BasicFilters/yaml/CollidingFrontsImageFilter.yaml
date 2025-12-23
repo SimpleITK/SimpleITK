@@ -102,7 +102,6 @@ tests:
     - '{30,30}'
     tcl_value:
     - 30 30
-    lua_value: '{ {30,30} }'
     python_value: '[ [30,30] ]'
     ruby_value: '[ [30,30] ]'
     R_value: list(c(30,30))

@@ -98,8 +98,10 @@ jobs:
           - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            apt-get-dependencies: "liblua5.3-dev lua5.3"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
+              WRAP_LUA:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
           - os: ubuntu-24.04
