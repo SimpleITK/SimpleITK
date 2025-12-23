@@ -46,5 +46,10 @@ target_link_libraries(
   ${TCL_LIBRARY}
 )
 target_include_directories(SimpleITKTclsh PRIVATE ${TCL_INCLUDE_PATH})
-target_compile_options(SimpleITKTclsh PRIVATE -w)
+target_compile_options(
+  SimpleITKTclsh
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 sitk_strip_target( SimpleITKTclsh )

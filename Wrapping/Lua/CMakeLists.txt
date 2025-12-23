@@ -57,7 +57,12 @@ if(SimpleITK_LUA_BUILD_EXECUTABLE)
     ${LUA_ADDITIONAL_LIBRARIES}
   )
   target_include_directories(SimpleITKLua PRIVATE ${LUA_INCLUDE_DIR})
-  target_compile_options(SimpleITKLua PRIVATE -w)
+  target_compile_options(
+    SimpleITKLua
+    PRIVATE
+      ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+      -w
+  )
   sitk_strip_target( SimpleITKLua )
 endif()
 
@@ -82,5 +87,10 @@ target_include_directories(
   PRIVATE
     ${LUA_INCLUDE_DIR}
 )
-target_compile_options(${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} PRIVATE -w)
+target_compile_options(
+  ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} )

@@ -22,9 +22,7 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)
   include(${SimpleITK_USE_FILE})
 
-  if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
-  endif()
+  include(sitkCheckRequiredFlags)
 
   include(CTest)
 

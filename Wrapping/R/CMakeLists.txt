@@ -69,7 +69,12 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_compile_options(${SWIG_MODULE_SimpleITK_TARGET_NAME} PRIVATE -w)
+target_compile_options(
+  ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 
 # set the output directory for the R library to the binary packaging location
 set_target_properties(

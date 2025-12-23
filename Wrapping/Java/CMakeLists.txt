@@ -64,7 +64,12 @@ target_include_directories(
     ${JAVA_INCLUDE_PATH}
     ${JNI_INCLUDE_DIRS}
 )
-target_compile_options(${SWIG_MODULE_SimpleITKJava_TARGET_NAME} PRIVATE -w)
+target_compile_options(
+  ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
 
 set(JAVA_SOURCE_CODE "${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java")
