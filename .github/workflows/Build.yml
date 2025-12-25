@@ -33,12 +33,14 @@ jobs:
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
     strategy:
+      fail-fast: false
       max-parallel: 5
       matrix:
         include:
           - os: mac-arm64
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
+            use-superbuild: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
@@ -49,14 +51,29 @@ jobs:
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
+          - os: mac-arm64
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            use-superbuild: false
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
           - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_build_parallel_level: 6
+            use-superbuild: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
+          - os: ubuntu-24.04-arm
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            use-superbuild: false
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              WRAP_JAVA:BOOL=ON
+              CMAKE_LINKER_TYPE:STRING=GOLD
           - os: ubuntu-24.04-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -146,4 +163,9 @@ jobs:
       run: |
         cmake --version
         ninja --version
-        ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
+        if [[ "${{ matrix.use-superbuild }}" == "false" ]]; then
+          DASHBOARD_SOURCE_CONFIG_DIR=""
+        else
+          DASHBOARD_SOURCE_CONFIG_DIR="SuperBuild"
+        fi
+        ctest -D dashboard_source_config_dir="${DASHBOARD_SOURCE_CONFIG_DIR}" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV

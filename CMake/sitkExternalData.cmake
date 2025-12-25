@@ -44,9 +44,12 @@ if(
   )
 endif()
 
-set(ExternalData_BINARY_ROOT ${CMAKE_BINARY_DIR}/ExternalData)
+set(ExternalData_BINARY_ROOT ${PROJECT_BINARY_DIR}/ExternalData)
 
-set(ExternalData_SOURCE_ROOT ${SimpleITK_SOURCE_DIR})
+if(NOT SimpleITK_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  # need to explicitly set source root for ExternalData when building a wrapping subdirectory
+  set(ExternalData_SOURCE_ROOT ${SimpleITK_SOURCE_DIR})
+endif()
 
 set(
   ExternalData_URL_TEMPLATES
