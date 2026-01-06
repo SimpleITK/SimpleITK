@@ -396,11 +396,7 @@ target_compile_options(
 )
 
 add_executable(sitkSystemInformationTest sitkSystemInformationTest.cxx)
-target_link_libraries(
-  sitkSystemInformationTest
-  ${SimpleITK_LIBRARIES}
-  ${ITK_LIBRARIES}
-)
+sitk_target_use_itk(sitkSystemInformationTest PRIVATE ITKCommon ITKKWSys )
 add_test(
   NAME sitkSystemInformationTest
   COMMAND

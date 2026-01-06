@@ -27,8 +27,6 @@ set(
   ITKLabelMap
 )
 
-include(${ITK_USE_FILE})
-
 if(MSVC AND SITK_BUILD_SHARED_LIBS)
   set(SimpleITKExplicit_FORCE_LIBRARY_TYPE "STATIC")
 endif()
