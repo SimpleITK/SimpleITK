@@ -71,8 +71,6 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
   cache_list_append(SimpleITK_LIBRARIES ${library_name} )
 endfunction()
 
-find_package(ITK REQUIRED COMPONENTS ITKCommon OPTIONAL_COMPONENTS ITKFFT)
-
 # common source which all basic filter libraries need to be linked against
 set(SimpleITKBasicFilters0Source sitkImageFilter.cxx)
 
