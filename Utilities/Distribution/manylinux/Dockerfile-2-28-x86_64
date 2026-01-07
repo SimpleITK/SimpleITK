@@ -1,0 +1,11 @@
+FROM quay.io/pypa/manylinux_2_28_x86_64
+LABEL maintainer="Insight Software Consortium <community@itk.org>"
+
+WORKDIR /tmp/
+
+RUN yum update -y\
+    && yum -y install java-devel\
+     && yum clean all
+
+# User is expected to mount directory to "/work"
+ENTRYPOINT ["bash", "-c", "/work/io/imagefiles/cmd.sh" ]
