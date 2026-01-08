@@ -1,13 +1,3 @@
-# The ITK factories are already compiled into the SimpleITK
-# libraries. So they are not needed again, additionally using ITK this
-# way will not cause the headers to be generated, so the managers
-# should not be used.
-foreach(_f IN LISTS ITK_FACTORY_LIST)
-  string(TOUPPER ${_f} _f)
-  set(ITK_NO_${_f}_FACTORY_REGISTER_MANAGER 1)
-endforeach()
-include(${ITK_USE_FILE})
-
 # Test data directory
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${ExternalData_BINARY_ROOT}/Testing/Data)
@@ -92,7 +82,7 @@ target_link_libraries(
   GTest::gtest
   SimpleITKUnitTestBase
   ${SimpleITK_LIBRARIES}
-  ${ITK_LIBRARIES}
+  ${ITK_INTERFACE_LIBRARIES}
 )
 target_compile_options(
   SimpleITKUnitTestDriver0
@@ -137,6 +127,7 @@ foreach(filter_config_file IN LISTS GENERATED_CONFIG_LIST)
       GTest::gtest
       SimpleITKUnitTestBase
       ${SimpleITK_LIBRARIES}
+      ITK::ITKKWSysModule
     )
     target_compile_options(
       SimpleITKUnitTestDriver${_exec_i}
@@ -372,6 +363,7 @@ target_link_libraries(
   GTest::gtest
   SimpleITKUnitTestBase
   ${SimpleITK_LIBRARIES}
+  ITK::ITKKWSysModule
 )
 target_compile_options(
   SimpleITKUnitTestDriver${_exec_i}
@@ -400,7 +392,12 @@ target_compile_options(
 )
 
 add_executable(sitkSystemInformationTest sitkSystemInformationTest.cxx)
-sitk_target_use_itk(sitkSystemInformationTest PRIVATE ITKCommon ITKKWSys )
+target_link_libraries(
+  sitkSystemInformationTest
+  PRIVATE
+    ITK::ITKCommonModule
+    ITK::ITKKWSysModule
+)
 add_test(
   NAME sitkSystemInformationTest
   COMMAND

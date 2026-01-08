@@ -52,18 +52,17 @@ set(
 
 set(
   use_itk_modules
-  ITKCommon
-  ITKImageCompose
-  ITKImageIntensity
-  ITKLabelMap
-  ITKTransform
-  ITKTransformIO
-  ITKIOTransformBase
-  ITKDisplacementField
+  ITK::ITKCommonModule
+  ITK::ITKImageComposeModule
+  ITK::ITKImageIntensityModule
+  ITK::ITKLabelMapModule
+  ITK::ITKTransformModule
+  ITK::ITKIOTransformBaseModule
+  ITK::ITKDisplacementFieldModule
 )
 
 if("GenericLabelInterpolator" IN_LIST ITK_MODULES_ENABLED)
-  list(APPEND use_itk_modules GenericLabelInterpolator)
+  list(APPEND use_itk_modules ITK::GenericLabelInterpolatorModule)
 endif()
 
 add_library(
@@ -72,8 +71,12 @@ add_library(
   ${SimpleITKAncillarySource}
 )
 
-sitk_target_use_itk_factory(SimpleITKCommon TransformIO)
-sitk_target_use_itk(SimpleITKCommon PRIVATE ${use_itk_modules})
+target_link_libraries(
+  SimpleITKCommon
+  PRIVATE
+    ${use_itk_modules}
+    ITK::ITKTransformIO
+)
 if(SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries(SimpleITKCommon PRIVATE SimpleITKExplicit)
 endif()

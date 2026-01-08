@@ -21,10 +21,10 @@ set(
 
 set(
   use_itk_modules
-  ITKCommon
-  ITKImageCompose
-  ITKImageIntensity
-  ITKLabelMap
+  ITK::ITKCommonModule
+  ITK::ITKImageComposeModule
+  ITK::ITKImageIntensityModule
+  ITK::ITKLabelMapModule
 )
 
 if(MSVC AND SITK_BUILD_SHARED_LIBS)
@@ -43,7 +43,7 @@ if(SITK_BUILD_SHARED_LIBS)
         default
   )
 endif()
-sitk_target_use_itk(SimpleITKExplicit PUBLIC ${use_itk_modules})
+target_link_libraries(SimpleITKExplicit PUBLIC ${use_itk_modules})
 
 # Add headers using FILE_SET for automatic include directory management and installation
 target_sources(
