@@ -44,14 +44,6 @@ set(
   ITKIOTransformBase
   ITKDisplacementField
 )
-find_package(
-  ITK
-  REQUIRED
-  COMPONENTS
-    ${use_itk_modules}
-  OPTIONAL_COMPONENTS
-    GenericLabelInterpolator
-)
 
 add_library(
   SimpleITKCommon
@@ -60,7 +52,10 @@ add_library(
 )
 
 sitk_target_use_itk_factory(SimpleITKCommon TransformIO)
-sitk_target_use_itk(SimpleITKCommon PRIVATE ${ITK_MODULES_REQUESTED})
+if("GenericLabelInterpolator" IN_LIST ITK_MODULES_ENABLED)
+  list(APPEND use_itk_modules GenericLabelInterpolator)
+endif()
+sitk_target_use_itk(SimpleITKCommon PRIVATE ${use_itk_modules})
 if(SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries(SimpleITKCommon PRIVATE SimpleITKExplicit)
 endif()

@@ -13,17 +13,13 @@ set(
   ITKMetricsv4
   ITKRegistrationMethodsv4
 )
-find_package(
-  ITK
-  REQUIRED
-  COMPONENTS
-    ${use_itk_modules}
-  OPTIONAL_COMPONENTS
-    GenericLabelInterpolator
-)
+
+if("GenericLabelInterpolator" IN_LIST ITK_MODULES_ENABLED)
+  list(APPEND use_itk_modules GenericLabelInterpolator)
+endif()
 
 add_library(SimpleITKRegistration ${SimpleITKRegistrationSource})
-sitk_target_use_itk(SimpleITKRegistration PRIVATE ${ITK_MODULES_REQUESTED})
+sitk_target_use_itk(SimpleITKRegistration PRIVATE ${use_itk_modules})
 
 # The BasicFiltersLibrary is needed of the Cast filter
 target_link_libraries(

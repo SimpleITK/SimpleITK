@@ -26,8 +26,6 @@ set(
   ITKImageIntensity
   ITKLabelMap
 )
-find_package(ITK COMPONENTS ${use_itk_modules} REQUIRED)
-include(${ITK_USE_FILE})
 
 if(MSVC AND SITK_BUILD_SHARED_LIBS)
   set(SimpleITKExplicit_FORCE_LIBRARY_TYPE "STATIC")

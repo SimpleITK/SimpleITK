@@ -2,8 +2,6 @@
 # libraries. So they are not needed again, additionally using ITK this
 # way will not cause the headers to be generated, so the managers
 # should not be used.
-
-# set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 foreach(_f ${ITK_FACTORY_LIST})
   string(TOUPPER ${_f} _f)
   set(ITK_NO_${_f}_FACTORY_REGISTER_MANAGER 1)
@@ -398,11 +396,7 @@ target_compile_options(
 )
 
 add_executable(sitkSystemInformationTest sitkSystemInformationTest.cxx)
-target_link_libraries(
-  sitkSystemInformationTest
-  ${SimpleITK_LIBRARIES}
-  ${ITK_LIBRARIES}
-)
+sitk_target_use_itk(sitkSystemInformationTest PRIVATE ITKCommon ITKKWSys )
 add_test(
   NAME sitkSystemInformationTest
   COMMAND

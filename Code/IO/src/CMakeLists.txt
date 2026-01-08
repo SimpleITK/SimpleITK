@@ -23,8 +23,6 @@ set(
   ITKImageIO
 )
 
-find_package(ITK COMPONENTS ${use_itk_modules})
-
 add_library(SimpleITKIO ${SimpleITKIOSource})
 sitk_target_use_itk(SimpleITKIO PRIVATE ${use_itk_modules})
 sitk_target_use_itk_factory(SimpleITKIO ImageIO)
