@@ -103,8 +103,8 @@ set(
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
-# Using ITK 6.0 Beta 1
-set(_DEFAULT_ITK_GIT_TAG "v6.0b01")
+# Using ITK 6.0 Beta 2 as the default tag
+set(_DEFAULT_ITK_GIT_TAG "v6.0b02")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(
