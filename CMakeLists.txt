@@ -260,6 +260,9 @@ function(sitk_install_exported_target tgt)
     ARCHIVE
       DESTINATION ${SimpleITK_INSTALL_ARCHIVE_DIR}
       COMPONENT Development
+    FILE_SET HEADERS
+      DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
+      COMPONENT Development
   )
 endfunction()
 
@@ -494,41 +497,7 @@ install(
   COMPONENT Development
 )
 
-file(
-  GLOB __files
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/[^.]*.h
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/[^.]*.hxx
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/[^.]*.h
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/[^.]*.hxx
-  ${CMAKE_SOURCE_DIR}/Code/IO/include/[^.]*.h
-  ${CMAKE_SOURCE_DIR}/Code/IO/include/[^.]*.hxx
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/[^.]*.h
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/[^.]*.hxx
-)
-
-if(SimpleITK_USE_ELASTIX)
-  file(
-    GLOB elastixTransformixWrapperFiles
-    ${CMAKE_SOURCE_DIR}/Code/ElastixTransformixWrappers/include/[^.]*.h
-  )
-  list(APPEND __files ${elastixTransformixWrapperFiles})
-endif()
-
-install(
-  FILES
-    ${__files}
-  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
-  COMPONENT Development
-)
-
-install(
-  DIRECTORY
-    ${CMAKE_SOURCE_DIR}/Code/Common/include/Ancillary
-  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}/
-  COMPONENT Development
-  FILES_MATCHING
-  PATTERN "*.h"
-)
+# Ancillary headers are installed via SimpleITKCommon FILE_SET, no separate install needed
 
 install(
   FILES

@@ -78,10 +78,14 @@ add_executable(
   SimpleITKUnitTestDriver.cxx
   ${SimpleITKUnitTestSource}
 )
-target_include_directories(
+# Add generated headers using FILE_SET for automatic include directory management
+target_sources(
   SimpleITKUnitTestDriver0
   PRIVATE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    FILE_SET private_headers
+      TYPE HEADERS
+      BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}
+      FILES ${CMAKE_CURRENT_BINARY_DIR}/sitkImageViewerTest.h
 )
 target_link_libraries(
   SimpleITKUnitTestDriver0

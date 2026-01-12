@@ -267,6 +267,7 @@ function(expand_template input_config_file input_dir output_dir library_name)
   get_config_path( itk_module ${input_config_file} itk_module)
   if(NOT "${itk_module}" STREQUAL "")
     cache_list_append(${library_name}GeneratedSource_${itk_module}  ${output_cxx})
+    cache_list_append(${library_name}GeneratedHeader_${itk_module}  ${output_h})
   endif()
 endfunction()
 
@@ -458,14 +459,15 @@ macro(generate_filter_source)
   configure_file("${tmp_generated_headers_h}" "${generated_headers_h}" COPYONLY)
   configure_file("${tmp_generated_headers_i}" "${generated_headers_i}" COPYONLY)
 
-  install(
-    FILES
-      ${SimpleITK${directory_name}GeneratedHeader}
-      ${generated_headers_h}
-      ${generated_headers_i}
-    DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
-    COMPONENT Development
+  # The generated headers file needs to be added to the GeneratedHeader cache variable
+  # so it can be included in FILE_SET
+  set(
+    ${directory_name}GeneratedHeadersFiles
+    ${generated_headers_h}
+    CACHE INTERNAL
+    ""
   )
+
   message(CHECK_PASS "done")
 endmacro()
 
