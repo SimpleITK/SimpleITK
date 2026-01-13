@@ -2,7 +2,7 @@
 # libraries. So they are not needed again, additionally using ITK this
 # way will not cause the headers to be generated, so the managers
 # should not be used.
-foreach(_f ${ITK_FACTORY_LIST})
+foreach(_f IN LISTS ITK_FACTORY_LIST)
   string(TOUPPER ${_f} _f)
   set(ITK_NO_${_f}_FACTORY_REGISTER_MANAGER 1)
 endforeach()
@@ -119,7 +119,7 @@ set(_exec_i 1) # exec 0 is the manual tests
 set(_i 0)
 set(_CMAKE_OUTPUT_CONTENT "")
 
-foreach(filter_config_file ${GENERATED_CONFIG_LIST})
+foreach(filter_config_file IN LISTS GENERATED_CONFIG_LIST)
   get_filename_component(FILTERNAME ${filter_config_file} NAME_WE)
 
   if(NOT _i LESS _stride)

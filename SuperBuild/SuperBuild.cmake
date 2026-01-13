@@ -471,7 +471,7 @@ list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES SimpleITK_VENV)
 
 get_cmake_property(_varNames VARIABLES)
 
-foreach(_varName ${_varNames})
+foreach(_varName IN LISTS _varNames)
   if(_varName MATCHES "^SimpleITK_" OR _varName MATCHES "^SITK_")
     if(
       NOT
@@ -668,7 +668,7 @@ set(
 # Dump external project dependencies
 #-----------------------------------------------------------------------------
 set(ep_dependency_graph "# External project dependencies")
-foreach(ep ${external_project_list})
+foreach(ep IN LISTS external_project_list)
   set(
     ep_dependency_graph
     "${ep_dependency_graph}\n${ep}: ${${ep}_DEPENDENCIES}"

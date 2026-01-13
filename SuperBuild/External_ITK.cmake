@@ -33,7 +33,7 @@ set(
   "Module_LabelErodeDilate"
   "Module_ITKReview"
 )
-foreach(_module ${_SimpleITK_DEFAULT_MODULES})
+foreach(_module IN LISTS _SimpleITK_DEFAULT_MODULES)
   if(NOT DEFINED ${_module})
     set(${_module} ON)
   endif()
@@ -45,7 +45,7 @@ endif()
 
 get_cmake_property(_varNames VARIABLES)
 
-foreach(_varName ${_varNames})
+foreach(_varName IN LISTS _varNames)
   if(
     _varName
       MATCHES

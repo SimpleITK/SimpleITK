@@ -122,7 +122,7 @@ file(
 
 set(_CMAKE_OUTPUT_CONTENT "")
 
-foreach(filter_config_file ${GENERATED_CONFIG_LIST})
+foreach(filter_config_file IN LISTS GENERATED_CONFIG_LIST)
   get_filename_component(FILTERNAME ${filter_config_file} NAME_WE)
 
   set(
