@@ -444,7 +444,7 @@ set(
 # Construct the proper number of get_filename_component(... PATH)
 # calls to compute the installation prefix.
 string(REGEX REPLACE "/" ";" _count "${SimpleITK_INSTALL_PACKAGE_DIR}")
-foreach(p ${_count})
+foreach(p IN LISTS _count)
   set(
     SimpleITKConfig_CODE
     "${SimpleITKConfig_CODE}

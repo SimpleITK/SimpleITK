@@ -31,7 +31,7 @@ list(
   ITKTransform
 )
 
-foreach(itkDependency ${_SITK_REQUIRED_ITK_MODULES})
+foreach(itkDependency IN LISTS _SITK_REQUIRED_ITK_MODULES)
   list(FIND ITK_MODULES_ENABLED ${itkDependency} ITKDependency_FOUND)
   if(ITKDependency_FOUND EQUAL -1)
     message(

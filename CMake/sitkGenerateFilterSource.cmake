@@ -309,7 +309,7 @@ macro(generate_filter_list)
   set(config_files ${yaml_config_files})
 
   # Loop through config files and expand each one
-  foreach(input_config_file ${config_files})
+  foreach(input_config_file IN LISTS config_files)
     get_config_path( itk_module ${input_config_file} itk_module)
 
     list(FIND ITK_MODULES_ENABLED "${itk_module}" _index)
@@ -364,7 +364,7 @@ macro(generate_filter_source)
   unset(SimpleITK${directory_name}GeneratedSource CACHE)
   unset(SimpleITK${directory_name}GeneratedHeader CACHE)
   get_cmake_property(_varNames VARIABLES)
-  foreach(_varName ${_varNames})
+  foreach(_varName IN LISTS _varNames)
     if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
       unset(${_varName} CACHE)
     endif()
@@ -381,7 +381,7 @@ macro(generate_filter_source)
   message(CHECK_START "Configuring C++ file generation")
 
   # Loop through config files and expand each one
-  foreach(f ${GENERATED_CONFIG_LIST})
+  foreach(f IN LISTS GENERATED_CONFIG_LIST)
     expand_template( ${f}
                       ${generated_code_input_path}
                       ${generated_code_output_path}
@@ -439,7 +439,7 @@ macro(generate_filter_source)
     "#define SimpleITK${directory_name}GeneratedHeaders_h\n"
   )
 
-  foreach(config_file ${GENERATED_CONFIG_LIST})
+  foreach(config_file IN LISTS GENERATED_CONFIG_LIST)
     get_filename_component(filtername ${config_file} NAME_WE)
     file(
       APPEND

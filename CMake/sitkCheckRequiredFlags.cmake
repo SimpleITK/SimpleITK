@@ -67,9 +67,9 @@ set(
   "^-std=" # required to be last
 )
 
-foreach(_r ${required_flags_regex_to_test})
+foreach(_r IN LISTS required_flags_regex_to_test)
   set(_HAS_FLAG 0)
-  foreach(f ${cmake_cxx_flags_list})
+  foreach(f IN LISTS cmake_cxx_flags_list)
     string(REGEX MATCH ${_r} _match ${f})
     if(_match)
       list(APPEND SimpleITK_PUBLIC_COMPILE_OPTIONS ${f})
