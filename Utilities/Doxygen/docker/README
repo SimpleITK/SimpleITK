@@ -1,18 +1,109 @@
-This dockerfile has been created to facilitate the creation of SimpleITK html
-doxygen documentation.
+# SimpleITK Doxygen Documentation Builder
 
-Run the following commands:
+## Overview
 
-#docker build --build-arg TAG=v1.1.0 . -f Dockerfile -t simpleitk-doxygen
+This Docker-based build system provides a clean, reproducible environment for
+generating SimpleITK's Doxygen documentation. The container includes all
+necessary dependencies including:
+
+- Doxygen 1.13.2
+- CMake and Ninja build system
+- Python 3 with virtual environment support
+- Graphviz for diagrams
+- LaTeX for PDF generation
+- Build tools and compilers
+
+The build process:
+1. Creates a Python virtual environment with required packages (Jinja2,
+   jsonschema, PyYAML, SWIG)
+2. Configures SimpleITK using CMake FetchContent to automatically download
+   and build ITK
+3. Generates comprehensive API documentation in both HTML and XML formats
+4. Packages the documentation into compressed archives
+
+## Usage
+
+### Building the Docker Image
+
+From this directory, build the Docker image:
+
+```bash
+docker build -f Dockerfile -t simpleitk-doxygen .
+```
+
+### Generating Documentation
+
+#### Option 1: Using Local SimpleITK Source
+
+To build documentation from your local SimpleITK repository (useful for testing
+changes before committing):
+
+```bash
+docker run \
+  --mount type=bind,source=/path/to/SimpleITK,destination=/work/SimpleITK,readonly \
+  --name sitk-dox \
+  simpleitk-doxygen
+```
+
+Replace `/path/to/SimpleITK` with the absolute path to your local SimpleITK
+source directory.
+
+#### Option 2: Cloning from GitHub
+
+To build documentation from a specific Git tag or branch:
+
+```bash
+export SIMPLEITK_GIT_TAG=v2.4.0
+docker run \
+  --env SIMPLEITK_GIT_TAG \
+  --name sitk-dox \
+  simpleitk-doxygen
+```
+
+If `SIMPLEITK_GIT_TAG` is not set, the `release` branch will be used by default.
+
+### Extracting Documentation Archives
+
+After the build completes, copy the generated documentation from the container:
+
+```bash
+docker cp sitk-dox:/SimpleITKDoxygen.tar.gz SimpleITKDoxygen${SIMPLEITK_GIT_TAG:+-${SIMPLEITK_GIT_TAG}}.tar.gz
+docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz SimpleITKDoxygenXML${SIMPLEITK_GIT_TAG:+-${SIMPLEITK_GIT_TAG}}.tar.gz
+```
+
+This creates:
+- `SimpleITKDoxygen[-TAG].tar.gz` - HTML documentation for web hosting
+- `SimpleITKDoxygenXML[-TAG].tar.gz` - XML documentation for further processing
+
+### Cleanup
+
+Remove the container after extracting the documentation:
+
+```bash
+docker rm sitk-dox
+```
+
+## Complete Example
+
+```bash
+# Build the image (only needed once)
 docker build -f Dockerfile -t simpleitk-doxygen .
 
-  export TAG=v1.2.0
-  docker run --env TAG --name sitk-dox simpleitk-doxygen
--or-
-  docker run \
-    --env TAG \
-    --mount type=bind,source=/home/blowekamp/src/SimpleITK,destination=/work/SimpleITK,readonly \
-    --name sitk-dox simpleitk-doxygen
+# Generate documentation for main branch using local source
+docker run \
+  --mount type=bind,source=$(pwd)/../../..,destination=/work/SimpleITK,readonly \
+  --name sitk-dox \
+  simpleitk-doxygen
 
-docker cp sitk-dox:/SimpleITKDoxygen.tar.gz SimpleITKDoxygen${TAG:+-${TAG}}.tar.gz
+# Extract the documentation
+docker cp sitk-dox:/SimpleITKDoxygen.tar.gz .
+docker cp sitk-dox:/SimpleITKDoxygenXML.tar.gz .
+
+# Clean up
 docker rm sitk-dox
+
+# Extract and view HTML documentation
+tar -xzf SimpleITKDoxygen.tar.gz
+open html/index.html  # macOS
+# or: xdg-open html/index.html  # Linux
+```
