@@ -14,14 +14,21 @@ target_link_libraries(
   PRIVATE
     ${ITK_LIBRARIES}
 )
-target_include_directories(
+
+# Add headers using FILE_SET for automatic include directory management
+target_sources(
   SimpleITKUnitTestBase
   PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  PRIVATE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    FILE_SET HEADERS
+      BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
+      FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarness.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageCompare.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/sitkTransformCompare.h
+        ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTestHarnessPaths.h
 )
 
+# FILE_SET automatically adds BASE_DIRS to INCLUDE_DIRECTORIES and INTERFACE_INCLUDE_DIRECTORIES
 target_compile_options(
   SimpleITKUnitTestBase
   PUBLIC
