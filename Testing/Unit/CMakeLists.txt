@@ -82,7 +82,30 @@ target_link_libraries(
   GTest::gtest
   SimpleITKUnitTestBase
   ${SimpleITK_LIBRARIES}
-  ${ITK_INTERFACE_LIBRARIES}
+  ITK::ITKAnisotropicSmoothingModule
+  ITK::ITKBiasCorrectionModule
+  ITK::ITKColormapModule
+  ITK::ITKCommonModule
+  ITK::ITKDeconvolutionModule
+  ITK::ITKDenoisingModule
+  ITK::ITKDisplacementFieldModule
+  ITK::ITKDistanceMapModule
+  ITK::ITKFastMarchingModule
+  ITK::ITKImageComposeModule
+  ITK::ITKImageFilterBaseModule
+  ITK::ITKImageFusionModule
+  ITK::ITKImageGridModule
+  ITK::ITKImageIntensityModule
+  ITK::ITKImageNoiseModule
+  ITK::ITKImageSourcesModule
+  ITK::ITKImageStatisticsModule
+  ITK::ITKLabelMapModule
+  ITK::ITKPDEDeformableRegistrationModule
+  ITK::ITKRegionGrowingModule
+  ITK::ITKSmoothingModule
+  ITK::ITKThresholdingModule
+  ITK::ITKTransformModule
+  ITK::SimpleITKFiltersModule
 )
 target_compile_options(
   SimpleITKUnitTestDriver0
