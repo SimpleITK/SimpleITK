@@ -464,6 +464,7 @@ macro(generate_filter_source)
   set(
     ${directory_name}GeneratedHeadersFiles
     ${generated_headers_h}
+    ${generated_headers_i}
     CACHE INTERNAL
     ""
   )
