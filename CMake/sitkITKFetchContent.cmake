@@ -6,14 +6,14 @@ include(FetchContent)
 # Set ITK Git repository and tag
 set(
   ITK_GIT_REPOSITORY
-  "https://github.com/InsightSoftwareConsortium/ITK.git"
+  "https://github.com/blowekamp/ITK.git"
   CACHE STRING
   "URL of ITK Git repository for FetchContent"
 )
 mark_as_advanced(ITK_GIT_REPOSITORY)
 
 # The commit contains the ExternaData changes to work with SimpleITK
-set(_DEFAULT_ITK_GIT_TAG "92e815d50e897830a899a79e7fe9a80e5734380d")
+set(_DEFAULT_ITK_GIT_TAG "cmake_interface_module")
 set(
   ITK_GIT_TAG
   "${_DEFAULT_ITK_GIT_TAG}"

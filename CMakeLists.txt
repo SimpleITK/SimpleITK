@@ -66,11 +66,12 @@ include(sitkITKFetchContent)
 
 include(sitkSITKLegacyNaming)
 include(sitkForbidDownloadsOption)
-include(sitkTargetUseITK)
 
 find_package(ITK REQUIRED)
+
 #we require certain packages be turned on in ITK
 include(sitkCheckForITKModuleDependencies)
+itk_generate_factory_registration(ImageIO TransformIO FFTImageFilterInit)
 
 list(APPEND SimpleITK_PRIVATE_COMPILE_OPTIONS ${CXX_ADDITIONAL_WARNING_FLAGS})
 

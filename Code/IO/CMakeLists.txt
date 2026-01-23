@@ -13,19 +13,22 @@ set(
 
 set(
   use_itk_modules
-  ITKCommon
-  ITKLabelMap
-  ITKImageCompose
-  ITKImageIntensity
-  ITKIOImageBase
-  ITKIOTransformBase
-  ITKIOGDCM
-  ITKImageIO
+  ITK::ITKCommonModule
+  ITK::ITKLabelMapModule
+  ITK::ITKImageComposeModule
+  ITK::ITKImageIntensityModule
+  ITK::ITKIOImageBaseModule
+  ITK::ITKIOTransformBaseModule
+  ITK::ITKIOGDCMModule
 )
 
 add_library(SimpleITKIO ${SimpleITKIOSource})
-sitk_target_use_itk(SimpleITKIO PRIVATE ${use_itk_modules})
-sitk_target_use_itk_factory(SimpleITKIO ImageIO)
+target_link_libraries(
+  SimpleITKIO
+  PRIVATE
+    ${use_itk_modules}
+    ITK::ITKImageIO
+)
 target_link_libraries(SimpleITKIO PUBLIC SimpleITKCommon)
 if(SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries(SimpleITKIO PRIVATE SimpleITKExplicit)

@@ -12,7 +12,7 @@ target_link_libraries(
     GTest::gtest
     ${SimpleITK_LIBRARIES}
   PRIVATE
-    ${ITK_LIBRARIES}
+    ITK::ITKKWSysModule
 )
 
 # Add headers using FILE_SET for automatic include directory management
@@ -42,7 +42,7 @@ target_link_libraries(
   sitkCompareDriver
   SimpleITKUnitTestBase
   ${SimpleITK_LIBRARIES}
-  ${ITK_LIBRARIES}
+  ITK::ITKKWSysModule
 )
 target_compile_options(
   sitkCompareDriver
