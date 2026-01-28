@@ -1,5 +1,6 @@
 # Set up code generation
 include(sitkGenerateFilterSource)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/src)
 generate_filter_source()
 
 set_source_files_properties(
