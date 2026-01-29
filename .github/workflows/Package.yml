@@ -57,7 +57,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310"
+          PYTHON_VERSIONS: "cp310-cp310"
           BUILD_CSHARP: ${{ matrix.build_csharp }}
           BUILD_JAVA: ${{ matrix.build_java }}
           BUILD_PYTHON_LIMITED_API: 1
@@ -232,12 +232,6 @@ jobs:
         uses: ./.github/actions/package_python
         with:
           python-version: "3.10"
-          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
-
-      - name: Package Python 3.9
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.9
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
 
       - name: Upload Artifacts
