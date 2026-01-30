@@ -53,12 +53,12 @@ endfunction()
 function(add_filter_library library_name src_list_var itk_module_list_var)
   add_library(${library_name} ${${src_list_var}})
 
-  sitk_target_use_itk(
+  target_link_libraries(
     ${library_name}
     PRIVATE
-    ${${itk_module_list_var}}
-    ITKLabelMap
-    ITKImageIntensity
+      ITK::${${itk_module_list_var}}Module
+      ITK::ITKLabelMapModule
+      ITK::ITKImageIntensityModule
   )
 
   target_link_libraries(
@@ -102,8 +102,13 @@ endfunction()
 set(SimpleITKBasicFilters0Source src/sitkImageFilter.cxx)
 
 add_library(SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source})
-sitk_target_use_itk(SimpleITKBasicFilters0 PRIVATE ITKCommon)
-target_link_libraries(SimpleITKBasicFilters0 PUBLIC SimpleITKCommon)
+target_link_libraries(
+  SimpleITKBasicFilters0
+  PRIVATE
+    ITK::ITKCommonModule
+  PUBLIC
+    SimpleITKCommon
+)
 
 # Add headers using FILE_SET for automatic include directory management and installation
 target_sources(
@@ -238,13 +243,6 @@ set(PREV_SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES})
 # because it needs FILE_SET to be added before export
 add_library(SimpleITKBasicFilters1 ${SimpleITKBasicFilters1Source})
 
-sitk_target_use_itk(
-  SimpleITKBasicFilters1
-  PRIVATE
-  ITKLabelMap
-  ITKImageIntensity
-)
-
 target_link_libraries(
   SimpleITKBasicFilters1
   PUBLIC
@@ -252,6 +250,8 @@ target_link_libraries(
     SimpleITKBasicFilters0
   PRIVATE
     ${PREV_SimpleITK_LIBRARIES}
+    ITK::ITKLabelMapModule
+    ITK::ITKImageIntensityModule
 )
 
 # Add headers using FILE_SET for automatic include directory management and installation
@@ -275,9 +275,21 @@ target_link_libraries(
 )
 
 if(GenericLabelInterpolator IN_LIST ITK_MODULES_ENABLED)
-  sitk_target_use_itk(SimpleITK_ITKImageGrid PRIVATE GenericLabelInterpolator)
+  target_link_libraries(
+    SimpleITK_ITKImageGrid
+    PRIVATE
+      ITK::GenericLabelInterpolatorModule
+  )
 endif()
 
-sitk_target_use_itk_factory(SimpleITK_ITKFFT FFTImageFilterInit)
-sitk_target_use_itk_factory(SimpleITK_ITKConvolution FFTImageFilterInit)
-sitk_target_use_itk_factory(SimpleITK_ITKDeconvolution FFTImageFilterInit)
+target_link_libraries(SimpleITK_ITKFFT PRIVATE ITK::ITKFFTImageFilterInit)
+target_link_libraries(
+  SimpleITK_ITKConvolution
+  PRIVATE
+    ITK::ITKFFTImageFilterInit
+)
+target_link_libraries(
+  SimpleITK_ITKDeconvolution
+  PRIVATE
+    ITK::ITKFFTImageFilterInit
+)

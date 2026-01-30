@@ -7,18 +7,18 @@ set(
 
 set(
   use_itk_modules
-  ITKCommon
-  ITKLabelMap
-  ITKOptimizersv4
-  ITKMetricsv4
-  ITKRegistrationMethodsv4
+  ITK::ITKCommonModule
+  ITK::ITKLabelMapModule
+  ITK::ITKOptimizersv4Module
+  ITK::ITKMetricsv4Module
+  ITK::ITKRegistrationMethodsv4Module
 )
 if("GenericLabelInterpolator" IN_LIST ITK_MODULES_ENABLED)
-  list(APPEND use_itk_modules GenericLabelInterpolator)
+  list(APPEND use_itk_modules ITK::GenericLabelInterpolatorModule)
 endif()
 
 add_library(SimpleITKRegistration ${SimpleITKRegistrationSource})
-sitk_target_use_itk(SimpleITKRegistration PRIVATE ${use_itk_modules})
+target_link_libraries(SimpleITKRegistration PRIVATE ${use_itk_modules})
 
 # The BasicFiltersLibrary is needed of the Cast filter
 target_link_libraries(
