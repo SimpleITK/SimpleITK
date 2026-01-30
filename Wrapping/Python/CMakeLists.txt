@@ -341,14 +341,6 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
   )
 endif()
 
-if(CMAKE_OSX_DEPLOYMENT_TARGET)
-  set(
-    PYPROJECT_TOML_EXTRA
-    "${PYPROJECT_TOML_EXTRA}\n
-    [tool.scikit-build.cmake.define]\nCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}\n"
-  )
-endif()
-
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
   "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"

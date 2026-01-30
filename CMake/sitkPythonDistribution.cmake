@@ -32,10 +32,22 @@ Using unknown versions of pip, setuptools and/or wheel packages/"
     "."
   )
 
+  # Configure the platform tag for macOS wheels to contain the OSX deployment target
+  if(CMAKE_OSX_DEPLOYMENT_TARGET)
+    set(
+      CMAKE_ENVIRONMENT_PREFIX
+      ${CMAKE_COMMAND}
+      -E
+      env
+      MACOSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+    )
+  endif()
+
   add_custom_target(
     dist.Python
-    ${PYTHON_COMMAND_PREFIX} ${SimpleITK_PYTHON_TEST_EXECUTABLE}
-    ${pip_wheel_commands}
+    COMMAND
+      ${CMAKE_ENVIRONMENT_PREFIX} ${PYTHON_COMMAND_PREFIX}
+      ${SimpleITK_PYTHON_TEST_EXECUTABLE} ${pip_wheel_commands}
     WORKING_DIRECTORY ${SimpleITK_Python_BINARY_DIR}
     DEPENDS
       ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
