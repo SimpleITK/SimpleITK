@@ -1,0 +1,76 @@
+# This file is configured to install SimpleITK from the build directory.
+
+[build-system]
+requires = [
+  "scikit-build-core==0.11.5",
+  "setuptools-scm>=8.0",
+  "swig~=4.4.0",
+  "jinja2~=3.1",
+  "jsonschema~=4.24",
+  "pyyaml~=6.0"
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "simpleitk"
+readme = {file = "Readme.md", content-type = "text/markdown"}
+authors = [
+    {name = "Insight Software Consortium", email = "insight-users@itk.org"}
+]
+description = "SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation"
+license = "Apache-2.0"
+keywords = ["SimpleITK", "ITK", "InsightToolkit", "segmentation", "registration", "medical imaging", "image processing", "computer vision", "DICOM"]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: C++",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: MacOS"
+]
+requires-python = ">=3.10"
+dynamic = ["version"]
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "no-local-version"
+write_to = "Wrapping/Python/SimpleITK/_version.py"
+tag_regex = "^v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
+
+[tool.scikit-build]
+minimum-version = "0.11"
+cmake.version = ">=3.26.1"
+cmake.build-type = "Release"
+wheel.packages = []
+install.components = ["Python"]
+
+[tool.scikit-build.cmake.define]
+WRAP_DEFAULT="OFF"
+WRAP_PYTHON = "ON"
+BUILD_TESTING = "OFF"
+BUILD_EXAMPLES = "OFF"
+BUILD_SHARED_LIBS = "OFF"
+ITK_C_OPTIMIZATION_FLAGS = ""
+ITK_CXX_OPTIMIZATION_FLAGS = ""
+SimpleITK_BUILD_DISTRIBUTE = "ON"
+
+[[tool.scikit-build.overrides]]
+if.python-version = ">=3.11"
+wheel.py-api = "cp311"
+
+[project.urls]
+Homepage = "http://simpleitk.org/"
+"Bug Tracker" = "https://github.com/SimpleITK/SimpleITK/issues"
+Documentation = "https://simpleitk.readthedocs.io/en/release/"
+"Source Code" = "https://github.com/SimpleITK/SimpleITK"

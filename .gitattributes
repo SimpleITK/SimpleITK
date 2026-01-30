@@ -1,4 +1,5 @@
 .git*            export-ignore
+.git_archival.txt  -export-ignore export-subst
 .hooks*          export-ignore
 .mailmap         export-ignore
 
