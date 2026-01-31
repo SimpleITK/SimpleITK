@@ -44,7 +44,18 @@ if(SimpleITK_PYTHON_EGG)
   )
 endif()
 
-if(
+if(SKBUILD)
+  if(SKBUILD_SABI_VERSION STREQUAL "3.11")
+    set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+  elseif(SKBUILD_SABI_VERSION STREQUAL "")
+    set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+  else()
+    message(
+      FATAL_ERROR
+      "Unsupported SKBUILD_SABI_VERSION: ${SKBUILD_SABI_VERSION}"
+    )
+  endif()
+elseif(
   CMAKE_VERSION
     VERSION_GREATER_EQUAL
     "3.26"

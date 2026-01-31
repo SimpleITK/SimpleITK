@@ -70,7 +70,8 @@ if.python-version = ">=3.11"
 wheel.py-api = "cp311"
 
 [project.urls]
-Homepage = "http://simpleitk.org/"
-"Bug Tracker" = "https://github.com/SimpleITK/SimpleITK/issues"
-Documentation = "https://simpleitk.readthedocs.io/en/release/"
-"Source Code" = "https://github.com/SimpleITK/SimpleITK"
+homepage = "https://simpleitk.org/"
+source = "https://github.com/SimpleITK/SimpleITK"
+download = "https://pypi.org/project/simpleitk/#files"
+issues = "https://github.com/SimpleITK/SimpleITK/issues"
+documentation = "https://simpleitk.readthedocs.io/en/release/"
