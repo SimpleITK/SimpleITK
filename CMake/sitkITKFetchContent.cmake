@@ -12,8 +12,7 @@ set(
 )
 mark_as_advanced(ITK_GIT_REPOSITORY)
 
-# Merge of Modernization of ITK Modular System
-set(_DEFAULT_ITK_GIT_TAG "5ddc558191b9527c7545849aee6638262d6120a8")
+set(_DEFAULT_ITK_GIT_TAG "v6.0b02")
 set(
   ITK_GIT_TAG
   "${_DEFAULT_ITK_GIT_TAG}"
