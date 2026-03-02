@@ -132,14 +132,52 @@ set(
 )
 
 if(APPLE)
-  # On linux platform some times the libR.so is not available, however
-  # on apple a link error results if the library is linked.
+  # On macOS, R library must be explicitly linked
   list(
     APPEND
     _REQUIRED_R_VARIABLES
     R_LIBRARIES
     R_LIBRARY_BASE
   )
+elseif(WIN32)
+  # On Windows, R.dll may not be found by find_library in some installations,
+  # but R CMD config provides the necessary linker flags
+  if(R_LIBRARY_BASE)
+    # Prefer the library if found
+    list(APPEND _REQUIRED_R_VARIABLES R_LIBRARY_BASE)
+  elseif(NOT R_LDFLAGS)
+    # If neither library nor linker flags are available, fail
+    message(
+      WARNING
+      "R library not found and R CMD config --ldflags is empty. "
+      "R may not be properly configured for development. "
+      "Ensure R was installed with development headers."
+    )
+    list(
+      APPEND
+      _REQUIRED_R_VARIABLES
+      R_LIBRARY_BASE # This will cause find_package to fail
+    )
+  endif()
+elseif(UNIX)
+  # On Linux, libR.so may not be found by find_library, but we can still
+  # link successfully if R CMD config provides linker flags
+  if(R_LIBRARY_BASE)
+    # Prefer the library if found
+    list(APPEND _REQUIRED_R_VARIABLES R_LIBRARY_BASE)
+  elseif(NOT R_LDFLAGS)
+    # If neither library nor linker flags are available, fail
+    message(
+      WARNING
+      "R library not found and R CMD config --ldflags is empty. "
+      "R may not be properly configured for development."
+    )
+    list(
+      APPEND
+      _REQUIRED_R_VARIABLES
+      R_LIBRARY_BASE # This will cause find_package to fail
+    )
+  endif()
 endif()
 
 find_package_handle_standard_args(
@@ -148,3 +186,16 @@ find_package_handle_standard_args(
     ${_REQUIRED_R_VARIABLES}
   VERSION_VAR R_VERSION_STRING
 )
+
+# Provide guidance on how to use R_LIBRARIES and R_LDFLAGS
+if(R_FOUND)
+  if(R_LIBRARY_BASE)
+    message(STATUS "R linking: Using R_LIBRARIES=${R_LIBRARIES}")
+  elseif(R_LDFLAGS)
+    message(
+      STATUS
+      "R linking: Library not found, but R CMD config provides: ${R_LDFLAGS}"
+    )
+    message(STATUS "  Use R_LDFLAGS for linking on this platform")
+  endif()
+endif()
