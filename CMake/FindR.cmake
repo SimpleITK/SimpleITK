@@ -9,6 +9,8 @@
 # R_COMMAND          - Path to R command
 # RSCRIPT_EXECUTABLE - Path to Rscript command
 # R_VERSION_STRING   - R version obtained from R_COMMAND and R.version variable
+# R_CPPFLAGS         - C preprocessor flags from R CMD config --cppflags
+# R_LDFLAGS          - Linker flags from R CMD config --ldflags
 
 # Make sure find package macros are included
 include(FindPackageHandleStandardArgs)
@@ -34,6 +36,44 @@ if(R_COMMAND)
     OUTPUT_VARIABLE R_VERSION_STRING
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
+
+  # Query R for include directory using R.home('include')
+  execute_process(
+    WORKING_DIRECTORY .
+    COMMAND
+      ${R_COMMAND} --slave --vanilla -e "cat(R.home('include'))"
+    OUTPUT_VARIABLE R_INCLUDE_DIR_FROM_R
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+
+  # Query R for library directory
+  execute_process(
+    WORKING_DIRECTORY .
+    COMMAND
+      ${R_COMMAND} --slave --vanilla -e "cat(R.home('lib'))"
+    OUTPUT_VARIABLE R_LIB_DIR_FROM_R
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+
+  # Query R CMD config for compiler flags
+  execute_process(
+    WORKING_DIRECTORY .
+    COMMAND
+      ${R_COMMAND} CMD config --cppflags
+    OUTPUT_VARIABLE R_CPPFLAGS
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
+
+  # Query R CMD config for linker flags
+  execute_process(
+    WORKING_DIRECTORY .
+    COMMAND
+      ${R_COMMAND} CMD config --ldflags
+    OUTPUT_VARIABLE R_LDFLAGS
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
 endif(R_COMMAND)
 
 find_program(RSCRIPT_EXECUTABLE Rscript DOC "Rscript executable.")
@@ -42,9 +82,12 @@ set(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
 
 # R.h gets installed in all sorts of places -
 # ubuntu: /usr/share/R/include, RHEL/Fedora: /usr/include/R/R.h
+# Prioritize the path obtained from R itself
 find_path(
   R_INCLUDE_DIR
   R.h
+  HINTS
+    ${R_INCLUDE_DIR_FROM_R}
   PATHS
     /usr/local/lib
     /usr/local/lib64
@@ -60,6 +103,8 @@ find_path(
 find_library(
   R_LIBRARY_BASE
   R
+  HINTS
+    ${R_LIB_DIR_FROM_R}
   PATHS
     ${R_BASE_DIR}
   PATH_SUFFIXES
@@ -74,6 +119,10 @@ mark_as_advanced(
   R_INCLUDE_DIR
   R_COMMAND
   R_LIBRARY_BASE
+  R_CPPFLAGS
+  R_LDFLAGS
+  R_INCLUDE_DIR_FROM_R
+  R_LIB_DIR_FROM_R
 )
 
 set(
