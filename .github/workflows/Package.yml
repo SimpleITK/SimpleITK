@@ -195,7 +195,7 @@ jobs:
 
       - name: Generate Source and Data Archives
         shell: bash
-        if: matrix.os == 'mac-15'
+        if: matrix.os == 'macos-15-intel'
         run: |
           set -xe
 
