@@ -3,14 +3,10 @@
 # This file centralizes the ITK repository and tag CMake cache variables
 # to avoid duplication between FetchContent and ExternalProject driven builds.
 
-if(DEFINED git_protocol)
-  set(
-    _itk_repo
-    "${git_protocol}://github.com/InsightSoftwareConsortium/ITK.git"
-  )
-else()
-  set(_itk_repo "https://github.com/InsightSoftwareConsortium/ITK.git")
-endif()
+set(
+  _itk_repo
+  "${SimpleITK_GIT_PROTOCOL}://github.com/InsightSoftwareConsortium/ITK.git"
+)
 
 set(ITK_GIT_REPOSITORY "${_itk_repo}" CACHE STRING "URL of ITK Git repository")
 mark_as_advanced(ITK_GIT_REPOSITORY)

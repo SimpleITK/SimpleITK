@@ -62,6 +62,7 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 include(sitkCompilerWarningsSettings)
 
+include(sitkGitProtocol)
 include(sitkITKFetchContent)
 
 include(sitkSITKLegacyNaming)
