@@ -3,23 +3,8 @@
 
 include(FetchContent)
 
-# Set ITK Git repository and tag
-set(
-  ITK_GIT_REPOSITORY
-  "https://github.com/InsightSoftwareConsortium/ITK.git"
-  CACHE STRING
-  "URL of ITK Git repository for FetchContent"
-)
-mark_as_advanced(ITK_GIT_REPOSITORY)
-
-set(_DEFAULT_ITK_GIT_TAG "v6.0b02")
-set(
-  ITK_GIT_TAG
-  "${_DEFAULT_ITK_GIT_TAG}"
-  CACHE STRING
-  "Tag in ITK git repo for FetchContent"
-)
-mark_as_advanced(ITK_GIT_TAG)
+# Set ITK Git repository and tag (shared)
+include("${CMAKE_CURRENT_LIST_DIR}/sitkITKGitOptions.cmake")
 
 if(NOT DEFINED ITK_BUILD_DEFAULT_MODULES)
   set(ITK_BUILD_DEFAULT_MODULES ON)

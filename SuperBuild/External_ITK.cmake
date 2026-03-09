@@ -94,23 +94,7 @@ variablelisttoargs( ITK_VARS  ep_itk_args )
 
 set(proj ITK) ## Use ITK convention of calling it ITK
 
-set(
-  ITK_GIT_REPOSITORY
-  "${git_protocol}://github.com/InsightSoftwareConsortium/ITK.git"
-  CACHE STRING
-  "URL of ITK Git repository"
-)
-mark_as_advanced(ITK_GIT_REPOSITORY)
-sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
-
-set(_DEFAULT_ITK_GIT_TAG "v6.0b02")
-set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
-mark_as_advanced(ITK_GIT_TAG)
-set(
-  ITK_TAG_COMMAND
-  GIT_TAG
-  "${ITK_GIT_TAG}"
-)
+include("${CMAKE_CURRENT_LIST_DIR}/../CMake/sitkITKGitOptions.cmake")
 
 set(ITK_USE_GIT_PROTOCOL 0)
 if("${git_protocol}" STREQUAL "git")
