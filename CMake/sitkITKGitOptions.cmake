@@ -15,7 +15,7 @@ if(COMMAND sitk_legacy_naming)
   sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 endif()
 
-set(_DEFAULT_ITK_GIT_TAG "v6.0b02")
+set(_DEFAULT_ITK_GIT_TAG "c79274e4") # main on 2026-03-09
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 
