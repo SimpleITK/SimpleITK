@@ -14,6 +14,9 @@ SET(CTEST_CUSTOM_COVERAGE_EXCLUDE
 
  # Exclude files from the Testing directories
  ".*/Testing/.*"
+
+ # Exclude FetchContent dependencies
+ ".*/_deps/.*"
  )
 
 SET(CTEST_CUSTOM_WARNING_EXCEPTION
