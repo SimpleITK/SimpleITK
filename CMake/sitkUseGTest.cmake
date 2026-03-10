@@ -27,7 +27,7 @@ endif()
 # Fetch GTest using FetchContent
 set(
   GOOGLETEST_GIT_REPOSITORY
-  "https://github.com/google/googletest.git"
+  "${SimpleITK_GIT_PROTOCOL}://github.com/google/googletest.git"
   CACHE STRING
   "Google Test repository"
 )

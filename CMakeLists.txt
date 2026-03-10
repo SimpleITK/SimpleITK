@@ -62,10 +62,14 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 include(sitkCompilerWarningsSettings)
 
+include(sitkGitProtocol)
 include(sitkITKFetchContent)
 
 include(sitkSITKLegacyNaming)
 include(sitkForbidDownloadsOption)
+
+# Include GNUInstallDirs for standard installation directories
+include(GNUInstallDirs)
 
 find_package(ITK REQUIRED)
 
@@ -162,34 +166,35 @@ endif()
 
 #------------------------------------------------------------------------------
 # Variables for use in install rules:
+# Using GNUInstallDirs standard variables with project-specific subdirectories
 
-if(NOT SimpleITK_INSTALL_RUNTIME_DIR)
-  set(SimpleITK_INSTALL_RUNTIME_DIR "bin")
-endif()
-if(NOT SimpleITK_INSTALL_LIBRARY_DIR)
-  set(SimpleITK_INSTALL_LIBRARY_DIR "lib")
-endif()
-if(NOT SimpleITK_INSTALL_ARCHIVE_DIR)
-  set(SimpleITK_INSTALL_ARCHIVE_DIR "lib")
-endif()
-if(NOT SimpleITK_INSTALL_INCLUDE_DIR)
-  set(
-    SimpleITK_INSTALL_INCLUDE_DIR
-    "include/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}"
-  )
-endif()
-if(NOT SimpleITK_INSTALL_DOC_DIR)
-  set(
-    SimpleITK_INSTALL_DOC_DIR
-    share/doc/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}
-  )
-endif()
-if(NOT SimpleITK_INSTALL_PACKAGE_DIR)
-  set(
-    SimpleITK_INSTALL_PACKAGE_DIR
-    "${SimpleITK_INSTALL_LIBRARY_DIR}/cmake/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}"
-  )
-endif()
+# Set project-specific installation directories using GNUInstallDirs defaults
+set(
+  SimpleITK_INSTALL_INCLUDEDIR
+  "${CMAKE_INSTALL_INCLUDEDIR}/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}"
+  CACHE STRING
+  "Include directory for SimpleITK headers"
+)
+
+set(
+  SimpleITK_INSTALL_DOCDIR
+  "${CMAKE_INSTALL_DOCDIR}-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}"
+  CACHE STRING
+  "Documentation directory for SimpleITK"
+)
+
+set(
+  SimpleITK_INSTALL_PACKAGEDIR
+  "${CMAKE_INSTALL_LIBDIR}/cmake/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}"
+  CACHE STRING
+  "CMake package files directory for SimpleITK"
+)
+
+mark_as_advanced(
+  SimpleITK_INSTALL_INCLUDEDIR
+  SimpleITK_INSTALL_DOCDIR
+  SimpleITK_INSTALL_PACKAGEDIR
+)
 
 function(sitk_install_exported_target tgt)
   get_target_property(type ${tgt} TYPE)
@@ -223,16 +228,16 @@ function(sitk_install_exported_target tgt)
       ${tgt}
     EXPORT SimpleITKTargets
     RUNTIME
-      DESTINATION ${SimpleITK_INSTALL_RUNTIME_DIR}
+      DESTINATION ${CMAKE_INSTALL_BINDIR}
       COMPONENT Runtime
     LIBRARY
-      DESTINATION ${SimpleITK_INSTALL_LIBRARY_DIR}
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
       COMPONENT Runtime
     ARCHIVE
-      DESTINATION ${SimpleITK_INSTALL_ARCHIVE_DIR}
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
       COMPONENT Development
     FILE_SET HEADERS
-      DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
+      DESTINATION ${SimpleITK_INSTALL_INCLUDEDIR}
       COMPONENT Development
   )
 endfunction()
@@ -417,7 +422,7 @@ set(
 )
 # Construct the proper number of get_filename_component(... PATH)
 # calls to compute the installation prefix.
-string(REGEX REPLACE "/" ";" _count "${SimpleITK_INSTALL_PACKAGE_DIR}")
+string(REGEX REPLACE "/" ";" _count "${SimpleITK_INSTALL_PACKAGEDIR}")
 foreach(p IN LISTS _count)
   set(
     SimpleITKConfig_CODE
@@ -429,7 +434,7 @@ set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}\n")
 
 set(
   SimpleITKConfig_INCLUDE_DIRS
-  "\${SimpleITK_INSTALL_PREFIX}/${SimpleITK_INSTALL_INCLUDE_DIR}"
+  "\${SimpleITK_INSTALL_PREFIX}/${SimpleITK_INSTALL_INCLUDEDIR}"
 )
 
 configure_file(
@@ -458,13 +463,13 @@ install(
     ${SimpleITK_BINARY_DIR}/CMakeFiles/SimpleITKConfig.cmake
     ${SimpleITK_BINARY_DIR}/SimpleITKConfigVersion.cmake
     ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake
-  DESTINATION ${SimpleITK_INSTALL_PACKAGE_DIR}
+  DESTINATION ${SimpleITK_INSTALL_PACKAGEDIR}
   COMPONENT Development
 )
 
 install(
   EXPORT SimpleITKTargets
-  DESTINATION ${SimpleITK_INSTALL_PACKAGE_DIR}
+  DESTINATION ${SimpleITK_INSTALL_PACKAGEDIR}
   COMPONENT Development
 )
 
@@ -473,7 +478,7 @@ install(
 install(
   FILES
     ${SimpleITK_DOC_FILES}
-  DESTINATION "${SimpleITK_INSTALL_DOC_DIR}"
+  DESTINATION "${SimpleITK_INSTALL_DOCDIR}"
   COMPONENT Runtime
 )
 
