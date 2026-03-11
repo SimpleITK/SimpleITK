@@ -195,7 +195,7 @@ jobs:
 
       - name: Generate Source and Data Archives
         shell: bash
-        if: matrix.os == 'mac-15'
+        if: matrix.os == 'macos-15-intel'
         run: |
           set -xe
 
@@ -315,7 +315,7 @@ jobs:
 
           To upgrade to this Python binary package run:
           \`\`\`pip install --upgrade --pre simpleitk --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
-          " >notes.txt
+          " >>notes.txt
 
           ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
             --hash md5 \
@@ -348,7 +348,7 @@ jobs:
             $create_args \
             --notes-file notes.txt \
             --title "Release ${{ github.ref_name }}"
-          gh release upload ${{ steps.tag.outputs.name }} $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" -o -name "*.zip" -o -name "*.gz" )
+          gh release upload ${{ steps.tag.outputs.name }} $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
 
           if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
             gh release edit ${{ steps.tag.outputs.name }} --draft=false
