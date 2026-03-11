@@ -101,10 +101,13 @@ jobs:
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_osx_architectures: "x86_64"
+            use-ccache: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=OFF
+              CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+              CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: windows-2022
             name: windows-v142-x64-python-java-csharp
             cmake-build-type: "Release"
@@ -159,7 +162,11 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r ./.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.4.0
         if [[ "${{ matrix.use-ccache }}" == "true" ]]; then
-          sudo apt-get install -y ccache
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            sudo apt-get install -y ccache
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            brew install ccache
+          fi
         fi
     - name: Restore ccache
       if: matrix.use-ccache
