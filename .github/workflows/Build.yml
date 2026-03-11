@@ -30,6 +30,7 @@ jobs:
     # platforms.
     if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
     strategy:
@@ -38,6 +39,7 @@ jobs:
       matrix:
         include:
           - os: mac-arm64
+            name: mac-arm64-superbuild-python-java-tcl-ruby
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             use-superbuild: true
@@ -52,44 +54,62 @@ jobs:
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
           - os: mac-arm64
+            name: mac-arm64-python
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-superbuild: false
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
           - os: ubuntu-24.04
+            name: linux-x64-superbuild-elastix-python
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_build_parallel_level: 6
             use-superbuild: true
+            use-ccache: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
+              CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+              CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: ubuntu-24.04-arm
+            name: linux-arm-gold-linker-python-java
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-superbuild: false
+            use-ccache: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               CMAKE_LINKER_TYPE:STRING=GOLD
+              CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+              CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: ubuntu-24.04-arm
+            name: linux-arm-itk-build-python-java
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
+            use-ccache: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               ITK_USE_BUILD_DIR:BOOL=ON
+              CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+              CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: macos-15
+            name: macos-x86_64-python-java
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_osx_architectures: "x86_64"
+            use-ccache: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=OFF
+              CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
+              CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: windows-2022
+            name: windows-v142-x64-python-java-csharp
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"
             cmake-generator-toolset: v142,host=x64
@@ -137,9 +157,34 @@ jobs:
       with:
         python-version: 3.11
     - name: Install build dependencies
+      shell: bash
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r ./.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.4.0
+        if [[ "${{ matrix.use-ccache }}" == "true" ]]; then
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            sudo apt-get install -y ccache
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            brew install ccache
+          fi
+        fi
+    - name: Restore ccache
+      if: matrix.use-ccache
+      uses: actions/cache@v5
+      with:
+        path: ${{ runner.temp }}/.ccache
+        key: ccache-v1-${{ matrix.name }}-${{ github.base_ref || github.ref_name }}-${{ github.sha }}
+        restore-keys: |
+          ccache-v1-${{ matrix.name }}-${{ github.base_ref || github.ref_name }}-
+          ccache-v1-${{ matrix.name }}-
+    - name: Configure ccache
+      if: matrix.use-ccache
+      run: |
+        echo "CCACHE_DIR=${{ runner.temp }}/.ccache" >> "$GITHUB_ENV"
+        echo "CCACHE_NODIRECT=1" >> "$GITHUB_ENV"
+        ccache --max-size=2.0G
+        ccache --zero-stats
+        ccache --show-config
     - name: Build and Test
       shell: bash
       env:
@@ -169,3 +214,6 @@ jobs:
           DASHBOARD_SOURCE_CONFIG_DIR="SuperBuild"
         fi
         ctest -D dashboard_source_config_dir="${DASHBOARD_SOURCE_CONFIG_DIR}" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
+    - name: ccache stats
+      if: matrix.use-ccache
+      run: ccache --show-stats
