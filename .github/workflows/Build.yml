@@ -30,6 +30,7 @@ jobs:
     # platforms.
     if: github.repository == 'SimpleITK/SimpleITK'
     runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
     env:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
     strategy:
@@ -38,6 +39,7 @@ jobs:
       matrix:
         include:
           - os: mac-arm64
+            name: mac-arm64-superbuild-python-java-tcl-ruby
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             use-superbuild: true
@@ -52,12 +54,14 @@ jobs:
               CMAKE_VISIBILITY_INLINES_HIDDEN:BOOL=ON
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
           - os: mac-arm64
+            name: mac-arm64-python
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-superbuild: false
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
           - os: ubuntu-24.04
+            name: linux-x64-superbuild-elastix-python
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_build_parallel_level: 6
@@ -70,6 +74,7 @@ jobs:
               CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
               CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: ubuntu-24.04-arm
+            name: linux-arm-gold-linker-python-java
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-superbuild: false
@@ -81,6 +86,7 @@ jobs:
               CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
               CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: ubuntu-24.04-arm
+            name: linux-arm-itk-build-python-java
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-ccache: true
@@ -91,6 +97,7 @@ jobs:
               CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
               CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: macos-15
+            name: macos-x86_64-python-java
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_osx_architectures: "x86_64"
@@ -99,6 +106,7 @@ jobs:
               WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=OFF
           - os: windows-2022
+            name: windows-v142-x64-python-java-csharp
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"
             cmake-generator-toolset: v142,host=x64
@@ -158,10 +166,10 @@ jobs:
       uses: actions/cache@v5
       with:
         path: ${{ runner.temp }}/.ccache
-        key: ccache-v1-${{ runner.os }}-${{ runner.arch }}-${{ github.base_ref || github.ref_name }}-${{ github.sha }}
+        key: ccache-v1-${{ matrix.name }}-${{ github.base_ref || github.ref_name }}-${{ github.sha }}
         restore-keys: |
-          ccache-v1-${{ runner.os }}-${{ runner.arch }}-${{ github.base_ref || github.ref_name }}-
-          ccache-v1-${{ runner.os }}-${{ runner.arch }}-
+          ccache-v1-${{ matrix.name }}-${{ github.base_ref || github.ref_name }}-
+          ccache-v1-${{ matrix.name }}-
     - name: Configure ccache
       if: matrix.use-ccache
       run: |
