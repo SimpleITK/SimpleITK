@@ -109,13 +109,13 @@ public:
   LogToConsoleOff();
 
   void
-  SetTransformParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
+  SetTransformParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
   void
   SetTransformParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   void
   AddTransformParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   std::vector<std::map<std::string, std::vector<std::string>>>
-  GetTransformParameterMap();
+  GetTransformParameterMaps();
   unsigned int
   GetNumberOfTransformParameterMaps();
 

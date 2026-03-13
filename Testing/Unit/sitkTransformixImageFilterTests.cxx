@@ -29,13 +29,13 @@ TEST(TransformixImageFilter, ObjectOrientedInterface)
 
   TransformixImageFilter stfx;
   EXPECT_EQ(stfx.GetName(), "TransformixImageFilter");
-  EXPECT_EQ(stfx.GetTransformParameterMap().size(), 0u);
+  EXPECT_EQ(stfx.GetTransformParameterMaps().size(), 0u);
 
   ASSERT_THROW(stfx.Execute(), GenericException);
   EXPECT_NO_THROW(stfx.SetMovingImage(movingImage));
   ASSERT_THROW(stfx.Execute(), GenericException);
 
-  EXPECT_NO_THROW(stfx.SetTransformParameterMap(silx.GetTransformParameterMap()));
+  EXPECT_NO_THROW(stfx.SetTransformParameterMaps(silx.GetTransformParameterMaps()));
   EXPECT_NO_THROW(stfx.Execute());
   EXPECT_FALSE(stfxIsEmpty(stfx.GetResultImage()));
 
@@ -62,28 +62,28 @@ TEST(TransformixImageFilter, ProceduralInterface)
 
   std::string outputDirectory = ".";
 
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap()[0]));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps()[0]));
   EXPECT_FALSE(stfxIsEmpty(resultImage));
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap()[0], true));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps()[0], true));
   EXPECT_FALSE(stfxIsEmpty(resultImage));
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap()[0], true, outputDirectory));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps()[0], true, outputDirectory));
   EXPECT_FALSE(stfxIsEmpty(resultImage));
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap()[0], false, outputDirectory));
-  EXPECT_FALSE(stfxIsEmpty(resultImage));
-
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap()));
-  EXPECT_FALSE(stfxIsEmpty(resultImage));
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap(), true));
-  EXPECT_FALSE(stfxIsEmpty(resultImage));
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap(), true, outputDirectory));
-  EXPECT_FALSE(stfxIsEmpty(resultImage));
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap(), false, outputDirectory));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps()[0], false, outputDirectory));
   EXPECT_FALSE(stfxIsEmpty(resultImage));
 
-  ElastixImageFilter::ParameterMapVectorType parameterMapVector = silx.GetTransformParameterMap();
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps()));
+  EXPECT_FALSE(stfxIsEmpty(resultImage));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps(), true));
+  EXPECT_FALSE(stfxIsEmpty(resultImage));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps(), true, outputDirectory));
+  EXPECT_FALSE(stfxIsEmpty(resultImage));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps(), false, outputDirectory));
+  EXPECT_FALSE(stfxIsEmpty(resultImage));
+
+  ElastixImageFilter::ParameterMapVectorType parameterMapVector = silx.GetTransformParameterMaps();
   parameterMapVector[parameterMapVector.size() - 1]["WriteResultImage"] =
     ElastixImageFilter::ParameterValueVectorType(1, "false");
-  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMap()));
+  EXPECT_NO_THROW(resultImage = Transformix(movingImage, silx.GetTransformParameterMaps()));
   EXPECT_FALSE(stfxIsEmpty(resultImage));
 }
 
@@ -101,7 +101,7 @@ TEST(TransformixImageFilter, ComputeDeformationField)
   silx.Execute();
 
   TransformixImageFilter stfx;
-  stfx.SetTransformParameterMap(silx.GetTransformParameterMap());
+  stfx.SetTransformParameterMaps(silx.GetTransformParameterMaps());
   stfx.ComputeDeformationFieldOn();
 
   // Note: SetMovingImage appears necessary for `itk::TransformixFilter` (not for the old
@@ -140,11 +140,11 @@ TEST(TransformixImageFilter, Transformation4D)
   silx.SetMovingImage(movingImage1);
   resultImage1 = silx.Execute();
 
-  silx.PrintParameterMap(silx.GetTransformParameterMap());
+  silx.PrintParameterMap(silx.GetTransformParameterMaps());
 
   TransformixImageFilter stfx;
   stfx.SetMovingImage(movingImage2);
-  stfx.SetTransformParameterMap(silx.GetTransformParameterMap());
+  stfx.SetTransformParameterMaps(silx.GetTransformParameterMaps());
   resultImage2 = stfx.Execute();
 }
 
