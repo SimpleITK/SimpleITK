@@ -4,11 +4,23 @@ template_test_filename: ImageFilter
 number_of_inputs: 1
 doc: Some global documentation
 pixel_types: RealPixelIDTypeList
-members: []
+members: [
+  {
+    name: UseLegacyOperatorCoefficients,
+    type: bool,
+    default: 'false',
+    doc: Set/Get whether to use the legacy Sobel operator coefficients (compatible with ITK <= 5.4).
+  }
+]
 tests:
 - tag: defaults
   description: Simply run with default settings
-  settings: []
+  settings:
+    - parameter: UseLegacyOperatorCoefficients
+      type: bool
+      value: 'true'
+      python_value: "True"
+      R_value: "TRUE"
   tolerance: 0.01
   inputs:
   - Input/RA-Float.nrrd
