@@ -162,27 +162,24 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r ./.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.4.0
         if [[ "${{ matrix.use-ccache }}" == "true" ]]; then
-          if [[ "${{ runner.os }}" == "Linux" ]]; then
-            sudo apt-get install -y ccache
-          elif [[ "${{ runner.os }}" == "macOS" ]]; then
-            brew install ccache
-          fi
+          sudo apt-get install -y ccache
         fi
     - name: Restore ccache
       if: matrix.use-ccache
       uses: actions/cache@v5
       with:
         path: ${{ runner.temp }}/.ccache
-        key: ccache-v1-${{ matrix.name }}-${{ github.base_ref || github.ref_name }}-${{ github.sha }}
+        key: ccache-v1-${{ matrix.name }}-${{ github.head_ref && format('{0}-{1}', github.base_ref, github.head_ref) || github.ref_name }}-${{ github.sha }}
         restore-keys: |
-          ccache-v1-${{ matrix.name }}-${{ github.base_ref || github.ref_name }}-
+          ccache-v1-${{ matrix.name }}-${{ github.head_ref && format('{0}-{1}', github.base_ref, github.head_ref) || github.ref_name }}-
+          ccache-v1-${{ matrix.name }}-${{ github.head_ref && github.base_ref || github.ref_name }}-
           ccache-v1-${{ matrix.name }}-
     - name: Configure ccache
       if: matrix.use-ccache
       run: |
         echo "CCACHE_DIR=${{ runner.temp }}/.ccache" >> "$GITHUB_ENV"
         echo "CCACHE_NODIRECT=1" >> "$GITHUB_ENV"
-        ccache --max-size=2.0G
+        ccache --max-size=400M
         ccache --zero-stats
         ccache --show-config
     - name: Build and Test
