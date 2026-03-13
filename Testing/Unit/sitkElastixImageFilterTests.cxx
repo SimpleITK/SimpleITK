@@ -306,7 +306,7 @@ TEST(ElastixImageFilter, InitialTransform)
   EXPECT_NO_THROW(silx1.SetMovingImage(movingImage));
   EXPECT_NO_THROW(resultImage1 = silx1.Execute());
   EXPECT_FALSE(silxIsEmpty(resultImage1));
-  WriteParameterFile(silx1.GetTransformParameterMap()[0], initialTransformParameterFileName);
+  WriteParameterFile(silx1.GetTransformParameterMaps()[0], initialTransformParameterFileName);
 
   ElastixImageFilter silx2;
   EXPECT_NO_THROW(silx2.SetFixedImage(fixedImage));

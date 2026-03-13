@@ -209,9 +209,9 @@ TransformixImageFilter ::LogToConsoleOff()
 }
 
 void
-TransformixImageFilter ::SetTransformParameterMap(const ParameterMapVectorType transformParameterMapVector)
+TransformixImageFilter ::SetTransformParameterMaps(const ParameterMapVectorType transformParameterMapVector)
 {
-  this->m_Pimple->SetTransformParameterMap(transformParameterMapVector);
+  this->m_Pimple->SetTransformParameterMaps(transformParameterMapVector);
 }
 
 void
@@ -227,9 +227,9 @@ TransformixImageFilter ::AddTransformParameterMap(const ParameterMapType transfo
 }
 
 TransformixImageFilter::ParameterMapVectorType
-TransformixImageFilter ::GetTransformParameterMap()
+TransformixImageFilter ::GetTransformParameterMaps()
 {
-  return this->m_Pimple->GetTransformParameterMap();
+  return this->m_Pimple->GetTransformParameterMaps();
 }
 
 unsigned int
@@ -375,7 +375,7 @@ Transformix(const Image &                                        movingImage,
 {
   TransformixImageFilter stfx;
   stfx.SetMovingImage(movingImage);
-  stfx.SetTransformParameterMap(parameterMapVector);
+  stfx.SetTransformParameterMaps(parameterMapVector);
   stfx.SetOutputDirectory(outputDirectory);
   stfx.LogToFileOn();
   stfx.SetLogToConsole(logToConsole);

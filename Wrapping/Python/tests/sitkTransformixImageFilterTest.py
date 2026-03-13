@@ -35,8 +35,8 @@ def test_TransformixImageFilter_GetDeformationField():
 
     # Set up transformix filter
     transformixImageFilter = sitk.TransformixImageFilter()
-    transformixImageFilter.SetTransformParameterMap(
-        elastixImageFilter.GetTransformParameterMap()
+    transformixImageFilter.SetTransformParameterMaps(
+        elastixImageFilter.GetTransformParameterMaps()
     )
     transformixImageFilter.ComputeDeformationFieldOn()
 

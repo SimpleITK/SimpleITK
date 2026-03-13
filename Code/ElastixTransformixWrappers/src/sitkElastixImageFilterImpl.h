@@ -162,13 +162,13 @@ public:
                   const unsigned int numberOfResolutions = 4u,
                   const double       finalGridSpacingInPhysicalUnits = 10.0);
   void
-  SetParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
+  SetParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
   void
   SetParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   void
   AddParameterMap(const std::map<std::string, std::vector<std::string>> parameterMap);
   std::vector<std::map<std::string, std::vector<std::string>>>
-  GetParameterMap(void);
+  GetParameterMaps(void);
   std::map<std::string, std::vector<std::string>>
   GetDefaultParameterMap(const std::string  transformName,
                          const unsigned int numberOfResolutions = 4,
@@ -216,7 +216,7 @@ public:
   Image
   Execute(void);
   std::vector<std::map<std::string, std::vector<std::string>>>
-  GetTransformParameterMap(void);
+  GetTransformParameterMaps(void);
   std::map<std::string, std::vector<std::string>>
   GetTransformParameterMap(const unsigned int index);
   Image

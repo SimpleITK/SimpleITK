@@ -355,9 +355,9 @@ ElastixImageFilter ::SetParameterMap(const ParameterMapType parameterMap)
 }
 
 void
-ElastixImageFilter ::SetParameterMap(const ParameterMapVectorType parameterMapVector)
+ElastixImageFilter ::SetParameterMaps(const ParameterMapVectorType parameterMapVector)
 {
-  this->m_Pimple->SetParameterMap(parameterMapVector);
+  this->m_Pimple->SetParameterMaps(parameterMapVector);
 }
 
 void
@@ -367,9 +367,9 @@ ElastixImageFilter ::AddParameterMap(const ParameterMapType parameterMap)
 }
 
 ElastixImageFilter::ParameterMapVectorType
-ElastixImageFilter ::GetParameterMap()
+ElastixImageFilter ::GetParameterMaps()
 {
-  return this->m_Pimple->GetParameterMap();
+  return this->m_Pimple->GetParameterMaps();
 }
 
 unsigned int
@@ -499,9 +499,9 @@ ElastixImageFilter ::Execute()
 }
 
 ElastixImageFilter::ParameterMapVectorType
-ElastixImageFilter ::GetTransformParameterMap()
+ElastixImageFilter ::GetTransformParameterMaps()
 {
-  return this->m_Pimple->GetTransformParameterMap();
+  return this->m_Pimple->GetTransformParameterMaps();
 }
 
 ElastixImageFilter::ParameterMapType
@@ -576,7 +576,7 @@ void
 PrintParameterMap(const ElastixImageFilter::ParameterMapVectorType parameterMapVector)
 {
   ElastixImageFilter selx;
-  selx.SetParameterMap(parameterMapVector);
+  selx.SetParameterMaps(parameterMapVector);
   selx.PrintParameterMap();
 }
 
@@ -654,7 +654,7 @@ Elastix(const Image &                                    fixedImage,
   ElastixImageFilter selx;
   selx.SetFixedImage(fixedImage);
   selx.SetMovingImage(movingImage);
-  selx.SetParameterMap(parameterMapVector);
+  selx.SetParameterMaps(parameterMapVector);
   selx.SetLogToFile(logToFile);
   selx.SetLogToConsole(logToConsole);
   selx.SetOutputDirectory(outputDirectory);
@@ -711,7 +711,7 @@ Elastix(const Image &                              fixedImage,
   ElastixImageFilter selx;
   selx.SetFixedImage(fixedImage);
   selx.SetMovingImage(movingImage);
-  selx.SetParameterMap(parameterMapVector);
+  selx.SetParameterMaps(parameterMapVector);
   selx.SetFixedMask(fixedMask);
   selx.SetMovingMask(movingMask);
   selx.SetLogToFile(logToFile);

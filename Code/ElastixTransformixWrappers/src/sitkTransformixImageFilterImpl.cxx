@@ -434,7 +434,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::LogToConsoleOff()
 }
 
 void
-TransformixImageFilter::TransformixImageFilterImpl ::SetTransformParameterMap(
+TransformixImageFilter::TransformixImageFilterImpl ::SetTransformParameterMaps(
   const ParameterMapVectorType parameterMapVector)
 {
   this->m_TransformParameterMapVector = parameterMapVector;
@@ -445,7 +445,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::SetTransformParameterMap(co
 {
   ParameterMapVectorType parameterMapVector;
   parameterMapVector.push_back(parameterMap);
-  this->SetTransformParameterMap(parameterMapVector);
+  this->SetTransformParameterMaps(parameterMapVector);
 }
 
 void
@@ -455,7 +455,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::AddTransformParameterMap(co
 }
 
 TransformixImageFilter::TransformixImageFilterImpl::ParameterMapVectorType
-TransformixImageFilter::TransformixImageFilterImpl ::GetTransformParameterMap()
+TransformixImageFilter::TransformixImageFilterImpl ::GetTransformParameterMaps()
 {
   return this->m_TransformParameterMapVector;
 }
@@ -625,7 +625,7 @@ TransformixImageFilter::TransformixImageFilterImpl ::WriteParameterFile(const Pa
 void
 TransformixImageFilter::TransformixImageFilterImpl ::PrintParameterMap()
 {
-  this->PrintParameterMap(this->GetTransformParameterMap());
+  this->PrintParameterMap(this->GetTransformParameterMaps());
 }
 
 void

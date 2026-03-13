@@ -38,6 +38,6 @@ main(int argc, char * argv[])
   writer.Execute(elastixImageFilter.GetResultImage());
 
   // Write parameter file. This test executable only supports one parameter map and one transform parameter map.
-  sitk::WriteParameterFile(elastixImageFilter.GetTransformParameterMap()[0], std::string(argv[5]));
+  sitk::WriteParameterFile(elastixImageFilter.GetTransformParameterMaps()[0], std::string(argv[5]));
   return 0;
 }

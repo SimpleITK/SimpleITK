@@ -44,7 +44,7 @@ ElastixImageFilter::ElastixImageFilterImpl ::ElastixImageFilterImpl(void)
   defaultParameterMap.push_back(ParameterObjectType::GetDefaultParameterMap("translation"));
   defaultParameterMap.push_back(ParameterObjectType::GetDefaultParameterMap("affine"));
   defaultParameterMap.push_back(ParameterObjectType::GetDefaultParameterMap("bspline"));
-  this->SetParameterMap(defaultParameterMap);
+  this->SetParameterMaps(defaultParameterMap);
 }
 
 ElastixImageFilter::ElastixImageFilterImpl ::~ElastixImageFilterImpl(void) {}
@@ -737,11 +737,11 @@ void
 ElastixImageFilter::ElastixImageFilterImpl ::SetParameterMap(const ParameterMapType parameterMap)
 {
   ParameterMapVectorType parameterMapVector = ParameterMapVectorType(1, parameterMap);
-  this->SetParameterMap(parameterMapVector);
+  this->SetParameterMaps(parameterMapVector);
 }
 
 void
-ElastixImageFilter::ElastixImageFilterImpl ::SetParameterMap(const ParameterMapVectorType parameterMapVector)
+ElastixImageFilter::ElastixImageFilterImpl ::SetParameterMaps(const ParameterMapVectorType parameterMapVector)
 {
   this->m_ParameterMapVector = parameterMapVector;
 }
@@ -753,7 +753,7 @@ ElastixImageFilter::ElastixImageFilterImpl ::AddParameterMap(const ParameterMapT
 }
 
 ElastixImageFilter::ElastixImageFilterImpl::ParameterMapVectorType
-ElastixImageFilter::ElastixImageFilterImpl ::GetParameterMap(void)
+ElastixImageFilter::ElastixImageFilterImpl ::GetParameterMaps(void)
 {
   return this->m_ParameterMapVector;
 }
@@ -971,7 +971,7 @@ ElastixImageFilter::ElastixImageFilterImpl ::GetDefaultParameterMap(const std::s
 }
 
 ElastixImageFilter::ElastixImageFilterImpl::ParameterMapVectorType
-ElastixImageFilter::ElastixImageFilterImpl ::GetTransformParameterMap(void)
+ElastixImageFilter::ElastixImageFilterImpl ::GetTransformParameterMaps(void)
 {
   if (this->m_TransformParameterMapVector.size() == 0)
   {
@@ -1017,7 +1017,7 @@ ElastixImageFilter::ElastixImageFilterImpl ::PrintParameterMap(void)
     sitkExceptionMacro("Cannot print parameter maps: Number of parameter maps is 0.")
   }
 
-  this->PrintParameterMap(this->GetParameterMap());
+  this->PrintParameterMap(this->GetParameterMaps());
 }
 
 void

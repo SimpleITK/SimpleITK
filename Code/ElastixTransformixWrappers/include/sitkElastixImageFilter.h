@@ -285,12 +285,7 @@ public:
 
   /** \brief Specifies multiple parameter maps. */
   void
-  SetParameterMap(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
-  void
-  SetParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector)
-  {
-    return SetParameterMap(parameterMapVector);
-  }
+  SetParameterMaps(const std::vector<std::map<std::string, std::vector<std::string>>> parameterMapVector);
 
   /** \brief Specifies a single parameter map. */
   void
@@ -302,12 +297,7 @@ public:
 
   /** \brief Returns a copy of the parameter maps. */
   std::vector<std::map<std::string, std::vector<std::string>>>
-  GetParameterMap();
-  std::vector<std::map<std::string, std::vector<std::string>>>
-  GetParameterMaps()
-  {
-    return GetParameterMap();
-  };
+  GetParameterMaps();
 
   /** \brief Returns the default parameter map for the specified function arguments (\p transformName may be
    * "translation", "rigid" , "affine", "nonrigid", or "bspline"). */
@@ -403,7 +393,7 @@ public:
 
   /** \brief Returns all transform parameter maps. */
   std::vector<std::map<std::string, std::vector<std::string>>>
-  GetTransformParameterMap();
+  GetTransformParameterMaps();
 
   /** \brief Returns the transform parameter map at the specified (zero-based) \p index. */
   std::map<std::string, std::vector<std::string>>
