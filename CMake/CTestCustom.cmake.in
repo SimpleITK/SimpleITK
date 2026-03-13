@@ -44,36 +44,13 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   # Ignore warning in lua about the use of `tmpnam' is dangerous
   "loslib"
 
-  # RH5 GCC 4.1 is producing warnings internally for functional headers
-  "mu_iterate.h.*warning? unused parameter '__tuple'"
-
   # Ignore CSharp invalid version warning for dev
   "warning CS1607.*The version number.*dev.*is invalid"
   "warning CS1607.*The version.*dev.*is not in the normal"
   "warning CS7035.*The specified version string.*does not conform"
 
-  # Warning when building R, issue related to make file
-  "warning: jobserver unavailable:"
-
-  # Warning when compiling ITK v4.5.1 with clang
-  "clang: warning: argument unused during.*-fno-ipa-cp-clone"
-
   # Warning when compiling SWIG
   "clang: warning: argument unused.*-ansi"
-
-  # Warning from RHEL5 GCC 4.1 about visibility change
-  "warning: lowering visibility of .* to match its type"
-
-  # Warning from SWIG with self member type
-  "sitkCommand.* [wW]arning 314.*self.*is a python keyword"
-
-  # Warning from RH5 gcc 4.1.2
-  "tr1/mu_iterate.h.* warning: unused parameter '__tuple'"
-
-  # Warning on CircleCI
-  "Warning: Permanently added.*to the list of known hosts"
-
-  "checking for.*single_module is obsolete"
 )
 
 SET(CTEST_CUSTOM_ERROR_EXCEPTION
@@ -82,6 +59,4 @@ SET(CTEST_CUSTOM_ERROR_EXCEPTION
  # Error to ignore on Windows during wheel production
  "pep425tags.*RuntimeWarning.*ABI tag may be incorrect"
 
- # Warning marked as error
- "dist.py.*UserWarning.*Unknown distribution option"
 )
