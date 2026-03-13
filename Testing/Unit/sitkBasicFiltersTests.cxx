@@ -271,8 +271,7 @@ TEST(BasicFilters, MaskImageFilter_deprecated_1)
   EXPECT_EQ(out.GetPixelAsFloat({ 0, 1 }), 0);
   EXPECT_EQ(out.GetPixelAsFloat({ 1, 1 }), 99);
 
-  EXPECT_TRUE(logger.m_DisplayWarningText.str().find("has been deprecated") != std::string::npos);
-
+  EXPECT_TRUE(logger.m_DisplayWarningTextContext.str().find("has been deprecated") != std::string::npos);
   logger.Clear();
 
 
@@ -283,7 +282,7 @@ TEST(BasicFilters, MaskImageFilter_deprecated_1)
   EXPECT_EQ(out.GetPixelAsFloat({ 0, 1 }), 0);
   EXPECT_EQ(out.GetPixelAsFloat({ 1, 1 }), 99);
 
-  EXPECT_TRUE(logger.m_DisplayWarningText.str().find("has been deprecated") != std::string::npos);
+  EXPECT_TRUE(logger.m_DisplayWarningTextContext.str().find("has been deprecated") != std::string::npos);
 }
 
 
