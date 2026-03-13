@@ -37,7 +37,22 @@ target_link_libraries(
   ${SimpleITK_LIBRARIES}
 )
 
-sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES})
+# Link with R libraries or use R linker flags
+if(R_LIBRARIES)
+  sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES})
+elseif(R_LDFLAGS)
+  # On some systems (Linux, Windows), libR may not be found but R CMD config provides linker flags
+  if(WIN32)
+    separate_arguments(R_LDFLAGS_LIST WINDOWS_COMMAND "${R_LDFLAGS}")
+  else()
+    separate_arguments(R_LDFLAGS_LIST UNIX_COMMAND "${R_LDFLAGS}")
+  endif()
+  target_link_options(
+    ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+    PRIVATE
+      ${R_LDFLAGS_LIST}
+  )
+endif()
 
 # Workaround for SWIG 4.2.x issue with R and 64-bit integers. See GH issue swig/swig#2847 for details.
 if(
@@ -75,6 +90,20 @@ target_compile_options(
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
     -w
 )
+
+# Add R-specific compiler flags if available
+if(R_CPPFLAGS)
+  if(WIN32)
+    separate_arguments(R_CPPFLAGS_LIST WINDOWS_COMMAND "${R_CPPFLAGS}")
+  else()
+    separate_arguments(R_CPPFLAGS_LIST UNIX_COMMAND "${R_CPPFLAGS}")
+  endif()
+  target_compile_options(
+    ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+    PRIVATE
+      ${R_CPPFLAGS_LIST}
+  )
+endif()
 
 # set the output directory for the R library to the binary packaging location
 set_target_properties(
