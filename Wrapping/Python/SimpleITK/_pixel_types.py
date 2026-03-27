@@ -23,7 +23,7 @@ This module provides constants and functions to classify SimpleITK pixel types
 into categories: Basic, Vector, and Label types.
 """
 
-from SimpleITK.SimpleITK import (
+from .SimpleITK import (
     sitkUnknown,
     sitkUInt8,
     sitkInt8,

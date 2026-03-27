@@ -7,7 +7,7 @@ requires = [
 build-backend = "scikit_build_core.build"
 
 [project]
-name = "simpleitk"
+name = "@SimpleITK_PYTHON_PACKAGE_NAME_LOWER@"
 version = "@SITK_PYTHON_VERSION@"
 readme = {file = "@SimpleITK_SOURCE_DIR@/Readme.md", content-type = "text/markdown"}
 authors = [

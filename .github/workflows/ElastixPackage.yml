@@ -170,6 +170,7 @@ jobs:
         shell: bash
         run: |
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/Elastix ${COREBINARYDIRECTORY}/Elastix-build
           rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
 
       - name: Package Python 3.11
