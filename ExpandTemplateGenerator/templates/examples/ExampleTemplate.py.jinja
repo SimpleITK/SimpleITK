@@ -1,0 +1,169 @@
+# =========================================================================
+#
+#  Copyright NumFOCUS
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0.txt
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+# =========================================================================
+{#- Jinja2 template for generating Python example scripts.
+    Variables consumed from the filter YAML:
+      name, briefdescription, detaileddescription, number_of_inputs, inputs,
+      members, measurements, tests, no_return_image, no_procedure, example (optional).
+    The 'example' key, if present, takes precedence over tests[0] for providing
+    the sample input files and settings shown in this script.
+-#}
+{#- ---- Resolve example data -------------------------------------------- -#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{#- ---- Derived helper values -------------------------------------------- -#}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{#- ---- Build usage string for the main() docstring --------------------- -#}
+{%- set ns = namespace(usage_str="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- set ns.usage_str = ns.usage_str ~ "<input" ~ (i if number_of_inputs > 1 else "") ~ "> " -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- set ns.usage_str = ns.usage_str ~ "<" ~ (inp.name[0] | lower ~ inp.name[1:]) ~ "> " -%}
+{%- endfor -%}
+{%- if has_output -%}
+  {%- set ns.usage_str = ns.usage_str ~ "<output>" -%}
+{%- endif -%}
+{#- ---- Build Execute() argument string ---------------------------------- -#}
+{%- set ns2 = namespace(exec_args="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- if ns2.exec_args -%}{%- set ns2.exec_args = ns2.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns2.exec_args = ns2.exec_args ~ "image" ~ (i if number_of_inputs > 1 else "") -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- if ns2.exec_args -%}{%- set ns2.exec_args = ns2.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns2.exec_args = ns2.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
+{%- endfor -%}
+"""{{ briefdescription if briefdescription else "Example of SimpleITK " ~ name ~ "." }}
+{% if detaileddescription %}
+{{ detaileddescription | wordwrap(79) }}
+{% endif %}
+{% if not no_procedure %}
+The procedural one-liner equivalent::
+
+    {% if has_output %}output = {% endif %}sitk.{{ procedure_name }}({{ ns2.exec_args }})
+
+{% endif %}"""
+
+import os
+import sys
+
+import SimpleITK as sitk
+
+
+def main(args):
+    """{{ briefdescription if briefdescription else "Run " ~ name ~ "." }}
+
+    Args:
+        args: Command-line arguments, equivalent to sys.argv.
+              Expected: [script{{ ", <input>" * number_of_inputs }}{% for inp in named_image_inputs %}, <{{ inp.name[0] | lower ~ inp.name[1:] }}>{% endfor %}{% if has_output %}, <output>{% endif %}]
+    """
+    if len(args) < {{ total_inputs + (1 if has_output else 0) + 1 }}:
+        print(f"Usage: {args[0]} {{ ns.usage_str }}")
+        sys.exit(1)
+
+{% if number_of_inputs == 1 %}
+    image = sitk.ReadImage(args[1])
+{% elif number_of_inputs >= 2 %}
+{% for i in range(1, number_of_inputs + 1) %}
+    image{{ i }} = sitk.ReadImage(args[{{ i }}])
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+    {{ inp.name[0] | lower ~ inp.name[1:] }} = sitk.ReadImage(args[{{ number_of_inputs + loop.index }}])
+{% endfor %}
+    # Object-oriented interface: create filter and set parameters
+    filter = sitk.{{ name }}()
+{% if ex and ex.settings %}
+{% for setting in ex.settings %}
+{% if setting.point_vec is defined and setting.point_vec %}
+    filter.Clear{{ setting.parameter | replace('List', 's') }}()
+{% if setting.python_value is defined and setting.python_value %}
+{% for pt in setting.python_value %}
+    filter.Add{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') }}({{ pt }})
+{% endfor %}
+{% else %}
+{% for v in setting.value %}
+    filter.Add{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') }}({{ v }})
+{% endfor %}
+{% endif %}
+{% elif setting.dim_vec is defined and setting.dim_vec %}
+    filter.Set{{ setting.parameter }}([{{ setting.value | join(", ") }}])
+{% elif setting.python_value is defined and setting.python_value is not none %}
+    filter.Set{{ setting.parameter }}({{ setting.python_value }})
+{% elif setting.type is defined and setting.type == "bool" %}
+    filter.Set{{ setting.parameter }}({{ "True" if setting.value else "False" }})
+{% else %}
+    filter.Set{{ setting.parameter }}({{ setting.value }})
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if has_output %}
+    output = filter.Execute({{ ns2.exec_args }})
+
+    sitk.WriteImage(output, args[{{ total_inputs + 1 }}])
+{% else %}
+    filter.Execute({{ ns2.exec_args }})
+{% endif %}
+
+{% if no_return_image and measurements %}
+    # Print computed measurements
+{% for m in measurements %}
+    print(f"{{ m.name }}: {filter.Get{{ m.name }}()}")
+{% endfor %}
+
+{% endif %}
+    return_dict = {
+{% if number_of_inputs == 1 %}
+        "input": image,
+{% elif number_of_inputs >= 2 %}
+{% for i in range(1, number_of_inputs + 1) %}
+        "image{{ i }}": image{{ i }},
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+        "{{ inp.name[0] | lower ~ inp.name[1:] }}": {{ inp.name[0] | lower ~ inp.name[1:] }},
+{% endfor %}
+{% if has_output %}
+        "output": output,
+{% endif %}
+    }
+    return return_dict
+
+
+if __name__ == "__main__":
+    result = main(sys.argv)
+{% if has_output %}
+    if "SITK_NOSHOW" not in os.environ:
+        sitk.Show(result["output"], "{{ name }}")
+{% endif %}

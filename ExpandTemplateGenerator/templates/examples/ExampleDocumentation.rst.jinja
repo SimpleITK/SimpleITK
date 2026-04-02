@@ -1,0 +1,175 @@
+{#- Jinja2 template for generating a Documentation.rst stub for a filter example.
+    Mirrors the structure of Examples/SimpleGaussian/Documentation.rst.
+    Variables consumed from the filter YAML (same as the code example templates).
+-#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{%- set example_name = name -%}
+{#- Build the call-args string for the exec_code block's run_example() invocation. -#}
+{%- set ns = namespace(run_args="") -%}
+{%- if ex and ex.inputs -%}
+  {%- for img_path in ex.inputs -%}
+    {%- if ns.run_args -%}{%- set ns.run_args = ns.run_args ~ ",\n            " -%}{%- endif -%}
+    {%- set ns.run_args = ns.run_args ~ "data_path / '" ~ img_path ~ "'" -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- for i in range(total_inputs) -%}
+    {%- if ns.run_args -%}{%- set ns.run_args = ns.run_args ~ ",\n            " -%}{%- endif -%}
+    {%- set ns.run_args = ns.run_args ~ "'<input" ~ (i + 1 if total_inputs > 1 else "") ~ ">'" -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if has_output -%}
+  {%- if ns.run_args -%}{%- set ns.run_args = ns.run_args ~ ",\n            " -%}{%- endif -%}
+  {%- set ns.run_args = ns.run_args ~ "'/tmp/" ~ example_name ~ "_output.nrrd'" -%}
+{%- endif -%}
+{%- set title_text = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{{ title_text }}
+{{ "=" * (title_text | length) }}
+
+
+Overview
+--------
+{% if briefdescription %}
+{{ briefdescription }}
+{% endif %}
+{% if detaileddescription %}
+{{ detaileddescription | wordwrap(79) }}
+{% endif %}
+
+This example demonstrates the use of :class:`itk::simple::{{ name }}`.
+{% if not no_procedure %}
+The equivalent procedural call is:
+
+.. code-block:: python
+
+    output = SimpleITK.{{ procedure_name }}(image)
+{% endif %}
+
+
+Example Run
+-----------
+
+{% if ex and ex.inputs %}
+Running the Python code with the following input{% if ex.inputs | length > 1 %}s{% endif %}:
+
+.. code-block:: text
+
+    python {{ example_name }}.py {% for img in ex.inputs %}{{ img }} {% endfor %}{% if has_output %}/tmp/{{ example_name }}_output.nrrd{% endif %}
+
+{% endif %}
+
+.. exec_code::
+    :hide_output:
+
+    # --- hide: start ---
+    from pathlib import Path
+    from example_utils import run_example, save_image
+    data_path = Path("${SimpleITK_DATA_ROOT}")
+    args = [
+        '',
+        {{ ns.run_args }}
+    ]
+    args = [str(a) for a in args]
+    return_dict = run_example('{{ example_name }}', 'main', args)
+    for key, value in return_dict.items():
+        save_image(value, f"{{ example_name }}_{key}")
+    # --- hide: stop ---
+
+{% if has_output or (total_inputs > 0) %}
+Input/Output Images
+^^^^^^^^^^^^^^^^^^^
+{% if total_inputs > 0 %}
+
+.. figure:: ../images/{{ example_name }}_{% if number_of_inputs == 1 %}input{% elif number_of_inputs >= 2 %}image1{% else %}{{ named_image_inputs[0].name[0] | lower ~ named_image_inputs[0].name[1:] if named_image_inputs else 'input' }}{% endif %}.png
+   :scale: 100%
+
+   **Input Image**
+{% if number_of_inputs >= 2 %}
+
+.. figure:: ../images/{{ example_name }}_image2.png
+   :scale: 100%
+
+   **Second Input Image**
+{% endif %}
+{% for inp in named_image_inputs %}
+{% if loop.index > 1 or number_of_inputs == 0 %}
+
+.. figure:: ../images/{{ example_name }}_{{ inp.name[0] | lower ~ inp.name[1:] }}.png
+   :scale: 100%
+
+   **{{ inp.name | ruby_capitalize }} Image**
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if has_output %}
+
+.. figure:: ../images/{{ example_name }}_output.png
+   :scale: 100%
+
+   **Output Image**
+{% endif %}
+{% endif %}
+
+
+Code
+----
+
+.. tabs::
+
+  .. tab:: Python
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.py
+       :language: python
+       :lines: 18-
+
+  .. tab:: C++
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.cxx
+       :language: c++
+       :lines: 18-
+
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.cs
+       :language: c#
+       :lines: 18-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.java
+       :language: java
+       :lines: 18-
+
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.lua
+       :language: lua
+       :lines: 18-
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.R
+       :language: r
+       :lines: 18-
+
+  .. tab:: Ruby
+
+    .. literalinclude:: ../../Examples/{{ example_name }}/{{ example_name }}.rb
+       :language: ruby
+       :lines: 18-

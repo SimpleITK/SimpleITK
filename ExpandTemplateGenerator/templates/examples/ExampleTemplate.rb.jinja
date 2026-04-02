@@ -1,0 +1,152 @@
+#==========================================================================
+#
+#   Copyright NumFOCUS
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#          http://www.apache.org/licenses/LICENSE-2.0.txt
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+#==========================================================================
+{#- Jinja2 template for generating Ruby example scripts. -#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{%- set ns = namespace(exec_args="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ "image" ~ (i if number_of_inputs > 1 else "") -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
+{%- endfor -%}
+
+# Example script for {{ name }}.
+{% if briefdescription %}
+# {{ briefdescription | wordwrap(79) | replace('\n', '\n# ') }}
+{% endif %}
+#
+# Usage:
+#   ruby {{ name }}.rb {% for i in range(1, number_of_inputs + 1) %}<input{{ i if number_of_inputs > 1 else "" }}> {% endfor %}{% for inp in named_image_inputs %}<{{ inp.name[0] | lower ~ inp.name[1:] }}> {% endfor %}{% if has_output %}<output>{% endif %}
+
+
+require 'simpleitk'
+
+expected_args = {{ total_inputs + (1 if has_output else 0) }}
+if ARGV.length < expected_args
+  puts "Usage: ruby {{ name }}.rb" \
+{% for i in range(1, number_of_inputs + 1) %}
+       " <input{{ i if number_of_inputs > 1 else "" }}>" \
+{% endfor %}
+{% for inp in named_image_inputs %}
+       " <{{ inp.name[0] | lower ~ inp.name[1:] }}>" \
+{% endfor %}
+{% if has_output %}
+       " <output>"
+{% else %}
+       ""
+{% endif %}
+
+  exit 1
+end
+
+arg_idx = 0
+reader = Simpleitk::ImageFileReader.new
+filter = Simpleitk::{{ name }}.new
+
+{% if number_of_inputs == 1 %}
+# Read the input image
+reader.set_file_name(ARGV[arg_idx])
+arg_idx += 1
+image = reader.execute
+{% elif number_of_inputs >= 2 %}
+# Read the input images
+{% for i in range(1, number_of_inputs + 1) %}
+reader.set_file_name(ARGV[arg_idx])
+arg_idx += 1
+image{{ i }} = reader.execute
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+# Read the {{ inp.name[0] | lower ~ inp.name[1:] }} image
+reader.set_file_name(ARGV[arg_idx])
+arg_idx += 1
+{{ inp.name[0] | lower ~ inp.name[1:] }} = reader.execute
+{% endfor %}
+
+# Configure filter parameters
+{% if ex and ex.settings %}
+{% for setting in ex.settings %}
+{% if setting.point_vec is defined and setting.point_vec %}
+filter.clear_{{ setting.parameter | replace('List', 's') | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}
+{% if setting.ruby_value is defined and setting.ruby_value %}
+{% for pt in setting.ruby_value %}
+filter.add_{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}({{ pt }})
+{% endfor %}
+{% else %}
+{% for v in setting.value %}
+{
+  idx = Simpleitk::VectorUInt32.new
+  {{ v }}.each { |x| idx << x }
+  filter.add_{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}(idx)
+}
+{% endfor %}
+{% endif %}
+{% elif setting.dim_vec is defined and setting.dim_vec %}
+{
+  idx = Simpleitk::VectorDouble.new
+  [{{ setting.value | join(", ") }}].each { |x| idx << x }
+  filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}(idx)
+}
+{% elif setting.type is defined and setting.type == "bool" %}
+filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}({{ "true" if setting.value else "false" }})
+{% elif setting.ruby_value is defined and setting.ruby_value is not none %}
+filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}({{ setting.ruby_value }})
+{% else %}
+filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}({{ setting.value }})
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if has_output %}
+# Execute the filter
+output = filter.execute({{ ns.exec_args }})
+
+# Write the output image
+writer = Simpleitk::ImageFileWriter.new
+writer.set_file_name(ARGV[arg_idx])
+writer.execute(output)
+{% else %}
+# Execute the filter
+filter.execute({{ ns.exec_args }})
+
+{% if measurements %}
+# Print computed measurements
+{% for m in measurements %}
+puts "{{ m.name }}: #{filter.get_{{ m.name | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}}"
+{% endfor %}
+{% endif %}
+{% endif %}

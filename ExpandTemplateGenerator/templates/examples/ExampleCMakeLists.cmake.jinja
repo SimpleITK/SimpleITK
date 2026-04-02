@@ -1,0 +1,139 @@
+{#- Jinja2 template for generating a CMakeLists.txt for a generated filter example.
+    Variables consumed from the filter YAML (same as code example templates).
+-#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set has_output = not no_return_image -%}
+{%- set use_md5 = ex and (ex.md5hash is defined) and ex.md5hash -%}
+{%- set use_image_compare = ex and (ex.tolerance is defined) and ex.tolerance -%}
+{#-
+  Macro: data_inputs()
+  Emits the DATA{} lines for all inputs from the example/test data.
+-#}
+{%- macro data_inputs() %}
+{%- if ex and ex.inputs -%}
+{%- for img_path in ex.inputs %}
+  DATA{${SimpleITK_DATA_ROOT}/{{ img_path }}}
+{%- endfor -%}
+{%- endif %}
+{%- endmacro -%}
+{#-
+  Macro: test_compare(lang_prefix)
+  Emits the output path and comparison block for one language test.
+-#}
+{%- macro test_compare(lang_prefix) %}
+{%- if has_output %}
+  "${SimpleITK_TEST_OUTPUT_DIR}/{{ lang_prefix }}.{{ name }}.nrrd"
+{%- endif %}
+{%- if use_md5 %}
+  IMAGE_MD5_COMPARE
+    "${SimpleITK_TEST_OUTPUT_DIR}/{{ lang_prefix }}.{{ name }}.nrrd"
+    {{ ex.md5hash }}
+{%- elif use_image_compare %}
+  IMAGE_COMPARE
+    "${SimpleITK_TEST_OUTPUT_DIR}/{{ lang_prefix }}.{{ name }}.nrrd"
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_{{ name }}.nrrd,:}
+    {{ ex.tolerance }}
+{%- endif %}
+{%- endmacro -%}
+
+# CMakeLists.txt for generated example: {{ name }}
+# Automatically generated — do not edit manually.
+# -----------------------------------------------------------------------------
+
+# ---- C++ executable --------------------------------------------------------
+
+add_executable({{ name }} {{ name }}.cxx)
+target_link_libraries({{ name }} ${SimpleITK_LIBRARIES})
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
+# Register example input data with ExternalData
+{% if ex and ex.inputs %}
+ExternalData_Expand_Arguments(SimpleITKData
+  unused_arg
+{{ data_inputs() -}}
+{%- if use_image_compare %}
+  "DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_{{ name }}.nrrd,:}"
+{%- endif %}
+)
+{% endif %}
+
+# ---- C++ test --------------------------------------------------------------
+
+sitk_add_test(
+  NAME CXX.Example.{{ name }}
+  COMMAND
+    $<TARGET_FILE:{{ name }}>
+{{ data_inputs() }}
+{{ test_compare("CXX") }}
+)
+
+# ---- Python test -----------------------------------------------------------
+
+sitk_add_python_test(
+  Example.{{ name }}
+  "${CMAKE_CURRENT_SOURCE_DIR}/{{ name }}.py"
+{{ data_inputs() }}
+{{ test_compare("Python") }}
+)
+
+# ---- C# test ---------------------------------------------------------------
+
+sitk_add_csharp_test(
+  Example.{{ name }}
+  "${CMAKE_CURRENT_SOURCE_DIR}/{{ name }}.cs"
+{{ data_inputs() }}
+{{ test_compare("CSharp") }}
+)
+
+# ---- Java test -------------------------------------------------------------
+
+sitk_add_java_test(
+  Example.{{ name }}
+  "${CMAKE_CURRENT_SOURCE_DIR}/{{ name }}.java"
+{{ data_inputs() }}
+{{ test_compare("Java") }}
+)
+
+# ---- Lua test --------------------------------------------------------------
+
+sitk_add_lua_test(
+  Example.{{ name }}
+  "${CMAKE_CURRENT_SOURCE_DIR}/{{ name }}.lua"
+{{ data_inputs() }}
+{{ test_compare("Lua") }}
+)
+
+# ---- R test ----------------------------------------------------------------
+
+sitk_add_r_test(
+  Example.{{ name }}
+  "${CMAKE_CURRENT_SOURCE_DIR}/{{ name }}.R"
+{{ data_inputs() }}
+{{ test_compare("R") }}
+)
+
+# ---- Ruby test -------------------------------------------------------------
+
+sitk_add_ruby_test(
+  Example.{{ name }}
+  "${CMAKE_CURRENT_SOURCE_DIR}/{{ name }}.rb"
+{{ data_inputs() }}
+{{ test_compare("Ruby") }}
+)

@@ -1,0 +1,102 @@
+# example_filter_list.yaml
+# -------------------------
+# Lists the SimpleITK filters for which example code should be generated.
+#
+# For each filter entry the generator will read the corresponding YAML file
+# from Code/BasicFilters/yaml/<name>.yaml and expand all templates in
+# ExpandTemplateGenerator/templates/examples/ to produce:
+#
+#   Examples/<name>/<name>.py
+#   Examples/<name>/<name>.cxx
+#   Examples/<name>/<name>.cs
+#   Examples/<name>/<name>.java
+#   Examples/<name>/<name>.lua
+#   Examples/<name>/<name>.R
+#   Examples/<name>/<name>.rb
+#   Examples/<name>/Documentation.rst
+#   Examples/<name>/CMakeLists.txt
+#
+# Rules for inclusion
+# -------------------
+# * Prefer filters with a clear single input image → single output image
+#   relationship so the generated example is readable with no extra context.
+# * Filters without any tests in their YAML (no baseline comparison data)
+#   should supply an 'example' section directly in their YAML (see below).
+# * Measurement-only filters (no_return_image: true) are welcome; the
+#   templates will print the computed values instead of writing an image.
+#
+# Optional 'example' section in a filter YAML
+# --------------------------------------------
+# Add a top-level 'example' key to the filter's YAML to override the
+# settings and inputs used in the generated example code.  If this key is
+# absent the first entry in 'tests' is used as a fallback.
+#
+#   example:
+#     inputs:
+#       - Input/BrainProtonDensitySlice.png   # relative to SimpleITK_DATA_ROOT
+#     settings:
+#       - parameter: Sigma
+#         type: double
+#         value: 2.0
+#     description: "Blur with sigma = 2.0 in physical space."
+#
+# Filters
+# -------
+
+filters:
+
+  # ---- Smoothing / blurring ------------------------------------------------
+  - DiscreteGaussianImageFilter
+  - SmoothingRecursiveGaussianImageFilter
+  - MedianImageFilter
+  - BilateralImageFilter
+  - MeanImageFilter
+
+  # ---- Edge detection ------------------------------------------------------
+  - SobelEdgeDetectionImageFilter
+  - CannyEdgeDetectionImageFilter
+  - LaplacianImageFilter
+  - LaplacianRecursiveGaussianImageFilter
+
+  # ---- Morphology ----------------------------------------------------------
+  - BinaryDilateImageFilter
+  - BinaryErodeImageFilter
+  - GrayscaleDilateImageFilter
+  - GrayscaleErodeImageFilter
+
+  # ---- Thresholding --------------------------------------------------------
+  - ThresholdImageFilter
+  - OtsuThresholdImageFilter
+  - BinaryThresholdImageFilter
+
+  # ---- Arithmetic / logic --------------------------------------------------
+  - AddImageFilter
+  - SubtractImageFilter
+  - MultiplyImageFilter
+  - DivideImageFilter
+  - AbsImageFilter
+  - SquareImageFilter
+  - SqrtImageFilter
+
+  # ---- Casting / type conversion -------------------------------------------
+  - CastImageFilter
+  - RescaleIntensityImageFilter
+  - NormalizeImageFilter
+
+  # ---- Geometric transforms ------------------------------------------------
+  - ResampleImageFilter
+  - FlipImageFilter
+  - PermuteAxesImageFilter
+
+  # ---- Statistics / measurements -------------------------------------------
+  - StatisticsImageFilter
+  - MinimumMaximumImageFilter
+  - LabelStatisticsImageFilter
+
+  # ---- Segmentation --------------------------------------------------------
+  - ConnectedComponentImageFilter
+  - LabelShapeStatisticsImageFilter
+
+  # ---- Gradients -----------------------------------------------------------
+  - GradientMagnitudeImageFilter
+  - GradientMagnitudeRecursiveGaussianImageFilter
