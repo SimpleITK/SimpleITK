@@ -364,18 +364,41 @@ function(sitk_add_java_test name java_file)
     )
   endif()
 
+  # Register a CTest fixture to compile the .class file before the test runs.
+  # This ensures the class is compiled even when the build system does not
+  # pull in the ${_java_class}Java ALL target (e.g. when the example
+  # subdirectory was added via an absolute path).
+  set(_compile_test_name "Java.Compile.${name}")
+  if(NOT TEST "${_compile_test_name}")
+    add_test(
+      NAME "${_compile_test_name}"
+      COMMAND
+        "${Java_JAVAC_EXECUTABLE}" -classpath "${_JAVA_CLASSPATH}" -d
+        "${_class_path}" "${java_file}"
+    )
+    set_tests_properties(
+      "${_compile_test_name}"
+      PROPERTIES
+        FIXTURES_SETUP
+          "Java.Compile.${_java_class}"
+        LABELS
+          "Java"
+    )
+  endif()
+
   sitk_add_test(
     NAME Java.${name}
     COMMAND
       "${Java_JAVA_EXECUTABLE}" "-Djava.library.path=${_JAVA_LIBRARY_PATH}"
       "-classpath" "${_JAVA_CLASSPATH}" "${_java_class}" ${ARGN}
   )
-  set_property(
-    TEST
-      Java.${name}
-    PROPERTY
+  set_tests_properties(
+    Java.${name}
+    PROPERTIES
       LABELS
-        Java
+        "Java"
+      FIXTURES_REQUIRED
+        "Java.Compile.${_java_class}"
   )
 endfunction()
 

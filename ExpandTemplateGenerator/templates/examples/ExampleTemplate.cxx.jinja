@@ -26,7 +26,7 @@
 {%- set named_image_inputs = [] -%}
 {%- if inputs -%}
   {%- for inp in inputs -%}
-    {%- if inp.type == "Image" -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
       {%- set _ = named_image_inputs.append(inp) -%}
     {%- endif -%}
   {%- endfor -%}
@@ -140,9 +140,34 @@ main(int argc, char * argv[])
 
 {% if measurements %}
   // Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}
+{%- endfor %}
 {% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
+{%- if 'vector' in (m.type | default('')) %}
+  {
+    auto vals = filter.Get{{ m.name }}();
+    std::cout << "{{ m.name }}:";
+    for (const auto & v : vals) { std::cout << " " << v; }
+    std::cout << "\n";
+  }
+{%- else %}
   std::cout << "{{ m.name }}: " << filter.Get{{ m.name }}() << "\n";
+{%- endif %}
+{%- endif %}
 {% endfor %}
+{%- if ns_p.has_param %}
+  // Per-label measurements require a label argument; iterate over labels like:
+  // for (const auto label : filter.GetLabels()) {
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+  //   filter.Get{{ m.name }}(label);
+{%- endif %}
+{% endfor %}
+  // }
+{%- endif %}
 {% endif %}
 {% endif %}
 

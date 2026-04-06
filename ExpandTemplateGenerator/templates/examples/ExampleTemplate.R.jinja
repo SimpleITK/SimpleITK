@@ -26,7 +26,7 @@
 {%- set named_image_inputs = [] -%}
 {%- if inputs -%}
   {%- for inp in inputs -%}
-    {%- if inp.type == "Image" -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
       {%- set _ = named_image_inputs.append(inp) -%}
     {%- endif -%}
   {%- endfor -%}
@@ -118,9 +118,24 @@ filter$Execute({{ ns.exec_args }})
 
 {% if measurements %}
 # Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
 {% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
 cat("{{ m.name }}:", filter$Get{{ m.name }}(), "\n")
+{%- endif %}
 {% endfor %}
+{%- if ns_p.has_param %}
+# Per-label measurements require a label argument:
+for (label in filter$GetLabels()) {
+  cat("Label:", label, "\n")
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+  cat("  {{ m.name }}:", filter$Get{{ m.name }}(label), "\n")
+{%- endif %}
+{% endfor %}
+}
+{%- endif %}
 {% endif %}
 {% endif %}
 

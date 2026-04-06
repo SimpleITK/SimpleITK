@@ -11,7 +11,7 @@
 {%- set named_image_inputs = [] -%}
 {%- if inputs -%}
   {%- for inp in inputs -%}
-    {%- if inp.type == "Image" -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
       {%- set _ = named_image_inputs.append(inp) -%}
     {%- endif -%}
   {%- endfor -%}

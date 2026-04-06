@@ -26,7 +26,7 @@
 {%- set named_image_inputs = [] -%}
 {%- if inputs -%}
   {%- for inp in inputs -%}
-    {%- if inp.type == "Image" -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
       {%- set _ = named_image_inputs.append(inp) -%}
     {%- endif -%}
   {%- endfor -%}
@@ -148,9 +148,24 @@ class {{ name }}Example {
 
 {% if measurements %}
     // Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
 {% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
     System.out.println("{{ m.name }}: " + filter.get{{ m.name }}());
+{%- endif %}
 {% endfor %}
+{%- if ns_p.has_param %}
+    // Per-label measurements require a label argument:
+    for (long label : filter.getLabels()) {
+      System.out.println("Label: " + label);
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+      System.out.println("  {{ m.name }}: " + filter.get{{ m.name }}(label));
+{%- endif %}
+{% endfor %}
+    }
+{%- endif %}
 {% endif %}
 {% endif %}
 

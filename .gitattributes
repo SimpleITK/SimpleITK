@@ -2,9 +2,7 @@
 .git_archival.txt  -export-ignore export-subst
 .hooks*          export-ignore
 .mailmap         export-ignore
-
 /Utilities/GitSetup export-ignore
-
 *.bat           -crlf
 *.bin           -crlf
 *.jpg           -crlf
@@ -12,10 +10,9 @@
 *.pdf           -crlf
 *.png           -crlf
 *.raw           -crlf
-*.nrrd          -crlf
+*.nrrd          binary
 *.sh             crlf=input
 *.sh.in          crlf=input
-
 *.c              whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
 *.h              whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
 *.cxx            whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
@@ -30,6 +27,6 @@
 *.rb             whitespace=tab-in-indent,no-lf-at-eof
 *.R              whitespace=tab-in-indent,no-lf-at-eof
 *.tcl            whitespace=tab-in-indent,no-lf-at-eof
-
 Wrapping/Java/JavaDoc.i              hooks-max-size=2097152
 Wrapping/Python/PythonDocstrings.i   hooks-max-size=2097152
+Testing/Data/Baseline/Example_*.nrrd filter=lfs diff=lfs merge=lfs -text

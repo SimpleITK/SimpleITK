@@ -26,7 +26,7 @@
 {%- set named_image_inputs = [] -%}
 {%- if inputs -%}
   {%- for inp in inputs -%}
-    {%- if inp.type == "Image" -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
       {%- set _ = named_image_inputs.append(inp) -%}
     {%- endif -%}
   {%- endfor -%}
@@ -53,7 +53,7 @@ using itk.simple;
 /// {{ briefdescription }}
 {% endif %}
 /// Usage:
-///   {{ name }} {% for i in range(1, number_of_inputs + 1) %}&lt;input{{ i if number_of_inputs > 1 else "" }}&gt; {% endfor %}{% for inp in named_image_inputs %}&lt;{{ inp.name[0] | lower ~ inp.name[1:] }}&gt; {% endfor %}{% if has_output %}&lt;output&gt;{% endif %}
+///   {{ name }} {% for i in range(1, number_of_inputs + 1) %}[input{{ i if number_of_inputs > 1 else "" }}] {% endfor %}{% for inp in named_image_inputs %}[{{ inp.name[0] | lower ~ inp.name[1:] }}] {% endfor %}{% if has_output %}[output]{% endif %}
 
 /// </summary>
 class {{ name }}Example {
@@ -141,9 +141,24 @@ class {{ name }}Example {
 
 {% if measurements %}
       // Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
 {% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
       Console.WriteLine("{{ m.name }}: " + filter.Get{{ m.name }}());
+{%- endif %}
 {% endfor %}
+{%- if ns_p.has_param %}
+      // Per-label measurements require a label argument:
+      foreach (var label in filter.GetLabels()) {
+        Console.WriteLine("Label: " + label);
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+        Console.WriteLine("  {{ m.name }}: " + filter.Get{{ m.name }}(label));
+{%- endif %}
+{% endfor %}
+      }
+{%- endif %}
 {% endif %}
 {% endif %}
 

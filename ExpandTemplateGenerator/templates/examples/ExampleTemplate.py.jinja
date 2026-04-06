@@ -34,7 +34,7 @@
 {%- set named_image_inputs = [] -%}
 {%- if inputs -%}
   {%- for inp in inputs -%}
-    {%- if inp.type == "Image" -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
       {%- set _ = named_image_inputs.append(inp) -%}
     {%- endif -%}
   {%- endfor -%}
@@ -62,10 +62,10 @@
 {%- for inp in named_image_inputs -%}
   {%- if ns2.exec_args -%}{%- set ns2.exec_args = ns2.exec_args ~ ", " -%}{%- endif -%}
   {%- set ns2.exec_args = ns2.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
-{%- endfor -%}
+{%- endfor %}
 """{{ briefdescription if briefdescription else "Example of SimpleITK " ~ name ~ "." }}
 {% if detaileddescription %}
-{{ detaileddescription | wordwrap(79) }}
+{{ detaileddescription | regex_replace('\\\\[a-z]+[^\n]*\n?', '') | wordwrap(79) }}
 {% endif %}
 {% if not no_procedure %}
 The procedural one-liner equivalent::
@@ -119,7 +119,7 @@ def main(args):
 {% elif setting.dim_vec is defined and setting.dim_vec %}
     filter.Set{{ setting.parameter }}([{{ setting.value | join(", ") }}])
 {% elif setting.python_value is defined and setting.python_value is not none %}
-    filter.Set{{ setting.parameter }}({{ setting.python_value }})
+    filter.Set{{ setting.parameter }}({{ setting.python_value | replace('SimpleITK.', 'sitk.') }})
 {% elif setting.type is defined and setting.type == "bool" %}
     filter.Set{{ setting.parameter }}({{ "True" if setting.value else "False" }})
 {% else %}
@@ -138,10 +138,30 @@ def main(args):
 
 {% if no_return_image and measurements %}
     # Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
 {% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
     print(f"{{ m.name }}: {filter.Get{{ m.name }}()}")
+{%- endif %}
 {% endfor %}
-
+{%- if ns_p.has_param %}
+    # Per-label measurements require a label argument; iterate over labels like:
+    # for label in filter.GetLabels():
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+    #     filter.Get{{ m.name }}(label)
+{%- endif %}
+{% endfor %}
+    # Example: print stats for each label
+    for label in filter.GetLabels():
+        print(f"Label {label}:")
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+        print(f"  {{ m.name }}: {filter.Get{{ m.name }}(label)}")
+{%- endif %}
+{% endfor %}
+{%- endif %}
 {% endif %}
     return_dict = {
 {% if number_of_inputs == 1 %}
