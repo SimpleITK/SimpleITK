@@ -488,6 +488,24 @@ to fail.  By default, Windows does not allow path lengths longer than 260 charac
 See `Windows Path Length <windowsPathLength.html>`__ for more information.
 
 
+Why does building SimpleITK via ``pip install`` fail with a path length error on Windows?
+------------------------------------------------------------------------------------------
+When pip installs SimpleITK from source (e.g., when no pre-built binary is available
+for your Python version), pip uses the system's ``TEMP`` directory as the build
+location. That directory's path is often long enough to trigger ITK's path length
+check, resulting in an error such as:
+
+.. code-block ::
+
+   CMake Error at CMakeLists.txt:105 (message):
+     ITK source code directory path length is too long (64 > 50). Please move the
+     ITK source code directory to a directory with a shorter path.
+
+Setting the ``TEMP`` and ``TMP`` environment variables to a shorter path before
+running pip resolves the issue. See `Windows Path Length <windowsPathLength.html>`__
+for the full details and additional solutions.
+
+
 Where is the Test Data?
 -----------------------
 
