@@ -108,19 +108,19 @@ filter.add_{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)
 {% endfor %}
 {% else %}
 {% for v in setting.value %}
-{
-  idx = Simpleitk::VectorUInt32.new
-  {{ v }}.each { |x| idx << x }
-  filter.add_{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}(idx)
-}
+idx = Simpleitk::VectorUInt32.new
+{{ v }}.each { |x| idx << x }
+filter.add_{{ setting.parameter | replace('List', '') | regex_replace('s([0-9]?)$', '\\1') | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}(idx)
 {% endfor %}
 {% endif %}
 {% elif setting.dim_vec is defined and setting.dim_vec %}
-{
-  idx = Simpleitk::VectorDouble.new
-  [{{ setting.value | join(", ") }}].each { |x| idx << x }
-  filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}(idx)
-}
+{% if setting.type is defined and setting.type in ('uint32_t', 'uint64_t', 'unsigned int', 'unsigned long') %}
+idx = Simpleitk::VectorUInt32.new
+{% else %}
+idx = Simpleitk::VectorDouble.new
+{% endif %}
+[{{ setting.value | join(", ") }}].each { |x| idx << x }
+filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}(idx)
 {% elif setting.type is defined and setting.type == "bool" %}
 filter.set_{{ setting.parameter | regex_replace('([A-Z])', '_\\1') | lower | replace('__', '_') | lstrip('_') }}({{ "true" if setting.value else "false" }})
 {% elif setting.ruby_value is defined and setting.ruby_value is not none %}
