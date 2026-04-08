@@ -49,6 +49,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
+          PYTHON_VERSIONS: ""
           BUILD_PYTHON_LIMITED_API: 1
           SIMPLEITK_USE_ELASTIX: 1
           SIMPLEITK_PYTHON_PACKAGE_NAME: SimpleITKElastix
