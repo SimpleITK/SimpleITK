@@ -67,6 +67,10 @@ fi
 export CTEST_CACHE
 export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/py${PYTHON_VERSION}"
 
+if [ -n "${CTEST_TEST_EXCLUDE}" ]; then
+    export CTEST_TEST_ARGS="EXCLUDE;${CTEST_TEST_EXCLUDE}"
+fi
+
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-py${PYTHON_VERSION}" \
