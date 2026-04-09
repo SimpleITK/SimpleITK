@@ -184,7 +184,7 @@ jobs:
           use_limited_api: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
           python_package_name: SimpleITKElastix
-          ctest_test_exclude: "Python\\.Test(ArrayView|ImageBuffer|Numpy)"
+          ctest_test_exclude: "Python\\.Test\\.(ArrayView|ImageBuffer|Numpy)"
 
       - name: Rename wheels to SimpleElastix
         shell: bash
