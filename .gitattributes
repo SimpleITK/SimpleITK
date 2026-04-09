@@ -29,4 +29,3 @@
 *.tcl            whitespace=tab-in-indent,no-lf-at-eof
 Wrapping/Java/JavaDoc.i              hooks-max-size=2097152
 Wrapping/Python/PythonDocstrings.i   hooks-max-size=2097152
-Testing/Data/Baseline/Example_*.nrrd filter=lfs diff=lfs merge=lfs -text
