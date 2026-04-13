@@ -1,0 +1,183 @@
+/*=========================================================================
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
+{#- Jinja2 template for generating C++ example programs. -#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{#- Build Execute() argument string -#}
+{%- set ns = namespace(exec_args="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ "image" ~ (i if number_of_inputs > 1 else "") -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
+{%- endfor -%}
+
+/** \file
+ * \brief Example program for itk::simple::{{ name }}.
+ *
+{% if briefdescription %}
+ * {{ briefdescription | wordwrap(DOXYGEN_WORDWRAP_WIDTH) | indent(" * ", blank=True) }}
+ *
+{% endif %}
+ * Usage:
+ *   {{ name }} {% for i in range(1, number_of_inputs + 1) %}<input{{ i if number_of_inputs > 1 else "" }}> {% endfor %}{% for inp in named_image_inputs %}<{{ inp.name[0] | lower ~ inp.name[1:] }}> {% endfor %}{% if has_output %}<output>{% endif %}
+
+ */
+
+// This one header includes all SimpleITK filters and objects.
+#include <SimpleITK.h>
+#include <iostream>
+#include <cstdlib>
+
+// Convenient namespace alias
+namespace sitk = itk::simple;
+
+int
+main(int argc, char * argv[])
+{
+  const int expectedArgs = {{ total_inputs + (1 if has_output else 0) }};
+  if (argc < expectedArgs + 1)
+  {
+    std::cerr << "Usage: " << argv[0]
+{% for i in range(1, number_of_inputs + 1) %}
+              << " <input{{ i if number_of_inputs > 1 else "" }}>"
+{% endfor %}
+{% for inp in named_image_inputs %}
+              << " <{{ inp.name[0] | lower ~ inp.name[1:] }}>"
+{% endfor %}
+{% if has_output %}
+              << " <output>"
+{% endif %}
+              << "\n";
+    return EXIT_FAILURE;
+  }
+
+  int argIdx = 1;
+
+{% if number_of_inputs == 1 %}
+  // Read the input image
+  sitk::ImageFileReader reader;
+  reader.SetFileName(argv[argIdx++]);
+  sitk::Image image = reader.Execute();
+{% elif number_of_inputs >= 2 %}
+  // Read the input images
+  sitk::ImageFileReader reader;
+{% for i in range(1, number_of_inputs + 1) %}
+  reader.SetFileName(argv[argIdx++]);
+  sitk::Image image{{ i }} = reader.Execute();
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+  // Read the {{ inp.name[0] | lower ~ inp.name[1:] }} image
+  sitk::ImageFileReader {{ inp.name[0] | lower ~ inp.name[1:] }}Reader;
+  {{ inp.name[0] | lower ~ inp.name[1:] }}Reader.SetFileName(argv[argIdx++]);
+  sitk::Image {{ inp.name[0] | lower ~ inp.name[1:] }} = {{ inp.name[0] | lower ~ inp.name[1:] }}Reader.Execute();
+{% endfor %}
+
+  // Create the filter and set parameters
+  sitk::{{ name }} filter;
+{% if ex and ex.settings %}
+{% for setting in ex.settings %}
+{% if setting.dim_vec is defined and setting.dim_vec %}
+  {
+    std::vector<{{ setting.type if setting.type else "double" }}> param = { {{ setting.value | join(", ") }} };
+    filter.Set{{ setting.parameter }}(param);
+  }
+{% elif setting.type is defined and setting.type == "bool" %}
+  filter.Set{{ setting.parameter }}({{ "true" if setting.value else "false" }});
+{% elif setting.type is defined %}
+  filter.Set{{ setting.parameter }}(static_cast<{{ setting.type }}>({{ setting.value }}));
+{% else %}
+  filter.Set{{ setting.parameter }}({{ setting.value }});
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if has_output %}
+  // Execute the filter
+  sitk::Image output = filter.Execute({{ ns.exec_args }});
+
+  // Write the output image
+  sitk::ImageFileWriter writer;
+  writer.SetFileName(argv[argIdx++]);
+  writer.Execute(output);
+{% else %}
+  // Execute the filter
+  filter.Execute({{ ns.exec_args }});
+
+{% if measurements %}
+  // Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}
+{%- endfor %}
+{% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
+{%- if 'vector' in (m.type | default('')) %}
+  {
+    auto vals = filter.Get{{ m.name }}();
+    std::cout << "{{ m.name }}:";
+    for (const auto & v : vals) { std::cout << " " << v; }
+    std::cout << "\n";
+  }
+{%- else %}
+  std::cout << "{{ m.name }}: " << filter.Get{{ m.name }}() << "\n";
+{%- endif %}
+{%- endif %}
+{% endfor %}
+{%- if ns_p.has_param %}
+  // Per-label measurements require a label argument; iterate over labels like:
+  // for (const auto label : filter.GetLabels()) {
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+  //   filter.Get{{ m.name }}(label);
+{%- endif %}
+{% endfor %}
+  // }
+{%- endif %}
+{% endif %}
+{% endif %}
+
+  /* Equivalent procedural call:
+{% if has_output %}
+   * sitk::Image output = sitk::{{ procedure_name }}({{ ns.exec_args }});
+{% else %}
+   * sitk::{{ procedure_name }}({{ ns.exec_args }});
+{% endif %}
+   */
+
+  return EXIT_SUCCESS;
+}
