@@ -9,9 +9,7 @@ file(
   "${ep_common_cache}"
 )
 
-set(ELASTIX_GIT_REPOSITORY ${git_protocol}://github.com/SuperElastix/elastix)
-# March 20, 2026 release
-set(ELASTIX_GIT_TAG 5.3.1)
+include("${CMAKE_CURRENT_LIST_DIR}/../CMake/sitkElastixGitOptions.cmake")
 
 if(NOT ${BUILD_SHARED_LIBS})
   list(

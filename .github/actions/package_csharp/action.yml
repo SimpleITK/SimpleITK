@@ -4,6 +4,7 @@ inputs:
   continue-on-error:
     description: "Continue on error"
     required: false
+    default: 'false'
   cmake_osx_architectures:
     description: "CMAKE_OSX_ARCHITECTURES value for macOS builds"
     required: false
@@ -16,7 +17,7 @@ runs:
   using: "composite"
   steps:
     - name: Build CSharp
-      continue-on-error: ${{ inputs.continue-on-error }}
+      continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: bash
       if: runner.os == 'macOS'
       env:
@@ -24,7 +25,7 @@ runs:
       run: |
         ${{ github.action_path }}/scripts/mac_build_csharp.sh
     - name: Build CSharp
-      continue-on-error: ${{ inputs.continue-on-error }}
+      continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: cmd
       if: runner.os == 'Windows'
       run: |

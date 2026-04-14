@@ -62,6 +62,19 @@ docker run \
 
 If `SIMPLEITK_GIT_TAG` is not set, the `release` branch will be used by default.
 
+### Enabling Elastix Support
+
+To build documentation with Elastix support enabled, set the `SIMPLEITK_USE_ELASTIX`
+environment variable:
+
+```bash
+docker run \
+  --env SIMPLEITK_USE_ELASTIX=1 \
+  --mount type=bind,source=/path/to/SimpleITK,destination=/work/SimpleITK,readonly \
+  --name sitk-dox \
+  simpleitk-doxygen
+```
+
 ### Extracting Documentation Archives
 
 After the build completes, copy the generated documentation from the container:

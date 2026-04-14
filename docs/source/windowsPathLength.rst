@@ -71,3 +71,28 @@ the entry to ON.
   :alt: Setting ITK_SKIP_PATH_LENGTH_CHECKS in CMake
 
 Now we can build ITK within the SimpleITK SuperBuild with long path names.
+
+
+Building SimpleITK via pip on Windows
+--------------------------------------
+When pip installs SimpleITK from source (e.g., when no pre-built binary is available
+for your Python version), pip uses the system's ``TEMP`` directory as the build
+location. On Windows, the default ``TEMP`` path (e.g.,
+``C:\Users\username\AppData\Local\Temp``) is often long enough to trigger ITK's path
+length check. The solution is to redirect the ``TEMP`` and ``TMP`` environment
+variables to a shorter path before running pip.
+
+In PowerShell:
+
+.. code-block :: powershell
+
+   $Env:TEMP = $Env:TMP = "C:\tmp"
+   pip install simpleitk
+
+Or in Command Prompt:
+
+.. code-block :: bat
+
+   set TEMP=C:\tmp
+   set TMP=C:\tmp
+   pip install simpleitk

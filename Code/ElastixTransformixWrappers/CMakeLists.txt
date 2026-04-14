@@ -1,15 +1,6 @@
-find_package(Elastix CONFIG REQUIRED)
-
-# included for the "transformix_lib" library
-include(${ELASTIX_CONFIG_TARGETS_FILE})
-
-set(
-  use_itk_modules
-  ITK::ITKCommonModule
-  ITK::ITKImageGridModule
-  ITK::ITKRegistrationCommonModule
-  ITK::ITKIOMeshBaseModule
-)
+if(NOT TARGET elastix_lib)
+  find_package(Elastix CONFIG REQUIRED)
+endif()
 
 add_library(
   SimpleElastix
@@ -37,16 +28,14 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/sitkTransformixImageFilterImpl.h
 )
 
-target_include_directories(SimpleElastix PRIVATE ${ELASTIX_INCLUDE_DIRS})
-
 target_link_libraries(
   SimpleElastix
   PUBLIC
     SimpleITKCommon
   PRIVATE
     SimpleITK_ITKCommon
-    ${ELASTIX_LIBRARIES}
-    ${use_itk_modules}
+    transformix_lib
+    elastix_lib
 )
 target_compile_options(
   SimpleElastix

@@ -9,7 +9,7 @@ echo "CTEST_SOURCE_DIRECTORY: ${CTEST_SOURCE_DIRECTORY}"
 
 which python
 python --version
-PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
+PYTHON_ABI_TAG=$(python -c 'import sysconfig; print(sysconfig.get_config_var("SOABI"))')
 
 Python_EXECUTABLE=$(which python)
 SimpleITK_Python_EXECUTABLE=${Python_EXECUTABLE}
@@ -64,11 +64,11 @@ CMAKE_OSX_ARCHITECTURES:STRING=${CMAKE_OSX_ARCHITECTURES}"
 fi
 
 export CTEST_CACHE
-export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/py${PYTHON_VERSION}"
+export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/${PYTHON_ABI_TAG}"
 
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
-      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-py${PYTHON_VERSION}" \
+      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-${PYTHON_ABI_TAG}" \
       -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -VV -j 2
 
 cmake --build "${CTEST_BINARY_DIRECTORY}" --target dist

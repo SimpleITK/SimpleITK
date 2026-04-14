@@ -1792,6 +1792,7 @@ postcomposition
 postfix
 postfixes
 postprocessing
+powershell
 pragma
 pre
 precalculated

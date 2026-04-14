@@ -75,6 +75,11 @@ find_package(ITK REQUIRED)
 
 #we require certain packages be turned on in ITK
 include(sitkCheckForITKModuleDependencies)
+
+option(SimpleITK_USE_ELASTIX "Use the Elastix image registration library" OFF)
+if(SimpleITK_USE_ELASTIX)
+  include(sitkElastixFetchContent)
+endif()
 itk_generate_factory_registration(ImageIO TransformIO FFTImageFilterInit)
 
 list(APPEND SimpleITK_PRIVATE_COMPILE_OPTIONS ${CXX_ADDITIONAL_WARNING_FLAGS})

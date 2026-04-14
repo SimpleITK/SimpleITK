@@ -35,6 +35,7 @@ mkdir -p ${BLD_DIR} && \
           -DWRAP_DEFAULT=OFF\
           -DSimpleITK_Python_EXECUTABLE:FILEPATH=${BLD_DIR}/venv/bin/python\
           -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON\
+          ${SIMPLEITK_USE_ELASTIX:+-DSimpleITK_USE_ELASTIX:BOOL=ON}\
           ${SRC_DIR} && \
     cmake --build . --target Documentation && \
     cd ${BLD_DIR}/Documentation/ && \

@@ -10,7 +10,7 @@ echo "COREBINARYDIRECTORY: ${COREBINARYDIRECTORY}"
 echo "CTEST_SOURCE_DIRECTORY: ${CTEST_SOURCE_DIRECTORY}"
 
 python --version
-PYTHON_VERSION=$(python -c 'import sys;print ("{0}{1}".format(sys.version_info[0], sys.version_info[1]))')
+PYTHON_ABI_TAG=$(python -c 'import sysconfig; print(sysconfig.get_config_var("SOABI"))')
 Python_EXECUTABLE=$(python -c "import sys; print(sys.executable)")
 echo $Python_EXECUTABLE
 
@@ -34,15 +34,14 @@ EOM
 
 
 export CTEST_CACHE
-export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/py${PYTHON_VERSION}"
+export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/${PYTHON_ABI_TAG}"
 
 export CC=cl.exe
 export CXX=cl.exe
 
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
-      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-py${PYTHON_VERSION}" \
-      -D "CTEST_CMAKE_GENERATOR:STRING=Ninja" \
+      -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-${PYTHON_ABI_TAG}" \
       -S "${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake" -VV -j 2
 
 ( cd ${CTEST_BINARY_DIRECTORY} && cmake --build "${CTEST_BINARY_DIRECTORY}" --config "${CTEST_CONFIGURATION_TYPE}" --target dist )

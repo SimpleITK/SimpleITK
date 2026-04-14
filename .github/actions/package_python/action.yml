@@ -8,7 +8,7 @@ inputs:
   continue-on-error:
     description: "Continue on error"
     required: false
-    default: false
+    default: 'false'
   use_limited_api:
     description: "Use limited API"
     required: false
@@ -30,7 +30,7 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
-      continue-on-error: ${{ inputs.continue-on-error }}
+      continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: bash
       if: runner.os == 'macOS'
       env:
@@ -39,7 +39,7 @@ runs:
       run: |
         ${{ github.action_path }}/scripts/mac_build_python.sh
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
-      continue-on-error: ${{ inputs.continue-on-error }}
+      continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: cmd
       if: runner.os == 'Windows'
       env:
