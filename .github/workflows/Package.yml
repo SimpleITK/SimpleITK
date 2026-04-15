@@ -123,7 +123,7 @@ jobs:
           - os: windows-2022
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v142,host=x64
+            cmake-generator-toolset: v143,host=x64
             cmake-generator-platform: x64
             ctest-cache: |
               BUILD_EXAMPLES:BOOL=ON

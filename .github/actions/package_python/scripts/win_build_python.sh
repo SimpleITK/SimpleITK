@@ -36,9 +36,6 @@ EOM
 export CTEST_CACHE
 export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/${PYTHON_ABI_TAG}"
 
-export CC=cl.exe
-export CXX=cl.exe
-
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \
       -D "CTEST_BUILD_NAME:STRING=${RUNNER_NAME}-${GITHUB_JOB}-${PYTHON_ABI_TAG}" \
