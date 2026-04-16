@@ -124,6 +124,10 @@ LoggerBase::LoggerBase() = default;
 
 LoggerBase::~LoggerBase() = default;
 
+void
+LoggerBase::DisplayText(const char * txt)
+{}
+
 ITKLogger
 LoggerBase::SetAsGlobalITKLogger()
 {

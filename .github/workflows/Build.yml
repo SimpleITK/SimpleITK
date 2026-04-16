@@ -121,9 +121,23 @@ jobs:
               WRAP_CSHARP:BOOL=ON
               CXXFLAGS:STRING=/MP
     steps:
+    - name: Install git-lfs
+      shell: bash
+      run: |
+        if ! command -v git-lfs &>/dev/null; then
+          if command -v brew &>/dev/null; then
+            brew install git-lfs
+          elif command -v apt-get &>/dev/null; then
+            sudo apt-get install -y git-lfs
+          elif command -v yum &>/dev/null; then
+            sudo yum install -y git-lfs
+          fi
+        fi
+        git lfs install
     - uses: actions/checkout@v6
       with:
         fetch-depth: 0
+        lfs: true
         ref: "${{ github.event.pull_request.head.sha }}"
     - uses: actions/checkout@v6
       with:

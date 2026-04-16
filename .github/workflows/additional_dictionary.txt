@@ -793,6 +793,7 @@ Viergever
 Vigneault
 Vincken
 Vis
+Vol
 Vor
 Voronoi
 Wada
@@ -1756,6 +1757,7 @@ parsers
 partitioner
 partitioners
 parzen
+pathlib
 pb
 pdf
 pdfs
@@ -1792,6 +1794,7 @@ postcomposition
 postfix
 postfixes
 postprocessing
+pp
 powershell
 pragma
 pre
@@ -2067,6 +2070,7 @@ th
 thisline
 thread_local
 threadpool
+threadsafe
 thresholded
 thresholding
 tif
