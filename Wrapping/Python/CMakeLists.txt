@@ -37,6 +37,19 @@ option(
   ON
 )
 mark_as_advanced(SimpleITK_PYTHON_THREADS)
+
+set(
+  SimpleITK_PYTHON_PACKAGE_NAME
+  "SimpleITK"
+  CACHE STRING
+  "Name of the Python package (e.g. SimpleITK or SimpleElastix)."
+)
+string(
+  TOLOWER
+  "${SimpleITK_PYTHON_PACKAGE_NAME}"
+  SimpleITK_PYTHON_PACKAGE_NAME_LOWER
+)
+
 if(SimpleITK_PYTHON_EGG)
   message(
     WARNING
@@ -147,7 +160,10 @@ if(
     -flatstaticmethod
   )
 endif()
-set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
+set(
+  CMAKE_SWIG_OUTDIR
+  ${CMAKE_CURRENT_BINARY_DIR}/${SimpleITK_PYTHON_PACKAGE_NAME}
+)
 set(
   SWIG_MODULE_SimpleITK_EXTRA_DEPS
   ${SWIG_EXTRA_DEPS}
@@ -302,21 +318,15 @@ sitk_get_pep440_version(SITK_PYTHON_VERSION)
 message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+  "${CMAKE_CURRENT_BINARY_DIR}/${SimpleITK_PYTHON_PACKAGE_NAME}/_version.py"
 )
 
 set(
   SimpleITK_Py_Files
-  "__init__.py"
-  "extra.py"
-  "_pixel_types.py"
-  "py.typed"
-)
-# for each file in SimpleITK_Py_Files, prefix with "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
-list(
-  TRANSFORM SimpleITK_Py_Files
-  PREPEND
-    "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/"
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/__init__.py"
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/extra.py"
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_pixel_types.py"
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/py.typed"
 )
 
 # Currently this installation
@@ -324,9 +334,9 @@ install(
   FILES
     ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
     ${SimpleITK_DOC_FILES}
-    "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+    "${CMAKE_CURRENT_BINARY_DIR}/${SimpleITK_PYTHON_PACKAGE_NAME}/_version.py"
     ${SimpleITK_Py_Files}
-  DESTINATION SimpleITK
+  DESTINATION ${SimpleITK_PYTHON_PACKAGE_NAME}
   COMPONENT Python
   EXCLUDE_FROM_ALL
 )
@@ -335,11 +345,11 @@ install(
   TARGETS
     ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   RUNTIME
-    DESTINATION SimpleITK
+    DESTINATION ${SimpleITK_PYTHON_PACKAGE_NAME}
     COMPONENT Python
     EXCLUDE_FROM_ALL
   LIBRARY
-    DESTINATION SimpleITK
+    DESTINATION ${SimpleITK_PYTHON_PACKAGE_NAME}
     COMPONENT Python
     EXCLUDE_FROM_ALL
 )

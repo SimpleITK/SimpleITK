@@ -1,0 +1,203 @@
+name: ElastixPackage
+
+on:
+  push:
+    tags:
+      - 'latest'
+      - 'v*'
+    branches-ignore:
+      - '**'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - .github/workflows/ElastixPackage.yml
+  workflow_dispatch:
+
+concurrency:
+  group: '${{ github.workflow }}@${{ github.event.pull_request.head.sha || github.head_ref || github.ref }}'
+
+# Set minimal permissions for all jobs (read-only)
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  package-docker:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - os: ubuntu-22.04-arm
+            dockerfile: Dockerfile-2014-aarch64
+          - os: ubuntu-latest
+            dockerfile: Dockerfile-2014-x86_64
+          - os: ubuntu-latest
+            dockerfile: Dockerfile-2-28-x86_64
+          - os: ubuntu-22.04-arm
+            dockerfile: Dockerfile-2-28-aarch64
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Docker Build Image
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux
+        run: |
+          docker build --pull=true --rm=true -t simpleitk_manylinux -f "${{ matrix.dockerfile }}"   .
+      - name: Build ${{ matrix.dockerfile }}
+        shell: bash
+        env:
+          PYTHON_VERSIONS: ""
+          BUILD_PYTHON_LIMITED_API: 1
+          SIMPLEITK_USE_ELASTIX: 1
+          SIMPLEITK_PYTHON_PACKAGE_NAME: SimpleITKElastix
+        run: |
+          docker run --rm \
+               --user "$(id -u):$(id -g)" \
+               --env BUILD_PYTHON_LIMITED_API \
+               --env SIMPLEITK_USE_ELASTIX \
+               --env SIMPLEITK_PYTHON_PACKAGE_NAME \
+               --env SIMPLEITK_SRC_DIR="/work/src" \
+               -v "${{ github.workspace }}:/work/src" \
+               -v "${{ github.workspace }}/Utilities/Distribution/manylinux:/work/io" \
+               -t simpleitk_manylinux
+      - name: Rename wheels to SimpleElastix
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux/wheelhouse
+        run: |
+          for f in simpleitk*.whl; do
+            [ -f "$f" ] || continue
+            mv "$f" "${f/simpleitk/simpleelastix}"
+          done
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts-${{ matrix.os }}-${{matrix.dockerfile}}
+          path: |
+            Utilities/Distribution/manylinux/wheelhouse/simpleelastix*.whl
+            Utilities/Distribution/manylinux/wheelhouse/simpleitkelastix*.whl
+
+  build:
+    if: github.repository == 'SimpleITK/SimpleITK'
+    runs-on: ${{ matrix.os }}
+    env:
+      COREBINARYDIRECTORY:  "${{ github.workspace }}/bld"
+      DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/SimpleITK-dashboard"
+      CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
+      CTEST_CONFIGURATION_TYPE: "${{ matrix.cmake-build-type }}"
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - os: windows-2022
+            cmake-build-type: "Release"
+            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator-toolset: v142,host=x64
+            cmake-generator-platform: x64
+            ctest-cache: |
+              ITK_C_OPTIMIZATION_FLAGS:STRING=
+              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+          - os: macos-15-intel
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_OSX_DEPLOYMENT_TARGET=10.9
+              ITK_C_OPTIMIZATION_FLAGS:STRING=
+              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+              SimpleITK_BUILD_STRIP:BOOL=1
+          - os: mac-arm64
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            ctest-cache: |
+              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
+              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
+              CMAKE_OSX_DEPLOYMENT_TARGET=11.0
+              ITK_C_OPTIMIZATION_FLAGS:STRING=
+              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
+              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
+              SimpleITK_BUILD_STRIP:BOOL=1
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v6
+        with:
+          path: SimpleITK-dashboard
+          ref: dashboard
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        id: cpy
+        with:
+          python-version: "3.11"
+
+      - name: Install build dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r ./.github/workflows/requirements-build.txt
+
+          if [  ! -z "${{ matrix.xcode-version }}" ]; then
+            sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
+            xcode-select -p
+          fi
+
+      - name: Build and Test
+        shell: bash
+        env:
+          ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
+          CTEST_BINARY_DIRECTORY: "${{ env.COREBINARYDIRECTORY }}"
+          CTEST_CMAKE_GENERATOR: "${{ matrix.cmake-generator }}"
+          CTEST_CMAKE_GENERATOR_TOOLSET: "${{ matrix.cmake-generator-toolset }}"
+          CTEST_CMAKE_GENERATOR_PLATFORM: "${{ matrix.cmake-generator-platform }}"
+          CTEST_OUTPUT_ON_FAILURE: 1
+          CTEST_CACHE: |
+            WRAP_DEFAULT:BOOL=OFF
+            BUILD_EXAMPLES:BOOL=ON
+            BUILD_TESTING:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=ON
+            ${{ matrix.cmake_osx_architectures && format('CMAKE_OSX_ARCHITECTURES:STRING={0}', matrix.cmake_osx_architectures) || '' }}
+            ${{ matrix.ctest-cache }}
+        run: |
+          cmake --version
+          ninja --version
+          ctest -D "dashboard_track:STRING=Package" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
+
+      - name: Cleanup build
+        shell: bash
+        run: |
+          rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
+          rm -rf ${COREBINARYDIRECTORY}/Elastix ${COREBINARYDIRECTORY}/Elastix-build
+          rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
+
+      - name: Package Python 3.11
+        uses: ./.github/actions/package_python
+        with:
+          python-version: "3.11"
+          use_limited_api: true
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
+          python_package_name: SimpleITKElastix
+          ctest_test_exclude: "Python\\.Test\\.(ArrayView|ImageBuffer|Numpy)"
+
+      - name: Rename wheels to SimpleElastix
+        shell: bash
+        run: |
+          for f in "${{ github.workspace }}/artifacts"/simpleitk*.whl; do
+            [ -f "$f" ] || continue
+            mv "$f" "${f/simpleitk/simpleelastix}"
+          done
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: artifacts-${{ matrix.os }}
+          path: |
+            ${{ github.workspace }}/artifacts/simpleelastix*.whl
+            ${{ github.workspace }}/artifacts/simpleitkelastix*.whl

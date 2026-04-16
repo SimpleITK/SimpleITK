@@ -1,2 +1,2 @@
 ninja
-cmake~=3.29.0
+cmake~=4.2.0

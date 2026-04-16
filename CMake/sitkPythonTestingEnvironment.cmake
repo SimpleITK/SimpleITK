@@ -90,6 +90,36 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
     COMMENT "Creating python virtual environment..."
   )
+
+  if(NOT SimpleITK_PYTHON_PACKAGE_NAME STREQUAL "SimpleITK")
+    # When the package is renamed (e.g. SimpleElastix), install a SimpleITK
+    # shim module into the venv so that "import SimpleITK as sitk" still works.
+    set(_shim_file "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.py")
+    set(_install_shim_script "${CMAKE_CURRENT_BINARY_DIR}/install_sitk_shim.py")
+    file(
+      CONFIGURE
+      OUTPUT "${_shim_file}"
+      CONTENT
+        "# SimpleITK compatibility shim - re-exports @SimpleITK_PYTHON_PACKAGE_NAME@ as SimpleITK\nfrom @SimpleITK_PYTHON_PACKAGE_NAME@ import *\n"
+      @ONLY
+    )
+    file(
+      CONFIGURE
+      OUTPUT "${_install_shim_script}"
+      CONTENT
+        "import sysconfig, shutil\nshutil.copy('@_shim_file@', sysconfig.get_path('purelib') + '/SimpleITK.py')\n"
+      @ONLY
+    )
+    add_custom_command(
+      OUTPUT
+        "${VIRTUAL_PYTHON_EXECUTABLE}"
+      COMMAND
+        ${VIRTUAL_PYTHON_EXECUTABLE} "${_install_shim_script}"
+      COMMENT
+        "Installing SimpleITK compatibility shim into virtual environment..."
+      APPEND
+    )
+  endif()
 else()
   set(
     SimpleITK_PYTHON_TEST_EXECUTABLE

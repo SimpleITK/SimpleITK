@@ -55,6 +55,7 @@ SimpleITK_BUILD_STRIP:BOOL=1
 Python_EXECUTABLE:FILEPATH=$(which python)
 SimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE}
 SimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API}
+${SIMPLEITK_PYTHON_PACKAGE_NAME:+SimpleITK_PYTHON_PACKAGE_NAME:STRING=${SIMPLEITK_PYTHON_PACKAGE_NAME}}
 EOM
 
 # Conditionally add CMAKE_OSX_ARCHITECTURES if set
@@ -65,6 +66,10 @@ fi
 
 export CTEST_CACHE
 export CTEST_BINARY_DIRECTORY="${GITHUB_WORKSPACE}/${PYTHON_ABI_TAG}"
+
+if [ -n "${CTEST_TEST_EXCLUDE}" ]; then
+    export CTEST_TEST_ARGS="EXCLUDE;${CTEST_TEST_EXCLUDE}"
+fi
 
 ctest -D dashboard_source_config_dir="Wrapping/Python" \
       -D "dashboard_track:STRING=Package" \

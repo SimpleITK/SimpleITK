@@ -21,6 +21,14 @@ inputs:
     description: "Visual Studio vcvarsall.bat options"
     required: false
     default: amd64 -vcvars_ver=14.2
+  python_package_name:
+    description: "Name of the Python package (e.g. SimpleITK or SimpleITKElastix)"
+    required: false
+    default: ""
+  ctest_test_exclude:
+    description: "Regex pattern for test names to exclude from ctest_test EXCLUDE"
+    required: false
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -36,6 +44,8 @@ runs:
       env:
         USE_LIMITED_API: ${{ inputs.use_limited_api }}
         CMAKE_OSX_ARCHITECTURES: ${{ inputs.cmake_osx_architectures }}
+        SIMPLEITK_PYTHON_PACKAGE_NAME: ${{ inputs.python_package_name }}
+        CTEST_TEST_EXCLUDE: ${{ inputs.ctest_test_exclude }}
       run: |
         ${{ github.action_path }}/scripts/mac_build_python.sh
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
@@ -44,6 +54,8 @@ runs:
       if: runner.os == 'Windows'
       env:
         USE_LIMITED_API: ${{ inputs.use_limited_api }}
+        SIMPLEITK_PYTHON_PACKAGE_NAME: ${{ inputs.python_package_name }}
+        CTEST_TEST_EXCLUDE: ${{ inputs.ctest_test_exclude }}
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
         bash ${{ github.action_path }}/scripts/win_build_python.sh

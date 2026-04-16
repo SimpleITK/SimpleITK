@@ -17,8 +17,8 @@
 # ========================================================================
 
 from pathlib import Path
-from SimpleITK.SimpleITK import *
-from SimpleITK.SimpleITK import _SetImageFromArray
+from .SimpleITK import *
+from .SimpleITK import _SetImageFromArray
 
 from typing import Iterable, List, Optional, Type, Union, Tuple
 
