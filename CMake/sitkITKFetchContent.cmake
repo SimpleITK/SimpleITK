@@ -74,6 +74,14 @@ else()
   message(FATAL_ERROR "ITK configuration failed - no targets available")
 endif()
 
+# ITKConfig.cmake does not set the composite ITK_VERSION variable.
+if(NOT ITK_VERSION)
+  set(
+    ITK_VERSION
+    "${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}.${ITK_VERSION_PATCH}"
+  )
+endif()
+
 # These ITK option conflict with SimpleITK.
 # Allow a user's cache variable to be respected.
 unset(BUILD_TESTING)
