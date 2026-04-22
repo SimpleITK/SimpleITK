@@ -82,6 +82,40 @@ if(NOT ITK_VERSION)
   )
 endif()
 
+# When ITK is consumed via FetchContent, CMake generates a stub itk-config.cmake
+# in CMAKE_FIND_PACKAGE_REDIRECTS_DIR that includes ITKExtra.cmake (OPTIONAL).
+# Write that file now so all subsequent find_package(ITK) calls — including those
+# made internally by Elastix's CMakeLists.txt and from ElastixConfig.cmake —
+# load the real ITKConfig.cmake and have all version variables available.
+# Also overwrite the auto-generated itk-config-version.cmake so that calls with
+# an EXACT version requirement (e.g. find_package(ITK "6.0.0" EXACT REQUIRED))
+# succeed with the real version rather than the stub's version-agnostic logic.
+if(DEFINED CMAKE_FIND_PACKAGE_REDIRECTS_DIR AND ITK_DIR)
+  file(
+    WRITE
+    "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/ITKExtra.cmake"
+    "# Written by SimpleITK's sitkITKFetchContent.cmake.\n"
+    "# Provides ITK version variables and the full ITK config to all\n"
+    "# find_package(ITK) calls redirected here by FetchContent.\n"
+    "include(\"${ITK_DIR}/ITKConfig.cmake\")\n"
+    "if(NOT ITK_VERSION)\n"
+    "  set(ITK_VERSION \"${ITK_VERSION}\")\n"
+    "endif()\n"
+  )
+  file(
+    WRITE
+    "${CMAKE_FIND_PACKAGE_REDIRECTS_DIR}/itk-config-version.cmake"
+    "# Written by SimpleITK's sitkITKFetchContent.cmake.\n"
+    "set(PACKAGE_VERSION \"${ITK_VERSION}\")\n"
+    "if(PACKAGE_FIND_VERSION VERSION_EQUAL PACKAGE_VERSION)\n"
+    "  set(PACKAGE_VERSION_EXACT TRUE)\n"
+    "endif()\n"
+    "if(NOT PACKAGE_FIND_VERSION VERSION_GREATER PACKAGE_VERSION)\n"
+    "  set(PACKAGE_VERSION_COMPATIBLE TRUE)\n"
+    "endif()\n"
+  )
+endif()
+
 # These ITK option conflict with SimpleITK.
 # Allow a user's cache variable to be respected.
 unset(BUILD_TESTING)
