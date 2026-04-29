@@ -19,10 +19,15 @@
 // The python header defines _POSIX_C_SOURCE without a preceding #undef
 #include <iostream>
 #include <Rinternals.h>
+#include <Rversion.h>
 
 #include "sitkRCommand.h"
 #include "sitkExceptionObject.h"
 
+// R_ClosureEnv was added in R 4.5.0, CLOENV was removed in R 4.6.0
+#if R_VERSION < R_Version(4, 5, 0)
+#  define R_ClosureEnv(x) CLOENV(x)
+#endif
 
 namespace itk
 {
@@ -86,7 +91,7 @@ RCommand::SetFunctionClosure(SEXP FN)
     // element
     R_fcall = PROTECT(Rf_lang1(this->m_FunctionClosure));
     this->SetCallbackRCallable(R_fcall);
-    this->SetCallbackREnviron(CLOENV(this->m_FunctionClosure));
+    this->SetCallbackREnviron(R_ClosureEnv(this->m_FunctionClosure));
     UNPROTECT(1);
   }
 }
