@@ -152,6 +152,13 @@ if(NOT SWIG_DIR)
     ExternalProject_Add(
       Swig
       ${SWIG_DOWNLOAD_STEP}
+      PATCH_COMMAND
+        ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
+        "<SOURCE_DIR>/swig-r-api-r460.patch"
+      COMMAND
+        patch -p1 --forward --reject-file=- -i
+        "<SOURCE_DIR>/swig-r-api-r460.patch"
       CONFIGURE_COMMAND
         ${swig_CONFIGURE_COMMAND}
       DEPENDS
