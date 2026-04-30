@@ -1,5 +1,33 @@
+diff --git a/Lib/r/argcargv.i b/Lib/r/argcargv.i
+index 73380f4e2..af7aa14d6 100644
+--- a/Lib/r/argcargv.i
++++ b/Lib/r/argcargv.i
+@@ -14,7 +14,6 @@
+ %}
+ %typemap(in) (int ARGC, char **ARGV) {
+   $1_ltype i;
+-  SEXP *pstr;
+   if ($input == R_NilValue) {
+     /* Empty array */
+     $1 = 0;
+@@ -22,14 +21,13 @@
+     SWIG_exception_fail(SWIG_RuntimeError, "Wrong array type.");
+   } else {
+     $1 = Rf_length($input);
+-    pstr = CHARACTER_POINTER($input);
+   }
+   $2 = ($2_ltype) malloc(($1+1)*sizeof($*2_ltype));
+   if ($2 == NULL) {
+     SWIG_exception_fail(SWIG_MemoryError, "Memory allocation failed.");
+   }
+   for (i = 0; i < $1; i++) {
+-    $2[i] = ($*2_ltype)STRING_VALUE(pstr[i]);
++    $2[i] = ($*2_ltype)STRING_VALUE(STRING_ELT($input, i));
+   }
+   $2[i] = NULL;
+ }
 diff --git a/Lib/r/rrun.swg b/Lib/r/rrun.swg
-index 4c03d58..72cfb8f 100644
+index 4c03d5884..5dee391f3 100644
 --- a/Lib/r/rrun.swg
 +++ b/Lib/r/rrun.swg
 @@ -267,7 +267,7 @@ SWIG_MakePtr(void *ptr, const char *typeName, int flags)
@@ -16,7 +44,7 @@ index 4c03d58..72cfb8f 100644
  
     Rf_unprotect(3); 			   
 -   SET_S4_OBJECT(arr);	
-+   arr = Rf_asS4(arr, TRUE, 0);	
++   arr = Rf_asS4(arr, TRUE, 0);
     return arr;
  }
  
@@ -30,7 +58,7 @@ index 4c03d58..72cfb8f 100644
  }
  
 diff --git a/Lib/r/std_vector.i b/Lib/r/std_vector.i
-index 6b32c9f..7db6d38 100644
+index 6b32c9f6f..7db6d3814 100644
 --- a/Lib/r/std_vector.i
 +++ b/Lib/r/std_vector.i
 @@ -203,7 +203,7 @@
