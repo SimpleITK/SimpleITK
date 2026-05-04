@@ -197,17 +197,6 @@ jobs:
           rm -rf ${COREBINARYDIRECTORY}/ITK ${COREBINARYDIRECTORY}/ITK-build
           rm -rf ${COREBINARYDIRECTORY}/SimpleITK-build
 
-      - name: Package Python 3.11
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.11
-          use_limited_api: true
-          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
-      - name: Package Python 3.10
-        uses: ./.github/actions/package_python
-        with:
-          python-version: "3.10"
-          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Package CSharp
         if: runner.os != 'macOS'
         uses: ./.github/actions/package_csharp
