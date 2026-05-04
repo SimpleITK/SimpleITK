@@ -89,36 +89,15 @@ find_path(
   DOC "Path to file R.h"
 )
 if(WIN32)
+  # On Windows, R ships R.dll (not a static .lib) in bin/x64/. Add .dll to
+  # CMAKE_FIND_LIBRARY_SUFFIXES so find_library() locates R.dll directly.
+  # This applies to both MSVC (standard CRAN install) and MinGW/Rtools builds.
+  list(APPEND CMAKE_FIND_LIBRARY_SUFFIXES .dll)
   list(
     APPEND
     _R_LIBRARY_PATH_SUFFIXES
     bin
     bin/x64
-  )
-endif()
-
-if(MINGW)
-  # On Windows with a MinGW/Rtools toolchain, R does not install a static import
-  # library (libR.a or R.lib). Instead the R runtime is provided as R.dll located
-  # in R's bin/x64/ directory.  MinGW's linker (ld) can link directly against a
-  # .dll file: it reads the DLL's export table and synthesises the import stubs
-  # automatically, so no separate .dll.a import library is required.
-  #
-  # The resulting SimpleITK R package .dll will have a dynamic dependency on
-  # R.dll, which is resolved at load time when R executes `useDynLib(SimpleITK)`
-  # (i.e. when the user calls `library(SimpleITK)`).  This mirrors how libR.so is
-  # used on Linux — the package shared library is loaded into the live R process
-  # and the R API symbols are resolved from R's own address space.
-  #
-  # We temporarily add .dll to CMAKE_FIND_LIBRARY_SUFFIXES so that find_library()
-  # will locate R.dll, then restore the original suffixes immediately afterwards.
-  list(APPEND CMAKE_FIND_LIBRARY_SUFFIXES .dll)
-
-  list(
-    APPEND
-    _R_LIBRARY_PATH_SUFFIXES
-    /bin
-    /bin/x64
   )
 endif()
 
@@ -132,7 +111,7 @@ find_library(
   DOC "R library (example libR.a, libR.dylib, R.dll, etc.)."
 )
 
-if(MINGW)
+if(WIN32)
   list(POP_BACK CMAKE_FIND_LIBRARY_SUFFIXES)
 endif()
 
