@@ -17,6 +17,20 @@ find_package(
     Development.SABIModule
 )
 
+# Free-threaded Python (PEP 703, e.g. Python 3.13t/3.14t) requires CMake >= 3.30 for
+# correct FindPython support. Earlier versions link against python3XX.lib instead of
+# python3XXt.lib, causing a crash (access violation) on module import.
+if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
+  if(CMAKE_VERSION VERSION_LESS "3.30")
+    message(
+      FATAL_ERROR
+      "Free-threaded Python (detected SOABI: '${Python_SOABI}') requires CMake >= 3.30. "
+      "CMake ${CMAKE_VERSION} will link against the wrong Python DLL, causing crashes. "
+      "Please upgrade CMake to 3.30 or later."
+    )
+  endif()
+endif()
+
 include_directories(
   ${SimpleITK_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}
