@@ -139,7 +139,7 @@ jobs:
     - name: Install Examples R package dependencies
       if: contains(matrix.ctest-cache, 'WRAP_R')
       run: |
-        Rscript -e 'install.packages(c("argparser"))'
+        Rscript -e 'install.packages(c("argparser"), repos = "https://cloud.r-project.org")'
     - uses: ./.github/actions/external-data-cache
       with:
         path: ${{ runner.temp }}/.ExternalData

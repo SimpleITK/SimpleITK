@@ -219,7 +219,7 @@ jobs:
           fi
 
           if [[ "${{ contains(matrix.ctest-cache, 'WRAP_R') }}" == "true" ]]; then
-            Rscript -e 'install.packages(c("argparser"))'
+            Rscript -e 'install.packages(c("argparser"), repos = "https://cloud.r-project.org")'
           fi
 
       - name: Build and Test
