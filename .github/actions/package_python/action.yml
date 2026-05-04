@@ -21,12 +21,12 @@ runs:
   using: "composite"
   steps:
     - name: Set up Python ${{ inputs.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       id: cpy
       with:
         python-version: ${{ inputs.python-version }}
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
-      continue-on-error: ${{ inputs.continue-on-error }}
+      continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: bash
       if: runner.os == 'macOS'
       env:
@@ -34,7 +34,7 @@ runs:
       run: |
         ${{ github.action_path }}/scripts/mac_build_python.sh
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
-      continue-on-error: ${{ inputs.continue-on-error }}
+      continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: cmd
       if: runner.os == 'Windows'
       env:

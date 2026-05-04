@@ -42,7 +42,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310"
+          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310 cp314-cp314t"
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
           BUILD_JAVA: 1
           BUILD_PYTHON_LIMITED_API: 1
@@ -155,7 +155,7 @@ jobs:
         shell: bash
         run: |
           python -m pip install --upgrade pip
-          python -m pip install ninja cmake~=3.29.0
+          python -m pip install ninja cmake~=3.31.0
 
           if [  ! -z "${{ matrix.xcode-version }}" ]; then
             sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
@@ -224,6 +224,11 @@ jobs:
         uses: ./.github/actions/package_python
         with:
           python-version: 3.9
+      - name: Package Python 3.14t
+        uses: ./.github/actions/package_python
+        with:
+          python-version: "3.14t"
+          continue-on-error: true
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
