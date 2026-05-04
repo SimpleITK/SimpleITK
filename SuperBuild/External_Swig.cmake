@@ -153,12 +153,10 @@ if(NOT SWIG_DIR)
       Swig
       ${SWIG_DOWNLOAD_STEP}
       PATCH_COMMAND
-        ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
-        "<SOURCE_DIR>/swig-r-api-r460.patch"
+        git -C "<SOURCE_DIR>" init
       COMMAND
-        patch -p1 --forward --reject-file=- -i
-        "<SOURCE_DIR>/swig-r-api-r460.patch"
+        git -C "<SOURCE_DIR>" apply --ignore-whitespace
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
       CONFIGURE_COMMAND
         ${swig_CONFIGURE_COMMAND}
       DEPENDS

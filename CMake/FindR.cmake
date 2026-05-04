@@ -88,6 +88,15 @@ find_path(
     R/include
   DOC "Path to file R.h"
 )
+if(WIN32)
+  list(
+    APPEND
+    _R_LIBRARY_PATH_SUFFIXES
+    bin
+    bin/x64
+  )
+endif()
+
 if(MINGW)
   # On Windows with a MinGW/Rtools toolchain, R does not install a static import
   # library (libR.a or R.lib). Instead the R runtime is provided as R.dll located
