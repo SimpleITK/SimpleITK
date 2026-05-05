@@ -62,6 +62,11 @@ if(NOT SWIG_DIR)
         "${SWIGWIN_URL}"
       URL_HASH "${SWIGWIN_URL_HASH}"
       SOURCE_DIR ${swig_source_dir}
+      PATCH_COMMAND
+        git -C "<SOURCE_DIR>" init
+      COMMAND
+        git -C "<SOURCE_DIR>" apply --ignore-whitespace
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
       CONFIGURE_COMMAND
         ""
       BUILD_COMMAND

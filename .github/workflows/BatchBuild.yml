@@ -62,7 +62,7 @@ jobs:
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Visual Studio 17 2022"
             cmake-generator-toolset: v143,host=x64
-            use-superbuild: false
+            use-superbuild: true
             cmake-generator-platform: x64
             ctest-cache: |
               WRAP_R:BOOL=ON
@@ -74,7 +74,7 @@ jobs:
             cmake-generator: "Visual Studio 17 2022"
             cmake-generator-toolset: v143,host=x64
             cmake-generator-platform: x64
-            use-superbuild: true
+            use-superbuild: false
             ctest-cache: |
               WRAP_DEFAULT:BOOL=OFF
               CXXFLAGS:STRING= /wd4251 /MP
