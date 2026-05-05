@@ -23,6 +23,10 @@ permissions:
   contents: read
   actions: read
 
+env:
+  DEFAULT_PYTHON_VERSION: "3.11"
+  DEFAULT_R_VERSION: "4.5"
+
 jobs:
 
   build:
@@ -104,10 +108,11 @@ jobs:
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_osx_architectures: "x86_64"
+            r_version: "4.4"
             use-ccache: true
             ctest-cache: |
+              WRAP_R:BOOL=ON
               WRAP_PYTHON:BOOL=ON
-              WRAP_JAVA:BOOL=ON
               WRAP_CSHARP:BOOL=OFF
               CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
               CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
@@ -131,24 +136,20 @@ jobs:
       with:
         path: SimpleITK-dashboard
         ref: dashboard
-    - name: Install R
+    - name: Install R ${{ matrix.r-version || env.DEFAULT_R_VERSION }}
       if: contains(matrix.ctest-cache, 'WRAP_R')
       uses: r-lib/actions/setup-r@v2
       with:
-        r-version: '4.5'
-    - name: Install Examples R package dependencies
-      if: contains(matrix.ctest-cache, 'WRAP_R')
-      run: |
-        Rscript -e 'install.packages(c("argparser"))'
+        r-version: ${{ matrix.r-version || env.DEFAULT_R_VERSION }}
     - uses: ./.github/actions/external-data-cache
       with:
         path: ${{ runner.temp }}/.ExternalData
         save: ${{ github.event_name != 'pull_request' }}
-    - name: Set up Python 3.11
+    - name: Set up Python ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
       uses: actions/setup-python@v6
       id: cpy
       with:
-        python-version: 3.11
+        python-version: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
     - name: Install build dependencies
       shell: bash
       run: |
@@ -160,6 +161,11 @@ jobs:
           elif [[ "${{ runner.os }}" == "macOS" ]]; then
             brew install ccache
           fi
+        fi
+
+        # Install R dependecies needed for exmaples
+        if [[ "${{ contains(matrix.ctest-cache, 'WRAP_R') }}" == "true" ]]; then
+          Rscript -e 'install.packages(c("argparser"))'
         fi
     - name: Restore ccache
       if: matrix.use-ccache
