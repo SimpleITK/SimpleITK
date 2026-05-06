@@ -19,7 +19,7 @@ if(NOT SWIG_DIR)
   endif()
 
 
-  set(SWIG_TARGET_VERSION "4.3.0" )
+  set(SWIG_TARGET_VERSION "4.4.1")
 
   find_package(Patch REQUIRED)
 
