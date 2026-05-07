@@ -19,7 +19,9 @@ if(NOT SWIG_DIR)
   endif()
 
 
-  set(SWIG_TARGET_VERSION "4.3.0" )
+  set(SWIG_TARGET_VERSION "4.4.1")
+
+  find_package(Patch REQUIRED)
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
@@ -41,12 +43,17 @@ if(NOT SWIG_DIR)
       URL "${SWIGWIN_URL}"
       URL_HASH "${SWIGWIN_URL_HASH}"
       SOURCE_DIR ${swig_source_dir}
-      CONFIGURE_COMMAND ""
-      BUILD_COMMAND ""
-      INSTALL_COMMAND ""
-      ${External_Project_USES_TERMINAL}
-      )
-    add_dependencies(Swig  "SuperBuildSimpleITKSource")
+      PATCH_COMMAND
+        ${Patch_EXECUTABLE} -p1 --forward --reject-file=- -i
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
+      CONFIGURE_COMMAND
+        ""
+      BUILD_COMMAND
+        ""
+      INSTALL_COMMAND
+        "" ${External_Project_USES_TERMINAL}
+    )
+    add_dependencies(Swig "SuperBuildSimpleITKSource")
 
     set(SWIG_DIR "${swig_source_dir}") # path specified as source in ep
     set(SWIG_EXECUTABLE ${SWIG_DIR}/swig.exe)
@@ -110,10 +117,15 @@ if(NOT SWIG_DIR)
 
     ExternalProject_add(Swig
       ${SWIG_DOWNLOAD_STEP}
-      CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
-      DEPENDS "${Swig_DEPENDENCIES}"
-      ${External_Project_USES_TERMINAL}
-      )
+      PATCH_COMMAND
+        ${Patch_EXECUTABLE} -p1 --forward --reject-file=- -i
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
+      CONFIGURE_COMMAND
+        ${swig_CONFIGURE_COMMAND}
+      DEPENDS
+        "${Swig_DEPENDENCIES}"
+        ${External_Project_USES_TERMINAL}
+    )
 
     if(NOT USE_SWIG_FROM_GIT)
       sitkSourceDownloadDependency(Swig)
