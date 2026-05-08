@@ -120,8 +120,6 @@ protected:
 } // namespace
 
 
-LoggerBase::LoggerBase() = default;
-
 LoggerBase::~LoggerBase() = default;
 
 ITKLogger

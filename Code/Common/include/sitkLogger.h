@@ -49,7 +49,7 @@ class ITKLogger;
 class SITKCommon_EXPORT LoggerBase : public ObjectOwnedBase
 {
 public:
-  LoggerBase();
+  LoggerBase() = default;
 
   ~LoggerBase() override;
 

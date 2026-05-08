@@ -21,6 +21,7 @@ permissions:
 
 env:
   DEFAULT_PYTHON_VERSION: "3.11"
+  DEFAULT_R_VERSION: "4.5"
 
 jobs:
   build:
@@ -99,16 +100,19 @@ jobs:
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
+              WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
           - os: ubuntu-24.04
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             apt-get-dependencies: "liblua5.3-dev lua5.3"
+            r-version: "4.0"
             use-superbuild: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_LUA:BOOL=ON
+              WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
 
           - os: ubuntu-24.04
@@ -143,6 +147,7 @@ jobs:
             use-superbuild: true
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
+              WRAP_R:BOOL=ON
 
           - os: macos-14
             cmake-build-type: "Release"
@@ -176,6 +181,11 @@ jobs:
         with:
           path: ${{ runner.temp }}/.ExternalData
           save: ${{ github.event_name != 'pull_request' }}
+      - name: Install R
+        if: contains(matrix.ctest-cache, 'WRAP_R')
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r-version || env.DEFAULT_R_VERSION }}
       - name: Set up Python ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
         uses: actions/setup-python@v6
         id: cpy
@@ -205,6 +215,10 @@ jobs:
           if [ ! -z "${{ matrix.apt-get-dependencies }}" ]; then
             sudo apt-get update
             sudo apt-get install -y ${{ matrix.apt-get-dependencies }}
+          fi
+
+          if [[ "${{ contains(matrix.ctest-cache, 'WRAP_R') }}" == "true" ]]; then
+            Rscript -e 'install.packages(c("argparser"))'
           fi
 
       - name: Build and Test
