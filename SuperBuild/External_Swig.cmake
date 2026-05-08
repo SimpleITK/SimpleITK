@@ -30,6 +30,8 @@ if(NOT SWIG_DIR)
 
   set(SWIG_TARGET_VERSION "4.4.1")
 
+  find_package(Patch REQUIRED)
+
   if(USE_SWIG_FROM_GIT)
     set(
       SWIG_GIT_REPOSITORY
@@ -62,6 +64,9 @@ if(NOT SWIG_DIR)
         "${SWIGWIN_URL}"
       URL_HASH "${SWIGWIN_URL_HASH}"
       SOURCE_DIR ${swig_source_dir}
+      PATCH_COMMAND
+        ${Patch_EXECUTABLE} -p1 --forward --reject-file=- -i
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
       CONFIGURE_COMMAND
         ""
       BUILD_COMMAND
@@ -152,6 +157,9 @@ if(NOT SWIG_DIR)
     ExternalProject_Add(
       Swig
       ${SWIG_DOWNLOAD_STEP}
+      PATCH_COMMAND
+        ${Patch_EXECUTABLE} -p1 --forward --reject-file=- -i
+        "${CMAKE_CURRENT_LIST_DIR}/swig-r-api-r460.patch"
       CONFIGURE_COMMAND
         ${swig_CONFIGURE_COMMAND}
       DEPENDS
