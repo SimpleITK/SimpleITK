@@ -26,6 +26,7 @@
 #include <sitkExtractImageFilter.h>
 #include <sitkRegionOfInterestImageFilter.h>
 
+#include <cmath>
 #include <itksys/SystemTools.hxx>
 
 
@@ -552,7 +553,26 @@ TEST(IO, DicomSeriesReader)
   EXPECT_EQ(image2.GetSize(), image2_reverse.GetSize());
   EXPECT_NE(image2.GetOrigin(), image2_reverse.GetOrigin());
   EXPECT_EQ(image2.GetSpacing(), image2_reverse.GetSpacing());
-  EXPECT_EQ(image2.GetDirection(), image2_reverse.GetDirection());
+  // ITK PR#5357 fixed ForceOrthogonalDirection to negate the z-column when
+  // reading in reverse order. X/y-columns are unaffected; z-column must match
+  // in magnitude (sign may differ: ITK < 6.0 preserved the sign (pre-fix),
+  // ITK >= 6.0 negates it (post ITK PR#5357)).
+  {
+    const auto d = image2.GetDirection();
+    const auto dr = image2_reverse.GetDirection();
+    ASSERT_EQ(d.size(), dr.size());
+    ASSERT_EQ(d.size(), 9u);
+    for (size_t i : { 0u, 1u, 3u, 4u, 6u, 7u })
+    {
+      EXPECT_NEAR(d[i], dr[i], 1e-10) << "Direction element [" << i
+                                      << "] (x/y-column) should be unchanged by ReverseOrder";
+    }
+    for (size_t i : { 2u, 5u, 8u })
+    {
+      EXPECT_NEAR(std::abs(d[i]), std::abs(dr[i]), 1e-10)
+        << "Direction z-column element [" << i << "] magnitude should be unchanged by ReverseOrder";
+    }
+  }
   EXPECT_EQ(image2.GetPixelID(), image2_reverse.GetPixelID());
   EXPECT_EQ(image2.GetDimension(), image2_reverse.GetDimension());
   EXPECT_EQ(image2.GetNumberOfComponentsPerPixel(), image2_reverse.GetNumberOfComponentsPerPixel());
