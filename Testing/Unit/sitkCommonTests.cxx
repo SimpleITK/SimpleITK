@@ -605,6 +605,15 @@ TEST(ProcessObject, Threads)
 
   EXPECT_TRUE(sitk::ProcessObject::SetGlobalDefaultThreader("POOL"));
   EXPECT_EQ("POOL", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()));
+
+#if defined(SITK_ITK_HAS_SINGLE_THREADER)
+  EXPECT_TRUE(sitk::ProcessObject::SetGlobalDefaultThreader("SINGLE"));
+  EXPECT_EQ("SINGLE", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()));
+  EXPECT_TRUE(sitk::ProcessObject::SetGlobalDefaultThreader("Single"));
+  EXPECT_EQ("SINGLE", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()));
+#else
+  EXPECT_FALSE(sitk::ProcessObject::SetGlobalDefaultThreader("SINGLE"));
+#endif
 }
 
 TEST(Command, Test2)

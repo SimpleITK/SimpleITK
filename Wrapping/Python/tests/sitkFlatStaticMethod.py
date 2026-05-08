@@ -52,6 +52,11 @@ def test_ProcessObject():
     sitk.ProcessObject_SetGlobalDefaultNumberOfThreads(2)
     assert sitk.ProcessObject_GetGlobalDefaultNumberOfThreads() == 2
 
+    # "SINGLE" threader is available when ITK has itk::SingleMultiThreader
+    result = sitk.ProcessObject_SetGlobalDefaultThreader("SINGLE")
+    if result:
+        assert sitk.ProcessObject_GetGlobalDefaultThreader().upper() == "SINGLE"
+
 def test_IO(test_data):
     sitk.ImageSeriesReader_GetGDCMSeriesIDs(str(test_data["test_dir"]))
     sitk.ImageReaderBase_GetImageIOFromFileName(str(test_data["test_dcm_file"]))
