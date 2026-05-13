@@ -295,6 +295,15 @@ jobs:
         run: |
           echo "TAG NAME: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
           echo "name=${{github.ref_name}}" >> $GITHUB_OUTPUT
+      - name: Detect pre-release
+        id: prerelease
+        run: |
+          if [[ "${{ steps.tag.outputs.name }}" == "latest" ||
+              "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+          fi
       - name: Create Release Notes
         shell: bash
         run: |
@@ -304,10 +313,15 @@ jobs:
           else
             echo "This is an automatic packaging of SimpleITK based on the ${{ steps.tag.outputs.name }} tag." > notes.txt
           fi
+          if [ "${{ steps.prerelease.outputs.is_prerelease }}" == "true" ]; then
+            pip_cmd="pip install --upgrade --pre simpleitk"
+          else
+            pip_cmd="pip install --upgrade simpleitk"
+          fi
           echo "
 
           To upgrade to this Python binary package run:
-          \`\`\`pip install --upgrade --pre simpleitk --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
+          \`\`\`${pip_cmd} --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
           " >>notes.txt
 
           ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
@@ -328,8 +342,7 @@ jobs:
             gh release delete ${{ steps.tag.outputs.name }} --yes || true
           fi
 
-          if [[  "${{ steps.tag.outputs.name }}" == "latest" ||
-              "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
+          if [ "${{ steps.prerelease.outputs.is_prerelease }}" == "true" ]; then
             create_args="--prerelease"
           fi
 
