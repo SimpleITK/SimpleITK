@@ -10,6 +10,7 @@ Release Notes
    notes-v3.0.0a3
    notes-v3.0.0a2
    notes-v3.0.0a1
+   notes-v2.5.5
    notes-v2.5.4
    notes-v2.5.3
    notes-v2.5.2
