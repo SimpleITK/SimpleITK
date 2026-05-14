@@ -28,8 +28,9 @@ runs:
       continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: cmd
       if: runner.os == 'Windows'
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  ${{ inputs.VCVAR_OPTIONS }}
-        bash ${{ github.action_path }}/scripts/win_build_csharp.sh
       env:
+        VCVAR_OPTIONS: ${{ inputs.VCVAR_OPTIONS }}
         CSHARP_PLATFORM: x64
+      run: |
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  %VCVAR_OPTIONS%
+        bash ${{ github.action_path }}/scripts/win_build_csharp.sh
