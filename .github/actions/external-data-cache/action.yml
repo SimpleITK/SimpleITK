@@ -13,7 +13,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/cache/restore@v5
+    - uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       if: inputs.save != 'true'
       with:
         path: ${{ inputs.path }}
@@ -21,7 +21,7 @@ runs:
         enableCrossOsArchive: true
         restore-keys: |
           external-data-v2-
-    - uses: actions/cache@v5
+    - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       if: inputs.save == 'true'
       with:
         path: ${{ inputs.path }}
