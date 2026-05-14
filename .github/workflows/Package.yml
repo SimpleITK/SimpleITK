@@ -292,29 +292,35 @@ jobs:
           cat checksums.txt
       - name: Set tag name
         id: tag
+        env:
+          REF_NAME: ${{ github.ref_name }}
         run: |
-          echo "TAG NAME: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "name=${{github.ref_name}}" >> $GITHUB_OUTPUT
+          echo "TAG NAME: ${REF_NAME}" >> $GITHUB_STEP_SUMMARY
+          echo "name=${REF_NAME}" >> $GITHUB_OUTPUT
       - name: Create Release Notes
         shell: bash
+        env:
+          TAG_NAME: ${{ steps.tag.outputs.name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
         run: |
-          echo "Tag Name: ${{ steps.tag.outputs.name }}"
-          if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
-            echo "This is an automatic packaging of SimpleITK based on the ${{github.event.repository.default_branch}} branch. It contains the latest features and experimental developments." > notes.txt
+          echo "Tag Name: ${TAG_NAME}"
+          if [ "${TAG_NAME}" == "latest" ]; then
+            echo "This is an automatic packaging of SimpleITK based on the ${DEFAULT_BRANCH} branch. It contains the latest features and experimental developments." > notes.txt
           else
-            echo "This is an automatic packaging of SimpleITK based on the ${{ steps.tag.outputs.name }} tag." > notes.txt
+            echo "This is an automatic packaging of SimpleITK based on the ${TAG_NAME} tag." > notes.txt
           fi
           echo "
 
           To upgrade to this Python binary package run:
-          \`\`\`pip install --upgrade --pre simpleitk --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${{ steps.tag.outputs.name }}\`\`\`
+          \`\`\`pip install --upgrade --pre simpleitk --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/${TAG_NAME}\`\`\`
           " >>notes.txt
 
           ${{ github.workspace }}/Utilities/Maintenance/GeneratePythonDownloadsPage.py \
             --hash md5 \
             --format gh \
-            --tag "${{ steps.tag.outputs.name }}" \
-            $( find ${{ steps.download.outputs.download-path }} -type f  -name \*.whl ) \
+            --tag "${TAG_NAME}" \
+            $( find "${DOWNLOAD_PATH}" -type f  -name \*.whl ) \
           >> notes.txt
 
           echo "== notes.txt =="
@@ -323,28 +329,32 @@ jobs:
       - name: Create Release and Upload Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.tag.outputs.name }}
+          REF_NAME: ${{ github.ref_name }}
+          GIT_SHA: ${{ github.sha }}
+          DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
         run: |
-          if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
-            gh release delete ${{ steps.tag.outputs.name }} --yes || true
+          if [ "${TAG_NAME}" == "latest" ]; then
+            gh release delete "${TAG_NAME}" --yes || true
           fi
 
-          if [[  "${{ steps.tag.outputs.name }}" == "latest" ||
-              "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
+          if [[  "${TAG_NAME}" == "latest" ||
+              "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
             create_args="--prerelease"
           fi
 
-          gh release create ${{ steps.tag.outputs.name }} \
-            --target ${{ github.sha }} \
+          gh release create "${TAG_NAME}" \
+            --target "${GIT_SHA}" \
             --verify-tag \
             --draft \
             --generate-notes \
             $create_args \
             --notes-file notes.txt \
-            --title "Release ${{ github.ref_name }}"
-          gh release upload ${{ steps.tag.outputs.name }} $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
+            --title "Release ${REF_NAME}"
+          gh release upload "${TAG_NAME}" $( find  "${DOWNLOAD_PATH}" -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
 
-          if [ "${{ steps.tag.outputs.name }}" == "latest" ]; then
-            gh release edit ${{ steps.tag.outputs.name }} --draft=false
+          if [ "${TAG_NAME}" == "latest" ]; then
+            gh release edit "${TAG_NAME}" --draft=false
           fi
       - name: Prepare for PyPI upload
         shell: bash
