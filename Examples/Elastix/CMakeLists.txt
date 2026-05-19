@@ -39,3 +39,33 @@ set_tests_properties(
     DEPENDS
       "CXX.Example.Elastix"
 )
+
+# Python tests
+sitk_add_python_test(
+  Example.Elastix
+  "${CMAKE_CURRENT_SOURCE_DIR}/elx.py"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  ${CMAKE_CURRENT_SOURCE_DIR}/par0001.txt
+  ${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.elx.nii
+  ${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.elx.TransformParameters.txt
+)
+
+sitk_add_python_test(
+  Example.Transformix
+  "${CMAKE_CURRENT_SOURCE_DIR}/tfx.py"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  ${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.elx.TransformParameters.txt
+  ${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.tfx.nii
+  IMAGE_COMPARE
+    ${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.elx.nii
+    ${SimpleITK_TEST_OUTPUT_DIR}/Python.Example.tfx.nii
+    40
+)
+
+set_tests_properties(
+  Python.Example.Transformix
+  PROPERTIES
+    DEPENDS
+      "Python.Example.Elastix"
+)
