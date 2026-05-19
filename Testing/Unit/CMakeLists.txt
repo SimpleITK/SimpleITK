@@ -113,6 +113,27 @@ target_compile_options(
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
 )
 
+include(CheckIncludeFileCXX)
+set(_sitk_saved_cmake_required_includes "${CMAKE_REQUIRED_INCLUDES}")
+if(DEFINED ITK_INCLUDE_DIRS)
+  list(APPEND CMAKE_REQUIRED_INCLUDES ${ITK_INCLUDE_DIRS})
+endif()
+check_include_file_cxx(
+  "itkSingleMultiThreader.h"
+  SITK_ITK_HAS_SINGLE_THREADER
+)
+set(CMAKE_REQUIRED_INCLUDES "${_sitk_saved_cmake_required_includes}")
+unset(_sitk_saved_cmake_required_includes)
+
+if(SITK_ITK_HAS_SINGLE_THREADER)
+  set_source_files_properties(
+    sitkCommonTests.cxx
+    PROPERTIES
+      COMPILE_DEFINITIONS
+        SITK_ITK_HAS_SINGLE_THREADER
+  )
+endif()
+
 #
 # Glob for necessary template files up front, before the foreach loop over
 # the filters:

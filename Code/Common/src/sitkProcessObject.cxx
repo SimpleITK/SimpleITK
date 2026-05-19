@@ -325,7 +325,7 @@ ProcessObject::SetGlobalDefaultThreader(const std::string & threader)
   auto threaderEnum = itk::MultiThreaderBase::ThreaderTypeFromString(threader);
   if (threaderEnum == itk::MultiThreaderBase::ThreaderEnum::Unknown
 #if !defined(ITK_USE_TBB)
-      || threaderEnum == itk::MultiThreaderBase::ThreaderEnum::Unknown
+      || threaderEnum == itk::MultiThreaderBase::ThreaderEnum::TBB
 #endif
   )
   {

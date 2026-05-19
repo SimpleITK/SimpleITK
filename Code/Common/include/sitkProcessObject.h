@@ -162,6 +162,7 @@ public:
    *  - "POOL" itk::PoolMultiThreader
    *  - "TBB" itk::TBBThreader (optional)
    *  - "PLATFORM" itk::PlatformMultiThreader
+   *  - "SINGLE" itk::SingleMultiThreader
    *
    * The default and the available multi-threaders are
    * dependent upon ITK's configuration. See the ITK
@@ -176,7 +177,7 @@ public:
    * threader argument is not case sensitive.
    *
    * \sa itk::MultiThreaderBase itk::PoolMultiThreader
-   * itk::TBBThreader itk::PlatformMultiThreader
+   * itk::TBBThreader itk::PlatformMultiThreader itk::SingleMultiThreader
    * @{
    */
   static bool
