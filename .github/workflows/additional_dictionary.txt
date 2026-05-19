@@ -2063,6 +2063,7 @@ tetrahedra
 textbf
 textrm
 tfm
+tfx
 th
 thisline
 thread_local
