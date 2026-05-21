@@ -36,11 +36,29 @@ Registration (elx)
 
 .. tabs::
 
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/Elastix/elx.cs
+       :language: c#
+       :lines: 18-
+
   .. tab:: C++
 
     .. literalinclude:: ../../Examples/Elastix/elx.cxx
        :language: c++
        :lines: 1-
+
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/Elastix/elx.java
+       :language: java
+       :lines: 18-
+
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/Elastix/elx.lua
+       :language: lua
+       :lines: 18-
 
   .. tab:: Python
 
@@ -48,10 +66,22 @@ Registration (elx)
        :language: python
        :lines: 1-
 
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/Elastix/elx.R
+       :language: r
+       :lines: 18-
+
 Transformation (tfx)
 ^^^^^^^^^^^^^^^^^^^^
 
 .. tabs::
+
+  .. tab:: C#
+
+    .. literalinclude:: ../../Examples/Elastix/tfx.cs
+       :language: c#
+       :lines: 18-
 
   .. tab:: C++
 
@@ -59,11 +89,29 @@ Transformation (tfx)
        :language: c++
        :lines: 1-
 
+  .. tab:: Java
+
+    .. literalinclude:: ../../Examples/Elastix/tfx.java
+       :language: java
+       :lines: 18-
+
+  .. tab:: Lua
+
+    .. literalinclude:: ../../Examples/Elastix/tfx.lua
+       :language: lua
+       :lines: 18-
+
   .. tab:: Python
 
     .. literalinclude:: ../../Examples/Elastix/tfx.py
        :language: python
        :lines: 1-
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/Elastix/tfx.R
+       :language: r
+       :lines: 18-
 
 See Also
 --------
