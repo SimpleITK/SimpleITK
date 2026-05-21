@@ -59,7 +59,7 @@ jobs:
               SimpleITK_EXPLICIT_INSTANTIATION:BOOL=ON
               SimpleITK_USE_SYSTEM_SWIG:BOOL=OFF
           - os: mac-arm64
-            name: mac-arm64-python-elastix-python
+            name: mac-arm64-elastix-python
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-superbuild: false
@@ -67,7 +67,7 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
           - os: ubuntu-24.04
-            name: linux-x64-superbuild-elastix-python
+            name: linux-x64-superbuild-elastix-python-r
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_build_parallel_level: 6
@@ -104,7 +104,7 @@ jobs:
               CMAKE_C_COMPILER_LAUNCHER:STRING=ccache
               CMAKE_CXX_COMPILER_LAUNCHER:STRING=ccache
           - os: macos-15
-            name: macos-x86_64-python-java
+            name: macos-x86_64-python-r
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             cmake_osx_architectures: "x86_64"
