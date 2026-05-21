@@ -63,12 +63,14 @@ sitk_add_python_test(
     40
 )
 
-set_tests_properties(
-  Python.Example.Transformix
-  PROPERTIES
-    DEPENDS
-      "Python.Example.Elastix"
-)
+if(WRAP_PYTHON)
+  set_tests_properties(
+    Python.Example.Transformix
+    PROPERTIES
+      DEPENDS
+        "Python.Example.Elastix"
+  )
+endif()
 
 # Java tests
 sitk_add_java_test(
@@ -93,12 +95,14 @@ sitk_add_java_test(
     40
 )
 
-set_tests_properties(
-  Java.Example.Transformix
-  PROPERTIES
-    DEPENDS
-      "Java.Example.Elastix"
-)
+if(WRAP_JAVA)
+  set_tests_properties(
+    Java.Example.Transformix
+    PROPERTIES
+      DEPENDS
+        "Java.Example.Elastix"
+  )
+endif()
 
 # CSharp tests
 sitk_add_csharp_test(
@@ -123,12 +127,14 @@ sitk_add_csharp_test(
     40
 )
 
-set_tests_properties(
-  CSharp.Example.Transformix
-  PROPERTIES
-    DEPENDS
-      "CSharp.Example.Elastix"
-)
+if(WRAP_CSHARP)
+  set_tests_properties(
+    CSharp.Example.Transformix
+    PROPERTIES
+      DEPENDS
+        "CSharp.Example.Elastix"
+  )
+endif()
 
 # Lua tests
 sitk_add_lua_test(
@@ -153,12 +159,14 @@ sitk_add_lua_test(
     40
 )
 
-set_tests_properties(
-  Lua.Example.Transformix
-  PROPERTIES
-    DEPENDS
-      "Lua.Example.Elastix"
-)
+if(WRAP_LUA)
+  set_tests_properties(
+    Lua.Example.Transformix
+    PROPERTIES
+      DEPENDS
+        "Lua.Example.Elastix"
+  )
+endif()
 
 # R tests
 sitk_add_r_test(
@@ -183,9 +191,11 @@ sitk_add_r_test(
     40
 )
 
-set_tests_properties(
-  R.Example.Transformix
-  PROPERTIES
-    DEPENDS
-      "R.Example.Elastix"
-)
+if(WRAP_R)
+  set_tests_properties(
+    R.Example.Transformix
+    PROPERTIES
+      DEPENDS
+        "R.Example.Elastix"
+  )
+endif()
