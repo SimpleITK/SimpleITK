@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.26...3.31.0)
 
 project(SimpleITKInternalPythonPackage NONE)
 
