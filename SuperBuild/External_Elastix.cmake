@@ -1,7 +1,10 @@
 set(proj Elastix)
 
 # Set dependency list
-set(${proj}_DEPENDENCIES "ITK")
+set(${proj}_DEPENDENCIES "")
+if(NOT SimpleITK_USE_SYSTEM_ITK)
+  list(APPEND ${proj}_DEPENDENCIES "ITK")
+endif()
 
 file(
   WRITE
