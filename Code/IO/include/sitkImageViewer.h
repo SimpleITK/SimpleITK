@@ -53,6 +53,7 @@ class SITKIO_EXPORT ImageViewer
 
 public:
   ImageViewer();
+  virtual ~ImageViewer() = default;
 
   /** Return the user readable name of the class */
   virtual std::string
