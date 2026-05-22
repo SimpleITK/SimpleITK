@@ -1,19 +1,20 @@
 Package: SimpleITK
 Version: @SimpleITKR_VERSION@
 Date: @DATE@
-Title: Bindings to SimpleITK Image Segmentation and Registration toolkit
+Title: SimpleITK: A Simplified Interface to the Insight Toolkit
 Authors@R: c(person("Richard", "Beare", role = c("aut", "cre"),
                       email = "Richard.Beare@ieee.org"),
                    person("Bradley", "Lowekamp", role = "aut",
                      email = "blowekamp@mail.nih.gov"),
 		     person("Ziv", "Yaniv", role="aut",
-		     email = "zivrafael.yaniv@nih.gov"))
-Depends: R (>= 3.3)
+		     email = "zivyaniv@nih.gov"))
+Author: Richard Beare, Bradley Lowekamp, Ziv Yaniv, The Insight Software Consortium and the ITK user and developer communities.
+Depends: R (>= 4.0)
 Imports: methods
-Description: An interface to SimpleITK, which is a simplified
-     interface to the Insight Toolkit (ITKv@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@) for medical image segmentation
+Description: This package is an interface to SimpleITK, which is a simplified
+     interface to the Insight Toolkit (ITK) for medical image segmentation
      and registration.
 License: Apache License 2.0
-URL: http://www.simpleitk.org, https://www.itk.org
-BugReports: https://issues.itk.org
+URL: https://github.com/SimpleITK/SimpleITK, https://www.simpleitk.org, https://www.itk.org
+BugReports: https://github.com/SimpleITK/SimpleITK/issues
 Maintainer: Richard Beare <Richard.Beare@ieee.org>
