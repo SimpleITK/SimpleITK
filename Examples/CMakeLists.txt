@@ -1,14 +1,5 @@
-cmake_minimum_required(VERSION 3.16.3...3.20)
+cmake_minimum_required(VERSION 3.23.0...3.31.0)
 project(SimpleITKExamples)
-
-foreach(
-  p
-  CMP0156 # De-duplicate libraries on link lines based on linker capabilities.
-)
-  if(POLICY ${p})
-    cmake_policy(SET ${p} NEW)
-  endif()
-endforeach()
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)

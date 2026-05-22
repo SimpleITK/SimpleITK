@@ -1,5 +1,5 @@
 set(SITK_CMAKE_MINIMUM_REQUIRED_VERSION "3.23.0")
-set(SITK_CMAKE_POLICY_VERSION "3.23")
+set(SITK_CMAKE_POLICY_VERSION "3.31.0")
 
 # cache_list_append( <cache list name> [<element> ...])
 #
