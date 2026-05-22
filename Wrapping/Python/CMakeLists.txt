@@ -4,6 +4,7 @@ cmake_minimum_required(
 )
 
 project(SimpleITK_Python)
+set(WRAP_PYTHON ON)
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
