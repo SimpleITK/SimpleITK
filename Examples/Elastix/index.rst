@@ -17,6 +17,7 @@ The elastix framework is widely used for medical image registration and offers:
   :maxdepth: 1
 
   link_ElastixRegistration_docs
+  link_ElastixParameterMaps_docs
 
 See Also
 --------
