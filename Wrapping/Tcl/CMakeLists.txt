@@ -4,6 +4,7 @@ cmake_minimum_required(
 )
 
 project(SimpleITK_TCL)
+set(WRAP_TCL ON)
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 

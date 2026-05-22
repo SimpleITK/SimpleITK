@@ -4,6 +4,7 @@ cmake_minimum_required(
 )
 
 project(SimpleITK_Lua)
+set(WRAP_LUA ON)
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 

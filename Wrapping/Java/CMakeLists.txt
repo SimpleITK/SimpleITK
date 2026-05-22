@@ -4,6 +4,7 @@ cmake_minimum_required(
 )
 
 project(SimpleITK_Java)
+set(WRAP_JAVA ON)
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 

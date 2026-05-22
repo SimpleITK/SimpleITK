@@ -4,6 +4,7 @@ cmake_minimum_required(
 )
 
 project(SimpleITK_Ruby)
+set(WRAP_RUBY ON)
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
