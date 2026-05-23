@@ -2,6 +2,12 @@
 
 set -ex
 
+warn_on_failure() {
+  local rc=$?
+  [ $rc -ne 0 ] && echo "::error title=Build Failed::Python ${PYTHON_ABI_TAG:-unknown} Windows build failed with exit code $rc"
+}
+trap warn_on_failure EXIT
+
 export PATH=/usr/bin:${PATH}
 
 export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=2
