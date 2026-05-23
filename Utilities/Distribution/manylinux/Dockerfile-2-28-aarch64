@@ -3,7 +3,7 @@ LABEL maintainer="Insight Software Consortium <community@itk.org>"
 
 WORKDIR /tmp/
 RUN yum update -y\
-    && yum -y install java-devel\
+    && yum -y install java-devel ninja-build\
     && yum clean all
 
 

@@ -15,7 +15,6 @@ SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
 
 NPROC=$(grep -c processor /proc/cpuinfo)
-export MAKEFLAGS="-j ${NPROC}"
 
 # if ExternalData_OBJECT_STORES is not set by the driver script then
 # set it here to enable  reuse of downloaded files between python
@@ -39,6 +38,7 @@ build_simpleitk() {
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
     cmake \
+        -GNinja \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=Release \
@@ -51,7 +51,7 @@ build_simpleitk() {
         -DITK_CXX_OPTIMIZATION_FLAGS:STRING="" \
         ${SIMPLEITK_USE_ELASTIX:+-DSimpleITK_USE_ELASTIX:BOOL=ON} \
         ${SRC_DIR}/SuperBuild &&
-    make  &&
+    cmake --build . &&
     find ./ -name \*.o -delete
 }
 
@@ -68,6 +68,7 @@ build_simpleitk_python() {
     mkdir -p ${BLD_PY_DIR} &&
     cd ${BLD_PY_DIR} &&
     cmake \
+        -GNinja \
         -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CFLAGS}" \
         -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
         -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
@@ -83,8 +84,8 @@ build_simpleitk_python() {
         -DPython_EXECUTABLE:FILEPATH=${Python_EXECUTABLE} \
         -DPython_INCLUDE_DIR:PATH=${Python_INCLUDE_DIR} \
         ${SRC_DIR}/Wrapping/Python &&
-    make &&
-    make dist
+    cmake --build . &&
+    cmake --build . --target dist
 
 }
 
