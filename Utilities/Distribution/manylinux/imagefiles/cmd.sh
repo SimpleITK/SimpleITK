@@ -68,8 +68,8 @@ build_simpleitk_python() {
     mkdir -p ${BLD_PY_DIR} &&
     cd ${BLD_PY_DIR} &&
     cmake \
-        -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CFLAGS}" \
-        -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
+        -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CXXFLAGS}" \
+        -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
         -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
         -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
         -DCMAKE_BUILD_TYPE:STRING=Release \
@@ -96,8 +96,8 @@ if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-csharp &&
         cd ${BLD_DIR}-csharp &&
         cmake  \
-            -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CFLAGS}" \
-            -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
+            -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CXXFLAGS}" \
+            -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
             -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
             -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
             -DCMAKE_BUILD_TYPE:STRING=Release \
@@ -114,8 +114,8 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-java &&
         cd ${BLD_DIR}-java &&
         cmake  \
-            -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CFLAGS}" \
-            -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CXXFLAGS}" \
+            -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CXXFLAGS}" \
+            -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
             -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
             -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
             -DCMAKE_BUILD_TYPE:STRING=Release \
