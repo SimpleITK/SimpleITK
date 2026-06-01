@@ -1,1 +1,1 @@
-.. include:: ../../Examples/Elastix/Documentation.rst
+.. include:: ../../Examples/Elastix/index.rst

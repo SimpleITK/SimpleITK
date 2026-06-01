@@ -1,5 +1,4 @@
 // Description: elastixpaper, affine
-// https://github.com/SuperElastix/ElastixModelZoo/blob/f6bc11f690062924a855474c0f13d089e6ad3666/models/Par0001/Par0001affine.txt
 
 //ImageTypes
 (FixedInternalImagePixelType "float")
@@ -69,4 +68,4 @@
 (SP_A 200.0)
 
 //SP: Param_alpha in each resolution level. a_k = a/(A+k+1)^alpha
-(SP_alpha 0.6)
+(SP_alpha 0.6 )

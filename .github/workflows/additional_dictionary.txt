@@ -137,6 +137,7 @@ Deconstructor
 Deconvolve
 Decubitus
 DefaultImageToImageMetricTraitsv
+DefaultResampler
 Deformably
 Dekker
 DelaunayConformingQuadEdgeMeshFilter
@@ -265,6 +266,7 @@ GrayscaleFillhole
 GrayscaleFillholeImageFilter
 Grimson
 Grossman
+Groupwise
 Guibas
 HDF
 HFDL
@@ -593,6 +595,7 @@ RenyiEntropyThresholdCalculator
 RenyiEntropyThresholdImageFilter
 RenyiEntropys
 ResamplerType
+Resampler
 Rescale
 Reson
 Ridler
@@ -1111,6 +1114,7 @@ decomposable
 deconvolution
 deconvolved
 decr
+dedent
 deeppink
 default
 deffield
@@ -1347,6 +1351,7 @@ grey
 greyscale
 gridded
 gridding
+groupwise
 gtest
 gui
 gunzip
