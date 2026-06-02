@@ -1137,7 +1137,9 @@ TEST_F(sitkRegistrationMethodTest, StopRegistration)
     std::cout << "outTx1.GetParameters(): " << outTx1.GetParameters() << std::endl;
     std::cout << "GetOptimizerIteration(): " << R.GetOptimizerIteration() << std::endl;
     std::cout << "Stop Condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
-    EXPECT_EQ(stop_iteration + 1, R.GetOptimizerIteration());
+    // Note: ITK 6.0 development enabled stopping before incrementing the iteration count, so the expected iteration
+    // matches.
+    EXPECT_EQ(stop_iteration, R.GetOptimizerIteration());
   }
 }
 
