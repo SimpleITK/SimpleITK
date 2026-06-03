@@ -79,10 +79,10 @@ namespace itk.simple.examples
                 string outputPrefix = args[2];
                 for (int i = 0; i < transformParameterMaps.Count; i++)
                 {
-                    string filename = $"{outputPrefix}_TransformParameters_{i}.txt";
+                    string filename = string.Format("{0}_TransformParameters_{1}.txt", outputPrefix, i);
                     SimpleITK.WriteParameterFile(transformParameterMaps[i], filename);
                 }
-                SimpleITK.WriteImage(resultImage, $"{outputPrefix}.nii");
+                SimpleITK.WriteImage(resultImage, string.Format("{0}.nii", outputPrefix));
             }
         }
     }
