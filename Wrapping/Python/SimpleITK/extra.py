@@ -281,9 +281,7 @@ def GetArrayViewFromImage(image: Image) -> "numpy.ndarray":
 
     image_memory_view = _GetMemoryViewFromImage(image)
     array_view = numpy.asarray(image_memory_view).view(dtype=dtype)
-    array_view.shape = shape[::-1]
-
-    return array_view
+    return array_view.reshape(shape[::-1], copy=False)
 
 
 def GetArrayFromImage(image: Image) -> "numpy.ndarray":
