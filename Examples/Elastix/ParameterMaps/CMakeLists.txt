@@ -51,3 +51,12 @@ sitk_add_lua_test(
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
   ${SimpleITK_TEST_OUTPUT_DIR}/Lua.Example.ParameterMaps
 )
+
+# R test
+sitk_add_r_test(
+  Example.ParameterMaps
+  "${CMAKE_CURRENT_SOURCE_DIR}/ParameterMaps.R"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  ${SimpleITK_TEST_OUTPUT_DIR}/R.Example.ParameterMaps
+)
