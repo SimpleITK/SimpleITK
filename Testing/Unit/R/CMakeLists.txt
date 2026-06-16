@@ -19,3 +19,14 @@ sitk_add_r_test(
   "${CMAKE_CURRENT_SOURCE_DIR}/Rmethodexceptions.R"
 )
 sitk_add_r_test(Commands "${CMAKE_CURRENT_SOURCE_DIR}/RCommands.R")
+if(SimpleITK_USE_ELASTIX)
+  sitk_add_r_test(
+    ElastixParameterMapInterface
+    "${CMAKE_CURRENT_SOURCE_DIR}/RElastixParameterMapInterfaceTest.R"
+  )
+endif()
+
+sitk_add_r_test(
+  ChangeLabelMapInterface
+  "${CMAKE_CURRENT_SOURCE_DIR}/RChangeLabelMapInterfaceTest.R"
+)
