@@ -83,6 +83,13 @@ SimpleITK provides pre-configured default parameter maps for common registration
        :start-after: #START_DEFAULT_PARAMETER_MAP
        :end-before: #END_DEFAULT_PARAMETER_MAP
 
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/Elastix/ParameterMaps/ParameterMaps.R
+       :language: r
+       :start-after: #START_DEFAULT_PARAMETER_MAP
+       :end-before: #END_DEFAULT_PARAMETER_MAP
+
 Modifying Parameter Maps
 ------------------------
 
@@ -125,6 +132,13 @@ Parameter maps behave like dictionaries mapping string keys to vectors of string
 
     .. literalinclude:: ../../Examples/Elastix/ParameterMaps/ParameterMaps.py
        :language: python
+       :start-after: #START_MODIFY_PARAMETER_MAP
+       :end-before: #END_MODIFY_PARAMETER_MAP
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/Elastix/ParameterMaps/ParameterMaps.R
+       :language: r
        :start-after: #START_MODIFY_PARAMETER_MAP
        :end-before: #END_MODIFY_PARAMETER_MAP
 
@@ -173,6 +187,13 @@ Complex registration problems benefit from a coarse-to-fine approach. Use ``SetP
        :start-after: #START_MULTI_STAGE_REGISTRATION
        :end-before: #END_MULTI_STAGE_REGISTRATION
 
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/Elastix/ParameterMaps/ParameterMaps.R
+       :language: r
+       :start-after: #START_MULTI_STAGE_REGISTRATION
+       :end-before: #END_MULTI_STAGE_REGISTRATION
+
 Reading and Writing Parameter Maps
 -----------------------------------
 
@@ -215,6 +236,13 @@ Parameter maps can be saved to and loaded from elastix-format text files. This e
 
     .. literalinclude:: ../../Examples/Elastix/ParameterMaps/ParameterMaps.py
        :language: python
+       :start-after: #START_READ_WRITE_PARAMETER_MAP
+       :end-before: #END_READ_WRITE_PARAMETER_MAP
+
+  .. tab:: R
+
+    .. literalinclude:: ../../Examples/Elastix/ParameterMaps/ParameterMaps.R
+       :language: r
        :start-after: #START_READ_WRITE_PARAMETER_MAP
        :end-before: #END_READ_WRITE_PARAMETER_MAP
 

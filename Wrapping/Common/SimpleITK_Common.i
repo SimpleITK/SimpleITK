@@ -118,8 +118,6 @@ namespace std
   %template(VectorOfTransform) vector< itk::simple::Transform >;
   %template(VectorUIntList) vector< vector<unsigned int> >;
   %template(VectorString) vector< std::string >;
-
-  %template(DoubleDoubleMap) map<double, double>;
 }
 
 // Language Specific Sections
@@ -145,6 +143,10 @@ namespace std
   %include Ruby.i
 #endif
 
+// DoubleDoubleMap is instantiated after language-specific includes so that
+// R's %extend std::map (sitkRStdMap.i) is processed before instantiation,
+// giving the R bindings get/set/del/has_key methods.
+%template(DoubleDoubleMap) std::map<double, double>;
 
 // define these preprocessor directives to nothing for the swig interface
 #define SITKCommon_EXPORT
