@@ -1,0 +1,13 @@
+bibentry(
+  bibtype = "Article",
+  title = "Image Segmentation, Registration and Characterization in R with SimpleITK",
+  author = c(person("Richard", "Beare"),
+             person("Bradley C.", "Lowekamp"),
+             person("Ziv", "Yaniv")),
+  journal = "J Stat Softw",
+  year = "2018",
+  volume = "86",
+  number = "8",
+  doi = "10.18637/jss.v086.i08",
+  url = "https://doi.org/10.18637/jss.v086.i08"
+)
