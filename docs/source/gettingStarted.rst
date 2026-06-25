@@ -33,8 +33,7 @@ right away!
 
 Currently, **Python** binaries are available on Microsoft Windows, GNU
 Linux and Mac OS X. **C# and Java** binaries are available for
-Windows. **R** binaries are not available but a convenient
-`remotes based installer <https://github.com/SimpleITK/SimpleITKRInstaller>`__  for Linux and Mac is.
+Windows. **R** binaries are available for Windows, Linux, and MacOS (Intel).
 
 Python binary files
 -------------------
@@ -126,10 +125,10 @@ at :ref:`setup SimpleITK with Java <setup-java>`.
 R binary files
 --------------
 
-R binaries are not available.
+R binaries are available for Windows, Linux, and MacOS (Intel) and are distributed using a lightweight installer available via the r-universe. Detailed installation instructions are `available on GitHub <https://github.com/SimpleITK/SimpleITKRInstaller/tree/main/SimpleITK_Foyer>`__.
 
-For Linux and Mac one can easily build and install SimpleITK from source using a `remotes <https://cran.r-project.org/web/packages/remotes/readme/README.html>`__ based installer
-referencing this `GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
+If the binary package you need is not available, you can build and install SimpleITK using a `remotes <https://cran.r-project.org/web/packages/remotes/readme/README.html>`__ based installer
+following the instructions available in this `GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
 
 This installation requires `R remotes <https://github.com/r-lib/remotes>`__,
 `CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__, and a compiler
