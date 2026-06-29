@@ -262,12 +262,11 @@ jobs:
             artifacts/SimpleITKDoxygenXML-*.tar.gz
             artifacts/SimpleITKDoxygen-*.tar.gz
 
-  publish:
+  publish-github:
     if: github.event_name != 'pull_request' && (github.ref_name == 'latest' || startsWith(github.ref_name, 'v'))
     environment:
       name: release
     permissions:
-      id-token: write  # for PyPI publish
       contents: write  # for creating and uploading GitHub releases
     needs:
       - build
@@ -326,6 +325,10 @@ jobs:
           echo "== notes.txt =="
           cat notes.txt
 
+      - name: Check wheel metadata
+        run: |
+          pip install twine
+          twine check $( find ${{ steps.download.outputs.download-path }} -name "*.whl" )
       - name: Create Release and Upload Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -356,14 +359,27 @@ jobs:
           if [ "${TAG_NAME}" == "latest" ]; then
             gh release edit "${TAG_NAME}" --draft=false
           fi
+
+  publish-pypi:
+    if: github.event_name != 'pull_request' && startsWith(github.ref_name, 'v')
+    environment:
+      name: release
+    permissions:
+      id-token: write  # for PyPI publish
+    needs:
+      - publish-github
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        id: download
+        with:
+          path: ${{ github.workspace }}/artifacts
       - name: Prepare for PyPI upload
         shell: bash
         run: |
           mkdir -p dist
           mv $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" ) dist/
       - name: PyPI Publish package
-        if: startsWith(github.ref_name, 'v')
-        # hash for release/v1.12.4
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
         with:
           repository-url: https://test.pypi.org/legacy/
