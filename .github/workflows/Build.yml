@@ -169,7 +169,7 @@ jobs:
         fi
     - name: Restore ccache
       if: matrix.use-ccache
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       with:
         path: ${{ runner.temp }}/.ccache
         # GHA scoping rules make branch names in the key redundant:
