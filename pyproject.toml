@@ -1,5 +1,3 @@
-# This file is configured to install SimpleITK from the build directory.
-
 [build-system]
 requires = [
   "scikit-build-core==0.11.5",
@@ -45,7 +43,7 @@ provider = "scikit_build_core.metadata.setuptools_scm"
 [tool.setuptools_scm]
 version_scheme = "post-release"
 local_scheme = "no-local-version"
-write_to = "Wrapping/Python/SimpleITK/_version.py"
+version_file = "Wrapping/Python/SimpleITK/_version.py"
 tag_regex = "^v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
 
 [tool.scikit-build]
