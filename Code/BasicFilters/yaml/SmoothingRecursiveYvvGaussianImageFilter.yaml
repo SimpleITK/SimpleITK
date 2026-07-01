@@ -1,0 +1,62 @@
+name: SmoothingRecursiveYvvGaussianImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+output_image_type: typename InputImageType::template RebindImageType<float>
+members:
+- name: Sigma
+  type: double
+  default: std::vector<double>(3,1.0)
+  dim_vec: true
+  set_as_scalar: true
+  itk_type: typename FilterType::SigmaArrayType
+  custom_itk_cast: |-
+    typename FilterType::SigmaArrayType itkVecSigma = sitkSTLVectorToITK<typename FilterType::SigmaArrayType>( this->GetSigma() );
+      filter->SetSigmaArray( itkVecSigma );
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the standard deviation of the Gaussian used for smoothing. Sigma is measured in the units of image spacing. You may
+    use the method SetSigma to set the same value across each axis or use the method SetSigmaArray if you need different values
+    along each axis.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the Sigma scalar. If the Sigma is anisotropic, we will just return the Sigma along the first dimension.
+- name: NormalizeAcrossScale
+  type: bool
+  default: 'false'
+  doc: ''
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set/Get the flag for normalizing the Gaussian over scale-space. This method does not effect the output of this filter.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Set/Get the flag for normalizing the Gaussian over scale-space. This method does not effect the output of this filter.
+tests:
+- tag: default
+  description: Simply run with default settings
+  settings: []
+  tolerance: 0.0001
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Computes the smoothing of an image by recursive convolution with the Young-Van Vliet Gaussian kernel (IIR filter).
+detaileddescription: >-
+  This filter computes image smoothing using the recursive Young-Van Vliet approximation of a Gaussian kernel, implemented as
+  an Infinite Impulse Response (IIR) filter. This implementation is more efficient than Gaussian filters for larger kernels and
+  is suitable for real-time applications.
+
+
+  For multi-component images, the filter works on each component independently.
+
+
+  For this filter to be able to run in-place the input and output image types need to be the same and/or the same type as
+  the RealImageType.
+
+
+  More information in the Insight Journal publication:
+  https://hdl.handle.net/10380/3425
+itk_module: SmoothingRecursiveYvvGaussianFilter
+itk_group: Smoothing
+in_place: true
