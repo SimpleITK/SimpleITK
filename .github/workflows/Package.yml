@@ -262,6 +262,25 @@ jobs:
             artifacts/SimpleITKDoxygenXML-*.tar.gz
             artifacts/SimpleITKDoxygen-*.tar.gz
 
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.11"
+      - name: Build sdist
+        run: |
+          pip install build
+          python -m build --sdist
+      - name: Upload sdist
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: artifacts-sdist
+          path: dist/simpleitk-*.tar.gz
+
   publish-github:
     if: github.event_name != 'pull_request' && (github.ref_name == 'latest' || startsWith(github.ref_name, 'v'))
     environment:
@@ -272,6 +291,7 @@ jobs:
       - build
       - doxygen
       - package-docker
+      - sdist
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v6
@@ -328,7 +348,7 @@ jobs:
       - name: Check wheel metadata
         run: |
           pip install twine
-          twine check $( find ${{ steps.download.outputs.download-path }} -name "*.whl" )
+          twine check $( find ${{ steps.download.outputs.download-path }} -name "*.whl" -o -name "simpleitk-*.tar.gz" )
       - name: Create Release and Upload Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -378,7 +398,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
-          mv $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" ) dist/
+          mv $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "simpleitk-*.tar.gz" \) ) dist/
       - name: PyPI Publish package
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
         with:
