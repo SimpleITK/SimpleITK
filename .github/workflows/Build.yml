@@ -66,6 +66,14 @@ jobs:
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
+          - os: macos-26
+            name: macos-26-elastix-python
+            cmake-build-type: "Release"
+            cmake-generator: "Ninja"
+            use-superbuild: false
+            ctest-cache: |
+              WRAP_PYTHON:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
           - os: ubuntu-24.04
             name: linux-x64-superbuild-elastix-python-r
             cmake-build-type: "Release"
