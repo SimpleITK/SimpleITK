@@ -43,7 +43,7 @@ jobs:
       matrix:
         include:
           - os: mac-arm64
-            name: mac-arm64-superbuild-python-java-tcl-ruby
+            name: mac-arm64-superbuild-python-java-tcl
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             use-superbuild: true
@@ -51,7 +51,6 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_TCL:BOOL=ON
-              WRAP_RUBY:BOOL=ON
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
