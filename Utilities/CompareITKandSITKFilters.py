@@ -17,9 +17,15 @@
 #
 # =========================================================================
 
-import re, getopt, sys, csv
+import re, sys, csv
 import SimpleITK
 import itk
+import argparse
+import logging
+from pathlib import Path
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class bcolors:
@@ -45,10 +51,9 @@ class FilterSet:
 
 # Global variables
 fs = FilterSet()  # the filter data structure
-remarkFile = ""
+remarkFile = Path("")
 onlyRemarksFlag = False
 sortByType = False
-quietMode = False
 writelessMode = False
 
 fieldnames = ("Filter", "ITK", "SITK", "Remark", "ToDo")  # fields in the CSV file
@@ -76,29 +81,18 @@ def writeCSV(name):
             headers = dict((n, n) for n in fieldnames)
             writer.writerow(headers)
             for filt in fs.filters:
-                if filt in fs.remarks:
-                    rem = fs.remarks[filt]
-                else:
-                    rem = ""
+                rem = fs.remarks.get(filt, "")
                 if len(rem) or not onlyRemarksFlag:
-                    writer.writerow(
-                        {
-                            fieldnames[0]: filt,
-                            fieldnames[1]: filt in fs.itk,
-                            fieldnames[2]: filt in fs.sitk,
-                            fieldnames[3]: rem,
-                            fieldnames[4]: filt in fs.todo,
-                        }
-                    )
-    except:
-        print(
-            bcolors.FAIL,
-            "Error:",
-            bcolors.ENDC,
-            "Couldn't write output file",
-            name,
-            "\n",
-        )
+                    writer.writerow({
+                        fieldnames[0]: filt,
+                        fieldnames[1]: filt in fs.itk,
+                        fieldnames[2]: filt in fs.sitk,
+                        fieldnames[3]: rem,
+                        fieldnames[4]: filt in fs.todo,
+                    })
+    except Exception as e:
+        logging.warning("Warning: Couldn't write output file %s", name)
+        logging.warning("Error: %s", e)
         sys.exit(-1)
 
 
@@ -129,24 +123,15 @@ def readCSV(name):
                 insitk = filt in fs.sitk
 
                 if not initk and not insitk:
-                    print(
-                        bcolors.FAIL,
-                        "Warning: ",
-                        bcolors.ENDC,
-                        "Filter ",
-                        filt,
-                        "not found in either ITK or SimpleITK",
+                    logging.warning(
+                        "Warning: Filter %s not found in either ITK or SimpleITK", filt
                     )
 
                 if (iflag != initk) or (sflag != insitk):
-                    print(
-                        bcolors.FAIL,
-                        "Warning: ",
-                        bcolors.ENDC,
-                        "mismatch between file and symbol table for filter ",
-                        filt,
+                    logging.warning(
+                        "Warning: mismatch between file and symbol table for filter %s", filt
                     )
-                    print("    ", row)
+                    logging.warning("    %s", row)
 
                 # Get the remark field from the file.
                 if row[fieldnames[3]] != None:
@@ -158,18 +143,11 @@ def readCSV(name):
                     if row[fieldnames[4]].lower() == "true":
                         fs.todo.add(filt)
 
-    except:
-        print(
-            bcolors.FAIL,
-            "Warning:",
-            bcolors.ENDC,
-            "Couldn't read input file",
-            name,
-            ".  Proceeding without it.\n",
-        )
+    except Exception as e:
+        logging.warning("Warning: Couldn't read input file %s. Proceeding without it.", name)
+        logging.warning("Error: %s", e)
     else:
-        if not quietMode:
-            print("Read file", remarkFile, "\n")
+        logging.info("Read file %s", remarkFile)
 
 
 #
@@ -189,120 +167,75 @@ def filterKey(filter_name):
 
 #
 #
-def usage():
-    """command line usage message"""
-    print("")
-    print("CompareITKandSITKFilters.py [options] [output_file.csv]")
-    print("")
-    print("  -h         This help message.")
-    print("  -t         Sort printed filters by toolkit type.")
-    print('  -r string  Add a remark entry in the format "filter_name:remark string".')
-    print("  -o         Only output filters with remarks.")
-    print("  -q         Quiet mode, don't print filter list.")
-    print("  -w         Writeless mode, don't write the output file.")
-    print("")
-    print(
-        "This script compares what image filters ITK (via WrapITK) and SimpleITK implement."
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Compare what image filters ITK (via WrapITK) and SimpleITK implement."
     )
-    print("It works by comparing the symbol tables of their respective python modules.")
-    print(
-        "If no output file name is given, by default, the script writes results to filters.csv."
+    parser.add_argument(
+        "output_file", nargs="?", default="filters.csv", help="Output file name (default: filters.csv)"
     )
-    print("")
-
-
-#
-#   Handle command line options
-#
-
-try:
-    opts, args = getopt.getopt(
-        sys.argv[1:],
-        "htoqwr:",
-        ["help", "type", "only", "quiet", "writeless", "remark"],
+    parser.add_argument(
+        "-t", "--type", action="store_true", help="Sort printed filters by toolkit type."
     )
-except getopt.GetoptError as err:
-    print(str(err))
-    usage()
-    sys.exit(2)
+    parser.add_argument(
+        "-r", "--remark", metavar="FILTER:REMARK", help="Add a remark entry in the format 'filter_name:remark string'."
+    )
+    parser.add_argument(
+        "-o", "--only", action="store_true", help="Only output filters with remarks."
+    )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Quiet mode, don't print filter list."
+    )
+    parser.add_argument(
+        "-w", "--writeless", action="store_true", help="Writeless mode, don't write the output file."
+    )
+    return parser.parse_args()
 
-for o, a in opts:
-    if o in ("-h", "--help"):
-        usage()
-        sys.exit()
-    elif o in ("-t", "--type"):
-        sortByType = True
-    elif o in ("-o", "--only"):
-        onlyRemarksFlag = True
-    elif o in ("-q", "--quiet"):
-        quietMode = True
-    elif o in ("-w", "--writeless"):
-        writelessMode = True
-    elif o in ("-r", "--remark"):
-        words = a.partition(":")
-        remarks[words[0]] = words[2]
-        print(words[0], remarks[words[0]])
+
+def main():
+    args = parse_arguments()
+
+    global remarkFile, onlyRemarksFlag, sortByType, writelessMode
+    remarkFile = Path(args.output_file)
+    onlyRemarksFlag = args.only
+    sortByType = args.type
+    writelessMode = args.writeless
+
+    if args.quiet:
+        logging.getLogger().setLevel(logging.WARNING)
+
+    if args.remark:
+        words = args.remark.partition(":")
+        fs.remarks[words[0]] = words[2]
+        print(words[0], fs.remarks[words[0]])
+
+    # Get all the ITK and SimpleITK classes from Python symbol tables
+    sclasses = dir(SimpleITK)
+    iclasses = dir(itk)
+
+    # Find all the SimpleITK class names that end with "ImageFilter"
+    fs.sitk = {s for s in sclasses if re.search(r"ImageFilter$", s) and s != "ImageFilter"}
+
+    logging.info("SimpleITK has %d filters.", len(fs.sitk))
+
+    # Find all the ITK class names that end with "ImageFilter" or "ImageSource"
+    fs.itk = {i for i in iclasses if (re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i)) and i != "ImageSource"}
+
+    logging.info("ITK has %d filters.", len(fs.itk))
+
+    fs.filters = list(fs.itk.union(fs.sitk))
+
+    # Sort the filters either by name or toolkit and name
+    if sortByType:
+        fs.filters = sorted(fs.filters, key=filterKey)
     else:
-        assert False, "unhandled option"
+        fs.filters.sort()
 
-# take the last word left from the args list as the output file name
-if len(args):
-    remarkFile = args[len(args) - 1]
+    # Read the remarks from file
+    if remarkFile.exists():
+        readCSV(remarkFile)
 
-
-#
-#   Get all the ITK and SimpleITK classes from Python symbol tables.
-#
-
-sclasses = dir(SimpleITK)
-iclasses = dir(itk)
-
-#   Find all the SimpleITK class names that end with "ImageFilter".
-#   SimpleITK has a base class that is just "ImageFilter" that we want to omit.
-for s in sclasses:
-    if re.search(r"ImageFilter$", s):
-        if s != "ImageFilter":
-            fs.sitk.add(s)
-
-if not quietMode:
-    print("\nSimpleITK has", bcolors.OKBLUE, len(fs.sitk), bcolors.ENDC, "filters.")
-
-
-#   Find all the ITK class names that end with "ImageFilter" or "ImageSource"
-#   ITK has a base class that is just "ImageSource" that we want to omit.
-for i in iclasses:
-    if re.search(r"ImageFilter$", i) or re.search(r"ImageSource$", i):
-        if i != "ImageSource":
-            fs.itk.add(i)
-
-if not quietMode:
-    print("ITK has", bcolors.OKBLUE, len(fs.itk), bcolors.ENDC, "filters.\n")
-
-fs.filters = list(fs.itk.union(fs.sitk))
-
-
-#
-# Sort the filters either by name or toolkit and name
-#
-
-if sortByType:
-    fs.filters = sorted(fs.filters, key=filterKey)
-else:
-    fs.filters.sort()
-
-
-#
-#  Read the remarks from file
-
-if remarkFile != "":
-    readCSV(remarkFile)
-
-
-#
-#    Print all the filters
-#
-
-if not quietMode:
+    # Print all the filters
     bothcount = icount = scount = 0
     word = ""
 
@@ -327,21 +260,17 @@ if not quietMode:
             rem = fs.remarks[filt]
         print("%50s %s %s %s      %s" % (filt, color, word, bcolors.ENDC, rem))
 
-    print("")
-    print("%3d filters in both toolkits." % bothcount)
-    print("%3d filters in ITK only." % icount)
-    print("%3d filters in SimpleITK only." % scount)
-    print("")
+    logging.info("%3d filters in both toolkits.", bothcount)
+    logging.info("%3d filters in ITK only.", icount)
+    logging.info("%3d filters in SimpleITK only.", scount)
+
+    # Write out the new CSV file
+    if not writelessMode:
+        if remarkFile == Path(""):
+            remarkFile = Path("filters.csv")
+        writeCSV(remarkFile)
+        logging.info(f"Wrote file {remarkFile}")
 
 
-#
-#   Write out the new CSV file
-#
-
-if not writelessMode:
-    if remarkFile == "":
-        remarkFile = "filters.csv"
-    writeCSV(remarkFile)
-    if not quietMode:
-        print("Wrote file", remarkFile)
-        print("")
+if __name__ == "__main__":
+    main()
