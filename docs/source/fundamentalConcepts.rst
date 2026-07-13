@@ -255,20 +255,6 @@ In the context of registration, if you use a composite transform as the transfor
 that is optimized, only the parameters of the last transformation :math:`T_n` will
 be optimized over.
 
-.. note::
-
-   When porting from the `Advanced Normalization Tools (ANTs) ecosystem
-   <https://github.com/ANTsX>`_, the repeated ``-t`` transforms given to
-   ``antsApplyTransforms`` must be added in **reverse** of their command line
-   order. ANTs prepends each repeated flag to its internal option list, so it
-   builds its composite from the last command line argument to the first::
-
-    antsApplyTransforms -t warp.nii.gz -t affine.mat
-
-   is reproduced by ``CompositeTransform([affine, warp])``. The reversal applies
-   to the ``-t`` flags themselves; if a single ``-t`` names a composite transform
-   file, its sub-transforms are added in their stored order.
-
 Additional Resources
 =====================
 
