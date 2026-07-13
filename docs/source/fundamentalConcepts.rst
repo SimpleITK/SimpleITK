@@ -229,6 +229,28 @@ stack based, that is, first in last applied:
  composite_transform = CompositeTransform([T0, T1])
  composite_transform.AddTransform(T2)
 
+The order in which transformations are added is therefore the reverse of the order
+in which they are applied. Given three transformations :math:`A`, :math:`B` and
+:math:`C` added in that order:
+
+.. code-block:: python
+
+ composite = CompositeTransform(3)
+ composite.AddTransform(A)
+ composite.AddTransform(B)
+ composite.AddTransform(C)
+
+the composite maps a point :math:`\mathbf{x}` as:
+
+.. math::
+
+  \mathrm{composite}(\mathbf{x}) = A(B(C(\mathbf{x})))
+
+That is, :math:`C`, the last transformation added, is the first one applied to the
+point, and :math:`A`, the first one added, is applied last. Passing the
+transformations to the constructor as ``CompositeTransform([A, B, C])`` is
+equivalent to adding them in the same order.
+
 In the context of registration, if you use a composite transform as the transformation
 that is optimized, only the parameters of the last transformation :math:`T_n` will
 be optimized over.
@@ -243,16 +265,9 @@ be optimized over.
 
     antsApplyTransforms -t warp.nii.gz -t affine.mat
 
-   is reproduced by::
-
-    composite = CompositeTransform(3)
-    composite.AddTransform(affine)  # listed last on the command line, so added first
-    composite.AddTransform(warp)    # listed first on the command line, so added last
-
-   Running ``antsApplyTransforms --verbose`` prints the transforms in the order
-   ANTs adds them, which is the order to pass to ``AddTransform``. The reversal
-   applies to the ``-t`` flags themselves; if a single ``-t`` names a composite
-   transform file, its sub-transforms are added in their stored order.
+   is reproduced by ``CompositeTransform([affine, warp])``. The reversal applies
+   to the ``-t`` flags themselves; if a single ``-t`` names a composite transform
+   file, its sub-transforms are added in their stored order.
 
 Additional Resources
 =====================
