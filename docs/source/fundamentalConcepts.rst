@@ -238,8 +238,8 @@ be optimized over.
    When porting from the `Advanced Normalization Tools (ANTs) ecosystem
    <https://github.com/ANTsX>`_, the repeated ``-t`` transforms given to
    ``antsApplyTransforms`` must be added in **reverse** of their command line
-   order. ANTs stores repeated flags in reverse and builds its composite from
-   that reversed list, so::
+   order. ANTs prepends each repeated flag to its internal option list, so it
+   builds its composite from the last command line argument to the first::
 
     antsApplyTransforms -t warp.nii.gz -t affine.mat
 
