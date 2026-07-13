@@ -779,7 +779,7 @@ TEST(BasicFilters, CenteredVersorTransformInitializer)
     tx = sitk::VersorRigid3DTransform(filter.Execute(g1, g3, sitk::VersorRigid3DTransform()));
     EXPECT_VECTOR_DOUBLE_NEAR(tx.GetTranslation(), v3(-1.0, -2.0, -3.0), 0.1);
     EXPECT_VECTOR_DOUBLE_NEAR(tx.GetCenter(), v3(64.0, 64.0, 64.0), 0.1);
-    EXPECT_VECTOR_DOUBLE_NEAR(tx.GetVersor(), v4(-0.5, -0.5, 0.5, 0.5), 1e-5);
+    EXPECT_VECTOR_DOUBLE_NEAR(tx.GetVersor(), v4(0.5, 0.5, 0.5, 0.5), 1e-5);
   }
 
   {
@@ -803,7 +803,7 @@ TEST(BasicFilters, CenteredVersorTransformInitializer)
     tx = sitk::Similarity3DTransform(filter.Execute(g1, g3, sitk::Similarity3DTransform()));
     EXPECT_VECTOR_DOUBLE_NEAR(tx.GetTranslation(), v3(-1.0, -2.0, -3.0), 0.1);
     EXPECT_VECTOR_DOUBLE_NEAR(tx.GetCenter(), v3(64.0, 64.0, 64.0), 0.1);
-    EXPECT_VECTOR_DOUBLE_NEAR(tx.GetVersor(), v4(-0.5, -0.5, 0.5, 0.5), 1e-5);
+    EXPECT_VECTOR_DOUBLE_NEAR(tx.GetVersor(), v4(0.5, 0.5, 0.5, 0.5), 1e-5);
   }
 
   EXPECT_THROW(sitk::CenteredVersorTransformInitializer(g1, g2, sitk::Transform(2, sitk::sitkSimilarity)),
