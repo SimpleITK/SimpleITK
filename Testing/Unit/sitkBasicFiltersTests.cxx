@@ -42,6 +42,7 @@
 #include <sitkPatchBasedDenoisingImageFilter.h>
 #include <sitkConnectedThresholdImageFilter.h>
 #include <sitkMergeLabelMapFilter.h>
+#include <sitkLabelMapMaskImageFilter.h>
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
 #include <sitkThresholdImageFilter.h>
@@ -113,6 +114,29 @@ TEST(BasicFilter, DiffeomorphicDemonsRegistrationFilter_ENUMCHECK)
   EXPECT_EQ((int)ITKType::Fixed, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Fixed);
   EXPECT_EQ((int)ITKType::WarpedMoving, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::WarpedMoving);
   EXPECT_EQ((int)ITKType::MappedMoving, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::MappedMoving);
+}
+
+TEST(BasicFilters, LabelMapMaskImageFilter_BackgroundValuePreserved)
+{
+  // Regression test for 2625 (S16): BackgroundValue was cast through the
+  // unsigned label type (destroying negatives) instead of the feature image
+  // type. Verify a negative background value survives the round-trip.
+  namespace sitk = itk::simple;
+
+  sitk::Image labelMap = sitk::ReadImage(dataFinder.GetFile("Input/2th_cthead1.mha"));
+  labelMap = sitk::Cast(labelMap, sitk::sitkLabelUInt8);
+  sitk::Image featureImage = sitk::ReadImage(dataFinder.GetFile("Input/cthead1-Float.mha"));
+
+  sitk::LabelMapMaskImageFilter filter;
+  filter.SetLabel(1);
+  filter.SetBackgroundValue(-1000.0);
+  sitk::Image output = filter.Execute(labelMap, featureImage);
+
+  EXPECT_EQ(sitk::sitkFloat32, output.GetPixelID());
+
+  sitk::StatisticsImageFilter stats;
+  stats.Execute(output);
+  EXPECT_DOUBLE_EQ(-1000.0, stats.GetMinimum());
 }
 
 TEST(BasicFilters, MergeLabelMap_ENUMCHECK)
