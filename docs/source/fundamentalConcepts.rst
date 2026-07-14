@@ -222,16 +222,43 @@ transformation continuity or smoothness.
 Finally, SimpleITK supports a **composite transformation** with either a bounded or
 global domain. This transformation represents multiple transformations applied
 one after the other :math:`T_0(T_1(T_2(...T_n(p)...)))`. The semantics are
-stack based, that is, first in last applied:
+stack-based: first added last applied, which is implemented as follows:
 
 .. code-block:: python
 
- composite_transform = CompositeTransform([T0, T1])
- composite_transform.AddTransform(T2)
+    # Create 3D composite transformation
+    composite_transform = CompositeTransform(3)
+    composite_transform.AddTransform(T0)
+    composite_transform.AddTransform(T1)
+    ...
+    composite_transform.AddTransform(Tn)
+
+or equivalently
+
+.. code-block:: python
+
+    composite_transform = CompositeTransform([T0, T1, ..., Tn])
 
 In the context of registration, if you use a composite transform as the transformation
 that is optimized, only the parameters of the last transformation :math:`T_n` will
 be optimized over.
+
+.. note::
+
+   When porting from the `Advanced Normalization Tools (ANTs) ecosystem <https://github.com/ANTsX>`_,
+   the ``-t`` transforms given to ``antsApplyTransforms`` must be added on the command line in
+   the **reverse** order of adding to a SimpleITK Composite Transform. For example::
+
+     antsApplyTransforms -t warp.nii.gz -t affine.mat
+
+   is reproduced by::
+
+     composite = CompositeTransform(3)
+     composite.AddTransform(affine)  # listed last, so added first
+     composite.AddTransform(warp)    # listed first, so added last
+
+   Running ``antsApplyTransforms --verbose`` prints the transforms in the order
+   they should be added.
 
 Additional Resources
 =====================
