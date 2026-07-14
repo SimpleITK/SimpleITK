@@ -359,7 +359,15 @@ ImageFileReader::ExecuteInternal(itk::ImageIOBase * imageio)
   assert(imageio != nullptr);
 
 
-  if (m_ExtractSize.empty() || m_ExtractSize.size() == ImageType::ImageDimension)
+  // Use the same-dimension reader only when:
+  // 1. No extraction is requested, or
+  // 2. Every axis in ExtractSize is non-zero (no dimension collapse) AND
+  //    the file has exactly that many dimensions (no implicit zero-collapse).
+  // When the file has more dimensions than m_ExtractSize (implicit trailing zeros),
+  // fall through to the full-rank InternalReader so that ExecuteExtract can honor
+  // all ExtractIndex entries and collapse direction to a proper sub-matrix.
+  if (m_ExtractSize.empty() || (m_ExtractSize.size() == ImageType::ImageDimension &&
+                                imageio->GetNumberOfDimensions() == ImageType::ImageDimension))
   {
 
     typename Reader::Pointer reader = Reader::New();
