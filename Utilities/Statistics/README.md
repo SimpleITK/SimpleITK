@@ -4,9 +4,7 @@ This directory contains two scripts for analyzing SimpleITK download statistics.
 
 `Python` binaries are distributed via [PyPI](https://pypi.org/project/simpleitk/) and [conda-forge](https://anaconda.org/channels/conda-forge/packages/simpleitk/overview). Convenient snapshots of PyPI downloads for the past several months can be viewed on [pypistats](https://pypistats.org/packages/simpleitk) or [clickpy](https://clickpy.clickhouse.com/dashboard/simpleitk). Conda package download statistics can be viewed on the [conda-forge channel](https://anaconda.org/channels/conda-forge/packages/simpleitk/overview).
 
-`Java` and `C#` binary packages are only available as GitHub release artifacts which requires using the `github_downloads_analysis` script to analyze their downloads.
-
-`R` binary packages are not distributed. Instead an [installer](https://github.com/SimpleITK/SimpleITKRInstaller) which clones the SimpleITK repository and performs a local build is provided. There is no convenient way of tracking the number of repository clones associated with the `R` installer.
+`R`, `Java`, and `C#` binary packages are only available as GitHub release artifacts which requires using the `github_downloads_analysis` script to analyze their downloads.
 
 ## Download analysis scripts
 
@@ -14,8 +12,8 @@ Run the two scripts using the [uv Python package and project manager](https://do
 
 ### GitHub release artifact downloads
 
-The script `github_downloads_analysis` retrieves the artifact download statistics per release from GitHub, saves a csv output file `download_counts.csv` with the information and creates two figures in PDF format, bargraphs showing download counts per release categorized by programming language,
-`download_counts_per_language.pdf` and operating system, `download_counts_per_os.pdf`.
+The script `github_downloads_analysis` retrieves the artifact download statistics per release from GitHub, saves a csv output file `github_download_counts.csv` with the information and creates two figures in PDF format, bargraphs showing download counts per release categorized by programming language,
+`github_download_counts_per_language.pdf` and operating system, `github_download_counts_per_os.pdf`.
 
 
 Most common invocation:
