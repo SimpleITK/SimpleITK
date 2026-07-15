@@ -38,9 +38,16 @@ import matplotlib.pyplot as plt
 
 """
 This script retrieves release download statistics from github.com/SimpleITK/SimpleITK
-and generates a csv output file "download_counts.csv" and two figures in PDF format,
+and github.com/SimpleITK/SimpleITKRInstaller and generates a csv output file
+"github_download_counts.csv" and two figures in PDF format,
 bargraphs showing download counts per release categorized by programming language,
-"download_counts_per_language.pdf" and operating system, "download_counts_per_os.pdf".
+"github_download_counts_per_language.pdf" and operating system, "github_download_counts_per_os.pdf".
+
+Java and C# binaries are only available as release assets on the SimpleITK/SimpleITK
+repository. Python binaries are also available on that repository but the primary
+distribution mechanisms for those are conda-forge and PyPI, so the downloads of
+Python binaries from GitHub are less relevant. R binaries are only available as release
+assets on the SimpleITK/SimpleITKRInstaller repository.
 
 Usage (without explicitly creating a virtual environment or installing dependencies):
 Run the script using the uv (https://docs.astral.sh/uv/) tool as follows:
@@ -217,8 +224,21 @@ def main():
 
     try:
         all_releases = retrieve_all_releases("SimpleITK/SimpleITK", args.token)
+        all_r_releases = retrieve_all_releases("SimpleITK/SimpleITKRInstaller", args.token)
+
+        # Merge R installer assets into the matching main release by tag_name
+        r_releases_by_tag = {r["tag_name"]: r for r in all_r_releases}
+        for release in all_releases:
+            if release["tag_name"] in r_releases_by_tag:
+                release["assets"].extend(r_releases_by_tag[release["tag_name"]]["assets"])
 
         # Prior to SimpleITK release 1.0.0 assets (binary distributions) were not uploaded to GitHub
+        # Later on they were. Unfortunately, the GitHub release date does not match the true
+        # release date (e.g. v0.5.1 was released on September 5 2012 and the GitHub
+        # release date is March 20 2026, no way to backdate it). We use the date in the
+        # graphs, x axis tag location is based on date, so correct dates are critical.
+        # We could obtain the original release date but that overly complicates the script,
+        # so will continue to ignore releases prior to 1.0.0.
         pre_1_0_pattern = re.compile(r"v?0\.\d+\.\d+")
         all_releases = [
             r for r in all_releases if not pre_1_0_pattern.match(r["tag_name"])
@@ -239,6 +259,9 @@ def main():
             "python_windows": re.compile(r".*cp\d+.*win.*whl", re.IGNORECASE),
             "python_macos": re.compile(r".*cp\d+.*macosx.*whl", re.IGNORECASE),
             "python_linux": re.compile(r".*cp\d+.*linux.*whl", re.IGNORECASE),
+            "r_windows": re.compile(r".*_windows-.*\.zip$", re.IGNORECASE),
+            "r_macos": re.compile(r".*_macos-.*\.tgz$", re.IGNORECASE),
+            "r_linux": re.compile(r".*_linux-.*\.tar\.gz$", re.IGNORECASE),
             "csharp_windows": re.compile(r".*CSharp.*win.*\.zip", re.IGNORECASE),
             "csharp_macos": re.compile(r".*CSharp.*macosx.*\.zip", re.IGNORECASE),
             "csharp_linux": re.compile(r".*CSharp.*linux.*\.zip", re.IGNORECASE),
@@ -250,14 +273,15 @@ def main():
         # Combine asset classes into broader categories, language
         # or os based
         combined_language_classes = {
-            "python": ["python_windows", "python_macos", "python_linux"],
-            "csharp": ["csharp_windows", "csharp_macos", "csharp_linux"],
-            "java": ["java_windows", "java_macos", "java_linux"],
+            "Python": ["python_windows", "python_macos", "python_linux"],
+            "C#": ["csharp_windows", "csharp_macos", "csharp_linux"],
+            "Java": ["java_windows", "java_macos", "java_linux"],
+            "R": ["r_windows", "r_macos", "r_linux"],
         }
         combined_os_classes = {
-            "windows": ["python_windows", "csharp_windows", "java_windows"],
-            "macos": ["python_macos", "csharp_macos", "java_macos"],
-            "linux": ["python_linux", "csharp_linux", "java_linux"],
+            "Windows": ["python_windows", "csharp_windows", "java_windows", "r_windows"],
+            "macOS": ["python_macos", "csharp_macos", "java_macos", "r_macos"],
+            "Linux": ["python_linux", "csharp_linux", "java_linux", "r_linux"],
         }
 
         df = analyze_releases(
@@ -265,7 +289,7 @@ def main():
             asset_classpatterns,
             [combined_language_classes, combined_os_classes],
         )
-        df.to_csv("download_counts.csv", index=False)
+        df.to_csv("github_download_counts.csv", index=False)
 
         fig, _ = plot_datetime_spaced_stacked_barchart(
             df[
@@ -277,7 +301,7 @@ def main():
             xlabel="Release",
             ylabel="Download Count",
         )
-        fig.savefig("download_counts_per_language.pdf", dpi=300, bbox_inches="tight")
+        fig.savefig("github_download_counts_per_language.pdf", dpi=300, bbox_inches="tight")
 
         fig, _ = plot_datetime_spaced_stacked_barchart(
             df[["published_at", "release_tag"] + list(combined_os_classes.keys())],
@@ -287,7 +311,7 @@ def main():
             xlabel="Release",
             ylabel="Download Count",
         )
-        fig.savefig("download_counts_per_os.pdf", dpi=300, bbox_inches="tight")
+        fig.savefig("github_download_counts_per_os.pdf", dpi=300, bbox_inches="tight")
         return 0
 
     except Exception as e:
