@@ -16,7 +16,7 @@ authors = [
     {name = "Insight Software Consortium", email = "insight-users@itk.org"}
 ]
 description = "SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation"
-license = "Apache-2.0"
+license = {text = "Apache-2.0"}
 keywords = ["SimpleITK", "ITK", "InsightToolkit", "segmentation", "registration", "medical imaging", "image processing", "computer vision", "DICOM"]
 classifiers = [
     "Programming Language :: Python",
