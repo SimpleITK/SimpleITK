@@ -34,9 +34,9 @@ die() { echo "ERROR: $*" >&2; exit 1; }
 [[ $# -ge 1 ]] || die "Usage: $0 <file1> [<file2> ...]"
 
 if command -v sha512sum >/dev/null 2>&1; then
-    SHA512CMD="sha512sum"
+    SHA512CMD=(sha512sum)
 elif command -v shasum >/dev/null 2>&1; then
-    SHA512CMD="shasum -a 512"
+    SHA512CMD=(shasum -a 512)
 else
     die "Neither sha512sum (Linux) nor shasum (macOS) found."
 fi
@@ -61,14 +61,16 @@ MD5_CONFLICTS=()
 for FILE in "$@"; do
     [[ -f "${FILE}" ]] || die "File not found: ${FILE}"
 
-    BASENAME="$(basename "${FILE}")"
-    HASH="$($SHA512CMD "${FILE}" | awk '{print $1}')"
+    BASENAME="$(basename -- "${FILE}")"
+    HASH="$("${SHA512CMD[@]}" -- "${FILE}" | awk '{print $1}')"
+    [[ "${HASH}" =~ ^[0-9a-f]{128}$ ]] \
+        || die "Unexpected hash output for ${FILE}: '${HASH}'"
 
     DEST="${ED_DIR}/SHA512/${HASH}"
     if [[ -f "${DEST}" ]]; then
         echo "SKIP  ${BASENAME}: hash already in .ExternalData"
     else
-        cp "${FILE}" "${DEST}"
+        cp -- "${FILE}" "${DEST}"
         echo "COPY  ${BASENAME} -> .ExternalData/SHA512/${HASH:0:12}..."
     fi
 
@@ -77,7 +79,7 @@ for FILE in "$@"; do
     echo "LINK  ${FILE}.sha512"
 
     # remove original
-    rm "${FILE}"
+    rm -- "${FILE}"
     echo "DEL   ${FILE}"
 
     # note old .md5 content links

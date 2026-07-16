@@ -106,21 +106,27 @@ If this fails, **stop** and tell the user:
 > gh repo clone SimpleITK/SimpleITKExternalData .ExternalData
 > ```
 
-Otherwise, list its remotes to find one to push to:
+Otherwise, list its remotes to identify both the upstream and the remote
+to push to:
 
 ```bash
 git -C .ExternalData remote -v
 ```
 
-- Ignore any remote pointing at `SimpleITK/SimpleITKExternalData` itself
-  (typically `origin`/`upstream`) — that's the upstream, not a fork.
-- If exactly one other remote remains, use its name as `<push-remote>`.
-- Otherwise (zero or multiple candidates), ask the user which remote
-  name to use as `<push-remote>`, listing whatever remote names were
-  found. If none exist, tell the user they need to add one first (e.g.
-  by running `gh repo fork --remote --remote-name <name>` themselves).
+- The remote pointing at `SimpleITK/SimpleITKExternalData` itself
+  (typically `origin`/`upstream`) is `<upstream-remote>` — used in Step 4
+  to fetch and base the branch on `main`. Do not assume it is named
+  `origin`; read the actual name from the `remote -v` output.
+- Do **not** run `gh repo fork` — never create a fork automatically.
+  Among the *other* remotes (not `<upstream-remote>`):
+  - If exactly one remains, use its name as `<push-remote>`.
+  - Otherwise (zero or multiple candidates), ask the user which remote
+    name to use as `<push-remote>`, listing whatever remote names were
+    found. If none exist, tell the user they need to add one first
+    (e.g. by running `gh repo fork --remote --remote-name <name>`
+    themselves).
 
-Use as `<push-remote>` in Step 4.
+Use `<upstream-remote>` and `<push-remote>` in Step 4.
 
 ### Step 3 — Hash, copy, create content links, remove originals
 
@@ -146,8 +152,8 @@ All commands use `git -C .ExternalData` to stay in the source root.
 Run from the **SimpleITK source root**:
 
 ```bash
-git -C .ExternalData fetch origin
-git -C .ExternalData checkout -B <branch-name> origin/main
+git -C .ExternalData fetch <upstream-remote>
+git -C .ExternalData checkout -B <branch-name> <upstream-remote>/main
 git -C .ExternalData add SHA512/<hash>
 git -C .ExternalData commit -m "Add <original-filename>"
 git -C .ExternalData push --force-with-lease <push-remote> HEAD:<branch-name>
