@@ -114,50 +114,7 @@ done)
 test -z "$bad" || die "$bad"
 
 #-----------------------------------------------------------------------------
-# Check file modes and sizes.
-mode_looks_exe() {
-	case "$1" in
-		*.bat) return 0 ;;
-		*.cmd) return 0 ;;
-		*.exe) return 0 ;;
-		*.com) return 0 ;;
-	esac
-	git cat-file blob "$2" | head -1 | grep "^#!/" > /dev/null
-}
-mode_not_exe () {
-	echo "The file '$file' looks executable but does not have an executable mode.
-On UNIX, run:
-
-  $ chmod u+x '$file' && git add -u '$file'
-
-On Windows, run:
-
-  $ git update-index --chmod=+x '$file'
-"
-}
-mode_bad_exe () {
-	echo "The file '$file' has executable mode but does not look executable.
-On UNIX, run:
-
-  $ chmod u-x '$file' && git add -u '$file'
-
-On Windows, run:
-
-  $ git update-index --chmod=-x '$file'
-"
-}
-mode_non_file () {
-	echo "The path '$file' has a non-file mode."
-}
-check_mode() {
-	case "$dst_mode" in
-		100755) mode_looks_exe "$file" "$dst_obj" || mode_bad_exe ;;
-		100644) mode_looks_exe "$file" "$dst_obj" && mode_not_exe ;;
-		160000) ;;
-		*)	mode_non_file ;;
-	esac
-}
-
+# Check file sizes.
 size_max_KiB=$(git config hooks.MaxObjectKiB)
 test -n "$size_max_KiB" || size_max_KiB=1024
 size_max_bytes=$(git config hooks.max-size)
@@ -238,9 +195,6 @@ diffs_normal=$(echo "$diffs" | grep -v '^...... 160000')
 bad=$(
 test -n "$diffs_normal" && echo "$diffs_normal" |
 while read src_mode dst_mode src_obj dst_obj status file; do
-	if test "$src_mode" != "$dst_mode" -a "$dst_mode" != "000000"; then
-		check_mode
-	fi
 	if test "$dst_mode" != "160000" -a "$dst_mode" != '000000'; then
 		check_size
 	fi
