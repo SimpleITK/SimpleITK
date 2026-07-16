@@ -1072,6 +1072,7 @@ copysign
 cout
 cov
 covariances
+cp
 cpbotha
 cpp
 cppcheck
@@ -1676,6 +1677,7 @@ netlib
 neurodegenerative
 neuroimage
 new
+newbaseline
 newdocumentation
 newlines
 nhdr

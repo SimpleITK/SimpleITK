@@ -124,11 +124,44 @@ You will not see again the green button name "compare & pull request". That mean
 
 ## Testing
 
-Testing is very important for SimpleITK, to ensure quality and reliable code that "just works". Please include tests in pull request that add features or fix bugs.
+Testing is important for SimpleITK, to ensure quality and reliable code that "just works". Please include tests in pull request that add features or fix bugs.
 
 Pull requests are run through the continuous integration building and
-testing infrastructure to ensure quality code. Many options are tested
-on the PR, but more are run when merged into main. It is important
-to check the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK) to verify no new warnings or regression test failures are introduced after your patch has been merged.
+testing infrastructure to ensure quality code. Limited build configurations are tested during a PR, but more platforms, compilers and configurations are tested after the merge into main. Therefore, it is important
+to check the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK) to verify no new warnings or regression test failures are introduced after a patch has been merged.
 
-The regression testing is reported to the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK).
+
+### Comparing filter test output
+
+Generated filter tests are defined in YAML, one file per filter under `Code/BasicFilters/yaml/*.yaml` (schema: [ExpandTemplateGenerator/simpleitk_filter_description.schema.json](../ExpandTemplateGenerator/simpleitk_filter_description.schema.json)). Each entry in a filter's `tests:` list has a `tag`, `inputs`, and a comparison criterion, e.g. [AdaptiveHistogramEqualizationImageFilter.yaml](../Code/BasicFilters/yaml/AdaptiveHistogramEqualizationImageFilter.yaml):
+```yaml
+tests:
+- tag: defaults
+  description: Simply run with default settings
+  tolerance: 0.002
+  inputs:
+  - Input/RA-Slice-Float.nrrd
+```
+
+`tolerance` (RMS comparison against a baseline image) and `md5hash` (exact hash comparison) are the two comparison keys and may be used independently or together. These YAML tests are expanded by jinja templates into two kinds of generated tests:
+
+- **C++ (gtest):** [sitkImageFilterTestTemplate.cxx.jinja](../Testing/Unit/sitkImageFilterTestTemplate.cxx.jinja) emits `IMAGECOMPAREWITHTOLERANCE(output, "", <tolerance>)` and/or `IMAGECOMPAREWITHHASH("<md5hash>", MD5, output, ...)` — macros defined in [sitkImageCompare.h](../Testing/Unit/TestBase/sitkImageCompare.h) that compare in-process, in the same test binary.
+- **Wrapped languages (Lua, Ruby, R, Java, Tcl, C#):** [ImageFilterCTestTemplate.cmake.jinja](../Testing/Unit/ImageFilterCTestTemplate.cmake.jinja) emits CMake `sitk_add_lua_test`/`sitk_add_ruby_test`/etc. calls with `IMAGE_COMPARE ... {{ test.tolerance }}` and/or `IMAGE_MD5_COMPARE ... {{ test.md5hash }}` arguments, since these bindings run in a separate process and can't link gtest directly.
+
+`sitk_add_test()` (in [CMake/sitkAddTest.cmake](../CMake/sitkAddTest.cmake)) is the common CMake wrapper that all such tests funnel through, accepting:
+- `IMAGE_COMPARE <test-image> <baseline-image> [tolerance]` — RMS comparison, tolerance defaults to 0.
+- `IMAGE_MD5_COMPARE <test-image> <md5-hash>` — exact hash comparison.
+- `TRANSFORM_COMPARE <transform> <displacement-baseline> [tolerance]` — samples a transform onto a displacement field image and compares by RMS.
+
+When any of these are given, the test `COMMAND` is prepended with the [`sitkCompareDriver`](../Testing/Unit/TestBase/sitkCompareDriver.cxx) executable, translating them to its `--compare`, `--compare-MD5`, and `--compareTransform` arguments (`sitkCompareDriver --help` shows full usage). It runs the wrapped test program (given after `--`), then performs the requested comparisons itself and reports RMS/measurement values to CDash.
+
+### Testing data and baseline images
+
+Baseline images live in `Testing/Data/Baseline`, referenced as `DATA{${SimpleITK_DATA_ROOT}/Baseline/<name>.<ext>}`.
+
+- **Missing baseline:** the test writes its output to `<build>/Testing/Temporary/Newbaseline/<name>.nrrd` instead of failing, and prints the command to accept it, e.g. `cp <build>/.../Newbaseline/<name>.nrrd Testing/Data/Baseline/<name>.nrrd` (see [sitkImageCompare.cxx](../Testing/Unit/TestBase/sitkImageCompare.cxx)).
+- **Multiple baselines:** for known valid variants (e.g. platform-specific rendering), add `<name>.1.<ext>`, `<name>.2.<ext>`, etc.; the closest match (lowest RMS) is used — e.g. `BasicFilters_AdaptiveHistogramEqualizationImageFilter_defaults.nrrd` / `.1.nrrd` (see [`GetExistingBaselineFileNames`](../Testing/Unit/TestBase/sitkCompareDriver.cxx)).
+- **Storage:** not committed directly — each baseline is a small `.sha512` content-link file resolved by CMake `ExternalData` (see [CMake/sitkExternalData.cmake](../CMake/sitkExternalData.cmake)) against the [SimpleITKExternalData](https://github.com/SimpleITK/SimpleITKExternalData) remote, and fetched on demand into `ExternalData_OBJECT_STORES` or a local `.ExternalData` clone.
+- **Uploading:** use the [`sitk-upload-binary-data`](skills/sitk-upload-binary-data/SKILL.md) skill to compute the content link and push new/updated data.
+
+`md5hash` (see [Comparing filter test output](#comparing-filter-test-output)) is the alternative to a baseline image when an exact match is wanted instead of an RMS tolerance.
