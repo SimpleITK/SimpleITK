@@ -859,6 +859,7 @@ affine
 affines
 al
 alen
+algo
 algol
 aliasa
 alignas
@@ -906,6 +907,7 @@ atoi
 atol
 attractor
 aug
+auth
 auto
 autocorrelation
 autocorrelations
@@ -1019,6 +1021,7 @@ closedness
 cmake
 cmd
 cmds
+codebase
 codebook
 codebooks
 codeofconduct
@@ -1338,6 +1341,7 @@ gimble
 gipl
 gitforwindows
 github
+gitignore
 gitlab
 globals
 gmail
@@ -1898,6 +1902,7 @@ rhs
 rindex
 rint
 rjwagner
+rm
 rms
 roberto
 rockspec
@@ -1942,6 +1947,7 @@ setstate
 sexualized
 sgi
 sha
+shasum
 shi
 short
 showbase
@@ -2033,6 +2039,7 @@ subregion
 subregions
 subsample
 subsampling
+subshell
 subtree
 subtypes
 subvoxel
