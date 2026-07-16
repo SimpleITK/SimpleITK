@@ -580,6 +580,54 @@
 
         # iterator and container methods
 
+        @classmethod
+        def _pixel_getter_name(cls, pixelID):
+            """Returns the name of the low-level per-type pixel getter method
+               for a pixel ID. The map is built once and cached on the class."""
+
+            if pixelID == sitkUnknown:
+              raise Exception("invalid pixel type")
+
+            try:
+              getter_map = cls._pixel_getter_name_map
+            except AttributeError:
+              suffixes = {
+                sitkInt8: "Int8",
+                sitkUInt8: "UInt8",
+                sitkLabelUInt8: "UInt8",
+                sitkInt16: "Int16",
+                sitkUInt16: "UInt16",
+                sitkLabelUInt16: "UInt16",
+                sitkInt32: "Int32",
+                sitkUInt32: "UInt32",
+                sitkLabelUInt32: "UInt32",
+                sitkInt64: "Int64",
+                sitkUInt64: "UInt64",
+                sitkLabelUInt64: "UInt64",
+                sitkFloat32: "Float",
+                sitkFloat64: "Double",
+                sitkVectorInt8: "VectorInt8",
+                sitkVectorUInt8: "VectorUInt8",
+                sitkVectorInt16: "VectorInt16",
+                sitkVectorUInt16: "VectorUInt16",
+                sitkVectorInt32: "VectorInt32",
+                sitkVectorUInt32: "VectorUInt32",
+                sitkVectorInt64: "VectorInt64",
+                sitkVectorUInt64: "VectorUInt64",
+                sitkVectorFloat32: "VectorFloat32",
+                sitkVectorFloat64: "VectorFloat64",
+                sitkComplexFloat32: "ComplexFloat32",
+                sitkComplexFloat64: "ComplexFloat64"
+              }
+              getter_map = cls._pixel_getter_name_map = {
+                id: "__GetPixelAs{0}__".format(s) for id, s in suffixes.items()
+              }
+
+            try:
+              return getter_map[pixelID]
+            except KeyError:
+              raise Exception("unknown pixel type") from None
+
         def __iter__( self ):
 
             if len(self) == 0:
@@ -589,9 +637,12 @@
             size = self.GetSize()
             idx = [0] * dim
 
+            # resolve the pixel type dispatch once instead of per pixel
+            getter = getattr( self, self._pixel_getter_name(self.GetPixelIDValue()) )
+
             while idx[dim-1] < size[dim-1]:
 
-              yield self[ idx ]
+              yield getter( idx )
 
               # increment the idx
               for d in range( 0, dim ):
