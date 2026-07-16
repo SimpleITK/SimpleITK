@@ -174,6 +174,7 @@ swig_add_module( SimpleITK python
   SimpleITK.i
   sitkPyCommand.cxx
   sitkImageBuffer.cxx
+  sitkImagePixelIterator.cxx
 )
 set(
   SWIG_MODULE_SimpleITKPython_TARGET_NAME

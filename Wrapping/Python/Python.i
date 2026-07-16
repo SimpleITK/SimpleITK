@@ -24,6 +24,7 @@
 #define NOMINMAX
 #include "stdlib.h"
 #include "sitkImageBuffer.h"
+#include "sitkImagePixelIterator.h"
 %}
 
 %{
@@ -33,6 +34,13 @@
 %init %{
     // Initialize the ImageBuffer type when the module loads
     if (InitImageBufferType(m) < 0) {
+#if PY_VERSION_HEX >= 0x03000000
+        return NULL;
+#else
+        return;
+#endif
+    }
+    if (InitImagePixelIteratorType(m) < 0) {
 #if PY_VERSION_HEX >= 0x03000000
         return NULL;
 #else
