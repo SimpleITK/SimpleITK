@@ -41,6 +41,30 @@ tests:
   tolerance: 0.0001
   inputs:
   - Input/RA-Float.nrrd
+- tag: sigma
+  description: Smooth with non-default anisotropic Sigma values
+  settings:
+  - parameter: Sigma
+    type: double
+    dim_vec: true
+    value:
+    - 3.0
+    - 2.0
+    - 1.0
+  tolerance: 0.0001
+  inputs:
+  - Input/RA-Float.nrrd
+- tag: normalize
+  description: Smooth with NormalizeAcrossScale enabled
+  settings:
+  - parameter: NormalizeAcrossScale
+    type: bool
+    value: 'true'
+    python_value: 'True'
+    R_value: 'TRUE'
+  tolerance: 0.0001
+  inputs:
+  - Input/RA-Float.nrrd
 briefdescription: Computes the smoothing of an image by recursive convolution with the Young-Van Vliet Gaussian kernel (IIR filter).
 detaileddescription: >-
   This filter computes image smoothing using the recursive Young-Van Vliet approximation of a Gaussian kernel, implemented as
