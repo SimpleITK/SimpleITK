@@ -75,10 +75,10 @@ repos:
       language: system
       pass_filenames: false
       stages: [pre-commit]
-    - id: kw-commit-msg
-      name: 'kw commit-msg'
-      entry: 'Utilities/Hooks/kw-commit-msg'
-      language: system
+    - id: commit-msg
+      name: 'commit-msg'
+      entry: 'Utilities/Hooks/commit-msg.py'
+      language: python
       stages: [commit-msg]
     - id: kw-pre-commit
       name: 'kw-pre-commit'
