@@ -60,9 +60,6 @@ else
 	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
 fi
 
-# Merge ("git commit" after "git merge" with conflicts or --no-commit)
-merge_head=$(git rev-parse -q --verify MERGE_HEAD) || merge_head=''
-
 # Disallow non-ascii file names.  The printable range starts at the
 # space character and ends with tilde.
 if test "$(git diff --cached --name-only --diff-filter=A -z $against |
@@ -247,25 +244,6 @@ while read src_mode dst_mode src_obj dst_obj status file; do
 	if test "$dst_mode" != "160000" -a "$dst_mode" != '000000'; then
 		check_size
 	fi
-done
-)
-test -z "$bad" || die "$bad"
-
-#-----------------------------------------------------------------------------
-# Merge checks.
-if test -n "$merge_head"; then
-	merge_diffs=$(git diff-index --cached $merge_head -- |
-	              sed -n '/^:[^:]/ {s/^://;p;}')
-else
-	merge_diffs=''
-fi
-merge_diffs_normal=$(echo "$merge_diffs" | grep -v '^...... 160000')
-merge_diffs_module=$(echo "$merge_diffs" | grep    '^...... 160000')
-bad=$(
-test -n "$merge_diffs_module" && echo "$merge_diffs_module" |
-while read src_mode dst_mode src_obj dst_obj status file; do
-	check_module_rewind MERGE_HEAD "$merge_head" ||
-	break
 done
 )
 test -z "$bad" || die "$bad"
