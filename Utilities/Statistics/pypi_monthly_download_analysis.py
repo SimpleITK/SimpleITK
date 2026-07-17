@@ -42,6 +42,7 @@ import pandas as pd
 import requests
 import pycountry
 import plotly.express as px
+import re
 
 
 def csv_path(path, required_columns={}):
@@ -289,7 +290,9 @@ def pypi_monthly_downloads_country_report(
     ]
     country_stats_df = pd.DataFrame(country_stats_data)
     csv_file = output_file_name.replace(".pdf", "_stats.csv")
-    country_stats_df.to_csv(csv_file, index=False)
+    # Write with utf-8 encoding and BOM for better compatibility with Excel
+    # so that it reads country names with non-ASCII characters correctly
+    country_stats_df.to_csv(csv_file, index=False, encoding="utf-8-sig")
 
 
 def pypi_monthly_downloads_os_report(
@@ -339,9 +342,24 @@ def pypi_monthly_downloads_os_report(
         [col for col in plot_os if col in monthly_os_downloads.columns]
     ]
 
-    # Create the stacked bar chart
-    fig, ax = plt.subplots(figsize=(14, 8))
+    # Create the stacked bar chart; scale width so bars never crowd each other
+    n_bars = len(monthly_os_downloads_plot)
+    fig_width = max(14, n_bars * 0.5)
+    fig, ax = plt.subplots(figsize=(fig_width, 8))
     monthly_os_downloads_plot.plot(kind="bar", stacked=True, ax=ax, colormap="tab10")
+
+    # Add total download counts above the bars (rounded to nearest 500 and
+    # shortened with K and M suffixes).
+    totals = monthly_os_downloads_plot.sum(axis=1)
+    for i, total in enumerate(totals):
+        rounded_total = round(total / 500) * 500
+        if rounded_total >= 1000000:
+            label = f"{rounded_total / 1000000:.3f}M".rstrip("0").rstrip(".")
+        elif rounded_total >= 1000:
+            label = f"{rounded_total / 1000:.1f}K".replace(".0", "")
+        else:
+            label = str(int(rounded_total))
+        ax.text(i, total, label, ha="center", va="bottom", fontsize=9, fontweight="bold")
 
     # Customize the plot
     ax.set_xlabel("Month", fontsize=12, fontweight="bold")
@@ -356,6 +374,15 @@ def pypi_monthly_downloads_os_report(
     handles, labels = ax.get_legend_handles_labels()
     if overlay_releases:
         releases_df = retrieve_official_releases_and_dates()
+        # Drop pre-1.0 releases from the DataFrame
+        pre_1_0_pattern = re.compile(r"0\.\d+.*")
+        releases_df = releases_df[~releases_df["version"].str.match(pre_1_0_pattern)]
+        print(releases_df[["version", "date"]])
+
+        # If there is more than one release in a given month, keep the latest one
+        releases_df = releases_df.loc[
+            releases_df.groupby(releases_df["date"].dt.strftime("%Y-%m"))["date"].idxmax()
+        ]
         release_information_color = "green"
 
         month_labels = monthly_os_downloads_plot.index.tolist()

@@ -239,7 +239,7 @@ def main():
         # graphs, x axis tag location is based on date, so correct dates are critical.
         # We could obtain the original release date but that overly complicates the script,
         # so will continue to ignore releases prior to 1.0.0.
-        pre_1_0_pattern = re.compile(r"v?0\.\d+\.\d+")
+        pre_1_0_pattern = re.compile(r"v?0\.\d+.*")
         all_releases = [
             r for r in all_releases if not pre_1_0_pattern.match(r["tag_name"])
         ]

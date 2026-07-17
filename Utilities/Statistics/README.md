@@ -33,7 +33,7 @@ The script `pypi_monthly_download_analysis` outputs two pdfs, `pypi_downloads_by
 Before running the analysis we need to obtain the PyPI download data. This requires a Google account as the PyPI download statistics dataset is hosted on Google BigQuery. The PyPI table schema describing the data is [available here](https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=pypi&page=dataset&project=advance-stratum-298519&ws=!1m9!1m4!4m3!1sbigquery-public-data!2spypi!3ssimple_requests!1m3!3m2!1sbigquery-public-data!2spypi
 ).
 
-To obtain download information for the past 5 years, sorted by month with columns titled "month", "operating_system", "python_version", "ci", "country_code", "download_count" run the following SQL query on [BigQuery](https://console.cloud.google.com/bigquery) (change the time interval to your needs):
+To obtain download information for the past 5 years, sorted by month with columns titled "month", "operating_system", "python_version", "ci", "country_code", "download_count" run the following SQL query on [BigQuery](https://console.cloud.google.com/bigquery). Change the time interval to your needs:
 ```
 SELECT
 FORMAT_TIMESTAMP('%Y-%m', timestamp) as month,
@@ -50,6 +50,9 @@ month, operating_system, python_version, country_code, ci
 ORDER BY
 month
 ```
+
+Another useful date range is between the release of the first major toolkit version in April 2017 and the current date: `TIMESTAMP('2017-04-01 00:00:00') AND CURRENT_TIMESTAMP()`
+
 Download the resulting csv for analysis.
 
 Note that the country encoding in the csv is [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). To plot downloads using the `plotly.express.choropleth` function we need to denote the country using [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) or country name. To convert between the alpha-2 and country name or alpha-3 we use the [pycountry](https://github.com/pycountry/pycountry) package which provides us with the full country information (alpha-2, alpha-3, name, flag etc.).
