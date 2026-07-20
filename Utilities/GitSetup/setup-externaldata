@@ -30,7 +30,7 @@ die() {
 externaldata_organization='SimpleITK'
 externaldata_repo='SimpleITKExternalData'
 externaldata_url="https://github.com/${externaldata_organization}/${externaldata_repo}.git"
-externaldata_dir='.ExternalData'
+externaldata_dir="$(git rev-parse --show-toplevel)/.ExternalData"
 
 if test -d "${externaldata_dir}/.git"; then
 	echo "Updating \"${externaldata_dir}\" clone..." &&
@@ -55,23 +55,31 @@ fi
 # fork of SimpleITKExternalData. Mirror the fork account already configured
 # for this repository's own GitHub remote (see setup-github) so a push
 # remote is ready in ".ExternalData" without prompting again.
-fork_remote=$(git config --get github.fork.remote || echo "github")
-fork_remote_url=$(git config --get remote."${fork_remote}".url || echo '')
-if test -z "${fork_remote_url}"; then
+fork_remote=$(git config --get github.fork.remote)
+if test -z "${fork_remote}"; then
 	echo "No GitHub fork is configured for this repository yet (run
 Utilities/GitSetup/setup-github first); skipping fork remote setup for
 \"${externaldata_dir}\"."
-elif git -C "${externaldata_dir}" config --get remote."${fork_remote}".url > /dev/null 2>&1; then
-	echo "\"${externaldata_dir}\" already has a \"${fork_remote}\" remote configured."
 else
-	github_username=$(echo "${fork_remote_url}" | sed -E 's#.*[:/]([^/]+)/[^/]+$#\1#') &&
-	fork_fetchurl="https://github.com/${github_username}/${externaldata_repo}.git" &&
-	fork_pushurl="git@github.com:${github_username}/${externaldata_repo}.git" &&
-	echo "Configuring \"${fork_remote}\" remote in \"${externaldata_dir}\" for pushing to ${github_username}/${externaldata_repo}..." &&
-	git -C "${externaldata_dir}" remote add "${fork_remote}" "${fork_fetchurl}" &&
-	git -C "${externaldata_dir}" config remote."${fork_remote}".pushurl "${fork_pushurl}" &&
-	echo "Done. If you have not already, fork
+	fork_remote_pushurl=$(git config --get remote."${fork_remote}".pushurl)
+	fork_remote_fetchurl=$(git config --get remote."${fork_remote}".url || echo '')
+	fork_remote_url="${fork_remote_pushurl:-${fork_remote_fetchurl}}"
+	if test -z "${fork_remote_url}"; then
+		echo "No GitHub fork is configured for this repository yet (run
+Utilities/GitSetup/setup-github first); skipping fork remote setup for
+\"${externaldata_dir}\"."
+	elif git -C "${externaldata_dir}" config --get remote."${fork_remote}".url > /dev/null 2>&1; then
+		echo "\"${externaldata_dir}\" already has a \"${fork_remote}\" remote configured."
+	else
+		github_username=$(echo "${fork_remote_url}" | sed -E 's#.*[:/]([^/]+)/[^/]+$#\1#') &&
+		fork_fetchurl="https://github.com/${github_username}/${externaldata_repo}.git" &&
+		fork_pushurl="git@github.com:${github_username}/${externaldata_repo}.git" &&
+		echo "Configuring \"${fork_remote}\" remote in \"${externaldata_dir}\" for pushing to ${github_username}/${externaldata_repo}..." &&
+		git -C "${externaldata_dir}" remote add "${fork_remote}" "${fork_fetchurl}" &&
+		git -C "${externaldata_dir}" config remote."${fork_remote}".pushurl "${fork_pushurl}" &&
+		echo "Done. If you have not already, fork
   https://github.com/${externaldata_organization}/${externaldata_repo}
 to your account (${github_username}) using the Fork button on GitHub." ||
-	die "Failed to configure \"${fork_remote}\" remote in \"${externaldata_dir}\"."
+		die "Failed to configure \"${fork_remote}\" remote in \"${externaldata_dir}\"."
+	fi
 fi
