@@ -138,6 +138,7 @@ jobs:
             CC: "gcc-12"
             use-superbuild: true
             ctest-cache: |
+              WRAP_RUBY:BOOL=ON
               WRAP_DEFAULT:BOOL=OFF
 
           - os: macos-15
@@ -157,7 +158,6 @@ jobs:
             python-version: "3.10"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
-              WRAP_RUBY:BOOL=ON
 
           - os: macos-14
             cmake-build-type: "MinSizeRel"
