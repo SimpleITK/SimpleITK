@@ -21,6 +21,8 @@ repos:
    - id: check-yaml
    - id: check-xml
    - id: check-shebang-scripts-are-executable
+   - id: check-executables-have-shebangs
+     exclude: '\.bat$'
    - id: end-of-file-fixer
      types: [text]
    - id: trailing-whitespace
@@ -86,6 +88,11 @@ repos:
       language: system
       stages: [pre-commit]
       pass_filenames: false
+    - id: check-file-size
+      name: 'Check staged file sizes'
+      entry: 'Utilities/Hooks/check-file-size.py'
+      language: python
+      stages: [pre-commit]
     - id: forbid-txx
       name: 'forbid txx extensions'
       entry: Files with the .txx extension are deprecated -- please use .hxx instead
