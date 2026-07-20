@@ -34,17 +34,32 @@ externaldata_dir="$(git rev-parse --show-toplevel)/.ExternalData"
 
 if test -d "${externaldata_dir}/.git"; then
 	echo "Updating \"${externaldata_dir}\" clone..." &&
-	git -C "${externaldata_dir}" fetch --quiet origin &&
+	(cd "${externaldata_dir}" && git fetch --quiet origin) &&
 	echo "Done." ||
 	die "Failed to update \"${externaldata_dir}\"."
-elif test -e "${externaldata_dir}"; then
-	die "\"${externaldata_dir}\" exists but is not a Git clone of
+else
+	if test -e "${externaldata_dir}"; then
+		# The source tree ships a skeleton ".ExternalData" directory containing
+		# only a checked-in "README.rst" placeholder (see .gitignore). Only
+		# remove the directory automatically when its contents exactly match
+		# that skeleton, so any real user data placed there is never deleted.
+		# Use "ls -A" rather than "find -printf" since -printf is a GNU
+		# extension not supported by BSD/macOS find.
+		skeleton_contents=$(ls -A "${externaldata_dir}" | sort)
+		if test "${skeleton_contents}" != "README.rst"; then
+			die "\"${externaldata_dir}\" exists but is not a Git clone of
 
   ${externaldata_url}
 
-Binary data uploads and local resolution of ExternalData content links may
-not work as expected until this is corrected."
-else
+and contains files other than the expected \"README.rst\" placeholder, so it
+will not be removed automatically. Please move or remove it manually, then
+re-run this script."
+		fi
+		echo "Removing existing \"${externaldata_dir}\" (placeholder/skeleton directory)..." &&
+		rm -f "${externaldata_dir}/README.rst" &&
+		rmdir "${externaldata_dir}" ||
+		die "Failed to remove existing \"${externaldata_dir}\"."
+	fi
 	echo "Cloning \"${externaldata_dir}\" (local object store for CMake ExternalData and staging area for binary data uploads)..." &&
 	git clone --quiet "${externaldata_url}" "${externaldata_dir}" &&
 	echo "Done." ||
@@ -68,15 +83,16 @@ else
 		echo "No GitHub fork is configured for this repository yet (run
 Utilities/GitSetup/setup-github first); skipping fork remote setup for
 \"${externaldata_dir}\"."
-	elif git -C "${externaldata_dir}" config --get remote."${fork_remote}".url > /dev/null 2>&1; then
+	elif (cd "${externaldata_dir}" && git config --get remote."${fork_remote}".url) > /dev/null 2>&1; then
 		echo "\"${externaldata_dir}\" already has a \"${fork_remote}\" remote configured."
 	else
 		github_username=$(echo "${fork_remote_url}" | sed -E 's#.*[:/]([^/]+)/[^/]+$#\1#') &&
 		fork_fetchurl="https://github.com/${github_username}/${externaldata_repo}.git" &&
 		fork_pushurl="git@github.com:${github_username}/${externaldata_repo}.git" &&
 		echo "Configuring \"${fork_remote}\" remote in \"${externaldata_dir}\" for pushing to ${github_username}/${externaldata_repo}..." &&
-		git -C "${externaldata_dir}" remote add "${fork_remote}" "${fork_fetchurl}" &&
-		git -C "${externaldata_dir}" config remote."${fork_remote}".pushurl "${fork_pushurl}" &&
+		(cd "${externaldata_dir}" &&
+		 git remote add "${fork_remote}" "${fork_fetchurl}" &&
+		 git config remote."${fork_remote}".pushurl "${fork_pushurl}") &&
 		echo "Done. If you have not already, fork
   https://github.com/${externaldata_organization}/${externaldata_repo}
 to your account (${github_username}) using the Fork button on GitHub." ||
