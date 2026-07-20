@@ -12,7 +12,7 @@ echo "BUILD_JAVA: ${BUILD_JAVA}"
 SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 
 # Remove Python 2 and pure Python builds
-PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
+PYTHON_VERSIONS=${PYTHON_VERSIONS-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
 
 NPROC=$(grep -c processor /proc/cpuinfo)
 export MAKEFLAGS="-j ${NPROC}"
@@ -27,6 +27,20 @@ export PIP_NO_CACHE_DIR=1
 
 export HOME=/tmp
 
+# Create a Python virtual environment for the FetchContent build system.
+# This provides jinja2/jsonschema/pyyaml (template code generation) and
+# swig (replaces the SuperBuild-compiled SWIG). Use cp312 to match the
+# Python version chosen by the SuperBuild's uv-based venv setup.
+BUILD_VENV_DIR="/tmp/sitk-build-venv"
+/opt/python/cp312-cp312/bin/python -m venv "${BUILD_VENV_DIR}"
+"${BUILD_VENV_DIR}/bin/pip" install \
+    'jinja2~=3.1' \
+    'jsonschema~=4.24' \
+    'pyyaml~=6.0' \
+    'swig~=4.4.0'
+export PATH="${BUILD_VENV_DIR}/bin:${PATH}"
+SIMPLEITK_BUILD_PYTHON="${BUILD_VENV_DIR}/bin/python"
+
 build_simpleitk() {
 
     if [ ! -d ${SRC_DIR} ]; then
@@ -34,6 +48,14 @@ build_simpleitk() {
               cd ${SRC_DIR} &&
               git checkout ${SIMPLEITK_GIT_TAG}
         )
+    fi
+
+    # Pre-populate the writable ExternalData object store from the source tree.
+    # sitkExternalData.cmake appends ${SRC_DIR}/.ExternalData to the search list,
+    # but the source is mounted read-only so cmake cannot touch_nocreate the symlink
+    # targets there. Copying to the writable store ensures cmake uses it first.
+    if [ -d "${SRC_DIR}/.ExternalData" ]; then
+        cp -rn "${SRC_DIR}/.ExternalData/." "${ExternalData_OBJECT_STORES}/"
     fi
 
     rm -rf ${BLD_DIR} &&
@@ -46,11 +68,14 @@ build_simpleitk() {
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DWRAP_DEFAULT:BOOL=OFF \
-        -DITK_GIT_REPOSITORY:STRING="https://github.com/InsightSoftwareConsortium/ITK.git" \
+        -DSimpleITK_USE_SYSTEM_SWIG:BOOL=ON \
+        -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SIMPLEITK_BUILD_PYTHON} \
+        -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden" \
+        -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden" \
         -DITK_C_OPTIMIZATION_FLAGS:STRING="" \
         -DITK_CXX_OPTIMIZATION_FLAGS:STRING="" \
         ${SIMPLEITK_USE_ELASTIX:+-DSimpleITK_USE_ELASTIX:BOOL=ON} \
-        ${SRC_DIR}/SuperBuild &&
+        ${SRC_DIR} &&
     make  &&
     find ./ -name \*.o -delete
 }
@@ -72,14 +97,15 @@ build_simpleitk_python() {
         -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
         -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
         -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
+        -DITK_DIR:PATH=${BLD_DIR}/_deps/itk-build \
+        ${SIMPLEITK_USE_ELASTIX:+-DElastix_DIR:PATH=${BLD_DIR}/_deps/elastix-build} \
         -DCMAKE_BUILD_TYPE:STRING=Release \
-        -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
-        -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
+        -DBUILD_EXAMPLES:BOOL=OFF \
         -DSimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API:-OFF} \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
-        -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE} \
+        -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SIMPLEITK_BUILD_PYTHON} \
         -DPython_EXECUTABLE:FILEPATH=${Python_EXECUTABLE} \
         -DPython_INCLUDE_DIR:PATH=${Python_INCLUDE_DIR} \
         ${SRC_DIR}/Wrapping/Python &&
@@ -90,8 +116,6 @@ build_simpleitk_python() {
 
 build_simpleitk || exit 1
 
-SimpleITK_Python_EXECUTABLE="${BLD_DIR}/venv/bin/python"
-
 if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-csharp &&
         cd ${BLD_DIR}-csharp &&
@@ -100,9 +124,10 @@ if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
             -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
             -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
             -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
+            -DITK_DIR:PATH=${BLD_DIR}/_deps/itk-build \
+            ${SIMPLEITK_USE_ELASTIX:+-DElastix_DIR:PATH=${BLD_DIR}/_deps/elastix-build} \
             -DCMAKE_BUILD_TYPE:STRING=Release \
-            -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
-            -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
+            -DBUILD_EXAMPLES:BOOL=OFF \
             -DSimpleITK_CSHARP_ARCH:STRING="linux_$(arch)" \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/CSharp &&
@@ -118,9 +143,10 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
             -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
             -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
             -DCMAKE_PREFIX_PATH:PATH=${BLD_DIR} \
+            -DITK_DIR:PATH=${BLD_DIR}/_deps/itk-build \
+            ${SIMPLEITK_USE_ELASTIX:+-DElastix_DIR:PATH=${BLD_DIR}/_deps/elastix-build} \
             -DCMAKE_BUILD_TYPE:STRING=Release \
-            -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
-            -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
+            -DBUILD_EXAMPLES:BOOL=OFF \
             -DSimpleITK_JAVA_ARCH:STRING="linux_$(arch)" \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/Java &&
