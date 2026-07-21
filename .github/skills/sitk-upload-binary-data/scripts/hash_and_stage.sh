@@ -47,7 +47,7 @@ SOURCE_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" \
 ED_DIR="${SOURCE_ROOT}/.ExternalData"
 
 [[ -d "${ED_DIR}/.git" ]] \
-    || die ".ExternalData is not a git clone. Run:\n  gh repo clone SimpleITK/SimpleITKExternalData ${ED_DIR}"
+    || die ".ExternalData is not a git clone. Run:\n  Utilities/GitSetup/setup-externaldata"
 
 git -C "${ED_DIR}" remote -v 2>/dev/null | grep -q SimpleITKExternalData \
     || die ".ExternalData is not a clone of SimpleITK/SimpleITKExternalData."
