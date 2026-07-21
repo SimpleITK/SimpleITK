@@ -100,10 +100,11 @@ test -d .ExternalData/.git
 If this fails, **stop** and tell the user:
 
 > The `.ExternalData` directory must be a clone of
-> `SimpleITK/SimpleITKExternalData`. To set it up, run:
+> `SimpleITK/SimpleITKExternalData`. To set it up (including a
+> configured push remote), run:
 >
 > ```
-> gh repo clone SimpleITK/SimpleITKExternalData .ExternalData
+> Utilities/GitSetup/setup-externaldata
 > ```
 
 Otherwise, list its remotes to identify both the upstream and the remote
@@ -114,17 +115,26 @@ git -C .ExternalData remote -v
 ```
 
 - The remote pointing at `SimpleITK/SimpleITKExternalData` itself
-  (typically `origin`/`upstream`) is `<upstream-remote>` — used in Step 4
-  to fetch and base the branch on `main`. Do not assume it is named
-  `origin`; read the actual name from the `remote -v` output.
-- Do **not** run `gh repo fork` — never create a fork automatically.
-  Among the *other* remotes (not `<upstream-remote>`):
+  (typically `origin`) is `<upstream-remote>` — used in Step 4 to fetch
+  and base the branch on `main`. Do not assume it is named `origin`, read
+  the actual name from the `remote -v` output.
+- `Utilities/GitSetup/setup-externaldata` configures a fork push remote
+  in `.ExternalData` automatically, using the same remote name as
+  `github.fork.remote` in the main SimpleITK repo (mirroring the fork
+  account already set up for SimpleITK's own GitHub remote via
+  `setup-github`). Prefer this convention over guessing:
+
+  ```bash
+  fork_remote=$(git config --get github.fork.remote)
+  ```
+
+  If `<fork_remote>` is non-empty and also exists as a remote in
+  `.ExternalData` (per the `remote -v` output above), use it directly as
+  `<push-remote>` — no need to ask the user.
+- Otherwise, fall back to inspecting the *other* remotes (not
+  `<upstream-remote>`):
   - If exactly one remains, use its name as `<push-remote>`.
-  - Otherwise (zero or multiple candidates), ask the user which remote
-    name to use as `<push-remote>`, listing whatever remote names were
-    found. If none exist, tell the user they need to add one first
-    (e.g. by running `gh repo fork --remote --remote-name <name>`
-    themselves).
+  - Otherwise (zero or multiple candidates), ask the user to rerun the SetupForDevelopment scripts.
 
 Use `<upstream-remote>` and `<push-remote>` in Step 4.
 
