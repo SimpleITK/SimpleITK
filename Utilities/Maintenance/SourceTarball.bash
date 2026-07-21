@@ -267,7 +267,6 @@ info "Loading source tree from $commit..." &&
 rm -f "$GIT_INDEX_FILE" &&
 git read-tree -m -i $commit &&
 git rm -rf -q --cached '.ExternalData' &&
-index_additional_object "${build_dir}/sitkSourceVersionVars.cmake" "CMake" &&
 
 
 tree=$(git write-tree) &&
