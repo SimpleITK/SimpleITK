@@ -6,6 +6,7 @@ doc: ''
 pixel_types: LabelPixelIDTypeList
 pixel_types2: typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type
 filter_type: itk::LabelMapMaskImageFilter<InputImageType, InputImageType2>
+output_image_type: InputImageType2
 inputs:
 - name: LabelMapImage
   type: Image
