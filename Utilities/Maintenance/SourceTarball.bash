@@ -19,7 +19,7 @@
 
 usage() {
   die 'USAGE: SourceTarball.bash [(--tgz|--txz|--zip)...] \
-        [--verbose] [-v <version>] build_dir [<tag>|<commit>]'
+        [--verbose] [--source|--no-source] [-v <version>] [<tag>|<commit>]'
 }
 
 info() {
@@ -214,7 +214,7 @@ formats=
 commit=
 version=
 verbose=
-build_dir=
+source=1
 
 # Parse command line options.
 while test $# != 0; do
@@ -223,11 +223,12 @@ while test $# != 0; do
     --txz) formats="$formats txz" ;;
     --zip) formats="$formats zip" ;;
     --verbose) verbose=-v ;;
+    --source) source=1 ;;
+    --no-source) source=0 ;;
     --) shift; break ;;
     -v) shift; version="$1" ;;
     -*) usage ;;
-    *) { test -z "$build_dir" && build_dir="$1"; } ||
-       { test -z "$commit" && commit="$1"; } ||
+    *) { test -z "$commit" && commit="$1"; } ||
        usage ;;
   esac
   shift
@@ -235,13 +236,6 @@ done
 test $# = 0 || usage
 test -n "$commit" || commit=HEAD
 test -n "$formats" || formats=tgz
-
-test -n "$build_dir" ||
-  die "Missing required build_dir argument."
-
-test -e "${build_dir}/SimpleITKConfig.cmake" ||
-  die "invalid build directory."
-
 
 if ! git rev-parse --verify -q "$commit" >/dev/null ; then
   die "'$commit' is not a valid commit"
@@ -263,17 +257,21 @@ trap "rm -f '$GIT_INDEX_FILE'" EXIT &&
 result=0 &&
 
 
-info "Loading source tree from $commit..." &&
-rm -f "$GIT_INDEX_FILE" &&
-git read-tree -m -i $commit &&
-git rm -rf -q --cached '.ExternalData' &&
+if test "$source" = 1; then
+  info "Loading source tree from $commit..." &&
+  rm -f "$GIT_INDEX_FILE" &&
+  git read-tree -m -i $commit &&
+  git rm -rf -q --cached '.ExternalData' &&
 
 
-tree=$(git write-tree) &&
-info "Generating source archive(s)..." &&
-for fmt in $formats; do
-  git_archive_$fmt $tree "SimpleITK-$version" || result=1
-done &&
+  tree=$(git write-tree) &&
+  info "Generating source archive(s)..." &&
+  for fmt in $formats; do
+    git_archive_$fmt $tree "SimpleITK-$version" || result=1
+  done
+else
+  info "Skipping source archive(s) (--no-source)."
+fi &&
 
 info "Loading data for $commit..." &&
 rm -f "$GIT_INDEX_FILE" &&

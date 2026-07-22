@@ -179,17 +179,17 @@ jobs:
           ninja --version
           ctest -D "dashboard_track:STRING=Package" -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV
 
-      - name: Generate Source and Data Archives
+      - name: Generate Data Archive
         shell: bash
         if: matrix.os == 'macos-15-intel'
         run: |
           set -xe
 
-          Utilities/Maintenance/SourceTarball.bash --tgz --zip --verbose "${{ env.COREBINARYDIRECTORY }}/SimpleITK-build" ${{ github.sha }}
+          Utilities/Maintenance/SourceTarball.bash --tgz --zip --verbose --no-source ${{ github.sha }}
           mkdir -p ${{ github.workspace }}/artifacts
           ls -la
           shopt -s extglob
-          mv SimpleITK@(Data|)-*@(zip|gz) ${{ github.workspace }}/artifacts
+          mv SimpleITKData-*@(zip|gz) ${{ github.workspace }}/artifacts
 
       - name: Cleanup build
         shell: bash
