@@ -195,6 +195,171 @@ def test_iterable():
     assert sum(image) == 10
 
 
+class TestImageIterator:
+    """Comprehensive tests for Image.__iter__."""
+
+    # --- Scalar pixel types ---
+
+    @pytest.mark.parametrize(
+        "pixel_type,py_type",
+        [
+            (sitk.sitkUInt8, int),
+            (sitk.sitkInt8, int),
+            (sitk.sitkUInt16, int),
+            (sitk.sitkInt16, int),
+            (sitk.sitkUInt32, int),
+            (sitk.sitkInt32, int),
+            (sitk.sitkUInt64, int),
+            (sitk.sitkInt64, int),
+            (sitk.sitkFloat32, float),
+            (sitk.sitkFloat64, float),
+        ],
+    )
+    def test_scalar_types(self, pixel_type, py_type):
+        """Each scalar pixel yields the correct Python type."""
+        img = sitk.Image(4, 3, pixel_type)
+        img[1, 1] = 7
+        pixels = list(img)
+        assert len(pixels) == 12
+        assert all(isinstance(p, py_type) for p in pixels)
+        assert pixels[0] == 0
+        # pixel at (1,1) → linear index 1 + 1*4 = 5
+        assert pixels[5] == 7
+
+    @pytest.mark.parametrize(
+        "pixel_type",
+        [
+            sitk.sitkVectorUInt8,
+            sitk.sitkVectorInt16,
+            sitk.sitkVectorFloat32,
+            sitk.sitkVectorFloat64,
+        ],
+    )
+    def test_vector_types(self, pixel_type):
+        """Vector pixels yield tuples of correct length."""
+        ncomp = 3
+        img = sitk.Image([4, 3], pixel_type, ncomp)
+        pixels = list(img)
+        assert len(pixels) == 12
+        for p in pixels:
+            assert isinstance(p, tuple)
+            assert len(p) == ncomp
+
+    @pytest.mark.parametrize(
+        "pixel_type", [sitk.sitkComplexFloat32, sitk.sitkComplexFloat64]
+    )
+    def test_complex_types(self, pixel_type):
+        """Complex pixels yield Python complex objects."""
+        img = sitk.Image(4, 3, pixel_type)
+        pixels = list(img)
+        assert len(pixels) == 12
+        for p in pixels:
+            assert isinstance(p, complex)
+
+    # --- Dimensions ---
+
+    def test_2d(self):
+        """2D iteration yields correct count."""
+        img = sitk.Image(5, 7, sitk.sitkFloat32)
+        assert len(list(img)) == 35
+
+    def test_3d(self):
+        """3D iteration yields correct count."""
+        img = sitk.Image(3, 4, 5, sitk.sitkFloat32)
+        assert len(list(img)) == 60
+
+    # --- Edge cases ---
+
+    def test_single_pixel(self):
+        """Single-pixel image yields exactly one value."""
+        img = sitk.Image(1, 1, sitk.sitkFloat64)
+        img[0, 0] = 42.0
+        pixels = list(img)
+        assert pixels == [42.0]
+
+    def test_empty_image(self):
+        """Zero-size image yields nothing."""
+        img = sitk.Image(0, 0, sitk.sitkFloat32)
+        assert list(img) == []
+
+    # --- Iteration order ---
+
+    def test_iteration_order_2d(self):
+        """Pixels iterate x-fastest (column-major / Fortran order)."""
+        img = sitk.Image(3, 2, sitk.sitkInt32)
+        # Fill with linear index: pixel (x,y) = x + y*3
+        for y in range(2):
+            for x in range(3):
+                img[x, y] = x + y * 3
+        pixels = list(img)
+        assert pixels == [0, 1, 2, 3, 4, 5]
+
+    def test_iteration_order_3d(self):
+        """3D pixels iterate x-fastest, then y, then z."""
+        img = sitk.Image(2, 2, 2, sitk.sitkInt32)
+        val = 0
+        for z in range(2):
+            for y in range(2):
+                for x in range(2):
+                    img[x, y, z] = val
+                    val += 1
+        pixels = list(img)
+        assert pixels == list(range(8))
+
+    # --- Correctness with non-trivial values ---
+
+    def test_float_values(self):
+        """Float pixel values survive round-trip through iterator."""
+        img = sitk.Image(3, 1, sitk.sitkFloat32)
+        img[0, 0] = 1.5
+        img[1, 0] = -2.25
+        img[2, 0] = 0.0
+        pixels = list(img)
+        assert abs(pixels[0] - 1.5) < 1e-6
+        assert abs(pixels[1] - (-2.25)) < 1e-6
+        assert pixels[2] == 0.0
+
+    def test_vector_values(self):
+        """Vector pixel component values survive round-trip."""
+        img = sitk.Image([2, 1], sitk.sitkVectorFloat64, 2)
+        img[0, 0] = (1.5, -3.0)
+        img[1, 0] = (0.0, 7.0)
+        pixels = list(img)
+        assert len(pixels) == 2
+        assert abs(pixels[0][0] - 1.5) < 1e-10
+        assert abs(pixels[0][1] - (-3.0)) < 1e-10
+        assert abs(pixels[1][1] - 7.0) < 1e-10
+
+    def test_complex_values(self):
+        """Complex pixel values survive round-trip."""
+        img = sitk.Image(2, 1, sitk.sitkComplexFloat64)
+        # ComplexFloat64 pixels are set/got as tuples of (real, imag)
+        # through GetPixel, but the iterator should yield Python complex
+        pixels = list(img)
+        assert len(pixels) == 2
+        for p in pixels:
+            assert isinstance(p, complex)
+
+    # --- Multiple iterations ---
+
+    def test_reiter(self):
+        """Image can be iterated multiple times with same results."""
+        img = sitk.Image(4, 4, sitk.sitkUInt8)
+        img[2, 3] = 99
+        first = list(img)
+        second = list(img)
+        assert first == second
+
+    # --- sum/min/max ---
+
+    def test_sum(self):
+        """sum() over image pixels works correctly."""
+        img = sitk.Image(10, 10, sitk.sitkInt32)
+        img[0, 0] = 5
+        img[9, 9] = 15
+        assert sum(img) == 20
+
+
 def test_set_get_pixel():
     """Test methods for setting and getting pixel"""
     image = sitk.Image(10, 10, sitk.sitkInt32)
