@@ -29,7 +29,7 @@ tests:
   - Input/cthead1.png
 - tag: by23
   description: Test by 23
-  md5hash: 67615832b6f0e0bb877ce03418d3328c
+  md5hash: b8a6f4f77a7df4b1e5d5dba0297945bb
   settings:
   - parameter: Rank
     type: double
