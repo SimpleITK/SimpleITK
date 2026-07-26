@@ -93,6 +93,61 @@ def test_get_item_metadata():
         img["does_not_exit"]
 
 
+def test_spatial_key_protocol():
+    """Test order-explicit spatial keys (ITK issue #6706)"""
+    import warnings
+
+    img = sitk.Image([10, 9, 11], sitk.sitkFloat32)
+    img.SetSpacing([0.3, 0.1, 0.2])
+    img.SetOrigin([-3.0, -2.0, -1.0])
+    direction = (0.0, -1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+    img.SetDirection(direction)
+
+    assert img["spacing_xyz"] == (0.3, 0.1, 0.2)
+    assert img["origin_xyz"] == (-3.0, -2.0, -1.0)
+    assert img["direction_xyz"] == direction
+    assert img["size_xyz"] == (10, 9, 11)
+    assert img["index_xyz"] == (0, 0, 0)
+
+    assert img["spacing_zyx"] == (0.2, 0.1, 0.3)
+    assert img["origin_zyx"] == (-1.0, -2.0, -3.0)
+    assert img["direction_zyx"] == tuple(reversed(direction))
+    assert img["size_zyx"] == (11, 9, 10)
+    assert img["index_zyx"] == (0, 0, 0)
+
+    img["spacing_zyx"] = (0.6, 0.5, 0.4)
+    assert img.GetSpacing() == (0.4, 0.5, 0.6)
+    img["origin_xyz"] = (1.0, 2.0, 3.0)
+    assert img.GetOrigin() == (1.0, 2.0, 3.0)
+    img["direction_zyx"] = tuple(reversed(direction))
+    assert img.GetDirection() == direction
+
+    with pytest.raises(KeyError):
+        img["size_xyz"] = (2, 2, 2)
+    with pytest.raises(ValueError):
+        img["index_zyx"] = (1, 0, 0)
+    img["index_xyz"] = (0, 0, 0)
+
+    for key in ("spacing_xyz", "index_zyx"):
+        assert key in img
+        with pytest.raises(KeyError):
+            del img[key]
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        assert img["spacing"] == img["spacing_xyz"]
+        img["spacing"] = img["spacing_xyz"]
+    deprecations = [w for w in caught if issubclass(w.category, DeprecationWarning)]
+    assert len(deprecations) == 2
+    assert "6706" in str(deprecations[0].message)
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        img["spacing_xyz"]
+        img["origin_zyx"]
+    assert not [w for w in caught if issubclass(w.category, DeprecationWarning)]
+
+
 def test_setitem_metadata():
     """Test the __setitem__ with a string to access meta-data dictionary"""
 
