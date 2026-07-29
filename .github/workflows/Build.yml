@@ -145,7 +145,7 @@ jobs:
         path: ${{ runner.temp }}/.ExternalData
         save: ${{ github.event_name != 'pull_request' }}
     - name: Set up Python ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       id: cpy
       with:
         python-version: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
