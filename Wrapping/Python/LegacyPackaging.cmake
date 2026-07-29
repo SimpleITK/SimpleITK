@@ -99,11 +99,14 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
     COMMAND ${PYTHON_COMMAND_PREFIX} "${Python_EXECUTABLE}" "-m" "venv" "--clear" "${PythonVirtualenvHome}"
     COMMAND ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "--upgrade" "pip"
-    COMMAND ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "wheel" "numpy!=1.24.1,!=1.24.0" "setuptools" "."
+    # numpy<2.5 is required for building from source with GCC < 10.3 (e.g. manylinux2014's
+    # devtoolset-10), needed for Python ABIs without a manylinux2014-tagged numpy wheel (e.g. cp314t).
+    COMMAND ${PYTHON_COMMAND_PREFIX} "${VIRTUAL_PYTHON_EXECUTABLE}" "-m" "pip" "install" "wheel" "numpy!=1.24.1,!=1.24.0,<2.5" "setuptools" "."
     WORKING_DIRECTORY "${SimpleITK_Python_BINARY_DIR}"
     DEPENDS
     "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
     COMMENT "Creating python virtual environment..."
+    VERBATIM
     )
 
 endif()
