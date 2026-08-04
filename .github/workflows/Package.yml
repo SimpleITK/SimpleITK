@@ -31,7 +31,7 @@ jobs:
 
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Docker Build Image
@@ -124,10 +124,10 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -243,7 +243,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Build Docker Image for Doxygen
@@ -280,7 +280,7 @@ jobs:
       - package-docker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: actions/download-artifact@v4

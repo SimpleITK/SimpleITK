@@ -14,7 +14,7 @@ jobs:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Tag latest
@@ -67,11 +67,11 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       CTEST_BINARY_DIRECTORY: "${{ github.workspace }}/bld"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.sha }}"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -148,7 +148,7 @@ jobs:
       CTEST_SOURCE_DIRECTORY: "${{ github.workspace }}"
       DASHBOARD_BRANCH_DIRECTORY: "${{ github.workspace }}/ITK-dashboard"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: InsightSoftwareConsortium/ITK
           path: ITK-dashboard
