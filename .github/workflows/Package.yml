@@ -349,6 +349,17 @@ jobs:
         run: |
           pip install twine
           twine check $( find ${{ steps.download.outputs.download-path }} -name "*.whl" -o -name "simpleitk-*.tar.gz" )
+      - name: Verify abi3 wheel compatibility
+        env:
+          DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
+        run: |
+          pip install abi3audit
+          wheels=$( find "${DOWNLOAD_PATH}" -type f -name "*-abi3-*.whl" )
+          if [ -z "${wheels}" ]; then
+            echo "No abi3 wheels found under ${DOWNLOAD_PATH}, skipping check."
+          else
+            abi3audit --verbose ${wheels}
+          fi
       - name: Create Release and Upload Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
