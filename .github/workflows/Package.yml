@@ -359,6 +359,6 @@ jobs:
       - name: PyPI Publish package
         if: startsWith(github.ref_name, 'v')
         # hash for release/v1.12.3
-        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
         with:
           repository-url: https://test.pypi.org/legacy/
