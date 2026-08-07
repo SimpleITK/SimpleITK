@@ -308,16 +308,14 @@ public:
 
   /** Sets an abort flag on the active process.
    *
-   * Requests the current active process to abort. Additional,
-   * progress or iteration event may occur. If aborted then, an
-   * AbortEvent should occur. The Progress should be set to 1.0
-   * after aborting.
+   * Requests the current active process to abort. Additional
+   * progress or iteration events may occur. If aborted, an
+   * AbortEvent will occur and the Progress will be set to 1.0.
    *
-   * The expected behavior is that not exception should be throw
-   * out of this processes Execute method. Additionally, the
-   * results returned are valid but undefined content. The
-   * content may be only partially updated, uninitialized or the a
-   * of size zero.
+   * An itk::ProcessAborted exception may be thrown from the
+   * Execute method when the process is aborted. The results
+   * returned are valid but undefined in content: they may be
+   * only partially updated, uninitialized, or of size zero.
    *
    * If there is no active process the method has no effect.
    */
