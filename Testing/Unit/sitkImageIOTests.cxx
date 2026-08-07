@@ -1102,6 +1102,48 @@ TEST(IO, ImageFileReader_Extract2)
 }
 
 
+// Regression test for issue S17: ImageFileReader implicit-zero extract spellings
+// must agree.  "size=[w,h]" for a 3-D file is documented as equivalent to
+// "size=[w,h,0]" (missing entries are zero), so both must honor the same
+// ExtractIndex (including the collapsed z-axis slice) and must produce identical
+// output images.
+TEST(IO, ImageFileReader_ExtractImplicitZero)
+{
+  sitk::Image generatedImage(50, 60, 70, sitk::sitkInt16);
+  generatedImage.SetOrigin(v3(1.0, 2.0, 3.0));
+  generatedImage.SetSpacing(v3(0.5, 0.6, 0.7));
+
+  generatedImage = sitk::AdditiveGaussianNoise(generatedImage, 128.0, 0.0, 42u);
+
+  const ::testing::TestInfo * info = ::testing::UnitTest::GetInstance()->current_test_info();
+  std::string                 filename = std::string(info->test_case_name()) + "." + info->name() + ".mha";
+  filename = dataFinder.GetOutputFile(filename);
+  sitk::WriteImage(generatedImage, filename);
+
+  sitk::ImageFileReader reader;
+  reader.SetFileName(filename);
+
+  // Explicit zero: [20, 30, 0] collapses the z-axis at index 5.
+  reader.SetExtractSize({ 20u, 30u, 0u });
+  reader.SetExtractIndex({ 3, 4, 5 });
+  sitk::Image explicitResult = reader.Execute();
+
+  // Implicit zero: [20, 30] — the missing z entry is documented as zero.
+  // After the fix both spellings must produce the same image.
+  reader.SetExtractSize({ 20u, 30u });
+  reader.SetExtractIndex({ 3, 4, 5 });
+  sitk::Image implicitResult = reader.Execute();
+
+  EXPECT_EQ(2u, explicitResult.GetDimension());
+  EXPECT_EQ(2u, implicitResult.GetDimension());
+
+  EXPECT_EQ(sitk::Hash(explicitResult), sitk::Hash(implicitResult));
+  EXPECT_VECTOR_DOUBLE_NEAR(explicitResult.GetOrigin(), implicitResult.GetOrigin(), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(explicitResult.GetSpacing(), implicitResult.GetSpacing(), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(explicitResult.GetDirection(), implicitResult.GetDirection(), 1e-10);
+}
+
+
 TEST(IO, ImageFileReader_5DExtract)
 {
   const std::string file = dataFinder.GetDirectory() + "/Input/points_5d.mha";
