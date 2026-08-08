@@ -102,6 +102,10 @@ First obtain the SimpleITK source code:
 
  git clone https://github.com/SimpleITK/SimpleITK.git
 
+As of SimpleITK 3.0, a release's or tag's standard GitHub "Source code
+(zip)"/"Source code (tar.gz)" download is also a supported way to obtain
+the source code to build, as an alternative to cloning with git.
+
 
 .. _building_superbuild:
 

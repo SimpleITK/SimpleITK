@@ -1,7 +1,6 @@
 [build-system]
 requires = [
   "scikit-build-core==0.11.5",
-  "setuptools-scm>=8.0",
   "swig~=4.4.0",
   "jinja2~=3.1",
   "jsonschema~=4.24",
@@ -38,15 +37,12 @@ requires-python = ">=3.10"
 dynamic = ["version"]
 
 [tool.scikit-build.metadata.version]
-provider = "scikit_build_core.metadata.setuptools_scm"
-
-[tool.setuptools_scm]
-version_scheme = "post-release"
-local_scheme = "no-local-version"
-version_file = "Wrapping/Python/SimpleITK/_version.py"
-tag_regex = "^v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
+provider = "sitk_version_provider"
+provider-path = "CMake"
+driver-script = "sitkVersionDriver.cmake"
 
 [tool.scikit-build]
+experimental = true
 minimum-version = "0.11"
 cmake.version = ">=3.26.1"
 cmake.build-type = "Release"
