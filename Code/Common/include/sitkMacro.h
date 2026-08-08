@@ -62,29 +62,29 @@ namespace itk::simple
 
 class GenericException;
 
-#define sitkExceptionMacro(x)                                                         \
-  {                                                                                   \
-    std::ostringstream message;                                                       \
-    message << "sitk::ERROR: " x;                                                     \
-    throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str().c_str()); \
+#define sitkExceptionMacro(x)                                                 \
+  {                                                                           \
+    std::ostringstream message;                                               \
+    message << "" x;                                                          \
+    throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str()); \
   }
 
-#define sitkWarningMacro(x)                                 \
-  {                                                         \
-    std::ostringstream msg;                                 \
-    msg << this->GetName() << " (" << this << "): " x;      \
-    itk::OutputWindowDisplayWarningText(msg.str().c_str()); \
+#define sitkWarningMacro(x)                                                                                      \
+  {                                                                                                              \
+    std::ostringstream msg;                                                                                      \
+    msg << "" x;                                                                                                 \
+    ::itk::OutputWindowDisplayWarningText(__FILE__, __LINE__, this->GetName().c_str(), this, msg.str().c_str()); \
   }
 
 
-#define sitkDebugMacro(x)                                                       \
-  {                                                                             \
-    if (this->GetDebug())                                                       \
-    {                                                                           \
-      std::ostringstream msg;                                                   \
-      msg << "Debug: " << this->GetName() << " (" << this << "): " x << "\n\n"; \
-      ::itk::OutputWindowDisplayDebugText(msg.str().c_str());                   \
-    }                                                                           \
+#define sitkDebugMacro(x)                                                                                        \
+  {                                                                                                              \
+    if (this->GetDebug())                                                                                        \
+    {                                                                                                            \
+      std::ostringstream msg;                                                                                    \
+      msg << "" x;                                                                                               \
+      ::itk::OutputWindowDisplayDebugText(__FILE__, __LINE__, this->GetName().c_str(), this, msg.str().c_str()); \
+    }                                                                                                            \
   }
 
 #define sitkMacroJoin(X, Y) sitkDoMacroJoin(X, Y)

@@ -46,6 +46,8 @@ class SimpleITKLogger(sitk.LoggerBase):
     ProcessObject:GlobalWarningDisplayOff.
     """
 
+    _context_args = ("file", "line", "className", "objectAddress")
+
     def __init__(self, logger: logging.Logger = logging.getLogger("SimpleITK")):
         """
         Initializes with a Logger object to handle the messages emitted from
@@ -74,23 +76,49 @@ class SimpleITKLogger(sitk.LoggerBase):
         self._old_logger.SetAsGlobalITKLogger()
         del self._old_logger
 
-    def DisplayText(self, s):
+    def DisplayText(self, message):
         """ Display text message. """
-        # Remove newline endings from SimpleITK/ITK messages since the Python
-        # logger adds during output.
-        self._logger.info(s.rstrip())
+        extra = { key: None for key in self._context_args }
+        self._logger.info(message, extra=extra)
 
-    def DisplayErrorText(self, s):
-        self._logger.error(s.rstrip())
+    def DisplayErrorText(self,
+                         message,
+                         file = None,
+                         line = None,
+                         className = None,
+                         objectAddress = None):
+        """
+        This python method signature will be called for both C++ overloaded DisplayErrorText methods. These additional context parameters can be passed to the logger as extra information.
 
-    def DisplayWarningText(self, s):
-        self._logger.warning(s.rstrip())
+        """
+        extra = { key: locals()[key] for key in self._context_args }
+        self._logger.error(message, extra=extra)
 
-    def DisplayGenericOutputText(self, s):
-        self._logger.info(s.rstrip())
+    def DisplayWarningText(self,
+                           message,
+                           file = None,
+                           line = None,
+                           className = None,
+                        objectAddress = None):
+        extra = { key: locals()[key] for key in self._context_args }
+        self._logger.warning(message, extra=extra)
 
-    def DisplayDebugText(self, s):
-        self._logger.debug(s.rstrip())
+    def DisplayGenericOutputText(self,
+                                 message,
+                                 file = None,
+                                 line = None):
+        extra = { key: locals()[key] for key in ("file", "line") }
+        self._logger.info(message, extra=extra)
+
+    def DisplayDebugText(self,
+                         message,
+                         file = None,
+                         line = None,
+                         className = None,
+                         objectAddress = None):
+
+        extra = { key: locals()[key] for key in self._context_args }
+        self._logger.debug(message, extra=extra)
 
 
 # Enable all debug messages for all ProcessObjects, and procedures
@@ -102,8 +130,11 @@ sitkLogger = SimpleITKLogger()
 # Configure ITK to use the logger adaptor
 sitkLogger.SetAsGlobalITKLogger()
 
+sitkLogger.DisplayText("check")
+
 # Configure the Python root logger, enabling debug and info level messages.
-logging.basicConfig(format="%(name)s (%(levelname)s): %(message)s", level=logging.DEBUG)
+# Note that if an ITK extra context is not provided, then the logging message will not occur due to the missing context keys.
+logging.basicConfig(format="%(name)s [%(file)s#%(line)s] (%(levelname)s): %(message)s", level=logging.DEBUG)
 
 
 img = sitk.GaborSource(size=[64, 64, 64], frequency=4.0 / 64)
