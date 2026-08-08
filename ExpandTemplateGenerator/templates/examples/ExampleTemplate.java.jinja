@@ -1,0 +1,174 @@
+/*=========================================================================
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
+{#- Jinja2 template for generating Java example programs. -#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{#- Build Execute() argument string (Java lowercase method style) -#}
+{%- set ns = namespace(exec_args="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ "image" ~ (i if number_of_inputs > 1 else "") -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
+{%- endfor -%}
+
+import org.itk.simple.*;
+
+/**
+ * Example program for {{ name }}.
+{% if briefdescription %}
+ * {{ briefdescription | wordwrap(DOXYGEN_WORDWRAP_WIDTH) | indent(" * ", blank=True) }}
+{% endif %}
+ *
+ * Usage: {{ name }}Example
+ *   {% for i in range(1, number_of_inputs + 1) %}<input{{ i if number_of_inputs > 1 else "" }}> {% endfor %}{% for inp in named_image_inputs %}<{{ inp.name[0] | lower ~ inp.name[1:] }}> {% endfor %}{% if has_output %}<output>{% endif %}
+
+ */
+class {{ name }}Example {
+
+  public static void main(String argv[]) {
+
+    final int expectedArgs = {{ total_inputs + (1 if has_output else 0) }};
+    if (argv.length < expectedArgs) {
+      System.out.println(
+        "Usage: {{ name }}Example"
+{% for i in range(1, number_of_inputs + 1) %}
+        + " <input{{ i if number_of_inputs > 1 else "" }}>"
+{% endfor %}
+{% for inp in named_image_inputs %}
+        + " <{{ inp.name[0] | lower ~ inp.name[1:] }}>"
+{% endfor %}
+{% if has_output %}
+        + " <output>"
+{% endif %}
+      );
+      System.exit(1);
+    }
+
+    int argIdx = 0;
+    ImageFileReader reader = new ImageFileReader();
+    org.itk.simple.{{ name }} filter = new org.itk.simple.{{ name }}();
+
+{% if number_of_inputs == 1 %}
+    // Read the input image
+    reader.setFileName(argv[argIdx++]);
+    Image image = reader.execute();
+{% elif number_of_inputs >= 2 %}
+    // Read the input images
+{% for i in range(1, number_of_inputs + 1) %}
+    reader.setFileName(argv[argIdx++]);
+    Image image{{ i }} = reader.execute();
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+    // Read the {{ inp.name[0] | lower ~ inp.name[1:] }} image
+    reader.setFileName(argv[argIdx++]);
+    Image {{ inp.name[0] | lower ~ inp.name[1:] }} = reader.execute();
+{% endfor %}
+
+    // Configure filter parameters
+{% if ex and ex.settings %}
+{% for setting in ex.settings %}
+{% if setting.dim_vec is defined and setting.dim_vec %}
+    {
+      {#- Map C++ type to Java primitive array type and SimpleITK vector wrapper. -#}
+      {%- if setting.type is defined and setting.type == "bool" -%}
+        {%- set java_prim = "boolean" -%}{%- set vec_type = "VectorBool" -%}
+      {%- elif setting.type is defined and setting.type in ("unsigned int", "uint32_t") -%}
+        {%- set java_prim = "long" -%}{%- set vec_type = "VectorUInt32" -%}
+      {%- elif setting.type is defined and setting.type in ("unsigned long", "uint64_t") -%}
+        {%- set java_prim = "long" -%}{%- set vec_type = "VectorUInt64" -%}
+      {%- elif setting.type is defined and setting.type == "int" -%}
+        {%- set java_prim = "int" -%}{%- set vec_type = "VectorInt32" -%}
+      {%- elif setting.type is defined and setting.type in ("unsigned short", "uint16_t") -%}
+        {%- set java_prim = "int" -%}{%- set vec_type = "VectorUInt16" -%}
+      {%- elif setting.type is defined and setting.type == "float" -%}
+        {%- set java_prim = "float" -%}{%- set vec_type = "VectorFloat" -%}
+      {%- else -%}
+        {%- set java_prim = "double" -%}{%- set vec_type = "VectorDouble" -%}
+      {%- endif %}
+      {{ java_prim }}[] v = {% if setting.java_value is defined and setting.java_value %}{{ setting.java_value }}{% else %}{ {{ setting.value | join(", ") }} }{% endif %};
+      {{ vec_type }} param = new {{ vec_type }}(v);
+      filter.set{{ setting.parameter }}(param);
+    }
+{% elif setting.type is defined and setting.type == "bool" %}
+    filter.set{{ setting.parameter }}({{ "true" if setting.value else "false" }});
+{% elif setting.java_value is defined and setting.java_value is not none %}
+    filter.set{{ setting.parameter }}({{ setting.java_value }});
+{% else %}
+    filter.set{{ setting.parameter }}({{ setting.value }});
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if has_output %}
+    // Execute the filter
+    Image output = filter.execute({{ ns.exec_args }});
+
+    // Write the output image
+    ImageFileWriter writer = new ImageFileWriter();
+    writer.setFileName(argv[argIdx++]);
+    writer.execute(output);
+{% else %}
+    // Execute the filter
+    filter.execute({{ ns.exec_args }});
+
+{% if measurements %}
+    // Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
+{% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
+    System.out.println("{{ m.name }}: " + filter.get{{ m.name }}());
+{%- endif %}
+{% endfor %}
+{%- if ns_p.has_param %}
+    // Per-label measurements require a label argument:
+    for (long label : filter.getLabels()) {
+      System.out.println("Label: " + label);
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+      System.out.println("  {{ m.name }}: " + filter.get{{ m.name }}(label));
+{%- endif %}
+{% endfor %}
+    }
+{%- endif %}
+{% endif %}
+{% endif %}
+
+  }
+
+}
