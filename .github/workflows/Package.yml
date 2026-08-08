@@ -137,7 +137,7 @@ jobs:
           mkdir -p ${ExternalData_OBJECT_STORES}
           ls -la "${{ github.workspace }}/Testing/Data/"
           git log -n 1 "${{ github.workspace }}/Testing/Data/" | tee "${{ github.workspace }}/external-data.hashable"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         id: cache
         with:
           path: ${{ env.ExternalData_OBJECT_STORES }}
