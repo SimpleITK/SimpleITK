@@ -22,6 +22,7 @@
 
 #include <cstring>
 #include <algorithm>
+#include <string_view>
 
 namespace
 {
@@ -31,6 +32,9 @@ MakeExtendedVersionString()
 {
   std::ostringstream v;
   v << "SimpleITK Version: " << itk::simple::Version::VersionString() << " (ITK " << ITK_VERSION_STRING << ")"
+#ifdef SITK_USE_ELASTIX
+    << " (Elastix " << ELASTIX_VERSION_STRING << ")" << std::endl
+#endif
     << std::endl
     << "Compiled: " << itk::simple::Version::BuildDate() << std::endl;
   return v.str();
@@ -97,6 +101,29 @@ Version::ITKVersionString()
   return itkVersionString;
 }
 
+#ifdef SITK_USE_ELASTIX
+unsigned int
+Version::ElastixMajorVersion()
+{
+  return ELASTIX_VERSION_MAJOR;
+}
+unsigned int
+Version::ElastixMinorVersion()
+{
+  return ELASTIX_VERSION_MINOR;
+}
+unsigned int
+Version::ElastixPatchVersion()
+{
+  return ELASTIX_VERSION_PATCH;
+}
+const std::string &
+Version::ElastixVersionString()
+{
+  static const std::string v(ELASTIX_VERSION_STRING);
+  return v;
+}
+#endif
 
 std::vector<std::string>
 Version::ITKModulesEnabled()
@@ -104,21 +131,26 @@ Version::ITKModulesEnabled()
   // itkModulesEnabled is a semi-colon separate list of the ITK modules
   // enabled during compilation. This method splits that one string
   // into separate strings.
-  const char * strMods = itkModulesEnabled;
-  const char * strModsEnd = strMods + strlen(itkModulesEnabled);
-
+  std::string_view modulesView(itkModulesEnabled);
 
   std::vector<std::string> modules_vector;
-  modules_vector.reserve(std::count(strMods, strModsEnd, ';'));
+  modules_vector.reserve(std::count(modulesView.begin(), modulesView.end(), ';'));
 
-  while (strMods < strModsEnd)
+  size_t start = 0;
+  size_t end = modulesView.find(';');
+
+  while (end != std::string_view::npos)
   {
-    const char * tokenMod = std::find(strMods, strModsEnd, ';');
-
-    modules_vector.emplace_back(strMods, tokenMod);
-
-    strMods = tokenMod + 1;
+    modules_vector.emplace_back(modulesView.substr(start, end - start));
+    start = end + 1;
+    end = modulesView.find(';', start);
   }
+
+  if (start < modulesView.length())
+  {
+    modules_vector.emplace_back(modulesView.substr(start));
+  }
+
   return modules_vector;
 }
 
