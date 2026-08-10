@@ -25,7 +25,7 @@ if(NOT PCRE2_DIR)
   #  PCRE2 (Perl Compatible Regular Expressions)
   #
 
-  set(PCRE2_TARGET_VERSION 10.44)
+  set(PCRE2_TARGET_VERSION 10.47)
   sitksourcedownload(PCRE2_URL "pcre2-${PCRE2_TARGET_VERSION}.tar.gz")
 
   # follow the standard EP_PREFIX locations
