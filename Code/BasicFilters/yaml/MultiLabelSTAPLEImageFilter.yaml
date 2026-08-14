@@ -3,7 +3,7 @@ template_code_filename: MultiInputImageFilter
 template_test_filename: ImageFilter
 number_of_inputs: 1
 pixel_types: UnsignedIntegerPixelIDTypeList
-filter_type: itk::MultiLabelSTAPLEImageFilter<InputImageType, OutputImageType, float>
+filter_type: itk::MultiLabelSTAPLEImageFilter<InputImageType, OutputImageType, double>
 members:
 - name: LabelForUndecidedPixels
   type: uint64_t
@@ -43,8 +43,8 @@ members:
   detaileddescriptionGet: >-
     Set maximum number of iterations.
 - name: PriorProbabilities
-  type: std::vector<float>
-  default: std::vector<float>()
+  type: std::vector<double>
+  default: std::vector<double>()
   briefdescriptionSet: ''
   custom_itk_cast: |-
     if (!m_PriorProbabilities.empty()) filter->SetPriorProbabilities(typename FilterType::PriorProbabilitiesType(&this->m_PriorProbabilities[0],this->m_PriorProbabilities.size()));
@@ -64,9 +64,9 @@ members:
     this function.
 measurements:
 - name: ConfusionMatrix
-  type: std::vector<float>
+  type: std::vector<double>
   no_print: true
-  custom_cast: std::vector<float>(value.begin(), value.end())
+  custom_cast: std::vector<double>(value.begin(), value.end())
   active: true
   parameters:
   - name: input
