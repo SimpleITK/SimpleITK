@@ -1,0 +1,74 @@
+cff-version: 1.2.0
+message: "If you use SimpleITK, please cite it using the metadata in this file."
+type: software
+title: SimpleITK
+authors:
+  - family-names: Lowekamp
+    given-names: Bradley C.
+  - family-names: Chen
+    given-names: David T.
+  - family-names: Ibáñez
+    given-names: Luis
+  - family-names: Blezek
+    given-names: Daniel
+  - family-names: Johnson
+    given-names: Hans J.
+  - family-names: Beare
+    given-names: Richard
+  - family-names: Yaniv
+    given-names: Ziv
+  - name: "the Insight Software Consortium Community"
+repository-code: "https://github.com/SimpleITK/SimpleITK"
+license: Apache-2.0
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Lowekamp
+      given-names: Bradley C.
+    - family-names: Chen
+      given-names: David T.
+    - family-names: Ibáñez
+      given-names: Luis
+    - family-names: Blezek
+      given-names: Daniel
+  title: "The Design of SimpleITK"
+  doi: 10.3389/fninf.2013.00045
+  journal: Frontiers in Neuroinformatics
+  volume: 7
+  year: 2013
+
+references:
+  - type: article
+    authors:
+      - family-names: Yaniv
+        given-names: Ziv
+      - family-names: Lowekamp
+        given-names: Bradley C.
+      - family-names: Johnson
+        given-names: Hans J.
+      - family-names: Beare
+        given-names: Richard
+    title: "SimpleITK Image-Analysis Notebooks: A Collaborative Environment for Education and Reproducible Research"
+    doi: 10.1007/s10278-017-0037-8
+    journal: Journal of Digital Imaging
+    volume: 31
+    issue: 3
+    start: 290
+    end: 303
+    year: 2018
+
+  - type: article
+    authors:
+      - family-names: Beare
+        given-names: Richard
+      - family-names: Lowekamp
+        given-names: Bradley
+      - family-names: Yaniv
+        given-names: Ziv
+    title: "Image Segmentation, Registration and Characterization in R with SimpleITK"
+    doi: 10.18637/jss.v086.i08
+    journal: Journal of Statistical Software
+    volume: 86
+    issue: 8
+    year: 2018
