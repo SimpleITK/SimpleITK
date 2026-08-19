@@ -47,8 +47,8 @@ version_file = "Wrapping/Python/SimpleITK/_version.py"
 tag_regex = "^v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
 
 [tool.scikit-build]
-minimum-version = "0.11"
-cmake.version = ">=3.26.1"
+minimum-version = "1.0"
+cmake.version = ">=3.30"
 cmake.build-type = "Release"
 wheel.packages = []
 install.components = ["Python"]
@@ -64,7 +64,11 @@ ITK_CXX_OPTIMIZATION_FLAGS = ""
 SimpleITK_BUILD_DISTRIBUTE = "ON"
 
 [[tool.scikit-build.overrides]]
-if.python-version = ">=3.11"
+if.python-version = ">=3.15"
+wheel.py-api = "cp315.cp315t"
+
+[[tool.scikit-build.overrides]]
+if.python-version = ">=3.11,<3.15"
 wheel.py-api = "cp311"
 
 [project.urls]

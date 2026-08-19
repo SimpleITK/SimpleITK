@@ -78,10 +78,27 @@ else()
 endif()
 
 if(SKBUILD)
-  if(SKBUILD_SABI_VERSION STREQUAL "3.11")
+  # scikit-build-core 1.0+ sets Py_TARGET_ABI3T when building for the
+  # free-threaded Stable ABI (PEP 803 / abi3t).  It sets SKBUILD_SABI_VERSION
+  # (e.g. "3.15") for both the classic abi3 and the abi3t builds; the two are
+  # distinguished by the presence of Py_TARGET_ABI3T.
+  if(Py_TARGET_ABI3T)
     set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+    set(SimpleITK_PYTHON_USE_ABI3T ON)
+  elseif(
+    SKBUILD_SABI_VERSION
+      STREQUAL
+      "3.11"
+    OR
+      SKBUILD_SABI_VERSION
+        STREQUAL
+        "3.15"
+  )
+    set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+    set(SimpleITK_PYTHON_USE_ABI3T OFF)
   elseif(SKBUILD_SABI_VERSION STREQUAL "")
     set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+    set(SimpleITK_PYTHON_USE_ABI3T OFF)
   else()
     message(
       FATAL_ERROR
@@ -95,6 +112,25 @@ else()
     ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT}
   )
   mark_as_advanced(SimpleITK_PYTHON_USE_LIMITED_API)
+
+  # abi3t (PEP 803): requires Python >= 3.15 and LIMITED_API. Only relevant
+  # when building outside scikit-build-core (e.g. direct CMake invocation).
+  if(
+    SimpleITK_PYTHON_USE_LIMITED_API
+    AND
+      Python_VERSION
+        VERSION_GREATER_EQUAL
+        "3.15.0"
+  )
+    option(
+      SimpleITK_PYTHON_USE_ABI3T
+      "Use Python free-threaded Stable ABI (PEP 803 / abi3t)."
+      OFF
+    )
+  else()
+    set(SimpleITK_PYTHON_USE_ABI3T OFF)
+  endif()
+  mark_as_advanced(SimpleITK_PYTHON_USE_ABI3T)
 endif()
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
@@ -125,6 +161,21 @@ if(
     "Python limited API is not supported for this Python version and SWIG version."
   )
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+endif()
+
+# abi3t (PEP 803) requires the PyModExport entry point (PEP 793), which SWIG
+# does not yet support. Until SWIG gains PyModExport code generation, building
+# for abi3t is blocked. This guard makes the dependency explicit so the
+# infrastructure is in place once SWIG support lands.
+# Track progress at: https://github.com/swig/swig/issues (no issue yet as of 2026-08)
+if(SimpleITK_PYTHON_USE_ABI3T)
+  message(
+    FATAL_ERROR
+    "abi3t (PEP 803 / free-threaded Stable ABI) is not yet supported. "
+    "SWIG must generate a PyModExport_SimpleITK entry point (PEP 793) "
+    "before this build target can be used. "
+    "See https://peps.python.org/pep-0793/ and https://peps.python.org/pep-0803/."
+  )
 endif()
 
 set_source_files_properties(
@@ -205,11 +256,22 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
   # https://docs.python.org/3/c-api/stable.html
 
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::SABIModule)
-  target_compile_definitions(
-    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    PRIVATE
-      -DPy_LIMITED_API=0x030b0000
-  )
+  if(SimpleITK_PYTHON_USE_ABI3T)
+    # PEP 803: abi3t adds Py_TARGET_ABI3T on top of Py_LIMITED_API.
+    # Py_TARGET_ABI3T automatically ensures Py_GIL_DISABLED is defined and
+    # selects the free-threaded-compatible limited API subset.
+    target_compile_definitions(
+      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PRIVATE
+        -DPy_TARGET_ABI3T=0x030f0000
+    )
+  else()
+    target_compile_definitions(
+      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PRIVATE
+        -DPy_LIMITED_API=0x030b0000
+    )
+  endif()
 
   message(
     STATUS
