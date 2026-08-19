@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "scikit-build-core==0.11.5",
+  "scikit-build-core~=1.0.0",
   "setuptools-scm>=8.0",
   "swig~=4.4.0",
   "jinja2~=3.1",
