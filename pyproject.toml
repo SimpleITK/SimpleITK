@@ -51,7 +51,7 @@ tag_regex = "^v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
-cmake.version = ">=3.26.1"
+cmake.version = ">=3.30"
 cmake.build-type = "Release"
 wheel.packages = []
 install.components = ["Python"]
@@ -67,7 +67,11 @@ ITK_CXX_OPTIMIZATION_FLAGS = ""
 SimpleITK_BUILD_DISTRIBUTE = "ON"
 
 [[tool.scikit-build.overrides]]
-if.python-version = ">=3.11"
+if.python-version = ">=3.15"
+wheel.py-api = "cp315.cp315t"
+
+[[tool.scikit-build.overrides]]
+if.python-version = ">=3.11,<3.15"
 wheel.py-api = "cp311"
 
 [project.urls]
