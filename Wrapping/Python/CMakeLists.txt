@@ -85,15 +85,8 @@ if(SKBUILD)
   if(Py_TARGET_ABI3T)
     set(SimpleITK_PYTHON_USE_LIMITED_API ON)
     set(SimpleITK_PYTHON_USE_ABI3T ON)
-  elseif(
-    SKBUILD_SABI_VERSION
-      STREQUAL
-      "3.11"
-    OR
-      SKBUILD_SABI_VERSION
-        STREQUAL
-        "3.15"
-  )
+  elseif(SKBUILD_SABI_VERSION MATCHES "^3\\.[0-9]+$")
+    # Any Python 3.x version with a stable ABI (3.11+)
     set(SimpleITK_PYTHON_USE_LIMITED_API ON)
     set(SimpleITK_PYTHON_USE_ABI3T OFF)
   elseif(SKBUILD_SABI_VERSION STREQUAL "")
@@ -131,6 +124,38 @@ else()
     set(SimpleITK_PYTHON_USE_ABI3T OFF)
   endif()
   mark_as_advanced(SimpleITK_PYTHON_USE_ABI3T)
+endif()
+
+# Compute the Py_LIMITED_API and Py_TARGET_ABI3T version hex from
+# SKBUILD_SABI_VERSION or Python_VERSION. This follows PEP 384's version hex
+# encoding: 0x0XYZ0000 where X=major (3), YZ=minor (11, 12, 13, 14, 15, etc).
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  if(SKBUILD AND SKBUILD_SABI_VERSION MATCHES "^3\\.([0-9]+)$")
+    # Extract minor version from SKBUILD_SABI_VERSION (e.g. "3.15" -> 15)
+    string(
+      REGEX REPLACE
+      "^3\\.([0-9]+)$"
+      "\\1"
+      _SABI_MINOR
+      "${SKBUILD_SABI_VERSION}"
+    )
+  elseif(Python_VERSION_MAJOR EQUAL 3)
+    set(_SABI_MINOR ${Python_VERSION_MINOR})
+  else()
+    message(
+      FATAL_ERROR
+      "Unable to determine minor version for Python Limited API hex value"
+    )
+  endif()
+
+  # Compute hex: 0x03<minor>0000. E.g., 3.11 -> 0x030b0000
+  math(EXPR _SABI_HEX "0x03${_SABI_MINOR}0000" OUTPUT_FORMAT HEXADECIMAL)
+  set(SITK_PYTHON_ABI_VER_HEX "${_SABI_HEX}")
+
+  message(
+    STATUS
+    "Python Limited ABI version: 3.${_SABI_MINOR} (hex: ${SITK_PYTHON_ABI_VER_HEX})"
+  )
 endif()
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
@@ -263,13 +288,13 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
     target_compile_definitions(
       ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
       PRIVATE
-        -DPy_TARGET_ABI3T=0x030f0000
+        -DPy_TARGET_ABI3T=${SITK_PYTHON_ABI_VER_HEX}
     )
   else()
     target_compile_definitions(
       ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
       PRIVATE
-        -DPy_LIMITED_API=0x030b0000
+        -DPy_LIMITED_API=${SITK_PYTHON_ABI_VER_HEX}
     )
   endif()
 
