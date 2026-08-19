@@ -188,18 +188,19 @@ if(
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
 endif()
 
-# abi3t (PEP 803) requires the PyModExport entry point (PEP 793), which SWIG
-# does not yet support. Until SWIG gains PyModExport code generation, building
-# for abi3t is blocked. This guard makes the dependency explicit so the
-# infrastructure is in place once SWIG support lands.
-# Track progress at: https://github.com/swig/swig/issues (no issue yet as of 2026-08)
+# abi3t (PEP 803) requires the PyModExport entry point (PEP 793).
+# A hand-written shim (sitkPyModExport.cxx) can provide that hook, but the
+# current SWIG-generated wrapper and sitkImageBuffer.cxx still depend on opaque
+# Python object/module layouts that are unavailable under abi3t. Keep the
+# configure-time guard until those pieces are ported.
 if(SimpleITK_PYTHON_USE_ABI3T)
   message(
     FATAL_ERROR
-    "abi3t (PEP 803 / free-threaded Stable ABI) is not yet supported. "
-    "SWIG must generate a PyModExport_SimpleITK entry point (PEP 793) "
-    "before this build target can be used. "
-    "See https://peps.python.org/pep-0793/ and https://peps.python.org/pep-0803/."
+    "abi3t (PEP 803 / free-threaded Stable ABI) is not yet fully supported. "
+    "A PyModExport shim exists, but the current SWIG-generated wrapper and "
+    "sitkImageBuffer.cxx still rely on PyObject_HEAD/PyModuleDef layouts that "
+    "are opaque under abi3t. "
+    "See PEP 793, PEP 803, and the SWIG PyModExport support work."
   )
 endif()
 
@@ -246,10 +247,19 @@ set(
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkTransform.i
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkPathType.i
 )
-swig_add_module( SimpleITK python
+set(
+  _SITK_PYTHON_SOURCES
   SimpleITK.i
   sitkPyCommand.cxx
   sitkImageBuffer.cxx
+)
+
+if(SimpleITK_PYTHON_USE_ABI3T)
+  list(APPEND _SITK_PYTHON_SOURCES sitkPyModExport.cxx)
+endif()
+
+swig_add_module( SimpleITK python
+  ${_SITK_PYTHON_SOURCES}
 )
 set(
   SWIG_MODULE_SimpleITKPython_TARGET_NAME
