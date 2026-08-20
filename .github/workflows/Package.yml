@@ -90,14 +90,32 @@ jobs:
         include:
           - os: ubuntu-latest
             cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            artifact_suffix: all
           - os: ubuntu-22.04-arm
             cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            artifact_suffix: all
           - os: macos-15-intel
             cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            artifact_suffix: all
           - os: macos-15
             cibw_archs: arm64
+            cibw_build: "cp310-*"
+            artifact_suffix: cp310
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp311-*"
+            artifact_suffix: cp311
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp314t-*"
+            artifact_suffix: cp314t
           - os: windows-2022
             cibw_archs: AMD64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            artifact_suffix: all
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
@@ -109,7 +127,7 @@ jobs:
       - name: Build Python wheels with cibuildwheel
         uses: pypa/cibuildwheel@298ed2fb2c105540f5ed055e8a6ad78d82dd3a7e # v3.3.1
         env:
-          CIBW_BUILD: "cp310-* cp311-* cp314t-*"
+          CIBW_BUILD: ${{ matrix.cibw_build }}
           CIBW_ENABLE: cpython-freethreading
           CIBW_ARCHS: ${{ matrix.cibw_archs }}
           CIBW_SKIP: "*-musllinux_* *-manylinux_i686 *-win32"
@@ -122,7 +140,7 @@ jobs:
       - name: Upload wheel artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: artifacts-wheels-${{ matrix.os }}-${{ matrix.cibw_archs }}
+          name: artifacts-wheels-${{ matrix.os }}-${{ matrix.cibw_archs }}-${{ matrix.artifact_suffix }}
           path: wheelhouse/*.whl
 
   build:
