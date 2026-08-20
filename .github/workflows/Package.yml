@@ -102,13 +102,18 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           fetch-depth: 0
+      - name: Prepare short temp path for Windows wheel builds
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: New-Item -Path C:\t -ItemType Directory -Force | Out-Null
       - name: Build Python wheels with cibuildwheel
         uses: pypa/cibuildwheel@298ed2fb2c105540f5ed055e8a6ad78d82dd3a7e # v3.3.1
         env:
           CIBW_BUILD: "cp310-* cp311-* cp314t-*"
           CIBW_ENABLE: cpython-freethreading
           CIBW_ARCHS: ${{ matrix.cibw_archs }}
-          CIBW_SKIP: "pp* *-musllinux_* *-manylinux_i686 *-win32"
+          CIBW_SKIP: "*-musllinux_* *-manylinux_i686 *-win32"
+          CIBW_ENVIRONMENT_WINDOWS: "TMP=C:\\t TEMP=C:\\t"
           CIBW_TEST_SKIP: "*"
           CIBW_BUILD_VERBOSITY: 1
         with:
