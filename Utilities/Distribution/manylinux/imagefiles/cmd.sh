@@ -129,24 +129,56 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
 fi
 
 if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0 ]]; then
+    # Build abi3 wheels using the highest stable Python version (3.15).
+    # A single abi3 wheel works on all supported Python versions back to the minimum
+    # (e.g., Python 3.11+), so we only need to build once.
+    # When building with free-threaded Python 3.15t, scikit-build-core will produce
+    # the abi3t tag instead. Combined, they form abi3.abi3t wheels.
+
     USE_LIMITED_API=ON
-    PYTHON=cp311-cp311
+
+    # Build abi3 with GIL-enabled Python 3.15
+    PYTHON=cp315-cp315
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
-    PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
-    build_simpleitk_python &&
-       ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
-         ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
-         rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} )
+    if [[ -x "${Python_EXECUTABLE}" ]]; then
+        PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
+        build_simpleitk_python &&
+           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
+             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
+             rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} )
+    fi
+
+    # Build abi3t with free-threaded Python 3.15t
+    PYTHON=cp315t-cp315t
+    Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    if [[ -x "${Python_EXECUTABLE}" ]]; then
+        PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
+        build_simpleitk_python &&
+           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3t}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
+             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3t}.log &&
+             rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3t} )
+    fi
+
     unset USE_LIMITED_API
 fi
 
 
 
 for PYTHON in ${PYTHON_VERSIONS}; do
+    # Skip abi3/abi3t versions as they are handled separately in the BUILD_PYTHON_LIMITED_API block
+    case "${PYTHON}" in
+        cp315-cp315|cp315t-cp315t)
+            echo "Skipping ${PYTHON} (handled in BUILD_PYTHON_LIMITED_API block)"
+            continue
+            ;;
+    esac
+
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
-    PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
-    build_simpleitk_python &&
-        ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
-          ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}.log &&
-          rm -rf ${BLD_DIR}-${PYTHON} )
+    if [[ -x "${Python_EXECUTABLE}" ]]; then
+        PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
+        build_simpleitk_python &&
+            ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
+              ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}.log &&
+              rm -rf ${BLD_DIR}-${PYTHON} )
+    fi
 done

@@ -49,7 +49,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t"
+          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315 cp315t-cp315t"
           BUILD_CSHARP: ${{ matrix.build_csharp }}
           BUILD_JAVA: ${{ matrix.build_java }}
           BUILD_PYTHON_LIMITED_API: 1
@@ -224,6 +224,13 @@ jobs:
         uses: ./.github/actions/package_python
         with:
           python-version: "3.14t"
+          continue-on-error: true
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
+      - name: Package Python 3.15t (abi3t)
+        uses: ./.github/actions/package_python
+        with:
+          python-version: "3.15t"
+          use_limited_api: true
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Upload Artifacts
