@@ -581,27 +581,7 @@
         # iterator and container methods
 
         def __iter__( self ):
-
-            if len(self) == 0:
-              return
-
-            dim = self.GetDimension()
-            size = self.GetSize()
-            idx = [0] * dim
-
-            while idx[dim-1] < size[dim-1]:
-
-              yield self[ idx ]
-
-              # increment the idx
-              for d in range( 0, dim ):
-                idx[d] += 1
-                if idx[d] >= size[d] and d != dim  - 1:
-                   idx[d] = 0
-                else:
-                   break
-
-            return
+            return _SimpleITK.ImagePixelIterator(self)
 
         def __len__( self ):
             l = 1
