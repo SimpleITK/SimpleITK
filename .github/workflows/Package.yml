@@ -231,6 +231,7 @@ jobs:
         with:
           python-version: "3.15t"
           use_limited_api: true
+          allow-prereleases: true
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Upload Artifacts

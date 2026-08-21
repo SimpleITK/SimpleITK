@@ -13,6 +13,10 @@ inputs:
     description: "Use limited API"
     required: false
     default: false
+  allow-prereleases:
+    description: "Allow setup-python to select a pre-release interpreter (e.g. Python 3.15 release candidates)"
+    required: false
+    default: false
   cmake_osx_architectures:
     description: "CMAKE_OSX_ARCHITECTURES value for macOS builds"
     required: false
@@ -24,11 +28,29 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # setup-python's "<version>t" shorthand is only reliably matched for GA
+    # releases. Pre-release interpreters (e.g. 3.15 rc/beta builds) must be
+    # requested with a plain "x.y" version plus the separate freethreaded
+    # input, so split any trailing "t" off here.
+    - name: Parse Python version
+      id: pyver
+      shell: bash
+      run: |
+        version="${{ inputs.python-version }}"
+        if [[ "${version}" == *t ]]; then
+          echo "version=${version%t}" >> "$GITHUB_OUTPUT"
+          echo "freethreaded=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "freethreaded=false" >> "$GITHUB_OUTPUT"
+        fi
     - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
       id: cpy
       with:
-        python-version: ${{ inputs.python-version }}
+        python-version: ${{ steps.pyver.outputs.version }}
+        freethreaded: ${{ steps.pyver.outputs.freethreaded }}
+        allow-prereleases: ${{ inputs.allow-prereleases }}
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
       continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: bash
