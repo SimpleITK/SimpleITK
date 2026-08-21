@@ -103,11 +103,13 @@ jobs:
             cibw_build: "cp310-* cp311-* cp314t-*"
             cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
             artifact_suffix: musllinux-x86_64
+            cibw_environment_linux: "CMAKE_ARGS='-DITK_GIT_TAG:STRING=7fae0b606bffb9cba8bd8db5132c504cc461b36a -DITK_GIT_REPOSITORY:STRING=https://github.com/blowekamp/ITK.git'"
           - os: ubuntu-22.04-arm
             cibw_archs: aarch64
             cibw_build: "cp310-* cp311-* cp314t-*"
             cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
             artifact_suffix: musllinux-aarch64
+            cibw_environment_linux: "CMAKE_ARGS='-DITK_GIT_TAG:STRING=7fae0b606bffb9cba8bd8db5132c504cc461b36a -DITK_GIT_REPOSITORY:STRING=https://github.com/blowekamp/ITK.git'"
           - os: macos-15-intel
             cibw_archs: x86_64
             cibw_build: "cp310-* cp311-* cp314t-*"
@@ -149,6 +151,7 @@ jobs:
           CIBW_ARCHS: ${{ matrix.cibw_archs }}
           CIBW_SKIP: ${{ matrix.cibw_skip }}
           CIBW_ENVIRONMENT_WINDOWS: "TMP=C:\t TEMP=C:\t"
+          CIBW_ENVIRONMENT_LINUX: ${{ matrix.cibw_environment_linux || '' }}
           CIBW_TEST_SKIP: "*"
           CIBW_BUILD_VERBOSITY: 1
         with:
