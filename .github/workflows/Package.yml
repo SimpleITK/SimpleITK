@@ -30,13 +30,50 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            dockerfile: Dockerfile-2-28-x86_64
-            build_csharp: 1
-            build_java: 1
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-x86_64
           - os: ubuntu-22.04-arm
-            dockerfile: Dockerfile-2-28-aarch64
-            build_csharp: 0
-            build_java: 1
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-aarch64
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-aarch64
+          - os: macos-15-intel
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*"
+            artifact_suffix: all
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp310-*"
+            cibw_skip: "*"
+            artifact_suffix: cp310
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp311-*"
+            cibw_skip: "*"
+            artifact_suffix: cp311
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp314t-*"
+            cibw_skip: "*"
+            artifact_suffix: cp314t
+          - os: windows-2022
+            cibw_archs: AMD64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: all
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
@@ -91,30 +128,47 @@ jobs:
           - os: ubuntu-latest
             cibw_archs: x86_64
             cibw_build: "cp310-* cp311-* cp314t-*"
-            artifact_suffix: all
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-x86_64
           - os: ubuntu-22.04-arm
             cibw_archs: aarch64
             cibw_build: "cp310-* cp311-* cp314t-*"
-            artifact_suffix: all
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-aarch64
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-aarch64
           - os: macos-15-intel
             cibw_archs: x86_64
             cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*"
             artifact_suffix: all
           - os: macos-15
             cibw_archs: arm64
             cibw_build: "cp310-*"
+            cibw_skip: "*"
             artifact_suffix: cp310
           - os: macos-15
             cibw_archs: arm64
             cibw_build: "cp311-*"
+            cibw_skip: "*"
             artifact_suffix: cp311
           - os: macos-15
             cibw_archs: arm64
             cibw_build: "cp314t-*"
+            cibw_skip: "*"
             artifact_suffix: cp314t
           - os: windows-2022
             cibw_archs: AMD64
             cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
             artifact_suffix: all
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
@@ -130,7 +184,7 @@ jobs:
           CIBW_BUILD: ${{ matrix.cibw_build }}
           CIBW_ENABLE: cpython-freethreading
           CIBW_ARCHS: ${{ matrix.cibw_archs }}
-          CIBW_SKIP: "*-manylinux_i686 *-win32"
+          CIBW_SKIP: ${{ matrix.cibw_skip }}
           CIBW_ENVIRONMENT_WINDOWS: "TMP=C:\\t TEMP=C:\\t"
           CIBW_TEST_SKIP: "*"
           CIBW_BUILD_VERBOSITY: 1
@@ -160,40 +214,51 @@ jobs:
       max-parallel: 5
       matrix:
         include:
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-aarch64
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-aarch64
           - os: macos-15-intel
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
-              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
-              CMAKE_OSX_DEPLOYMENT_TARGET=10.9
-              ITK_C_OPTIMIZATION_FLAGS:STRING=
-              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
-              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
-              SimpleITK_BUILD_STRIP:BOOL=1
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*"
+            artifact_suffix: all
           - os: macos-15
-            cmake-build-type: "Release"
-            cmake-generator: "Ninja"
-            ctest-cache: |
-              CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
-              CMAKE_C_FLAGS:STRING=-fvisibility=hidden
-              CMAKE_OSX_DEPLOYMENT_TARGET=11.0
-              ITK_C_OPTIMIZATION_FLAGS:STRING=
-              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
-              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
-              SimpleITK_BUILD_STRIP:BOOL=1
+            cibw_archs: arm64
+            cibw_build: "cp310-*"
+            cibw_skip: "*"
+            artifact_suffix: cp310
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp311-*"
+            cibw_skip: "*"
+            artifact_suffix: cp311
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp314t-*"
+            cibw_skip: "*"
+            artifact_suffix: cp314t
           - os: windows-2022
-            cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
-            cmake-generator-toolset: v142,host=x64
-            cmake-generator-platform: x64
-            ctest-cache: |
-              BUILD_EXAMPLES:BOOL=ON
-              BUILD_TESTING:BOOL=ON
-              ITK_C_OPTIMIZATION_FLAGS:STRING=
-              ITK_CXX_OPTIMIZATION_FLAGS:STRING=
-              SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
-              CXXFLAGS:STRING= /MP
+            cibw_archs: AMD64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: all
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
