@@ -149,7 +149,7 @@ if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0
     fi
 
     # Build abi3t with free-threaded Python 3.15t
-    PYTHON=cp315t-cp315t
+    PYTHON=cp315-cp315t
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     if [[ -x "${Python_EXECUTABLE}" ]]; then
         PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
@@ -167,7 +167,7 @@ fi
 for PYTHON in ${PYTHON_VERSIONS}; do
     # Skip abi3/abi3t versions as they are handled separately in the BUILD_PYTHON_LIMITED_API block
     case "${PYTHON}" in
-        cp315-cp315|cp315t-cp315t)
+        cp315-cp315|cp315-cp315t)
             echo "Skipping ${PYTHON} (handled in BUILD_PYTHON_LIMITED_API block)"
             continue
             ;;
