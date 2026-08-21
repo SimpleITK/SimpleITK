@@ -839,6 +839,7 @@ Zou
 Zsize
 Zuerich
 aa
+abi
 abspath
 accesor
 accessor
@@ -1410,6 +1411,7 @@ igenerator
 iinfo
 ij
 imag
+imagefiles
 imagej
 img
 imod
@@ -1586,6 +1588,7 @@ lua
 luarocks
 luminance
 lvalue
+manylinux
 mapable
 mathbb
 mathbf
