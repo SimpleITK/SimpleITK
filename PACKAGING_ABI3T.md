@@ -42,7 +42,7 @@ The manylinux CI/CD pipeline now:
    - Skips 3.15 and 3.15t (already handled in abi3/abi3t section)
 
 Environment variables:
-- `PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315 cp315t-cp315t"`
+- `PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315 cp315-cp315t"`
 - `BUILD_PYTHON_LIMITED_API: 1`
 
 ### macOS & Windows Individual Builds
@@ -86,7 +86,7 @@ The build system uses **scikit-build-core 1.0+** which provides:
 ## Configuration Files Modified
 
 1. **.github/workflows/Package.yml**:
-   - Updated `PYTHON_VERSIONS` to: `"cp310-cp310 cp314-cp314t cp315-cp315 cp315t-cp315t"`
+   - Updated `PYTHON_VERSIONS` to: `"cp310-cp310 cp314-cp314t cp315-cp315 cp315-cp315t"`
    - Removed redundant 3.11, 3.12, 3.13 individual builds (covered by single abi3 build)
    - Added single Python 3.15t package step for abi3t testing
 
