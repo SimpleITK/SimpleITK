@@ -135,6 +135,11 @@ jobs:
             cibw_build: "cp310-* cp311-* cp314t-*"
             cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
             artifact_suffix: all
+          - os: windows-11-arm
+            cibw_archs: ARM64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: all
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
