@@ -63,7 +63,7 @@ build_simpleitk_python() {
     echo ""
     echo "Python_EXECUTABLE:${Python_EXECUTABLE}"
 
-    BLD_PY_DIR="${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}"
+    BLD_PY_DIR="${BLD_DIR}-${PYTHON}${ABI_SUFFIX:-}"
     rm -rf  ${BLD_PY_DIR} &&
     mkdir -p ${BLD_PY_DIR} &&
     cd ${BLD_PY_DIR} &&
@@ -76,6 +76,7 @@ build_simpleitk_python() {
         -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
         -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
         -DSimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API:-OFF} \
+        -DSimpleITK_PYTHON_USE_ABI3T:BOOL=${USE_ABI3T:-OFF} \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
@@ -139,27 +140,30 @@ if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0
 
     # Build abi3 with GIL-enabled Python 3.15
     PYTHON=cp315-cp315
+    ABI_SUFFIX=-abi3
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     if [[ -x "${Python_EXECUTABLE}" ]]; then
         PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
         build_simpleitk_python &&
-           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
-             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
-             rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} )
+           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${ABI_SUFFIX}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
+             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${ABI_SUFFIX}.log &&
+             rm -rf ${BLD_DIR}-${PYTHON}${ABI_SUFFIX} )
     fi
 
     # Build abi3t with free-threaded Python 3.15t
     PYTHON=cp315-cp315t
+    USE_ABI3T=ON
+    ABI_SUFFIX=-abi3t
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     if [[ -x "${Python_EXECUTABLE}" ]]; then
         PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
         build_simpleitk_python &&
-           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3t}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
-             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3t}.log &&
-             rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3t} )
+           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${ABI_SUFFIX}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
+             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${ABI_SUFFIX}.log &&
+             rm -rf ${BLD_DIR}-${PYTHON}${ABI_SUFFIX} )
     fi
 
-    unset USE_LIMITED_API
+    unset USE_LIMITED_API USE_ABI3T ABI_SUFFIX
 fi
 
 

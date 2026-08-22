@@ -148,8 +148,18 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
     )
   endif()
 
-  # Compute hex: 0x03<minor>0000. E.g., 3.11 -> 0x030b0000
-  math(EXPR _SABI_HEX "0x03${_SABI_MINOR}0000" OUTPUT_FORMAT HEXADECIMAL)
+  # Compute hex: 0x03<minor>0000 using PEP 384's version-hex convention,
+  # where <minor> is the minor version's own hexadecimal digits (not its
+  # decimal digits). E.g. 3.11 -> 0x030b0000, 3.15 -> 0x030f0000. Building
+  # the literal by string-concatenating the decimal minor number (e.g.
+  # "0x03" + "15" + "0000") is WRONG for any minor >= 10, since decimal
+  # "15" is not the same value as hex digit "0f".
+  math(
+    EXPR
+    _SABI_HEX
+    "0x03000000 + (${_SABI_MINOR} * 65536)"
+    OUTPUT_FORMAT HEXADECIMAL
+  )
   set(SITK_PYTHON_ABI_VER_HEX "${_SABI_HEX}")
 
   message(
@@ -460,9 +470,20 @@ include(sitkPythonDistribution)
 set(PYPROJECT_TOML_EXTRA "")
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
+  # Mirror the top-level pyproject.toml's py-api convention: a plain
+  # "cp<NN>" tag for classic abi3 builds, or a dot-joined "cp<NN>.cp<NN>t"
+  # tag when building the free-threaded Stable ABI (abi3t / PEP 803), so
+  # the wheel produced by `make dist` (used by the manylinux packaging
+  # path) is tagged with the actual interpreter version instead of a
+  # hardcoded value.
+  if(SimpleITK_PYTHON_USE_ABI3T)
+    set(_SITK_WHEEL_PY_API "cp3${_SABI_MINOR}.cp3${_SABI_MINOR}t")
+  else()
+    set(_SITK_WHEEL_PY_API "cp3${_SABI_MINOR}")
+  endif()
   set(
     PYPROJECT_TOML_EXTRA
-    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"cp311\"\n"
+    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"${_SITK_WHEEL_PY_API}\"\n"
   )
 endif()
 
