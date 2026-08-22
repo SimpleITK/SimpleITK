@@ -33,11 +33,9 @@
 %init %{
     // Initialize the ImageBuffer type when the module loads
     if (InitImageBufferType(m) < 0) {
-#if PY_VERSION_HEX >= 0x03000000
-        return NULL;
-#else
-        return;
-#endif
+        // SWIG_mod_exec (the Py_mod_exec slot function for the multi-phase
+        // init module, PEP 489) returns int, not PyObject*.
+        return -1;
     }
 #ifdef Py_GIL_DISABLED
     // Declare this module as safe to use without the GIL (PEP 703 / free-threaded).
