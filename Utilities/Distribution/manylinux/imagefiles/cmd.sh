@@ -130,16 +130,22 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
 fi
 
 if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0 ]]; then
-    # Build abi3 wheels using the highest stable Python version (3.15).
-    # A single abi3 wheel works on all supported Python versions back to the minimum
-    # (e.g., Python 3.11+), so we only need to build once.
-    # When building with free-threaded Python 3.15t, scikit-build-core will produce
-    # the abi3t tag instead. Combined, they form abi3.abi3t wheels.
+    # Build the classic abi3 wheel using the minimum supported Stable ABI
+    # version (Python 3.11). A single abi3 wheel built this way works on
+    # all supported GIL-enabled Python versions from 3.11 upward, so we
+    # only need to build it once (matches the mac/Windows packaging path).
+    #
+    # Build the abi3t wheel separately, using the free-threaded Python
+    # 3.15t interpreter. This requires both SimpleITK_PYTHON_USE_LIMITED_API
+    # and SimpleITK_PYTHON_USE_ABI3T so scikit-build-core's "cp315.cp315t"
+    # py-api override applies, producing a wheel with the combined
+    # abi3.abi3t tag that covers both GIL-enabled and free-threaded
+    # Python 3.15+.
 
     USE_LIMITED_API=ON
 
-    # Build abi3 with GIL-enabled Python 3.15
-    PYTHON=cp315-cp315
+    # Build abi3 with the minimum supported Python 3.11
+    PYTHON=cp311-cp311
     ABI_SUFFIX=-abi3
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
     if [[ -x "${Python_EXECUTABLE}" ]]; then
@@ -171,7 +177,7 @@ fi
 for PYTHON in ${PYTHON_VERSIONS}; do
     # Skip abi3/abi3t versions as they are handled separately in the BUILD_PYTHON_LIMITED_API block
     case "${PYTHON}" in
-        cp315-cp315|cp315-cp315t)
+        cp311-cp311|cp315-cp315t)
             echo "Skipping ${PYTHON} (handled in BUILD_PYTHON_LIMITED_API block)"
             continue
             ;;
