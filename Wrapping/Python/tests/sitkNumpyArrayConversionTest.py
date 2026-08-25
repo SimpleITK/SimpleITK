@@ -247,3 +247,81 @@ def test_legacy_array2sitk(dims, dtype):
     assert (image[0, 0, 0] if len(dims) == 3 else image[0, 0]) == 0
     assert (image[1, 1, 0] if len(dims) == 3 else image[1, 1]) == 5
     assert (image[2, 2, 0] if len(dims) == 3 else image[2, 2]) == 10
+
+
+def test_output_image():
+    """Test filling a given image with GetImageFromArray's outputImage argument"""
+    image = sitk.Image((sizeX, sizeY, sizeZ), sitk.sitkInt16)
+    image.SetOrigin((1.0, 2.0, 3.0))
+    image.SetSpacing((0.5, 0.5, 2.0))
+
+    arr = np.arange(sizeX * sizeY * sizeZ, dtype=np.int16).reshape(sizeZ, sizeY, sizeX)
+    result = sitk.GetImageFromArray(arr, outputImage=image)
+
+    assert result is image, "The given image should be filled and returned"
+    assert np.array_equal(sitk.GetArrayViewFromImage(image), arr)
+    assert image.GetOrigin() == (1.0, 2.0, 3.0), "The image's geometry should be left unchanged"
+    assert image.GetSpacing() == (0.5, 0.5, 2.0), "The image's geometry should be left unchanged"
+
+    # The same image can be filled again with another array of the same shape and dtype.
+    other = arr[::-1].copy()
+    assert sitk.GetImageFromArray(other, outputImage=image) is image
+    assert np.array_equal(sitk.GetArrayViewFromImage(image), other)
+
+
+def test_output_image_is_equivalent_to_a_fresh_one():
+    """Test that outputImage produces the image GetImageFromArray would have constructed"""
+    arr = np.arange(2 * 3 * 5, dtype=np.float32).reshape(2, 3, 5)
+
+    for is_vector in (None, False, True):
+        expected = sitk.GetImageFromArray(arr, isVector=is_vector)
+        image = sitk.Image(
+            expected.GetSize(),
+            expected.GetPixelID(),
+            expected.GetNumberOfComponentsPerPixel(),
+        )
+        result = sitk.GetImageFromArray(arr, isVector=is_vector, outputImage=image)
+
+        assert result is image
+        assert sitk.Hash(result) == sitk.Hash(expected), f"Different content for isVector={is_vector}"
+
+
+@pytest.mark.parametrize("size,pixel_id,components", [
+    ((sizeX, sizeY, sizeZ + 1), sitk.sitkUInt16, 1),
+    ((sizeY, sizeX, sizeZ), sitk.sitkUInt16, 1),
+    ((sizeX, sizeY), sitk.sitkUInt16, 1),
+    ((sizeX, sizeY, sizeZ), sitk.sitkInt16, 1),
+    ((sizeX * 2, sizeY, sizeZ), sitk.sitkUInt8, 1),
+    ((sizeX, sizeY, sizeZ), sitk.sitkVectorUInt16, 1),
+])
+def test_output_image_mismatch(size, pixel_id, components):
+    """Test that an outputImage which does not match the array is rejected"""
+    arr = np.zeros((sizeZ, sizeY, sizeX), dtype=np.uint16)
+    image = sitk.Image(size, pixel_id, components)
+
+    with pytest.raises(ValueError, match="outputImage"):
+        sitk.GetImageFromArray(arr, outputImage=image)
+
+
+def test_output_image_vector():
+    """Test the outputImage argument with a vector image"""
+    arr = np.arange(2 * 3 * 5 * 4, dtype=np.uint8).reshape(2, 3, 5, 4)
+    image = sitk.Image((5, 3, 2), sitk.sitkVectorUInt8, 4)
+
+    assert sitk.GetImageFromArray(arr, outputImage=image) is image
+    assert np.array_equal(sitk.GetArrayViewFromImage(image), arr)
+
+    with pytest.raises(ValueError, match="component"):
+        sitk.GetImageFromArray(arr, outputImage=sitk.Image((5, 3, 2), sitk.sitkVectorUInt8, 2))
+
+
+def test_output_image_copy_on_write():
+    """Test that filling an image does not modify another image sharing its buffer"""
+    arr = np.zeros((sizeZ, sizeY, sizeX), dtype=np.uint16)
+    image = sitk.GetImageFromArray(arr)
+    shared = sitk.Image(image)
+
+    sitk.GetImageFromArray(arr + 1, outputImage=image)
+
+    assert np.array_equal(sitk.GetArrayFromImage(shared), arr)
+    assert np.array_equal(sitk.GetArrayFromImage(image), arr + 1)

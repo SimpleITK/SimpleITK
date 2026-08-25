@@ -281,12 +281,23 @@ def GetArrayFromImage(image: Image) -> "numpy.ndarray":
     return numpy.array(image, copy=True)
 
 
-def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> Image:
+def GetImageFromArray(
+    arr: "numpy.ndarray",
+    isVector: Optional[bool] = None,
+    outputImage: Optional[Image] = None,
+) -> Image:
     """Get a SimpleITK Image from a numpy array.
 
     If isVector is True, then the Image will have a Vector pixel type, and the last dimension of the array will be
     considered the component index. By default when isVector is None, 4D arrays
     are automatically considered 3D vector images, but 3D arrays are 3D images.
+
+    If outputImage is given, the array is copied into that image and that image is returned, instead of a newly
+    constructed one. It must already have the size, pixel ID and number of components per pixel the array
+    converts to, otherwise a ValueError is raised. Its origin, spacing, direction and metadata are left
+    unchanged. Converting a sequence of arrays of the same shape and dtype into one reused image avoids an
+    allocation and a zero fill per array. Copy-on-write still applies: if the image shares its buffer with
+    another Image, that image is left untouched and this call allocates a new buffer.
     """
 
     if not HAVE_NUMPY:
@@ -311,8 +322,30 @@ def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> 
         id = _get_sitk_pixelid(z)
         shape = z.shape[::-1]
 
-    # SimpleITK throws an exception if the image dimension is not supported
-    img = Image(shape, id, number_of_components)
+    if outputImage is None:
+        # SimpleITK throws an exception if the image dimension is not supported
+        img = Image(shape, id, number_of_components)
+    else:
+        # _SetImageFromArray checks the total number of bytes only, so the image is matched to the array here.
+        img = outputImage
+        size = tuple(int(s) for s in shape)
+        if (
+            img.GetSize() != size
+            or img.GetPixelID() != id
+            or img.GetNumberOfComponentsPerPixel() != number_of_components
+        ):
+            raise ValueError(
+                "The outputImage does not match the array. The array converts to size {0}, pixel type"
+                ' "{1}" and {2} component(s) per pixel, while the image has size {3}, pixel type "{4}" and'
+                " {5} component(s) per pixel.".format(
+                    size,
+                    GetPixelIDValueAsString(id),
+                    number_of_components,
+                    img.GetSize(),
+                    img.GetPixelIDTypeAsString(),
+                    img.GetNumberOfComponentsPerPixel(),
+                )
+            )
 
     _SetImageFromArray(z, img)
 
