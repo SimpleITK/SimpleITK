@@ -90,6 +90,11 @@ sitk_add_pytest_test(
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkGetArrayViewFromImageTest.py"
 )
 
+sitk_add_pytest_test(
+  Test.ImageView
+  "${CMAKE_CURRENT_SOURCE_DIR}/sitkGetImageViewFromArrayTest.py"
+)
+
 # Test data directory
 set(
   TEST_HARNESS_TEMP_DIRECTORY
