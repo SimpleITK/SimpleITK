@@ -155,6 +155,18 @@ class TestBufferProtocol:
         assert mv1.format == mv2.format
         assert mv1.strides == mv2.strides
 
+    def test_buffer_writable_rejected(self):
+        """Test that Image.__buffer__ rejects a writable buffer request"""
+        import inspect
+
+        img = sitk.Image([3, 5], sitk.sitkFloat32)
+
+        with pytest.raises(BufferError, match="Cannot create writable buffer"):
+            img.__buffer__(inspect.BufferFlags.WRITABLE)
+
+        with pytest.raises(BufferError, match="Cannot create writable buffer"):
+            img.__buffer__(inspect.BufferFlags.FULL)
+
 
 # ============================================================================
 # __array_interface__ Tests (requires numpy)
