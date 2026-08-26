@@ -37,8 +37,9 @@
         // init module, PEP 489) returns int, not PyObject*.
         return -1;
     }
-#ifdef Py_GIL_DISABLED
-    // Declare this module as safe to use without the GIL (PEP 703 / free-threaded).
+#if defined(Py_GIL_DISABLED) && !defined(Py_LIMITED_API)
+    // This runtime hint is only valid for non-limited builds; abi3t must stay
+    // on the stable surface and cannot call the unstable module GIL API.
     PyUnstable_Module_SetGIL(m, Py_MOD_GIL_NOT_USED);
 #endif
 %}

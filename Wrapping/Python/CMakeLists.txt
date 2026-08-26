@@ -78,10 +78,20 @@ else()
 endif()
 
 if(SKBUILD)
-  if(SKBUILD_SABI_VERSION STREQUAL "3.11")
+  # scikit-build-core 1.0+ sets Py_TARGET_ABI3T when building for the
+  # free-threaded Stable ABI (PEP 803 / abi3t).  It sets SKBUILD_SABI_VERSION
+  # (e.g. "3.15") for both the classic abi3 and the abi3t builds; the two are
+  # distinguished by the presence of Py_TARGET_ABI3T.
+  if(Py_TARGET_ABI3T)
     set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+    set(SimpleITK_PYTHON_USE_ABI3T ON)
+  elseif(SKBUILD_SABI_VERSION MATCHES "^3\\.[0-9]+$")
+    # Any Python 3.x version with a stable ABI (3.11+)
+    set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+    set(SimpleITK_PYTHON_USE_ABI3T OFF)
   elseif(SKBUILD_SABI_VERSION STREQUAL "")
     set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+    set(SimpleITK_PYTHON_USE_ABI3T OFF)
   else()
     message(
       FATAL_ERROR
@@ -95,6 +105,67 @@ else()
     ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT}
   )
   mark_as_advanced(SimpleITK_PYTHON_USE_LIMITED_API)
+
+  # abi3t (PEP 803): requires Python >= 3.15 and LIMITED_API. Only relevant
+  # when building outside scikit-build-core (e.g. direct CMake invocation).
+  if(
+    SimpleITK_PYTHON_USE_LIMITED_API
+    AND
+      Python_VERSION
+        VERSION_GREATER_EQUAL
+        "3.15.0"
+  )
+    option(
+      SimpleITK_PYTHON_USE_ABI3T
+      "Use Python free-threaded Stable ABI (PEP 803 / abi3t)."
+      OFF
+    )
+  else()
+    set(SimpleITK_PYTHON_USE_ABI3T OFF)
+  endif()
+  mark_as_advanced(SimpleITK_PYTHON_USE_ABI3T)
+endif()
+
+# Compute the Py_LIMITED_API and Py_TARGET_ABI3T version hex from
+# SKBUILD_SABI_VERSION or Python_VERSION. This follows PEP 384's version hex
+# encoding: 0x0XYZ0000 where X=major (3), YZ=minor (11, 12, 13, 14, 15, etc).
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  if(SKBUILD AND SKBUILD_SABI_VERSION MATCHES "^3\\.([0-9]+)$")
+    # Extract minor version from SKBUILD_SABI_VERSION (e.g. "3.15" -> 15)
+    string(
+      REGEX REPLACE
+      "^3\\.([0-9]+)$"
+      "\\1"
+      _SABI_MINOR
+      "${SKBUILD_SABI_VERSION}"
+    )
+  elseif(Python_VERSION_MAJOR EQUAL 3)
+    set(_SABI_MINOR ${Python_VERSION_MINOR})
+  else()
+    message(
+      FATAL_ERROR
+      "Unable to determine minor version for Python Limited API hex value"
+    )
+  endif()
+
+  # Compute hex: 0x03<minor>0000 using PEP 384's version-hex convention,
+  # where <minor> is the minor version's own hexadecimal digits (not its
+  # decimal digits). E.g. 3.11 -> 0x030b0000, 3.15 -> 0x030f0000. Building
+  # the literal by string-concatenating the decimal minor number (e.g.
+  # "0x03" + "15" + "0000") is WRONG for any minor >= 10, since decimal
+  # "15" is not the same value as hex digit "0f".
+  math(
+    EXPR
+    _SABI_HEX
+    "0x03000000 + (${_SABI_MINOR} * 65536)"
+    OUTPUT_FORMAT HEXADECIMAL
+  )
+  set(SITK_PYTHON_ABI_VER_HEX "${_SABI_HEX}")
+
+  message(
+    STATUS
+    "Python Limited ABI version: 3.${_SABI_MINOR} (hex: ${SITK_PYTHON_ABI_VER_HEX})"
+  )
 endif()
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
@@ -125,6 +196,22 @@ if(
     "Python limited API is not supported for this Python version and SWIG version."
   )
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+endif()
+
+# abi3t (PEP 803) requires the PyModExport entry point (PEP 793).
+# A hand-written shim (sitkPyModExport.cxx) can provide that hook, but the
+# current SWIG-generated wrapper and sitkImageBuffer.cxx still depend on opaque
+# Python object/module layouts that are unavailable under abi3t. Keep the
+# configure-time guard until those pieces are ported.
+if(SimpleITK_PYTHON_USE_ABI3T)
+  message(
+    FATAL_ERROR
+    "abi3t (PEP 803 / free-threaded Stable ABI) is not yet fully supported. "
+    "A PyModExport shim exists, but the current SWIG-generated wrapper and "
+    "sitkImageBuffer.cxx still rely on PyObject_HEAD/PyModuleDef layouts that "
+    "are opaque under abi3t. "
+    "See PEP 793, PEP 803, and the SWIG PyModExport support work."
+  )
 endif()
 
 set_source_files_properties(
@@ -170,10 +257,19 @@ set(
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkTransform.i
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkPathType.i
 )
-swig_add_module( SimpleITK python
+set(
+  _SITK_PYTHON_SOURCES
   SimpleITK.i
   sitkPyCommand.cxx
   sitkImageBuffer.cxx
+)
+
+if(SimpleITK_PYTHON_USE_ABI3T)
+  list(APPEND _SITK_PYTHON_SOURCES sitkPyModExport.cxx)
+endif()
+
+swig_add_module( SimpleITK python
+  ${_SITK_PYTHON_SOURCES}
 )
 set(
   SWIG_MODULE_SimpleITKPython_TARGET_NAME
@@ -205,11 +301,22 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
   # https://docs.python.org/3/c-api/stable.html
 
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::SABIModule)
-  target_compile_definitions(
-    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    PRIVATE
-      -DPy_LIMITED_API=0x030b0000
-  )
+  if(SimpleITK_PYTHON_USE_ABI3T)
+    # PEP 803: abi3t adds Py_TARGET_ABI3T on top of Py_LIMITED_API.
+    # Py_TARGET_ABI3T automatically ensures Py_GIL_DISABLED is defined and
+    # selects the free-threaded-compatible limited API subset.
+    target_compile_definitions(
+      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PRIVATE
+        -DPy_TARGET_ABI3T=${SITK_PYTHON_ABI_VER_HEX}
+    )
+  else()
+    target_compile_definitions(
+      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PRIVATE
+        -DPy_LIMITED_API=${SITK_PYTHON_ABI_VER_HEX}
+    )
+  endif()
 
   message(
     STATUS
@@ -363,9 +470,20 @@ include(sitkPythonDistribution)
 set(PYPROJECT_TOML_EXTRA "")
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
+  # Mirror the top-level pyproject.toml's py-api convention: a plain
+  # "cp<NN>" tag for classic abi3 builds, or a dot-joined "cp<NN>.cp<NN>t"
+  # tag when building the free-threaded Stable ABI (abi3t / PEP 803), so
+  # the wheel produced by `make dist` (used by the manylinux packaging
+  # path) is tagged with the actual interpreter version instead of a
+  # hardcoded value.
+  if(SimpleITK_PYTHON_USE_ABI3T)
+    set(_SITK_WHEEL_PY_API "cp3${_SABI_MINOR}.cp3${_SABI_MINOR}t")
+  else()
+    set(_SITK_WHEEL_PY_API "cp3${_SABI_MINOR}")
+  endif()
   set(
     PYPROJECT_TOML_EXTRA
-    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"cp311\"\n"
+    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"${_SITK_WHEEL_PY_API}\"\n"
   )
 endif()
 

@@ -839,6 +839,7 @@ Zou
 Zsize
 Zuerich
 aa
+abi
 abspath
 accesor
 accessor
@@ -1363,6 +1364,7 @@ gtest
 gui
 gunzip
 gz
+hardcoded
 harvard
 hashlib
 hashtable
@@ -1410,6 +1412,7 @@ igenerator
 iinfo
 ij
 imag
+imagefiles
 imagej
 img
 imod
@@ -1586,6 +1589,7 @@ lua
 luarocks
 luminance
 lvalue
+manylinux
 mapable
 mathbb
 mathbf
