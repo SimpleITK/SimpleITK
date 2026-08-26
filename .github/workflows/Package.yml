@@ -49,10 +49,10 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t"
+          PYTHON_VERSIONS: ""
           BUILD_CSHARP: ${{ matrix.build_csharp }}
           BUILD_JAVA: ${{ matrix.build_java }}
-          BUILD_PYTHON_LIMITED_API: 1
+          BUILD_PYTHON_LIMITED_API: 0
           SIMPLEITK_USE_ELASTIX: 1
         run: |
           echo "BUILD_CSHARP: ${BUILD_CSHARP}"
@@ -78,8 +78,96 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}-${{matrix.dockerfile}}
           path: |
-            Utilities/Distribution/manylinux/wheelhouse/*.whl
             Utilities/Distribution/manylinux/SimpleITK*.zip
+
+  python-wheels:
+    if: github.repository == 'SimpleITK/SimpleITK'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: manylinux-aarch64
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-x86_64
+            cibw_environment_linux: "CMAKE_ARGS='-DITK_GIT_TAG:STRING=7fae0b606bffb9cba8bd8db5132c504cc461b36a -DITK_GIT_REPOSITORY:STRING=https://github.com/blowekamp/ITK.git'"
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-manylinux*"
+            artifact_suffix: musllinux-aarch64
+            cibw_environment_linux: "CMAKE_ARGS='-DITK_GIT_TAG:STRING=7fae0b606bffb9cba8bd8db5132c504cc461b36a -DITK_GIT_REPOSITORY:STRING=https://github.com/blowekamp/ITK.git'"
+          - os: macos-15-intel
+            cibw_archs: x86_64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: all
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp310-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: cp310
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp311-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: cp311
+          - os: macos-15
+            cibw_archs: arm64
+            cibw_build: "cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: cp314t
+          - os: windows-2022
+            cibw_archs: AMD64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: all
+          - os: windows-11-arm
+            cibw_archs: ARM64
+            cibw_build: "cp310-* cp311-* cp314t-*"
+            cibw_skip: "*-manylinux_i686 *-win32 *-musllinux*"
+            artifact_suffix: all
+            cibw_environment_windows: "CMAKE_ARGS='-DITK_SKIP_PATH_LENGTH_CHECKS:BOOL=ON'"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          fetch-depth: 0
+      - name: Prepare short temp path for Windows wheel builds
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: New-Item -Path C:\t -ItemType Directory -Force | Out-Null
+      - name: Build Python wheels with cibuildwheel
+        uses: pypa/cibuildwheel@298ed2fb2c105540f5ed055e8a6ad78d82dd3a7e # v3.3.1
+        env:
+          CIBW_BUILD: ${{ matrix.cibw_build }}
+          CIBW_ENABLE: cpython-freethreading
+          CIBW_ARCHS: ${{ matrix.cibw_archs }}
+          CIBW_SKIP: ${{ matrix.cibw_skip }}
+          CIBW_ENVIRONMENT_WINDOWS: "TMP=C:\t TEMP=C:\t ${{ matrix.cibw_environment_windows || '' }}"
+          CIBW_ENVIRONMENT_LINUX: ${{ matrix.cibw_environment_linux || '' }}
+          CIBW_TEST_SKIP: "*"
+          CIBW_BUILD_VERBOSITY: 1
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+      - name: Upload wheel artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: artifacts-wheels-${{ matrix.os }}-${{ matrix.cibw_archs }}-${{ matrix.artifact_suffix }}
+          path: wheelhouse/*.whl
 
   build:
     if: github.repository == 'SimpleITK/SimpleITK'
@@ -209,29 +297,11 @@ jobs:
         with:
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
-      - name: Package Python 3.11
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.11
-          use_limited_api: true
-          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
-      - name: Package Python 3.10
-        uses: ./.github/actions/package_python
-        with:
-          python-version: "3.10"
-          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
-      - name: Package Python 3.14t
-        uses: ./.github/actions/package_python
-        with:
-          python-version: "3.14t"
-          continue-on-error: true
-          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            ${{ github.workspace }}/artifacts/*.whl
             ${{ github.workspace }}/artifacts/*.zip
             ${{ github.workspace }}/artifacts/*.gz
   doxygen:
@@ -291,6 +361,7 @@ jobs:
       - build
       - doxygen
       - package-docker
+      - python-wheels
       - sdist
     runs-on: ubuntu-latest
     steps:
