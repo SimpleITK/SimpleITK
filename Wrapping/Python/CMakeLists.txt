@@ -17,6 +17,15 @@ if (Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
       "CMake ${CMAKE_VERSION} will link against the wrong Python DLL, causing crashes. "
       "Please upgrade CMake to 3.30 or later.")
   endif()
+  # Required version for SWIG's -nogil flag, which declares the module thread-safe for free-threaded Python.
+  if(SWIG_VERSION VERSION_LESS "4.4.0")
+    message(
+      FATAL_ERROR
+      "Free-threaded Python (detected SOABI: '${Python_SOABI}') requires SWIG >= 4.4.0 "
+      "for the -nogil flag. SWIG ${SWIG_VERSION} does not support it. "
+      "Please upgrade SWIG to 4.4.0 or later."
+    )
+  endif()
 endif()
 
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
@@ -66,6 +75,16 @@ if( SimpleITK_PYTHON_THREADS )
 endif()
 if (SimpleITK_PYTHON_FLATSTATICMETHOD AND SWIG_VERSION VERSION_GREATER_EQUAL "4.1.0")
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -flatstaticmethod )
+endif()
+if(SWIG_VERSION VERSION_GREATER_EQUAL "4.4.0")
+  # Declares the module thread-safe for free-threaded Python (PEP 703) via the
+  # Py_mod_gil module slot, a no-op on Python builds without free-threading
+  # support.
+  set(
+    CMAKE_SWIG_FLAGS
+    ${CMAKE_SWIG_FLAGS}
+    -nogil
+  )
 endif()
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
