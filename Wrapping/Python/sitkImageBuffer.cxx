@@ -27,14 +27,33 @@
 namespace sitk = itk::simple;
 
 
-// Buffer object structure
+// Buffer object structure.
+//
+// Under the free-threaded stable ABI (PEP 803, "abi3t"), PyObject is opaque
+// and PyObject_HEAD is not defined, so it cannot be embedded here (PEP 697).
+// Detect that the same way sitkPyCommand.h does, and reach this struct from
+// a PyObject* self via PyObject_GetTypeData() instead in that case.
 typedef struct
 {
-  PyObject_HEAD PyObject * pyImageRef; // Python Image object reference (stored directly as member)
-  int                      ndim;
-  Py_ssize_t               shape[SITK_MAX_DIMENSION + 1];
-  Py_ssize_t               strides[SITK_MAX_DIMENSION + 1];
+#ifdef PyObject_HEAD
+  PyObject_HEAD
+#endif
+    PyObject * pyImageRef; // Python Image object reference (stored directly as member)
+  int          ndim;
+  Py_ssize_t   shape[SITK_MAX_DIMENSION + 1];
+  Py_ssize_t   strides[SITK_MAX_DIMENSION + 1];
 } sitkImageBuffer;
+
+// Resolve the sitkImageBuffer data for a PyObject* instance of this type.
+static sitkImageBuffer *
+sitkImageBuffer_Data(PyObject * self)
+{
+#ifdef PyObject_HEAD
+  return (sitkImageBuffer *)self;
+#else
+  return (sitkImageBuffer *)PyObject_GetTypeData(self, Py_TYPE(self));
+#endif
+}
 
 // Helper function to get the sitk::Image from buffer object
 static const sitk::Image *
@@ -188,7 +207,7 @@ IsVectorPixelType(sitk::PixelIDValueEnum pixelID)
 static int
 sitkImageBuffer_getbuffer(PyObject * exporter, Py_buffer * view, int flags)
 {
-  sitkImageBuffer *   self = (sitkImageBuffer *)exporter;
+  sitkImageBuffer *   self = sitkImageBuffer_Data(exporter);
   const sitk::Image * imagePtr = nullptr;
 
   // Determine writable vs readonly access
@@ -316,8 +335,8 @@ sitkImageBuffer_getbuffer(PyObject * exporter, Py_buffer * view, int flags)
 
 
     // Increment reference count for the exporter object
-    view->obj = (PyObject *)self;
-    Py_INCREF((PyObject *)self);
+    view->obj = exporter;
+    Py_INCREF(exporter);
 
     return 0;
   }
@@ -332,7 +351,7 @@ sitkImageBuffer_getbuffer(PyObject * exporter, Py_buffer * view, int flags)
 static void
 sitkImageBuffer_releasebuffer(PyObject * exporter, Py_buffer * view)
 {
-  sitkImageBuffer * self = (sitkImageBuffer *)exporter;
+  sitkImageBuffer * self = sitkImageBuffer_Data(exporter);
   // Debug message for buffer release
   const sitk::Image * imagePtr = GetImageFromBuffer(self);
   if (imagePtr)
@@ -355,8 +374,8 @@ sitkImageBuffer_releasebuffer(PyObject * exporter, Py_buffer * view)
     std::cerr.flush();
   }
 
-  // Verify that view->obj is the same as self (safety check)
-  if (view->obj && view->obj != (PyObject *)self)
+  // Verify that view->obj is the same as exporter (safety check)
+  if (view->obj && view->obj != exporter)
   {
     std::cerr << "[WARNING] Buffer release: view->obj != self" << std::endl;
   }
@@ -367,14 +386,14 @@ sitkImageBuffer_releasebuffer(PyObject * exporter, Py_buffer * view)
 static PyObject *
 sitkImageBuffer_new(PyTypeObject * type, PyObject * args, PyObject * kwds)
 {
-  sitkImageBuffer * self = (sitkImageBuffer *)PyType_GenericAlloc(type, 1);
-  return (PyObject *)self;
+  return PyType_GenericAlloc(type, 1);
 }
 
 static int
-sitkImageBuffer_init(sitkImageBuffer * self, PyObject * args, PyObject * kwds)
+sitkImageBuffer_init(PyObject * pyself, PyObject * args, PyObject * kwds)
 {
-  PyObject * pyImageObj = nullptr;
+  sitkImageBuffer * self = sitkImageBuffer_Data(pyself);
+  PyObject *        pyImageObj = nullptr;
 
   // Parse the SimpleITK Image object argument
   static char * kwlist[] = { (char *)"image", NULL };
@@ -461,8 +480,9 @@ sitkImageBuffer_init(sitkImageBuffer * self, PyObject * args, PyObject * kwds)
 }
 
 static void
-sitkImageBuffer_dealloc(sitkImageBuffer * self)
+sitkImageBuffer_dealloc(PyObject * pyself)
 {
+  sitkImageBuffer * self = sitkImageBuffer_Data(pyself);
 #ifdef sitkImageBuffer_DEBUG
   // Debug message for ImageBuffer deallocation
   const sitk::Image * imagePtr = GetImageFromBuffer(self);
@@ -488,24 +508,25 @@ sitkImageBuffer_dealloc(sitkImageBuffer * self)
   }
 #endif
 
-  // Decrement reference to Python Image object
-  Py_DECREF(self->pyImageRef);
+  // Decrement reference to Python Image object (may be NULL if __init__ failed early)
+  Py_XDECREF(self->pyImageRef);
   self->pyImageRef = nullptr;
 
-  PyTypeObject * type = Py_TYPE((PyObject *)self);
+  PyTypeObject * type = Py_TYPE(pyself);
 #ifdef Py_LIMITED_API
   freefunc free_func = (freefunc)PyType_GetSlot(type, Py_tp_free);
-  free_func((PyObject *)self);
+  free_func(pyself);
 #else
-  type->tp_free((PyObject *)self);
+  type->tp_free(pyself);
 #endif
   Py_DECREF(type);
 }
 
 // String representation
 static PyObject *
-sitkImageBuffer_repr(sitkImageBuffer * self)
+sitkImageBuffer_repr(PyObject * pyself)
 {
+  sitkImageBuffer *   self = sitkImageBuffer_Data(pyself);
   const sitk::Image * imagePtr = GetImageFromBuffer(self);
   if (!imagePtr)
   {
@@ -533,7 +554,7 @@ sitkImageBuffer_repr(sitkImageBuffer * self)
 // Note: This does NOT keep a strong reference to the ImageBuffer or Image.
 // The caller must ensure the source Image/ImageBuffer remains alive.
 static PyObject *
-sitkImageBuffer_GetWeakMemoryView(sitkImageBuffer * self, PyObject * args)
+sitkImageBuffer_GetWeakMemoryView(PyObject * self, PyObject * args)
 {
   int flags = PyBUF_FULL_RO; // Default to read-only
 
@@ -551,7 +572,7 @@ sitkImageBuffer_GetWeakMemoryView(sitkImageBuffer * self, PyObject * args)
 
 #if 1
   Py_buffer view;
-  if (PyObject_GetBuffer((PyObject *)self, &view, flags) < 0)
+  if (PyObject_GetBuffer(self, &view, flags) < 0)
   {
     return nullptr;
   }
@@ -561,7 +582,7 @@ sitkImageBuffer_GetWeakMemoryView(sitkImageBuffer * self, PyObject * args)
   PyBuffer_Release(&view);
 
 #else
-  PyObject * memoryview = PyMemoryView_FromObject((PyObject *)self);
+  PyObject * memoryview = PyMemoryView_FromObject(self);
 #endif
   if (!memoryview)
   {
@@ -598,8 +619,9 @@ static PyMethodDef sitkImageBuffer_methods[] = {
 
 // Getter for _image_ref property (stable API compatible)
 static PyObject *
-sitkImageBuffer_get_image_ref(sitkImageBuffer * self, void * closure)
+sitkImageBuffer_get_image_ref(PyObject * pyself, void * closure)
 {
+  sitkImageBuffer * self = sitkImageBuffer_Data(pyself);
   if (self->pyImageRef)
   {
     Py_INCREF(self->pyImageRef);
@@ -636,8 +658,15 @@ static PyType_Slot sitkImageBuffer_slots[] = {
 
 // Type spec for Limited API
 static PyType_Spec sitkImageBufferType_spec = {
-  "simpleitk.ImageBuffer",                  // name
-  sizeof(sitkImageBuffer),                  // basic size
+  "simpleitk.ImageBuffer", // name
+#ifdef PyObject_HEAD
+  sizeof(sitkImageBuffer), // basic size (struct includes PyObject_HEAD)
+#else
+  // Negative basic size (PEP 697): PyObject is opaque here, so this specifies
+  // space needed in addition to the base type, matching PyObject_GetTypeData()
+  // used by sitkImageBuffer_Data() to reach this struct.
+  -(Py_ssize_t)sizeof(sitkImageBuffer), // basic size
+#endif
   0,                                        // item size
   Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE, // flags
   sitkImageBuffer_slots                     // slots
