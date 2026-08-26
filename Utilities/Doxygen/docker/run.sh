@@ -24,7 +24,7 @@ python3 -m venv ${BLD_DIR}/venv && \
     python -m pip install --upgrade pip
 
 if [ -f ${SRC_DIR}/.github/workflows/requirements-build.txt ]; then
-   python -m pip install -r ${SRC_DIR}/.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.4.0
+   python -m pip install -r ${SRC_DIR}/.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.5.0
 fi
 
 # Build SimpleITK with FetchContent for ITK
