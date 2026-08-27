@@ -365,7 +365,7 @@ set(PYPROJECT_TOML_EXTRA "")
 if(SimpleITK_PYTHON_USE_LIMITED_API)
   set(
     PYPROJECT_TOML_EXTRA
-    "${PYPROJECT_TOML_EXTRA}\n[tool.scikit-build]\nwheel.py-api = \"cp311\"\n"
+    "${PYPROJECT_TOML_EXTRA}\nwheel.py-api = \"cp311\"\n"
   )
 endif()
 

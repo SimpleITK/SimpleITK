@@ -40,6 +40,8 @@ Homepage = "http://simpleitk.org/"
 Documentation = "https://simpleitk.readthedocs.io/en/release/"
 "Source Code" = "https://github.com/SimpleITK/SimpleITK"
 
+[tool.scikit-build]
+minimum-version = "build-system.requires"
 @PYPROJECT_TOML_EXTRA@
 
 [tool.pytest.ini_options]
