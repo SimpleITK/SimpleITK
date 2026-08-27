@@ -107,6 +107,6 @@ detaileddescription: >-
 
 
   \see MaskNegatedImageFilter
-itk_module: SimpleITKFilters
-itk_group: SimpleITKFilters
+itk_module: ITKImageIntensity
+itk_group: ImageIntensity
 in_place: true

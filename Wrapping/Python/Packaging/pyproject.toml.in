@@ -2,7 +2,7 @@
 
 [build-system]
 requires = [
-  "scikit-build-core>=0.10"
+  "scikit-build-core~=1.0.0"
 ]
 build-backend = "scikit_build_core.build"
 
@@ -14,7 +14,7 @@ authors = [
     {name = "Insight Software Consortium", email = "insight-users@itk.org"}
 ]
 description = "SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation"
-license = "Apache-2.0"
+license = {text = "Apache-2.0"}
 keywords = ["SimpleITK", "ITK", "InsightToolkit", "segmentation", "registration", "medical imaging", "image processing", "computer vision", "DICOM"]
 classifiers = [
     "Programming Language :: Python",
@@ -40,6 +40,8 @@ Homepage = "http://simpleitk.org/"
 Documentation = "https://simpleitk.readthedocs.io/en/release/"
 "Source Code" = "https://github.com/SimpleITK/SimpleITK"
 
+[tool.scikit-build]
+minimum-version = "build-system.requires"
 @PYPROJECT_TOML_EXTRA@
 
 [tool.pytest.ini_options]

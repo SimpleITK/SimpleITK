@@ -43,7 +43,7 @@ jobs:
       matrix:
         include:
           - os: mac-arm64
-            name: mac-arm64-superbuild-python-java-tcl-ruby
+            name: mac-arm64-superbuild-python-java-tcl
             cmake-build-type: "RelMinSize"
             cmake-generator: "Ninja"
             use-superbuild: true
@@ -51,7 +51,6 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_TCL:BOOL=ON
-              WRAP_RUBY:BOOL=ON
               CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden
               CMAKE_C_FLAGS:STRING=-fvisibility=hidden
               CMAKE_CXX_VISIBILITY_PRESET:STRING=hidden
@@ -136,11 +135,11 @@ jobs:
               WRAP_CSHARP:BOOL=ON
               CXXFLAGS:STRING=/MP
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7.0.1
       with:
         fetch-depth: 0
         ref: "${{ github.event.pull_request.head.sha }}"
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7.0.1
       with:
         path: SimpleITK-dashboard
         ref: dashboard
@@ -177,7 +176,7 @@ jobs:
         fi
     - name: Restore ccache
       if: matrix.use-ccache
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       with:
         path: ${{ runner.temp }}/.ccache
         # GHA scoping rules make branch names in the key redundant:

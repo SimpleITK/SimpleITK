@@ -10,6 +10,7 @@ inputs:
   type: Image
 - name: MaskImage
   type: Image
+  optional: true
 - name: TemplateImage
   type: Image
   no_size_check: true
@@ -36,6 +37,13 @@ tests:
   - Input/cthead1-Float.mha
   - Input/cthead1-Float.mha
   - Input/DeconvolutionKernel.nrrd
+- tag: NoMask
+  description: Basic xcorr without a mask, exercises the null-mask code path
+  settings: []
+  tolerance: 0.0001
+  inputs:
+  - Input/cthead1-Float.mha
+  - Input/Gaussian_1.5.nrrd
 briefdescription: Computes the normalized correlation of an image and a template.
 detaileddescription: >-
   This filter calculates the normalized correlation between an image and the template. Normalized correlation is frequently

@@ -38,7 +38,7 @@ jobs:
             build_csharp: 0
             build_java: 1
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           fetch-depth: 0
       - name: Docker Build Image
@@ -49,7 +49,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t"
+          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315t"
           BUILD_CSHARP: ${{ matrix.build_csharp }}
           BUILD_JAVA: ${{ matrix.build_java }}
           BUILD_PYTHON_LIMITED_API: 1
@@ -133,10 +133,10 @@ jobs:
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               CXXFLAGS:STRING= /MP
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           fetch-depth: 0
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -226,6 +226,13 @@ jobs:
           python-version: "3.14t"
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
+      - name: Package Python 3.15t (pre-release)
+        uses: ./.github/actions/package_python
+        with:
+          python-version: "3.15t"
+          allow_prereleases: true
+          continue-on-error: true
+          cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
@@ -237,7 +244,7 @@ jobs:
   doxygen:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           fetch-depth: 0
       - name: Build Docker Image for Doxygen
@@ -262,20 +269,39 @@ jobs:
             artifacts/SimpleITKDoxygenXML-*.tar.gz
             artifacts/SimpleITKDoxygen-*.tar.gz
 
-  publish:
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.11"
+      - name: Build sdist
+        run: |
+          pip install build
+          python -m build --sdist
+      - name: Upload sdist
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: artifacts-sdist
+          path: dist/simpleitk-*.tar.gz
+
+  publish-github:
     if: github.event_name != 'pull_request' && (github.ref_name == 'latest' || startsWith(github.ref_name, 'v'))
     environment:
       name: release
     permissions:
-      id-token: write  # for PyPI publish
       contents: write  # for creating and uploading GitHub releases
     needs:
       - build
       - doxygen
       - package-docker
+      - sdist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
           fetch-depth: 0
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
@@ -326,6 +352,21 @@ jobs:
           echo "== notes.txt =="
           cat notes.txt
 
+      - name: Check wheel metadata
+        run: |
+          pip install twine
+          twine check $( find ${{ steps.download.outputs.download-path }} -name "*.whl" -o -name "simpleitk-*.tar.gz" )
+      - name: Verify abi3 wheel compatibility
+        env:
+          DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
+        run: |
+          pip install abi3audit
+          wheels=$( find "${DOWNLOAD_PATH}" -type f -name "*-abi3-*.whl" )
+          if [ -z "${wheels}" ]; then
+            echo "No abi3 wheels found under ${DOWNLOAD_PATH}, skipping check."
+          else
+            abi3audit --verbose ${wheels}
+          fi
       - name: Create Release and Upload Artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -356,14 +397,27 @@ jobs:
           if [ "${TAG_NAME}" == "latest" ]; then
             gh release edit "${TAG_NAME}" --draft=false
           fi
+
+  publish-pypi:
+    if: github.event_name != 'pull_request' && startsWith(github.ref_name, 'v')
+    environment:
+      name: release
+    permissions:
+      id-token: write  # for PyPI publish
+    needs:
+      - publish-github
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        id: download
+        with:
+          path: ${{ github.workspace }}/artifacts
       - name: Prepare for PyPI upload
         shell: bash
         run: |
           mkdir -p dist
-          mv $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" ) dist/
+          mv $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "simpleitk-*.tar.gz" \) ) dist/
       - name: PyPI Publish package
-        if: startsWith(github.ref_name, 'v')
-        # hash for release/v1.12.4
-        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
         with:
           repository-url: https://test.pypi.org/legacy/

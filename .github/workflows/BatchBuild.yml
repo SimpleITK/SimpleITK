@@ -138,6 +138,7 @@ jobs:
             CC: "gcc-12"
             use-superbuild: true
             ctest-cache: |
+              WRAP_RUBY:BOOL=ON
               WRAP_DEFAULT:BOOL=OFF
 
           - os: macos-15
@@ -169,11 +170,11 @@ jobs:
               WRAP_JAVA:BOOL=ON
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           ref: "${{ github.event.pull_request.head.sha }}"
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
         with:
           path: SimpleITK-dashboard
           ref: dashboard
@@ -204,7 +205,7 @@ jobs:
           python -m pip install -r ./.github/workflows/requirements-build.txt
 
           if [[ '${{ matrix.use-superbuild }}' != 'true' ]]; then
-            python -m pip install jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.4.0
+            python -m pip install jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.5.0
           fi
 
           if [  ! -z "${{ matrix.xcode-version }}" ]; then

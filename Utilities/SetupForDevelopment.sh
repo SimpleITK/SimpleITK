@@ -85,6 +85,8 @@ Utilities/GitSetup/setup-user && echo &&
  echo 'Failed to setup GitHub.  Run this again to retry.') && echo &&
 (Utilities/GitSetup/setup-precommit  ||
  echo 'Failed to setup pre-commit.') && echo &&
+(Utilities/GitSetup/setup-externaldata ||
+ echo 'Failed to setup ExternalData.  Run this again to retry.') && echo &&
 Utilities/GitSetup/tips &&
 Utilities/GitSetup/github-tips
 
@@ -115,5 +117,5 @@ git config --get remote.stage.url > /dev/null &&
 
 
 # Record the version of this setup so Hooks/pre-commit can check it.
-SetupForDevelopment_VERSION=6
+SetupForDevelopment_VERSION=7
 git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}

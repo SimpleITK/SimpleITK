@@ -13,7 +13,7 @@ set(
 )
 mark_as_advanced(ELASTIX_GIT_REPOSITORY)
 
-set(_DEFAULT_ELASTIX_GIT_TAG "af47e22") # April, 10 2026
+set(_DEFAULT_ELASTIX_GIT_TAG "5b50b8f49fa923e944bd294f0b751fd280597e97") # July 8, 2026 include ITKv6 linkage
 set(
   ELASTIX_GIT_TAG
   "${_DEFAULT_ELASTIX_GIT_TAG}"

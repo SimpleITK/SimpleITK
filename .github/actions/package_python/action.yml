@@ -10,7 +10,11 @@ inputs:
     required: false
     default: 'false'
   use_limited_api:
-    description: "Use limited API"
+    description: "Use limited API (ignored, and forced off, for free-threaded 't' interpreters)"
+    required: false
+    default: false
+  allow_prereleases:
+    description: "Allow installing a pre-release interpreter (e.g. alpha/beta/rc) when no matching stable release exists"
     required: false
     default: false
   cmake_osx_architectures:
@@ -29,12 +33,23 @@ runs:
       id: cpy
       with:
         python-version: ${{ inputs.python-version }}
+        allow-prereleases: ${{ inputs.allow_prereleases }}
+    - name: Resolve build options
+      id: opts
+      shell: bash
+      run: |
+        use_limited_api="${{ inputs.use_limited_api }}"
+        # Free-threaded ("t") interpreters have no stable/limited ABI to build against.
+        if [[ "${{ inputs.python-version }}" == *t ]]; then
+          use_limited_api="false"
+        fi
+        echo "use_limited_api=${use_limited_api}" >> "$GITHUB_OUTPUT"
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
       continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: bash
       if: runner.os == 'macOS'
       env:
-        USE_LIMITED_API: ${{ inputs.use_limited_api }}
+        USE_LIMITED_API: ${{ steps.opts.outputs.use_limited_api }}
         CMAKE_OSX_ARCHITECTURES: ${{ inputs.cmake_osx_architectures }}
       run: |
         ${{ github.action_path }}/scripts/mac_build_python.sh
@@ -43,7 +58,7 @@ runs:
       shell: cmd
       if: runner.os == 'Windows'
       env:
-        USE_LIMITED_API: ${{ inputs.use_limited_api }}
+        USE_LIMITED_API: ${{ steps.opts.outputs.use_limited_api }}
         VCVAR_OPTIONS: ${{ inputs.VCVAR_OPTIONS }}
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"  %VCVAR_OPTIONS%

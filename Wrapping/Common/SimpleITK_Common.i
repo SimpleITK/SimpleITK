@@ -20,6 +20,18 @@
 // Remove some warnings
 #pragma SWIG nowarn=362,503,401,389,516,511
 
+// SWIG >= 4.5.0's Ruby -autorename drops these std::vector partial
+// specializations as duplicate "Vector" names (Warning 302), breaking
+// %template(VectorBool) below. Give them distinct default names.
+#if SWIGRUBY
+namespace std
+{
+  %rename(SwigVectorPtr) vector< _Tp *, _Alloc >;
+  %rename(SwigVectorConstPtr) vector< _Tp const *, _Alloc >;
+  %rename(SwigVectorBool) vector< bool, _Alloc >;
+}
+#endif
+
 // Use STL support
 %include <std_vector.i>
 %include <std_string.i>

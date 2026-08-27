@@ -25,7 +25,7 @@ members:
   - cEED
   - Isotropic
   default: itk::simple::CoherenceEnhancingDiffusionImageFilter::CED
-  itk_type: typename FilterType::EnhancementEnum
+  itk_type: typename FilterType::EnhancementType
   briefdescriptionSet: Switch between CED, EED, and variants.
   detaileddescriptionSet: ""
   briefdescriptionGet: ''

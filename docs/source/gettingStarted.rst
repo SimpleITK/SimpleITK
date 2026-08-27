@@ -31,10 +31,8 @@ One of the great advantages of SimpleITK is that (typically) the user does not
 have to build it — he or she can simply download the binaries and get started
 right away!
 
-Currently, **Python** binaries are available on Microsoft Windows, GNU
-Linux and Mac OS X. **C# and Java** binaries are available for
-Windows. **R** binaries are not available but a convenient
-`remotes based installer <https://github.com/SimpleITK/SimpleITKRInstaller>`__  for Linux and Mac is.
+Currently, **Python** and **R** binaries are available for Microsoft Windows, GNU
+Linux and Mac OS X. **C#** and **Java** binaries are available for Windows.
 
 Python binary files
 -------------------
@@ -126,26 +124,15 @@ at :ref:`setup SimpleITK with Java <setup-java>`.
 R binary files
 --------------
 
-R binaries are not available.
+R binaries are distributed using a lightweight installer available via the r-universe. Detailed installation instructions are `available on GitHub <https://github.com/SimpleITK/SimpleITKRInstaller/tree/main/SimpleITK_Foyer>`__.
 
-For Linux and Mac one can easily build and install SimpleITK from source using a `remotes <https://cran.r-project.org/web/packages/remotes/readme/README.html>`__ based installer
-referencing this `GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
+If the binary package you need is not available, you can build and install SimpleITK from source using a `remotes <https://cran.r-project.org/web/packages/remotes/readme/README.html>`__ based installer
+following the instructions available in this `GitHub Repository <https://github.com/SimpleITK/SimpleITKRInstaller>`__.
 
 This installation requires `R remotes <https://github.com/r-lib/remotes>`__,
 `CMake <https://cmake.org/>`__, `git <https://git-scm.com/>`__, and a compiler
 in the path.
 
-One line commands to build and install the package:
-
-.. code-block :: bash
-
-  remotes::install_github("SimpleITK/SimpleITKRInstaller")
-
-or using six cores for compilation (change this number based on your hardware):
-
-.. code-block :: bash
-
-  remotes::install_github("SimpleITK/SimpleITKRInstaller", configure.vars=c("MAKEJ=6"))
 
 
 Latest binaries
