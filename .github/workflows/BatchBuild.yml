@@ -188,7 +188,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version || env.DEFAULT_R_VERSION }}
       - name: Set up Python ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         id: cpy
         with:
           python-version: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
