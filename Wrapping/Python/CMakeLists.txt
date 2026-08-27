@@ -18,9 +18,7 @@ find_package(
     Development.SABIModule
 )
 
-# Free-threaded Python (PEP 703, e.g. Python 3.13t/3.14t) requires CMake >= 3.30 for
-# correct FindPython support. Earlier versions link against python3XX.lib instead of
-# python3XXt.lib, causing a crash (access violation) on module import.
+# Free-threaded Python (PEP 703) requires CMake >= 3.30 for correct FindPython support.
 if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
   if(CMAKE_VERSION VERSION_LESS "3.30")
     message(
@@ -28,6 +26,15 @@ if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
       "Free-threaded Python (detected SOABI: '${Python_SOABI}') requires CMake >= 3.30. "
       "CMake ${CMAKE_VERSION} will link against the wrong Python DLL, causing crashes. "
       "Please upgrade CMake to 3.30 or later."
+    )
+  endif()
+  # Required version for SWIG's -nogil flag, which declares the module thread-safe for free-threaded Python.
+  if(SWIG_VERSION VERSION_LESS "4.4.0")
+    message(
+      FATAL_ERROR
+      "Free-threaded Python (detected SOABI: '${Python_SOABI}') requires SWIG >= 4.4.0 "
+      "for the -nogil flag. SWIG ${SWIG_VERSION} does not support it. "
+      "Please upgrade SWIG to 4.4.0 or later."
     )
   endif()
 endif()
@@ -159,6 +166,16 @@ if(
     CMAKE_SWIG_FLAGS
     ${CMAKE_SWIG_FLAGS}
     -flatstaticmethod
+  )
+endif()
+if(SWIG_VERSION VERSION_GREATER_EQUAL "4.4.0")
+  # Declares the module thread-safe for free-threaded Python (PEP 703) via the
+  # Py_mod_gil module slot, a no-op on Python builds without free-threading
+  # support.
+  set(
+    CMAKE_SWIG_FLAGS
+    ${CMAKE_SWIG_FLAGS}
+    -nogil
   )
 endif()
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
