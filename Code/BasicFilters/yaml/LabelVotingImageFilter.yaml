@@ -21,11 +21,11 @@ members:
     and the new value only becomes effective upon the next filter update.
 tests:
 - tag: uint8_case
-  description: Test for a case where the undecided value may overflow
+  description: Basic usage with uint8 pixels
   inputs:
-  - Input/STAPLE1.png
-  - Input/STAPLE2.png
-  md5hash: a5f7ea84f72b82971f3f7476475dfdf2
+  - Input/STAPLE1-binary.png
+  - Input/STAPLE2-binary.png
+  md5hash: 08d9ca203d70ceffd8a9c9c09bf9426f
 - tag: basic
   description: Basic usage with required parameters
   inputA_cast: sitkUInt16
