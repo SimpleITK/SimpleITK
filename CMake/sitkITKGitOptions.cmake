@@ -15,7 +15,7 @@ if(COMMAND sitk_legacy_naming)
   sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 endif()
 
-set(_DEFAULT_ITK_GIT_TAG "8ae03df92e7db51c03ba657d84cde0dbbd273f57") # main on 2026-07-10
+set(_DEFAULT_ITK_GIT_TAG "841f4b66d37804907cef5758d80bde19aa08d104") # main on 2026-07-10, includes ITK#6580 fix for FastApproximateRankImageFilter
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag in ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 
