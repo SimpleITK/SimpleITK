@@ -30,10 +30,6 @@
 %}
 
 %init %{
-#ifdef Py_GIL_DISABLED
-    // Declare this module as safe to use without the GIL (PEP 703 / free-threaded).
-    PyUnstable_Module_SetGIL(m, Py_MOD_GIL_NOT_USED);
-#endif
 %}
 
 %include "PythonDocstrings.i"
