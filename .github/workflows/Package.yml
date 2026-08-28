@@ -401,7 +401,8 @@ jobs:
   publish-pypi:
     if: github.event_name != 'pull_request' && startsWith(github.ref_name, 'v')
     environment:
-      name: release
+      name: pypi-test
+      url: ${{ vars.ENVIRONMENT_URL }}
     permissions:
       id-token: write  # for PyPI publish
     needs:
@@ -420,4 +421,4 @@ jobs:
       - name: PyPI Publish package
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
         with:
-          repository-url: https://test.pypi.org/legacy/
+          repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
