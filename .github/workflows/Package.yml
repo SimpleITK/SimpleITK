@@ -42,7 +42,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310 cp314-cp314t"
+          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310 cp314-cp314t cp315-cp315t"
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
           BUILD_JAVA: 1
           BUILD_PYTHON_LIMITED_API: 1
@@ -229,7 +229,12 @@ jobs:
         with:
           python-version: "3.14t"
           continue-on-error: true
-
+      - name: Package Python 3.15t (pre-release)
+        uses: ./.github/actions/package_python
+        with:
+          python-version: "3.15t"
+          allow_prereleases: true
+          continue-on-error: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v7
         with:
