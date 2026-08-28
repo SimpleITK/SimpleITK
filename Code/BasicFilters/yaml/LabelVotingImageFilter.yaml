@@ -21,11 +21,15 @@ members:
     and the new value only becomes effective upon the next filter update.
 tests:
 - tag: uint8_case
-  description: Basic usage with uint8 pixels
+  description: Basic usage with uint8 pixels and an explicit undecided label
   inputs:
   - Input/STAPLE1-binary.png
   - Input/STAPLE2-binary.png
-  md5hash: 08d9ca203d70ceffd8a9c9c09bf9426f
+  settings:
+  - parameter: LabelForUndecidedPixels
+    type: uint64_t
+    value: '128'
+  md5hash: 0220ae160ecddefed8c7c7835cf1cafa
 - tag: basic
   description: Basic usage with required parameters
   inputA_cast: sitkUInt16
