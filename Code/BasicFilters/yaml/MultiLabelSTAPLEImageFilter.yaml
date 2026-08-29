@@ -77,7 +77,7 @@ measurements:
 tests:
 - tag: basic
   description: Basic usage
-  md5hash: 77ac8604a252c5130602645a5f02cc36
+  md5hash: 08d9ca203d70ceffd8a9c9c09bf9426f
   inputs:
   - Input/STAPLE1-binary.png
   - Input/STAPLE2-binary.png

@@ -91,7 +91,7 @@ tests:
 - tag: float
   description: 3D-float
   settings: []
-  md5hash: e475b27bd0dd66ede330c4eab93c17e9
+  md5hash: 63d4c611a5633ba010f1857401b13150
   inputs:
   - Input/RA-Float.nrrd
 briefdescription: Finds the threshold value of an image based on maximizing the number of objects in the image that are larger
