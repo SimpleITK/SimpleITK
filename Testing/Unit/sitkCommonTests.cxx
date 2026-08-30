@@ -21,6 +21,8 @@
 #include <sitkCommand.h>
 #include <sitkFunctionCommand.h>
 #include <sitkCastImageFilter.h>
+#include <sitkImageFileReader.h>
+#include <sitkSignedMaurerDistanceMapImageFilter.h>
 
 #include <sitkKernel.h>
 #include <sitkVersion.h>
@@ -610,6 +612,33 @@ TEST(ProcessObject, Threads)
   EXPECT_EQ("SINGLE", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()));
   EXPECT_TRUE(sitk::ProcessObject::SetGlobalDefaultThreader("Single"));
   EXPECT_EQ("SINGLE", strupper(sitk::ProcessObject::GetGlobalDefaultThreader()));
+}
+
+// Issue #2625 S22: Verify that aborting a process throws itk::ProcessAborted
+// from Execute(). The underlying ITK pipeline throws itk::ProcessAborted after
+// aborting (via ProgressReporter and ProcessObject::UpdateOutputData).
+TEST(ProcessObject, Abort_ExceptionEscapesExecute)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image img = sitk::ReadImage(dataFinder.GetFile("Input/RA-Short.nrrd"));
+
+  // SignedMaurerDistanceMapImageFilter is a composite filter that reports
+  // detailed progress, making it suitable for triggering mid-execution abort.
+  sitk::SignedMaurerDistanceMapImageFilter filter;
+  filter.SetNumberOfThreads(16);
+
+  AbortAtCommand abortAtCommand(filter, 0.35f);
+  filter.AddCommand(sitk::sitkProgressEvent, abortAtCommand);
+
+  CountCommand abortEventCmd(filter);
+  filter.AddCommand(sitk::sitkAbortEvent, abortEventCmd);
+
+  // Aborting causes itk::ProcessAborted to be thrown from Execute().
+  EXPECT_ANY_THROW(filter.Execute(img));
+
+  // The AbortEvent is fired before the exception propagates.
+  EXPECT_EQ(1, abortEventCmd.m_Count);
 }
 
 TEST(Command, Test2)
