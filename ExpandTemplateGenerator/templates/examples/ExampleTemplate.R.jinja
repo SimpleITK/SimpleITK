@@ -1,0 +1,142 @@
+#==========================================================================
+#
+#   Copyright NumFOCUS
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#          http://www.apache.org/licenses/LICENSE-2.0.txt
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+#==========================================================================
+{#- Jinja2 template for generating R example scripts. -#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{%- set ns = namespace(exec_args="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ "image" ~ (i if number_of_inputs > 1 else "") -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
+{%- endfor -%}
+
+# Example script for {{ name }}.
+{% if briefdescription %}
+# {{ briefdescription | wordwrap(79) | replace('\n', '\n# ') }}
+{% endif %}
+#
+# Usage:
+#   Rscript {{ name }}.R {% for i in range(1, number_of_inputs + 1) %}<input{{ i if number_of_inputs > 1 else "" }}> {% endfor %}{% for inp in named_image_inputs %}<{{ inp.name[0] | lower ~ inp.name[1:] }}> {% endfor %}{% if has_output %}<output>{% endif %}
+
+
+library(SimpleITK)
+
+args <- commandArgs(TRUE)
+expectedArgs <- {{ total_inputs + (1 if has_output else 0) }}
+
+if (length(args) < expectedArgs) {
+  print(paste(
+    "Usage: Rscript {{ name }}.R"{% for i in range(1, number_of_inputs + 1) %},
+    "<input{{ i if number_of_inputs > 1 else "" }}>"{% endfor %}{% for inp in named_image_inputs %},
+    "<{{ inp.name[0] | lower ~ inp.name[1:] }}>"{% endfor %}{% if has_output %},
+    "<output>"{% endif %}
+
+  ))
+  quit(save = "no", status = 1)
+}
+
+argIdx <- 1
+writer <- ImageFileWriter()
+filter <- {{ name }}()
+
+{% if number_of_inputs == 1 %}
+# Read the input image
+image <- ReadImage(args[[argIdx]])
+argIdx <- argIdx + 1
+{% elif number_of_inputs >= 2 %}
+# Read the input images
+{% for i in range(1, number_of_inputs + 1) %}
+image{{ i }} <- ReadImage(args[[argIdx]])
+argIdx <- argIdx + 1
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+# Read the {{ inp.name[0] | lower ~ inp.name[1:] }} image
+{{ inp.name[0] | lower ~ inp.name[1:] }} <- ReadImage(args[[argIdx]])
+argIdx <- argIdx + 1
+{% endfor %}
+
+# Configure filter parameters
+{% if ex and ex.settings %}
+{% for setting in ex.settings %}
+{% if setting.dim_vec is defined and setting.dim_vec %}
+filter$Set{{ setting.parameter }}({% if setting.R_value is defined and setting.R_value %}{{ setting.R_value }}{% else %}c({{ setting.value | join(", ") }}){% endif %})
+{% elif setting.type is defined and setting.type == "bool" %}
+filter$Set{{ setting.parameter }}({{ "TRUE" if setting.value else "FALSE" }})
+{% elif setting.R_value is defined and setting.R_value is not none %}
+filter$Set{{ setting.parameter }}({{ setting.R_value }})
+{% else %}
+filter$Set{{ setting.parameter }}({{ setting.value }})
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if has_output %}
+# Execute the filter
+output <- filter$Execute({{ ns.exec_args }})
+
+# Write the output image
+writer$SetFileName(args[[argIdx]])
+writer$Execute(output)
+{% else %}
+# Execute the filter
+filter$Execute({{ ns.exec_args }})
+
+{% if measurements %}
+# Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
+{% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
+cat("{{ m.name }}:", filter$Get{{ m.name }}(), "\n")
+{%- endif %}
+{% endfor %}
+{%- if ns_p.has_param %}
+# Per-label measurements require a label argument:
+for (label in filter$GetLabels()) {
+  cat("Label:", label, "\n")
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+  cat("  {{ m.name }}:", filter$Get{{ m.name }}(label), "\n")
+{%- endif %}
+{% endfor %}
+}
+{%- endif %}
+{% endif %}
+{% endif %}
+
+quit(save = "no", status = 0)
