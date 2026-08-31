@@ -11,8 +11,10 @@ echo "BUILD_JAVA: ${BUILD_JAVA}"
 
 SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 
-# Remove Python 2 and pure Python builds
-PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
+# Remove Python 2 and pure Python builds. Use "-" rather than ":-" so that an
+# explicitly empty PYTHON_VERSIONS (as opposed to unset) disables Python wheel
+# building entirely, instead of falling back to autodetection.
+PYTHON_VERSIONS=${PYTHON_VERSIONS-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
 
 NPROC=$(grep -c processor /proc/cpuinfo)
 export MAKEFLAGS="-j ${NPROC}"

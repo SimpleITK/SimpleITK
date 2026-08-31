@@ -62,6 +62,7 @@ BUILD_SHARED_LIBS = "OFF"
 ITK_C_OPTIMIZATION_FLAGS = ""
 ITK_CXX_OPTIMIZATION_FLAGS = ""
 SimpleITK_BUILD_DISTRIBUTE = "ON"
+SimpleITK_USE_ELASTIX = "ON"
 
 [[tool.scikit-build.overrides]]
 if.python-version = ">=3.11"

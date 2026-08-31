@@ -49,10 +49,9 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315t"
+          PYTHON_VERSIONS: ""
           BUILD_CSHARP: ${{ matrix.build_csharp }}
           BUILD_JAVA: ${{ matrix.build_java }}
-          BUILD_PYTHON_LIMITED_API: 1
           SIMPLEITK_USE_ELASTIX: 1
         run: |
           echo "BUILD_CSHARP: ${BUILD_CSHARP}"
@@ -78,8 +77,56 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}-${{matrix.dockerfile}}
           path: |
-            Utilities/Distribution/manylinux/wheelhouse/*.whl
             Utilities/Distribution/manylinux/SimpleITK*.zip
+
+  python-wheels:
+    if: github.repository == 'SimpleITK/SimpleITK'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            artifact_suffix: manylinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            artifact_suffix: manylinux-aarch64
+    env:
+      CIBW_SKIP: "*-manylinux_i686 *-musllinux*"
+      CIBW_ARCHS_LINUX: ${{ matrix.cibw_archs }}
+      CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+      CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+      CIBW_TEST_SKIP: "*"
+      CIBW_BUILD_VERBOSITY: 1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          fetch-depth: 0
+      - name: Build Python wheels with cibuildwheel
+        uses: pypa/cibuildwheel@1828c10ab37f080699c7b81cea34097c684a7074 # v4.2.0
+        env:
+          CIBW_BUILD: "cp310-* cp311-* cp314t-*"
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+      - name: Build cp315t (prerelease) wheel with cibuildwheel
+        # cp315t is a pre-release, best-effort build: it may not yet be
+        # available in the manylinux image, so don't fail the job over it.
+        continue-on-error: true
+        uses: pypa/cibuildwheel@1828c10ab37f080699c7b81cea34097c684a7074 # v4.2.0
+        env:
+          CIBW_BUILD: "cp315t-*"
+          CIBW_ENABLE: cpython-prerelease
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+      - name: Upload wheel artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: artifacts-wheels-${{ matrix.artifact_suffix }}
+          path: wheelhouse/*.whl
+          if-no-files-found: ignore
 
   build:
     if: github.repository == 'SimpleITK/SimpleITK'
@@ -298,6 +345,7 @@ jobs:
       - build
       - doxygen
       - package-docker
+      - python-wheels
       - sdist
     runs-on: ubuntu-latest
     steps:
