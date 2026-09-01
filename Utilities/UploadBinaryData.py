@@ -52,8 +52,8 @@ The script will authenticate to data.kitware.com, upload the file to your
 user account's Public folder, and create a *.sha512 CMake ExternalData
 content link file. To specify a different folder, use the --folder-id flag.
 After the content link has been created, add the *.sha512 file to your
-git commit. The binary file will be removed from the source tree following
-upload.
+git commit. By default, the binary file is removed from the source tree
+following upload; pass --no-remove to keep it in place.
 
 Usage (without explicitly creating a virtual environment or installing
 dependencies), run the script using the uv (https://docs.astral.sh/uv/) tool:
@@ -190,18 +190,19 @@ class GirderClient:
             raise UploadError("Could not create item.") from e
         return response.json()["_id"]
 
-    def upload_file(self, item_id: str, name: str, data: bytes) -> str:
+    def upload_file(self, item_id: str, name: str, path: Path) -> str:
         try:
-            response = self.session.post(
-                f"{self.api_url}/file",
-                params={
-                    "parentType": "item",
-                    "parentId": item_id,
-                    "name": name,
-                    "size": len(data),
-                },
-                data=data,
-            )
+            with path.open("rb") as f:
+                response = self.session.post(
+                    f"{self.api_url}/file",
+                    params={
+                        "parentType": "item",
+                        "parentId": item_id,
+                        "name": name,
+                        "size": path.stat().st_size,
+                    },
+                    data=f,
+                )
             response.raise_for_status()
         except requests.RequestException as e:
             raise UploadError("Could not upload file.") from e
@@ -220,9 +221,12 @@ class GirderClient:
 
 
 def _get_git_config(key: str) -> Optional[str]:
-    result = subprocess.run(
-        ["git", "config", "--get", key], capture_output=True, text=True
-    )
+    try:
+        result = subprocess.run(
+            ["git", "config", "--get", key], capture_output=True, text=True
+        )
+    except FileNotFoundError:
+        return None
     return result.stdout.strip() if result.returncode == 0 else None
 
 
@@ -238,15 +242,14 @@ def upload_binary_file(client: GirderClient, binary_file: Path, folder_id: str) 
     """Upload a single binary file to the given Girder folder, verifying that
     the server-computed sha512 hash matches the local file. Returns the
     verified sha512 hash of the file."""
-    if not binary_file.exists():
-        raise UploadError(f"{binary_file} does not exist.")
+    if not binary_file.is_file():
+        raise UploadError(f"{binary_file} does not exist or is not a regular file.")
 
     item_name = binary_file.name
     item_id = client.create_item(folder_id, item_name)
 
     print(f"Uploading {item_name}...")
-    data = binary_file.read_bytes()
-    file_id = client.upload_file(item_id, item_name, data)
+    file_id = client.upload_file(item_id, item_name, binary_file)
 
     remote_sha512 = client.get_file_sha512(file_id)
     local_sha512 = _local_sha512(binary_file)
