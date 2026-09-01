@@ -134,6 +134,13 @@ foreach(
   set(${_component} "${SimpleITK_ELASTIX_USE_OPENCL}")
 endforeach()
 
+# elastix calls some ITK methods that are marked legacy/deprecated in newer
+# ITK versions. Scoped to elastix's own subdirectory via a saved/restored
+# variable, so it doesn't leak into SimpleITK's own targets defined later
+# in this same directory scope.
+set(_sitk_elastix_saved_cxx_flags "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DITK_LEGACY_SILENT")
+
 FetchContent_Declare(
   Elastix
   GIT_REPOSITORY "${ELASTIX_GIT_REPOSITORY}"
@@ -143,6 +150,9 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(Elastix)
+
+set(CMAKE_CXX_FLAGS "${_sitk_elastix_saved_cxx_flags}")
+unset(_sitk_elastix_saved_cxx_flags)
 
 # Check if FetchContent used find_package() or fetched from source
 FetchContent_GetProperties(Elastix)
