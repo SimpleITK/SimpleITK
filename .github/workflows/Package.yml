@@ -99,6 +99,22 @@ jobs:
       CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
       CIBW_TEST_SKIP: "*"
       CIBW_BUILD_VERBOSITY: 1
+      # Mount host directories into the container so both the CMake build
+      # tree and ccache's cache persist across every CIBW_BUILD identifier
+      # in this job and across both cibuildwheel steps below (but not
+      # across job runs). By default scikit-build-core gives every
+      # invocation its own fresh random /tmp build tree and re-fetches
+      # ITK's source into it each time, which defeats both ccache's hashing
+      # (path/mtime differences) and, more importantly, CMake/Ninja's own
+      # incremental rebuild: pinning SKBUILD_BUILD_DIR to a stable path
+      # means ITK's ~2900 object files simply aren't touched again once
+      # built for the first identifier, since Ninja sees them as already
+      # up to date - this is the main win, ccache is a secondary safety net
+      # for whatever legitimately does need recompiling (e.g. the
+      # abi3/free-threaded-specific wrapping code).
+      CIBW_CONTAINER_ENGINE: "docker; create_args: --volume /tmp/ccache-cache:/ccache --volume /tmp/skbuild-build:/build"
+      CIBW_BEFORE_ALL_LINUX: "yum install -y ccache"
+      CIBW_ENVIRONMENT_LINUX: 'CCACHE_DIR=/ccache CCACHE_NOHASHDIR=1 CCACHE_MAXSIZE=10G CCACHE_COMPRESS=1 CCACHE_SLOPPINESS=include_file_mtime,include_file_ctime,pch_defines,time_macros SKBUILD_BUILD_DIR=/build SKBUILD_CMAKE_DEFINE="CMAKE_C_COMPILER_LAUNCHER=ccache;CMAKE_CXX_COMPILER_LAUNCHER=ccache"'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
