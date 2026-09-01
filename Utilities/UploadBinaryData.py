@@ -99,7 +99,7 @@ class GirderClient:
             response.raise_for_status()
         except requests.RequestException as e:
             raise UploadError("Could not retrieve token from API key.") from e
-        return response.json().get("token")
+        return response.json().get("authToken", {}).get("token")
 
     def authenticate_with_credentials(self, username: str, password: str) -> Optional[str]:
         """Exchange a username/password for an authentication token."""
