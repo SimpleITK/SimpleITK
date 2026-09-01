@@ -204,8 +204,8 @@ class GirderClient:
                     data=f,
                 )
             response.raise_for_status()
-        except requests.RequestException as e:
-            raise UploadError("Could not upload file.") from e
+        except (requests.RequestException, OSError) as e:
+            raise UploadError(f"Could not upload {path}.") from e
         return response.json()["_id"]
 
     def get_file_sha512(self, file_id: str) -> str:
@@ -252,7 +252,10 @@ def upload_binary_file(client: GirderClient, binary_file: Path, folder_id: str) 
     file_id = client.upload_file(item_id, item_name, binary_file)
 
     remote_sha512 = client.get_file_sha512(file_id)
-    local_sha512 = _local_sha512(binary_file)
+    try:
+        local_sha512 = _local_sha512(binary_file)
+    except OSError as e:
+        raise UploadError(f"Could not read {binary_file} to verify its hash.") from e
     if local_sha512 != remote_sha512:
         raise UploadError("Local file hash does not match uploaded file hash.")
 
@@ -306,11 +309,17 @@ def main() -> int:
             sha512 = upload_binary_file(client, binary_file, folder_id)
 
             sha512_content_link = binary_file.with_name(binary_file.name + ".sha512")
-            sha512_content_link.write_text(sha512 + "\n")
+            try:
+                sha512_content_link.write_text(sha512 + "\n")
+            except OSError as e:
+                raise UploadError(f"Could not write {sha512_content_link}.") from e
             generated_content_links.append(sha512_content_link)
 
             if args.remove:
-                binary_file.unlink()
+                try:
+                    binary_file.unlink()
+                except OSError as e:
+                    raise UploadError(f"Could not remove {binary_file}.") from e
     except UploadError as e:
         print(str(e), file=sys.stderr)
         return 1
