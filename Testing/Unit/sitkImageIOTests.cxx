@@ -340,6 +340,46 @@ TEST(IO, ReadWrite)
 }
 
 
+// Regression test for https://github.com/SimpleITK/SimpleITK/issues/2702
+// Round-tripping a vector-pixel-type image through HDF5 raised
+// "Unknown PixelType" on read, because itk::HDF5ImageIO::ReadImageInformation
+// never called SetPixelType(VECTOR) after inferring multiple components.
+TEST(IO, HDF5_ReadWriteVectorPixelType)
+{
+  namespace sitk = itk::simple;
+
+  sitk::ImageFileWriter    writer;
+  std::vector<std::string> ios = writer.GetRegisteredImageIOs();
+  if (std::find(ios.begin(), ios.end(), "HDF5ImageIO") == ios.end())
+  {
+    GTEST_SKIP() << "HDF5ImageIO is not registered in this build.";
+  }
+
+  const std::vector<unsigned int> size{ 4u, 4u };
+  sitk::Image                     image(size, sitk::sitkVectorFloat32, 2u);
+
+  for (unsigned int y = 0; y < size[1]; ++y)
+  {
+    for (unsigned int x = 0; x < size[0]; ++x)
+    {
+      image.SetPixelAsVectorFloat32({ x, y }, { static_cast<float>(x), static_cast<float>(y) });
+    }
+  }
+
+  const std::string filename = dataFinder.GetOutputFile("IO.HDF5_ReadWriteVectorPixelType.hdf5");
+
+  ASSERT_NO_THROW(sitk::WriteImage(image, filename));
+  ASSERT_TRUE(dataFinder.FileExists(filename));
+
+  sitk::Image result;
+  ASSERT_NO_THROW(result = sitk::ReadImage(filename));
+
+  EXPECT_EQ(result.GetPixelID(), sitk::sitkVectorFloat32);
+  EXPECT_EQ(result.GetNumberOfComponentsPerPixel(), 2u);
+  EXPECT_EQ(sitk::Hash(image), sitk::Hash(result));
+}
+
+
 TEST(IO, 2DFormats)
 {
   itk::simple::HashImageFilter hasher;
