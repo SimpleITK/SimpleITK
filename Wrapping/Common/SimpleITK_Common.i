@@ -18,7 +18,9 @@
 %module(directors="1") SimpleITK
 
 // Remove some warnings
-#pragma SWIG nowarn=362,503,401,389,516,511
+// 560: Unknown Doxygen command. ITK's Doxygen comments use commands that
+// SWIG's Doxygen parser does not recognize.
+#pragma SWIG nowarn=362,503,401,389,516,511,560
 
 // SWIG >= 4.5.0's Ruby -autorename drops these std::vector partial
 // specializations as duplicate "Vector" names (Warning 302), breaking
