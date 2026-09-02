@@ -101,15 +101,17 @@ namespace itk.simple.examples
             R.SetShrinkFactorsPerLevel(shrinkFactors);
             R.SetSmoothingSigmasPerLevel(smoothingSigmas);
 
-            R.SetMetricAsJointHistogramMutualInformation(20);
+            R.SetMetricAsMattesMutualInformation();
             R.MetricUseFixedImageGradientFilterOff();
 
             double learningRate = 1.0;
             uint numberOfIterations = 100;
             double convergenceMinimumValue = 1e-6;
             uint convergenceWindowSize = 10;
+            // Estimated once per level, not each iteration, so stage 1 is
+            // reproducible regardless of thread count.
             ImageRegistrationMethod.EstimateLearningRateType estimateLearningRate =
-                ImageRegistrationMethod.EstimateLearningRateType.EachIteration;
+                ImageRegistrationMethod.EstimateLearningRateType.Once;
             R.SetOptimizerAsGradientDescent(learningRate, numberOfIterations,
                                            convergenceMinimumValue, convergenceWindowSize, estimateLearningRate);
 
@@ -162,8 +164,12 @@ namespace itk.simple.examples
             convergenceMinimumValue = 1e-6;
             convergenceWindowSize = 10;
             estimateLearningRate = ImageRegistrationMethod.EstimateLearningRateType.EachIteration;
+            // Caps the per-iteration step to one voxel, keeping stage 2
+            // reproducible regardless of thread count.
+            double maximumStepSizeInPhysicalUnits = 1.0;
             R.SetOptimizerAsGradientDescent(learningRate, numberOfIterations,
-                                           convergenceMinimumValue, convergenceWindowSize, estimateLearningRate);
+                                           convergenceMinimumValue, convergenceWindowSize, estimateLearningRate,
+                                           maximumStepSizeInPhysicalUnits);
 
             R.Execute(fixedImage, movingImage);
 

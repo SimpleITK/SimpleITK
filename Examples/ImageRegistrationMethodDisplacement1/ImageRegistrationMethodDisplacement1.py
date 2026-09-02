@@ -18,7 +18,7 @@
 # =========================================================================
 
 """ A SimpleITK example demonstrating image registration using the
-    DisplacementFieldTransform and the JointHistogramMutualInformation
+    DisplacementFieldTransform and the MattesMutualInformation
     metric.  """
 
 import sys
@@ -66,13 +66,15 @@ R = sitk.ImageRegistrationMethod()
 R.SetShrinkFactorsPerLevel([3, 2, 1])
 R.SetSmoothingSigmasPerLevel([2, 1, 1])
 
-R.SetMetricAsJointHistogramMutualInformation(20)
+R.SetMetricAsMattesMutualInformation()
 R.MetricUseFixedImageGradientFilterOff()
 
+# Estimated once per level, not each iteration, so stage 1 is
+# reproducible regardless of thread count.
 R.SetOptimizerAsGradientDescent(
     learningRate=1.0,
     numberOfIterations=100,
-    estimateLearningRate=R.EachIteration,
+    estimateLearningRate=R.Once,
 )
 R.SetOptimizerScalesFromPhysicalShift()
 
@@ -111,11 +113,14 @@ R.MetricUseFixedImageGradientFilterOff()
 R.SetShrinkFactorsPerLevel([3, 2, 1])
 R.SetSmoothingSigmasPerLevel([2, 1, 1])
 
+# Caps the per-iteration step to one voxel, keeping stage 2
+# reproducible regardless of thread count.
 R.SetOptimizerScalesFromPhysicalShift()
 R.SetOptimizerAsGradientDescent(
     learningRate=1,
     numberOfIterations=300,
     estimateLearningRate=R.EachIteration,
+    maximumStepSizeInPhysicalUnits=1.0,
 )
 
 R.Execute(fixed, moving)

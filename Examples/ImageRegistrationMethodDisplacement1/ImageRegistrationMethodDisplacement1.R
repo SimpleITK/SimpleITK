@@ -58,14 +58,16 @@ R <- ImageRegistrationMethod()
 R$SetShrinkFactorsPerLevel(c(3,2,1))
 R$SetSmoothingSigmasPerLevel(c(2,1,1))
 
-R$SetMetricAsJointHistogramMutualInformation(20)
+R$SetMetricAsMattesMutualInformation()
 R$MetricUseFixedImageGradientFilterOff()
 
+# Estimated once per level, not each iteration, so stage 1 is
+# reproducible regardless of thread count.
 R$SetOptimizerAsGradientDescent(learningRate=1.0,
                                 numberOfIterations=100,
                                 convergenceMinimumValue=1e-6,
                                 convergenceWindowSize=10,
-                                estimateLearningRate = 'EachIteration')
+                                estimateLearningRate = 'Once')
 R$SetOptimizerScalesFromPhysicalShift()
 
 R$SetInitialTransform(initialTx)
@@ -100,12 +102,15 @@ R$MetricUseFixedImageGradientFilterOff()
 R$SetShrinkFactorsPerLevel(c(3,2,1))
 R$SetSmoothingSigmasPerLevel(c(2,1,1))
 
+# Caps the per-iteration step to one voxel, keeping stage 2
+# reproducible regardless of thread count.
 R$SetOptimizerScalesFromPhysicalShift()
 R$SetOptimizerAsGradientDescent(learningRate=1,
                                 numberOfIterations=300,
                                 convergenceMinimumValue=1e-6,
                                 convergenceWindowSize=10,
-                                estimateLearningRate = 'EachIteration')
+                                estimateLearningRate = 'EachIteration',
+                                maximumStepSizeInPhysicalUnits=1.0)
 
 R$Execute(fixed, moving)
 

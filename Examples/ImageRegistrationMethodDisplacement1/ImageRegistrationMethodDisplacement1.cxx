@@ -117,15 +117,17 @@ main(int argc, char * argv[])
     R.SetSmoothingSigmasPerLevel(smoothingSigmas);
   }
 
-  R.SetMetricAsJointHistogramMutualInformation(20);
+  R.SetMetricAsMattesMutualInformation();
   R.MetricUseFixedImageGradientFilterOff();
 
   {
-    double                                                  learningRate = 1.0;
-    unsigned int                                            numberOfIterations = 100;
-    double                                                  convergenceMinimumValue = 1e-6;
-    unsigned int                                            convergenceWindowSize = 10;
-    sitk::ImageRegistrationMethod::EstimateLearningRateType estimateLearningRate = R.EachIteration;
+    double       learningRate = 1.0;
+    unsigned int numberOfIterations = 100;
+    double       convergenceMinimumValue = 1e-6;
+    unsigned int convergenceWindowSize = 10;
+    // Estimated once per level, not each iteration, so stage 1 is
+    // reproducible regardless of thread count.
+    sitk::ImageRegistrationMethod::EstimateLearningRateType estimateLearningRate = R.Once;
     R.SetOptimizerAsGradientDescent(
       learningRate, numberOfIterations, convergenceMinimumValue, convergenceWindowSize, estimateLearningRate);
   }
@@ -181,8 +183,15 @@ main(int argc, char * argv[])
     double                                                  convergenceMinimumValue = 1e-6;
     unsigned int                                            convergenceWindowSize = 10;
     sitk::ImageRegistrationMethod::EstimateLearningRateType estimateLearningRate = R.EachIteration;
-    R.SetOptimizerAsGradientDescent(
-      learningRate, numberOfIterations, convergenceMinimumValue, convergenceWindowSize, estimateLearningRate);
+    // Caps the per-iteration step to one voxel, keeping stage 2
+    // reproducible regardless of thread count.
+    double maximumStepSizeInPhysicalUnits = 1.0;
+    R.SetOptimizerAsGradientDescent(learningRate,
+                                    numberOfIterations,
+                                    convergenceMinimumValue,
+                                    convergenceWindowSize,
+                                    estimateLearningRate,
+                                    maximumStepSizeInPhysicalUnits);
   }
   R.Execute(fixed, moving);
 
