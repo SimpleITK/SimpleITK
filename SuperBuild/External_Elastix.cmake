@@ -17,11 +17,17 @@ include("${CMAKE_CURRENT_LIST_DIR}/../CMake/sitkElastixGitOptions.cmake")
 # elastix calls some ITK methods that are marked legacy/deprecated in newer
 # ITK versions. Append (not replace) so the flags already forwarded via
 # ep_common_args are preserved; this later -DCMAKE_CXX_FLAGS wins for elastix's build.
+if(MSVC)
+  set(_sitk_elastix_legacy_silent_flag "/DITK_LEGACY_SILENT")
+else()
+  set(_sitk_elastix_legacy_silent_flag "-DITK_LEGACY_SILENT")
+endif()
 list(
   APPEND
   ep_elastix_args
-  "-DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS} -DITK_LEGACY_SILENT"
+  "-DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS} ${_sitk_elastix_legacy_silent_flag}"
 )
+unset(_sitk_elastix_legacy_silent_flag)
 
 if(NOT ${BUILD_SHARED_LIBS})
   list(

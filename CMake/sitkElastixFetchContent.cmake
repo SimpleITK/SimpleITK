@@ -135,11 +135,22 @@ foreach(
 endforeach()
 
 # elastix calls some ITK methods that are marked legacy/deprecated in newer
-# ITK versions. Scoped to elastix's own subdirectory via a saved/restored
-# variable, so it doesn't leak into SimpleITK's own targets defined later
-# in this same directory scope.
-set(_sitk_elastix_saved_cxx_flags "${CMAKE_CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DITK_LEGACY_SILENT")
+# ITK versions. Use a directory-scoped compile definition (portable across
+# MSVC/GCC/Clang, unlike hand-rolled -D/CxxFlags) saved/restored around
+# FetchContent_MakeAvailable() so it doesn't leak into SimpleITK's own
+# targets defined later in this same directory scope.
+get_property(
+  _sitk_elastix_saved_compile_defs
+  DIRECTORY
+  PROPERTY COMPILE_DEFINITIONS
+)
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY
+    COMPILE_DEFINITIONS
+      "ITK_LEGACY_SILENT"
+)
 
 FetchContent_Declare(
   Elastix
@@ -151,8 +162,13 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Elastix)
 
-set(CMAKE_CXX_FLAGS "${_sitk_elastix_saved_cxx_flags}")
-unset(_sitk_elastix_saved_cxx_flags)
+set_property(
+  DIRECTORY
+  PROPERTY
+    COMPILE_DEFINITIONS
+      "${_sitk_elastix_saved_compile_defs}"
+)
+unset(_sitk_elastix_saved_compile_defs)
 
 # Check if FetchContent used find_package() or fetched from source
 FetchContent_GetProperties(Elastix)
