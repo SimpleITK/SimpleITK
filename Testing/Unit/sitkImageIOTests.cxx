@@ -26,8 +26,131 @@
 #include <sitkExtractImageFilter.h>
 #include <sitkRegionOfInterestImageFilter.h>
 
+#include <itkImageIOBase.h>
+#include <itkObjectFactoryBase.h>
+#include <itkCreateObjectFunction.h>
+#include <itkVersion.h>
+
 #include <cmath>
 #include <itksys/SystemTools.hxx>
+
+namespace
+{
+// A minimal ImageIOBase that reports an inconsistent (numberOfComponents>1,
+// pixelType==SCALAR) state, to exercise ImageReaderBase::GetPixelIDFromImageIO's
+// diagnostic exception for that case, without relying on a real ImageIO having a bug.
+class InconsistentPixelTypeImageIO : public itk::ImageIOBase
+{
+public:
+  using Self = InconsistentPixelTypeImageIO;
+  using Superclass = itk::ImageIOBase;
+  using Pointer = itk::SmartPointer<Self>;
+
+  itkOverrideGetNameOfClassMacro(InconsistentPixelTypeImageIO);
+  itkNewMacro(Self);
+
+  bool
+  CanReadFile(const char *) override
+  {
+    return true;
+  }
+  bool
+  CanWriteFile(const char *) override
+  {
+    return false;
+  }
+
+  void
+  ReadImageInformation() override
+  {
+    this->SetNumberOfDimensions(2);
+    this->SetDimensions(0, 1);
+    this->SetDimensions(1, 1);
+    this->SetComponentType(itk::IOComponentEnum::FLOAT);
+    this->SetNumberOfComponents(3);
+    this->SetPixelType(itk::IOPixelEnum::SCALAR);
+  }
+
+  void
+  Read(void *) override
+  {}
+  void
+  WriteImageInformation() override
+  {}
+  void
+  Write(const void *) override
+  {}
+};
+
+class InconsistentPixelTypeImageIOFactory : public itk::ObjectFactoryBase
+{
+public:
+  using Self = InconsistentPixelTypeImageIOFactory;
+  using Superclass = itk::ObjectFactoryBase;
+  using Pointer = itk::SmartPointer<Self>;
+
+  const char *
+  GetITKSourceVersion() const override
+  {
+    return ITK_SOURCE_VERSION;
+  }
+  const char *
+  GetDescription() const override
+  {
+    return "InconsistentPixelTypeImageIO test factory";
+  }
+
+  itkOverrideGetNameOfClassMacro(InconsistentPixelTypeImageIOFactory);
+  itkFactorylessNewMacro(Self);
+
+protected:
+  InconsistentPixelTypeImageIOFactory()
+  {
+    this->RegisterOverride("itkImageIOBase",
+                           "InconsistentPixelTypeImageIO",
+                           "Inconsistent PixelType Test ImageIO",
+                           true,
+                           itk::CreateObjectFunction<InconsistentPixelTypeImageIO>::New());
+  }
+};
+
+// RAII helper registering InconsistentPixelTypeImageIOFactory for the lifetime of the instance.
+class InconsistentPixelTypeImageIOFactoryRegistration
+{
+public:
+  InconsistentPixelTypeImageIOFactoryRegistration() { itk::ObjectFactoryBase::RegisterFactory(m_Factory); }
+  ~InconsistentPixelTypeImageIOFactoryRegistration() { itk::ObjectFactoryBase::UnRegisterFactory(m_Factory); }
+
+private:
+  InconsistentPixelTypeImageIOFactory::Pointer m_Factory{ InconsistentPixelTypeImageIOFactory::New() };
+};
+} // namespace
+
+
+TEST(IO, ImageFileReader_InconsistentPixelTypeExceptionMessage)
+{
+  namespace sitk = itk::simple;
+
+  const InconsistentPixelTypeImageIOFactoryRegistration registration;
+
+  sitk::ImageFileReader reader;
+  reader.SetImageIO("InconsistentPixelTypeImageIO");
+  reader.SetFileName("does-not-matter.iotest");
+
+  try
+  {
+    reader.Execute();
+    FAIL() << "Expected sitk::GenericException to be thrown.";
+  }
+  catch (const sitk::GenericException & e)
+  {
+    const std::string what(e.what());
+    EXPECT_NE(what.find("PixelType=\"scalar\""), std::string::npos) << what;
+    EXPECT_NE(what.find("NumberOfComponents=3"), std::string::npos) << what;
+    EXPECT_NE(what.find("ComponentType=\"float\""), std::string::npos) << what;
+    EXPECT_NE(what.find("InconsistentPixelTypeImageIO"), std::string::npos) << what;
+  }
+}
 
 
 TEST(IO, ImageFileReader)

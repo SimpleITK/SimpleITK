@@ -233,8 +233,12 @@ ImageReaderBase ::GetPixelIDFromImageIO(const ImageIOBase * iobase,
   }
   else
   {
-    sitkExceptionMacro("Unknown PixelType: " << itk::ImageIOBase::GetComponentTypeAsString(componentType) << "("
-                                             << (int)componentType << ")");
+    sitkExceptionMacro("Unable to determine PixelType from ImageIO: PixelType=\""
+                       << itk::ImageIOBase::GetPixelTypeAsString(pixelType) << "\" (" << static_cast<int>(pixelType)
+                       << "), NumberOfComponents=" << numberOfComponents << ", ComponentType=\""
+                       << itk::ImageIOBase::GetComponentTypeAsString(componentType) << "\" ("
+                       << static_cast<int>(componentType) << "). This is an inconsistent state reported by the "
+                       << "ImageIO, likely indicating a bug in \"" << iobase->GetNameOfClass() << "\".");
   }
 
   sitkExceptionMacro("Unable to load image.");
