@@ -1,0 +1,13 @@
+set_tests_properties(
+  ConcurrentImageRead.JPEG
+  ConcurrentImageRead.TIFF
+  ConcurrentImageRead.PNG
+  ConcurrentImageRead.NIFTI
+  ConcurrentImageRead.MetaImage
+  ConcurrentImageRead.DICOM
+  PROPERTIES
+    RUN_SERIAL
+      TRUE
+    TIMEOUT
+      300
+)
