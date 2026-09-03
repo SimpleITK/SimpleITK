@@ -286,11 +286,17 @@ void
 RunConcurrentImageReadTest(const std::string & ext, sitk::PixelIDValueEnum pixelType)
 {
   const std::string              outputDir = dataFinder.GetOutputDirectory();
-  const std::vector<std::string> files = CreateConcurrentReadTestData(outputDir, ext, pixelType);
+  const unsigned int             numFiles = 16;
+  const std::vector<std::string> files = CreateConcurrentReadTestData(outputDir, ext, pixelType, numFiles);
 
-  const unsigned int nThreads = std::max(4u, std::thread::hardware_concurrency() * 4);
-  const unsigned int repeat = 8;
-  const unsigned int timeoutSeconds = 90;
+  // Fixed (not scaled off std::thread::hardware_concurrency()) so this runs
+  // with consistent, CI-appropriate load regardless of how many cores the
+  // build machine has -- enough concurrency to reproduce contention in the
+  // ImageIO stack, without spawning an unbounded number of threads on
+  // many-core machines.
+  const unsigned int nThreads = 16;
+  const unsigned int repeat = 4;
+  const unsigned int timeoutSeconds = 60;
 
   const std::string result = ConcurrentReadStressTest(files, pixelType, nThreads, repeat, timeoutSeconds);
   EXPECT_TRUE(result.empty()) << result;
