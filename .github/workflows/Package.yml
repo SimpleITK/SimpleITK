@@ -95,10 +95,13 @@ jobs:
     env:
       CIBW_SKIP: "*-manylinux_i686 *-musllinux*"
       CIBW_ARCHS_LINUX: ${{ matrix.cibw_archs }}
-      CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
-      CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
-      CIBW_TEST_SKIP: "*"
-      CIBW_BUILD_VERBOSITY: 1
+      # build-verbosity, enable, the test-* settings (running the
+      # hand-written pytest suite in Wrapping/Python/tests against the
+      # built wheel; test deps come from the "test" extra in pyproject.toml),
+      # and the manylinux images are OS/env-agnostic (or, for the images,
+      # just don't need to vary per matrix entry), so they're declared once
+      # in pyproject.toml's [tool.cibuildwheel]/[tool.cibuildwheel.linux]
+      # instead of duplicated here.
       # Mount host directories into the container so both the CMake build
       # tree and ccache's cache persist across every CIBW_BUILD identifier
       # in this job and across both cibuildwheel steps below (but not
@@ -133,7 +136,6 @@ jobs:
         uses: pypa/cibuildwheel@1828c10ab37f080699c7b81cea34097c684a7074 # v4.2.0
         env:
           CIBW_BUILD: "cp315t-*"
-          CIBW_ENABLE: cpython-prerelease
         with:
           package-dir: .
           output-dir: wheelhouse
