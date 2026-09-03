@@ -87,15 +87,17 @@ class ImageRegistrationMethodDisplacement1 {
         R.setShrinkFactorsPerLevel(shrinkFactors);
         R.setSmoothingSigmasPerLevel(smoothingSigmas);
 
-        R.setMetricAsJointHistogramMutualInformation(20);
+        R.setMetricAsMattesMutualInformation();
         R.metricUseFixedImageGradientFilterOff();
 
         double learningRate = 1.0;
         int numberOfIterations = 100;
         double convergenceMinimumValue = 1e-6;
         int convergenceWindowSize = 10;
+        // Estimated once per level, not each iteration, so stage 1 is
+        // reproducible regardless of thread count.
         ImageRegistrationMethod.EstimateLearningRateType estimateLearningRate =
-            ImageRegistrationMethod.EstimateLearningRateType.EachIteration;
+            ImageRegistrationMethod.EstimateLearningRateType.Once;
         R.setOptimizerAsGradientDescent(learningRate, numberOfIterations,
                                        convergenceMinimumValue, convergenceWindowSize, estimateLearningRate);
 
@@ -148,8 +150,12 @@ class ImageRegistrationMethodDisplacement1 {
         convergenceMinimumValue = 1e-6;
         convergenceWindowSize = 10;
         estimateLearningRate = ImageRegistrationMethod.EstimateLearningRateType.EachIteration;
+        // Caps the per-iteration step to one voxel, keeping stage 2
+        // reproducible regardless of thread count.
+        double maximumStepSizeInPhysicalUnits = 1.0;
         R.setOptimizerAsGradientDescent(learningRate, numberOfIterations,
-                                       convergenceMinimumValue, convergenceWindowSize, estimateLearningRate);
+                                       convergenceMinimumValue, convergenceWindowSize, estimateLearningRate,
+                                       maximumStepSizeInPhysicalUnits);
 
         R.execute(fixedImage, movingImage);
 
