@@ -49,10 +49,9 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315t"
+          PYTHON_VERSIONS: ""
           BUILD_CSHARP: ${{ matrix.build_csharp }}
           BUILD_JAVA: ${{ matrix.build_java }}
-          BUILD_PYTHON_LIMITED_API: 1
           SIMPLEITK_USE_ELASTIX: 1
         run: |
           echo "BUILD_CSHARP: ${BUILD_CSHARP}"
@@ -78,8 +77,74 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}-${{matrix.dockerfile}}
           path: |
-            Utilities/Distribution/manylinux/wheelhouse/*.whl
             Utilities/Distribution/manylinux/SimpleITK*.zip
+
+  python-wheels:
+    if: github.repository == 'SimpleITK/SimpleITK'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cibw_archs: x86_64
+            artifact_suffix: manylinux-x86_64
+          - os: ubuntu-22.04-arm
+            cibw_archs: aarch64
+            artifact_suffix: manylinux-aarch64
+    env:
+      CIBW_SKIP: "*-manylinux_i686 *-musllinux*"
+      CIBW_ARCHS_LINUX: ${{ matrix.cibw_archs }}
+      # build-verbosity, enable, the test-* settings (running the
+      # hand-written pytest suite in Wrapping/Python/tests against the
+      # built wheel; test deps come from the "test" extra in pyproject.toml),
+      # and the manylinux images are OS/env-agnostic (or, for the images,
+      # just don't need to vary per matrix entry), so they're declared once
+      # in pyproject.toml's [tool.cibuildwheel]/[tool.cibuildwheel.linux]
+      # instead of duplicated here.
+      # Mount host directories into the container so both the CMake build
+      # tree and ccache's cache persist across every CIBW_BUILD identifier
+      # in this job and across both cibuildwheel steps below (but not
+      # across job runs). By default scikit-build-core gives every
+      # invocation its own fresh random /tmp build tree and re-fetches
+      # ITK's source into it each time, which defeats both ccache's hashing
+      # (path/mtime differences) and, more importantly, CMake/Ninja's own
+      # incremental rebuild: pinning SKBUILD_BUILD_DIR to a stable path
+      # means ITK's ~2900 object files simply aren't touched again once
+      # built for the first identifier, since Ninja sees them as already
+      # up to date - this is the main win, ccache is a secondary safety net
+      # for whatever legitimately does need recompiling (e.g. the
+      # abi3/free-threaded-specific wrapping code).
+      CIBW_CONTAINER_ENGINE: "docker; create_args: --volume /tmp/ccache-cache:/ccache --volume /tmp/skbuild-build:/build"
+      CIBW_BEFORE_ALL_LINUX: "yum install -y ccache"
+      CIBW_ENVIRONMENT_LINUX: 'CCACHE_DIR=/ccache CCACHE_NOHASHDIR=1 CCACHE_MAXSIZE=10G CCACHE_COMPRESS=1 CCACHE_SLOPPINESS=include_file_mtime,include_file_ctime,pch_defines,time_macros SKBUILD_BUILD_DIR=/build SKBUILD_CMAKE_DEFINE="CMAKE_C_COMPILER_LAUNCHER=ccache;CMAKE_CXX_COMPILER_LAUNCHER=ccache"'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        with:
+          fetch-depth: 0
+      - name: Build Python wheels with cibuildwheel
+        uses: pypa/cibuildwheel@1828c10ab37f080699c7b81cea34097c684a7074 # v4.2.0
+        env:
+          CIBW_BUILD: "cp310-* cp311-* cp314t-*"
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+      - name: Build cp315t (prerelease) wheel with cibuildwheel
+        # cp315t is a pre-release, best-effort build: it may not yet be
+        # available in the manylinux image, so don't fail the job over it.
+        continue-on-error: true
+        uses: pypa/cibuildwheel@1828c10ab37f080699c7b81cea34097c684a7074 # v4.2.0
+        env:
+          CIBW_BUILD: "cp315t-*"
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+      - name: Upload wheel artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: artifacts-wheels-${{ matrix.artifact_suffix }}
+          path: wheelhouse/*.whl
+          if-no-files-found: ignore
 
   build:
     if: github.repository == 'SimpleITK/SimpleITK'
@@ -298,6 +363,7 @@ jobs:
       - build
       - doxygen
       - package-docker
+      - python-wheels
       - sdist
     runs-on: ubuntu-latest
     steps:
