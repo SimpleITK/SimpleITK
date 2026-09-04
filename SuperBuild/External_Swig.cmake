@@ -28,7 +28,7 @@ if(NOT SWIG_DIR)
     mark_as_advanced(USE_SWIG_FROM_GIT)
   endif()
 
-  set(SWIG_TARGET_VERSION "4.5.0")
+  set(SWIG_TARGET_VERSION "4.5.1")
 
   if(USE_SWIG_FROM_GIT)
     set(
