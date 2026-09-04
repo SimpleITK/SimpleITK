@@ -14,7 +14,9 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: '${{ github.workflow }}@${{ github.event.pull_request.head.sha || github.head_ref || github.ref }}'
+  # PR number is stable across pushes so superseded PR runs get cancelled; tag/release runs never are.
+  group: '${{ github.workflow }}@${{ github.event.pull_request.number || github.ref }}'
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Set minimal permissions for all jobs (read-only)
 permissions:
