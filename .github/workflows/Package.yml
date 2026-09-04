@@ -14,7 +14,9 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: '${{ github.workflow }}@${{ github.event.pull_request.head.sha || github.head_ref || github.ref }}'
+  # PR number is stable across pushes so superseded PR runs get cancelled; tag/release runs never are.
+  group: '${{ github.workflow }}@${{ github.event.pull_request.number || github.ref }}'
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Set minimal permissions for all jobs (read-only)
 permissions:
@@ -288,6 +290,34 @@ jobs:
           name: artifacts-sdist
           path: dist/simpleitk-*.tar.gz
 
+  # Actions `if:` expressions have no regex support, so a dedicated job computes this for reuse.
+  check-release-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      is_final: ${{ steps.check.outputs.is_final }}
+      is_prerelease: ${{ steps.check.outputs.is_prerelease }}
+    steps:
+      - name: Check release tag type
+        id: check
+        shell: bash
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "${REF_NAME}" == "latest" ||
+              "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
+            is_prerelease=true
+            is_final=false
+          elif [[ "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+            is_prerelease=false
+            is_final=true
+          else
+            is_prerelease=false
+            is_final=false
+          fi
+
+          echo "is_prerelease=${is_prerelease}" >> "$GITHUB_OUTPUT"
+          echo "is_final=${is_final}" >> "$GITHUB_OUTPUT"
+
   publish-github:
     if: github.event_name != 'pull_request' && (github.ref_name == 'latest' || startsWith(github.ref_name, 'v'))
     environment:
@@ -299,6 +329,7 @@ jobs:
       - doxygen
       - package-docker
       - sdist
+      - check-release-tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -374,13 +405,13 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
           GIT_SHA: ${{ github.sha }}
           DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
+          IS_PRERELEASE: ${{ needs.check-release-tag.outputs.is_prerelease }}
         run: |
           if [ "${TAG_NAME}" == "latest" ]; then
             gh release delete "${TAG_NAME}" --yes || true
           fi
 
-          if [[  "${TAG_NAME}" == "latest" ||
-              "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
+          if [ "${IS_PRERELEASE}" == "true" ]; then
             create_args="--prerelease"
           fi
 
@@ -398,7 +429,7 @@ jobs:
             gh release edit "${TAG_NAME}" --draft=false
           fi
 
-  publish-pypi:
+  publish-testpypi:
     if: github.event_name != 'pull_request' && startsWith(github.ref_name, 'v')
     environment:
       name: pypi-test
@@ -423,3 +454,32 @@ jobs:
         with:
           repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
           skip-existing: true
+
+  # Gated: requires manual approval via the pypi-release environment's required reviewers.
+  publish-pypi:
+    if: github.event_name != 'pull_request' && needs.check-release-tag.outputs.is_final == 'true'
+    environment:
+      name: pypi-release
+      url: ${{ vars.ENVIRONMENT_URL }}
+    permissions:
+      id-token: write  # for PyPI trusted publishing
+    needs:
+      - publish-github
+      - check-release-tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        id: download
+        with:
+          path: ${{ github.workspace }}/artifacts
+      - name: Prepare for PyPI upload
+        shell: bash
+        run: |
+          mkdir -p dist
+          mv $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "simpleitk-*.tar.gz" \) ) dist/
+      - name: PyPI Publish package
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
+        with:
+          repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
+          skip-existing: true
+          print-hash: true
