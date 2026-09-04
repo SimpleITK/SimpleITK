@@ -19,9 +19,8 @@ if(NOT PCRE2_DIR)
   #  PCRE2 (Perl Compatible Regular Expressions)
   #
 
-  set(PCRE2_TARGET_VERSION 10.44)
-  sitkSourceDownload(PCRE2_URL "pcre2-${PCRE2_TARGET_VERSION}.tar.gz")
-
+  set(PCRE2_TARGET_VERSION 10.47)
+  sitksourcedownload(PCRE2_URL "pcre2-${PCRE2_TARGET_VERSION}.tar.gz")
 
   # follow the standard EP_PREFIX locations
   set(pcre2_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/PCRE2-prefix/src/PCRE2-build)
