@@ -144,6 +144,20 @@ public:
   GetDirection() const;
   const std::vector<uint64_t> &
   GetSize() const;
+
+  /** \brief Query if the a sub-region of the file can be read without
+   * decoding the whole image.
+   *
+   * This value is valid after a successful call to ReadImageInformation or Execute.
+   *
+   * This reflects itk::ImageIOBase::CanStreamRead() for the file's
+   * ImageIO, which may depend on file-specific properties such as
+   * compression. If false, SetExtractIndex/SetExtractSize will
+   * still produce the requested region, but the ImageIO may need
+   * to read the entire file to do so.
+   */
+  bool
+  CanStreamRead() const;
   /** @} */
 
   /** \brief Get the meta-data dictionary keys
@@ -227,7 +241,7 @@ protected:
    * and image information.
    */
   void
-  UpdateImageInformationFromImageIO(const itk::ImageIOBase * iobase);
+  UpdateImageInformationFromImageIO(itk::ImageIOBase * iobase);
 
 private:
   // Internal method used implements extracting a region from the reader
@@ -260,6 +274,7 @@ private:
   std::vector<double> m_Spacing;
 
   std::vector<uint64_t> m_Size;
+  bool                  m_CanStreamRead{ false };
 
   std::vector<unsigned int> m_ExtractSize;
   std::vector<int>          m_ExtractIndex;

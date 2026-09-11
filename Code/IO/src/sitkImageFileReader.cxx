@@ -114,6 +114,8 @@ ImageFileReader::ToString() const
   out << "    Origin: " << this->m_Origin << std::endl;
   out << "    Spacing: " << this->m_Spacing << std::endl;
   out << "    Size: " << this->m_Size << std::endl;
+  out << "    CanStreamRead: ";
+  this->ToStringHelper(out, this->m_CanStreamRead) << std::endl;
 
   out << ImageReaderBase::ToString();
   return out.str();
@@ -133,7 +135,7 @@ ImageFileReader::GetFileName() const
 
 
 void
-ImageFileReader ::UpdateImageInformationFromImageIO(const itk::ImageIOBase * iobase)
+ImageFileReader ::UpdateImageInformationFromImageIO(itk::ImageIOBase * iobase)
 {
   PixelIDValueType pixelType;
   this->GetPixelIDFromImageIO(iobase, pixelType, m_Dimension);
@@ -174,6 +176,9 @@ ImageFileReader ::UpdateImageInformationFromImageIO(const itk::ImageIOBase * iob
   swap(origin, m_Origin);
   swap(spacing, m_Spacing);
   swap(size, m_Size);
+
+  // Note: This is a non-constant method.
+  m_CanStreamRead = iobase->CanStreamRead();
 
   this->m_pfGetMetaDataKeys = [capture0 = this->m_MetaDataDictionary.get()] { return capture0->GetKeys(); };
   this->m_pfHasMetaDataKey = [capture0 = this->m_MetaDataDictionary.get()](auto && PH1) {
@@ -232,11 +237,18 @@ ImageFileReader ::GetSize() const
   return this->m_Size;
 }
 
+bool
+ImageFileReader ::CanStreamRead() const
+{
+  return this->m_CanStreamRead;
+}
+
 void
 ImageFileReader ::ReadImageInformation()
 {
   itk::ImageIOBase::Pointer imageio = this->GetImageIOBase(this->m_FileName);
   this->UpdateImageInformationFromImageIO(imageio);
+
   sitkDebugMacro("ImageIO: " << imageio);
 }
 
