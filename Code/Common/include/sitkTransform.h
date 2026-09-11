@@ -214,6 +214,22 @@ public:
   std::vector<double>
   TransformVector(const std::vector<double> & vector, const std::vector<double> & point) const;
 
+  /** \brief Apply the inverse of this transform to an image's origin, spacing and direction.
+   *
+   * This changes the image's origin, spacing, and direction such
+   * that physical points are mapped to the same voxel index as
+   * before, but as if the image itself had been transformed by this
+   * transform's inverse. This is a metadata-only operation, no
+   * resampling is performed and the pixel data is not modified.
+   *
+   * This transform must have an inverse and its dimension must match
+   * the image's dimension, otherwise an exception is thrown.
+   *
+   * \sa itk::Transform::ApplyToImageMetadata
+   */
+  void
+  ApplyToImageMetadata(Image & image) const;
+
   // write
   void
   WriteTransform(const std::string & filename) const;

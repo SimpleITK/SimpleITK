@@ -505,6 +505,14 @@ Transform::TransformVector(const std::vector<double> & vector, const std::vector
 }
 
 
+void
+Transform::ApplyToImageMetadata(Image & image) const
+{
+  assert(m_PimpleTransform);
+  this->m_PimpleTransform->ApplyToImageMetadata(image);
+}
+
+
 bool
 Transform::IsLinear() const
 {
