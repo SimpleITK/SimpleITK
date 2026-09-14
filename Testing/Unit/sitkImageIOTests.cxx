@@ -1043,6 +1043,68 @@ TEST(IO, ImageFileReader_GetImageIOFromFileName)
 }
 
 
+TEST(IO, ImageFileReader_CanStreamRead)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image image = sitk::Image(10, 10, sitk::sitkUInt8);
+
+  sitk::ImageFileReader reader;
+
+  // Default constructed reader has not read any file yet.
+  EXPECT_FALSE(reader.CanStreamRead());
+
+  // Formats whose ImageIO is expected to support streamed reading for an
+  // uncompressed, freshly written file. Formats that currently do not
+  // support streaming are intentionally not tested here, so that ITK adding
+  // streaming support for them in the future does not break this test.
+  struct FormatExpectation
+  {
+    std::string extension;
+    std::string imageIOName;
+  };
+
+  const FormatExpectation formats[] = {
+    // Overrides CanStreamRead() and reports true when uncompressed/binary.
+    { "mha", "MetaImageIO" },
+    { "vtk", "VTKImageIO" },
+    // Derive from itk::StreamingImageIOBase, which reports true unconditionally.
+    { "hdf5", "HDF5ImageIO" },
+    { "mrc", "MRCImageIO" },
+  };
+
+  for (const auto & format : formats)
+  {
+    const std::string filename = dataFinder.GetOutputFile("IO.ImageFileReader_CanStreamRead." + format.extension);
+
+    ASSERT_NO_THROW(sitk::WriteImage(image, filename)) << "writing " << filename;
+
+    EXPECT_EQ(format.imageIOName, sitk::ImageFileReader::GetImageIOFromFileName(filename))
+      << "ImageIO for " << filename;
+
+    reader.SetFileName(filename);
+    ASSERT_NO_THROW(reader.ReadImageInformation()) << "reading information for " << filename;
+    EXPECT_TRUE(reader.CanStreamRead()) << "CanStreamRead for " << filename;
+
+    // Execute must agree, without requiring a prior call to ReadImageInformation.
+    sitk::ImageFileReader freshReader;
+    freshReader.SetFileName(filename);
+    ASSERT_NO_THROW(freshReader.Execute()) << "executing " << filename;
+    EXPECT_TRUE(freshReader.CanStreamRead()) << "CanStreamRead for " << filename;
+  }
+
+  // MetaImageIO: streaming is disabled when the file is compressed.
+  const std::string     mhaFilename = dataFinder.GetOutputFile("IO.ImageFileReader_CanStreamRead.mha");
+  sitk::ImageFileWriter compressedWriter;
+  compressedWriter.SetFileName(mhaFilename);
+  compressedWriter.UseCompressionOn();
+  compressedWriter.Execute(image);
+  reader.SetFileName(mhaFilename);
+  reader.ReadImageInformation();
+  EXPECT_FALSE(reader.CanStreamRead());
+}
+
+
 TEST(IO, ImageFileReader_Extract1)
 {
 
