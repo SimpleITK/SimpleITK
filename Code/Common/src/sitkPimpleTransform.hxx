@@ -185,6 +185,9 @@ public:
   virtual std::vector<double>
   TransformVector(const std::vector<double> & v, const std::vector<double> & p) const = 0;
 
+  virtual void
+  ApplyToImageMetadata(Image & image) const = 0;
+
   virtual TransformEnum
   GetTransformEnum() const = 0;
 
@@ -342,6 +345,20 @@ public:
       sitkSTLVectorToITK<typename TransformType::InputPointType>(pt);
 
     return sitkITKVectorToSTL<double>(this->m_Transform->TransformVector(itk_vec, itk_pt));
+  }
+
+  void
+  ApplyToImageMetadata(Image & image) const override
+  {
+    using ImageBaseType = itk::ImageBase<InputDimension>;
+    ImageBaseType * itkImage = dynamic_cast<ImageBaseType *>(image.GetITKBase());
+
+    if (!itkImage)
+    {
+      sitkExceptionMacro("Transform's dimension does not match the image's dimension!");
+    }
+
+    this->m_Transform->ApplyToImageMetadata(itkImage);
   }
 
   TransformEnum
