@@ -11,6 +11,7 @@ on:
     branches: [ master, main ]
     paths:
       - .github/workflows/Package.yml
+      - Utilities/Distribution/manylinux/**
   workflow_dispatch:
 
 concurrency:
