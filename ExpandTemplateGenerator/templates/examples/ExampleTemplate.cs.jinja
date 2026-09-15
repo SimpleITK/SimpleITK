@@ -1,0 +1,173 @@
+/*=========================================================================
+ *
+ *  Copyright NumFOCUS
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
+{#- Jinja2 template for generating C# example programs. -#}
+{%- if example is defined and example is not none -%}
+  {%- set ex = example -%}
+{%- elif tests is defined and tests -%}
+  {%- set ex = tests[0] -%}
+{%- else -%}
+  {%- set ex = none -%}
+{%- endif -%}
+{%- set named_image_inputs = [] -%}
+{%- if inputs -%}
+  {%- for inp in inputs -%}
+    {%- if inp.type == "Image" and not inp.optional -%}
+      {%- set _ = named_image_inputs.append(inp) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- set total_inputs = number_of_inputs + named_image_inputs | length -%}
+{%- set has_output = not no_return_image -%}
+{%- set procedure_name = name | regex_replace('ImageSource$', 'Source') | regex_replace('(ImageFilter|Filter)$', '') -%}
+{%- set ns = namespace(exec_args="") -%}
+{%- for i in range(1, number_of_inputs + 1) -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ "image" ~ (i if number_of_inputs > 1 else "") -%}
+{%- endfor -%}
+{%- for inp in named_image_inputs -%}
+  {%- if ns.exec_args -%}{%- set ns.exec_args = ns.exec_args ~ ", " -%}{%- endif -%}
+  {%- set ns.exec_args = ns.exec_args ~ (inp.name[0] | lower ~ inp.name[1:]) -%}
+{%- endfor -%}
+
+using System;
+using itk.simple;
+
+/// <summary>
+/// Example program for {{ name }}.
+{% if briefdescription %}
+/// {{ briefdescription }}
+{% endif %}
+/// Usage:
+///   {{ name }} {% for i in range(1, number_of_inputs + 1) %}[input{{ i if number_of_inputs > 1 else "" }}] {% endfor %}{% for inp in named_image_inputs %}[{{ inp.name[0] | lower ~ inp.name[1:] }}] {% endfor %}{% if has_output %}[output]{% endif %}
+
+/// </summary>
+class {{ name }}Example {
+
+  static int Main(string[] args) {
+    try {
+      const int expectedArgs = {{ total_inputs + (1 if has_output else 0) }};
+      if (args.Length < expectedArgs) {
+        Console.WriteLine(
+          "Usage: {{ name }}"
+{% for i in range(1, number_of_inputs + 1) %}
+          + " <input{{ i if number_of_inputs > 1 else "" }}>"
+{% endfor %}
+{% for inp in named_image_inputs %}
+          + " <{{ inp.name[0] | lower ~ inp.name[1:] }}>"
+{% endfor %}
+{% if has_output %}
+          + " <output>"
+{% endif %}
+        );
+        return 1;
+      }
+
+      int argIdx = 0;
+      ImageFileReader reader = new ImageFileReader();
+      {{ name }} filter = new {{ name }}();
+
+{% if number_of_inputs == 1 %}
+      // Read the input image
+      reader.SetFileName(args[argIdx++]);
+      Image image = reader.Execute();
+{% elif number_of_inputs >= 2 %}
+      // Read the input images
+{% for i in range(1, number_of_inputs + 1) %}
+      reader.SetFileName(args[argIdx++]);
+      Image image{{ i }} = reader.Execute();
+{% endfor %}
+{% endif %}
+{% for inp in named_image_inputs %}
+      // Read the {{ inp.name[0] | lower ~ inp.name[1:] }} image
+      reader.SetFileName(args[argIdx++]);
+      Image {{ inp.name[0] | lower ~ inp.name[1:] }} = reader.Execute();
+{% endfor %}
+
+      // Configure filter parameters
+{% if ex and ex.settings %}
+{% for setting in ex.settings %}
+{% if setting.dim_vec is defined and setting.dim_vec %}
+      {
+        {%- if setting.type is defined and setting.type == "bool" -%}
+          {%- set cs_type = "bool" -%}{%- set vec_type = "VectorBool" -%}
+        {%- elif setting.type is defined and setting.type in ("unsigned int", "uint32_t") -%}
+          {%- set cs_type = "uint" -%}{%- set vec_type = "VectorUInt32" -%}
+        {%- elif setting.type is defined and setting.type == "int" -%}
+          {%- set cs_type = "int" -%}{%- set vec_type = "VectorInt32" -%}
+        {%- else -%}
+          {%- set cs_type = "double" -%}{%- set vec_type = "VectorDouble" -%}
+        {%- endif %}
+        {%- if setting.csharp_value is defined and setting.csharp_value is not none %}
+        {{ vec_type }} param = {{ setting.csharp_value }};
+        {%- else %}
+        {{ vec_type }} param = new {{ vec_type }}(new {{ cs_type }}[] { {{ setting.value | join(", ") }} });
+        {%- endif %}
+        filter.Set{{ setting.parameter }}(param);
+      }
+{% elif setting.type is defined and setting.type == "bool" %}
+      filter.Set{{ setting.parameter }}({{ "true" if setting.value else "false" }});
+{% else %}
+      filter.Set{{ setting.parameter }}({{ setting.csharp_value if (setting.csharp_value is defined and setting.csharp_value is not none) else setting.value }});
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if has_output %}
+      // Execute the filter
+      Image output = filter.Execute({{ ns.exec_args }});
+
+      // Write the output image
+      ImageFileWriter writer = new ImageFileWriter();
+      writer.SetFileName(args[argIdx++]);
+      writer.Execute(output);
+{% else %}
+      // Execute the filter
+      filter.Execute({{ ns.exec_args }});
+
+{% if measurements %}
+      // Print computed measurements
+{%- set ns_p = namespace(has_param=false) %}
+{%- for m in measurements %}{% if m.parameters is defined and m.parameters %}{% set ns_p.has_param = true %}{% endif %}{% endfor %}
+{% for m in measurements %}
+{%- if not (m.no_print is defined and m.no_print) and not (m.parameters is defined and m.parameters) %}
+      Console.WriteLine("{{ m.name }}: " + filter.Get{{ m.name }}());
+{%- endif %}
+{% endfor %}
+{%- if ns_p.has_param %}
+      // Per-label measurements require a label argument:
+      foreach (var label in filter.GetLabels()) {
+        Console.WriteLine("Label: " + label);
+{% for m in measurements %}
+{%- if m.parameters is defined and m.parameters %}
+        Console.WriteLine("  {{ m.name }}: " + filter.Get{{ m.name }}(label));
+{%- endif %}
+{% endfor %}
+      }
+{%- endif %}
+{% endif %}
+{% endif %}
+
+      return 0;
+    }
+    catch (Exception e) {
+      Console.WriteLine("Exception: " + e.Message);
+      return 1;
+    }
+  }
+
+}

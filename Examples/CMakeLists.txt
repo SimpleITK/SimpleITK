@@ -60,6 +60,69 @@ add_subdirectory(CppInPlace)
 add_subdirectory(SliceBySliceDecorator)
 add_subdirectory(Logging)
 
+# ---------------------------------------------------------------------------
+# Generated filter examples
+#
+# The GenerateFilterExamples target expands Jinja2 templates for every filter
+# listed in example_filter_list.yaml and writes the output into
+# Examples/<FilterName>/ in the source tree.
+#
+# Run the target once (or whenever filter YAMLs or templates change) to
+# regenerate the files:
+#
+#   cmake --build <build-dir> --target GenerateFilterExamples
+#
+# After generation, each filter subdirectory is picked up automatically by
+# the add_subdirectory loop below.
+# ---------------------------------------------------------------------------
+
+if(CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
+  include(sitkGenerateExamples)
+  sitk_generate_filter_examples()
+endif()
+
+# Add every generated filter example subdirectory that already exists on disk.
+set(
+  _sitk_example_filter_list
+  "${CMAKE_CURRENT_SOURCE_DIR}/example_filter_list.yaml"
+)
+if(EXISTS "${_sitk_example_filter_list}")
+  # Resolve a Python interpreter for YAML parsing (may not be set in standalone mode).
+  if(DEFINED SimpleITK_Python_EXECUTABLE)
+    set(_sitk_py "${SimpleITK_Python_EXECUTABLE}")
+  elseif(DEFINED Python_EXECUTABLE)
+    set(_sitk_py "${Python_EXECUTABLE}")
+  else()
+    find_package(Python 3.9...<4 QUIET COMPONENTS Interpreter)
+    set(_sitk_py "${Python_EXECUTABLE}")
+  endif()
+
+  execute_process(
+    COMMAND
+      "${_sitk_py}" -c
+      "import sys, yaml\n\
+try:\n\
+    from yaml import CSafeLoader as Loader\n\
+except ImportError:\n\
+    from yaml import SafeLoader as Loader\n\
+data = yaml.load(open(sys.argv[1]), Loader=Loader)\n\
+print(';'.join(str(f) for f in data.get('filters', [])))"
+      "${_sitk_example_filter_list}"
+    OUTPUT_VARIABLE _sitk_generated_filters
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_STRIP_TRAILING_WHITESPACE
+  )
+  foreach(_sitk_filter IN LISTS _sitk_generated_filters)
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${_sitk_filter}/CMakeLists.txt")
+      add_subdirectory("${_sitk_filter}")
+    endif()
+  endforeach()
+  unset(_sitk_generated_filters)
+  unset(_sitk_filter)
+endif()
+unset(_sitk_example_filter_list)
+unset(_sitk_py)
+
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)
   if(WRAP_${LANG})
