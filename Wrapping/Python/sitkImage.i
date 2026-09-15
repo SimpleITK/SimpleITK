@@ -330,6 +330,100 @@
               'data': memoryview(_SimpleITK.ImageBuffer(self))
           }
 
+        @property
+        def buffer(self):
+          """
+          Read-only memoryview of the image's pixel buffer.
+
+          Uses the same shape/format conventions as __array_interface__. The
+          returned memoryview holds a strong reference to this Image (via an
+          internal ImageBuffer object), so it remains valid even after the
+          original Image variable goes out of scope.
+          """
+          return memoryview(_SimpleITK.ImageBuffer(self))
+
+        @buffer.setter
+        def buffer(self, value):
+          """
+          Copy new pixel data into this image's existing buffer, in place.
+
+          `value` must be a buffer-protocol object (bytes, bytearray,
+          memoryview, array.array, a NumPy array, ...) whose format and shape
+          exactly match this image's pixel type, size, and number of
+          components per pixel. This overwrites only the pixel data; this
+          image's spacing, origin, direction, and metadata are unchanged.
+
+          Raises:
+          -------
+          TypeError
+              If the image pixel type is not compatible with the buffer
+              interface, or the given buffer's format does not match.
+          ValueError
+              If the given buffer's shape does not match this image's shape.
+          """
+          _sitk_buffer_format = {
+              sitkUInt8: 'B',
+              sitkInt8: 'b',
+              sitkUInt16: 'H',
+              sitkInt16: 'h',
+              sitkUInt32: 'I',
+              sitkInt32: 'i',
+              sitkUInt64: 'Q',
+              sitkInt64: 'q',
+              sitkFloat32: 'f',
+              sitkFloat64: 'd',
+              sitkComplexFloat32: 'Zf',
+              sitkComplexFloat64: 'Zd',
+              sitkVectorUInt8: 'B',
+              sitkVectorInt8: 'b',
+              sitkVectorUInt16: 'H',
+              sitkVectorInt16: 'h',
+              sitkVectorUInt32: 'I',
+              sitkVectorInt32: 'i',
+              sitkVectorUInt64: 'Q',
+              sitkVectorInt64: 'q',
+              sitkVectorFloat32: 'f',
+              sitkVectorFloat64: 'd'
+          }
+          sitk_pixel_id = self.GetPixelIDValue()
+
+          expected_format = _sitk_buffer_format.get(sitk_pixel_id, None)
+
+          if expected_format is None:
+            raise TypeError("The SimpleITK image pixel type is not compatible with the buffer interface")
+
+          src = memoryview(value)
+
+          if src.format != expected_format:
+            raise TypeError(f"Buffer format '{src.format}' does not match the image's pixel type (expected '{expected_format}')")
+
+          expected_shape = self.GetSize()[::-1]
+          if sitk_pixel_id in { sitkVectorUInt8, sitkVectorInt8, sitkVectorUInt16, sitkVectorInt16,
+                               sitkVectorUInt32, sitkVectorInt32, sitkVectorUInt64, sitkVectorInt64,
+                               sitkVectorFloat32, sitkVectorFloat64 }:
+            expected_shape = expected_shape + (self.GetNumberOfComponentsPerPixel(),)
+
+          expected_count = 1
+          for dim in expected_shape:
+            expected_count *= dim
+
+          # A flat 1-D buffer (e.g. bytes/bytearray/array.array, or the pickled
+          # state in __setstate__) carries no shape information to validate,
+          # so only its total element count is checked - the same convention
+          # already relied on elsewhere for flat buffers. Anything with more
+          # dimensions is assumed to be shape-aware (e.g. a NumPy array) and
+          # must match this image's shape exactly, to catch the silent
+          # reinterpretation/transposition that plain _SetImageFromArray does
+          # not.
+          if src.ndim == 1:
+            if src.shape[0] != expected_count:
+              raise ValueError(
+                  f"Buffer has {src.shape[0]} elements, expected {expected_count} for image shape {expected_shape}")
+          elif src.shape != expected_shape:
+            raise ValueError(f"Buffer shape {src.shape} does not match the image's shape {expected_shape}")
+
+          _SetImageFromArray(value, self)
+
         def __copy__(self):
           """Create a SimpleITK shallow copy, where the internal image share is shared with copy on write implementation."""
           return Image(self)
