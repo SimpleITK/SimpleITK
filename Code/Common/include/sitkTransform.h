@@ -223,7 +223,8 @@ public:
    * resampling is performed and the pixel data is not modified.
    *
    * This transform must have an inverse and its dimension must match
-   * the image's dimension, otherwise an exception is thrown.
+   * the image's dimension, otherwise an exception is thrown. This
+   * operation is only well-defined for linear transforms.
    *
    * \sa itk::Transform::ApplyToImageMetadata
    */
