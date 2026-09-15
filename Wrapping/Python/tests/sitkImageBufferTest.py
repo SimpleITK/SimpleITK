@@ -378,6 +378,27 @@ def test_get_weak_memoryview_with_flags():
     assert mv.format == 'i'
 
 
+def test_get_weak_memoryview_writable_rejected():
+    """Test that requesting a writable buffer is explicitly rejected"""
+    import inspect
+
+    if not hasattr(inspect, 'BufferFlags'):
+        pytest.skip("BufferFlags not available (requires Python 3.12+)")
+
+    BufferFlags = inspect.BufferFlags
+    img = sitk.Image([4, 6], sitk.sitkInt32)
+    buf = ImageBuffer(img)
+
+    with pytest.raises(BufferError, match="Cannot create writable buffer"):
+        buf.get_weak_memoryview(BufferFlags.WRITABLE)
+
+    with pytest.raises(BufferError, match="Cannot create writable buffer"):
+        buf.get_weak_memoryview(BufferFlags.FULL)
+
+    with pytest.raises(BufferError, match="Cannot create writable buffer"):
+        buf.get_weak_memoryview(BufferFlags.RECORDS)
+
+
 def test_get_weak_memoryview_readonly_enforcement():
     """Test that get_weak_memoryview always returns read-only memoryview"""
     img = sitk.Image([3, 5], sitk.sitkFloat64)
