@@ -27,6 +27,7 @@
 #include <vector>
 #include <memory>
 #include <type_traits>
+#include <functional>
 
 namespace itk
 {
@@ -199,6 +200,23 @@ public:
   const itk::DataObject *
   GetITKBase() const;
   /**@}*/
+
+  /** \brief Tie an external resource's lifetime to this image's underlying pixel data.
+   *
+   * releaseCallback is invoked exactly once, when the last Image (including
+   * shallow copies made via the copy constructor) sharing this image's
+   * current underlying pixel data is destroyed. This is intended for
+   * language wrappings that import a foreign, externally-owned buffer as
+   * this image's pixel data (e.g. via ImportImageFilter) and need the
+   * foreign buffer's owner kept alive for exactly that long, released
+   * automatically - and only - once it becomes safe to do so.
+   *
+   * releaseCallback must not throw, and must not itself call any method on
+   * this Image (e.g. GetITKBase, MakeUnique), since it may run during this
+   * image's own destruction.
+   */
+  void
+  TieBufferLifetime(std::function<void()> releaseCallback);
 
   /** Get the pixel type
    *
