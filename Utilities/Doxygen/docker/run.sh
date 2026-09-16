@@ -23,9 +23,18 @@ python3 -m venv ${BLD_DIR}/venv && \
     . ${BLD_DIR}/venv/bin/activate && \
     python -m pip install --upgrade pip
 
-if [ -f ${SRC_DIR}/.github/workflows/requirements-build.txt ]; then
-   python -m pip install -r ${SRC_DIR}/.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.5.0
-fi
+# Install the [build-system] requires from pyproject.toml (jinja2, jsonschema, pyyaml, swig, ...)
+python -c "import tomllib" 2>/dev/null || python -m pip install --quiet tomli
+requires=$(PYPROJECT_FILE=${SRC_DIR}/pyproject.toml python -c "
+import os
+try:
+    import tomllib as toml
+except ImportError:
+    import tomli as toml
+with open(os.environ['PYPROJECT_FILE'], 'rb') as f:
+    print('\n'.join(toml.load(f)['build-system']['requires']))
+")
+python -m pip install $requires
 
 # Build SimpleITK with FetchContent for ITK
 mkdir -p ${BLD_DIR} && \
