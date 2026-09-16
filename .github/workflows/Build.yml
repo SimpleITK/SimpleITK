@@ -158,10 +158,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version || env.DEFAULT_PYTHON_VERSION }}
     - name: Install build dependencies
+      uses: ./.github/actions/install-build-dependencies
+      with:
+        extra-packages: ninja cmake~=3.31.0
+        install-pyproject-build-requires: 'true'
+    - name: Install additional dependencies
       shell: bash
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r ./.github/workflows/requirements-build.txt jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.4.0
         if [[ "${{ matrix.use-ccache }}" == "true" ]]; then
           if [[ "${{ runner.os }}" == "Linux" ]]; then
             sudo apt-get install -y ccache

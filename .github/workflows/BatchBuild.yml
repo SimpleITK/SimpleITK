@@ -210,15 +210,13 @@ jobs:
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\ITK-prefix\bin" >> $GITHUB_PATH
           echo "${{ env.CTEST_BINARY_DIRECTORY }}\SimpleITK-build\bin\${{ matrix.cmake-build-type }}" >> $GITHUB_PATH
       - name: Install build dependencies
+        uses: ./.github/actions/install-build-dependencies
+        with:
+          extra-packages: ninja cmake~=3.31.0
+          install-pyproject-build-requires: ${{ matrix.use-superbuild != 'true' }}
+      - name: Install additional dependencies
         shell: bash
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r ./.github/workflows/requirements-build.txt
-
-          if [[ '${{ matrix.use-superbuild }}' != 'true' ]]; then
-            python -m pip install jinja2~=3.1 jsonschema~=4.24 pyyaml~=6.0 swig~=4.5.0
-          fi
-
           if [  ! -z "${{ matrix.xcode-version }}" ]; then
             sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode-version }}.app/Contents/Developer/
             xcode-select -p
