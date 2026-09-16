@@ -34,6 +34,9 @@ classifiers = [
 ]
 requires-python = ">=3.8"
 
+[project.optional-dependencies]
+test = ["numpy>=1.25.0", "pytest"]
+
 [project.urls]
 Homepage = "http://simpleitk.org/"
 "Bug Tracker" = "https://github.com/SimpleITK/SimpleITK/issues"
