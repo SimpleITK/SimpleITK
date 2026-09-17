@@ -14,6 +14,11 @@ concurrency:
   group: '${{ github.workflow }}@${{ github.head_ref || github.ref }}'
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# Set minimal permissions for all jobs (read-only)
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   build:
     # The CMake configure and build commands are platform-agnostic and should work a cross
