@@ -29,6 +29,7 @@ set(
   itkSliceImageFilterTest.cxx
   sitkImageViewerTest.cxx
   sitkDemonsRegistrationTests.cxx
+  sitkConcurrentImageReadTests.cxx
 )
 
 if(SimpleITK_MAX_DIMENSION GREATER_EQUAL 4)
