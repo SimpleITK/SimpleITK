@@ -1,0 +1,43 @@
+name: 'Install Build Dependencies'
+description: >-
+  Upgrade pip and install extra pip packages, and/or the build dependencies
+  listed in the 'requires' field of the [build-system] table in a
+  pyproject.toml file (PEP 518).
+inputs:
+  extra-packages:
+    description: 'Pip package specifiers to install (space-separated)'
+    required: false
+    default: ''
+  install-pyproject-build-requires:
+    description: "Whether to also install the packages from the [build-system] table's requires field ('true' or 'false')"
+    required: false
+    default: 'false'
+  pyproject-path:
+    description: 'Path to the pyproject.toml file, relative to the repository root (github.workspace)'
+    required: false
+    default: 'pyproject.toml'
+
+runs:
+  using: composite
+  steps:
+    - name: Install extra packages
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        if [ -n "${{ inputs.extra-packages }}" ]; then
+          python -m pip install ${{ inputs.extra-packages }}
+        fi
+    - name: Install pyproject.toml build-system requires
+      if: inputs.install-pyproject-build-requires == 'true'
+      shell: bash
+      run: |
+        python -c "import tomllib" 2>/dev/null || python -m pip install --quiet tomli
+        requires=$(python -c "
+        try:
+            import tomllib as toml
+        except ImportError:
+            import tomli as toml
+        with open(r'${{ github.workspace }}/${{ inputs.pyproject-path }}', 'rb') as f:
+            print('\n'.join(toml.load(f)['build-system']['requires']))
+        ")
+        python -m pip install $requires
