@@ -1527,6 +1527,7 @@ jouy
 jp
 jpeg
 jpg
+jq
 json
 jsrt
 jupyter
@@ -1558,6 +1559,7 @@ li
 libc
 libpng
 libs
+libsimpleitk
 lightseagreen
 linalg
 linearize
