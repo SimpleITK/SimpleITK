@@ -1,0 +1,61 @@
+name: ProxTVImageFilter
+itk_name: ProxTVImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: RealPixelIDTypeList
+members:
+  - name: MaximumNumberOfIterations
+    type: unsigned int
+    default: 10u
+    doc: Maximum number of iterations for the optimization.
+  - name: Weights
+    type: double
+    dim_vec: true
+    default: std::vector<double>(3, 1.0)
+    itk_type: typename FilterType::ArrayType
+    doc: Weights for each image dimension in the TV norm.
+  - name: Norms
+    type: double
+    dim_vec: true
+    default: std::vector<double>(3, 1.0)
+    itk_type: typename FilterType::ArrayType
+    doc: Norms for each image dimension in the TV norm.
+tests:
+  - tag: default
+    description: Run with default settings
+    settings: []
+    tolerance: 1.0e-5
+    inputs:
+      - Input/RA-Float.nrrd
+  - tag: custom_weights_norms
+    description: Custom weights and norms for TV denoising
+    settings:
+      - parameter: Weights
+        type: double
+        dim_vec: true
+        value:
+          - 1.0
+          - 2.0
+          - 1.0
+      - parameter: Norms
+        type: double
+        dim_vec: true
+        value:
+          - 2.0
+          - 1.0
+          - 2.0
+      - parameter: MaximumNumberOfIterations
+        type: unsigned int
+        value: 20
+    tolerance: 1.0e-5
+    inputs:
+      - Input/RA-Float.nrrd
+
+briefdescription: Total Variation (TV) denoising using the ProxTV algorithm.
+detaileddescription: |
+  The ProxTVImageFilter applies total variation denoising to an image using the ProxTV algorithm. It minimizes the TV norm of the image, which is useful for edge-preserving smoothing and noise reduction. The filter allows control over the weights and norms for each image dimension, and the maximum number of iterations for the optimization.
+itk_module: TotalVariation
+itk_group: TotalVariation
+in_place: false
