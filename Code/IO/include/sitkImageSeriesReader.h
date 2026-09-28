@@ -140,7 +140,10 @@ public:
    * SeriesUID contains multiple 3D volumes - as can occur with
    * perfusion and DTI imaging.
    * \param loadSequences     Parse any sequences in the DICOM data set. Loading DICOM files is faster when sequences
-   *are not needed.
+   * are not needed.
+   * \param failOnAmbiguousOrdering When true, throw an exception when a series cannot be ordered geometrically
+   * (duplicate ImagePositionPatient, inconsistent or missing ImageOrientationPatient). When false, fall back to the
+   * legacy heuristics that are not DICOM compliant, so output should be treated cautiously.
    *
    * \sa itk::GDCMSeriesFileNames
    **/
@@ -149,7 +152,8 @@ public:
                          const std::string & seriesID = "",
                          bool                useSeriesDetails = false,
                          bool                recursive = false,
-                         bool                loadSequences = false);
+                         bool                loadSequences = false,
+                         bool                failOnAmbiguousOrdering = true);
 
   /** \brief Get all the seriesIDs from a DICOM data set
    *

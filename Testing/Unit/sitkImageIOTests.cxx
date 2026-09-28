@@ -30,6 +30,7 @@
 #include <itkObjectFactoryBase.h>
 #include <itkCreateObjectFunction.h>
 #include <itkVersion.h>
+#include <itkExceptionObject.h>
 
 #include <cmath>
 #include <itksys/SystemTools.hxx>
@@ -752,6 +753,59 @@ TEST(IO, DicomSeriesReader)
   EXPECT_EQ(image2.GetDimension(), image2_reverse.GetDimension());
   EXPECT_EQ(image2.GetNumberOfComponentsPerPixel(), image2_reverse.GetNumberOfComponentsPerPixel());
 }
+
+// Regression test for the failOnAmbiguousOrdering parameter added to
+// ImageSeriesReader::GetGDCMSeriesFileNames. Rather than adding new baseline
+// DICOM data, the existing DicomSeries slices are read back and rewritten
+// with an identical Image Position (Patient) tag so that the series can no
+// longer be ordered geometrically.
+TEST(IO, ImageSeriesReader_GetGDCMSeriesFileNames)
+{
+  const std::string dicomDir = dataFinder.GetDirectory() + "/Input/DicomSeries";
+
+  const std::vector<sitk::PathType> orderedFileNames = sitk::ImageSeriesReader::GetGDCMSeriesFileNames(dicomDir);
+  ASSERT_GE(orderedFileNames.size(), 2u);
+
+  // The original series can be sorted geometrically, so both modes succeed.
+  EXPECT_NO_THROW(sitk::ImageSeriesReader::GetGDCMSeriesFileNames(dicomDir, "", false, false, false, true));
+  EXPECT_NO_THROW(sitk::ImageSeriesReader::GetGDCMSeriesFileNames(dicomDir, "", false, false, false, false));
+
+  const sitk::PathType ambiguousDir = dataFinder.GetOutputDirectory() + "/IO.ImageSeriesReader_GetGDCMSeriesFileNames";
+  if (itksys::SystemTools::FileExists(ambiguousDir))
+  {
+    itksys::SystemTools::RemoveADirectory(ambiguousDir);
+  }
+  itksys::SystemTools::MakeDirectory(ambiguousDir);
+
+  sitk::ImageFileReader reader;
+  sitk::ImageFileWriter writer;
+  // Preserve the original study/series UIDs so the rewritten slices are still
+  // recognized as a single series.
+  writer.KeepOriginalImageUIDOn();
+
+  for (size_t i = 0; i < orderedFileNames.size(); ++i)
+  {
+    reader.SetFileName(orderedFileNames[i]);
+    sitk::Image slice = reader.Execute();
+
+    // Force a duplicate Image Position (Patient) to make the ordering ambiguous.
+    slice.SetMetaData("0020|0032", "0\\0\\0");
+
+    writer.SetFileName(ambiguousDir + "/" + std::to_string(i) + ".dcm");
+    writer.Execute(slice);
+  }
+
+  // The legacy heuristics do not require geometric ordering and should still succeed.
+  std::vector<sitk::PathType> legacyFileNames;
+  EXPECT_NO_THROW(legacyFileNames =
+                    sitk::ImageSeriesReader::GetGDCMSeriesFileNames(ambiguousDir, "", false, false, false, false));
+  EXPECT_EQ(orderedFileNames.size(), legacyFileNames.size());
+
+  // The non heuristic approach should fail
+  EXPECT_THROW(sitk::ImageSeriesReader::GetGDCMSeriesFileNames(ambiguousDir, "", false, false, false, true),
+               itk::ExceptionObject);
+}
+
 
 TEST(IO, ImageSeriesReader_Spacing)
 {
