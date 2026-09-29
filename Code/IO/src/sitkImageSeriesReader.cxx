@@ -61,7 +61,8 @@ ImageSeriesReader::GetGDCMSeriesFileNames(const PathType &    directory,
                                           const std::string & seriesID,
                                           bool                useSeriesDetails,
                                           bool                recursive,
-                                          bool                loadSequences)
+                                          bool                loadSequences,
+                                          bool                failOnAmbiguousOrdering)
 {
   GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
 
@@ -70,6 +71,7 @@ ImageSeriesReader::GetGDCMSeriesFileNames(const PathType &    directory,
   gdcmSeries->SetInputDirectory(directory);
   gdcmSeries->SetUseSeriesDetails(useSeriesDetails);
   gdcmSeries->SetLoadSequences(loadSequences);
+  gdcmSeries->SetFailOnAmbiguousOrdering(failOnAmbiguousOrdering);
   // Skip private tags. Loading DICOM files is faster when private tags are not needed.
   gdcmSeries->SetLoadPrivateTags(false);
 
