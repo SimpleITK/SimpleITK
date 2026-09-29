@@ -67,8 +67,9 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# ITK 5.4.6 release
-set(_DEFAULT_ITK_GIT_TAG "v5.4.7")
+# release-5.4 commit; includes the ApplyToImageMetadata non-invertible-transform
+# fix (ITK #6583, backported in #6914), not yet in a tagged v5.4.x release
+set(_DEFAULT_ITK_GIT_TAG "f51ee1e4fd63e435f8213556ef76e6c3b31ad04a")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag or hash for ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
