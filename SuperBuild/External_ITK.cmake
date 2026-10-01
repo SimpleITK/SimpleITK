@@ -62,13 +62,13 @@ VariableListToArgs( ITK_VARS  ep_itk_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 
 
-set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/InsightSoftwareConsortium/ITK.git" CACHE STRING "URL of ITK Git repository")
+set(ITK_GIT_REPOSITORY "${git_protocol}://github.com/blowekamp/ITK.git" CACHE STRING "URL of ITK Git repository")
 mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# ITK 5.4.6 release
-set(_DEFAULT_ITK_GIT_TAG "v5.4.7")
+# blowekamp/ITK fix-hdf5-imageio-thread-safety-5.4 branch, based on release-5.4 (2026-10-01)
+set(_DEFAULT_ITK_GIT_TAG "75f8ee9edb48b12df5ddc87a291e319cfc09feb5")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag or hash for ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
