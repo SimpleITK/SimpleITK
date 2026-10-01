@@ -52,6 +52,10 @@
       "type": "string",
       "description": "Output pixel type used for the output image template of the filter (optional)."
     },
+    "constant_compute_type": {
+      "type": "string",
+      "description": "C++ type (e.g. 'double') used for the 'constant' operand's ITK image template parameter in the single-image constant-overload dispatch ('image op constant' / 'constant op image'), in place of the image's own pixel/component type. Only supported by 'BinaryFunctorFilter'. Without this, the constant is cast (via ToPixelType, a bare static_cast) down to the image's pixel type *before* the ITK filter runs, silently truncating fractional or out-of-range constants (e.g. Multiply(uint8Image, 0.5) becomes Multiply(uint8Image, 0)). With this set, the ITK filter is instantiated with the constant's operand type fixed to 'constant_compute_type' and the raw constant is passed through unconverted, so the operation itself runs at that precision and only the final result is cast to the output pixel type (optional)."
+    },
     "vector_pixel_types_by_component": {
       "type": "string",
       "description": "Allowed vector pixel types (optional)"
