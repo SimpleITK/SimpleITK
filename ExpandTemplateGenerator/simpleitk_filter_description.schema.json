@@ -48,6 +48,14 @@
       "type": "string",
       "description": "Allowed pixel types (enum or type list) for the filter. The type lists are defined in sitkPixelIDTypeLists.h. Examples: 'BasicPixelIDTypeList', 'IntegerPixelIDTypeList'."
     },
+    "pixel_types_scalar_only": {
+      "type": "string",
+      "description": "Additional pixel types (a type list, same convention as 'pixel_types') registered only into the single-image constant-overload dispatch (the 'image op constant' and 'constant op image' factories), not into the main two-full-image 'pixel_types' factory. Used to enable 'image op constant' for a pixel type (e.g. VectorPixelIDTypeList) without enabling 'image op image' for that same type (optional)."
+    },
+    "vector_pixel_types_broadcast": {
+      "type": "string",
+      "description": "Vector pixel types (a type list, same convention as 'pixel_types') that may pair directly -- with no per-component decomposition -- with 'BasicPixelIDTypeList' in either image argument position of the main two-full-image dispatch. Only the position-matched pair (e.g. VectorFloat32 with BasicFloat32) is registered for each entry, not the full cross product with 'BasicPixelIDTypeList', to avoid a combinatorial explosion of template instantiations; this list must therefore have the same length and component-type order as 'BasicPixelIDTypeList'. Used to enable e.g. 'vectorImage op scalarImage' and 'scalarImage op vectorImage' without enabling 'vectorImage op vectorImage'. Only supported by 'BinaryFunctorFilter' for a simple two-image filter with no extra 'inputs' (optional)."
+    },
     "output_pixel_type": {
       "type": "string",
       "description": "Output pixel type used for the output image template of the filter (optional)."

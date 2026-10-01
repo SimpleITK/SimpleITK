@@ -25,6 +25,9 @@
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
+#include <sitkMultiplyImageFilter.h>
+#include <sitkAddImageFilter.h>
+#include <sitkSubtractImageFilter.h>
 #include <sitkStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkFastMarchingBaseImageFilter.h>
@@ -1532,4 +1535,91 @@ TEST(BasicFilters, N4BiasFieldCorrectionImageFilter_GetLogBiasField)
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetOrigin(), logBiasField.GetOrigin(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetSpacing(), logBiasField.GetSpacing(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetDirection(), logBiasField.GetDirection(), 1e-8);
+}
+
+TEST(BasicFilters, Multiply_VectorAndComplexConstant)
+{
+  namespace sitk = itk::simple;
+
+  // VectorFloat32 image (3 components) multiplied by a scalar constant
+  // should broadcast the constant across every component.
+  sitk::Image vecImage({ 2, 2 }, sitk::sitkVectorFloat32, 3);
+  vecImage.SetPixelAsVectorFloat32({ 0, 0 }, { 1.0, 2.0, 3.0 });
+  vecImage.SetPixelAsVectorFloat32({ 1, 0 }, { 4.0, 5.0, 6.0 });
+  vecImage.SetPixelAsVectorFloat32({ 0, 1 }, { -1.5, 0.0, 2.5 });
+  vecImage.SetPixelAsVectorFloat32({ 1, 1 }, { 10.0, -20.0, 0.25 });
+
+  const std::vector<std::vector<uint32_t>> idxs = { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 } };
+  const std::vector<std::vector<float>>    expectedDoubled = {
+    { 2.0, 4.0, 6.0 }, { 8.0, 10.0, 12.0 }, { -3.0, 0.0, 5.0 }, { 20.0, -40.0, 0.5 }
+  };
+
+  for (const auto & result : { sitk::Multiply(vecImage, 2.0), sitk::Multiply(2.0, vecImage) })
+  {
+    EXPECT_EQ(result.GetPixelID(), sitk::sitkVectorFloat32);
+    EXPECT_EQ(result.GetNumberOfComponentsPerPixel(), 3u);
+    for (size_t i = 0; i < idxs.size(); ++i)
+    {
+      EXPECT_EQ(expectedDoubled[i], result.GetPixelAsVectorFloat32(idxs[i]));
+    }
+  }
+
+  // vector*vector remains unsupported -- the main two-image dispatch is untouched.
+  EXPECT_THROW(sitk::Multiply(vecImage, vecImage), sitk::GenericException);
+
+  // vector * scalar-Image (a second full Image, as opposed to a scalar
+  // constant): each vector component is multiplied by the scalar image's
+  // value at that pixel, via the main two-full-image dispatch.
+  sitk::Image scalarImage({ 2, 2 }, sitk::sitkFloat32);
+  scalarImage.SetPixelAsFloat({ 0, 0 }, 2.0);
+  scalarImage.SetPixelAsFloat({ 1, 0 }, 0.5);
+  scalarImage.SetPixelAsFloat({ 0, 1 }, -2.0);
+  scalarImage.SetPixelAsFloat({ 1, 1 }, 1.0);
+
+  const std::vector<std::vector<float>> expectedScaled = {
+    { 2.0, 4.0, 6.0 }, { 2.0, 2.5, 3.0 }, { 3.0, 0.0, -5.0 }, { 10.0, -20.0, 0.25 }
+  };
+
+  for (const auto & result : { sitk::Multiply(vecImage, scalarImage), sitk::Multiply(scalarImage, vecImage) })
+  {
+    EXPECT_EQ(result.GetPixelID(), sitk::sitkVectorFloat32);
+    EXPECT_EQ(result.GetNumberOfComponentsPerPixel(), 3u);
+    for (size_t i = 0; i < idxs.size(); ++i)
+    {
+      EXPECT_EQ(expectedScaled[i], result.GetPixelAsVectorFloat32(idxs[i]));
+    }
+  }
+
+  // Add/Subtract already supported vector+constant before this change; lock in
+  // that behavior stays correct now that they share the updated template.
+  for (size_t i = 0; i < idxs.size(); ++i)
+  {
+    std::vector<float> input = vecImage.GetPixelAsVectorFloat32(idxs[i]);
+    std::vector<float> expectedAdd = { input[0] + 2.0f, input[1] + 2.0f, input[2] + 2.0f };
+    std::vector<float> expectedSub = { input[0] - 2.0f, input[1] - 2.0f, input[2] - 2.0f };
+    EXPECT_EQ(expectedAdd, sitk::Add(vecImage, 2.0).GetPixelAsVectorFloat32(idxs[i]));
+    EXPECT_EQ(expectedSub, sitk::Subtract(vecImage, 2.0).GetPixelAsVectorFloat32(idxs[i]));
+  }
+
+  // ComplexFloat32 * constant: closes a pre-existing coverage gap and confirms
+  // the ValueType-based typedef change doesn't alter existing Complex behavior.
+  sitk::Image complexImage({ 2, 2 }, sitk::sitkComplexFloat32);
+  complexImage.SetPixelAsComplexFloat32({ 0, 0 }, std::complex<float>(1.0f, 2.0f));
+  complexImage.SetPixelAsComplexFloat32({ 1, 0 }, std::complex<float>(3.0f, -4.0f));
+  complexImage.SetPixelAsComplexFloat32({ 0, 1 }, std::complex<float>(0.0f, 1.0f));
+  complexImage.SetPixelAsComplexFloat32({ 1, 1 }, std::complex<float>(-2.0f, 3.0f));
+
+  const std::vector<std::complex<float>> expectedComplexDoubled = { std::complex<float>(2.0f, 4.0f),
+                                                                    std::complex<float>(6.0f, -8.0f),
+                                                                    std::complex<float>(0.0f, 2.0f),
+                                                                    std::complex<float>(-4.0f, 6.0f) };
+
+  for (const auto & result : { sitk::Multiply(complexImage, 2.0), sitk::Multiply(2.0, complexImage) })
+  {
+    EXPECT_EQ(result.GetPixelID(), sitk::sitkComplexFloat32);
+    for (size_t i = 0; i < idxs.size(); ++i)
+    {
+      EXPECT_EQ(expectedComplexDoubled[i], result.GetPixelAsComplexFloat32(idxs[i]));
+    }
+  }
 }
