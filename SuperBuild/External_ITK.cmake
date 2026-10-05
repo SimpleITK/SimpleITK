@@ -67,8 +67,10 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# ITK 5.4.6 release
-set(_DEFAULT_ITK_GIT_TAG "v5.4.7")
+# ITK release-5.4 branch hash 2026-10-01, includes revert of ImageIOFactory
+# mutex-scope change (PR #6925) suspected of causing ConcurrentImageRead
+# intermittent failures
+set(_DEFAULT_ITK_GIT_TAG "b3abd15c12dec79e9a99ff7362c515cb3d6940a8")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag or hash for ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
