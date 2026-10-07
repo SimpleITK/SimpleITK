@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "pixel_types" : "UnsignedIntegerPixelIDTypeList",
-  "filter_type" : "itk::MultiLabelSTAPLEImageFilter<InputImageType, OutputImageType, float>",
+  "filter_type" : "itk::MultiLabelSTAPLEImageFilter<InputImageType, OutputImageType, double>",
   "members" : [
     {
       "name" : "LabelForUndecidedPixels",
@@ -38,8 +38,8 @@
     },
     {
       "name" : "PriorProbabilities",
-      "type" : "std::vector<float>",
-      "default" : "std::vector<float>()",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
       "briefdescriptionSet" : "",
       "custom_itk_cast" : "if (!m_PriorProbabilities.empty()) filter->SetPriorProbabilities(typename FilterType::PriorProbabilitiesType(&this->m_PriorProbabilities[0],this->m_PriorProbabilities.size()));",
       "detaileddescriptionSet" : "Set manual estimates for the a priori class probabilities. The size of the array must be greater than the value of the\nlargest label. The index into the array corresponds to the label\nvalue in the segmented image for the class.",
@@ -50,9 +50,9 @@
   "measurements" : [
     {
       "name" : "ConfusionMatrix",
-      "type" : "std::vector<float>",
+      "type" : "std::vector<double>",
       "no_print" : true,
-      "custom_cast" : "std::vector<float>(value.begin(), value.end())",
+      "custom_cast" : "std::vector<double>(value.begin(), value.end())",
       "active" : true,
       "parameters" : [
         {
