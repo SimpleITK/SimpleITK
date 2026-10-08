@@ -1,9 +1,17 @@
 #
-# This file sets up include directories, link directories, and
-# compiler settings for a project to use SimpleITK.  It should not be
-# included directly, but rather through the SimpleITK_USE_FILE setting
-# obtained from SimpleITKConfig.cmake.
+# This file is deprecated and kept only for backward compatibility
+# with projects that still do include(${SimpleITK_USE_FILE}).  Modern
+# consumers should use SimpleITK's CMake targets directly, e.g.
+# find_package(SimpleITK) and
+# target_link_libraries(your_target ${SimpleITK_LIBRARIES}), or link
+# the specific imported SimpleITK targets.
 #
+
+message(
+  WARNING
+  "SimpleITK_USE_FILE (UseSimpleITK.cmake) is deprecated, use \
+  SimpleITK's CMake targets instead."
+)
 
 # Add include directories needed to use SimpleITK.
 include_directories(${SimpleITK_INCLUDE_DIRS})
