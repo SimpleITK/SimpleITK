@@ -134,6 +134,24 @@ foreach(
   set(${_component} "${SimpleITK_ELASTIX_USE_OPENCL}")
 endforeach()
 
+# elastix calls some ITK methods that are marked legacy/deprecated in newer
+# ITK versions. Use a directory-scoped compile definition (portable across
+# MSVC/GCC/Clang, unlike hand-rolled -D/CxxFlags) saved/restored around
+# FetchContent_MakeAvailable() so it doesn't leak into SimpleITK's own
+# targets defined later in this same directory scope.
+get_property(
+  _sitk_elastix_saved_compile_defs
+  DIRECTORY
+  PROPERTY COMPILE_DEFINITIONS
+)
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY
+    COMPILE_DEFINITIONS
+      "ITK_LEGACY_SILENT"
+)
+
 FetchContent_Declare(
   Elastix
   GIT_REPOSITORY "${ELASTIX_GIT_REPOSITORY}"
@@ -143,6 +161,14 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(Elastix)
+
+set_property(
+  DIRECTORY
+  PROPERTY
+    COMPILE_DEFINITIONS
+      "${_sitk_elastix_saved_compile_defs}"
+)
+unset(_sitk_elastix_saved_compile_defs)
 
 # Check if FetchContent used find_package() or fetched from source
 FetchContent_GetProperties(Elastix)
