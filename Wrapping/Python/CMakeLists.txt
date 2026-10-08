@@ -39,10 +39,7 @@ if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
   endif()
 endif()
 
-include_directories(
-  ${SimpleITK_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 #
 # Options

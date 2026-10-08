@@ -9,7 +9,6 @@ set(WRAP_R ON)
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 find_package(R REQUIRED)
-include_directories(${SimpleITK_INCLUDE_DIRS})
 
 set_source_files_properties(
   SimpleITK.i

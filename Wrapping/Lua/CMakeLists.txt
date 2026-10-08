@@ -18,8 +18,6 @@ set(
 )
 mark_as_advanced(LUA_ADDITIONAL_LIBRARIES)
 
-include_directories(${SimpleITK_INCLUDE_DIRS})
-
 set_source_files_properties(
   SimpleITK.i
   PROPERTIES

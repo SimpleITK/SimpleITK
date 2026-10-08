@@ -10,7 +10,6 @@ include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
-include_directories(${SimpleITK_INCLUDE_DIRS})
 
 set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
 set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")

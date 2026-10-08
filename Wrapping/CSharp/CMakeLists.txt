@@ -12,8 +12,6 @@ include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 find_package(CSharp REQUIRED)
 include(${CSHARP_USE_FILE})
 
-include_directories(${SimpleITK_INCLUDE_DIRS})
-
 set_source_files_properties(
   SimpleITK.i
   PROPERTIES
