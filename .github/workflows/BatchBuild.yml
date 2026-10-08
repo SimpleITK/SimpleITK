@@ -161,16 +161,16 @@ jobs:
               WRAP_PYTHON:BOOL=ON
               WRAP_R:BOOL=ON
 
-          - os: macos-14
+          - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
             use-superbuild: false
-            xcode-version: 15.4
+            xcode-version: 16.0
             python-version: "3.10"
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
 
-          - os: macos-14
+          - os: macos-15
             cmake-build-type: "MinSizeRel"
             cmake-generator: "Ninja"
             xcode-version: 16.2
