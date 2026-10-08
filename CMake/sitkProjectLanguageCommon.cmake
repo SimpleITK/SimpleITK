@@ -20,7 +20,6 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 
   find_package(SimpleITK REQUIRED)
-  include(${SimpleITK_USE_FILE})
 
   include(sitkCheckRequiredFlags)
 
