@@ -20,6 +20,7 @@ permissions:
   actions: read
 
 env:
+  DEFAULT_CMAKE_VERSION: "3.31.0"
   DEFAULT_PYTHON_VERSION: "3.11"
   DEFAULT_R_VERSION: "4.5"
 
@@ -93,9 +94,10 @@ jobs:
               ITK_USE_BUILD_DIR:BOOL=ON
               CXXFLAGS:STRING= /wd4251 /MP
 
-          - os: windows-11-arm
+          - os: windows-11-vs2026-arm
             cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator: "Visual Studio 18 2026"
+            cmake-version: "4.4.3"
             cmake-generator-toolset: v143,host=ARM64
             cmake-generator-platform: ARM64
             use-superbuild: true
@@ -212,7 +214,7 @@ jobs:
       - name: Install build dependencies
         uses: ./.github/actions/install-build-dependencies
         with:
-          extra-packages: ninja cmake~=3.31.0
+          extra-packages: ninja cmake~=${{ matrix.cmake-version || env.DEFAULT_CMAKE_VERSION }}
           install-pyproject-build-requires: ${{ matrix.use-superbuild != 'true' }}
       - name: Install additional dependencies
         shell: bash

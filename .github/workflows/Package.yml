@@ -23,6 +23,9 @@ permissions:
   contents: read
   actions: read
 
+env:
+  DEFAULT_CMAKE_VERSION: "3.31.0"
+
 jobs:
   package-docker:
     runs-on: ${{ matrix.os }}
@@ -135,12 +138,13 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               CXXFLAGS:STRING= /MP
-          - os: windows-11-arm
+          - os: windows-11-vs2026-arm
             cmake-build-type: "Release"
-            cmake-generator: "Visual Studio 17 2022"
+            cmake-generator: "Visual Studio 18 2026"
+            cmake-version: "4.4.3"
             cmake-generator-toolset: v143,host=ARM64
             cmake-generator-platform: ARM64
-            vcvar-options: "arm64 -vcvars_ver=14.3"
+            vcvar-options: "arm64 -vcvars_ver=14.44"
             ctest-cache: |
               BUILD_EXAMPLES:BOOL=ON
               BUILD_TESTING:BOOL=ON
@@ -169,7 +173,7 @@ jobs:
       - name: Install build dependencies
         uses: ./.github/actions/install-build-dependencies
         with:
-          extra-packages: ninja cmake~=3.31.0
+          extra-packages: ninja cmake~=${{ matrix.cmake-version || env.DEFAULT_CMAKE_VERSION }}
       - name: Install additional dependencies
         shell: bash
         run: |
@@ -216,14 +220,14 @@ jobs:
 
       - name: Package CSharp
         # CSHARP_PLATFORM is hardcoded to x64 in the package_csharp action; not yet wired up for ARM64.
-        if: runner.os != 'macOS' && matrix.os != 'windows-11-arm'
+        if: runner.os != 'macOS' && matrix.os != 'windows-11-vs2026-arm'
         uses: ./.github/actions/package_csharp
         with:
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
       - name: Package Java
         # Windows ARM64 JDK availability on the runner image is unverified; not yet wired up for ARM64.
-        if: ${{ !matrix.cmake_osx_architectures && matrix.os != 'windows-11-arm' }}
+        if: ${{ !matrix.cmake_osx_architectures && matrix.os != 'windows-11-vs2026-arm' }}
         uses: ./.github/actions/package_java
         with:
           continue-on-error: true
@@ -237,7 +241,7 @@ jobs:
           VCVAR_OPTIONS: ${{ matrix.vcvar-options || 'amd64 -vcvars_ver=14.2' }}
       - name: Package Python 3.10
         # actions/setup-python never published a 3.10 build for win32/arm64; only 3.11+ is available there.
-        if: matrix.os != 'windows-11-arm'
+        if: matrix.os != 'windows-11-vs2026-arm'
         uses: ./.github/actions/package_python
         with:
           python-version: "3.10"
