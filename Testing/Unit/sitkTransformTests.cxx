@@ -16,6 +16,7 @@
  *
  *=========================================================================*/
 
+#include <cmath>
 #include <memory>
 
 #include "SimpleITKTestHarness.h"
@@ -598,6 +599,108 @@ TEST(TransformTest, TransformVector)
 
   ovec = tx3.TransformVector(ivec, ipt);
   EXPECT_EQ(ivec, v3(1, 2, 3));
+}
+
+
+TEST(TransformTest, ApplyToImageMetadata)
+{
+  // A non-identity direction, a 90 degree rotation, used to verify
+  // that the image's direction cosine matrix is correctly taken into
+  // account, and not just assumed to be identity.
+  const std::vector<double> rotatedDirection = v4(0.0, -1.0, 1.0, 0.0);
+
+  // A scale transform, centered at the origin, maps the image's
+  // origin through the inverse scale factor. The spacing is scaled
+  // by the inverse scale factor of the physical axis each direction
+  // column points along, while the direction itself is unaffected.
+  sitk::Image img = sitk::Image(10, 10, sitk::sitkUInt8);
+  img.SetOrigin(v2(1.0, 2.0));
+  img.SetSpacing(v2(2.0, 2.0));
+  img.SetDirection(rotatedDirection);
+
+  sitk::ScaleTransform tx(2, v2(2.0, 4.0));
+
+  tx.ApplyToImageMetadata(img);
+
+  EXPECT_EQ(img.GetOrigin(), v2(0.5, 0.5));
+  EXPECT_EQ(img.GetSpacing(), v2(0.5, 1.0));
+  EXPECT_EQ(img.GetDirection(), rotatedDirection);
+
+  // A translation transform only affects the origin, mapped through
+  // the inverse of the transform. The spacing and direction are
+  // unaffected, regardless of the direction's initial value.
+  sitk::Image img2 = sitk::Image(10, 10, sitk::sitkUInt8);
+  img2.SetOrigin(v2(1.0, 2.0));
+  img2.SetSpacing(v2(2.0, 2.0));
+  img2.SetDirection(rotatedDirection);
+
+  sitk::TranslationTransform tx2(2, v2(5.0, -7.0));
+
+  tx2.ApplyToImageMetadata(img2);
+
+  EXPECT_EQ(img2.GetOrigin(), v2(-4.0, 9.0));
+  EXPECT_EQ(img2.GetSpacing(), v2(2.0, 2.0));
+  EXPECT_EQ(img2.GetDirection(), rotatedDirection);
+
+  // A rotation transform changes the direction cosine matrix, in
+  // addition to the origin, while leaving the spacing unaffected.
+  sitk::Image img4 = sitk::Image(10, 10, sitk::sitkUInt8);
+  img4.SetOrigin(v2(1.0, 0.0));
+  img4.SetSpacing(v2(2.0, 2.0));
+
+  sitk::Euler2DTransform tx4;
+  tx4.SetAngle(itk::Math::pi_over_2);
+
+  tx4.ApplyToImageMetadata(img4);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(img4.GetOrigin(), v2(0.0, -1.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(img4.GetSpacing(), v2(2.0, 2.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(img4.GetDirection(), v4(0.0, 1.0, -1.0, 0.0), 1e-10);
+
+  // A general affine transform, with a non-diagonal matrix (shear),
+  // combined with non-uniform spacing so that each output axis mixes
+  // both input axes and ends up with a different spacing and a
+  // non-trivial, non-axis-aligned direction.
+  sitk::Image img5 = sitk::Image(10, 10, sitk::sitkUInt8);
+  img5.SetOrigin(v2(2.0, 1.0));
+  img5.SetSpacing(v2(2.0, 3.0));
+
+  sitk::AffineTransform tx5(2);
+  tx5.SetMatrix(v4(1.0, 0.0, 1.0, 2.0));
+  tx5.SetTranslation(v2(3.0, -2.0));
+
+  tx5.ApplyToImageMetadata(img5);
+
+  const double norm0 = std::sqrt(5.0);
+  EXPECT_VECTOR_DOUBLE_NEAR(img5.GetOrigin(), v2(-1.0, 2.0), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(img5.GetSpacing(), v2(norm0, 1.5), 1e-10);
+  EXPECT_VECTOR_DOUBLE_NEAR(img5.GetDirection(), v4(2.0 / norm0, 0.0, -1.0 / norm0, 1.0), 1e-10);
+
+  // A simple 3-d case, verifying the per-dimension dispatch also
+  // works correctly for a 3-d transform and image.
+  sitk::Image img6 = sitk::Image(10, 10, 10, sitk::sitkUInt8);
+  img6.SetOrigin(v3(0.0, 0.0, 0.0));
+  img6.SetSpacing(v3(2.0, 3.0, 4.0));
+
+  sitk::TranslationTransform tx6(3, v3(1.0, -2.0, 3.0));
+
+  tx6.ApplyToImageMetadata(img6);
+
+  EXPECT_EQ(img6.GetOrigin(), v3(-1.0, 2.0, -3.0));
+  EXPECT_EQ(img6.GetSpacing(), v3(2.0, 3.0, 4.0));
+  EXPECT_EQ(img6.GetDirection(), v9(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0));
+
+  // Transform's dimension must match the image's dimension.
+  sitk::Image img3 = sitk::Image(10, 10, 10, sitk::sitkUInt8);
+  EXPECT_ANY_THROW(tx.ApplyToImageMetadata(img3));
+
+  // A non-invertible (singular) transform has no inverse, and
+  // ApplyToImageMetadata requires one, so it must throw rather than
+  // silently succeed.
+  sitk::Image           img7 = sitk::Image(10, 10, sitk::sitkUInt8);
+  sitk::AffineTransform tx7(2);
+  tx7.SetMatrix(v4(1.0, 0.0, 0.0, 0.0));
+  EXPECT_ANY_THROW(tx7.ApplyToImageMetadata(img7));
 }
 
 
