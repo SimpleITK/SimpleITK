@@ -10,7 +10,8 @@
 message(
   WARNING
   "SimpleITK_USE_FILE (UseSimpleITK.cmake) is deprecated, use \
-  SimpleITK's CMake targets instead."
+  SimpleITK's CMake targets instead. See the migration guide: \
+  https://simpleitk.readthedocs.io/en/main/migrationGuide3.0.html#simpleitk-use-file-deprecated"
 )
 
 # Add include directories needed to use SimpleITK.

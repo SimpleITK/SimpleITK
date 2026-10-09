@@ -19,6 +19,35 @@ The following minimum version requirements have changed:
 * SWIG minimum version: 4.3.0 (now explicitly required)
 
 
+SimpleITK_USE_FILE Deprecated
++++++++++++++++++++++++++++++
+
+``SimpleITK_USE_FILE`` and the ``UseSimpleITK.cmake`` file it points to are deprecated. This legacy mechanism only set up global include/link directories (``include_directories()``/``link_directories()``), which predates CMake's modern, target-based usage requirements. SimpleITK now exports proper imported CMake targets, so consumers should link against them directly instead.
+
+The variable and file will continue to work, but including them now emits a CMake deprecation warning. And will be removed in a future release.
+
+**2.x (deprecated, still works but warns in 3.x):**
+
+.. code-block:: cmake
+
+   find_package(SimpleITK REQUIRED)
+   include(${SimpleITK_USE_FILE})
+
+   add_executable(MyExample MyExample.cxx)
+   target_link_libraries(MyExample ${SimpleITK_LIBRARIES})
+
+**3.x (updated approach):**
+
+.. code-block:: cmake
+
+   find_package(SimpleITK REQUIRED)
+
+   add_executable(MyExample MyExample.cxx)
+   target_link_libraries(MyExample ${SimpleITK_LIBRARIES})
+
+Simply drop the ``include(${SimpleITK_USE_FILE})`` line. ``SimpleITK_LIBRARIES`` already refers to SimpleITK's imported targets, which carry their own include directories and dependencies, so no separate include/link directory setup is needed.
+
+
 Interface Compatibility
 -----------------------
 
