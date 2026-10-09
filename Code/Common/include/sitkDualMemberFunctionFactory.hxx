@@ -121,6 +121,19 @@ DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFun
 
 
 template <typename TMemberFunctionPointer, typename TContainer>
+template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension, typename TAddressor>
+void
+DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::RegisterMemberFunctionsZipped()
+{
+  using InstantiaterType = DualMemberFunctionInstantiater<Self, VImageDimension, TAddressor>;
+
+  // initialize function array with pointer, only for position-matched pairs
+  typelist2::zip_visit<TPixelIDTypeList1, TPixelIDTypeList2> visitEachPairInLists;
+  visitEachPairInLists(InstantiaterType(*this));
+}
+
+
+template <typename TMemberFunctionPointer, typename TContainer>
 bool
 DualMemberFunctionFactory<TMemberFunctionPointer, TContainer>::HasMemberFunction(
   PixelIDValueType pixelID1,

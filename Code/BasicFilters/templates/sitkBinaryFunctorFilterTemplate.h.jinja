@@ -25,6 +25,9 @@
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 #include "sitkProcessObjectDeleter.h"
+{%- if vector_pixel_types_broadcast %}
+#include "sitkDualMemberFunctionFactory.h"
+{%- endif %}
 
 {#- Import parameter macros for use in this template -#}
 {% import "macros.jinja" as macros %}
@@ -66,6 +69,13 @@ namespace itk::simple {
   static const detail::MemberFunctionFactory<MemberFunction2Type> &GetMemberFunctionFactory2();
 
 {% include "MemberFunctionDispatch.h.jinja" %}
+
+{%- if vector_pixel_types_broadcast %}
+  friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
+  template <class TImageType1, class TImageType2> Image DualExecuteInternal(const Image& image1, const Image& image2);
+  static const detail::DualMemberFunctionFactory<MemberFunctionType> &GetMemberFunctionFactoryDual();
+{%- endif %}
+
 {% include "PrivateMemberDeclarations.h.jinja" %}
 };
 

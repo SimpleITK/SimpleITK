@@ -218,5 +218,34 @@ private:
 };
 
 
+/**\class zip_visit
+ * \brief Runs a templated predicate on each position-matched pair of types
+ * from two equal-length typelists (not the full cross product)
+ *
+ * \code
+ * using MyTypeList1 = typelist2::typelist<int, float>;
+ * using MyTypeList2 = typelist2::typelist<char, double>;
+ * typelist2::zip_visit<MyTypeList1, MyTypeList2> visitor;
+ * visitor( Predicate() ); // visits (int,char) and (float,double) only
+ *
+ * \endcode
+ *
+ */
+template <typename TypelistLeft, typename TypelistRight>
+struct zip_visit;
+template <typename... Tls, typename... Trs>
+struct zip_visit<typelist<Tls...>, typelist<Trs...>>
+{
+  static_assert(sizeof...(Tls) == sizeof...(Trs), "zip_visit requires two typelists of equal length");
+
+  template <typename Visitor>
+  constexpr void
+  operator()(Visitor && visitor) const
+  {
+    ((visitor.CLANG_TEMPLATE operator()<Tls, Trs>()), ...);
+  }
+};
+
+
 } // namespace typelist2
 #endif // typelist_h_
