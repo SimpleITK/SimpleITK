@@ -59,7 +59,9 @@ set(SimpleITK_INCLUDE_DIRS "@SimpleITKConfig_INCLUDE_DIRS@")
 set(ITK_LIBRARY_DIRS "@ITK_LIBRARY_DIRS@")
 set(SimpleITK_LIBRARY_DIRS "${ITK_LIBRARY_DIRS}")
 
-# The location of the UseITK.cmake file.
+# SimpleITK_USE_FILE/UseSimpleITK.cmake is deprecated, retained only
+# for legacy compatibility. Prefer linking the imported SimpleITK
+# CMake targets directly.
 set(SimpleITK_USE_FILE "${_SimpleITKConfig_DIR}/UseSimpleITK.cmake")
 
 # Locate ITK for required targets
