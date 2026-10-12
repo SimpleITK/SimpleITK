@@ -305,6 +305,138 @@ class TestArrayInterface:
 
 
 # ============================================================================
+# Image.buffer property Tests
+# ============================================================================
+
+@pytest.mark.skipif(not NUMPY_AVAILABLE, reason="Requires numpy")
+class TestBufferProperty:
+    """Tests for the Image.buffer property (read-only get, validated in-place set)"""
+
+    def test_getter_matches_array_interface_shape_and_format(self):
+        img = sitk.Image([3, 5, 7], sitk.sitkUInt16)
+        mv = img.buffer
+
+        assert mv.shape == (7, 5, 3)
+        assert mv.format == 'H'
+        assert mv.readonly
+
+    def test_getter_readonly(self):
+        img = sitk.Image([3, 5], sitk.sitkFloat32)
+        mv = img.buffer
+
+        with pytest.raises(TypeError, match="cannot modify read-only memory"):
+            mv[0, 0] = 1.0
+
+    def test_getter_vector_shape(self):
+        img = sitk.Image([5, 7], sitk.sitkVectorFloat32, 3)
+        mv = img.buffer
+
+        assert mv.shape == (7, 5, 3)
+        assert mv.format == 'f'
+
+    def test_getter_survives_source_variable_going_out_of_scope(self):
+        """The returned memoryview must keep the source Image alive on its own -
+        NOT rely on the caller separately holding a reference (e.g. a temporary
+        Image expression). Regression test for a dangling-buffer bug found while
+        designing this property: ImageBuffer.get_weak_memoryview() does NOT keep
+        the source Image alive, memoryview(ImageBuffer(img)) does."""
+
+        def get_buffer():
+            img = sitk.Image([4, 4], sitk.sitkFloat32)
+            img[0, 0] = 42.0
+            return img.buffer
+
+        mv = get_buffer()
+        gc.collect()
+
+        assert mv[0, 0] == 42.0
+
+    def test_setter_updates_pixel_data(self):
+        img = sitk.Image([3, 5, 7], sitk.sitkUInt16)
+        arr = np.arange(3 * 5 * 7, dtype=np.uint16).reshape(7, 5, 3)
+
+        img.buffer = arr
+
+        assert np.array_equal(sitk.GetArrayFromImage(img), arr)
+
+    def test_setter_accepts_plain_bytes_without_numpy(self):
+        img = sitk.Image([2, 2], sitk.sitkUInt8)
+        data = bytes([1, 2, 3, 4])
+
+        img.buffer = data
+
+        assert list(sitk.GetArrayFromImage(img).flatten()) == [1, 2, 3, 4]
+
+    def test_setter_accepts_array_module(self):
+        import array
+
+        img = sitk.Image([2, 2], sitk.sitkInt32)
+        data = array.array('i', [10, 20, 30, 40])
+
+        img.buffer = data
+
+        assert list(sitk.GetArrayFromImage(img).flatten()) == [10, 20, 30, 40]
+
+    def test_setter_rejects_format_mismatch(self):
+        img = sitk.Image([3, 5], sitk.sitkUInt16)
+        arr = np.zeros((5, 3), dtype=np.float32)
+
+        with pytest.raises(TypeError, match="does not match"):
+            img.buffer = arr
+
+    def test_setter_rejects_shape_mismatch_same_byte_length(self):
+        """The private _SetImageFromArray only checks byte length, so a buffer
+        of a different shape (or dtype) with the same total byte count is
+        silently accepted and reinterpreted/transposed. The buffer setter must
+        catch this instead of delegating to that unchecked byte-length compare."""
+        img = sitk.Image([6, 5, 4], sitk.sitkUInt16)  # 6*5*4*2 = 240 bytes
+        arr = np.zeros((6, 5, 8), dtype=np.uint8)  # 6*5*8*1 = 240 bytes, wrong shape/dtype
+
+        with pytest.raises((TypeError, ValueError)):
+            img.buffer = arr
+
+    def test_setter_rejects_transposed_shape(self):
+        img = sitk.Image([6, 5, 4], sitk.sitkUInt16)  # correct array shape is (4, 5, 6)
+        arr = np.zeros((6, 5, 4), dtype=np.uint16)  # same size and dtype, axes swapped
+
+        with pytest.raises(ValueError, match="does not match"):
+            img.buffer = arr
+
+    def test_setter_vector_image(self):
+        img = sitk.Image([3, 4], sitk.sitkVectorFloat32, 2)
+        arr = np.arange(4 * 3 * 2, dtype=np.float32).reshape(4, 3, 2)
+
+        img.buffer = arr
+
+        assert np.array_equal(sitk.GetArrayFromImage(img), arr)
+
+    def test_setter_rejects_vector_component_mismatch(self):
+        img = sitk.Image([3, 4], sitk.sitkVectorFloat32, 2)
+        arr = np.zeros((4, 3, 3), dtype=np.float32)  # 3 components instead of 2
+
+        with pytest.raises(ValueError, match="does not match"):
+            img.buffer = arr
+
+    def test_setter_preserves_metadata(self):
+        img = sitk.Image([3, 5], sitk.sitkFloat32)
+        img.SetOrigin([1.0, 2.0])
+        img.SetSpacing([2.0, 3.0])
+        img.SetMetaData("key", "value")
+
+        img.buffer = np.ones((5, 3), dtype=np.float32)
+
+        assert img.GetOrigin() == (1.0, 2.0)
+        assert img.GetSpacing() == (2.0, 3.0)
+        assert img.GetMetaData("key") == "value"
+
+    def test_setter_rejects_label_pixel_type(self):
+        img = sitk.Image([3, 5], sitk.sitkLabelUInt8)
+
+        with pytest.raises(TypeError, match="not compatible"):
+            img.buffer = np.zeros((5, 3), dtype=np.uint8)
+
+
+# ============================================================================
 # Integration Tests with numpy
 # ============================================================================
 
