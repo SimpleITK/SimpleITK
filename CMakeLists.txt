@@ -71,8 +71,6 @@ include(sitkForbidDownloadsOption)
 # Include GNUInstallDirs for standard installation directories
 include(GNUInstallDirs)
 
-find_package(ITK REQUIRED)
-
 #we require certain packages be turned on in ITK
 include(sitkCheckForITKModuleDependencies)
 
