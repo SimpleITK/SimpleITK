@@ -61,6 +61,13 @@ def format_list(list_, pattern):
     """
     return [pattern.format(s) for s in list_]
 
+def lstrip_filter(s: str, chars: str = None) -> str:
+    """A Jinja2 filter equivalent to Python's str.lstrip()."""
+    if not isinstance(s, str):
+        logging.error("Input must be a string.")
+        return s
+    return s.lstrip(chars)
+
 def load_configuration(config_file: Path):
     """Load configuration from a YAML file."""
     try:
@@ -104,6 +111,7 @@ def expand_template(config_file:Path, template:Path, template_dirs: List[Path], 
     env.filters['ruby_capitalize'] = ruby_capitalize
     env.filters['quote'] = quote_string
     env.filters['format_list'] = format_list
+    env.filters['lstrip'] = lstrip_filter
 
     # Add global constants for templates
     env.globals['DOXYGEN_WORDWRAP_WIDTH'] = DOXYGEN_WORDWRAP_WIDTH
