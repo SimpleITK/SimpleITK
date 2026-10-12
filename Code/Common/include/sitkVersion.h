@@ -55,6 +55,17 @@ public:
   static const std::string &
   ITKVersionString();
 
+#ifdef SITK_USE_ELASTIX
+  static unsigned int
+  ElastixMajorVersion();
+  static unsigned int
+  ElastixMinorVersion();
+  static unsigned int
+  ElastixPatchVersion();
+  static const std::string &
+  ElastixVersionString();
+#endif
+
   /* \brief Return a vector of the names of the ITK modules enabled.
    *
    *
