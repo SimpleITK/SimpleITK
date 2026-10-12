@@ -4,8 +4,26 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     target-branch: "release"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "pre-commit"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      pre-commit:
+        patterns:
+          - "*"
