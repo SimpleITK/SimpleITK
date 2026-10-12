@@ -19,6 +19,7 @@
 from pathlib import Path
 from SimpleITK.SimpleITK import *
 from SimpleITK.SimpleITK import _SetImageFromArray
+from SimpleITK.SimpleITK import _GetImageViewFromArray
 
 from typing import Iterable, List, Optional, Type, Union, Tuple
 
@@ -319,6 +320,60 @@ def GetImageFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> 
     return img
 
 
+def GetImageViewFromArray(arr: "numpy.ndarray", isVector: Optional[bool] = None) -> Image:
+    """Get a SimpleITK Image that is a zero-copy view of a NumPy array's memory.
+
+    Unlike GetImageFromArray, no new memory is allocated and no data is copied: the returned
+    Image's pixel buffer *is* arr's underlying memory. A write through either the Image or arr
+    is visible through the other.
+
+    arr must be writable and C-contiguous; a ValueError is raised otherwise (e.g. for a read-only
+    array, or a transposed/strided view). isVector has the same meaning as in GetImageFromArray.
+
+    It is safe for arr to go out of scope or be deleted while the returned Image (or any Image
+    derived from it via a shallow copy, e.g. img2 = img) still exists - SimpleITK pins a
+    reference to arr's buffer for exactly as long as needed and releases it automatically. It is
+    a programming error to resize arr (e.g. via ndarray.resize) while the returned Image exists.
+
+    Only 2D and 3D images are supported.
+    """
+    if not HAVE_NUMPY:
+        raise ImportError("Numpy not available.")
+
+    z = numpy.asarray(arr)
+
+    if not z.flags["WRITEABLE"]:
+        raise ValueError("The array must be writable to create a zero-copy Image view.")
+    if not z.flags["C_CONTIGUOUS"]:
+        raise ValueError("The array must be C-contiguous to create a zero-copy Image view.")
+
+    if isVector is None:
+        if z.ndim == 4 and z.dtype != numpy.complex64 and z.dtype != numpy.complex128:
+            isVector = True
+
+    if isVector:
+        id = _get_sitk_vector_pixelid(z)
+        if z.ndim > 2:
+            number_of_components = z.shape[-1]
+            shape = z.shape[-2::-1]
+        else:
+            number_of_components = 1
+            shape = z.shape[::-1]
+    else:
+        number_of_components = 1
+        id = _get_sitk_pixelid(z)
+        shape = z.shape[::-1]
+
+    if len(shape) not in (2, 3):
+        raise ValueError(f"GetImageViewFromArray only supports 2D or 3D images, got {len(shape)}D.")
+
+    spacing = [1.0] * len(shape)
+    origin = [0.0] * len(shape)
+    direction: List[float] = []
+
+    return _GetImageViewFromArray(z, list(shape), int(id), int(number_of_components), spacing, origin, direction)
+
+
 def ReadImage(
     fileName: PathType,
     outputPixelType: int = sitkUnknown,
@@ -483,6 +538,7 @@ __all__ = [
     "GetArrayViewFromImage",
     "GetArrayFromImage",
     "GetImageFromArray",
+    "GetImageViewFromArray",
     "ReadImage",
     "WriteImage",
     "SmoothingRecursiveGaussian",
