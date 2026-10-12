@@ -611,16 +611,35 @@
 
         # set/get pixel methods
 
+        _RESERVED_SPATIAL_KEYS = (
+            'origin', 'spacing', 'direction',
+            'origin_xyz', 'spacing_xyz', 'direction_xyz', 'index_xyz', 'size_xyz',
+            'origin_zyx', 'spacing_zyx', 'direction_zyx', 'index_zyx', 'size_zyx' )
+
+        def _warn_bare_spatial_key( self, key ):
+            import warnings
+            import os
+            future = os.environ.get('SITK_FUTURE_LEGACY_REMOVE', '0').lower() in ('1', 'on', 'true', 'yes')
+            category = FutureWarning if future else DeprecationWarning
+            warnings.warn(
+                f"Image['{key}'] is deprecated because the bare key is "
+                f"order-ambiguous across toolkits: SimpleITK returns (x,y,z) "
+                f"order while ITK returns NumPy (z,y,x) order for the same "
+                f"key. Use '{key}_xyz' (same values as this key) or "
+                f"'{key}_zyx' (NumPy array-axis order). See "
+                f"InsightSoftwareConsortium/ITK issue #6706.",
+                category, stacklevel=3 )
+
         def __delitem__( self, key ):
             """Remove an item from the meta-data dictionary.
 
-            It is an exception to delete the "origin", "spacing" and "direction" reserved keys.
+            It is an exception to delete the reserved spatial keys.
 
             If the key does not exist in the dictionary no action or exception occours.
             """
             if not isinstance(key, str):
               raise TypeError("MetaData dictionary key must be str")
-            if key in [ 'origin', 'spacing', 'direction' ]:
+            if key in self._RESERVED_SPATIAL_KEYS:
               raise KeyError(f"'{key} is read-only")
             return self.EraseMetaData( key )
 
@@ -630,7 +649,7 @@
             """
             if not isinstance(key, str):
               raise TypeError("MetaData dictionary key must be str")
-            return key in [ 'origin', 'spacing', 'direction' ] or self.HasMetaDataKey( key )
+            return key in self._RESERVED_SPATIAL_KEYS or self.HasMetaDataKey( key )
 
         def _expand_ellipsis(self, idx):
             """Expand "..." in idx with slice(None) to fill to dimension."""
@@ -678,19 +697,27 @@
             """
 
             if isinstance(idx, str):
-              if idx == 'origin':
-                return self.GetOrigin()
-              elif idx == 'spacing':
-                return self.GetSpacing()
-              elif idx == 'direction':
-                return self.GetDirection()
-              else:
-                try:
-                  return self.GetMetaData(idx)
-                except RuntimeError as e:
-                    if not self.HasMetaDataKey( idx ):
-                      raise KeyError(f"\"{idx}\" not in meta-data dictionary")
-                    raise e
+              xyz_getters = {
+                'origin_xyz': self.GetOrigin,
+                'spacing_xyz': self.GetSpacing,
+                'direction_xyz': self.GetDirection,
+                'size_xyz': self.GetSize,
+                'index_xyz': lambda: (0,) * self.GetDimension() }
+              if idx in xyz_getters:
+                return xyz_getters[idx]()
+              if idx.endswith('_zyx') and idx[:-4] + '_xyz' in xyz_getters:
+                # reversing the flat row-major direction tuple flips both
+                # matrix axes, matching itk.Image['direction_zyx']
+                return tuple(reversed(xyz_getters[idx[:-4] + '_xyz']()))
+              if idx in ('origin', 'spacing', 'direction'):
+                self._warn_bare_spatial_key(idx)
+                return xyz_getters[idx + '_xyz']()
+              try:
+                return self.GetMetaData(idx)
+              except RuntimeError as e:
+                  if not self.HasMetaDataKey( idx ):
+                    raise KeyError(f"\"{idx}\" not in meta-data dictionary")
+                  raise e
 
             if sys.version_info[0] < 3:
               def isint( i ):
@@ -808,16 +835,26 @@
             """
 
             if isinstance(idx, str):
-              if idx == 'origin':
-                return self.SetOrigin(rvalue)
-              elif idx == 'spacing':
-                return self.SetSpacing(rvalue)
-              elif idx == 'direction':
-                return self.SetDirection(rvalue)
-              else:
-                if not isinstance(rvalue, str):
-                  raise TypeError("metadata item must be a string")
-                return self.SetMetaData(idx, rvalue)
+              xyz_setters = {
+                'origin': self.SetOrigin,
+                'spacing': self.SetSpacing,
+                'direction': self.SetDirection }
+              if idx.endswith('_xyz') and idx[:-4] in xyz_setters:
+                return xyz_setters[idx[:-4]](rvalue)
+              if idx.endswith('_zyx') and idx[:-4] in xyz_setters:
+                return xyz_setters[idx[:-4]](tuple(reversed(tuple(rvalue))))
+              if idx in ('size_xyz', 'size_zyx'):
+                raise KeyError(f"'{idx}' is read-only; Image size is fixed at construction")
+              if idx in ('index_xyz', 'index_zyx'):
+                if any(int(v) for v in rvalue):
+                  raise ValueError("SimpleITK images always start at index 0")
+                return
+              if idx in ('origin', 'spacing', 'direction'):
+                self._warn_bare_spatial_key(idx)
+                return xyz_setters[idx](rvalue)
+              if not isinstance(rvalue, str):
+                raise TypeError("metadata item must be a string")
+              return self.SetMetaData(idx, rvalue)
 
             if isinstance(idx, Image):
                return self.__imasked_assign(idx, rvalue)
