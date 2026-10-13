@@ -27,3 +27,7 @@ updates:
       pre-commit:
         patterns:
           - "*"
+    # Ignore these hooks, updates require widespread code style changes.
+    ignore:
+      - dependency-name: "https://github.com/pre-commit/mirrors-clang-format"
+      - dependency-name: "https://github.com/BlankSpruce/gersemi-pre-commit"
