@@ -548,7 +548,11 @@ TEST(IO, DicomSeriesReader)
   EXPECT_EQ(image2.GetSize(), image2_reverse.GetSize());
   EXPECT_NE(image2.GetOrigin(), image2_reverse.GetOrigin());
   EXPECT_EQ(image2.GetSpacing(), image2_reverse.GetSpacing());
-  EXPECT_EQ(image2.GetDirection(), image2_reverse.GetDirection());
+  // ITK fixes the sign of the slice-to-slice direction cosine for negative
+  // spacing (as produced by ReverseOrder) to keep the physical location
+  // correct, so the direction legitimately differs here; ForceOrthogonalDirection
+  // only corrects near-orthogonal matrices and does not affect this sign.
+  EXPECT_NE(image2.GetDirection(), image2_reverse.GetDirection());
   EXPECT_EQ(image2.GetPixelID(), image2_reverse.GetPixelID());
   EXPECT_EQ(image2.GetDimension(), image2_reverse.GetDimension());
   EXPECT_EQ(image2.GetNumberOfComponentsPerPixel(), image2_reverse.GetNumberOfComponentsPerPixel());
