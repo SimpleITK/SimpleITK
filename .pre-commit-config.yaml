@@ -35,7 +35,7 @@ repos:
        - "--indent=2"
        - "--no-sort-keys"
 - repo: https://github.com/psf/black
-  rev: 25.9.0
+  rev: 26.10.1
   hooks: # check conformance to black formatting
    - id: black
      args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
@@ -46,13 +46,13 @@ repos:
       args: ['--style=file']
       files: '\.(c|cc|h|cxx|hxx)$'
 - repo: https://github.com/BlankSpruce/gersemi-pre-commit
-  rev: 0.22.3
+  rev: 0.29.2
   hooks:
   - id: gersemi
     args: [ '--config', '.gersemi.config', '-i' ]
     files: '.cmake$|CMakeLists.txt'
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: '0.34.1'
+  rev: '0.38.2'
   hooks:
     - id: check-jsonschema
       name: Validate meta files
