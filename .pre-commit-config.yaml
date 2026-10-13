@@ -45,7 +45,7 @@ repos:
     - id: clang-format
       args: ['--style=file']
       files: '\.(c|cc|h|cxx|hxx)$'
-- repo: https://github.com/BlankSpruce/gersemi
+- repo: https://github.com/BlankSpruce/gersemi-pre-commit
   rev: 0.22.3
   hooks:
   - id: gersemi
