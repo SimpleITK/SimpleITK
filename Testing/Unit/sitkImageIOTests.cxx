@@ -1467,6 +1467,54 @@ TEST(IO, ImageFileReader_ExtractImplicitZero4D)
 }
 
 
+TEST(IO, ImageFileReader_ExtractDirectionCollapseStrategy)
+{
+  const std::vector<double> identity2D = { 1.0, 0.0, 0.0, 1.0 };
+
+  sitk::ImageFileReader reader;
+  EXPECT_EQ(sitk::ImageFileReader::COLLAPSETOSUBMATRIX, reader.GetDirectionCollapseToStrategy());
+
+  const ::testing::TestInfo * info = ::testing::UnitTest::GetInstance()->current_test_info();
+  const std::string           prefix = std::string(info->test_case_name()) + "." + info->name();
+
+  // Rotation about z: the 2x2 sub-matrix of the x-y axes is a valid rotation.
+  sitk::Image image(10, 11, 12, sitk::sitkInt16);
+  image.SetDirection({ 0.0, -1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 });
+  const std::string filenameZ = dataFinder.GetOutputFile(prefix + "_Z.mha");
+  sitk::WriteImage(image, filenameZ);
+
+  reader.SetFileName(filenameZ);
+  reader.SetExtractSize({ 10, 11, 0 });
+
+  EXPECT_EQ(sitk::ImageFileReader::COLLAPSETOSUBMATRIX, reader.GetDirectionCollapseToStrategy());
+  EXPECT_VECTOR_NEAR(reader.Execute().GetDirection(), std::vector<double>({ 0.0, -1.0, 1.0, 0.0 }), 1e-10);
+
+  reader.SetDirectionCollapseToStrategy(sitk::ImageFileReader::COLLAPSETOIDENTITY);
+  EXPECT_EQ(sitk::ImageFileReader::COLLAPSETOIDENTITY, reader.GetDirectionCollapseToStrategy());
+  EXPECT_VECTOR_NEAR(reader.Execute().GetDirection(), identity2D, 1e-10);
+
+  reader.SetDirectionCollapseToStrategy(sitk::ImageFileReader::COLLAPSETOGUESS);
+  EXPECT_VECTOR_NEAR(reader.Execute().GetDirection(), std::vector<double>({ 0.0, -1.0, 1.0, 0.0 }), 1e-10);
+
+  // Rotation about x: the x-z sub-matrix collapsing the y axis is singular.
+  image.SetDirection({ 1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0 });
+  const std::string filenameX = dataFinder.GetOutputFile(prefix + "_X.mha");
+  sitk::WriteImage(image, filenameX);
+
+  reader.SetFileName(filenameX);
+  reader.SetExtractSize({ 10, 0, 12 });
+
+  reader.SetDirectionCollapseToStrategy(sitk::ImageFileReader::COLLAPSETOSUBMATRIX);
+  EXPECT_ANY_THROW(reader.Execute());
+
+  reader.SetDirectionCollapseToStrategy(sitk::ImageFileReader::COLLAPSETOIDENTITY);
+  EXPECT_VECTOR_NEAR(reader.Execute().GetDirection(), identity2D, 1e-10);
+
+  reader.SetDirectionCollapseToStrategy(sitk::ImageFileReader::COLLAPSETOGUESS);
+  EXPECT_VECTOR_NEAR(reader.Execute().GetDirection(), identity2D, 1e-10);
+}
+
+
 TEST(IO, ImageFileReader_5DExtract)
 {
   const std::string file = dataFinder.GetDirectory() + "/Input/points_5d.mha";
