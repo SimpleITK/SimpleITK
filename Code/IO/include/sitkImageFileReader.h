@@ -208,10 +208,11 @@ public:
    * assumed to be zero.
    *
    * When the dimension of the image is reduced, the direction
-   * cosine matrix will be set to the identity. However, the
-   * spacing for the selected axis will remain. The matrix from
-   * the file can still be obtained by
-   * ImageFileReader::GetDirection.
+   * cosine matrix of the output is determined by the strategy set
+   * with SetDirectionCollapseToStrategy. By default it is the
+   * sub-matrix of the file's direction. The spacing for the
+   * selected axis will remain. The matrix from the file can still
+   * be obtained by ImageFileReader::GetDirection.
    *
    * \sa ExtractImageFilter
    */
@@ -231,6 +232,38 @@ public:
   SetExtractIndex(const std::vector<int> & index);
   const std::vector<int> &
   GetExtractIndex() const;
+
+  typedef enum
+  {
+    COLLAPSETOIDENTITY,
+    COLLAPSETOSUBMATRIX,
+    COLLAPSETOGUESS
+  } DirectionCollapseStrategyType;
+
+  /** \brief Set the strategy used to collapse the direction cosine
+   * matrix when the extraction reduces the image dimension.
+   *
+   * This only has an effect when SetExtractSize reduces the
+   * dimension of the image.
+   *
+   * COLLAPSETOIDENTITY The output has an identity direction. Use
+   * this when retaining the orientation of the collapsed image is
+   * not important.
+   *
+   * COLLAPSETOSUBMATRIX The output direction is the sub-matrix of
+   * the file's direction if it is positive definite, else an
+   * exception is thrown. This is the default.
+   *
+   * COLLAPSETOGUESS The output direction is the sub-matrix if it
+   * is positive definite, else identity. The results are difficult
+   * to anticipate, so this is discouraged.
+   *
+   * \sa ExtractImageFilter::SetDirectionCollapseToStrategy
+   */
+  void
+  SetDirectionCollapseToStrategy(DirectionCollapseStrategyType strategy);
+  DirectionCollapseStrategyType
+  GetDirectionCollapseToStrategy() const;
 
 protected:
   template <class TImageType>
@@ -278,6 +311,8 @@ private:
 
   std::vector<unsigned int> m_ExtractSize;
   std::vector<int>          m_ExtractIndex;
+
+  DirectionCollapseStrategyType m_DirectionCollapseToStrategy{ COLLAPSETOSUBMATRIX };
 };
 
 /**
