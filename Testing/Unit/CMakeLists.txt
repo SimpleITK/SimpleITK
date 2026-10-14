@@ -29,6 +29,7 @@ set(
   itkSliceImageFilterTest.cxx
   sitkImageViewerTest.cxx
   sitkDemonsRegistrationTests.cxx
+  sitkConcurrentImageReadTests.cxx
 )
 
 if(SimpleITK_MAX_DIMENSION GREATER_EQUAL 4)
@@ -455,6 +456,15 @@ else()
     ${SimpleITKUnitTestSource}
   )
 endif()
+
+# Appended after discovery so the discovered tests exist when properties are applied.
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY
+    TEST_INCLUDE_FILES
+      "${CMAKE_CURRENT_SOURCE_DIR}/CTestCustomProperties.cmake"
+)
 
 ExternalData_Expand_Arguments(
   SimpleITKData
