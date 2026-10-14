@@ -229,11 +229,10 @@ jobs:
         with:
           python-version: "3.14t"
           continue-on-error: true
-      - name: Package Python 3.15t (pre-release)
+      - name: Package Python 3.15t
         uses: ./.github/actions/package_python
         with:
           python-version: "3.15t"
-          allow_prereleases: true
           continue-on-error: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@v7
