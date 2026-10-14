@@ -117,5 +117,5 @@ git config --get remote.stage.url > /dev/null &&
 
 
 # Record the version of this setup so Hooks/pre-commit can check it.
-SetupForDevelopment_VERSION=7
+SetupForDevelopment_VERSION=8
 git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}
