@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 MIN_PYTHON_VERSION_MAJOR=3
-MIN_PYTHON_VERSION_MINOR=8
+MIN_PYTHON_VERSION_MINOR=11
 MIN_PRECOMMIT_VERSION=3.5.0
 
 die() {
@@ -13,7 +13,7 @@ cd "${BASH_SOURCE%/*}" &&
 
 # check if python executable exists and is at least MIN_PYTHON_VERSION
 if ! command -v python3 &> /dev/null; then
-    die "Python $MIN_PYTHON_VERSION or later is required for pre-commit."
+    die "Python $MIN_PYTHON_VERSION_MAJOR.$MIN_PYTHON_VERSION_MINOR or later is required for pre-commit."
 fi &&
 
 # get python major version and minor version into array
@@ -21,10 +21,10 @@ python_version=$(python3 --version | cut -d ' ' -f 2) &&
 declare -a python_version_arr &&
 python_version_arr=(`echo ${python_version//./ }`) &&
 if test ${python_version_arr[0]} -lt $MIN_PYTHON_VERSION_MAJOR; then
-    die "Python $MIN_PYTHON_VERSION_MAJOR or later is required for pre-commit."
+    die "Python $MIN_PYTHON_VERSION_MAJOR.$MIN_PYTHON_VERSION_MINOR or later is required for pre-commit."
 elif test ${python_version_arr[0]} -eq $MIN_PYTHON_VERSION_MAJOR; then
     if test ${python_version_arr[1]} -lt $MIN_PYTHON_VERSION_MINOR; then
-      die "Python $MIN_PYTHON_VERSION_MAJOR.$MIN_PYTHON_VERSION_MINOR or later is for pre-commit"
+      die "Python $MIN_PYTHON_VERSION_MAJOR.$MIN_PYTHON_VERSION_MINOR or later is required for pre-commit"
     fi
 fi &&
 echo "Python version is $python_version" &&

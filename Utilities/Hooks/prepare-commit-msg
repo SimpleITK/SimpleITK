@@ -37,6 +37,7 @@ instructions='#\
 #   ENH:    - new functionality\
 #   PERF:   - performance improvement\
 #   STYLE:  - no logic impact (indentation, comments)\
+#   CI:     - Changes in continuous integration, packaging and GitHubActions\
 #   WIP:    - Work In Progress not ready for merge\
 #' &&
 sed '/^# On branch.*$/ a\
