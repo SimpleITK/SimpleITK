@@ -254,11 +254,10 @@ jobs:
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
           VCVAR_OPTIONS: ${{ matrix.vcvar-options || 'amd64 -vcvars_ver=14.2' }}
-      - name: Package Python 3.15t (pre-release)
+      - name: Package Python 3.15t
         uses: ./.github/actions/package_python
         with:
           python-version: "3.15t"
-          allow_prereleases: true
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
           VCVAR_OPTIONS: ${{ matrix.vcvar-options || 'amd64 -vcvars_ver=14.2' }}
