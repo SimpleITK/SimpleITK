@@ -65,9 +65,22 @@ def get_max_length():
     return int(result.stdout.strip())
 
 
+def get_git_dir():
+    # In a linked working tree ".git" is a file, so ask git for the real directory.
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--absolute-git-dir"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError:
+        return Path(os.environ.get("GIT_DIR", ".git")).resolve()
+    return Path(result.stdout.strip())
+
+
 def main():
-    git_dir_path: Path = Path(os.environ.get("GIT_DIR", ".git")).resolve()
-    commit_msg_path: Path = git_dir_path / "COMMIT_MSG"
+    commit_msg_path: Path = get_git_dir() / "COMMIT_MSG"
 
     if len(sys.argv) < 2:
         die(f"Usage: {sys.argv[0]} <git_commit_message_file>", commit_msg_path)
