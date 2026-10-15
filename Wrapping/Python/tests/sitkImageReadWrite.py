@@ -174,6 +174,26 @@ def test_reader_kwargs(test_dir):
         sitk.ReadImage(file_paths, nonsenseKwarg=True)
 
 
+def test_reader_extract_direction_collapse(test_dir):
+    """Test extract keyword arguments, including the direction collapse strategy, in ReadImage"""
+    img = sitk.Image([10, 11, 12], sitk.sitkInt16)
+    # rotation about z
+    img.SetDirection([0.0, -1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0])
+    file_path = test_dir / "test_reader_extract_direction_collapse.mha"
+    sitk.WriteImage(img, file_path)
+
+    # default is the sub-matrix
+    out = sitk.ReadImage(file_path, extractSize=[10, 11, 0])
+    assert out.GetDirection() == (0.0, -1.0, 1.0, 0.0)
+
+    out = sitk.ReadImage(
+        file_path,
+        extractSize=[10, 11, 0],
+        directionCollapseToStrategy=sitk.ImageFileReader.COLLAPSETOIDENTITY,
+    )
+    assert out.GetDirection() == (1.0, 0.0, 0.0, 1.0)
+
+
 def verify_read_write(img: sitk.Image, output_path: Path):
     """Verify image read/write operation maintains image integrity.
 

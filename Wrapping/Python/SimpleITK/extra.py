@@ -345,6 +345,9 @@ def ReadImage(
      generated.
     kwargs
      Additional keyword arguments corresponding to set methods on the reader (e.g., ReverseOrder=True calls SetReverseOrder(True)).
+     For a single file, extractSize, extractIndex and directionCollapseToStrategy (e.g.,
+     ImageFileReader.COLLAPSETOIDENTITY) select a sub-region and how the direction is collapsed when its dimension is
+     reduced.
 
     Returns
     -------
