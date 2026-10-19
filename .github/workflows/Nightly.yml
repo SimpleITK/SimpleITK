@@ -136,5 +136,6 @@ jobs:
         run: |
           cmake --version
           gcov --version
+          nproc; free -g
           ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV \
             ${{ matrix.ctest-extra-args }}
