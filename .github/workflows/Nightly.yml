@@ -56,6 +56,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
     strategy:
+      fail-fast: false
       matrix:
         include:
 
@@ -124,6 +125,7 @@ jobs:
           ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS: 2
           CTEST_CONFIGURATION_TYPE: ${{ matrix.cmake-build-type }}
           CTEST_CMAKE_GENERATOR: "Ninja"
+          CMAKE_BUILD_PARALLEL_LEVEL: "36"
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_TEST_TIMEOUT: ${{ matrix.ctest-test-timeout }}
           CTEST_CACHE: |
@@ -135,5 +137,6 @@ jobs:
         run: |
           cmake --version
           gcov --version
-          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -V \
+          nproc; free -g
+          ctest -S ${CTEST_SOURCE_DIRECTORY}/.github/workflows/github_actions.cmake -VV \
             ${{ matrix.ctest-extra-args }}
