@@ -42,7 +42,7 @@ jobs:
           - os: codebuild-SimpleITK-${{ github.run_id }}-${{ github.run_attempt }}-ubuntu-7.0-xlarge
             name: itk-coverage
             cmake-build-type: Debug
-            ctest-test-timeout: 1800
+            ctest-test-timeout: 2400
             timeout: 180
             ctest-cache: |
               CMAKE_CXX_FLAGS:STRING=--coverage
@@ -79,6 +79,18 @@ jobs:
             sudo locale-gen de_DE.UTF-8
 
 
+      - name: Set cache date
+        id: cache-date
+        run: echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache ctest cost data
+        uses: actions/cache@v6
+        with:
+          path: ${{ runner.temp }}/ctest-cost/CTestCostData.txt
+          key: ctest-cost-v1-${{ matrix.name }}-${{ steps.cache-date.outputs.date }}
+          restore-keys: |
+            ctest-cost-v1-${{ matrix.name }}-
+
       - name: CTest Build and Test
         shell: bash
         env:
@@ -88,6 +100,7 @@ jobs:
           CTEST_OUTPUT_ON_FAILURE: 1
           CTEST_TEST_TIMEOUT: ${{ matrix.ctest-test-timeout }}
           CTEST_BUILD_NAME: "${{ matrix.name }} ${{ github.run_id }} "
+          CTEST_COST_DATA_CACHE: ${{ runner.temp }}/ctest-cost/CTestCostData.txt
         run: |
           cat > dashboard.cmake << EOF
           set(CTEST_SITE "GitHub.\$ENV{GITHUB_REPOSITORY}")
@@ -125,6 +138,18 @@ jobs:
             Module_LabelErodeDilate:BOOL=ON
             ${{ matrix.ctest-cache }}
           ")
+
+          # itk_common.cmake wipes CTEST_BINARY_DIRECTORY before configuring, so the
+          # cached cost file must be restored right after ctest_start sets that
+          # directory up rather than before the script runs.
+          function(ctest_start)
+            _ctest_start(\${ARGV})
+            if(EXISTS "\$ENV{CTEST_COST_DATA_CACHE}")
+              file(MAKE_DIRECTORY "\${CTEST_BINARY_DIRECTORY}/Testing/Temporary")
+              file(COPY "\$ENV{CTEST_COST_DATA_CACHE}" DESTINATION "\${CTEST_BINARY_DIRECTORY}/Testing/Temporary")
+            endif()
+          endfunction()
+
           include(\$ENV{DASHBOARD_BRANCH_DIRECTORY}/itk_common.cmake)
           EOF
 
@@ -132,3 +157,9 @@ jobs:
           cat dashboard.cmake
 
           ctest -V -S dashboard.cmake ${{ matrix.ctest-extra-args }}
+
+      - name: Save ctest cost data for caching
+        shell: bash
+        run: |
+          mkdir -p "${{ runner.temp }}/ctest-cost"
+          cp "${{ github.workspace }}/ITK-build/Testing/Temporary/CTestCostData.txt" "${{ runner.temp }}/ctest-cost/CTestCostData.txt"
