@@ -111,6 +111,7 @@ jobs:
         uses: ./.github/actions/install-build-dependencies
         with:
           extra-packages: ninja cmake~=3.31.0
+          install-pyproject-build-requires: 'true'
       - name: Install additional dependencies
         shell: bash
         run: |
