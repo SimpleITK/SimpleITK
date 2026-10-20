@@ -371,7 +371,9 @@ ImageFileReader::ExecuteInternal(itk::ImageIOBase * imageio)
   assert(imageio != nullptr);
 
 
-  if (m_ExtractSize.empty() || m_ExtractSize.size() == ImageType::ImageDimension)
+  // The same-rank reader can neither apply ExtractIndex nor collapse direction for a higher-rank file.
+  if (m_ExtractSize.empty() || (m_ExtractSize.size() == ImageType::ImageDimension &&
+                                imageio->GetNumberOfDimensions() == ImageType::ImageDimension))
   {
 
     typename Reader::Pointer reader = Reader::New();

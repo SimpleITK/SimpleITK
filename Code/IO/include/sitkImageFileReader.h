@@ -208,10 +208,9 @@ public:
    * assumed to be zero.
    *
    * When the dimension of the image is reduced, the direction
-   * cosine matrix will be set to the identity. However, the
-   * spacing for the selected axis will remain. The matrix from
-   * the file can still be obtained by
-   * ImageFileReader::GetDirection.
+   * cosine matrix of the output is the sub-matrix of the file's
+   * direction for the retained axes. The matrix from the file can
+   * still be obtained by ImageFileReader::GetDirection.
    *
    * \sa ExtractImageFilter
    */

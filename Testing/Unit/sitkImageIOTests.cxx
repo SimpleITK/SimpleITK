@@ -1375,6 +1375,98 @@ TEST(IO, ImageFileReader_Extract2)
 }
 
 
+// Size [w,h] for a 3-D file is documented as equivalent to [w,h,0].
+TEST(IO, ImageFileReader_ExtractImplicitZero)
+{
+  sitk::Image generatedImage(50, 60, 70, sitk::sitkInt16);
+  generatedImage.SetOrigin(v3(1.0, 2.0, 3.0));
+  generatedImage.SetSpacing(v3(0.5, 0.6, 0.7));
+  // Rotation about z so the collapsed 2-D direction is not the identity.
+  const double c = std::cos(0.5);
+  const double s = std::sin(0.5);
+  generatedImage.SetDirection({ c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0 });
+  // Distinct values so that reading the wrong slice changes the hash.
+  int16_t * buffer = generatedImage.GetBufferAsInt16();
+  for (size_t i = 0; i < generatedImage.GetNumberOfPixels(); ++i)
+  {
+    buffer[i] = static_cast<int16_t>((i * 2654435761u) >> 16);
+  }
+
+  const ::testing::TestInfo * info = ::testing::UnitTest::GetInstance()->current_test_info();
+  std::string                 filename = std::string(info->test_case_name()) + "." + info->name() + ".mha";
+  filename = dataFinder.GetOutputFile(filename);
+  sitk::WriteImage(generatedImage, filename);
+
+  const std::vector<int> extractIndex{ 3, 4, 5 };
+  const sitk::Image      expected = sitk::Extract(
+    generatedImage, { 20u, 30u, 0u }, extractIndex, sitk::ExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX);
+
+  sitk::ImageFileReader reader;
+  reader.SetFileName(filename);
+  reader.SetExtractIndex(extractIndex);
+
+  for (const auto & extractSize : { std::vector<unsigned int>{ 20u, 30u, 0u }, std::vector<unsigned int>{ 20u, 30u } })
+  {
+    reader.SetExtractSize(extractSize);
+    const sitk::Image result = reader.Execute();
+
+    EXPECT_EQ(2u, result.GetDimension());
+    EXPECT_EQ(sitk::Hash(expected), sitk::Hash(result));
+    EXPECT_VECTOR_DOUBLE_NEAR(expected.GetOrigin(), result.GetOrigin(), 1e-10);
+    EXPECT_VECTOR_DOUBLE_NEAR(expected.GetSpacing(), result.GetSpacing(), 1e-10);
+    EXPECT_VECTOR_DOUBLE_NEAR(expected.GetDirection(), result.GetDirection(), 1e-10);
+  }
+}
+
+
+TEST(IO, ImageFileReader_ExtractImplicitZero4D)
+{
+  if (SITK_MAX_DIMENSION < 4)
+  {
+    GTEST_SKIP() << "4D images are not supported.";
+  }
+
+  sitk::Image generatedImage(std::vector<unsigned int>{ 10, 12, 14, 6 }, sitk::sitkInt16);
+  generatedImage.SetOrigin(std::vector<double>{ 1.0, 2.0, 3.0, 4.0 });
+  generatedImage.SetSpacing(std::vector<double>{ 0.5, 0.6, 0.7, 0.8 });
+  const double c = std::cos(0.5);
+  const double s = std::sin(0.5);
+  generatedImage.SetDirection({ c, -s, 0.0, 0.0, s, c, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 });
+  // Filters do not support 4D; fill with distinct values so reading the wrong slice changes the hash.
+  int16_t * buffer = generatedImage.GetBufferAsInt16();
+  for (size_t i = 0; i < generatedImage.GetNumberOfPixels(); ++i)
+  {
+    buffer[i] = static_cast<int16_t>((i * 2654435761u) >> 16);
+  }
+
+  const ::testing::TestInfo * info = ::testing::UnitTest::GetInstance()->current_test_info();
+  std::string                 filename = std::string(info->test_case_name()) + "." + info->name() + ".mha";
+  filename = dataFinder.GetOutputFile(filename);
+  sitk::WriteImage(generatedImage, filename);
+
+  const std::vector<int> extractIndex{ 1, 2, 3, 4 };
+  const sitk::Image      expected = sitk::Extract(
+    generatedImage, { 5u, 6u, 7u, 0u }, extractIndex, sitk::ExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX);
+
+  sitk::ImageFileReader reader;
+  reader.SetFileName(filename);
+  reader.SetExtractIndex(extractIndex);
+
+  for (const auto & extractSize :
+       { std::vector<unsigned int>{ 5u, 6u, 7u, 0u }, std::vector<unsigned int>{ 5u, 6u, 7u } })
+  {
+    reader.SetExtractSize(extractSize);
+    const sitk::Image result = reader.Execute();
+
+    EXPECT_EQ(3u, result.GetDimension());
+    EXPECT_EQ(sitk::Hash(expected), sitk::Hash(result));
+    EXPECT_VECTOR_DOUBLE_NEAR(expected.GetOrigin(), result.GetOrigin(), 1e-10);
+    EXPECT_VECTOR_DOUBLE_NEAR(expected.GetSpacing(), result.GetSpacing(), 1e-10);
+    EXPECT_VECTOR_DOUBLE_NEAR(expected.GetDirection(), result.GetDirection(), 1e-10);
+  }
+}
+
+
 TEST(IO, ImageFileReader_5DExtract)
 {
   const std::string file = dataFinder.GetDirectory() + "/Input/points_5d.mha";
