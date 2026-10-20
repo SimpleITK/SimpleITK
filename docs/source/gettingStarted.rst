@@ -135,6 +135,62 @@ in the path.
 
 
 
+.. _verifying-release-downloads:
+
+Verifying downloaded release files
+----------------------------------
+
+If a GitHub release includes ``SHA256SUMS``, download that file and your
+chosen release asset from the same release into one directory. Keep their
+original filenames. Earlier releases may not provide this manifest.
+
+The manifest covers the uploaded ``.whl``, ``.zip``, and ``.gz`` assets,
+including macOS Python wheels and Java archives for ``arm64`` and
+``x86_64`` when provided. It does not cover GitHub's automatically generated
+"Source code" archive links or the manifest itself.
+
+The procedure below checks one downloaded asset without requiring the
+other release files. Replace ``EXACT_RELEASE_FILENAME`` with the complete
+filename of your package. On macOS, run these commands from the download
+directory:
+
+.. code-block:: bash
+
+    asset='EXACT_RELEASE_FILENAME'
+    awk -v filename="$asset" \
+      '$2 == filename { print; count++ } END { if (count != 1) exit 1 }' \
+      SHA256SUMS > SHA256SUMS.selected &&
+      shasum -a 256 --check SHA256SUMS.selected
+
+On GNU/Linux, replace the final command in this block with
+``sha256sum --check SHA256SUMS.selected``.
+
+The selection command requires exactly one matching entry. If it fails,
+check the filename and that the manifest came from the same release.
+The checksum command runs only after a successful selection.
+
+If you have downloaded every file listed in the manifest, you can instead
+check the complete set on macOS with:
+
+.. code-block:: bash
+
+    shasum -a 256 --check SHA256SUMS
+
+On GNU/Linux, use ``sha256sum --check SHA256SUMS``.
+
+The complete-set check requires all listed filenames to coexist unchanged.
+Some releases can contain source archives whose names differ only by letter
+case, such as ``SimpleITK-VERSION.tar.gz`` and ``simpleitk-VERSION.tar.gz``.
+On a case-insensitive file system, keep each such archive in a separate
+directory with a copy of the manifest and use the single-file procedure.
+
+Successful checks print ``OK`` for each checked file. Resolve a missing
+file or checksum mismatch before using the download. These checks compare
+the downloaded bytes with the published manifest; they do not authenticate
+the publisher or protect against replacement of both an asset and its
+checksum. Obtain the manifest from a trusted release source.
+
+
 Latest binaries
 ----------------
 
