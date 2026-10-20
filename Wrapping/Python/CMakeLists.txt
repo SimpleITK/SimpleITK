@@ -85,7 +85,7 @@ else()
 endif()
 
 if(SKBUILD)
-  if(SKBUILD_SABI_VERSION STREQUAL "3.11")
+  if(SKBUILD_SABI_VERSION MATCHES "^3\\.[0-9]+$")
     set(SimpleITK_PYTHON_USE_LIMITED_API ON)
   elseif(SKBUILD_SABI_VERSION STREQUAL "")
     set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
@@ -132,6 +132,34 @@ if(
     "Python limited API is not supported for this Python version and SWIG version."
   )
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+endif()
+
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  if(SKBUILD AND SKBUILD_SABI_VERSION MATCHES "^3\\.([0-9]+)$")
+    set(_SABI_MINOR "${CMAKE_MATCH_1}")
+  elseif(DEFINED Python_VERSION_MINOR AND NOT Python_VERSION_MINOR STREQUAL "")
+    set(_SABI_MINOR "${Python_VERSION_MINOR}")
+  else()
+    message(
+      FATAL_ERROR
+      "Unable to determine the Python limited API minor version."
+    )
+  endif()
+  # Py_buffer is only in the Limited API from 3.11.
+  if(_SABI_MINOR LESS 11)
+    message(
+      FATAL_ERROR
+      "Python limited API target 3.${_SABI_MINOR} is not supported; 3.11 or newer is required."
+    )
+  endif()
+  # PEP 384: Py_LIMITED_API is 0x03MM0000 for Python 3.MM.
+  math(
+    EXPR
+    _SABI_HEX
+    "0x03000000 + (${_SABI_MINOR} * 65536)"
+    OUTPUT_FORMAT HEXADECIMAL
+  )
+  set(SITK_PYTHON_ABI_VER_HEX "${_SABI_HEX}")
 endif()
 
 set_source_files_properties(
@@ -225,7 +253,7 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
   target_compile_definitions(
     ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     PRIVATE
-      -DPy_LIMITED_API=0x030b0000
+      -DPy_LIMITED_API=${SITK_PYTHON_ABI_VER_HEX}
   )
 
   message(
@@ -382,7 +410,7 @@ set(PYPROJECT_TOML_EXTRA "")
 if(SimpleITK_PYTHON_USE_LIMITED_API)
   set(
     PYPROJECT_TOML_EXTRA
-    "${PYPROJECT_TOML_EXTRA}\nwheel.py-api = \"cp311\"\n"
+    "${PYPROJECT_TOML_EXTRA}\nwheel.py-api = \"cp3${_SABI_MINOR}\"\n"
   )
 endif()
 
