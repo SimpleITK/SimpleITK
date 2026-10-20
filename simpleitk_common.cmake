@@ -439,9 +439,11 @@ while(NOT dashboard_done)
 	dashboard_hook_coverage()
       endif()
 
-      # HACK Unfortunately ctest_coverage ignores the BUILD argument, try to force it...
-      file(READ ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/CMakeFiles/TargetDirectories.txt build_coverage_dirs)
-      file(APPEND "${CTEST_BINARY_DIRECTORY}/CMakeFiles/TargetDirectories.txt" "${build_coverage_dirs}")
+      if(NOT dashboard_build_dir STREQUAL CTEST_BINARY_DIRECTORY)
+        # HACK Unfortunately ctest_coverage ignores the BUILD argument, try to force it...
+        file(READ "${dashboard_build_dir}/CMakeFiles/TargetDirectories.txt" build_coverage_dirs)
+        file(APPEND "${CTEST_BINARY_DIRECTORY}/CMakeFiles/TargetDirectories.txt" "${build_coverage_dirs}")
+      endif()
       ctest_coverage( BUILD "${dashboard_build_dir}" )
       if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Coverage)
