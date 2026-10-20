@@ -91,6 +91,7 @@ build_simpleitk_python() {
 build_simpleitk || exit 1
 
 SimpleITK_Python_EXECUTABLE="${BLD_DIR}/venv/bin/python"
+ABI3_CP311_OK=
 
 if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-csharp &&
@@ -132,18 +133,33 @@ if [[ ! -z ${BUILD_PYTHON_LIMITED_API:+x} && "${BUILD_PYTHON_LIMITED_API}" -ne 0
     USE_LIMITED_API=ON
     PYTHON=cp311-cp311
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
-    PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
-    build_simpleitk_python &&
-       ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
-         ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
-         rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} )
+    if [[ -x ${Python_EXECUTABLE} ]]; then
+        PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
+        build_simpleitk_python &&
+           ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
+             ctest -j ${NPROC} -LE UNSTABLE | tee ${OUT_DIR}/ctest_${PLATFORM}_${PYTHON}${USE_LIMITED_API:+-abi3}.log &&
+             rm -rf ${BLD_DIR}-${PYTHON}${USE_LIMITED_API:+-abi3} ) &&
+           ABI3_CP311_OK=1 ||
+           echo "${PYTHON} abi3 build failed; falling back to the regular build" >&2
+    else
+        echo "Skipping ${PYTHON}: ${Python_EXECUTABLE} not found" >&2
+    fi
     unset USE_LIMITED_API
 fi
 
 
 
 for PYTHON in ${PYTHON_VERSIONS}; do
+    # The regular cp311 build is redundant only if the abi3 build succeeded.
+    if [[ "${PYTHON}" == "cp311-cp311" && -n "${ABI3_CP311_OK:-}" ]]; then
+        echo "Skipping ${PYTHON}: built as the limited API (abi3) wheel" >&2
+        continue
+    fi
     Python_EXECUTABLE=/opt/python/${PYTHON}/bin/python
+    if [[ ! -x ${Python_EXECUTABLE} ]]; then
+        echo "Skipping ${PYTHON}: ${Python_EXECUTABLE} not found" >&2
+        continue
+    fi
     PLATFORM=$(${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_platform())")
     build_simpleitk_python &&
         ( auditwheel repair $(find ${BLD_DIR}-${PYTHON}/ -name *.whl) -w ${OUT_DIR}/wheelhouse/;
