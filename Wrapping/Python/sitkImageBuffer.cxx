@@ -513,7 +513,8 @@ sitkImageBuffer_dealloc(PyObject * pyself)
   self->pyImageRef = nullptr;
 
   PyTypeObject * type = Py_TYPE(pyself);
-#ifdef Py_LIMITED_API
+#if defined(Py_LIMITED_API) || defined(Py_TARGET_ABI3T)
+  // PyTypeObject is opaque in the stable ABIs; use the type slot instead.
   freefunc free_func = (freefunc)PyType_GetSlot(type, Py_tp_free);
   free_func(pyself);
 #else
