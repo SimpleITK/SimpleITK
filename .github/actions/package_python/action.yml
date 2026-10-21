@@ -10,7 +10,7 @@ inputs:
     required: false
     default: 'false'
   use_limited_api:
-    description: "Use limited API (ignored, and forced off, for free-threaded 't' interpreters)"
+    description: "Use limited API (abi3t for free-threaded 't' interpreters)"
     required: false
     default: false
   allow_prereleases:
@@ -39,17 +39,20 @@ runs:
       shell: bash
       run: |
         use_limited_api="${{ inputs.use_limited_api }}"
-        # Free-threaded ("t") interpreters have no stable/limited ABI to build against.
-        if [[ "${{ inputs.python-version }}" == *t ]]; then
-          use_limited_api="false"
+        use_abi3t="false"
+        # On a free-threaded ("t") interpreter the limited API means abi3t (PEP 803).
+        if [[ "${use_limited_api}" == "true" && "${{ inputs.python-version }}" == *t ]]; then
+          use_abi3t="true"
         fi
         echo "use_limited_api=${use_limited_api}" >> "$GITHUB_OUTPUT"
+        echo "use_abi3t=${use_abi3t}" >> "$GITHUB_OUTPUT"
     - name: Build Python ${{ steps.cpy.outputs.python-version }}
       continue-on-error: ${{ inputs.continue-on-error == 'true' }}
       shell: bash
       if: runner.os == 'macOS'
       env:
         USE_LIMITED_API: ${{ steps.opts.outputs.use_limited_api }}
+        USE_ABI3T: ${{ steps.opts.outputs.use_abi3t }}
         CMAKE_OSX_ARCHITECTURES: ${{ inputs.cmake_osx_architectures }}
       run: |
         ${{ github.action_path }}/scripts/mac_build_python.sh
@@ -59,6 +62,7 @@ runs:
       if: runner.os == 'Windows'
       env:
         USE_LIMITED_API: ${{ steps.opts.outputs.use_limited_api }}
+        USE_ABI3T: ${{ steps.opts.outputs.use_abi3t }}
         VCVAR_OPTIONS: ${{ inputs.VCVAR_OPTIONS }}
       run: |
         set "VS_INSTALLATION_PATH="

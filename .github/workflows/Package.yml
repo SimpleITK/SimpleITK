@@ -254,10 +254,11 @@ jobs:
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
           VCVAR_OPTIONS: ${{ matrix.vcvar-options || 'amd64 -vcvars_ver=14.2' }}
-      - name: Package Python 3.15t
+      - name: Package Python 3.15t (abi3t)
         uses: ./.github/actions/package_python
         with:
           python-version: "3.15t"
+          use_limited_api: true
           continue-on-error: true
           cmake_osx_architectures: ${{ matrix.cmake_osx_architectures || '' }}
           VCVAR_OPTIONS: ${{ matrix.vcvar-options || 'amd64 -vcvars_ver=14.2' }}
