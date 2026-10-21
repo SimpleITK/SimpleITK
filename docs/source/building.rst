@@ -230,6 +230,13 @@ Superbuild add `-DModule_AnisotropicDiffusionLBR:BOOL=ON` to the
 command line or in the CMake GUI press the "Add Entry" button to
 define the variable as above.
 
+Interprocedural optimization (LTO) can be enabled with the
+`-DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON` option. It applies to
+the Release, RelWithDebInfo and MinSizeRel build types, and to ITK when it is
+built by the SuperBuild or FetchContent. It reduces the size of linked
+executables and libraries, but significantly increases build time and the size
+of static libraries.
+
 SimpleITK has a very flexible and robust build system utilizing
 CMake. It enables packagers to build SimpleITK in a variety of ways to
 suit their requirements and minimize recompilation of SimpleITK so
