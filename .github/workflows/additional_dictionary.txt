@@ -1459,6 +1459,7 @@ intermode
 interp
 interpolator
 interpolators
+interprocedural
 intp
 intrinsics
 ints
