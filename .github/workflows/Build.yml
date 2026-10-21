@@ -48,6 +48,7 @@ jobs:
             cmake-generator: "Ninja"
             use-superbuild: true
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               WRAP_TCL:BOOL=ON
@@ -63,6 +64,7 @@ jobs:
             cmake-generator: "Ninja"
             use-superbuild: false
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
           - os: macos-26
@@ -71,6 +73,7 @@ jobs:
             cmake-generator: "Ninja"
             use-superbuild: false
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
           - os: ubuntu-24.04
@@ -81,6 +84,7 @@ jobs:
             use-superbuild: true
             use-ccache: true
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
@@ -94,6 +98,7 @@ jobs:
             use-superbuild: false
             use-ccache: true
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               CMAKE_LINKER_TYPE:STRING=GOLD
@@ -105,6 +110,7 @@ jobs:
             cmake-generator: "Ninja"
             use-ccache: true
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
               ITK_USE_BUILD_DIR:BOOL=ON
@@ -118,6 +124,7 @@ jobs:
             r_version: "4.4"
             use-ccache: true
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
               WRAP_R:BOOL=ON
               WRAP_PYTHON:BOOL=ON
               WRAP_CSHARP:BOOL=OFF
@@ -215,6 +222,8 @@ jobs:
           Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           SimpleITK_USE_SYSTEM_SWIG:BOOL=ON
           SimpleITK_Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
+          CMAKE_JOB_POOLS:STRING=link_pool=1
+          CMAKE_JOB_POOL_LINK:STRING=link_pool
           ${{ matrix.ctest-cache }}
       run: |
         cmake --version
