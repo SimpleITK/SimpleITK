@@ -477,7 +477,7 @@ jobs:
           mkdir -p dist
           mv $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "simpleitk-*.tar.gz" \) ) dist/
       - name: PyPI Publish package
-        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086
         with:
           repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
           skip-existing: true
@@ -505,7 +505,7 @@ jobs:
           mkdir -p dist
           mv $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "simpleitk-*.tar.gz" \) ) dist/
       - name: PyPI Publish package
-        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086
         with:
           repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
           skip-existing: true
