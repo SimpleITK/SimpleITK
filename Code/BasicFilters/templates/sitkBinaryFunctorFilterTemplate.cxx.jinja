@@ -37,6 +37,9 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}
   static detail::MemberFunctionFactory<MemberFunction1Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction1Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+{%- if pixel_types_scalar_only %}
+    factory.RegisterMemberFunctions< {{ pixel_types_scalar_only }}, 2, 3 >();
+{%- endif %}
     return factory;
   }();
   return static_factory;
@@ -47,10 +50,31 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction2Type> &{{ name }}
   static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+{%- if pixel_types_scalar_only %}
+    factory.RegisterMemberFunctions< {{ pixel_types_scalar_only }}, 2, 3 >();
+{%- endif %}
     return factory;
   }();
   return static_factory;
 }
+
+{% if vector_pixel_types_broadcast %}
+const detail::DualMemberFunctionFactory<{{ name }}::MemberFunctionType> &{{ name }}::GetMemberFunctionFactoryDual()
+{
+  static detail::DualMemberFunctionFactory<MemberFunctionType> static_factory = [] {
+    detail::DualMemberFunctionFactory<MemberFunctionType> factory;
+    // Only register position-matched pairs (e.g. VectorFloat32 with BasicFloat32),
+    // not the full cross product -- avoids ~10x more template instantiations for
+    // combinations (e.g. VectorInt8 with BasicFloat64) nobody needs.
+    factory.RegisterMemberFunctionsZipped< {{ vector_pixel_types_broadcast }}, BasicPixelIDTypeList, 3 >();
+    factory.RegisterMemberFunctionsZipped< {{ vector_pixel_types_broadcast }}, BasicPixelIDTypeList, 2 >();
+    factory.RegisterMemberFunctionsZipped< BasicPixelIDTypeList, {{ vector_pixel_types_broadcast }}, 3 >();
+    factory.RegisterMemberFunctionsZipped< BasicPixelIDTypeList, {{ vector_pixel_types_broadcast }}, 2 >();
+    return factory;
+  }();
+  return static_factory;
+}
+{% endif %}
 
 // Default constructor that initializes parameters
 {% include "ConstructorSignature.cxx.jinja" %} = default;
@@ -91,7 +115,30 @@ Image {{ name }}::Execute ( {{ constant_type }} constant, const Image& image2{{ 
 }
 {% endif %}
 
+{% if vector_pixel_types_broadcast %}
+Image {{ name }}::Execute ( const Image& image1, const Image& image2 )
+{
+  const PixelIDValueEnum type1 = image1.GetPixelID();
+  const PixelIDValueEnum type2 = image2.GetPixelID();
+  const unsigned int dimension = image1.GetDimension();
+  CheckImageMatchingDimension( image1, image2, "image2" );
+  if ( type1 == type2 )
+    {
+    return GetMemberFunctionFactory().GetMemberFunction( type1, dimension, this )( image1, image2 );
+    }
+  if ( GetMemberFunctionFactoryDual().HasMemberFunction( type1, type2, dimension ) )
+    {
+    return GetMemberFunctionFactoryDual().GetMemberFunction( type1, type2, dimension, this )( image1, image2 );
+    }
+  CheckImageMatchingPixelType( image1, image2, "image2" );
+  return Image(); // unreachable: CheckImageMatchingPixelType always throws here
+}
+{%- if in_place %}
+  {%- include "ExecuteRValueReferenceNoParameters.cxx.jinja" %}
+{%- endif %}
+{% else %}
 {% include "ExecuteNoParameters.cxx.jinja" %}
+{% endif %}
 
 Image {{ name }}::Execute ( {{ constant_type }} constant, const Image& image2 )
 {
@@ -133,12 +180,25 @@ Image {{ name }}::Execute ( Image&& image1, {{ constant_type }} constant )
 template <class TImageType>
 Image {{ name }}::ExecuteInternal ( {{ constant_type }} constant, const Image& inImage2 )
 {
-  {% include "ExecuteInternalTypedefs.cxx.jinja" %}
+  // image2 keeps its own pixel type; the constant is reduced to image2's
+  // scalar ValueType (identity for Basic/Complex, component type for Vector)
+  // so that only the vector*scalar (not vector*vector) operator is used.
+  using InputImageType2 = TImageType;
+  using InputImageType =
+    itk::Image<typename NumericTraits<typename InputImageType2::PixelType>::ValueType, InputImageType2::ImageDimension>;
+  {%- if output_image_type %}
+  // Define output image type
+  using OutputImageType = {{ output_image_type }};
+  {%- elif output_pixel_type %}
+  // Define output image type
+  using OutputImageType = itk::Image< {{ output_pixel_type }}, InputImageType::ImageDimension >;
+  {%- else %}
+  using OutputImageType = InputImageType2;
+  {%- endif %}
   // Get the pointer to the ITK image contained in image2
   typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inImage2 );
   {% include "ExecuteInternalITKFilter.cxx.jinja" %}
   typename InputImageType::PixelType c;
-  NumericTraits<typename InputImageType2::PixelType>::SetLength( c, image2->GetNumberOfComponentsPerPixel() );
   ToPixelType( constant, c );
   filter->SetConstant1( c );
   filter->SetInput2( image2 );
@@ -149,12 +209,23 @@ Image {{ name }}::ExecuteInternal ( {{ constant_type }} constant, const Image& i
 template <class TImageType>
 Image {{ name }}::ExecuteInternal ( const Image& inImage1, {{ constant_type }} constant )
 {
-  {% include "ExecuteInternalTypedefs.cxx.jinja" %}
+  // image1 keeps its own pixel type; see the analogous comment above.
+  using InputImageType = TImageType;
+  using InputImageType2 =
+    itk::Image<typename NumericTraits<typename InputImageType::PixelType>::ValueType, InputImageType::ImageDimension>;
+  {%- if output_image_type %}
+  // Define output image type
+  using OutputImageType = {{ output_image_type }};
+  {%- elif output_pixel_type %}
+  // Define output image type
+  using OutputImageType = itk::Image< {{ output_pixel_type }}, InputImageType::ImageDimension >;
+  {%- else %}
+  using OutputImageType = InputImageType;
+  {%- endif %}
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
   {% include "ExecuteInternalITKFilter.cxx.jinja" %}
   typename InputImageType2::PixelType c;
-  NumericTraits<typename InputImageType::PixelType>::SetLength( c, image1->GetNumberOfComponentsPerPixel() );
   ToPixelType( constant, c );
   filter->SetInput1( image1 );
   filter->SetConstant2( c );
@@ -163,6 +234,45 @@ Image {{ name }}::ExecuteInternal ( const Image& inImage1, {{ constant_type }} c
 }
 
 //-----------------------------------------------------------------------------
+
+{% if vector_pixel_types_broadcast %}
+template <class TImageType1, class TImageType2>
+Image {{ name }}::DualExecuteInternal ( const Image& inImage1, const Image& inImage2 )
+{
+  // Both images keep their own (possibly Vector) pixel type -- no per-component
+  // decomposition is needed since the ITK filter's functor already supports a
+  // Vector-typed input paired with a scalar-typed input directly.
+  //
+  // ITK's BinaryGeneratorImageFilter::GenerateOutputInformation always copies
+  // output metadata (including NumberOfComponentsPerPixel) from Input1. Since
+  // Multiply is commutative, always bind the Vector-typed argument to Input1
+  // (regardless of which position the caller originally passed it in), so the
+  // Vector output always gets the correct component count.
+  using IsType1Scalar = std::is_same<typename TImageType1::PixelType,
+                                      typename NumericTraits<typename TImageType1::PixelType>::ValueType>;
+  using InputImageType = std::conditional_t<IsType1Scalar::value, TImageType2, TImageType1>;
+  using InputImageType2 = std::conditional_t<IsType1Scalar::value, TImageType1, TImageType2>;
+  {%- if output_image_type %}
+  // Define output image type
+  using OutputImageType = {{ output_image_type }};
+  {%- elif output_pixel_type %}
+  // Define output image type
+  using OutputImageType = itk::Image< {{ output_pixel_type }}, InputImageType::ImageDimension >;
+  {%- else %}
+  // Output matches Input1, which is always the Vector type (see above).
+  using OutputImageType = InputImageType;
+  {%- endif %}
+  const Image & inVectorImage = IsType1Scalar::value ? inImage2 : inImage1;
+  const Image & inScalarImage = IsType1Scalar::value ? inImage1 : inImage2;
+  typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inVectorImage );
+  typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inScalarImage );
+  {% include "ExecuteInternalITKFilter.cxx.jinja" %}
+  filter->SetInput1( image1 );
+  filter->SetInput2( image2 );
+  {% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
+  {% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+}
+{% endif %}
 
 {% include "ExecuteInternalVectorImages.cxx.jinja" %}
 
