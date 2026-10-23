@@ -176,6 +176,8 @@ endif()
 #-------------------------------------------------------------------------
 include(sitkCheckRequiredFlags)
 
+include(sitkInterproceduralOptimization)
+
 #------------------------------------------------------------------------------
 # BuildName used for dashboard reporting
 #------------------------------------------------------------------------------
@@ -217,6 +219,10 @@ list(
   CMAKE_CXX_STANDARD
   CMAKE_CXX_STANDARD_REQUIRED
   CMAKE_CXX_EXTENSIONS
+  CMAKE_INTERPROCEDURAL_OPTIMIZATION
+  CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE
+  CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO
+  CMAKE_INTERPROCEDURAL_OPTIMIZATION_MINSIZEREL
   CMAKE_LINKER
   CMAKE_LINKER_TYPE
   CMAKE_EXE_LINKER_FLAGS
