@@ -105,6 +105,8 @@ ImageFileReader::ToString() const
   this->ToStringHelper(out, this->m_FileName) << "\"" << std::endl;
   out << "  ExtractSize: " << this->m_ExtractSize << std::endl;
   out << "  ExtractIndex: " << this->m_ExtractIndex << std::endl;
+  out << "  DirectionCollapseToStrategy: ";
+  this->ToStringHelper(out, this->m_DirectionCollapseToStrategy) << std::endl;
 
   out << "  Image Information:" << std::endl << "    PixelType: ";
   this->ToStringHelper(out, this->m_PixelType) << std::endl;
@@ -296,6 +298,18 @@ ImageFileReader::GetExtractIndex() const
   return this->m_ExtractIndex;
 }
 
+void
+ImageFileReader::SetDirectionCollapseToStrategy(DirectionCollapseStrategyType strategy)
+{
+  this->m_DirectionCollapseToStrategy = strategy;
+}
+
+ImageFileReader::DirectionCollapseStrategyType
+ImageFileReader::GetDirectionCollapseToStrategy() const
+{
+  return this->m_DirectionCollapseToStrategy;
+}
+
 Image
 ImageFileReader::Execute()
 {
@@ -414,7 +428,20 @@ ImageFileReader::ExecuteExtract(TInternalImageType * itkImage)
   typename ExtractType::Pointer extractor = ExtractType::New();
 
   extractor->InPlaceOn();
-  extractor->SetDirectionCollapseToSubmatrix();
+  switch (this->m_DirectionCollapseToStrategy)
+  {
+    case COLLAPSETOIDENTITY:
+      extractor->SetDirectionCollapseToIdentity();
+      break;
+    case COLLAPSETOSUBMATRIX:
+      extractor->SetDirectionCollapseToSubmatrix();
+      break;
+    case COLLAPSETOGUESS:
+      extractor->SetDirectionCollapseToGuess();
+      break;
+    default:
+      sitkExceptionMacro("Invalid direction collapse strategy: " << int(this->m_DirectionCollapseToStrategy));
+  }
 
   extractor->SetInput(itkImage);
 
