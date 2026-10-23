@@ -917,6 +917,7 @@ autocorrelations
 autodoc
 automata
 autopointer
+awk
 ay
 az
 ba
@@ -1004,6 +1005,7 @@ chamfer
 char
 char16_t
 char32_t
+checksum
 choropleth
 cin
 cindex
