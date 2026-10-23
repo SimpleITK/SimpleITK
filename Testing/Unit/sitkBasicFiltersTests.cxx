@@ -60,6 +60,11 @@
 #include <sitkN4BiasFieldCorrectionImageFilter.h>
 #include <sitkMaskImageFilter.h>
 #include <sitkLogger.h>
+#include <sitkMultiplyImageFilter.h>
+#include <sitkPowImageFilter.h>
+#include <sitkDivideRealImageFilter.h>
+#include <sitkDivideImageFilter.h>
+#include <sitkDivideFloorImageFilter.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -1532,4 +1537,71 @@ TEST(BasicFilters, N4BiasFieldCorrectionImageFilter_GetLogBiasField)
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetOrigin(), logBiasField.GetOrigin(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetSpacing(), logBiasField.GetSpacing(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetDirection(), logBiasField.GetDirection(), 1e-8);
+}
+
+TEST(BasicFilters, MultiplyImageFilter_ConstantFullPrecision)
+{
+  // A fractional constant must be applied at double precision, not truncated
+  // to the image's integer pixel type before the multiply runs.
+  namespace sitk = itk::simple;
+  sitk::Image image = sitk::Image({ 1, 1 }, sitk::sitkUInt8);
+  image.SetPixelAsUInt8({ 0, 0 }, 200);
+
+  EXPECT_EQ(100u, sitk::Multiply(image, 0.5).GetPixelAsUInt8({ 0, 0 }));
+  EXPECT_EQ(100u, sitk::Multiply(0.5, image).GetPixelAsUInt8({ 0, 0 }));
+}
+
+TEST(BasicFilters, PowImageFilter_ConstantFullPrecision)
+{
+  // A fractional exponent must be applied at double precision, not truncated
+  // to the image's integer pixel type before pow() runs (0.5 truncating to 0
+  // would silently turn a square-root into "always 1").
+  namespace sitk = itk::simple;
+  sitk::Image image = sitk::Image({ 1, 1 }, sitk::sitkUInt8);
+  image.SetPixelAsUInt8({ 0, 0 }, 4);
+
+  EXPECT_EQ(2u, sitk::Pow(image, 0.5).GetPixelAsUInt8({ 0, 0 }));
+}
+
+TEST(BasicFilters, DivideRealImageFilter_ConstantFullPrecision)
+{
+  // A fractional divisor must be applied at double precision, not truncated
+  // to the image's integer pixel type before the division runs (0.5
+  // truncating to 0 would silently divide by zero).
+  namespace sitk = itk::simple;
+  sitk::Image image = sitk::Image({ 1, 1 }, sitk::sitkUInt8);
+  image.SetPixelAsUInt8({ 0, 0 }, 10);
+
+  EXPECT_NEAR(20.0, sitk::DivideReal(image, 0.5).GetPixelAsDouble({ 0, 0 }), 1e-9);
+}
+
+TEST(BasicFilters, DivideImageFilter_ConstantFullPrecision)
+{
+  // A fractional divisor must be applied at double precision, not truncated
+  // to the image's integer pixel type before the division runs (0.5
+  // truncating to 0 would trip the filter's divide-by-zero guard and
+  // saturate to the pixel type's max value instead of computing 10/0.5).
+  namespace sitk = itk::simple;
+  sitk::Image image = sitk::Image({ 1, 1 }, sitk::sitkUInt8);
+  image.SetPixelAsUInt8({ 0, 0 }, 10);
+
+  EXPECT_EQ(20u, sitk::Divide(image, 0.5).GetPixelAsUInt8({ 0, 0 }));
+}
+
+TEST(BasicFilters, DivideFloorImageFilter_ConstantFullPrecision)
+{
+  // As with Divide, a fractional divisor must not be truncated to the pixel
+  // type before the division. Both operand orders are covered since the
+  // constant takes a different position in each overload.
+  namespace sitk = itk::simple;
+  sitk::Image image = sitk::Image({ 1, 1 }, sitk::sitkUInt8);
+  image.SetPixelAsUInt8({ 0, 0 }, 10);
+
+  EXPECT_EQ(20u, sitk::DivideFloor(image, 0.5).GetPixelAsUInt8({ 0, 0 }));
+
+  // floor(-0.5 / 1) is -1, but a constant truncated toward zero gives 0.
+  sitk::Image signedImage = sitk::Image({ 1, 1 }, sitk::sitkInt8);
+  signedImage.SetPixelAsInt8({ 0, 0 }, 1);
+
+  EXPECT_EQ(-1, sitk::DivideFloor(-0.5, signedImage).GetPixelAsInt8({ 0, 0 }));
 }

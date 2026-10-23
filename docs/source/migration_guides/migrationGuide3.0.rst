@@ -168,3 +168,79 @@ If your code requires the exact behavior from SimpleITK 2.x for 3D images, use t
    f = sitk.SobelEdgeDetectionImageFilter()
    f.UseLegacyOperatorCoefficientsOn()
    result = f.Execute(image)
+
+
+Scalar Constants in Binary Operations Use Double Precision
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Binary filters that take an image and a scalar constant (e.g. ``Multiply(image, 0.5)``) previously cast the constant to the pixel type of the image before the operation ran. For integer images, a fractional or out-of-range constant was silently truncated, so ``Multiply(uint8_image, 0.5)`` was computed as ``Multiply(uint8_image, 0)``.
+
+In SimpleITK 3.0 the constant is kept as a ``double`` and the operation is computed at ``double`` precision. Only the final result is cast to the output pixel type. Constants are only promoted for integer pixel types (and integer vector/complex components). Images with floating point pixels, such as ``float``, are computed as before.
+
+**Affected filters:**
+
+The following filters, and only these, now use a ``double`` constant in the image/constant overloads:
+
+* ``MultiplyImageFilter`` (``Multiply``)
+* ``DivideImageFilter`` (``Divide``)
+* ``DivideRealImageFilter`` (``DivideReal``)
+* ``DivideFloorImageFilter`` (``DivideFloor``)
+* ``PowImageFilter`` (``Pow``)
+
+Other binary filters with a constant overload, such as ``Add``, ``Subtract``, ``Modulus``, ``Equal``, ``NotEqual``, ``Greater``, ``GreaterEqual``, ``Less`` and ``LessEqual``, are unchanged and still cast the constant to the image's pixel type.
+
+**Implication for Overloaded Operators:**
+
+The overloaded operators call these filters, so their behavior changes when one operand is a scalar and the image has an integer pixel type:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 35 35
+
+   * - Operator
+     - Filter
+     - Languages
+   * - ``*``, ``*=``
+     - ``Multiply``
+     - C++, Python, C#, R
+   * - ``/``
+     - ``Divide``
+     - C++, C#, R
+   * - ``/``, ``/=``
+     - ``DivideReal`` (Python true division)
+     - Python
+   * - ``//``, ``//=``
+     - ``DivideFloor`` (Python floor division)
+     - Python
+   * - ``**``, ``**=``
+     - ``Pow``
+     - Python, R
+
+This includes the reflected forms where the scalar is on the left, e.g. ``0.5 * image`` and ``2 ** image``. Operators for the filters that were not changed (``+``, ``-``, ``%``, ``==``, ``!=``, ``<``, ``<=``, ``>`` and ``>=``) are unaffected.
+
+The results change in these cases for integer pixel types:
+
+* ``image * 0.5`` was previously ``image * 0`` (all zeros). The product is now computed at ``double`` precision.
+* ``image / 0.5`` previously truncated the divisor to ``0``, which triggered the divide-by-zero guard and saturated the result to the pixel type's maximum value. It now computes ``image * 2``.
+* ``image // 0.5`` previously saturated in the same way, and now computes ``floor(image / 0.5)``. ``-0.5 // image`` now yields ``-1`` for a positive pixel value of 1, rather than ``0`` from the truncated constant.
+* ``image ** 0.5`` previously used an exponent of ``0`` (all ones). It now computes the square root.
+
+The final cast of a result to the output pixel type uses the C++ default numeric conversion (truncation toward zero, not rounding).
+
+**64-bit Integer Precision:**
+
+``DivideReal``, ``DivideFloor`` and ``Pow`` already converted the pixel values to ``double`` in 2.x. For ``Multiply`` and ``Divide``, however, the pixel values are now converted to ``double`` along with the constant. ``int64`` and ``uint64`` pixel values with a magnitude above 2\ :sup:`53` are rounded to the nearest representable ``double`` before these two filters operate on them. In SimpleITK 2.x these operations were exact for such values, because the constant was cast to the integer pixel type. For example, a pixel of 9007199254740993 multiplied by ``1.0`` yields 9007199254740992. The constant has always been a ``double`` in the interface, so a constant above 2\ :sup:`53` was never exactly representable. Images with values below 2\ :sup:`53`, which includes all 8, 16 and 32-bit integer types, are not affected. If exact 64-bit integer arithmetic is required, use the image/image overloads with a constant image of the same pixel type, which do not convert the pixels to ``double``.
+
+**Migration:**
+
+Code that relied on the previous truncation, which is unlikely to be intentional, should truncate the constant explicitly, for example ``image * int(0.5)``. To keep fractional results, cast the image to a floating point type before the operation:
+
+.. code-block:: python
+
+   img = sitk.Image([2, 2], sitk.sitkUInt8) + 10
+
+   # 2.x: all zeros, 3.x: 5 (computed at double precision)
+   result = img * 0.5
+
+   # Compute in floating point and keep fractional results
+   result = sitk.Cast(img, sitk.sitkFloat32) * 0.5
