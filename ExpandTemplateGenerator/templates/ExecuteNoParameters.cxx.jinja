@@ -19,6 +19,7 @@
   {%- for inum in range(2, number_of_inputs+1) %}
   CheckImageMatchingDimension( {{ inputName }}, image{{ inum }}, "image{{ inum }}" );
   CheckImageMatchingPixelType( {{ inputName }}, image{{ inum }}, "image{{ inum }}" );
+  CheckImageMatchingComponents( {{ inputName }}, image{{ inum }}, "image{{ inum }}" );
   {%- endfor %}
 
   {#- Check dimension and size for additional image-type inputs (beyond the numbered ones) #}

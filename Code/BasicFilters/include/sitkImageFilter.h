@@ -100,6 +100,13 @@ protected:
   void
   CheckImageMatchingPixelType(const Image & image1, const Image & image2, const std::string & image2Name);
 
+  /** Verify the number of components per pixel of image1 matches the
+   * number of components per pixel of image2, and if different then an
+   * exception is thrown.
+   */
+  void
+  CheckImageMatchingComponents(const Image & image1, const Image & image2, const std::string & image2Name);
+
   /** Verify the size in pixel of image1 matches the size of
    * image2, and if different then an exception is thrown.
    */

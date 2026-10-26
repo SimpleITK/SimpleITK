@@ -59,6 +59,9 @@
 #include <sitkPasteImageFilter.h>
 #include <sitkN4BiasFieldCorrectionImageFilter.h>
 #include <sitkMaskImageFilter.h>
+#include <sitkAddImageFilter.h>
+#include <sitkSubtractImageFilter.h>
+#include <sitkExceptionObject.h>
 #include <sitkLogger.h>
 
 #include "itkVectorImage.h"
@@ -1532,4 +1535,58 @@ TEST(BasicFilters, N4BiasFieldCorrectionImageFilter_GetLogBiasField)
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetOrigin(), logBiasField.GetOrigin(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetSpacing(), logBiasField.GetSpacing(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetDirection(), logBiasField.GetDirection(), 1e-8);
+}
+
+namespace
+{
+itk::simple::Image
+MakeVectorImage(const std::vector<float> & value)
+{
+  namespace sitk = itk::simple;
+  sitk::Image img({ 2, 1 }, sitk::sitkVectorFloat32, static_cast<unsigned int>(value.size()));
+  img.SetPixelAsVectorFloat32({ 0, 0 }, value);
+  img.SetPixelAsVectorFloat32({ 1, 0 }, value);
+  return img;
+}
+} // namespace
+
+TEST(BasicFilters, BinaryFunctor_VectorComponentMismatch)
+{
+  namespace sitk = itk::simple;
+
+  const sitk::Image v2 = MakeVectorImage({ 1.0f, 5.0f });
+  const sitk::Image v3 = MakeVectorImage({ 10.0f, 20.0f, 30.0f });
+
+  for (const auto & mismatched : { std::make_pair(v2, v3), std::make_pair(v3, v2) })
+  {
+    EXPECT_THROW(sitk::Add(mismatched.first, mismatched.second), sitk::GenericException);
+    EXPECT_THROW(sitk::Subtract(mismatched.first, mismatched.second), sitk::GenericException);
+  }
+
+  try
+  {
+    sitk::Add(v3, v2);
+    FAIL() << "Expected an exception for mismatched number of components";
+  }
+  catch (const sitk::GenericException & e)
+  {
+    const std::string what(e.what());
+    EXPECT_NE(std::string::npos, what.find("image2")) << what;
+    EXPECT_NE(std::string::npos, what.find("components per pixel")) << what;
+  }
+
+  // matching number of components
+  const sitk::Image other3 = MakeVectorImage({ 1.0f, 2.0f, 3.0f });
+  sitk::Image       sum;
+  ASSERT_NO_THROW(sum = sitk::Add(v3, other3));
+  EXPECT_EQ(3u, sum.GetNumberOfComponentsPerPixel());
+  EXPECT_EQ(std::vector<float>({ 11.0f, 22.0f, 33.0f }), sum.GetPixelAsVectorFloat32({ 1, 0 }));
+
+  sitk::Image diff;
+  ASSERT_NO_THROW(diff = sitk::Subtract(v3, other3));
+  EXPECT_EQ(std::vector<float>({ 9.0f, 18.0f, 27.0f }), diff.GetPixelAsVectorFloat32({ 1, 0 }));
+
+  // constants with vector images
+  EXPECT_EQ(std::vector<float>({ 12.0f, 22.0f, 32.0f }), sitk::Add(v3, 2.0).GetPixelAsVectorFloat32({ 0, 0 }));
+  EXPECT_EQ(std::vector<float>({ 12.0f, 22.0f, 32.0f }), sitk::Add(2.0, v3).GetPixelAsVectorFloat32({ 0, 0 }));
 }
