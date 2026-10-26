@@ -1,10 +1,15 @@
 name: SubtractImageFilter
+itk_name: BinaryFunctorImageFilter
 template_code_filename: BinaryFunctorFilter
 template_test_filename: ImageFilter
 constant_type: double
 number_of_inputs: 2
 doc: Some global documentation
 pixel_types: NonLabelPixelIDTypeList
+filter_type: itk::BinaryFunctorImageFilter< InputImageType, InputImageType2, OutputImageType, itk::simple::Functor::Subtract<
+  typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType> >
+include_files:
+- sitkVectorArithmeticFunctors.hxx
 members: []
 tests:
 - tag: 2D
