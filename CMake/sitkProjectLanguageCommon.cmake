@@ -23,6 +23,9 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 
   include(sitkCheckRequiredFlags)
 
+  # SimpleITK libraries built with IPO must be linked with IPO enabled.
+  include(sitkInterproceduralOptimization)
+
   include(CTest)
 
   if(BUILD_TESTING)

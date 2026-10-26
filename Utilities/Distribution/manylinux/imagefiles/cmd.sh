@@ -43,6 +43,7 @@ build_simpleitk() {
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DBUILD_TESTING:BOOL=ON \
+        -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DWRAP_DEFAULT:BOOL=OFF \
@@ -79,6 +80,7 @@ build_simpleitk_python() {
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
+        -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
         -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE} \
         -DPython_EXECUTABLE:FILEPATH=${Python_EXECUTABLE} \
         -DPython_INCLUDE_DIR:PATH=${Python_INCLUDE_DIR} \
@@ -105,6 +107,7 @@ if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
             -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
             -DSimpleITK_CSHARP_ARCH:STRING="linux_$(arch)" \
+            -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/CSharp &&
         cmake --build "${BLD_DIR}-csharp" --target dist &&
@@ -123,6 +126,7 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
             -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
             -DSimpleITK_JAVA_ARCH:STRING="linux_$(arch)" \
+            -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/Java &&
         cmake --build "${BLD_DIR}-java" --target dist &&

@@ -115,6 +115,8 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
+              CMAKE_JOB_POOLS:STRING=link_pool=1
+              CMAKE_JOB_POOL_LINK:STRING=link_pool
           - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -126,6 +128,8 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
+              CMAKE_JOB_POOLS:STRING=link_pool=1
+              CMAKE_JOB_POOL_LINK:STRING=link_pool
           - os: windows-2022
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"
@@ -193,6 +197,7 @@ jobs:
             BUILD_EXAMPLES:BOOL=ON
             BUILD_TESTING:BOOL=ON
             SimpleITK_USE_ELASTIX:BOOL=ON
+            SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
             ${{ matrix.cmake_osx_architectures && format('CMAKE_OSX_ARCHITECTURES:STRING={0}', matrix.cmake_osx_architectures) || '' }}
             ${{ matrix.ctest-cache }}
         run: |

@@ -63,6 +63,9 @@ jobs:
             cmake-generator: "Ninja"
             use-superbuild: false
             ctest-cache: |
+              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
+              CMAKE_JOB_POOLS:STRING=link_pool=1
+              CMAKE_JOB_POOL_LINK:STRING=link_pool
               WRAP_PYTHON:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
           - os: macos-26
