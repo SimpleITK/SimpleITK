@@ -589,3 +589,41 @@ def test_legacy():
     image //= image
 
     image = image * 0
+
+
+def test_vector_arithmetic():
+    """Vector images with vector images and constants"""
+
+    def make(values):
+        image = sitk.Image([2, 1], sitk.sitkVectorFloat32, 3)
+        for x, v in enumerate(values):
+            image[x, 0] = v
+        return image
+
+    a = make([(1.0, 2.0, 3.0), (10.0, -20.0, 0.5)])
+    b = make([(0.5, 0.25, 4.0), (-1.0, 2.0, 8.0)])
+
+    def pixels(image):
+        return [tuple(image[x, 0]) for x in range(2)]
+
+    assert pixels(a + b) == [(1.5, 2.25, 7.0), (9.0, -18.0, 8.5)]
+    assert pixels(a - b) == [(0.5, 1.75, -1.0), (11.0, -22.0, -7.5)]
+    assert pixels(a + 1) == [(2.0, 3.0, 4.0), (11.0, -19.0, 1.5)]
+    assert pixels(1 + a) == [(2.0, 3.0, 4.0), (11.0, -19.0, 1.5)]
+    assert pixels(a - 1) == [(0.0, 1.0, 2.0), (9.0, -21.0, -0.5)]
+    assert pixels(1 - a) == [(0.0, -1.0, -2.0), (-9.0, 21.0, 0.5)]
+
+    image = make([(1.0, 2.0, 3.0), (10.0, -20.0, 0.5)])
+    image += 2
+    assert pixels(image) == [(3.0, 4.0, 5.0), (12.0, -18.0, 2.5)]
+    image -= 1
+    assert pixels(image) == [(2.0, 3.0, 4.0), (11.0, -19.0, 1.5)]
+    image += b
+    assert pixels(image) == [(2.5, 3.25, 8.0), (10.0, -17.0, 9.5)]
+    image -= b
+    assert pixels(image) == [(2.0, 3.0, 4.0), (11.0, -19.0, 1.5)]
+
+    u = sitk.Image([1, 1], sitk.sitkVectorUInt8, 2)
+    u[0, 0] = (200, 100)
+    assert tuple((u + 100)[0, 0]) == (44, 200)
+    assert tuple((100 - u)[0, 0]) == (156, 0)

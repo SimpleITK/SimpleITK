@@ -60,6 +60,9 @@
 #include <sitkN4BiasFieldCorrectionImageFilter.h>
 #include <sitkMaskImageFilter.h>
 #include <sitkLogger.h>
+#include <sitkAddImageFilter.h>
+#include <sitkSubtractImageFilter.h>
+#include <sitkImageOperators.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -1532,4 +1535,298 @@ TEST(BasicFilters, N4BiasFieldCorrectionImageFilter_GetLogBiasField)
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetOrigin(), logBiasField.GetOrigin(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetSpacing(), logBiasField.GetSpacing(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reference.GetDirection(), logBiasField.GetDirection(), 1e-8);
+}
+
+namespace
+{
+
+namespace sitk = itk::simple;
+
+void
+SetVectorPixel(sitk::Image & img, const std::vector<uint32_t> & idx, const std::vector<uint8_t> & v)
+{
+  img.SetPixelAsVectorUInt8(idx, v);
+}
+void
+SetVectorPixel(sitk::Image & img, const std::vector<uint32_t> & idx, const std::vector<int32_t> & v)
+{
+  img.SetPixelAsVectorInt32(idx, v);
+}
+void
+SetVectorPixel(sitk::Image & img, const std::vector<uint32_t> & idx, const std::vector<float> & v)
+{
+  img.SetPixelAsVectorFloat32(idx, v);
+}
+
+std::vector<uint8_t>
+GetVectorPixel(const sitk::Image & img, const std::vector<uint32_t> & idx, uint8_t)
+{
+  return img.GetPixelAsVectorUInt8(idx);
+}
+std::vector<int32_t>
+GetVectorPixel(const sitk::Image & img, const std::vector<uint32_t> & idx, int32_t)
+{
+  return img.GetPixelAsVectorInt32(idx);
+}
+std::vector<float>
+GetVectorPixel(const sitk::Image & img, const std::vector<uint32_t> & idx, float)
+{
+  return img.GetPixelAsVectorFloat32(idx);
+}
+
+template <typename T>
+sitk::PixelIDValueEnum
+VectorPixelID();
+template <>
+sitk::PixelIDValueEnum
+VectorPixelID<uint8_t>()
+{
+  return sitk::sitkVectorUInt8;
+}
+template <>
+sitk::PixelIDValueEnum
+VectorPixelID<int32_t>()
+{
+  return sitk::sitkVectorInt32;
+}
+template <>
+sitk::PixelIDValueEnum
+VectorPixelID<float>()
+{
+  return sitk::sitkVectorFloat32;
+}
+
+// Component c of the pixel with linear index l is base + step * (l * numberOfComponents + c).
+template <typename T>
+sitk::Image
+MakeVectorImage(const std::vector<unsigned int> & size, unsigned int numberOfComponents, double base, double step)
+{
+  sitk::Image        img(size, VectorPixelID<T>(), numberOfComponents);
+  const unsigned int width = size[0];
+  const unsigned int height = size[1];
+  for (unsigned int y = 0; y < height; ++y)
+  {
+    for (unsigned int x = 0; x < width; ++x)
+    {
+      const unsigned int l = y * width + x;
+      std::vector<T>     v(numberOfComponents);
+      for (unsigned int c = 0; c < numberOfComponents; ++c)
+      {
+        v[c] = static_cast<T>(base + step * (l * numberOfComponents + c));
+      }
+      SetVectorPixel(img, { x, y }, v);
+    }
+  }
+  return img;
+}
+
+// Checks every pixel of img against the operator applied per component to the pixels of a and b.
+template <typename T, typename TOperator>
+void
+ExpectVectorResult(const sitk::Image & img, const sitk::Image & a, const sitk::Image & b, TOperator op)
+{
+  ASSERT_EQ(a.GetSize(), img.GetSize());
+  ASSERT_EQ(a.GetNumberOfComponentsPerPixel(), img.GetNumberOfComponentsPerPixel());
+  EXPECT_EQ(VectorPixelID<T>(), img.GetPixelID());
+  for (unsigned int y = 0; y < img.GetHeight(); ++y)
+  {
+    for (unsigned int x = 0; x < img.GetWidth(); ++x)
+    {
+      const std::vector<T> va = GetVectorPixel(a, { x, y }, T());
+      const std::vector<T> vb = GetVectorPixel(b, { x, y }, T());
+      const std::vector<T> vr = GetVectorPixel(img, { x, y }, T());
+      ASSERT_EQ(va.size(), vr.size());
+      for (std::size_t c = 0; c < vr.size(); ++c)
+      {
+        EXPECT_EQ(static_cast<T>(op(va[c], vb[c])), vr[c]) << "at " << x << "," << y << " component " << c;
+      }
+    }
+  }
+}
+
+template <typename T>
+sitk::Image
+MakeConstantVectorImage(const sitk::Image & like, T value)
+{
+  sitk::Image          img(like.GetSize(), VectorPixelID<T>(), like.GetNumberOfComponentsPerPixel());
+  const std::vector<T> v(like.GetNumberOfComponentsPerPixel(), value);
+  for (unsigned int y = 0; y < img.GetHeight(); ++y)
+  {
+    for (unsigned int x = 0; x < img.GetWidth(); ++x)
+    {
+      SetVectorPixel(img, { x, y }, v);
+    }
+  }
+  return img;
+}
+
+template <typename T>
+void
+RunVectorArithmetic(unsigned int numberOfComponents)
+{
+  const std::vector<unsigned int> size = { 5, 4 };
+  const sitk::Image               a = MakeVectorImage<T>(size, numberOfComponents, 1, 3);
+  const sitk::Image               b = MakeVectorImage<T>(size, numberOfComponents, 50, 2);
+  const T                         constant = static_cast<T>(7);
+  const sitk::Image               constantImage = MakeConstantVectorImage<T>(a, constant);
+
+  const auto add = [](T x, T y) { return x + y; };
+  const auto subtract = [](T x, T y) { return x - y; };
+
+  ExpectVectorResult<T>(sitk::Add(a, b), a, b, add);
+  ExpectVectorResult<T>(sitk::Subtract(a, b), a, b, subtract);
+
+  ExpectVectorResult<T>(sitk::Add(a, 7.0), a, constantImage, add);
+  ExpectVectorResult<T>(sitk::Add(7.0, a), constantImage, a, add);
+  ExpectVectorResult<T>(sitk::Subtract(a, 7.0), a, constantImage, subtract);
+  ExpectVectorResult<T>(sitk::Subtract(7.0, a), constantImage, a, subtract);
+}
+
+} // namespace
+
+TEST(BasicFilters, VectorArithmetic_Float32) { RunVectorArithmetic<float>(3); }
+
+TEST(BasicFilters, VectorArithmetic_Int32) { RunVectorArithmetic<int32_t>(3); }
+
+TEST(BasicFilters, VectorArithmetic_UInt8) { RunVectorArithmetic<uint8_t>(3); }
+
+TEST(BasicFilters, VectorArithmetic_Float32_Values)
+{
+  sitk::Image a(std::vector<unsigned int>{ 2, 1 }, sitk::sitkVectorFloat32, 2);
+  sitk::Image b(std::vector<unsigned int>{ 2, 1 }, sitk::sitkVectorFloat32, 2);
+  a.SetPixelAsVectorFloat32({ 0, 0 }, { 1.5f, -2.25f });
+  a.SetPixelAsVectorFloat32({ 1, 0 }, { 0.0f, 8.0f });
+  b.SetPixelAsVectorFloat32({ 0, 0 }, { 0.5f, 4.0f });
+  b.SetPixelAsVectorFloat32({ 1, 0 }, { -1.0f, 0.125f });
+
+  const sitk::Image sum = sitk::Add(a, b);
+  EXPECT_EQ((std::vector<float>{ 2.0f, 1.75f }), sum.GetPixelAsVectorFloat32({ 0, 0 }));
+  EXPECT_EQ((std::vector<float>{ -1.0f, 8.125f }), sum.GetPixelAsVectorFloat32({ 1, 0 }));
+
+  const sitk::Image difference = sitk::Subtract(a, b);
+  EXPECT_EQ((std::vector<float>{ 1.0f, -6.25f }), difference.GetPixelAsVectorFloat32({ 0, 0 }));
+  EXPECT_EQ((std::vector<float>{ 1.0f, 7.875f }), difference.GetPixelAsVectorFloat32({ 1, 0 }));
+
+  const sitk::Image shifted = sitk::Add(a, 0.5);
+  EXPECT_EQ((std::vector<float>{ 2.0f, -1.75f }), shifted.GetPixelAsVectorFloat32({ 0, 0 }));
+  EXPECT_EQ((std::vector<float>{ 0.5f, 8.5f }), shifted.GetPixelAsVectorFloat32({ 1, 0 }));
+
+  const sitk::Image reversed = sitk::Subtract(0.5, a);
+  EXPECT_EQ((std::vector<float>{ -1.0f, 2.75f }), reversed.GetPixelAsVectorFloat32({ 0, 0 }));
+  EXPECT_EQ((std::vector<float>{ 0.5f, -7.5f }), reversed.GetPixelAsVectorFloat32({ 1, 0 }));
+}
+
+TEST(BasicFilters, VectorArithmetic_Int32_Values)
+{
+  sitk::Image a(std::vector<unsigned int>{ 1, 1 }, sitk::sitkVectorInt32, 3);
+  sitk::Image b(std::vector<unsigned int>{ 1, 1 }, sitk::sitkVectorInt32, 3);
+  a.SetPixelAsVectorInt32({ 0, 0 }, { 10, -20, 2000000000 });
+  b.SetPixelAsVectorInt32({ 0, 0 }, { -3, 5, 1000 });
+
+  EXPECT_EQ((std::vector<int32_t>{ 7, -15, 2000001000 }), sitk::Add(a, b).GetPixelAsVectorInt32({ 0, 0 }));
+  EXPECT_EQ((std::vector<int32_t>{ 13, -25, 1999999000 }), sitk::Subtract(a, b).GetPixelAsVectorInt32({ 0, 0 }));
+  EXPECT_EQ((std::vector<int32_t>{ 13, -17, 2000000003 }), sitk::Add(a, 3.0).GetPixelAsVectorInt32({ 0, 0 }));
+  EXPECT_EQ((std::vector<int32_t>{ -7, 23, -1999999997 }), sitk::Subtract(3.0, a).GetPixelAsVectorInt32({ 0, 0 }));
+}
+
+TEST(BasicFilters, VectorArithmetic_UInt8_Wrap)
+{
+  sitk::Image a(std::vector<unsigned int>{ 1, 1 }, sitk::sitkVectorUInt8, 2);
+  sitk::Image b(std::vector<unsigned int>{ 1, 1 }, sitk::sitkVectorUInt8, 2);
+  a.SetPixelAsVectorUInt8({ 0, 0 }, { 200, 100 });
+  b.SetPixelAsVectorUInt8({ 0, 0 }, { 100, 100 });
+
+  EXPECT_EQ((std::vector<uint8_t>{ 44, 200 }), sitk::Add(a, b).GetPixelAsVectorUInt8({ 0, 0 }));
+  EXPECT_EQ((std::vector<uint8_t>{ 100, 0 }), sitk::Subtract(a, b).GetPixelAsVectorUInt8({ 0, 0 }));
+  EXPECT_EQ((std::vector<uint8_t>{ 156, 0 }), sitk::Subtract(b, a).GetPixelAsVectorUInt8({ 0, 0 }));
+
+  EXPECT_EQ((std::vector<uint8_t>{ 44, 200 }), sitk::Add(a, 100.0).GetPixelAsVectorUInt8({ 0, 0 }));
+  EXPECT_EQ((std::vector<uint8_t>{ 44, 200 }), sitk::Add(100.0, a).GetPixelAsVectorUInt8({ 0, 0 }));
+  EXPECT_EQ((std::vector<uint8_t>{ 100, 0 }), sitk::Subtract(a, 100.0).GetPixelAsVectorUInt8({ 0, 0 }));
+  EXPECT_EQ((std::vector<uint8_t>{ 156, 0 }), sitk::Subtract(100.0, a).GetPixelAsVectorUInt8({ 0, 0 }));
+}
+
+TEST(BasicFilters, VectorArithmetic_VaryingNumberOfComponents)
+{
+  const unsigned int previousThreads = sitk::ProcessObject::GetGlobalDefaultNumberOfThreads();
+
+  // The functor reuses per-thread storage, so the sequence changes the size back and forth.
+  const std::vector<unsigned int> numberOfComponents = { 3, 200, 2, 200, 7, 1 };
+  for (const unsigned int threads : { 1u, 4u })
+  {
+    sitk::ProcessObject::SetGlobalDefaultNumberOfThreads(threads);
+    for (const unsigned int n : numberOfComponents)
+    {
+      RunVectorArithmetic<float>(n);
+    }
+  }
+
+  sitk::ProcessObject::SetGlobalDefaultNumberOfThreads(previousThreads);
+  EXPECT_EQ(previousThreads, sitk::ProcessObject::GetGlobalDefaultNumberOfThreads());
+}
+
+TEST(BasicFilters, VectorArithmetic_PreservesMetaData)
+{
+  const std::vector<double> origin2 = { 1.5, -2.0 };
+  const std::vector<double> spacing2 = { 0.5, 2.0 };
+  const std::vector<double> direction2 = { 0.0, -1.0, 1.0, 0.0 };
+
+  sitk::Image a = MakeVectorImage<float>({ 4, 3 }, 3, 1, 1);
+  a.SetOrigin(origin2);
+  a.SetSpacing(spacing2);
+  a.SetDirection(direction2);
+  sitk::Image b = sitk::Image(a);
+  b = sitk::Add(b, 1.0);
+
+  for (const sitk::Image & result :
+       { sitk::Add(a, b), sitk::Subtract(a, b), sitk::Add(a, 2.0), sitk::Subtract(2.0, a) })
+  {
+    EXPECT_EQ(origin2, result.GetOrigin());
+    EXPECT_EQ(spacing2, result.GetSpacing());
+    EXPECT_EQ(direction2, result.GetDirection());
+    EXPECT_EQ(3u, result.GetNumberOfComponentsPerPixel());
+  }
+
+  const std::vector<double> origin3 = { 1.0, 2.0, 3.0 };
+  const std::vector<double> spacing3 = { 0.5, 1.5, 2.5 };
+  const std::vector<double> direction3 = { 0.0, 1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0 };
+
+  sitk::Image c(std::vector<unsigned int>{ 3, 4, 2 }, sitk::sitkVectorInt32, 2);
+  c.SetOrigin(origin3);
+  c.SetSpacing(spacing3);
+  c.SetDirection(direction3);
+  const sitk::Image d = sitk::Add(c, c);
+  EXPECT_EQ(origin3, d.GetOrigin());
+  EXPECT_EQ(spacing3, d.GetSpacing());
+  EXPECT_EQ(direction3, d.GetDirection());
+  EXPECT_EQ(2u, d.GetNumberOfComponentsPerPixel());
+}
+
+TEST(BasicFilters, VectorArithmetic_InPlace)
+{
+  const std::vector<unsigned int> size = { 5, 4 };
+  const sitk::Image               a = MakeVectorImage<float>(size, 4, 1, 3);
+  const sitk::Image               w = MakeVectorImage<float>(size, 4, 50, 2);
+  const auto                      add = [](float x, float y) { return x + y; };
+  const auto                      subtract = [](float x, float y) { return x - y; };
+
+  sitk::Image       v = MakeVectorImage<float>(size, 4, 1, 3);
+  const sitk::Image result = sitk::Subtract(std::move(v), w);
+  ExpectVectorResult<float>(result, a, w, subtract);
+
+  v = MakeVectorImage<float>(size, 4, 1, 3);
+  sitk::Add(v.ProxyForInPlaceOperation(), 2.0);
+  ExpectVectorResult<float>(v, a, MakeConstantVectorImage<float>(a, 2.0f), add);
+
+  v = MakeVectorImage<float>(size, 4, 1, 3);
+  v += w;
+  ExpectVectorResult<float>(v, a, w, add);
+
+  v = MakeVectorImage<float>(size, 4, 1, 3);
+  v -= w;
+  ExpectVectorResult<float>(v, a, w, subtract);
+
+  v = MakeVectorImage<float>(size, 4, 1, 3);
+  v -= 2.0;
+  ExpectVectorResult<float>(v, a, MakeConstantVectorImage<float>(a, 2.0f), subtract);
 }
