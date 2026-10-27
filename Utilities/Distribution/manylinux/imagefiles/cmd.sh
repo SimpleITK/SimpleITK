@@ -57,7 +57,7 @@ build_simpleitk() {
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=Release \
-        -DBUILD_TESTING:BOOL=OFF \
+        -DBUILD_TESTING:BOOL=ON \
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DWRAP_DEFAULT:BOOL=OFF \
