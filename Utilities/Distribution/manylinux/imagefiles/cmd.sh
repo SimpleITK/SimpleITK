@@ -14,7 +14,7 @@ SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.1rc1}
 # Remove Python 2 and pure Python builds
 PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[^ ]\+ \?//g' -e 's/pp3[^ ]\+ \?//g')}
 
-NPROC=$(grep -c processor /proc/cpuinfo)
+NPROC=${NPROC:-$(grep -c processor /proc/cpuinfo)}
 export MAKEFLAGS="-j ${NPROC}"
 
 # if ExternalData_OBJECT_STORES is not set by the driver script then
@@ -34,17 +34,12 @@ if ! command -v ninja > /dev/null; then
         export PATH="/tmp/ninja-venv/bin:${PATH}"
 fi
 
-# Serialize links and limit the LTO parallelism of each link; full IPO links
-# of all libraries are memory hungry and got the runner killed.
-LTO_LINK_FLAGS="-flto=2"
+# Serialize links; each full IPO link needs a large amount of memory.
 IPO_CMAKE_ARGS=(
     -G Ninja
     -DCMAKE_JOB_POOLS:STRING=link_pool=1
     -DCMAKE_JOB_POOL_LINK:STRING=link_pool
     -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
-    -D "CMAKE_EXE_LINKER_FLAGS:STRING=${LTO_LINK_FLAGS}"
-    -D "CMAKE_SHARED_LINKER_FLAGS:STRING=${LTO_LINK_FLAGS}"
-    -D "CMAKE_MODULE_LINKER_FLAGS:STRING=${LTO_LINK_FLAGS}"
 )
 
 build_simpleitk() {

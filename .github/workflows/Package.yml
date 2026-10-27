@@ -46,6 +46,21 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+      - name: Add swap space
+        # The GCC IPO link of the wrappers needs about 20GB of memory.
+        shell: bash
+        run: |
+          swap_dir=/mnt
+          [ -d "${swap_dir}" ] || swap_dir=/
+          df -h "${swap_dir}"
+          avail=$(df --output=avail -BG "${swap_dir}" | tail -1 | tr -dc '0-9')
+          size=$(( avail - 4 < 24 ? avail - 4 : 24 ))
+          sudo swapoff -a
+          sudo fallocate -l ${size}G "${swap_dir}/sitk.swap"
+          sudo chmod 600 "${swap_dir}/sitk.swap"
+          sudo mkswap "${swap_dir}/sitk.swap"
+          sudo swapon "${swap_dir}/sitk.swap"
+          free -h
       - name: Docker Build Image
         shell: bash
         working-directory: Utilities/Distribution/manylinux
@@ -115,9 +130,6 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
-              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
-              CMAKE_JOB_POOLS:STRING=link_pool=1
-              CMAKE_JOB_POOL_LINK:STRING=link_pool
           - os: macos-15
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -129,9 +141,6 @@ jobs:
               ITK_CXX_OPTIMIZATION_FLAGS:STRING=
               SimpleITK_BUILD_DISTRIBUTE:BOOL=ON
               SimpleITK_BUILD_STRIP:BOOL=1
-              SimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
-              CMAKE_JOB_POOLS:STRING=link_pool=1
-              CMAKE_JOB_POOL_LINK:STRING=link_pool
           - os: windows-2022
             cmake-build-type: "Release"
             cmake-generator: "Visual Studio 17 2022"
