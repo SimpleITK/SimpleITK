@@ -62,7 +62,7 @@ build_simpleitk() {
         -DITK_CXX_OPTIMIZATION_FLAGS:STRING="" \
         ${SIMPLEITK_USE_ELASTIX:+-DSimpleITK_USE_ELASTIX:BOOL=ON} \
         ${SRC_DIR}/SuperBuild &&
-    cmake --build . &&
+    cmake --build . -j ${NPROC} &&
     find ./ -name \*.o -delete
 }
 
