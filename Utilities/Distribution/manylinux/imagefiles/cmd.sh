@@ -27,13 +27,25 @@ export PIP_NO_CACHE_DIR=1
 
 export HOME=/tmp
 
-# Ninja lets links be serialized with a job pool; parallel IPO links can
-# exhaust the memory of the runner.
+# Ninja is needed to serialize links with a job pool.
 if ! command -v ninja > /dev/null; then
     /opt/python/cp311-cp311/bin/python -m venv /tmp/ninja-venv &&
         /tmp/ninja-venv/bin/pip install ninja &&
         export PATH="/tmp/ninja-venv/bin:${PATH}"
 fi
+
+# Serialize links and limit the LTO parallelism of each link; full IPO links
+# of all libraries are memory hungry and got the runner killed.
+LTO_LINK_FLAGS="-flto=2"
+IPO_CMAKE_ARGS=(
+    -G Ninja
+    -DCMAKE_JOB_POOLS:STRING=link_pool=1
+    -DCMAKE_JOB_POOL_LINK:STRING=link_pool
+    -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON
+    -D "CMAKE_EXE_LINKER_FLAGS:STRING=${LTO_LINK_FLAGS}"
+    -D "CMAKE_SHARED_LINKER_FLAGS:STRING=${LTO_LINK_FLAGS}"
+    -D "CMAKE_MODULE_LINKER_FLAGS:STRING=${LTO_LINK_FLAGS}"
+)
 
 build_simpleitk() {
 
@@ -46,14 +58,11 @@ build_simpleitk() {
 
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
-    cmake -G Ninja \
-        -DCMAKE_JOB_POOLS:STRING=link_pool=1 \
-        -DCMAKE_JOB_POOL_LINK:STRING=link_pool \
+    cmake "${IPO_CMAKE_ARGS[@]}" \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DBUILD_TESTING:BOOL=ON \
-        -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
         -DBUILD_EXAMPLES:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=OFF \
         -DWRAP_DEFAULT:BOOL=OFF \
@@ -78,7 +87,7 @@ build_simpleitk_python() {
     rm -rf  ${BLD_PY_DIR} &&
     mkdir -p ${BLD_PY_DIR} &&
     cd ${BLD_PY_DIR} &&
-    cmake \
+    cmake "${IPO_CMAKE_ARGS[@]}" \
         -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CXXFLAGS}" \
         -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
         -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
@@ -90,13 +99,12 @@ build_simpleitk_python() {
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
-        -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
         -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE} \
         -DPython_EXECUTABLE:FILEPATH=${Python_EXECUTABLE} \
         -DPython_INCLUDE_DIR:PATH=${Python_INCLUDE_DIR} \
         ${SRC_DIR}/Wrapping/Python &&
-    make &&
-    make dist
+    cmake --build . -j ${NPROC} &&
+    cmake --build . --target dist
 
 }
 
@@ -108,7 +116,7 @@ ABI3_CP311_OK=
 if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-csharp &&
         cd ${BLD_DIR}-csharp &&
-        cmake  \
+        cmake "${IPO_CMAKE_ARGS[@]}" \
             -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CXXFLAGS}" \
             -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
             -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
@@ -117,17 +125,16 @@ if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
             -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
             -DSimpleITK_CSHARP_ARCH:STRING="linux_$(arch)" \
-            -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/CSharp &&
-        cmake --build "${BLD_DIR}-csharp" --target dist &&
+        cmake --build "${BLD_DIR}-csharp" -j ${NPROC} --target dist &&
         find "${BLD_DIR}-csharp/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
 fi
 
 if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
     mkdir ${BLD_DIR}-java &&
         cd ${BLD_DIR}-java &&
-        cmake  \
+        cmake "${IPO_CMAKE_ARGS[@]}" \
             -D "CMAKE_CXX_FLAGS:STRING=-fvisibility=hidden -fvisibility-inlines-hidden ${CXXFLAGS}" \
             -D "CMAKE_C_FLAGS:STRING=-fvisibility=hidden ${CFLAGS}" \
             -DCMAKE_MODULE_PATH:PATH=${SRC_DIR} \
@@ -136,10 +143,9 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
             -DSWIG_EXECUTABLE:FILEPATH=${BLD_DIR}/Swig/bin/swig \
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
             -DSimpleITK_JAVA_ARCH:STRING="linux_$(arch)" \
-            -DSimpleITK_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/Java &&
-        cmake --build "${BLD_DIR}-java" --target dist &&
+        cmake --build "${BLD_DIR}-java" -j ${NPROC} --target dist &&
         find "${BLD_DIR}-java/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
 fi
 
