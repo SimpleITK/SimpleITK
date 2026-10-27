@@ -27,6 +27,14 @@ export PIP_NO_CACHE_DIR=1
 
 export HOME=/tmp
 
+# Ninja lets links be serialized with a job pool; parallel IPO links can
+# exhaust the memory of the runner.
+if ! command -v ninja > /dev/null; then
+    /opt/python/cp311-cp311/bin/python -m venv /tmp/ninja-venv &&
+        /tmp/ninja-venv/bin/pip install ninja &&
+        export PATH="/tmp/ninja-venv/bin:${PATH}"
+fi
+
 build_simpleitk() {
 
     if [ ! -d ${SRC_DIR} ]; then
@@ -38,7 +46,9 @@ build_simpleitk() {
 
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
-    cmake \
+    cmake -G Ninja \
+        -DCMAKE_JOB_POOLS:STRING=link_pool=1 \
+        -DCMAKE_JOB_POOL_LINK:STRING=link_pool \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=Release \
@@ -52,7 +62,7 @@ build_simpleitk() {
         -DITK_CXX_OPTIMIZATION_FLAGS:STRING="" \
         ${SIMPLEITK_USE_ELASTIX:+-DSimpleITK_USE_ELASTIX:BOOL=ON} \
         ${SRC_DIR}/SuperBuild &&
-    make  &&
+    cmake --build . &&
     find ./ -name \*.o -delete
 }
 
