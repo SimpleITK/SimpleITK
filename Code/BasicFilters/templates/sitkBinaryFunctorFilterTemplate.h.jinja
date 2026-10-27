@@ -25,6 +25,7 @@
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
 #include "sitkProcessObjectDeleter.h"
+#include "sitkDualMemberFunctionFactory.h"
 
 {#- Import parameter macros for use in this template -#}
 {% import "macros.jinja" as macros %}
@@ -53,7 +54,12 @@ namespace itk::simple {
   Image Execute({{ constant_type }} constant, const Image& image2{{ macros.member_parameters(members, number_of_inputs, name) }});
 {% endif %}
 
-{% include "ExecuteInternalMethod.h.jinja" %}
+private:
+  /** Setup for member function dispatching of two images */
+  using MemberFunctionType = Image (Self::*)(const Image& image1, const Image& image2);
+  template <class TImageType1, class TImageType2> Image DualExecuteInternal(const Image& image1, const Image& image2);
+  friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
+  static const detail::DualMemberFunctionFactory<MemberFunctionType> &GetMemberFunctionFactory();
 
   using MemberFunction1Type = Image (Self::*)({{ constant_type }} constant, const Image& image2);
   template <class TImageType> Image ExecuteInternal({{ constant_type }} constant, const Image& image2);
@@ -65,7 +71,6 @@ namespace itk::simple {
   friend struct detail::MemberFunctionAddressor<MemberFunction2Type>;
   static const detail::MemberFunctionFactory<MemberFunction2Type> &GetMemberFunctionFactory2();
 
-{% include "MemberFunctionDispatch.h.jinja" %}
 {% include "PrivateMemberDeclarations.h.jinja" %}
 };
 
