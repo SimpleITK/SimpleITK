@@ -52,8 +52,8 @@ CheckImageMatchingPixelType(const Image &       image1,
   {
     sitkExceptionMacro(<< "Input \"" << image2Name << "\" for \"" << filterName << "\" has pixel type of \""
                        << image2.GetPixelIDTypeAsString()
-                       << " which does not match the primary input's pixel type of \""
-                       << image1.GetPixelIDTypeAsString() << "!\n"
+                       << "\" which does not match the primary input's pixel type of \""
+                       << image1.GetPixelIDTypeAsString() << "\"!\n"
                        << "The \"" << image2Name << "\" input may need casting to the \""
                        << image1.GetPixelIDTypeAsString() << "\" pixel type.");
   }

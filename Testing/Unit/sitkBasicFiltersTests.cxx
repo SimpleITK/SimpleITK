@@ -63,6 +63,7 @@
 #include <sitkSubtractImageFilter.h>
 #include <sitkExceptionObject.h>
 #include <sitkLogger.h>
+#include <sitkAddImageFilter.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -1589,4 +1590,28 @@ TEST(BasicFilters, BinaryFunctor_VectorComponentMismatch)
   // constants with vector images
   EXPECT_EQ(std::vector<float>({ 12.0f, 22.0f, 32.0f }), sitk::Add(v3, 2.0).GetPixelAsVectorFloat32({ 0, 0 }));
   EXPECT_EQ(std::vector<float>({ 12.0f, 22.0f, 32.0f }), sitk::Add(2.0, v3).GetPixelAsVectorFloat32({ 0, 0 }));
+}
+
+TEST(BasicFilters, PixelTypeMismatchMessage)
+{
+  namespace sitk = itk::simple;
+
+  // The pixel type names in the message are enclosed in quotes.
+  const sitk::Image float32(std::vector<unsigned int>{ 4, 3 }, sitk::sitkFloat32);
+  const sitk::Image float64(std::vector<unsigned int>{ 4, 3 }, sitk::sitkFloat64);
+
+  try
+  {
+    sitk::Add(float32, float64);
+    ADD_FAILURE() << "no exception for images with different pixel types";
+  }
+  catch (const std::exception & e)
+  {
+    const std::string message = e.what();
+    EXPECT_NE(std::string::npos,
+              message.find("has pixel type of \"64-bit float\" which does not match the primary input's pixel type of "
+                           "\"32-bit float\"!"))
+      << message;
+    EXPECT_NE(std::string::npos, message.find("may need casting to the \"32-bit float\" pixel type")) << message;
+  }
 }
