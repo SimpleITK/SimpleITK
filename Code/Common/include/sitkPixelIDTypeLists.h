@@ -152,6 +152,20 @@ using SignedVectorPixelIDTypeList = typelist2::typelist<VectorPixelID<int8_t>,
                                                         VectorPixelID<float>,
                                                         VectorPixelID<double>>;
 
+/** The list of the BasicPixelID of the components of each VectorPixelID in a type list, in the same
+ * order, so that the pairs of the two lists are vector types with their component types.
+ *
+ * \sa VectorPixelIDToBasicPixelID
+ */
+template <typename TVectorPixelIDTypeList>
+struct VectorToBasicPixelIDTypeList;
+
+template <typename... TVectorPixelIDs>
+struct VectorToBasicPixelIDTypeList<typelist2::typelist<TVectorPixelIDs...>>
+{
+  using Type = typelist2::typelist<typename VectorPixelIDToBasicPixelID<TVectorPixelIDs>::Type...>;
+};
+
 
 /** List of pixel ids which are for itk::LabelMap Image class.
  *

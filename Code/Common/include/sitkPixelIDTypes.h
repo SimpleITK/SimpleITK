@@ -89,6 +89,24 @@ template <typename TPixelType>
 struct LabelPixelID
 {};
 
+/** A meta-programming tool to get the BasicPixelID of the components of
+ * a VectorPixelID at compile time.
+ *
+ * VectorPixelIDToBasicPixelID<VectorPixelID<T>>::Type is BasicPixelID<T>. It
+ * is only defined for VectorPixelID types.
+ *
+ * \sa VectorPixelID
+ * \sa BasicPixelID
+ */
+template <typename TVectorPixelID>
+struct VectorPixelIDToBasicPixelID;
+
+template <typename TPixelType>
+struct VectorPixelIDToBasicPixelID<VectorPixelID<TPixelType>>
+{
+  using Type = BasicPixelID<TPixelType>;
+};
+
 /** A meta-programming tool to query the "itk image type" if a PixelID
  * at compile type
  *
