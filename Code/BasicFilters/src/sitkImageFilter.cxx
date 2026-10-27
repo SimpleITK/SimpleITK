@@ -60,6 +60,21 @@ CheckImageMatchingPixelType(const Image &       image1,
 }
 
 void
+CheckImageMatchingComponents(const Image &       image1,
+                             const Image &       image2,
+                             const std::string & image2Name,
+                             const std::string & filterName)
+{
+  if (image1.GetNumberOfComponentsPerPixel() != image2.GetNumberOfComponentsPerPixel())
+  {
+    sitkExceptionMacro(<< "Input \"" << image2Name << "\" for \"" << filterName << "\" has "
+                       << image2.GetNumberOfComponentsPerPixel()
+                       << " components per pixel which does not match the primary input's "
+                       << image1.GetNumberOfComponentsPerPixel() << " components per pixel!");
+  }
+}
+
+void
 CheckImageMatchingSize(const Image &       image1,
                        const Image &       image2,
                        const std::string & image2Name,
@@ -92,6 +107,12 @@ void
 ImageFilter::CheckImageMatchingPixelType(const Image & image1, const Image & image2, const std::string & image2Name)
 {
   return itk::simple::CheckImageMatchingPixelType(image1, image2, image2Name, this->GetName());
+}
+
+void
+ImageFilter::CheckImageMatchingComponents(const Image & image1, const Image & image2, const std::string & image2Name)
+{
+  return itk::simple::CheckImageMatchingComponents(image1, image2, image2Name, this->GetName());
 }
 
 void
