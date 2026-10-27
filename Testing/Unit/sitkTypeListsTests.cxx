@@ -17,6 +17,8 @@
  *=========================================================================*/
 #include "SimpleITKTestHarness.h"
 #include <sitkPixelIDTypeLists.h>
+#include <itkImage.h>
+#include <sitkDualMemberFunctionFactory.h>
 
 #include <Ancillary/type_list2.h>
 
@@ -123,4 +125,76 @@ TEST_F(TypeListTest, typelist_dual_visit)
 
   EXPECT_EQ(pred.count, 9);
   EXPECT_EQ(constPred.count, 9);
+}
+
+
+TEST_F(TypeListTest, typelist_zip_visit)
+{
+  using t1 = typelist2::typelist<int, char, short>;
+  using t2 = typelist2::typelist<float, double, long>;
+  typelist2::zip_visit<t1, t2> ZipVisitor;
+  ZipVisitor(pred);
+  ZipVisitor(constPred);
+
+  // Only the position-matched pairs are visited, not the 9 combinations.
+  EXPECT_EQ(pred.count, 3);
+  EXPECT_EQ(constPred.count, 3);
+}
+
+
+namespace
+{
+class DualFactoryProbe
+{
+public:
+  using MemberFunctionType = int (DualFactoryProbe::*)();
+
+  template <class TImageType1, class TImageType2>
+  int
+  DualExecuteInternal()
+  {
+    return 1;
+  }
+};
+} // namespace
+
+
+TEST(DualMemberFunctionFactory, RegisterMemberFunctionsZipped)
+{
+  namespace sitk = itk::simple;
+
+  using Left = typelist2::typelist<sitk::BasicPixelID<float>, sitk::BasicPixelID<int8_t>>;
+  using Right = typelist2::typelist<sitk::BasicPixelID<double>, sitk::BasicPixelID<int16_t>>;
+
+  sitk::detail::DualMemberFunctionFactory<DualFactoryProbe::MemberFunctionType> factory;
+  factory.RegisterMemberFunctionsZipped<Left, Right, 2>();
+
+  DualFactoryProbe probe;
+  EXPECT_TRUE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkFloat64, 2));
+  EXPECT_TRUE(factory.HasMemberFunction(sitk::sitkInt8, sitk::sitkInt16, 2));
+  EXPECT_EQ(1, factory.GetMemberFunction(sitk::sitkFloat32, sitk::sitkFloat64, 2, &probe)());
+
+  // position-mismatched, same-type and other-dimension pairs are not registered
+  EXPECT_FALSE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkInt16, 2));
+  EXPECT_FALSE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkFloat32, 2));
+  EXPECT_FALSE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkFloat64, 3));
+  EXPECT_THROW(factory.GetMemberFunction(sitk::sitkFloat32, sitk::sitkInt16, 2, &probe), itk::simple::GenericException);
+}
+
+
+TEST(DualMemberFunctionFactory, RegisterMemberFunctionsSameTypeDimensionRange)
+{
+  namespace sitk = itk::simple;
+
+  using List = typelist2::typelist<sitk::BasicPixelID<float>, sitk::BasicPixelID<int8_t>>;
+
+  sitk::detail::DualMemberFunctionFactory<DualFactoryProbe::MemberFunctionType> factory;
+  factory.RegisterMemberFunctions<List, 2, 3>();
+
+  for (unsigned int dim : { 2u, 3u })
+  {
+    EXPECT_TRUE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkFloat32, dim));
+    EXPECT_TRUE(factory.HasMemberFunction(sitk::sitkInt8, sitk::sitkInt8, dim));
+    EXPECT_FALSE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkInt8, dim));
+  }
 }
