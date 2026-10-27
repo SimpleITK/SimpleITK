@@ -5,6 +5,7 @@ constant_type: double
 number_of_inputs: 2
 doc: Some global documentation
 pixel_types: NonLabelPixelIDTypeList
+vector_scalar_pixel_types: VectorPixelIDTypeList
 members: []
 tests:
 - tag: 2D
@@ -78,6 +79,10 @@ detaileddescription: >-
 
   \note The result of AddImageFilter with a negative constant is not necessarily the same as SubtractImageFilter . This would
   be the case when the PixelType defines an operator-() that is not the inverse of operator+()
+
+
+  A scalar image, or a constant, with the pixel type of the vector's components can be subtracted from a vector image, which
+  must be the first operand. The operation is applied to every component.
 itk_module: ITKImageIntensity
 itk_group: ImageIntensity
 in_place: true

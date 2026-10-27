@@ -25,6 +25,9 @@
 {% include "StandardIncludes.cxx.jinja" %}
 {% include "AddExtraIncludes.cxx.jinja" %}
 #include "sitkToPixelType.hxx"
+{%- if vector_scalar_pixel_types %}
+#include "sitkVectorScalarBroadcast.hxx"
+{%- endif %}
 
 namespace itk::simple {
 
@@ -38,6 +41,14 @@ const detail::DualMemberFunctionFactory<{{ name }}::MemberFunctionType> &{{ name
     {{ custom_register | indent(4) }}
 {% else %}
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+{%- endif %}
+{%- if vector_scalar_pixel_types %}
+    // Only a vector image with a scalar image of its component type is registered, not the
+    // full cross product.
+    using VectorPixelIDs = {{ vector_scalar_pixel_types }};
+    using ComponentPixelIDs = VectorToBasicPixelIDTypeList<VectorPixelIDs>::Type;
+    factory.RegisterMemberFunctionsZipped< VectorPixelIDs, ComponentPixelIDs, 2 >();
+    factory.RegisterMemberFunctionsZipped< VectorPixelIDs, ComponentPixelIDs, 3 >();
 {%- endif %}
     return factory;
   }();
@@ -59,6 +70,9 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction2Type> &{{ name }}
   static detail::MemberFunctionFactory<MemberFunction2Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction2Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+{%- if vector_scalar_pixel_types %}
+    factory.RegisterMemberFunctions< {{ vector_scalar_pixel_types }}, 2, 3 >();
+{%- endif %}
     return factory;
   }();
   return static_factory;
@@ -109,8 +123,19 @@ Image {{ name }}::Execute ( const Image& image1, const Image& image2 )
   const PixelIDValueEnum type2 = image2.GetPixelID();
   const unsigned int dimension = image1.GetDimension();
   CheckImageMatchingDimension( image1, image2, "image2" );
+{%- if vector_scalar_pixel_types %}
+  // A vector image with a scalar image of its component type is a registered pair of
+  // different pixel types, with a different number of components.
+  const bool isComponentPair = type1 != type2 && GetMemberFunctionFactory().HasMemberFunction( type1, type2, dimension );
+  if ( !isComponentPair )
+    {
+    CheckImageMatchingPixelType( image1, image2, "image2" );
+    CheckImageMatchingComponents( image1, image2, "image2" );
+    }
+{%- else %}
   CheckImageMatchingPixelType( image1, image2, "image2" );
   CheckImageMatchingComponents( image1, image2, "image2" );
+{%- endif %}
   return GetMemberFunctionFactory().GetMemberFunction( type1, type2, dimension, this )( image1, image2 );
 }
 {%- if in_place %}
@@ -160,7 +185,10 @@ Image {{ name }}::DualExecuteInternal ( const Image& inImage1, const Image& inIm
 
   {% include "ExecuteInternalGetImagePointers.cxx.jinja" %}
   {% include "ExecuteInternalITKFilter.cxx.jinja" %}
-  {% include "ExecuteInternalSetITKFilterInputs.cxx.jinja" %}
+  // SetInput1 and SetInput2 are typed independently, as the input pixel types may differ.
+  filter->SetInput1( image1 );
+  filter->SetInput2( image2 );
+  {% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
   {% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
 }
 
@@ -183,6 +211,25 @@ Image {{ name }}::ExecuteInternal ( {{ constant_type }} constant, const Image& i
 template <class TImageType>
 Image {{ name }}::ExecuteInternal ( const Image& inImage1, {{ constant_type }} constant )
 {
+{%- if vector_scalar_pixel_types %}
+  if constexpr ( IsVectorImage<TImageType>::value )
+    {
+    // The constant is a scalar of the component type, applied to every component.
+    using InputImageType = TImageType;
+    using InputImageType2 = typename ComponentImage<InputImageType>::Type;
+    using OutputImageType = InputImageType;
+    typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
+    {% include "ExecuteInternalITKFilter.cxx.jinja" %}
+    typename InputImageType2::PixelType c;
+    ToPixelType( constant, c );
+    filter->SetInput1( image1 );
+    filter->SetConstant2( c );
+    {% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
+    {% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+    }
+  else
+{%- endif %}
+  {
   {% include "ExecuteInternalTypedefs.cxx.jinja" %}
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
@@ -194,6 +241,7 @@ Image {{ name }}::ExecuteInternal ( const Image& inImage1, {{ constant_type }} c
   filter->SetConstant2( c );
   {% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
   {% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+  }
 }
 
 //-----------------------------------------------------------------------------

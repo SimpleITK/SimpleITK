@@ -5,6 +5,7 @@ constant_type: double
 number_of_inputs: 2
 doc: Some global documentation
 pixel_types: typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type
+vector_scalar_pixel_types: VectorPixelIDTypeList
 members: []
 tests:
 - tag: defaults
@@ -18,6 +19,10 @@ briefdescription: Pixel-wise multiplication of two images.
 detaileddescription: >-
   This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings)
   are done by the C++ defaults.
+
+
+  A vector image, which must be the first operand, can be multiplied by a scalar image, or a constant, with the pixel type of
+  the vector's components. Every component is multiplied by the scalar. The product of two vector images is not supported.
 itk_module: ITKImageIntensity
 itk_group: ImageIntensity
 in_place: true

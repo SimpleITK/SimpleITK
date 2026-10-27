@@ -64,6 +64,8 @@
 #include <sitkExceptionObject.h>
 #include <sitkLogger.h>
 #include <sitkAddImageFilter.h>
+#include <sitkSubtractImageFilter.h>
+#include <sitkMultiplyImageFilter.h>
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
@@ -1590,6 +1592,255 @@ TEST(BasicFilters, BinaryFunctor_VectorComponentMismatch)
   // constants with vector images
   EXPECT_EQ(std::vector<float>({ 12.0f, 22.0f, 32.0f }), sitk::Add(v3, 2.0).GetPixelAsVectorFloat32({ 0, 0 }));
   EXPECT_EQ(std::vector<float>({ 12.0f, 22.0f, 32.0f }), sitk::Add(2.0, v3).GetPixelAsVectorFloat32({ 0, 0 }));
+}
+
+namespace
+{
+
+namespace sitk = itk::simple;
+
+// A vector image with component 'c' set to values[c] everywhere, and a scalar image of the
+// matching component type set to 'scalarValue' everywhere.
+template <typename TComponent>
+sitk::Image
+MakeVectorImage(sitk::PixelIDValueEnum            id,
+                const std::vector<unsigned int> & size,
+                const std::vector<TComponent> &   values)
+{
+  sitk::Image img(size, id, static_cast<unsigned int>(values.size()));
+  img.SetOrigin(std::vector<double>(size.size(), 1.5));
+  img.SetSpacing(std::vector<double>(size.size(), 0.5));
+  std::vector<uint32_t> idx(size.size(), 0);
+  if constexpr (std::is_same_v<TComponent, float>)
+  {
+    img.SetPixelAsVectorFloat32(idx, values);
+  }
+  else
+  {
+    img.SetPixelAsVectorInt32(idx, values);
+  }
+  return img;
+}
+
+sitk::Image
+MakeScalarImage(sitk::PixelIDValueEnum id, const std::vector<unsigned int> & size, double value)
+{
+  sitk::Image img(size, id);
+  img.SetOrigin(std::vector<double>(size.size(), 1.5));
+  img.SetSpacing(std::vector<double>(size.size(), 0.5));
+  return sitk::Add(img, value);
+}
+
+std::vector<float>
+PixelOf(const sitk::Image & img)
+{
+  return img.GetPixelAsVectorFloat32(std::vector<uint32_t>(img.GetDimension(), 0));
+}
+
+std::vector<int32_t>
+PixelOfInt32(const sitk::Image & img)
+{
+  return img.GetPixelAsVectorInt32(std::vector<uint32_t>(img.GetDimension(), 0));
+}
+
+void
+ExpectVectorMetadata(const sitk::Image & out, const sitk::Image & vec)
+{
+  EXPECT_EQ(vec.GetPixelID(), out.GetPixelID());
+  EXPECT_EQ(vec.GetNumberOfComponentsPerPixel(), out.GetNumberOfComponentsPerPixel());
+  EXPECT_EQ(vec.GetSize(), out.GetSize());
+  EXPECT_EQ(vec.GetOrigin(), out.GetOrigin());
+  EXPECT_EQ(vec.GetSpacing(), out.GetSpacing());
+}
+
+} // namespace
+
+TEST(BasicFilters, VectorScalarBinaryOperators_Float32)
+{
+  for (const auto & size : { std::vector<unsigned int>{ 4, 3 }, std::vector<unsigned int>{ 4, 3, 2 } })
+  {
+    const sitk::Image v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f });
+    const sitk::Image s = MakeScalarImage(sitk::sitkFloat32, size, 3.0);
+    const double      c = 2.0;
+
+    sitk::Image out = sitk::Add(v, s);
+    ExpectVectorMetadata(out, v);
+    EXPECT_EQ((std::vector<float>{ 4.0f, 8.0f }), PixelOf(out));
+    EXPECT_EQ((std::vector<float>{ 3.0f, 7.0f }), PixelOf(sitk::Add(v, c)));
+    // a constant as the first operand of Add and Subtract is supported without this feature
+    EXPECT_EQ((std::vector<float>{ 3.0f, 7.0f }), PixelOf(sitk::Add(c, v)));
+
+    out = sitk::Subtract(v, s);
+    ExpectVectorMetadata(out, v);
+    EXPECT_EQ((std::vector<float>{ -2.0f, 2.0f }), PixelOf(out));
+    EXPECT_EQ((std::vector<float>{ -1.0f, 3.0f }), PixelOf(sitk::Subtract(v, c)));
+    EXPECT_EQ((std::vector<float>{ 1.0f, -3.0f }), PixelOf(sitk::Subtract(c, v)));
+
+    out = sitk::Multiply(v, s);
+    ExpectVectorMetadata(out, v);
+    EXPECT_EQ((std::vector<float>{ 3.0f, 15.0f }), PixelOf(out));
+    EXPECT_EQ((std::vector<float>{ 2.0f, 10.0f }), PixelOf(sitk::Multiply(v, c)));
+
+    // inputs are not modified
+    EXPECT_EQ((std::vector<float>{ 1.0f, 5.0f }), PixelOf(v));
+    EXPECT_EQ(3.0, s.GetPixelAsFloat(std::vector<uint32_t>(size.size(), 0)));
+  }
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_Int32)
+{
+  const std::vector<unsigned int> size{ 4, 3, 2 };
+  const sitk::Image               v = MakeVectorImage<int32_t>(sitk::sitkVectorInt32, size, { 1, 5, -7 });
+  const sitk::Image               s = MakeScalarImage(sitk::sitkInt32, size, 3.0);
+
+  EXPECT_EQ((std::vector<int32_t>{ 4, 8, -4 }), PixelOfInt32(sitk::Add(v, s)));
+  EXPECT_EQ((std::vector<int32_t>{ -2, 2, -10 }), PixelOfInt32(sitk::Subtract(v, s)));
+  EXPECT_EQ((std::vector<int32_t>{ 3, 15, -21 }), PixelOfInt32(sitk::Multiply(v, s)));
+  EXPECT_EQ((std::vector<int32_t>{ 2, 10, -14 }), PixelOfInt32(sitk::Multiply(v, 2.0)));
+  EXPECT_EQ((std::vector<int32_t>{ 3, 7, -5 }), PixelOfInt32(sitk::Add(v, 2.0)));
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_UInt8Wrap)
+{
+  // Results must wrap the same way as the scalar filters do for the component type.
+  sitk::Image v(std::vector<unsigned int>{ 4, 3 }, sitk::sitkVectorUInt8, 2);
+  v.SetPixelAsVectorUInt8({ 0, 0 }, { 200, 100 });
+  sitk::Image s(std::vector<unsigned int>{ 4, 3 }, sitk::sitkUInt8);
+  s = sitk::Add(s, 150.0);
+
+  auto pixel = [](const sitk::Image & img) { return img.GetPixelAsVectorUInt8({ 0, 0 }); };
+
+  EXPECT_EQ((std::vector<uint8_t>{ 94, 250 }), pixel(sitk::Add(v, s)));
+  EXPECT_EQ((std::vector<uint8_t>{ 50, 206 }), pixel(sitk::Subtract(v, s)));
+  EXPECT_EQ((std::vector<uint8_t>{ 48, 152 }), pixel(sitk::Multiply(v, s)));
+  EXPECT_EQ((std::vector<uint8_t>{ 48, 152 }), pixel(sitk::Multiply(v, 150.0)));
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_SingleComponent)
+{
+  const std::vector<unsigned int> size{ 4, 3 };
+  const sitk::Image               v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 5.0f });
+  const sitk::Image               s = MakeScalarImage(sitk::sitkFloat32, size, 3.0);
+
+  EXPECT_EQ((std::vector<float>{ 2.0f }), PixelOf(sitk::Subtract(v, s)));
+  EXPECT_EQ((std::vector<float>{ 15.0f }), PixelOf(sitk::Multiply(v, s)));
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_InPlace)
+{
+  const std::vector<unsigned int> size{ 4, 3 };
+  sitk::Image                     v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f });
+  const sitk::Image               s = MakeScalarImage(sitk::sitkFloat32, size, 3.0);
+
+  // the unique vector image is passed as an rvalue, and its buffer is reused for the result
+  sitk::SubtractImageFilter subtract;
+  const sitk::Image         out = subtract.Execute(std::move(v), s);
+  EXPECT_EQ((std::vector<float>{ -2.0f, 2.0f }), PixelOf(out));
+  EXPECT_EQ(3.0, s.GetPixelAsFloat(std::vector<uint32_t>(size.size(), 0)));
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_VaryingComponentCounts)
+{
+  // The number of components of the vector pixels is varied between calls, growing and shrinking,
+  // with one and several threads.
+  const unsigned int previousThreads = sitk::ProcessObject::GetGlobalDefaultNumberOfThreads();
+  for (const unsigned int threads : { 1u, 4u })
+  {
+    sitk::ProcessObject::SetGlobalDefaultNumberOfThreads(threads);
+    for (const unsigned int numberOfComponents : { 3u, 200u, 2u, 200u, 7u, 1u })
+    {
+      sitk::Image        v(std::vector<unsigned int>{ 8, 8 }, sitk::sitkVectorFloat32, numberOfComponents);
+      std::vector<float> pixel(numberOfComponents);
+      std::vector<float> expectedAdd(numberOfComponents);
+      std::vector<float> expectedSubtract(numberOfComponents);
+      for (unsigned int i = 0; i < numberOfComponents; ++i)
+      {
+        pixel[i] = static_cast<float>(i + 1);
+        expectedAdd[i] = pixel[i] + 10.0f;
+        expectedSubtract[i] = pixel[i] - 10.0f;
+      }
+      for (uint32_t y = 0; y < 8; ++y)
+      {
+        for (uint32_t x = 0; x < 8; ++x)
+        {
+          v.SetPixelAsVectorFloat32({ x, y }, pixel);
+        }
+      }
+      const sitk::Image s = sitk::Add(sitk::Image(std::vector<unsigned int>{ 8, 8 }, sitk::sitkFloat32), 10.0);
+
+      const sitk::Image add = sitk::Add(v, s);
+      const sitk::Image subtract = sitk::Subtract(v, s);
+      const sitk::Image addConstant = sitk::Add(v, 10.0);
+      for (uint32_t y = 0; y < 8; ++y)
+      {
+        for (uint32_t x = 0; x < 8; ++x)
+        {
+          ASSERT_EQ(numberOfComponents, add.GetNumberOfComponentsPerPixel());
+          EXPECT_EQ(expectedAdd, add.GetPixelAsVectorFloat32({ x, y }));
+          EXPECT_EQ(expectedSubtract, subtract.GetPixelAsVectorFloat32({ x, y }));
+          EXPECT_EQ(expectedAdd, addConstant.GetPixelAsVectorFloat32({ x, y }));
+        }
+      }
+    }
+  }
+  sitk::ProcessObject::SetGlobalDefaultNumberOfThreads(previousThreads);
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_Direction)
+{
+  // The output takes its geometry from the vector image.
+  const std::vector<double> direction{ 0.0, 1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0 };
+  const std::vector<double> origin{ 1.5, -2.0, 3.0 };
+  const std::vector<double> spacing{ 0.5, 0.25, 2.0 };
+
+  sitk::Image v(std::vector<unsigned int>{ 4, 3, 2 }, sitk::sitkVectorFloat32, 2);
+  sitk::Image s(std::vector<unsigned int>{ 4, 3, 2 }, sitk::sitkFloat32);
+  for (sitk::Image * img : { &v, &s })
+  {
+    img->SetDirection(direction);
+    img->SetOrigin(origin);
+    img->SetSpacing(spacing);
+  }
+
+  const std::vector<sitk::Image> results{
+    sitk::Add(v, s),        sitk::Add(v, 1.0),    sitk::Subtract(v, s),
+    sitk::Subtract(v, 1.0), sitk::Multiply(v, s), sitk::Multiply(v, 1.0),
+  };
+  for (const sitk::Image & out : results)
+  {
+    EXPECT_EQ(direction, out.GetDirection());
+    EXPECT_EQ(origin, out.GetOrigin());
+    EXPECT_EQ(spacing, out.GetSpacing());
+    EXPECT_EQ(2u, out.GetNumberOfComponentsPerPixel());
+  }
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_Unsupported)
+{
+  const std::vector<unsigned int> size{ 4, 3 };
+  const sitk::Image               v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f });
+  const sitk::Image               v3 = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f, 6.0f });
+
+  // vector with vector multiplication is not defined
+  EXPECT_ANY_THROW(sitk::Multiply(v, v));
+
+  // differing number of components
+  EXPECT_ANY_THROW(sitk::Add(v, v3));
+  EXPECT_ANY_THROW(sitk::Subtract(v3, v));
+
+  // the component type of the scalar image must match
+  EXPECT_ANY_THROW(sitk::Add(v, MakeScalarImage(sitk::sitkFloat64, size, 1.0)));
+  EXPECT_ANY_THROW(sitk::Multiply(v, MakeScalarImage(sitk::sitkUInt8, size, 1.0)));
+
+  // the vector image must be the first operand
+  const sitk::Image s = MakeScalarImage(sitk::sitkFloat32, size, 1.0);
+  EXPECT_ANY_THROW(sitk::Add(s, v));
+  EXPECT_ANY_THROW(sitk::Subtract(s, v));
+  EXPECT_ANY_THROW(sitk::Multiply(s, v));
+  EXPECT_ANY_THROW(sitk::Multiply(2.0, v));
+
+  // dimensions must match
+  EXPECT_ANY_THROW(sitk::Add(v, MakeScalarImage(sitk::sitkFloat32, { 4, 3, 2 }, 1.0)));
 }
 
 TEST(BasicFilters, PixelTypeMismatchMessage)

@@ -343,6 +343,59 @@ def test_inplace_operators_constants():
     assert image["test"] == "value"
 
 
+def test_vector_scalar_operators():
+    """Test operators combining vector images with scalar images and constants"""
+    vec = sitk.Compose(
+        sitk.Image([3, 2], sitk.sitkFloat32) + 1,
+        sitk.Image([3, 2], sitk.sitkFloat32) + 5,
+    )
+    vec.SetSpacing([0.5, 0.25])
+    scalar = sitk.Image([3, 2], sitk.sitkFloat32) + 3
+    scalar.SetSpacing([0.5, 0.25])
+
+    cases = {
+        "v + s": (vec + scalar, (4.0, 8.0)),
+        "v + c": (vec + 2, (3.0, 7.0)),
+        "c + v": (2 + vec, (3.0, 7.0)),
+        "v - s": (vec - scalar, (-2.0, 2.0)),
+        "v - c": (vec - 2, (-1.0, 3.0)),
+        "c - v": (2 - vec, (1.0, -3.0)),
+        "v * s": (vec * scalar, (3.0, 15.0)),
+        "v * c": (vec * 2, (2.0, 10.0)),
+    }
+    for name, (result, expected) in cases.items():
+        assert result.GetPixelID() == sitk.sitkVectorFloat32, name
+        assert result.GetNumberOfComponentsPerPixel() == 2, name
+        assert result.GetSpacing() == vec.GetSpacing(), name
+        assert result[0, 0] == expected, name
+
+    # inputs are unchanged
+    assert vec[0, 0] == (1.0, 5.0)
+    assert scalar[0, 0] == 3.0
+
+    vec += scalar
+    assert vec[0, 0] == (4.0, 8.0)
+    vec *= 2
+    assert vec[0, 0] == (8.0, 16.0)
+
+    with pytest.raises(RuntimeError):
+        vec * vec
+    with pytest.raises(RuntimeError):
+        vec + sitk.Image([3, 2], sitk.sitkFloat64)
+    with pytest.raises(RuntimeError):
+        vec + sitk.Compose([scalar] * 3)
+
+    # the vector image must be the first operand
+    with pytest.raises(RuntimeError):
+        scalar + vec
+    with pytest.raises(RuntimeError):
+        scalar - vec
+    with pytest.raises(RuntimeError):
+        scalar * vec
+    with pytest.raises(RuntimeError):
+        2 * vec
+
+
 def test_evaluate_at_continuous_index():
     """Test for EvaluateAtContinuousIndex"""
 
