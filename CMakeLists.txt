@@ -62,6 +62,9 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 include(sitkCompilerWarningsSettings)
 
+# Must be set before ITK is added so ITK is built with the same flags.
+include(sitkDeadStrip)
+
 include(sitkGitProtocol)
 include(sitkITKFetchContent)
 
