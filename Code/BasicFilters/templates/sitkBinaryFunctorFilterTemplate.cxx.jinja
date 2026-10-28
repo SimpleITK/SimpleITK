@@ -30,7 +30,19 @@ namespace itk::simple {
 
 //-----------------------------------------------------------------------------
 
-{% include "ConstructorMemberFunctionSetup.cxx.jinja" %}
+const detail::DualMemberFunctionFactory<{{ name }}::MemberFunctionType> &{{ name }}::GetMemberFunctionFactory()
+{
+  static detail::DualMemberFunctionFactory<MemberFunctionType> static_factory = [] {
+    detail::DualMemberFunctionFactory<MemberFunctionType> factory;
+{%- if custom_register %}
+    {{ custom_register | indent(4) }}
+{% else %}
+    factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+{%- endif %}
+    return factory;
+  }();
+  return static_factory;
+}
 
 const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}::GetMemberFunctionFactory1()
 {
@@ -91,7 +103,19 @@ Image {{ name }}::Execute ( {{ constant_type }} constant, const Image& image2{{ 
 }
 {% endif %}
 
-{% include "ExecuteNoParameters.cxx.jinja" %}
+Image {{ name }}::Execute ( const Image& image1, const Image& image2 )
+{
+  const PixelIDValueEnum type1 = image1.GetPixelID();
+  const PixelIDValueEnum type2 = image2.GetPixelID();
+  const unsigned int dimension = image1.GetDimension();
+  CheckImageMatchingDimension( image1, image2, "image2" );
+  CheckImageMatchingPixelType( image1, image2, "image2" );
+  CheckImageMatchingComponents( image1, image2, "image2" );
+  return GetMemberFunctionFactory().GetMemberFunction( type1, type2, dimension, this )( image1, image2 );
+}
+{%- if in_place %}
+  {%- include "ExecuteRValueReferenceNoParameters.cxx.jinja" %}
+{%- endif %}
 
 Image {{ name }}::Execute ( {{ constant_type }} constant, const Image& image2 )
 {
@@ -120,10 +144,20 @@ Image {{ name }}::Execute ( Image&& image1, {{ constant_type }} constant )
 
 //-----------------------------------------------------------------------------
 
-// ExecuteInternal
-{% include "ExecuteInternalSignature.cxx.jinja" %}
+// DualExecuteInternal
+template <class TImageType1, class TImageType2>
+Image {{ name }}::DualExecuteInternal ( const Image& inImage1, const Image& inImage2 )
 {
-  {% include "ExecuteInternalTypedefs.cxx.jinja" %}
+  using InputImageType = TImageType1;
+  using InputImageType2 = TImageType2;
+{%- if output_image_type %}
+  using OutputImageType = {{ output_image_type }};
+{%- elif output_pixel_type %}
+  using OutputImageType = itk::Image< {{ output_pixel_type }}, InputImageType::ImageDimension >;
+{%- else %}
+  using OutputImageType = InputImageType;
+{%- endif %}
+
   {% include "ExecuteInternalGetImagePointers.cxx.jinja" %}
   {% include "ExecuteInternalITKFilter.cxx.jinja" %}
   {% include "ExecuteInternalSetITKFilterInputs.cxx.jinja" %}
@@ -163,8 +197,6 @@ Image {{ name }}::ExecuteInternal ( const Image& inImage1, {{ constant_type }} c
 }
 
 //-----------------------------------------------------------------------------
-
-{% include "ExecuteInternalVectorImages.cxx.jinja" %}
 
 {% if not no_procedure %}
   {%- include "ProceduralAPI.cxx.jinja" %}

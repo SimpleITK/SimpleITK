@@ -147,6 +147,54 @@ public:
     using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
     this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, AddressorType>();
   }
+
+  /** Registers the same-type pairs of TPixelIDTypeList for the inclusive
+   * range of image dimensions [VImageDimension, VImageDimensionStop]. */
+  template <typename TPixelIDTypeList,
+            unsigned int VImageDimension,
+            unsigned int VImageDimensionStop,
+            typename TAddressor>
+  void
+  RegisterMemberFunctions()
+  {
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimensionStop, TAddressor>();
+    if constexpr (VImageDimensionStop > VImageDimension)
+    {
+      this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, VImageDimensionStop - 1, TAddressor>();
+    }
+  }
+  template <typename TPixelIDTypeList, unsigned int VImageDimension, unsigned int VImageDimensionStop>
+  void
+  RegisterMemberFunctions()
+  {
+    using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
+    this->RegisterMemberFunctions<TPixelIDTypeList, VImageDimension, VImageDimensionStop, AddressorType>();
+  }
+  /** @} */
+
+  /** \brief Register a member function for each position-matched pair of
+   * types from two equal-length pixel ID type lists, instead of the full
+   * cross product registered by RegisterMemberFunctions.
+   *
+   * Example usage:
+   * \code
+   * this->m_MemberFactory->RegisterMemberFunctionsZipped< PixelIDTypeList1,
+   *                                                       PixelIDTypeList2, 3 > ();
+   * \endcode
+   * Only registers (PixelIDTypeList1[i], PixelIDTypeList2[i]) for each i, not
+   * every combination.
+   * @{
+   */
+  template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension, typename TAddressor>
+  void
+  RegisterMemberFunctionsZipped();
+  template <typename TPixelIDTypeList1, typename TPixelIDTypeList2, unsigned int VImageDimension>
+  void
+  RegisterMemberFunctionsZipped()
+  {
+    using AddressorType = detail::DualExecuteInternalAddressor<MemberFunctionType>;
+    this->RegisterMemberFunctionsZipped<TPixelIDTypeList1, TPixelIDTypeList2, VImageDimension, AddressorType>();
+  }
   /** @} */
 
   /** \brief Query to determine if an member function has been
