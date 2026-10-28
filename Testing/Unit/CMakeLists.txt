@@ -15,6 +15,7 @@ set(
   sitkImageTests.cxx
   sitkCommonTests.cxx
   sitkImageRegistrationMethodTests.cxx
+  sitkSyNImageRegistrationMethodTests.cxx
   sitkImageIOTests.cxx
   sitkTypeListsTests.cxx
   sitkBasicFiltersTests.cxx
