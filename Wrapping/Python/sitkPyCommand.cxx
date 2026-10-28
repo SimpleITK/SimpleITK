@@ -95,6 +95,10 @@ PyCommand::GetCallbackPyCallable()
 void
 PyCommand::Execute()
 {
+  // Acquire the GIL before reading m_Object: SetCallbackPyCallable may
+  // run on another thread and release the reference concurrently.
+  PyGILStateEnsure gil;
+
   // if null do nothing
   if (!this->m_Object)
   {
@@ -112,8 +116,6 @@ PyCommand::Execute()
   }
   else
   {
-    PyGILStateEnsure gil;
-
     PyObject * result;
 
     result = PyObject_CallObject(this->m_Object, (PyObject *)NULL);
