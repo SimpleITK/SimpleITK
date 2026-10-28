@@ -60,6 +60,9 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}
   static detail::MemberFunctionFactory<MemberFunction1Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction1Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
+{%- if vector_scalar_pixel_types %}
+    factory.RegisterMemberFunctions< {{ vector_scalar_pixel_types }}, 2, 3 >();
+{%- endif %}
     return factory;
   }();
   return static_factory;
@@ -195,6 +198,27 @@ Image {{ name }}::DualExecuteInternal ( const Image& inImage1, const Image& inIm
 template <class TImageType>
 Image {{ name }}::ExecuteInternal ( {{ constant_type }} constant, const Image& inImage2 )
 {
+{%- if vector_scalar_pixel_types %}
+  if constexpr ( IsVectorImage<TImageType>::value )
+    {
+    // The constant is a scalar of the component type, applied to every component. As the first
+    // input is a constant, ITK takes the output information, including the number of components,
+    // from the second input.
+    using InputImageType2 = TImageType;
+    using InputImageType = typename ComponentImage<InputImageType2>::Type;
+    using OutputImageType = InputImageType2;
+    typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inImage2 );
+    {% include "ExecuteInternalITKFilter.cxx.jinja" %}
+    typename InputImageType::PixelType c;
+    ToPixelType( constant, c );
+    filter->SetConstant1( c );
+    filter->SetInput2( image2 );
+    {% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
+    {% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+    }
+  else
+{%- endif %}
+  {
   {% include "ExecuteInternalTypedefs.cxx.jinja" %}
   // Get the pointer to the ITK image contained in image2
   typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inImage2 );
@@ -206,6 +230,7 @@ Image {{ name }}::ExecuteInternal ( {{ constant_type }} constant, const Image& i
   filter->SetInput2( image2 );
   {% include "ExecuteInternalSetITKFilterParameters.cxx.jinja" %}
   {% include "ExecuteInternalUpdateAndReturn.cxx.jinja" %}
+  }
 }
 
 template <class TImageType>

@@ -362,6 +362,7 @@ def test_vector_scalar_operators():
         "c - v": (2 - vec, (1.0, -3.0)),
         "v * s": (vec * scalar, (3.0, 15.0)),
         "v * c": (vec * 2, (2.0, 10.0)),
+        "c * v": (2 * vec, (2.0, 10.0)),
     }
     for name, (result, expected) in cases.items():
         assert result.GetPixelID() == sitk.sitkVectorFloat32, name
@@ -385,15 +386,13 @@ def test_vector_scalar_operators():
     with pytest.raises(RuntimeError):
         vec + sitk.Compose([scalar] * 3)
 
-    # the vector image must be the first operand
+    # a scalar image must be the second operand
     with pytest.raises(RuntimeError):
         scalar + vec
     with pytest.raises(RuntimeError):
         scalar - vec
     with pytest.raises(RuntimeError):
         scalar * vec
-    with pytest.raises(RuntimeError):
-        2 * vec
 
 
 def test_evaluate_at_continuous_index():

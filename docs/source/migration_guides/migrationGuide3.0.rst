@@ -172,7 +172,7 @@ If your code requires the exact behavior from SimpleITK 2.x for 3D images, use t
 Add, Subtract and Multiply with Vector Images
 +++++++++++++++++++++++++++++++++++++++++++++
 
-The ``Add``, ``Subtract`` and ``Multiply`` filters now combine a vector image with a scalar image, or a scalar constant, by applying the operation to every component. The vector image must be the first operand, and the scalar image must have the pixel type of the vector image's components, for example ``sitkVectorFloat32`` with ``sitkFloat32``. ``Multiply`` of two vector images remains unsupported, and ``Multiply`` with a scalar image or constant as the first operand, such as ``2.0 * vec``, is not supported. Adding or subtracting a constant keeps working with either operand.
+The ``Add``, ``Subtract`` and ``Multiply`` filters now combine a vector image with a scalar image, or a scalar constant, by applying the operation to every component. A scalar image must be the second operand and have the pixel type of the vector image's components, for example ``sitkVectorFloat32`` with ``sitkFloat32``. A constant can be either operand, such as ``2.0 * vec``. ``Multiply`` of two vector images remains unsupported, and a scalar image as the first operand, such as ``mask * vec``, is not supported.
 
 Two vector images passed to ``Add`` or ``Subtract`` must now have the same number of components. Previously a mismatch was not detected and produced an incorrect result; it now raises an exception.
 
