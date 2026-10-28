@@ -5,6 +5,8 @@ constant_type: double
 number_of_inputs: 2
 doc: Some global documentation
 pixel_types: typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type
+vector_scalar_pixel_types: VectorPixelIDTypeList
+vector_scalar_constant_first: false
 members: []
 tests:
 - tag: defaults
@@ -19,6 +21,11 @@ detaileddescription: >-
   This class is templated over the types of the two input images and the type of the output image. When the divisor is zero,
   the division result is set to the maximum number that can be represented by default to avoid exception. Numeric conversions
   (castings) are done by the C++ defaults.
+
+
+  A vector image can be divided by a scalar image, which must be the second operand, or by a constant, with the pixel type of
+  the vector's components. Every component is divided by the scalar, and a zero divisor gives the maximum value of the
+  component type. A scalar divided by a vector image is not supported.
 itk_module: ITKImageIntensity
 itk_group: ImageIntensity
 in_place: true

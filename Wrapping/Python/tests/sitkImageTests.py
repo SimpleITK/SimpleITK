@@ -370,6 +370,20 @@ def test_vector_scalar_operators():
         assert result.GetSpacing() == vec.GetSpacing(), name
         assert result[0, 0] == expected, name
 
+    # Divide with the scalar as the second operand; the / and // operators use other filters
+    for name, result in {
+        "Divide(v, s)": sitk.Divide(vec, scalar),
+        "Divide(v, c)": sitk.Divide(vec, 2.0),
+    }.items():
+        assert result.GetPixelID() == sitk.sitkVectorFloat32, name
+        assert result.GetSpacing() == vec.GetSpacing(), name
+    assert sitk.Divide(vec, scalar)[0, 0] == pytest.approx((1.0 / 3.0, 5.0 / 3.0))
+    assert sitk.Divide(vec, 2.0)[0, 0] == (0.5, 2.5)
+    with pytest.raises(RuntimeError):
+        sitk.Divide(2.0, vec)
+    with pytest.raises(RuntimeError):
+        sitk.Divide(scalar, vec)
+
     # inputs are unchanged
     assert vec[0, 0] == (1.0, 5.0)
     assert scalar[0, 0] == 3.0

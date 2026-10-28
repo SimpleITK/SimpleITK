@@ -24,6 +24,7 @@
 #include <sitkGaussianImageSource.h>
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
+#include <sitkDivideImageFilter.h>
 #include <sitkPixelIDValues.h>
 #include <sitkStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
@@ -1709,6 +1710,51 @@ TEST(BasicFilters, VectorScalarBinaryOperators_Int32)
   EXPECT_EQ((std::vector<int32_t>{ 3, 7, -5 }), PixelOfInt32(sitk::Add(2.0, v)));
   EXPECT_EQ((std::vector<int32_t>{ 1, -3, 9 }), PixelOfInt32(sitk::Subtract(2.0, v)));
   EXPECT_EQ((std::vector<int32_t>{ 2, 10, -14 }), PixelOfInt32(sitk::Multiply(2.0, v)));
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_Divide)
+{
+  for (const auto & size : { std::vector<unsigned int>{ 4, 3 }, std::vector<unsigned int>{ 4, 3, 2 } })
+  {
+    const sitk::Image v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f, -3.0f });
+    const sitk::Image s = MakeScalarImage(sitk::sitkFloat32, size, 2.0);
+
+    sitk::Image out = sitk::Divide(v, s);
+    ExpectVectorMetadata(out, v);
+    EXPECT_EQ((std::vector<float>{ 0.5f, 2.5f, -1.5f }), PixelOf(out));
+    out = sitk::Divide(v, 2.0);
+    ExpectVectorMetadata(out, v);
+    EXPECT_EQ((std::vector<float>{ 0.5f, 2.5f, -1.5f }), PixelOf(out));
+
+    // a zero divisor in an image gives the maximum value of the component type, as for scalar images
+    const float maxFloat = std::numeric_limits<float>::max();
+    EXPECT_EQ((std::vector<float>{ maxFloat, maxFloat, maxFloat }),
+              PixelOf(sitk::Divide(v, MakeScalarImage(sitk::sitkFloat32, size, 0.0))));
+
+    // inputs are not modified
+    EXPECT_EQ((std::vector<float>{ 1.0f, 5.0f, -3.0f }), PixelOf(v));
+  }
+
+  // integer components use integer division, truncating toward zero
+  const std::vector<unsigned int> size{ 4, 3 };
+  const sitk::Image               vi = MakeVectorImage<int32_t>(sitk::sitkVectorInt32, size, { 7, -7, 5 });
+  EXPECT_EQ((std::vector<int32_t>{ 3, -3, 2 }), PixelOfInt32(sitk::Divide(vi, 2.0)));
+  EXPECT_EQ((std::vector<int32_t>{ 3, -3, 2 }),
+            PixelOfInt32(sitk::Divide(vi, MakeScalarImage(sitk::sitkInt32, size, 2.0))));
+  const int32_t maxInt = std::numeric_limits<int32_t>::max();
+  EXPECT_EQ((std::vector<int32_t>{ maxInt, maxInt, maxInt }),
+            PixelOfInt32(sitk::Divide(vi, MakeScalarImage(sitk::sitkInt32, size, 0.0))));
+
+  // a zero constant is rejected, as for scalar images
+  EXPECT_ANY_THROW(sitk::Divide(vi, 0.0));
+
+  // the scalar must be the second operand and have the component type of the vector
+  const sitk::Image s = MakeScalarImage(sitk::sitkFloat32, size, 2.0);
+  const sitk::Image v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f });
+  EXPECT_ANY_THROW(sitk::Divide(2.0, v));
+  EXPECT_ANY_THROW(sitk::Divide(s, v));
+  EXPECT_ANY_THROW(sitk::Divide(v, MakeScalarImage(sitk::sitkFloat64, size, 2.0)));
+  EXPECT_ANY_THROW(sitk::Divide(v, v));
 }
 
 TEST(BasicFilters, VectorScalarBinaryOperators_UInt8Wrap)

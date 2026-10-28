@@ -60,7 +60,7 @@ const detail::MemberFunctionFactory<{{ name }}::MemberFunction1Type> &{{ name }}
   static detail::MemberFunctionFactory<MemberFunction1Type> static_factory = [] {
     detail::MemberFunctionFactory<MemberFunction1Type> factory;
     factory.RegisterMemberFunctions< PixelIDTypeList, 2, 3 >();
-{%- if vector_scalar_pixel_types %}
+{%- if vector_scalar_pixel_types and vector_scalar_constant_first | default(true) %}
     factory.RegisterMemberFunctions< {{ vector_scalar_pixel_types }}, 2, 3 >();
 {%- endif %}
     return factory;
@@ -198,7 +198,7 @@ Image {{ name }}::DualExecuteInternal ( const Image& inImage1, const Image& inIm
 template <class TImageType>
 Image {{ name }}::ExecuteInternal ( {{ constant_type }} constant, const Image& inImage2 )
 {
-{%- if vector_scalar_pixel_types %}
+{%- if vector_scalar_pixel_types and vector_scalar_constant_first | default(true) %}
   if constexpr ( IsVectorImage<TImageType>::value )
     {
     // The constant is a scalar of the component type, applied to every component. As the first
