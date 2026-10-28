@@ -384,6 +384,25 @@ def test_vector_scalar_operators():
     with pytest.raises(RuntimeError):
         sitk.Divide(scalar, vec)
 
+    # DivideReal with the scalar as the second operand; the / operator uses this filter and
+    # always produces a real (float64) result, even for an integer vector image
+    for name, result in {
+        "DivideReal(v, s)": sitk.DivideReal(vec, scalar),
+        "DivideReal(v, c)": sitk.DivideReal(vec, 2.0),
+        "v / s": vec / scalar,
+        "v / c": vec / 2.0,
+    }.items():
+        assert result.GetPixelID() == sitk.sitkVectorFloat64, name
+        assert result.GetSpacing() == vec.GetSpacing(), name
+    assert sitk.DivideReal(vec, scalar)[0, 0] == pytest.approx((1.0 / 3.0, 5.0 / 3.0))
+    assert (vec / 2.0)[0, 0] == (0.5, 2.5)
+    with pytest.raises(RuntimeError):
+        sitk.DivideReal(2.0, vec)
+    with pytest.raises(RuntimeError):
+        2.0 / vec
+    with pytest.raises(RuntimeError):
+        sitk.DivideReal(scalar, vec)
+
     # inputs are unchanged
     assert vec[0, 0] == (1.0, 5.0)
     assert scalar[0, 0] == 3.0

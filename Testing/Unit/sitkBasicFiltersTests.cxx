@@ -25,6 +25,7 @@
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
 #include <sitkDivideImageFilter.h>
+#include <sitkDivideRealImageFilter.h>
 #include <sitkPixelIDValues.h>
 #include <sitkStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
@@ -1755,6 +1756,57 @@ TEST(BasicFilters, VectorScalarBinaryOperators_Divide)
   EXPECT_ANY_THROW(sitk::Divide(s, v));
   EXPECT_ANY_THROW(sitk::Divide(v, MakeScalarImage(sitk::sitkFloat64, size, 2.0)));
   EXPECT_ANY_THROW(sitk::Divide(v, v));
+}
+
+TEST(BasicFilters, VectorScalarBinaryOperators_DivideReal)
+{
+  // Unlike Divide, DivideReal always promotes the output to a real (double component) pixel type,
+  // and a zero divisor produces "inf" rather than the maximum value of the component type.
+  for (const auto & size : { std::vector<unsigned int>{ 4, 3 }, std::vector<unsigned int>{ 4, 3, 2 } })
+  {
+    const sitk::Image           vf = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f, -3.0f });
+    const sitk::Image           sf = MakeScalarImage(sitk::sitkFloat32, size, 2.0);
+    const std::vector<uint32_t> idx(size.size(), 0);
+
+    for (const sitk::Image & out : { sitk::DivideReal(vf, sf), sitk::DivideReal(vf, 2.0) })
+    {
+      EXPECT_EQ(sitk::sitkVectorFloat64, out.GetPixelID());
+      EXPECT_EQ(vf.GetNumberOfComponentsPerPixel(), out.GetNumberOfComponentsPerPixel());
+      EXPECT_EQ(vf.GetSize(), out.GetSize());
+      EXPECT_EQ(vf.GetOrigin(), out.GetOrigin());
+      EXPECT_EQ(vf.GetSpacing(), out.GetSpacing());
+      EXPECT_EQ((std::vector<double>{ 0.5, 2.5, -1.5 }), out.GetPixelAsVectorFloat64(idx));
+    }
+
+    // a zero divisor in an image gives "inf", not the maximum value as Divide does
+    const double inf = std::numeric_limits<double>::infinity();
+    EXPECT_EQ((std::vector<double>{ inf, inf, -inf }),
+              sitk::DivideReal(vf, MakeScalarImage(sitk::sitkFloat32, size, 0.0)).GetPixelAsVectorFloat64(idx));
+
+    // inputs are not modified
+    EXPECT_EQ((std::vector<float>{ 1.0f, 5.0f, -3.0f }), PixelOf(vf));
+  }
+
+  // integer components are promoted to a real (double) result, unlike Divide's integer truncation
+  const std::vector<unsigned int> size{ 4, 3 };
+  const sitk::Image               vi = MakeVectorImage<int32_t>(sitk::sitkVectorInt32, size, { 7, -7, 5 });
+  const sitk::Image               si = MakeScalarImage(sitk::sitkInt32, size, 2.0);
+  const sitk::Image               divByConstant = sitk::DivideReal(vi, 2.0);
+  EXPECT_EQ(sitk::sitkVectorFloat64, divByConstant.GetPixelID());
+  EXPECT_EQ((std::vector<double>{ 3.5, -3.5, 2.5 }), divByConstant.GetPixelAsVectorFloat64({ 0, 0 }));
+  EXPECT_EQ((std::vector<double>{ 3.5, -3.5, 2.5 }), sitk::DivideReal(vi, si).GetPixelAsVectorFloat64({ 0, 0 }));
+
+  // a zero constant divisor is not rejected, unlike Divide
+  const double inf = std::numeric_limits<double>::infinity();
+  EXPECT_EQ((std::vector<double>{ inf, -inf, inf }), sitk::DivideReal(vi, 0.0).GetPixelAsVectorFloat64({ 0, 0 }));
+
+  // the scalar must be the second operand and have the component type of the vector
+  const sitk::Image s = MakeScalarImage(sitk::sitkFloat32, size, 2.0);
+  const sitk::Image v = MakeVectorImage<float>(sitk::sitkVectorFloat32, size, { 1.0f, 5.0f });
+  EXPECT_ANY_THROW(sitk::DivideReal(2.0, v));
+  EXPECT_ANY_THROW(sitk::DivideReal(s, v));
+  EXPECT_ANY_THROW(sitk::DivideReal(v, MakeScalarImage(sitk::sitkFloat64, size, 2.0)));
+  EXPECT_ANY_THROW(sitk::DivideReal(v, v));
 }
 
 TEST(BasicFilters, VectorScalarBinaryOperators_UInt8Wrap)

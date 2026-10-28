@@ -242,7 +242,11 @@ Image {{ name }}::ExecuteInternal ( const Image& inImage1, {{ constant_type }} c
     // The constant is a scalar of the component type, applied to every component.
     using InputImageType = TImageType;
     using InputImageType2 = typename ComponentImage<InputImageType>::Type;
+{%- if output_image_type %}
+    using OutputImageType = {{ output_image_type }};
+{%- else %}
     using OutputImageType = InputImageType;
+{%- endif %}
     typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
     {% include "ExecuteInternalITKFilter.cxx.jinja" %}
     typename InputImageType2::PixelType c;
