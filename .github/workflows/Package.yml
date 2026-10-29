@@ -367,12 +367,17 @@ jobs:
           path: ${{ github.workspace }}/artifacts
       - name: Checksums
         shell: bash
+        env:
+          DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
         run: |
-          find ${{ steps.download.outputs.download-path }} -type f \
-            \( -name "*.gz" -o -name "*.whl" -o -name "*.zip" \) \
-            | xargs sha256sum > checksums.txt
-          echo "== checksums.txt =="
-          cat checksums.txt
+          # gh release upload publishes assets by basename, so the manifest
+          # must reference basenames too for "sha256sum -c" to verify them.
+          : > SHA256SUMS
+          while IFS= read -r -d '' file; do
+            sha256sum "${file}" | sed "s#${file}#$(basename "${file}")#" >> SHA256SUMS
+          done < <(find "${DOWNLOAD_PATH}" -type f \( -name "*.gz" -o -name "*.whl" -o -name "*.zip" \) -print0)
+          echo "== SHA256SUMS =="
+          cat SHA256SUMS
       - name: Set tag name
         id: tag
         env:
@@ -450,7 +455,7 @@ jobs:
             $create_args \
             --notes-file notes.txt \
             --title "Release ${REF_NAME}"
-          gh release upload "${TAG_NAME}" $( find  "${DOWNLOAD_PATH}" -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
+          gh release upload "${TAG_NAME}" SHA256SUMS $( find  "${DOWNLOAD_PATH}" -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
 
           if [ "${TAG_NAME}" == "latest" ]; then
             gh release edit "${TAG_NAME}" --draft=false
