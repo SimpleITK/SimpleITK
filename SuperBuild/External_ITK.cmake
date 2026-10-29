@@ -67,9 +67,8 @@ mark_as_advanced(ITK_GIT_REPOSITORY)
 sitk_legacy_naming(ITK_GIT_REPOSITORY ITK_REPOSITORY)
 
 
-# ITK release-5.4 branch hash 2026-10-12, includes the direction-cosine fix
-# regression suite backport (PR #6930)
-set(_DEFAULT_ITK_GIT_TAG "070c1132bd0423be0c4d80a0648d0207d6ec4838")
+# ITK release-5.4 branch tagged on Wed Oct 28
+set(_DEFAULT_ITK_GIT_TAG "v5.4.8")
 set(ITK_GIT_TAG "${_DEFAULT_ITK_GIT_TAG}" CACHE STRING "Tag or hash for ITK git repo")
 mark_as_advanced(ITK_GIT_TAG)
 set(ITK_TAG_COMMAND GIT_TAG "${ITK_GIT_TAG}")
