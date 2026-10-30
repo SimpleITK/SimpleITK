@@ -19,11 +19,6 @@ briefdescription: Pixel-wise multiplication of two images.
 detaileddescription: >-
   This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings)
   are done by the C++ defaults.
-
-
-  A vector image can be multiplied by a scalar image, which must be the second operand, or by a constant, as either operand,
-  with the pixel type of the vector's components. Every component is multiplied by the scalar. The product of two vector
-  images is not supported.
 itk_module: ITKImageIntensity
 itk_group: ImageIntensity
 in_place: true
