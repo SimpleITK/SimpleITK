@@ -217,6 +217,7 @@ list(
   CMAKE_CXX_STANDARD
   CMAKE_CXX_STANDARD_REQUIRED
   CMAKE_CXX_EXTENSIONS
+  CMAKE_INTERPROCEDURAL_OPTIMIZATION
   CMAKE_LINKER
   CMAKE_LINKER_TYPE
   CMAKE_EXE_LINKER_FLAGS
@@ -282,6 +283,11 @@ list(
   CMAKE_OSX_SYSROOT
   CMAKE_OSX_DEPLOYMENT_TARGET
 )
+
+# Debug is intentionally omitted: IPO is not meaningful for debug builds.
+foreach(_config RELEASE RELWITHDEBINFO MINSIZEREL)
+  list(APPEND ep_common_list CMAKE_INTERPROCEDURAL_OPTIMIZATION_${_config})
+endforeach()
 
 variablelisttoargs( ep_common_list ep_common_args )
 
