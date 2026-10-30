@@ -343,6 +343,91 @@ def test_inplace_operators_constants():
     assert image["test"] == "value"
 
 
+def test_vector_scalar_operators():
+    """Test operators combining vector images with scalar images and constants"""
+    vec = sitk.Compose(
+        sitk.Image([3, 2], sitk.sitkFloat32) + 1,
+        sitk.Image([3, 2], sitk.sitkFloat32) + 5,
+    )
+    vec.SetSpacing([0.5, 0.25])
+    scalar = sitk.Image([3, 2], sitk.sitkFloat32) + 3
+    scalar.SetSpacing([0.5, 0.25])
+
+    cases = {
+        "v + s": (vec + scalar, (4.0, 8.0)),
+        "v + c": (vec + 2, (3.0, 7.0)),
+        "c + v": (2 + vec, (3.0, 7.0)),
+        "v - s": (vec - scalar, (-2.0, 2.0)),
+        "v - c": (vec - 2, (-1.0, 3.0)),
+        "c - v": (2 - vec, (1.0, -3.0)),
+        "v * s": (vec * scalar, (3.0, 15.0)),
+        "v * c": (vec * 2, (2.0, 10.0)),
+        "c * v": (2 * vec, (2.0, 10.0)),
+    }
+    for name, (result, expected) in cases.items():
+        assert result.GetPixelID() == sitk.sitkVectorFloat32, name
+        assert result.GetNumberOfComponentsPerPixel() == 2, name
+        assert result.GetSpacing() == vec.GetSpacing(), name
+        assert result[0, 0] == expected, name
+
+    # Divide with the scalar as the second operand; the / and // operators use other filters
+    for name, result in {
+        "Divide(v, s)": sitk.Divide(vec, scalar),
+        "Divide(v, c)": sitk.Divide(vec, 2.0),
+    }.items():
+        assert result.GetPixelID() == sitk.sitkVectorFloat32, name
+        assert result.GetSpacing() == vec.GetSpacing(), name
+    assert sitk.Divide(vec, scalar)[0, 0] == pytest.approx((1.0 / 3.0, 5.0 / 3.0))
+    assert sitk.Divide(vec, 2.0)[0, 0] == (0.5, 2.5)
+    with pytest.raises(RuntimeError):
+        sitk.Divide(2.0, vec)
+    with pytest.raises(RuntimeError):
+        sitk.Divide(scalar, vec)
+
+    # DivideReal with the scalar as the second operand; the / operator uses this filter and
+    # always produces a real (float64) result, even for an integer vector image
+    for name, result in {
+        "DivideReal(v, s)": sitk.DivideReal(vec, scalar),
+        "DivideReal(v, c)": sitk.DivideReal(vec, 2.0),
+        "v / s": vec / scalar,
+        "v / c": vec / 2.0,
+    }.items():
+        assert result.GetPixelID() == sitk.sitkVectorFloat64, name
+        assert result.GetSpacing() == vec.GetSpacing(), name
+    assert sitk.DivideReal(vec, scalar)[0, 0] == pytest.approx((1.0 / 3.0, 5.0 / 3.0))
+    assert (vec / 2.0)[0, 0] == (0.5, 2.5)
+    with pytest.raises(RuntimeError):
+        sitk.DivideReal(2.0, vec)
+    with pytest.raises(RuntimeError):
+        2.0 / vec
+    with pytest.raises(RuntimeError):
+        sitk.DivideReal(scalar, vec)
+
+    # inputs are unchanged
+    assert vec[0, 0] == (1.0, 5.0)
+    assert scalar[0, 0] == 3.0
+
+    vec += scalar
+    assert vec[0, 0] == (4.0, 8.0)
+    vec *= 2
+    assert vec[0, 0] == (8.0, 16.0)
+
+    with pytest.raises(RuntimeError):
+        vec * vec
+    with pytest.raises(RuntimeError):
+        vec + sitk.Image([3, 2], sitk.sitkFloat64)
+    with pytest.raises(RuntimeError):
+        vec + sitk.Compose([scalar] * 3)
+
+    # a scalar image must be the second operand
+    with pytest.raises(RuntimeError):
+        scalar + vec
+    with pytest.raises(RuntimeError):
+        scalar - vec
+    with pytest.raises(RuntimeError):
+        scalar * vec
+
+
 def test_evaluate_at_continuous_index():
     """Test for EvaluateAtContinuousIndex"""
 

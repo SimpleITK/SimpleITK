@@ -198,3 +198,22 @@ TEST(DualMemberFunctionFactory, RegisterMemberFunctionsSameTypeDimensionRange)
     EXPECT_FALSE(factory.HasMemberFunction(sitk::sitkFloat32, sitk::sitkInt8, dim));
   }
 }
+
+
+TEST_F(TypeListTest, vector_to_basic_pixel_id)
+{
+  namespace sitk = itk::simple;
+
+  static_assert(
+    std::is_same_v<sitk::VectorPixelIDToBasicPixelID<sitk::VectorPixelID<float>>::Type, sitk::BasicPixelID<float>>);
+  static_assert(
+    std::is_same_v<sitk::VectorPixelIDToBasicPixelID<sitk::VectorPixelID<uint8_t>>::Type, sitk::BasicPixelID<uint8_t>>);
+
+  // The component list follows the order of the vector list, not that of the basic pixel types.
+  using Vectors = typelist2::typelist<sitk::VectorPixelID<double>, sitk::VectorPixelID<int8_t>>;
+  using Components = typelist2::typelist<sitk::BasicPixelID<double>, sitk::BasicPixelID<int8_t>>;
+  static_assert(std::is_same_v<sitk::VectorToBasicPixelIDTypeList<Vectors>::Type, Components>);
+
+  static_assert(typelist2::length<sitk::VectorToBasicPixelIDTypeList<sitk::VectorPixelIDTypeList>::Type>::value ==
+                typelist2::length<sitk::VectorPixelIDTypeList>::value);
+}

@@ -56,6 +56,14 @@
       "type": "string",
       "description": "Allowed vector pixel types (optional)"
     },
+    "vector_scalar_pixel_types": {
+      "type": "string",
+      "description": "BinaryFunctorFilter only: vector pixel types of an image that can be combined with a scalar of the same component type as the vector: a second image, or a constant as either operand (optional). The output must have the type of the vector image."
+    },
+    "vector_scalar_constant_first": {
+      "type": "boolean",
+      "description": "BinaryFunctorFilter only: when false, a constant as the first operand is not supported with a vector image, for operations which are not defined for a scalar and a vector. Default is true, and it applies only with vector_scalar_pixel_types (optional)."
+    },
     "members": {
       "type": "array",
       "items": {

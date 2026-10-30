@@ -5,6 +5,8 @@ constant_type: double
 number_of_inputs: 2
 doc: Some global documentation
 pixel_types: typelist2::append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::type
+vector_scalar_pixel_types: VectorPixelIDTypeList
+vector_scalar_constant_first: false
 members: []
 tests:
 - tag: defaults
