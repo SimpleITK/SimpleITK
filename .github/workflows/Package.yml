@@ -269,17 +269,45 @@ jobs:
             artifacts/SimpleITKDoxygenXML-*.tar.gz
             artifacts/SimpleITKDoxygen-*.tar.gz
 
-  publish:
+  # Actions `if:` expressions have no regex support, so a dedicated job computes this for reuse.
+  check-release-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      is_final: ${{ steps.check.outputs.is_final }}
+      is_prerelease: ${{ steps.check.outputs.is_prerelease }}
+    steps:
+      - name: Check release tag type
+        id: check
+        shell: bash
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "${REF_NAME}" == "latest" ||
+              "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?([-.]?[a-zA-Z]+[0-9]*)$ ]]; then
+            is_prerelease=true
+            is_final=false
+          elif [[ "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+            is_prerelease=false
+            is_final=true
+          else
+            is_prerelease=false
+            is_final=false
+          fi
+
+          echo "is_prerelease=${is_prerelease}" >> "$GITHUB_OUTPUT"
+          echo "is_final=${is_final}" >> "$GITHUB_OUTPUT"
+
+  publish-github:
     if: github.event_name != 'pull_request' && (github.ref_name == 'latest' || startsWith(github.ref_name, 'v'))
     environment:
       name: release
     permissions:
-      id-token: write  # for PyPI publish
       contents: write  # for creating and uploading GitHub releases
     needs:
       - build
       - doxygen
       - package-docker
+      - check-release-tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -333,6 +361,10 @@ jobs:
           echo "== notes.txt =="
           cat notes.txt
 
+      - name: Check wheel metadata
+        run: |
+          pip install twine
+          twine check $( find ${{ steps.download.outputs.download-path }} -name "*.whl" )
       - name: Verify abi3 wheel compatibility
         shell: bash
         env:
@@ -352,13 +384,13 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
           GIT_SHA: ${{ github.sha }}
           DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
+          IS_PRERELEASE: ${{ needs.check-release-tag.outputs.is_prerelease }}
         run: |
           if [ "${TAG_NAME}" == "latest" ]; then
             gh release delete "${TAG_NAME}" --yes || true
           fi
 
-          if [[  "${TAG_NAME}" == "latest" ||
-              "${REF_NAME}" =~ ^v[0-9]+\.[0-9]+(\.[0-9]+)?((-.)?[a-zA-Z]+[0-9]*)$ ]]; then
+          if [ "${IS_PRERELEASE}" == "true" ]; then
             create_args="--prerelease"
           fi
 
@@ -375,14 +407,58 @@ jobs:
           if [ "${TAG_NAME}" == "latest" ]; then
             gh release edit "${TAG_NAME}" --draft=false
           fi
+
+  publish-testpypi:
+    if: github.event_name != 'pull_request' && startsWith(github.ref_name, 'v')
+    environment:
+      name: pypi-test
+      url: ${{ vars.ENVIRONMENT_URL }}
+    permissions:
+      id-token: write  # for PyPI publish
+    needs:
+      - publish-github
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        id: download
+        with:
+          path: ${{ github.workspace }}/artifacts
       - name: Prepare for PyPI upload
         shell: bash
         run: |
           mkdir -p dist
           mv $( find  ${{ steps.download.outputs.download-path }} -type f -name "*.whl" ) dist/
       - name: PyPI Publish package
-        if: startsWith(github.ref_name, 'v')
-        # hash for release/v1.12.3
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086
         with:
-          repository-url: https://test.pypi.org/legacy/
+          repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
+          skip-existing: true
+
+  # Gated: requires manual approval via the pypi-release environment's required reviewers.
+  publish-pypi:
+    if: github.event_name != 'pull_request' && needs.check-release-tag.outputs.is_final == 'true'
+    environment:
+      name: pypi-release
+      url: ${{ vars.ENVIRONMENT_URL }}
+    permissions:
+      id-token: write  # for PyPI trusted publishing
+    needs:
+      - publish-github
+      - check-release-tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        id: download
+        with:
+          path: ${{ github.workspace }}/artifacts
+      - name: Prepare for PyPI upload
+        shell: bash
+        run: |
+          mkdir -p dist
+          mv $( find  ${{ steps.download.outputs.download-path }} -type f \( -name "*.whl" -o -name "simpleitk-*.tar.gz" \) ) dist/
+      - name: PyPI Publish package
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086
+        with:
+          repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
+          skip-existing: true
+          print-hash: true
