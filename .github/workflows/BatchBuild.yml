@@ -127,6 +127,9 @@ jobs:
               WRAP_LUA:BOOL=ON
               WRAP_R:BOOL=ON
               SimpleITK_USE_ELASTIX:BOOL=ON
+              SimpleITK_DEAD_STRIP:BOOL=ON
+              CMAKE_JOB_POOLS:STRING=link=1
+              CMAKE_JOB_POOL_LINK:STRING=link
 
           - os: ubuntu-24.04
             cmake-build-type: "Release"
