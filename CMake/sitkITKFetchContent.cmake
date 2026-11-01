@@ -16,6 +16,7 @@ set(
   "Module_ITKIOTransformMINC"
   "Module_GenericLabelInterpolator"
   "Module_LabelErodeDilate"
+  "Module_AdaptiveDenoising"
   "Module_ITKReview"
 )
 foreach(_module ${_SimpleITK_DEFAULT_MODULES})

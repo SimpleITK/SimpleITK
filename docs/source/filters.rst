@@ -566,6 +566,8 @@ SimpleITK Filters
      - Transforms the image so that any pixel that is not a regional maxima is set to the minimum value for the pixel type. Pixels that are regional maxima retain their value.
    * - `ValuedRegionalMinimaImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ValuedRegionalMinimaImageFilter.html>`_
      - Transforms the image so that any pixel that is not a regional minima is set to the maximum value for the pixel type. Pixels that are regional minima retain their value.
+   * - `VarianceImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1VarianceImageFilter.html>`_
+     - Applies a variance filter to an image.
    * - `VectorConfidenceConnectedImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1VectorConfidenceConnectedImageFilter.html>`_
      - Segment pixels with similar statistics using connectivity.
    * - `VectorConnectedComponentImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1VectorConnectedComponentImageFilter.html>`_
