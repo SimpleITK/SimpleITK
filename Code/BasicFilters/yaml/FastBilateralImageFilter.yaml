@@ -1,0 +1,98 @@
+name: FastBilateralImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+doc: ''
+number_of_inputs: 1
+pixel_types: BasicPixelIDTypeList
+members:
+- name: DomainSigma
+  type: double
+  default: std::vector<double>(3, 4.0)
+  dim_vec: true
+  set_as_scalar: true
+  itk_type: typename FilterType::DomainSigmaArrayType
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma
+    is specified in the units of intensity.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma
+    is specified in the units of intensity.
+- name: RangeSigma
+  type: double
+  default: '50.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma
+    is specified in the units of intensity.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma
+    is specified in the units of intensity.
+tests:
+- tag: default
+  description: Simply run with default settings
+  settings: []
+  md5hash: 6965aeeda0dc7f2ea4b1245079083d3a
+  inputs:
+  - Input/cthead1.png
+- tag: 3d
+  description: small kernel on a 3d float image
+  settings:
+  - parameter: DomainSigma
+    type: double
+    dim_vec: true
+    value:
+    - 2.0
+    - 2.0
+    - 2.0
+  - parameter: RangeSigma
+    value: '500'
+  md5hash: dc915cf658a9b8b028b62a0dc8ec6ae2
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: A fast approximation to the bilateral filter.
+detaileddescription: >-
+  This filter is a fast approximation to the bilateral filter. Blurring is performed on an image based on the distance of pixels
+  in both space and intensity.
+
+
+  The algorithm used was originally proposed by Paris and Durand [1].
+
+
+  Instead of calculating a kernel for every pixel in an image, this filter places the values of each pixel into a higher dimensional
+  image determined by the position and intensity of a pixel. How many bins are used is determined by the sigma values provided
+  to the filter. Larger sigmas will result in more aggressive downsampling and less running time overall. After the data of an
+  image has been organized into bins, a DiscreteGaussianImageFilter is applied. Finally, the output image is constructed by
+  interpolating the values of the output pixels from the blurred higher dimensional image.
+
+
+  [1] Sylvain Paris and Fredo Durand, A Fast Approximation of the Bilateral Filter using a Signal Processing Approach, European
+  Conference on Computer Vision (ECCV'06)
+
+
+  \see BilateralImageFilter
+
+
+
+  \see GaussianOperator
+
+
+
+  \see AnisotropicDiffusionImageFilter
+
+
+
+  \see Image
+
+
+
+  \see Neighborhood
+
+
+
+  \see NeighborhoodOperator
+itk_module: FastBilateral
+itk_group: FastBilateral
+in_place: false
