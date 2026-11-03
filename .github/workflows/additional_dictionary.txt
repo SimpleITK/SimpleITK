@@ -105,6 +105,8 @@ Chamfer
 CharEqn
 Charl
 Charvat
+checksum
+checksums
 Clunie's
 Cokus
 Colchester
