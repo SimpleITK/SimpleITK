@@ -136,6 +136,7 @@ jobs:
             Module_SimpleITKFilters:BOOL=ON
             Module_GenericLabelInterpolator:BOOL=ON
             Module_LabelErodeDilate:BOOL=ON
+            Module_FastBilateral:BOOL=ON
             ${{ matrix.ctest-cache }}
           ")
 

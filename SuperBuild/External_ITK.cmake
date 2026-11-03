@@ -31,6 +31,7 @@ set(
   "Module_ITKIOTransformMINC"
   "Module_GenericLabelInterpolator"
   "Module_LabelErodeDilate"
+  "Module_FastBilateral"
   "Module_ITKReview"
 )
 foreach(_module IN LISTS _SimpleITK_DEFAULT_MODULES)
