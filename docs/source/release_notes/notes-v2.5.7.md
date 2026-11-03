@@ -7,6 +7,9 @@ To upgrade to this Python binary package run:
 ## ITK 5.4.8
 This distribution is based on the Insight Toolkit 5.4.8 release. Please see the [ITK release notes](https://docs.itk.org/en/release/releases/5.4.8.html) for details.
 
+**Bug Fixes from ITK 5.4.8**
+- Fixed `ImageSeriesReader` computing an incorrect direction matrix for series where the `SpacingBetweenSlices` sign disagreed with the slice ordering, which could silently reorient the physical z-axis. Fixed upstream by [InsightSoftwareConsortium/ITK#6930](https://github.com/InsightSoftwareConsortium/ITK/pull/6930), reported in [SimpleITK#2292](https://github.com/SimpleITK/SimpleITK/issues/2292).
+
 ## Free-Threaded Python 3.15 Support
 SimpleITK now packages wheels for free-threaded CPython 3.15 (`cp315t`). CPython 3.15 changed how the GIL-free declaration must be made, from a runtime-only call to a static `Py_mod_gil` module slot. SimpleITK now relies on SWIG's own `-nogil` flag to emit this declaration natively, which requires SWIG 4.4.0 or later. Read more about [free-threaded Python on python.org](https://docs.python.org/3/howto/free-threading-python.html).
 
