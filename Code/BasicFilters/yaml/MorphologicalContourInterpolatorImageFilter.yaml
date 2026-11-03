@@ -1,0 +1,128 @@
+name: MorphologicalContourInterpolatorImageFilter
+itk_name: MorphologicalContourInterpolator
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: IntegerPixelIDTypeList
+custom_register: 'factory.RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+
+  '
+filter_type: itk::MorphologicalContourInterpolator<InputImageType>
+members:
+- name: Label
+  type: double
+  default: '0.0'
+  pixeltype: Input
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Interpolate only this label. Interpolates all labels if set to 0 (default).
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Which label is interpolated. 0 means all labels (default).
+- name: Axis
+  type: int
+  default: '-1'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Interpolate only along this axis. Interpolates along all axes if set to -1 (default).
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Axis of interpolation. -1 means interpolation along all axes (default).
+- name: HeuristicAlignment
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Heuristic alignment of regions for interpolation is faster than optimal alignment. Default is heuristic.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Heuristic alignment of regions for interpolation is faster than optimal alignment. Default is heuristic.
+- name: UseDistanceTransform
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Using distance transform instead of repeated dilations to calculate the median contour is slightly faster, but produces
+    lower quality interpolations. Default is ON.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Using distance transform instead of repeated dilations to calculate the median contour is slightly faster, but produces
+    lower quality interpolations. Default is ON.
+- name: UseBallStructuringElement
+  type: bool
+  default: 'false'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Use ball instead of default cross structuring element for repeated dilations.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Use ball instead of default cross structuring element for repeated dilations.
+- name: UseExtrapolation
+  type: bool
+  default: 'true'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Perform extrapolation for branch extremities. Branch extremities are defined as regions having no overlap with any region
+    in the next slice. Extrapolation helps generate smooth surface closings. Default is ON.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Perform extrapolation for branch extremities. Branch extremities are defined as regions having no overlap with any region
+    in the next slice. Extrapolation helps generate smooth surface closings. Default is ON.
+tests:
+- tag: defaults
+  description: Interpolate all seven labels between the two segmented slices
+  settings: []
+  md5hash: 354a0d78c707dcbb655a2c59e7ff6a1e
+  inputs:
+  - Input/SevenLabels.nrrd
+- tag: single_label
+  description: Interpolate only label 1 and leave the other labels on their slices
+  settings:
+  - parameter: Label
+    value: '1'
+  md5hash: f79d99ee7bb6aacb08bc72ddbb543b44
+  inputs:
+  - Input/SevenLabels.nrrd
+- tag: repeated_dilations
+  description: Median contour from repeated dilations instead of the distance transform
+  settings:
+  - parameter: UseDistanceTransform
+    value: 'false'
+    python_value: 'False'
+    R_value: 'FALSE'
+  md5hash: 7ba6acbc79c37febe455f92295d0ea62
+  inputs:
+  - Input/SevenLabels.nrrd
+briefdescription: Interpolates contours between slices.
+detaileddescription: >-
+  \par Inputs and Outputs
+  This is an image-to-image filter. The dimensionality is 3D or higher. Input contains an image with some slices segmented,
+  usually manually. The output has all in-between slices also segmented.
+
+
+  \par Parameters
+  Slices are detected at positions where a pixel exists with same labeled neighbors in slice and only clear (0) neighbors
+  perpendicular to the slice.
+
+
+  Filter can be restricted to run along only one axis, and/or to interpolate just one label.
+
+
+  Since optimal alignment between slices would require exhaustive search, the default is to use heuristic (breadth first search
+  starting from centroid).
+
+
+  There is also an alternative algorithm based on distance transform approach. It is slightly faster, but it can jump across
+  a twisty shape (not geodesic).
+
+
+  Reference: Albu AB, Beugeling T, Laurendeau D. "A morphology-based approach for interslice interpolation of anatomical slices
+  from volumetric images." IEEE Trans Biomed Eng. 2008 Aug;55(8):2022-38. DOI:10.1109/TBME.2008.921158
+
+
+  Acknowledgement: This work is supported by NIH grant R01 EB014346, "Continued development and maintenance of the ITK-SNAP
+  3D image segmentation software."
+itk_module: MorphologicalContourInterpolation
+itk_group: MorphologicalContourInterpolation
+in_place: false
