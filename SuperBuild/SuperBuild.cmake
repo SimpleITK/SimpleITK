@@ -284,8 +284,7 @@ list(
   CMAKE_OSX_DEPLOYMENT_TARGET
 )
 
-# Debug is intentionally omitted: IPO is not meaningful for debug builds.
-foreach(_config RELEASE RELWITHDEBINFO MINSIZEREL)
+foreach(_config DEBUG RELEASE RELWITHDEBINFO MINSIZEREL)
   list(APPEND ep_common_list CMAKE_INTERPROCEDURAL_OPTIMIZATION_${_config})
 endforeach()
 
