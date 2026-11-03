@@ -152,6 +152,50 @@ upgrade to the latest pre-release Python binary package run:
  pip install --upgrade --pre simpleitk --find-links https://github.com/SimpleITK/SimpleITK/releases/tag/latest
 
 
+Verifying downloaded release files
+-----------------------------------
+
+GitHub releases produced by the current release workflow include a
+``SHA256SUMS`` file with SHA-256 checksums for uploaded ``.whl``, ``.zip``, and
+``.gz`` release assets. The manifest also has a GitHub build-provenance
+attestation. Download ``SHA256SUMS`` and the binary you want from the same
+`GitHub release <https://github.com/SimpleITK/SimpleITK/releases>`__, keeping
+their original filenames in the same directory.
+
+
+Authenticating the publisher
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To authenticate the publisher, verify
+the attestation; a checksum match alone does not authenticate the publisher.
+With the `GitHub CLI <https://cli.github.com/>`__ installed and network access
+to GitHub, verify the manifest's attestation:
+
+.. code-block :: bash
+
+ gh attestation verify SHA256SUMS --repo SimpleITK/SimpleITK
+
+Checking the SHA-256 checksum
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After the attestation is verified, check the downloaded files against the
+manifest. Run the command from the directory containing ``SHA256SUMS`` and the
+downloaded files; ``--ignore-missing`` skips manifest entries for files that
+were not downloaded.
+
+.. code-block :: bash
+
+ # GNU/Linux, or Git Bash/WSL on Windows
+ sha256sum --check --ignore-missing SHA256SUMS
+
+ # macOS
+ shasum -a 256 --check --ignore-missing SHA256SUMS
+
+Each downloaded file should be reported as ``OK``; a mismatch is an error and
+the file should not be used. Confirm that every file you downloaded is listed
+in the output. GitHub-generated source-code archives are not covered by the
+manifest, and the manifest does not contain a checksum of itself.
+
+
 Recommended Software
 ====================
 
