@@ -8,7 +8,10 @@ To upgrade to this Python binary package run:
 This distribution is based on the Insight Toolkit 5.4.8 release. Please see the [ITK release notes](https://docs.itk.org/en/release/releases/5.4.8.html) for details.
 
 ## Free-Threaded Python 3.15 Support
-SimpleITK now packages wheels for free-threaded CPython 3.15 (`cp315t`) as a regular release, now that 3.15 is no longer a pre-release. CPython 3.15 changed how the GIL-free declaration must be made, from a runtime-only call to a static `Py_mod_gil` module slot, so building against it requires SWIG 4.5.1 or later, which this release updates to. Read more about [free-threaded Python on python.org](https://docs.python.org/3/howto/free-threading-python.html).
+SimpleITK now packages wheels for free-threaded CPython 3.15 (`cp315t`). CPython 3.15 changed how the GIL-free declaration must be made, from a runtime-only call to a static `Py_mod_gil` module slot. SimpleITK now relies on SWIG's own `-nogil` flag to emit this declaration natively, which requires SWIG 4.4.0 or later. Read more about [free-threaded Python on python.org](https://docs.python.org/3/howto/free-threading-python.html).
+
+## SWIG Updated to 4.5.1
+The Superbuild's bundled SWIG was updated to 4.5.1. This upstreams the R 4.6.0 API compatibility fixes that were previously applied as a local patch on top of SWIG 4.4.1, and fixes a SWIG bug that dropped the `std::vector<bool>` specialization during Ruby auto-renaming, removing the need for a SimpleITK-side workaround.
 
 **New Features**
 - Added `ImageFileReader::CanStreamRead()` to query whether the configured ImageIO supports streamed, region-by-region reading before attempting it.
