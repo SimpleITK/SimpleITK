@@ -165,6 +165,9 @@ namespace std
 #define SITKElastix_EXPORT
 #define SITKElastix_HIDDEN
 
+// the deprecation attribute is not needed for the wrapped languages
+#define SITK_DEPRECATED(message)
+
 
 // Any new classes need to have an "%include" statement to be wrapped.
 

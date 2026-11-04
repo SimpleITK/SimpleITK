@@ -324,6 +324,21 @@ VectorRMSPredFormat(const char *            expr1,
  */
 #define EXPECT_VECTOR_NEAR(val1, val2, rms_error) EXPECT_PRED_FORMAT3(VectorRMSPredFormat, val1, val2, rms_error)
 
+/** Suppress the compiler warnings for testing deprecated methods. Use around the code which intentionally
+ * calls a deprecated method.
+ */
+#if defined(_MSC_VER)
+#  define SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN __pragma(warning(push)) __pragma(warning(disable : 4996))
+#  define SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END __pragma(warning(pop))
+#elif defined(__GNUC__) || defined(__clang__)
+#  define SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN \
+    _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
+#  define SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END _Pragma("GCC diagnostic pop")
+#else
+#  define SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN
+#  define SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END
+#endif
+
 
 #include "sitkImageCompare.h"
 

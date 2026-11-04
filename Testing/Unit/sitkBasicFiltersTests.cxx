@@ -56,6 +56,9 @@
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 #include <sitkResampleImageFilter.h>
+#include <itkCastImageFilter.h>
+#include <itkImage.h>
+#include <itkThreadPool.h>
 #include <sitkSignedMaurerDistanceMapImageFilter.h>
 #include <sitkSignedDanielssonDistanceMapImageFilter.h>
 #include <sitkPasteImageFilter.h>
@@ -449,12 +452,15 @@ TEST(BasicFilters, ProcessObject_NumberOfThreads)
   const unsigned int gNum = filter.GetGlobalDefaultNumberOfThreads();
   const unsigned int targetNum = gNum == 13 ? 11 : 13;
 
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN
   EXPECT_NE(filter.GetGlobalDefaultNumberOfThreads(), 0u);
   EXPECT_NE(filter.GetNumberOfThreads(), 0u);
   EXPECT_EQ(filter.GetNumberOfThreads(), filter.GetGlobalDefaultNumberOfThreads());
 
   filter.SetNumberOfThreads(3);
   EXPECT_EQ(3u, filter.GetNumberOfThreads());
+  // the number of threads is the number of work units
+  EXPECT_EQ(3u, filter.GetNumberOfWorkUnits());
   EXPECT_EQ(gNum, filter.GetGlobalDefaultNumberOfThreads());
 
   filter.SetGlobalDefaultNumberOfThreads(targetNum);
@@ -464,6 +470,175 @@ TEST(BasicFilters, ProcessObject_NumberOfThreads)
   sitk::CastImageFilter caster2;
   EXPECT_EQ(targetNum, caster2.GetNumberOfThreads());
   EXPECT_EQ(targetNum, caster2.GetGlobalDefaultNumberOfThreads());
+
+  // zero restores the default, which is the global default at the time of construction
+  filter.SetNumberOfThreads(0);
+  EXPECT_EQ(0u, filter.GetNumberOfWorkUnits());
+  EXPECT_EQ(gNum, filter.GetNumberOfThreads());
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END
+}
+
+namespace
+{
+
+// Exposes the protected PreUpdate to verify the settings applied to an ITK filter.
+class PreUpdateProcessObject : public itk::simple::ProcessObject
+{
+public:
+  std::string
+  GetName() const override
+  {
+    return "PreUpdateProcessObject";
+  }
+
+  void
+  Apply(itk::ProcessObject * p)
+  {
+    this->PreUpdate(p);
+  }
+};
+
+// Select a default multi-threader for the scope, and restore the previous one.
+class ScopedDefaultThreader
+{
+public:
+  explicit ScopedDefaultThreader(const std::string & threader)
+    : m_Previous(itk::simple::ProcessObject::GetGlobalDefaultThreader())
+  {
+    EXPECT_TRUE(itk::simple::ProcessObject::SetGlobalDefaultThreader(threader));
+  }
+  ~ScopedDefaultThreader() { itk::simple::ProcessObject::SetGlobalDefaultThreader(m_Previous); }
+
+private:
+  std::string m_Previous;
+};
+
+} // namespace
+
+class ProcessObjectWorkUnits : public ::testing::TestWithParam<std::string>
+{
+protected:
+  using ITKImageType = itk::Image<float, 2>;
+  using ITKFilterType = itk::CastImageFilter<ITKImageType, ITKImageType>;
+
+  static ITKImageType::Pointer
+  MakeImage()
+  {
+    auto image = ITKImageType::New();
+    image->SetRegions(ITKImageType::SizeType::Filled(64));
+    image->AllocateInitialized();
+    return image;
+  }
+};
+
+TEST_P(ProcessObjectWorkUnits, DefaultIsUnchanged)
+{
+  const ScopedDefaultThreader threader(GetParam());
+
+  PreUpdateProcessObject po;
+  auto                   filter = ITKFilterType::New();
+  const auto             defaultWorkUnits = filter->GetNumberOfWorkUnits();
+
+  po.Apply(filter);
+  EXPECT_EQ(0u, po.GetNumberOfWorkUnits());
+  EXPECT_EQ(defaultWorkUnits, filter->GetNumberOfWorkUnits());
+}
+
+TEST_P(ProcessObjectWorkUnits, NumberOfWorkUnits)
+{
+  const ScopedDefaultThreader threader(GetParam());
+
+  PreUpdateProcessObject po;
+  po.SetNumberOfWorkUnits(3);
+
+  auto filter = ITKFilterType::New();
+  filter->SetInput(MakeImage());
+  po.Apply(filter);
+  EXPECT_EQ(3u, filter->GetNumberOfWorkUnits());
+
+  filter->Update();
+  EXPECT_EQ(3u, filter->GetMultiThreader()->GetNumberOfWorkUnits());
+}
+
+// The number of threads is the number of work units.
+TEST_P(ProcessObjectWorkUnits, NumberOfThreadsIsWorkUnits)
+{
+  const ScopedDefaultThreader threader(GetParam());
+
+  PreUpdateProcessObject po;
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN
+  po.SetNumberOfThreads(2);
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END
+  EXPECT_EQ(2u, po.GetNumberOfWorkUnits());
+
+  auto filter = ITKFilterType::New();
+  filter->SetInput(MakeImage());
+  po.Apply(filter);
+  EXPECT_EQ(2u, filter->GetNumberOfWorkUnits());
+
+  filter->Update();
+  EXPECT_EQ(2u, filter->GetMultiThreader()->GetNumberOfWorkUnits());
+}
+
+TEST_P(ProcessObjectWorkUnits, LastSetOfThreadsAndWorkUnitsIsApplied)
+{
+  const ScopedDefaultThreader threader(GetParam());
+
+  PreUpdateProcessObject po;
+  auto                   filter = ITKFilterType::New();
+
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN
+  po.SetNumberOfThreads(2);
+  po.SetNumberOfWorkUnits(5);
+  po.Apply(filter);
+  EXPECT_EQ(5u, filter->GetNumberOfWorkUnits());
+  EXPECT_EQ(5u, po.GetNumberOfThreads());
+
+  po.SetNumberOfWorkUnits(5);
+  po.SetNumberOfThreads(2);
+  po.Apply(filter);
+  EXPECT_EQ(2u, filter->GetNumberOfWorkUnits());
+  EXPECT_EQ(2u, po.GetNumberOfWorkUnits());
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END
+}
+
+INSTANTIATE_TEST_SUITE_P(Threaders, ProcessObjectWorkUnits, ::testing::Values("Pool", "Platform"));
+
+// Applying the settings must not add threads to the shared thread pool of the Pool multi-threader.
+TEST(ProcessObjectThreadPool, PreUpdateDoesNotGrowThreadPool)
+{
+  namespace sitk = itk::simple;
+  using ITKImageType = itk::Image<float, 2>;
+  using ITKFilterType = itk::CastImageFilter<ITKImageType, ITKImageType>;
+
+  const ScopedDefaultThreader threader("Pool");
+
+  const auto              pool = itk::ThreadPool::GetInstance();
+  const itk::ThreadIdType threadsBefore = pool->GetMaximumNumberOfThreads();
+  const unsigned int      previousDefault = sitk::ProcessObject::GetGlobalDefaultNumberOfThreads();
+  const itk::ThreadIdType larger =
+    std::min<itk::ThreadIdType>(threadsBefore + 8, itk::MultiThreaderBase::GetGlobalMaximumNumberOfThreads());
+  if (larger <= threadsBefore)
+  {
+    GTEST_SKIP() << "No room above the thread pool size.";
+  }
+
+  // The default number of threads of a new process object is larger than the thread pool.
+  sitk::ProcessObject::SetGlobalDefaultNumberOfThreads(larger);
+  {
+    PreUpdateProcessObject po;
+    auto                   filter = ITKFilterType::New();
+    po.Apply(filter);
+    EXPECT_EQ(threadsBefore, pool->GetMaximumNumberOfThreads());
+
+    SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN
+    po.SetNumberOfThreads(larger);
+    SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END
+    po.Apply(filter);
+    EXPECT_EQ(larger, filter->GetNumberOfWorkUnits());
+    EXPECT_EQ(threadsBefore, pool->GetMaximumNumberOfThreads());
+  }
+  sitk::ProcessObject::SetGlobalDefaultNumberOfThreads(previousDefault);
 }
 
 TEST(BasicFilters, Cast_Float32)
@@ -1037,7 +1212,7 @@ TEST(BasicFilters, SignedMaurerDistanceMap_Abort)
   EXPECT_EQ("a963bd6a755b853103a2d195e01a50d3", sitk::Hash(img, sitk::HashImageFilter::MD5));
 
   sitk::SignedMaurerDistanceMapImageFilter stats;
-  stats.SetNumberOfThreads(16);
+  stats.SetNumberOfWorkUnits(16);
 
   float abortAtProgress = 0.35f;
 
