@@ -240,6 +240,7 @@ namespace std
 
 // Registration
 %include "sitkImageRegistrationMethod.h"
+%include "sitkSyNImageRegistrationMethod.h"
 
 
 // Auto-generated headers
