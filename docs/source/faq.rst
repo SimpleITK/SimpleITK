@@ -135,25 +135,33 @@ SimpleITK to 1 and only use multiprocessing to obtain the benefits of parallel
 processing in a well controlled manner.
 
 Controlling the number of processes is external to SimpleITK.
-Controlling the number of threads is done via the `ProcessObject interface <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html>`_ which allows for getting and setting a specific filter instance's number of threads or the
-global default number of threads for all filters. Both options are shown below.
+Controlling the number of threads is done via the `ProcessObject interface <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html>`_ which allows for setting the global default number of threads for all filters, or a specific filter instance's number of work units. Both options are shown below.
+
+The global default number of threads sets the size of the thread pool, so it should be set before the first
+filter is executed. A work unit is one of the pieces the filter divides its work into, and a filter does not use more
+threads than it has work units. The number of work units of a filter does not change the number of threads in the
+pool, so it can be used to limit the parallelism of a specific filter.
 
 .. code-block :: python
 
   import SimpleITK as sitk
 
   print(f"Global default number of threads: {sitk.ProcessObject.GetGlobalDefaultNumberOfThreads()}")
-  filter = sitk.DiscreteGaussianImageFilter()
-  print(f"Filter number of threads, default: {filter.GetNumberOfThreads()}")
-
-  # Set the number of threads for a specific filter
-  filter.SetNumberOfThreads(3)
-  print(f"Filter number of threads, modified: {filter.GetNumberOfThreads()}")
 
   # Set the default number of threads for all filters
   sitk.ProcessObject.SetGlobalDefaultNumberOfThreads(6)
-  filter2 = sitk.RecursiveGaussianImageFilter()
-  print(f"Second filter number of threads, default: {filter2.GetNumberOfThreads()}")
+
+  filter = sitk.DiscreteGaussianImageFilter()
+  print(f"Filter number of work units, default (0 is the filter's default): {filter.GetNumberOfWorkUnits()}")
+
+  # Limit the parallelism of a specific filter
+  filter.SetNumberOfWorkUnits(3)
+  print(f"Filter number of work units, modified: {filter.GetNumberOfWorkUnits()}")
+
+.. note::
+
+  The per-filter ``SetNumberOfThreads`` and ``GetNumberOfThreads`` methods are deprecated. Setting the number of
+  threads is equivalent to setting the number of work units, and does not change the number of threads in the thread pool.
 
 
 

@@ -148,7 +148,8 @@ ProcessObject::ToString() const
   this->ToStringHelper(out, this->m_Debug) << std::endl;
 
   out << "  NumberOfThreads: ";
-  this->ToStringHelper(out, this->m_NumberOfThreads) << std::endl;
+  this->ToStringHelper(out, this->m_NumberOfWorkUnits != 0 ? this->m_NumberOfWorkUnits : this->m_NumberOfThreads)
+    << std::endl;
 
   out << "  NumberOfWorkUnits: ";
   this->ToStringHelper(out, this->m_NumberOfWorkUnits) << std::endl;
@@ -346,14 +347,15 @@ ProcessObject::GetGlobalDefaultThreader()
 void
 ProcessObject::SetNumberOfThreads(unsigned int n)
 {
-  m_NumberOfThreads = n;
+  this->SetNumberOfWorkUnits(n);
 }
 
 
 unsigned int
 ProcessObject::GetNumberOfThreads() const
 {
-  return m_NumberOfThreads;
+  const unsigned int workUnits = this->GetNumberOfWorkUnits();
+  return workUnits != 0 ? workUnits : m_NumberOfThreads;
 }
 
 
@@ -474,13 +476,12 @@ ProcessObject::PreUpdate(itk::ProcessObject * p)
 {
   assert(p);
 
-  // propagate number of threads
+  // propagate the number of work units, zero leaves the default of the ITK object. The multi-threader's
+  // maximum number of threads is not set, as a larger number would grow the thread pool of the Pool multi-threader.
   if (this->GetNumberOfWorkUnits() != 0)
   {
     p->SetNumberOfWorkUnits(this->GetNumberOfWorkUnits());
   }
-
-  p->GetMultiThreader()->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
 
   try
   {
