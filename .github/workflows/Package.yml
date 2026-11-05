@@ -445,26 +445,47 @@ jobs:
           DOWNLOAD_PATH: ${{ steps.download.outputs.download-path }}
           IS_PRERELEASE: ${{ needs.check-release-tag.outputs.is_prerelease }}
         run: |
-          if [ "${TAG_NAME}" == "latest" ]; then
-            gh release delete "${TAG_NAME}" --yes || true
-          fi
+          set -eo pipefail
 
+          create_args=()
           if [ "${IS_PRERELEASE}" == "true" ]; then
-            create_args="--prerelease"
+            create_args+=(--prerelease)
           fi
 
-          gh release create "${TAG_NAME}" \
+          # The rolling "latest" release is replaced only after the new one is
+          # complete. The draft uses a temporary tag so it never collides with
+          # the published release when gh looks releases up by tag name.
+          if [ "${TAG_NAME}" == "latest" ]; then
+            DRAFT_TAG="latest-pending-${GITHUB_RUN_ID}"
+            # Drafts do not create the tag, so --verify-tag does not apply.
+            verify_args=()
+            trap 'gh release delete "${DRAFT_TAG}" --yes || true' ERR
+          else
+            DRAFT_TAG="${TAG_NAME}"
+            verify_args=(--verify-tag)
+          fi
+
+          gh release create "${DRAFT_TAG}" \
             --target "${GIT_SHA}" \
-            --verify-tag \
+            "${verify_args[@]}" \
             --draft \
             --generate-notes \
-            $create_args \
+            "${create_args[@]}" \
             --notes-file notes.txt \
             --title "Release ${REF_NAME}"
-          gh release upload "${TAG_NAME}" SHA256SUMS $( find  "${DOWNLOAD_PATH}" -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
+          gh release upload "${DRAFT_TAG}" SHA256SUMS $( find  "${DOWNLOAD_PATH}" -type f \( -name "*.whl" -o -name "*.zip" -o -name "*.gz" \) )
 
           if [ "${TAG_NAME}" == "latest" ]; then
-            gh release edit "${TAG_NAME}" --draft=false
+            # Generated notes link to the draft's temporary tag name.
+            notes="$(gh release view "${DRAFT_TAG}" --json body --jq .body)"
+            gh release edit "${DRAFT_TAG}" --notes "${notes//${DRAFT_TAG}/${TAG_NAME}}"
+            # Past this point keep the completed draft for manual publishing.
+            trap - ERR
+            # Keep the git tag; only the release object is replaced.
+            if gh release view "${TAG_NAME}" > /dev/null 2>&1; then
+              gh release delete "${TAG_NAME}" --yes
+            fi
+            gh release edit "${DRAFT_TAG}" --tag "${TAG_NAME}" --draft=false
           fi
 
   publish-testpypi:
