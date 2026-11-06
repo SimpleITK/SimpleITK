@@ -23,6 +23,8 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 
   include(sitkCheckRequiredFlags)
 
+  include(sitkDeadStrip)
+
   include(CTest)
 
   if(BUILD_TESTING)

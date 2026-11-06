@@ -176,6 +176,8 @@ endif()
 #-------------------------------------------------------------------------
 include(sitkCheckRequiredFlags)
 
+include(sitkDeadStrip)
+
 #------------------------------------------------------------------------------
 # BuildName used for dashboard reporting
 #------------------------------------------------------------------------------
@@ -547,7 +549,12 @@ foreach(_varName IN LISTS _varNames)
   endif()
 endforeach()
 
-list(APPEND SimpleITK_VARS ExternalData_OBJECT_STORES)
+list(
+  APPEND
+  SimpleITK_VARS
+  ExternalData_OBJECT_STORES
+  USE_GOLD_LINKER
+)
 
 variablelisttocache( SimpleITK_VARS  ep_simpleitk_cache )
 variablelisttoargs( SimpleITK_VARS  ep_simpleitk_args )

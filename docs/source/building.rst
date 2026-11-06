@@ -230,6 +230,17 @@ Superbuild add `-DModule_AnisotropicDiffusionLBR:BOOL=ON` to the
 command line or in the CMake GUI press the "Add Entry" button to
 define the variable as above.
 
+The ``SimpleITK_DEAD_STRIP`` option (off by default) compiles every
+function and data item into its own section and lets the linker discard
+the unreferenced ones and, with a linker that supports it such as gold,
+fold identical functions. Enabling it also selects the gold linker when
+gold is available, unless ``USE_GOLD_LINKER`` is off or
+``CMAKE_LINKER_TYPE`` names another linker. It applies to ITK when ITK
+is built by the SuperBuild or FetchContent, and to the language wrapper
+projects. It reduces the size of the wrapper modules with little change
+in link time; each link uses more memory. It has no effect with MSVC or
+on macOS.
+
 SimpleITK has a very flexible and robust build system utilizing
 CMake. It enables packagers to build SimpleITK in a variety of ways to
 suit their requirements and minimize recompilation of SimpleITK so
