@@ -456,7 +456,8 @@ jobs:
           # complete. The draft uses a temporary tag so it never collides with
           # the published release when gh looks releases up by tag name.
           if [ "${TAG_NAME}" == "latest" ]; then
-            DRAFT_TAG="latest-pending-${GITHUB_RUN_ID}"
+            # Unique per attempt so a re-run never touches a retained draft.
+            DRAFT_TAG="latest-pending-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
             # Drafts do not create the tag, so --verify-tag does not apply.
             verify_args=()
             trap 'gh release delete "${DRAFT_TAG}" --yes || true' ERR
