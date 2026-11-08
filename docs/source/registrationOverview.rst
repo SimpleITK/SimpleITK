@@ -258,3 +258,43 @@ The secondary, and much more minor, source of variability has to do with the mul
 order of operations in each registration run. To eliminate multithreading variability, set the number of threads to one
 via the `SetGlobalDefaultNumberOfThreads <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ProcessObject.html#a305b43330f9feb26325eadfc30695bd9>`_ method. From a practical standpoint, in the tradeoff between full reproducibility and computational efficiency with minor
 variability in results, computational efficiency is most often more important.
+
+SyNImageRegistrationMethod
+..........................
+
+Symmetric normalization (SyN) is the diffeomorphic deformable registration
+of Avants et al. that the ANTs ``antsRegistration`` tool runs for its ``SyN``
+transform stage. SimpleITK provides it in the `SyNImageRegistrationMethod
+<https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1SyNImageRegistrationMethod.html>`_
+class, a driver for ``itk::SyNImageRegistrationMethod``. Both images are
+deformed toward a virtual midpoint by displacement field transforms with
+explicit inverses, so the result is symmetric and invertible.
+
+The class shares the similarity metric, mask, sampling, and multi-resolution
+settings of the ImageRegistrationMethod, but has no optimizer. The
+per-iteration step is controlled by ``SetLearningRate`` (the ANTs gradient
+step), ``SetGaussianSmoothingVarianceForTheUpdateField``, and
+``SetGaussianSmoothingVarianceForTheTotalField`` (the three ``SyN[...]``
+parameters of ``antsRegistration``), with ``SetNumberOfIterationsPerLevel``,
+``SetConvergenceThreshold``, and ``SetConvergenceWindowSize`` deciding when
+each level stops. The defaults are those of the ``antsRegistrationSyN.sh``
+script.
+
+``Execute`` returns a DisplacementFieldTransform mapping the fixed image domain
+to the moving image domain with its inverse field set. A rigid or affine
+stage from the ImageRegistrationMethod is passed via
+``SetMovingInitialTransform``, and the complete mapping is the composite of
+the two:
+
+.. code-block:: python
+
+   S = sitk.SyNImageRegistrationMethod()
+   S.SetMetricAsANTSNeighborhoodCorrelation(4)
+   S.SetMovingInitialTransform(affine)
+   deformable = S.Execute(fixed, moving)
+   composite = sitk.CompositeTransform([affine, deformable])
+   warped = sitk.Resample(moving, fixed, composite, sitk.sitkLinear, 0.0)
+
+Progress can be observed with ``sitkIterationEvent`` and
+``sitkMultiResolutionIterationEvent`` callbacks reading ``GetCurrentLevel``,
+``GetCurrentIteration``, ``GetMetricValue``, and ``GetConvergenceValue``.
