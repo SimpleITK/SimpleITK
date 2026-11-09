@@ -46,7 +46,7 @@ jobs:
       - name: Build ${{ matrix.dockerfile }}
         shell: bash
         env:
-          PYTHON_VERSIONS: "cp39-cp39 cp310-cp310 cp314-cp314t cp315-cp315t"
+          PYTHON_VERSIONS: "cp310-cp310 cp314-cp314t cp315-cp315t"
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
           BUILD_JAVA: 1
           BUILD_PYTHON_LIMITED_API: 1
@@ -220,10 +220,6 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Package Python 3.9
-        uses: ./.github/actions/package_python
-        with:
-          python-version: 3.9
       - name: Package Python 3.14t
         uses: ./.github/actions/package_python
         with:
