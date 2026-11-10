@@ -487,6 +487,11 @@ jobs:
               gh release delete "${TAG_NAME}" --yes
             fi
             gh release edit "${DRAFT_TAG}" --tag "${TAG_NAME}" --draft=false
+
+            # Drafts left by cancelled or failed attempts are obsolete now.
+            gh release list --limit 100 --json tagName,isDraft \
+              --jq '.[] | select(.isDraft and (.tagName | startswith("latest-pending-"))) | .tagName' |
+              xargs -r -n1 gh release delete --yes || true
           fi
 
   publish-testpypi:
