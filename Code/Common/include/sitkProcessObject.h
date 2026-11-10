@@ -187,7 +187,11 @@ public:
   /**@{*/
 
   /** Set the number of threads with which new process objects are
-   *  initialized.
+   *  initialized, and the size of the "POOL" multi-threader's thread pool.
+   *
+   * This is the supported way to limit the number of threads used
+   * by SimpleITK. It should be set before the first filter is
+   * executed.
    *
    * If the environment variable
    * "ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS" is defined, then this
@@ -205,40 +209,63 @@ public:
   GetGlobalDefaultNumberOfThreads();
   /**@}*/
 
-  /** The number of threads used when executing a filter if the
-   * filter is multi-threaded.
+  /** The number of work units used when executing a filter.
    *
-   * With ITK version 5, this parameter now corresponds to
-   * itk::MultiThreaderBase::SetMaximumNumberOfThreads and the
-   * corresponding get method. The is clamped to be limited by the
-   * "global" maximum.
+   * A work unit is one of the pieces the work (image) is divided
+   * into, matching itk::ProcessObject::SetNumberOfWorkUnits in
+   * ITK 6. This is the per-object control of the parallelism:
+   * the number of work units is the maximum number of pieces,
+   * and therefore the maximum number of concurrently executing
+   * tasks, used by the filter.
    *
-   * \note The "POOL" multi-threader cannot reduce the number of
-   * threads. As the "POOL" multi-threader  has a single instance
-   * of a thread pool, the number of threads will increased for
-   * subsequent processes.
-   * @{
-   */
-  virtual void
-  SetNumberOfThreads(unsigned int n);
-  virtual unsigned int
-  GetNumberOfThreads() const;
-  /**@}*/
-
-  /** The work (image) is requested to be divided into this number
-   * of sub-tasks.
+   * If zero (the default) then the default number from the filter
+   * and the multi-threader will be used. The "POOL"
+   * multi-threader's default is a multiple of the number of
+   * threads, which can improve load balancing.
    *
-   * If zero then, the default number from the process object and
-   * the multi-threader will be used.
+   * A work unit is not a thread:
+   * - The "POOL" multi-threader executes the work units with the
+   *   threads of a single shared thread pool. The number of work
+   *   units may be more or less than the number of threads in the
+   *   pool, and the number of threads is not changed. Use
+   *   SetGlobalDefaultNumberOfThreads to size the pool.
+   * - The "PLATFORM" multi-threader creates a thread for each work
+   *   unit.
    *
-   * \note The "PLATFORM" multi-threader set the number of threads
-   * equal to the number of work units.
+   * \note The ImageRegistrationMethod applies the number of work
+   * units to the metric and optimizer.
    * @{
    */
   virtual void
   SetNumberOfWorkUnits(unsigned int n);
   virtual unsigned int
   GetNumberOfWorkUnits() const;
+  /**@}*/
+
+  /** The number of threads used when executing a filter.
+   *
+   * \deprecated Equivalent to the number of work units, as ITK 6
+   * does not have a number of threads for a process object. Use
+   * SetNumberOfWorkUnits to limit the parallelism of a filter, or
+   * SetGlobalDefaultNumberOfThreads to limit the number of threads
+   * in general.
+   *
+   * Setting the number of threads sets the number of work units,
+   * and zero restores the default. The get method returns the
+   * number of work units if it is not zero, otherwise the value of
+   * the global default number of threads at the construction of
+   * this object.
+   *
+   * \note The number of threads of the multi-threader, and the size
+   * of the "POOL" multi-threader's thread pool, are not changed.
+   * @{
+   */
+  SITK_DEPRECATED("Use SetNumberOfWorkUnits or SetGlobalDefaultNumberOfThreads instead.")
+  virtual void
+  SetNumberOfThreads(unsigned int n);
+  SITK_DEPRECATED("Use GetNumberOfWorkUnits or GetGlobalDefaultNumberOfThreads instead.")
+  virtual unsigned int
+  GetNumberOfThreads() const;
   /**@}*/
 
 
@@ -473,6 +500,7 @@ private:
 
   bool m_Debug;
 
+  // the global default number of threads at construction, used when the number of work units is unset
   unsigned int m_NumberOfThreads;
   unsigned int m_NumberOfWorkUnits;
 

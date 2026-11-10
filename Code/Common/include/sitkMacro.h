@@ -57,6 +57,9 @@
 #  define CLANG_TEMPLATE
 #endif
 
+// Marks a method as deprecated for C++ callers.
+#define SITK_DEPRECATED(message) [[deprecated(message)]]
+
 namespace itk::simple
 {
 

@@ -591,7 +591,9 @@ TEST(ProcessObject, Threads)
 
   sitk::CastImageFilter po;
 
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_BEGIN
   EXPECT_EQ(sitk::ProcessObject::GetGlobalDefaultNumberOfThreads(), po.GetNumberOfThreads());
+  SITK_TEST_DISABLE_DEPRECATED_WARNINGS_END
 
 
   auto strupper = [](std::string s) {

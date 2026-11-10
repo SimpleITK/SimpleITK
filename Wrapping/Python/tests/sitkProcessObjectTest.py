@@ -108,3 +108,38 @@ def test_ProcessObject_PyCommand():
     # Second execution - progress should not be updated
     f.Execute(sitk.Image(10, 10, sitk.sitkFloat32))
     assert progress[0] == 0.0, "Progress should remain 0.0 after command deletion"
+
+
+def test_ProcessObject_NumberOfWorkUnits():
+    """Work units are the per-object control of the parallelism, and default to unset"""
+    f = sitk.CastImageFilter()
+    assert f.GetNumberOfWorkUnits() == 0
+
+    f.SetNumberOfWorkUnits(3)
+    assert f.GetNumberOfWorkUnits() == 3
+
+    # The filter executes with the settings.
+    img = f.Execute(sitk.Image(10, 10, sitk.sitkFloat32))
+    assert img.GetSize() == (10, 10)
+
+
+@pytest.mark.parametrize("method, args", [
+    ("SetNumberOfThreads", (2,)),
+    ("GetNumberOfThreads", ()),
+])
+def test_ProcessObject_NumberOfThreads_deprecated(method, args):
+    """The per-object number of threads is deprecated in favor of work units"""
+    f = sitk.CastImageFilter()
+    with pytest.warns(DeprecationWarning, match="NumberOfWorkUnits"):
+        getattr(f, method)(*args)
+
+
+def test_ProcessObject_NumberOfThreads_deprecated_still_works():
+    with pytest.warns(DeprecationWarning):
+        f = sitk.CastImageFilter()
+        f.SetNumberOfThreads(2)
+        assert f.GetNumberOfThreads() == 2
+        # the deprecated method sets the number of work units
+        assert f.GetNumberOfWorkUnits() == 2
+        img = f.Execute(sitk.Image(10, 10, sitk.sitkFloat32))
+    assert img.GetSize() == (10, 10)

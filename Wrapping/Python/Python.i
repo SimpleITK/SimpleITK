@@ -119,6 +119,20 @@ itk::simple::Image* sitk_GetImagePointerFromPyObject(PyObject* pyImage)
 
 %feature("director") itk::simple::LoggerBase;
 
+%pythonprepend itk::simple::ProcessObject::SetNumberOfThreads(unsigned int)
+{
+    import warnings
+    warnings.warn("SetNumberOfThreads is deprecated; use SetNumberOfWorkUnits or ProcessObject.SetGlobalDefaultNumberOfThreads instead.",
+                  DeprecationWarning, stacklevel=2)
+};
+
+%pythonprepend itk::simple::ProcessObject::GetNumberOfThreads() const
+{
+    import warnings
+    warnings.warn("GetNumberOfThreads is deprecated; use GetNumberOfWorkUnits or ProcessObject.GetGlobalDefaultNumberOfThreads instead.",
+                  DeprecationWarning, stacklevel=2)
+};
+
 
 
 %pythonappend itk::simple::ImageRegistrationMethod::Execute(const Image &, const Image &)
