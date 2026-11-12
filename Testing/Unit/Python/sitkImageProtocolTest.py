@@ -331,7 +331,7 @@ class TestArrayInterface(unittest.TestCase):
         initial_refcount = sys.getrefcount(img)
 
         # Access __array_interface__ - this creates ImageBuffer internally
-        img.__array_interface__
+        iface = img.__array_interface__
 
         self.assertGreater(
             sys.getrefcount(img),
