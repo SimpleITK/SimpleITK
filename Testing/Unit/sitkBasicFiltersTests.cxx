@@ -62,6 +62,7 @@
 
 #include "itkVectorImage.h"
 #include "itkVector.h"
+#include "itkThreadPool.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
 #include "itkFastMarchingImageFilterBase.h"
@@ -432,6 +433,48 @@ TEST(BasicFilters, ProcessObject_NumberOfThreads)
   sitk::CastImageFilter caster2;
   EXPECT_EQ(targetNum, caster2.GetNumberOfThreads());
   EXPECT_EQ(targetNum, caster2.GetGlobalDefaultNumberOfThreads());
+  EXPECT_EQ(targetNum, caster2.GetMaximumNumberOfThreads());
+
+  // the number of threads is the maximum number of threads
+  filter.SetMaximumNumberOfThreads(5);
+  EXPECT_EQ(5u, filter.GetMaximumNumberOfThreads());
+  EXPECT_EQ(5u, filter.GetNumberOfThreads());
+  filter.SetNumberOfThreads(4);
+  EXPECT_EQ(4u, filter.GetMaximumNumberOfThreads());
+
+  // it is independent of the number of work units
+  EXPECT_EQ(0u, filter.GetNumberOfWorkUnits());
+
+  filter.SetGlobalDefaultNumberOfThreads(gNum);
+}
+
+// The maximum number of threads is applied to the multi-threader when executing, which the Pool multi-threader
+// responds to by growing its shared thread pool.
+TEST(BasicFilters, ProcessObject_MaximumNumberOfThreadsApplied)
+{
+  namespace sitk = itk::simple;
+
+  const std::string previousThreader = sitk::ProcessObject::GetGlobalDefaultThreader();
+  ASSERT_TRUE(sitk::ProcessObject::SetGlobalDefaultThreader("Pool"));
+
+  const itk::ThreadIdType poolSize = itk::ThreadPool::GetInstance()->GetMaximumNumberOfThreads();
+  const itk::ThreadIdType larger =
+    std::min<itk::ThreadIdType>(poolSize + 2, itk::MultiThreaderBase::GetGlobalMaximumNumberOfThreads());
+  if (larger <= poolSize)
+  {
+    GTEST_SKIP() << "No room above the thread pool size.";
+  }
+
+  sitk::CastImageFilter caster;
+  caster.SetMaximumNumberOfThreads(1);
+  caster.Execute(sitk::Image(16, 16, sitk::sitkFloat32));
+  EXPECT_EQ(poolSize, itk::ThreadPool::GetInstance()->GetMaximumNumberOfThreads());
+
+  caster.SetMaximumNumberOfThreads(larger);
+  caster.Execute(sitk::Image(16, 16, sitk::sitkFloat32));
+  EXPECT_EQ(larger, itk::ThreadPool::GetInstance()->GetMaximumNumberOfThreads());
+
+  sitk::ProcessObject::SetGlobalDefaultThreader(previousThreader);
 }
 
 TEST(BasicFilters, Cast_Float32)
