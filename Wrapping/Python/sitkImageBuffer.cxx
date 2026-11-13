@@ -226,13 +226,6 @@ sitkImageBuffer_getbuffer(PyObject * exporter, Py_buffer * view, int flags)
   }
 
 
-  // if flags is zero set to PyBUF_SIMPLE and produce a warning
-  if (flags == 0)
-  {
-    flags = PyBUF_SIMPLE;
-    PyErr_WarnEx(PyExc_RuntimeWarning, "Buffer flag was zero, using PyBUF_SIMPLE", 1);
-  }
-
   // Zero-initialize the entire Py_buffer structure
   memset(view, 0, sizeof(Py_buffer));
 
