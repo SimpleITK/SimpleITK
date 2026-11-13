@@ -45,11 +45,6 @@ TEST(ElastixImageFilter, DefaultParameterMaps)
   EXPECT_NO_THROW(resultImage = silx.GetResultImage());
   EXPECT_FALSE(silxIsEmpty(resultImage));
 
-  EXPECT_NO_THROW(silx.SetParameterMap(GetDefaultParameterMap("nonrigid")));
-  EXPECT_NO_THROW(silx.Execute());
-  EXPECT_NO_THROW(resultImage = silx.GetResultImage());
-  EXPECT_FALSE(silxIsEmpty(resultImage));
-
   EXPECT_NO_THROW(silx.SetParameterMap(GetDefaultParameterMap("bspline")));
   EXPECT_NO_THROW(silx.Execute());
   EXPECT_NO_THROW(resultImage = silx.GetResultImage());

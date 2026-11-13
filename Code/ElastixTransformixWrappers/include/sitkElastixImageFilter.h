@@ -276,7 +276,7 @@ public:
   int
   GetNumberOfThreads();
 
-  /** \brief Specifies the parameter map by a \p transformName ("translation", "rigid" , "affine", "nonrigid", or
+  /** \brief Specifies the parameter map by a \p transformName ("translation", "rigid" , "affine", or
    * "bspline"), and optionally \p numberOfResolutions and \p finalGridSpacingInPhysicalUnits. */
   SITK_RETURN_SELF_TYPE_HEADER
   SetParameterMap(const std::string  transformName,
@@ -310,7 +310,7 @@ public:
   };
 
   /** \brief Returns the default parameter map for the specified function arguments (\p transformName may be
-   * "translation", "rigid" , "affine", "nonrigid", or "bspline"). */
+   * "translation", "rigid" , "affine", or "bspline"). */
   std::map<std::string, std::vector<std::string>>
   GetDefaultParameterMap(const std::string  transformName,
                          const unsigned int numberOfResolutions = 4,
