@@ -207,15 +207,19 @@ public:
   /** The number of threads used when executing a filter if the
    * filter is multi-threaded.
    *
-   * With ITK version 5, this parameter now corresponds to
-   * itk::MultiThreaderBase::SetMaximumNumberOfThreads and the
-   * corresponding get method. The is clamped to be limited by the
-   * "global" maximum.
+   * This is equivalent to the number of work units. The ITK
+   * multi-threader's maximum number of threads is not changed, as
+   * the "PLATFORM" multi-threader's number of threads is coupled to
+   * the number of work units, and the "POOL" multi-threader cannot
+   * reduce the size of its single shared thread pool. Use
+   * SetGlobalDefaultNumberOfThreads to size the "POOL" thread pool.
    *
-   * \note The "POOL" multi-threader cannot reduce the number of
-   * threads. As the "POOL" multi-threader  has a single instance
-   * of a thread pool, the number of threads will increased for
-   * subsequent processes.
+   * Setting the number of threads sets the number of work units, and
+   * zero restores the default. The get method returns the number of
+   * work units if it is not zero, otherwise the value of the global
+   * default number of threads at the construction of this object.
+   * The last set of the number of threads and the number of work
+   * units is the one applied.
    * @{
    */
   virtual void
@@ -231,7 +235,12 @@ public:
    * the multi-threader will be used.
    *
    * \note The "PLATFORM" multi-threader set the number of threads
-   * equal to the number of work units.
+   * equal to the number of work units. The "POOL" multi-threader
+   * executes the work units with the threads of its shared pool,
+   * the number of work units does not change the number of threads.
+   *
+   * \note The ImageRegistrationMethod applies the number of work
+   * units to the metric and optimizer.
    * @{
    */
   virtual void
@@ -472,6 +481,7 @@ private:
 
   bool m_Debug;
 
+  // the global default number of threads at construction, used when the number of work units is unset
   unsigned int m_NumberOfThreads;
   unsigned int m_NumberOfWorkUnits;
 
