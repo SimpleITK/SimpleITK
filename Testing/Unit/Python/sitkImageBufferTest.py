@@ -273,6 +273,30 @@ class ImageBufferTest(unittest.TestCase):
         with self.assertRaises(AttributeError):
             buf._image_ref = sitk.Image([1, 1], sitk.sitkUInt8)
 
+    def test_reinit_raises_and_preserves_state(self):
+        """Test that re-invoking __init__ on an already-initialized ImageBuffer raises
+        TypeError and leaves the original image reference and shape unchanged."""
+        img1 = sitk.Image([3, 5, 7], sitk.sitkUInt8)
+        img2 = sitk.Image([2, 4], sitk.sitkFloat32)
+        buf = ImageBuffer(img1)
+
+        original_image_ref = buf._image_ref
+        original_shape = memoryview(buf).shape
+
+        with self.assertRaisesRegex(TypeError, "cannot be reinitialized"):
+            buf.__init__(img2)
+
+        # State must be unchanged after the rejected re-initialization
+        self.assertIs(
+            buf._image_ref, original_image_ref, "_image_ref should be unchanged"
+        )
+        self.assertIs(
+            buf._image_ref, img1, "_image_ref should still reference the first image"
+        )
+        self.assertEqual(
+            memoryview(buf).shape, original_shape, "shape should be unchanged"
+        )
+
     def test_dimensions(self):
         """Test ImageBuffer with different dimensionalities"""
         cases = [
