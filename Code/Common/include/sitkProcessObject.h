@@ -204,18 +204,47 @@ public:
   GetGlobalDefaultNumberOfThreads();
   /**@}*/
 
+  /** The maximum number of threads of the multi-threader used when
+   * executing a filter if the filter is multi-threaded.
+   *
+   * This corresponds to itk::MultiThreaderBase::SetMaximumNumberOfThreads
+   * and the corresponding get method, and is set on the filter's
+   * multi-threader when the filter is executed. It is clamped to be
+   * limited by the "global" maximum. The default is the global default
+   * number of threads at the construction of this object.
+   *
+   * The effect depends on the multi-threader:
+   * - "TBB": limits the maximum parallelism of the executing filter.
+   * - "POOL": a value larger than the size of the single shared thread
+   *   pool will increase the number of threads in the pool for all
+   *   subsequent processes. The "POOL" multi-threader cannot reduce the
+   *   number of threads, so this does not limit the parallelism of the
+   *   filter. Use SetNumberOfWorkUnits to limit a filter.
+   * - "PLATFORM": has no effect, as the filter's number of work units
+   *   is applied to the multi-threader when executing, and the
+   *   "PLATFORM" multi-threader's number of threads is equal to the
+   *   number of work units. Use SetNumberOfWorkUnits instead.
+   *
+   * \sa SetNumberOfWorkUnits, SetGlobalDefaultNumberOfThreads
+   * @{
+   */
+  void
+  SetMaximumNumberOfThreads(unsigned int n);
+  unsigned int
+  GetMaximumNumberOfThreads() const;
+  /**@}*/
+
   /** The number of threads used when executing a filter if the
    * filter is multi-threaded.
    *
-   * With ITK version 5, this parameter now corresponds to
-   * itk::MultiThreaderBase::SetMaximumNumberOfThreads and the
-   * corresponding get method. The is clamped to be limited by the
-   * "global" maximum.
-   *
-   * \note The "POOL" multi-threader cannot reduce the number of
-   * threads. As the "POOL" multi-threader  has a single instance
-   * of a thread pool, the number of threads will increased for
-   * subsequent processes.
+   * This is equivalent to SetMaximumNumberOfThreads and
+   * GetMaximumNumberOfThreads, which should be preferred. It sets the
+   * maximum number of threads of the multi-threader, and it has an
+   * effect only with the "POOL" and "TBB" multi-threaders, as described
+   * in SetMaximumNumberOfThreads. It does not limit the parallelism of
+   * the "PLATFORM" multi-threader, nor of the "POOL" multi-threader
+   * which cannot reduce the size of its single shared thread pool. Use
+   * SetNumberOfWorkUnits to limit the parallelism of a filter.
    * @{
    */
   virtual void
@@ -472,7 +501,7 @@ private:
 
   bool m_Debug;
 
-  unsigned int m_NumberOfThreads;
+  unsigned int m_MaximumNumberOfThreads;
   unsigned int m_NumberOfWorkUnits;
 
   std::list<EventCommand> m_Commands;
