@@ -113,7 +113,7 @@ ProcessObject::EventCommand::EventCommand(EventEnum e, Command * c)
 //
 ProcessObject::ProcessObject()
   : m_Debug(ProcessObject::GetGlobalDefaultDebug())
-  , m_NumberOfThreads(itk::MultiThreaderBase::GetGlobalDefaultNumberOfThreads())
+  , m_MaximumNumberOfThreads(itk::MultiThreaderBase::GetGlobalDefaultNumberOfThreads())
   , m_NumberOfWorkUnits(0)
   , m_ActiveProcess(nullptr)
   , m_ProgressMeasurement(0.0)
@@ -147,8 +147,8 @@ ProcessObject::ToString() const
   out << "  Debug: ";
   this->ToStringHelper(out, this->m_Debug) << std::endl;
 
-  out << "  NumberOfThreads: ";
-  this->ToStringHelper(out, this->m_NumberOfThreads) << std::endl;
+  out << "  MaximumNumberOfThreads: ";
+  this->ToStringHelper(out, this->m_MaximumNumberOfThreads) << std::endl;
 
   out << "  NumberOfWorkUnits: ";
   this->ToStringHelper(out, this->m_NumberOfWorkUnits) << std::endl;
@@ -344,16 +344,30 @@ ProcessObject::GetGlobalDefaultThreader()
 
 
 void
+ProcessObject::SetMaximumNumberOfThreads(unsigned int n)
+{
+  m_MaximumNumberOfThreads = n;
+}
+
+
+unsigned int
+ProcessObject::GetMaximumNumberOfThreads() const
+{
+  return m_MaximumNumberOfThreads;
+}
+
+
+void
 ProcessObject::SetNumberOfThreads(unsigned int n)
 {
-  m_NumberOfThreads = n;
+  this->SetMaximumNumberOfThreads(n);
 }
 
 
 unsigned int
 ProcessObject::GetNumberOfThreads() const
 {
-  return m_NumberOfThreads;
+  return this->GetMaximumNumberOfThreads();
 }
 
 
@@ -480,7 +494,7 @@ ProcessObject::PreUpdate(itk::ProcessObject * p)
     p->SetNumberOfWorkUnits(this->GetNumberOfWorkUnits());
   }
 
-  p->GetMultiThreader()->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
+  p->GetMultiThreader()->SetMaximumNumberOfThreads(this->GetMaximumNumberOfThreads());
 
   try
   {
