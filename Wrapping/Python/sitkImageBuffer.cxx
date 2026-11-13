@@ -408,6 +408,15 @@ sitkImageBuffer_init(PyObject * pyself, PyObject * args, PyObject * kwds)
     return -1;
   }
 
+  // Reject re-initialization: any live memoryview already exported from this
+  // object aliases self->shape/self->strides directly (not a copy), so
+  // overwriting them here would corrupt that memoryview's view of the data.
+  if (self->pyImageRef != nullptr)
+  {
+    PyErr_SetString(PyExc_TypeError, "ImageBuffer object cannot be reinitialized");
+    return -1;
+  }
+
   try
   {
     // Extract SimpleITK Image from SWIG-wrapped Python object using helper function
