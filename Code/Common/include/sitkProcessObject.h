@@ -211,8 +211,10 @@ public:
    * multi-threader's maximum number of threads is not changed, as
    * the "PLATFORM" multi-threader's number of threads is coupled to
    * the number of work units, and the "POOL" multi-threader cannot
-   * reduce the size of its single shared thread pool. Use
-   * SetGlobalDefaultNumberOfThreads to size the "POOL" thread pool.
+   * reduce the size of its single shared thread pool. The size of
+   * the thread pool is set only when it is first created, from the
+   * global default number of threads at that time; see
+   * SetGlobalDefaultNumberOfThreads.
    *
    * Setting the number of threads sets the number of work units, and
    * zero restores the default. The get method returns the number of
