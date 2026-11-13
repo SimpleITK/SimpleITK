@@ -301,10 +301,12 @@ sitkImageBuffer_getbuffer(PyObject * exporter, Py_buffer * view, int flags)
 
     // Fill in the required fields (structure already zero-initialized)
     view->buf = (void *)buffer_ptr;
-    view->itemsize = itemSize;
+    // Per PEP 3118, itemsize must be 1 (bytes) unless PyBUF_FORMAT was requested,
+    // since the format is then implicitly "B" (unsigned byte).
+    view->itemsize = ((flags & PyBUF_FORMAT) == PyBUF_FORMAT) ? itemSize : 1;
     view->ndim = (flags & PyBUF_ND) == PyBUF_ND ? totalDimensions : 1;
 
-    // Calculate total buffer size
+    // Calculate total buffer size (always based on the real per-element byte size)
     Py_ssize_t buffer_size = itemSize;
     for (unsigned int i = 0; i < totalDimensions; ++i)
     {

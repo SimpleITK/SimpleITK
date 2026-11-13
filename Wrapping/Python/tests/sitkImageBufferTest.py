@@ -366,7 +366,10 @@ def test_get_weak_memoryview_with_flags():
     buf = ImageBuffer(img)
     mv = buf.get_weak_memoryview(BufferFlags.SIMPLE)
     assert mv.readonly
-    assert mv.shape == (6*4, ) # memoryview appears to be using uninitialized value in shape
+    # SIMPLE does not request PyBUF_FORMAT, so per the buffer protocol the data
+    # is presented as a flat sequence of bytes (itemsize == 1), not pixel elements.
+    assert mv.shape == (6 * 4 * 4, )
+    assert mv.itemsize == 1
     assert mv.ndim == 1
     assert mv.format == 'B'
 
