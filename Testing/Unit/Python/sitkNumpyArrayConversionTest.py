@@ -37,7 +37,11 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
         image = sitk.Image((9, 10), sitkType, 1)
         a = sitk.GetArrayFromImage(image)
         self.assertEqual(numpyType, a.dtype)
-        self.assertEqual((10, 9), a.shape)
+        # Vector pixel types always expose a trailing component axis, even
+        # with a single component.
+        is_vector = image.GetPixelIDTypeAsString().startswith("vector")
+        expected_shape = (10, 9, 1) if is_vector else (10, 9)
+        self.assertEqual(expected_shape, a.shape)
 
     def test_type_to_numpy(self):
         "try all sitk pixel type to convert to numpy"
