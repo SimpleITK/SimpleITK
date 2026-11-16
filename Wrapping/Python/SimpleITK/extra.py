@@ -265,7 +265,7 @@ def GetArrayViewFromImage(image: Image) -> "numpy.ndarray":
     if not HAVE_NUMPY:
         raise ImportError("NumPy not available.")
 
-    return numpy.asarray(image, copy=False)
+    return numpy.asarray(image)
 
 
 def GetArrayFromImage(image: Image) -> "numpy.ndarray":
