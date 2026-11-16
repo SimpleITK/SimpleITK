@@ -362,20 +362,88 @@ def test_get_weak_memoryview_with_flags():
     assert mv.shape == (6, 4)
     assert mv.format == 'i'
 
-    # Test with SIMPLE (simple buffer)
-    buf = ImageBuffer(img)
-    mv = buf.get_weak_memoryview(BufferFlags.SIMPLE)
-    assert mv.readonly
-    assert mv.shape == (6*4, ) # memoryview appears to be using uninitialized value in shape
-    assert mv.ndim == 1
-    assert mv.format == 'B'
-
     # Test with RECORDS (structured data)
     buf = ImageBuffer(img)
     mv = buf.get_weak_memoryview(BufferFlags.RECORDS_RO)
     assert mv.readonly
     assert mv.shape == (6, 4)
     assert mv.format == 'i'
+
+
+# Request flags from CPython's buffer header (inspect.BufferFlags requires Python 3.12).
+PYBUF_SIMPLE = 0x00
+PYBUF_FORMAT = 0x04
+PYBUF_ND = 0x08
+PYBUF_STRIDES = 0x10 | PYBUF_ND
+PYBUF_C_CONTIGUOUS = 0x20 | PYBUF_STRIDES
+PYBUF_INDIRECT = 0x100 | PYBUF_STRIDES
+
+
+@pytest.mark.parametrize("flags", [
+    PYBUF_SIMPLE,
+    PYBUF_FORMAT,
+    PYBUF_ND,
+    PYBUF_STRIDES,
+    PYBUF_C_CONTIGUOUS,
+    PYBUF_INDIRECT,
+    PYBUF_ND | PYBUF_FORMAT,
+    PYBUF_STRIDES | PYBUF_FORMAT,
+    PYBUF_INDIRECT | PYBUF_FORMAT,
+], ids=["SIMPLE", "FORMAT", "ND", "STRIDES", "C_CONTIGUOUS", "INDIRECT",
+        "ND_FORMAT", "STRIDES_FORMAT", "INDIRECT_FORMAT"])
+@pytest.mark.parametrize("size,pixel_type,num_components,fmt", [
+    ([4, 6], sitk.sitkInt32, 1, 'i'),
+    ([3, 5, 7], sitk.sitkFloat32, 1, 'f'),
+    ([4, 6], sitk.sitkVectorFloat32, 3, 'f'),
+], ids=["int32_2d", "float32_3d", "vector_float32_2d"])
+def test_get_weak_memoryview_request_flags(flags, size, pixel_type, num_components, fmt):
+    """Every supported request yields a self-consistent memoryview of the pixel data.
+
+    A shape is only exported for ND requests, and a memoryview needs the pixel format
+    to describe shaped data. Requests without a shape are one dimensional.
+    """
+    import itertools
+    import struct
+
+    is_vector = num_components > 1
+    if is_vector:
+        img = sitk.Image(size, pixel_type, num_components)
+    else:
+        img = sitk.Image(size, pixel_type)
+
+    # Values whose low byte differs from the value, so a format of 'B' on shaped data is detected.
+    cast = int if fmt == 'i' else float
+    expected = []
+    # Memory order has x varying fastest, so enumerate the indices from the last axis to the first.
+    for n, zyx_index in enumerate(itertools.product(*[range(s) for s in reversed(size)])):
+        components = [cast((n + 1) * (c + 1) * 1000) for c in range(num_components)]
+        img.SetPixel(list(zyx_index[::-1]), components if is_vector else components[0])
+        expected.extend(components)
+
+    itemsize = struct.calcsize(fmt)
+    expected_bytes = struct.pack(f"={len(expected)}{fmt}", *expected)
+
+    mv = ImageBuffer(img).get_weak_memoryview(flags)
+
+    assert mv.readonly
+    assert mv.nbytes == len(expected_bytes)
+    assert mv.tobytes() == expected_bytes
+
+    if flags & PYBUF_ND == PYBUF_ND:
+        shape = tuple(reversed(size)) + ((num_components,) if is_vector else ())
+        assert mv.shape == shape
+        assert mv.strides == calculate_expected_strides(tuple(size), itemsize,
+                                                        num_components if is_vector else None)
+        assert (mv.itemsize, mv.format) == (itemsize, fmt)
+        assert mv[(0,) * len(shape)] == expected[0]
+        assert mv[tuple(s - 1 for s in shape)] == expected[-1]
+    elif flags & PYBUF_FORMAT:
+        assert (mv.shape, mv.strides) == ((len(expected),), (itemsize,))
+        assert (mv.itemsize, mv.format) == (itemsize, fmt)
+        assert mv.tolist() == expected
+    else:
+        assert (mv.shape, mv.strides) == ((len(expected_bytes),), (1,))
+        assert (mv.itemsize, mv.format) == (1, 'B')
 
 
 def test_get_weak_memoryview_readonly_enforcement():
