@@ -254,6 +254,26 @@ def test_image_ref_attribute():
         buf._image_ref = sitk.Image([1, 1], sitk.sitkUInt8)
 
 
+# Test that calling __init__ a second time is rejected and does not corrupt state
+def test_reinit_raises_and_preserves_state():
+    """Test that re-invoking __init__ on an already-initialized ImageBuffer raises
+    TypeError and leaves the original image reference and shape unchanged."""
+    img1 = sitk.Image([3, 5, 7], sitk.sitkUInt8)
+    img2 = sitk.Image([2, 4], sitk.sitkFloat32)
+    buf = ImageBuffer(img1)
+
+    original_image_ref = buf._image_ref
+    original_shape = memoryview(buf).shape
+
+    with pytest.raises(TypeError, match="cannot be reinitialized"):
+        buf.__init__(img2)
+
+    # State must be unchanged after the rejected re-initialization
+    assert buf._image_ref is original_image_ref, "_image_ref should be unchanged"
+    assert buf._image_ref is img1, "_image_ref should still reference the first image"
+    assert memoryview(buf).shape == original_shape, "shape should be unchanged"
+
+
 # Test different dimensions
 @pytest.mark.parametrize("size,expected_shape", [
     ([5, 7], (7, 5)),           # 2D
