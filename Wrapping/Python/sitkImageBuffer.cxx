@@ -295,6 +295,7 @@ sitkImageBuffer_getbuffer(PyObject * exporter, Py_buffer * view, int flags)
     // Fill in the required fields (structure already zero-initialized)
     view->buf = (void *)buffer_ptr;
     view->itemsize = itemSize;
+    // Like CPython's memoryview, requests without a shape are one dimensional.
     view->ndim = (flags & PyBUF_ND) == PyBUF_ND ? totalDimensions : 1;
 
     // Calculate total buffer size
@@ -574,13 +575,23 @@ sitkImageBuffer_GetWeakMemoryView(PyObject * self, PyObject * args)
 #endif
 
 #if 1
+  // A memoryview without a format reports 'B' with the real item size, so a shaped view needs the format too.
+  const int acquireFlags = (flags & PyBUF_ND) == PyBUF_ND ? (flags | PyBUF_FORMAT) : flags;
+
   Py_buffer view;
-  if (PyObject_GetBuffer(self, &view, flags) < 0)
+  if (PyObject_GetBuffer(self, &view, acquireFlags) < 0)
   {
     return nullptr;
   }
 
-  PyObject * memoryview = PyMemoryView_FromBuffer(&view);
+  // Per the buffer protocol, a consumer must treat a buffer without shape or format as bytes.
+  Py_buffer wrapped = view;
+  if (wrapped.shape == nullptr && wrapped.format == nullptr)
+  {
+    wrapped.itemsize = 1;
+  }
+
+  PyObject * memoryview = PyMemoryView_FromBuffer(&wrapped);
 
   PyBuffer_Release(&view);
 
@@ -589,7 +600,6 @@ sitkImageBuffer_GetWeakMemoryView(PyObject * self, PyObject * args)
 #endif
   if (!memoryview)
   {
-    PyBuffer_Release(&view);
     return nullptr;
   }
 #ifdef sitkImageBuffer_DEBUG
@@ -604,7 +614,7 @@ static PyMethodDef sitkImageBuffer_methods[] = {
   { "get_weak_memoryview",
     (PyCFunction)sitkImageBuffer_GetWeakMemoryView,
     METH_VARARGS,
-    "get_weak_memoryview(flags=PyBUF_RECORDS) -> memoryview\n\n"
+    "get_weak_memoryview(flags=PyBUF_FULL_RO) -> memoryview\n\n"
     "Create a weak memoryview from this ImageBuffer.\n\n"
     "IMPORTANT: This method does NOT keep a strong reference to the ImageBuffer\n"
     "or the source Image object. The returned memoryview is 'weak' - it does not\n"
