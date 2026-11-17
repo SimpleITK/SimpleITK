@@ -46,3 +46,22 @@ Code
     .. literalinclude:: ../../Examples/ApplyToImageMetadataAndWarp/ApplyToImageMetadataAndWarp.py
        :language: python
        :lines: 19-
+
+Comparison to a Composite Transform
+-----------------------------------
+
+The result can be verified against the conventional approach: the
+displacement field is cast to double precision, wrapped in a
+``DisplacementFieldTransform``, combined with the linear transform in a
+``CompositeTransform``, and applied with a single call to ``Resample``. The
+following script performs this comparison and fails if the two results differ
+by more than a small tolerance, which is only due to the single precision
+rounding of the image metadata and displacement field.
+
+.. tabs::
+
+  .. tab:: Python
+
+    .. literalinclude:: ../../Examples/ApplyToImageMetadataAndWarp/CompareToCompositeTransform.py
+       :language: python
+       :lines: 19-
