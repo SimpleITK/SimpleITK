@@ -3,6 +3,18 @@ include(sitkGenerateFilterSource)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/src)
 generate_filter_source()
 
+option(
+  SimpleITK_BasicFilters_UNITY_BUILD
+  "Batch BasicFilters library sources into combined unity-build translation units"
+  ON
+)
+set(
+  SimpleITK_BasicFilters_UNITY_BUILD_BATCH_SIZE
+  8
+  CACHE STRING
+  "UNITY_BUILD_BATCH_SIZE for BasicFilters libraries, when unity build is enabled"
+)
+
 set_source_files_properties(
   ${SimpleITKBasicFiltersGeneratedSource}
   PROPERTIES
@@ -32,6 +44,15 @@ function(_apply_basicfilters_common_properties library_name)
   )
 
   target_compile_features(${library_name} PUBLIC cxx_std_17)
+
+  set_target_properties(
+    ${library_name}
+    PROPERTIES
+      UNITY_BUILD
+        ${SimpleITK_BasicFilters_UNITY_BUILD}
+      UNITY_BUILD_BATCH_SIZE
+        ${SimpleITK_BasicFilters_UNITY_BUILD_BATCH_SIZE}
+  )
 
   if(SimpleITK_EXPLICIT_INSTANTIATION)
     target_link_libraries(${library_name} PRIVATE SimpleITKExplicit)
