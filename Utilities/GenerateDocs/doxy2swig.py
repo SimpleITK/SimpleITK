@@ -90,6 +90,7 @@ class Doxy2SWIG:
             "listofallmembers",
             "innerclass",
             "name",
+            "qualifiedname",
             "declname",
             "incdepgraph",
             "invincdepgraph",
