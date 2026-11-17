@@ -58,12 +58,6 @@ Runtime information support.
 %feature("docstring")  itk::HashImageFilter::MakeOutput "
 ";
 
-%feature("docstring")  itk::HashImageFilter::MakeOutput "
-";
-
-%feature("docstring")  itk::HashImageFilter::MakeOutput "
-";
-
 
 %feature("docstring") itk::HolderCommand "
 
@@ -112,6 +106,18 @@ C++ includes: itkHolderCommand.h
 %feature("docstring")  itk::HolderCommand< T * >::Execute "
 ";
 
+%feature("docstring")  itk::HolderCommand< T * >::Execute "
+";
+
+%feature("docstring")  itk::HolderCommand< T * >::Execute "
+";
+
+%feature("docstring")  itk::HolderCommand< T * >::Get "
+";
+
+%feature("docstring")  itk::HolderCommand< T * >::Get "
+";
+
 %feature("docstring")  itk::HolderCommand< T * >::Get "
 ";
 
@@ -121,7 +127,16 @@ C++ includes: itkHolderCommand.h
 %feature("docstring")  itk::HolderCommand< T * >::HolderCommand "
 ";
 
+%feature("docstring")  itk::HolderCommand< T * >::HolderCommand "
+";
+
 %feature("docstring")  itk::HolderCommand< T * >::itkNewMacro "
+";
+
+%feature("docstring")  itk::HolderCommand< T * >::itkNewMacro "
+";
+
+%feature("docstring")  itk::HolderCommand< T * >::Set "
 ";
 
 %feature("docstring")  itk::HolderCommand< T * >::Set "
@@ -133,11 +148,6 @@ C++ includes: itkImageIOFactoryRegisterManager.h
 ";
 
 %feature("docstring")  itk::ImageIOFactoryRegisterManager::ImageIOFactoryRegisterManager "
-";
-
-
-%feature("docstring") itk::TransformBaseTemplate "
-C++ includes: sitkTransform.h
 ";
 
 
@@ -1542,7 +1552,8 @@ Processing,\" IEEE Signal Processing Magazine, vol. 16, no. 6, pp.
 Signal Processing, vol. 41, no. 2, pp. 821-832, February 1993. [3] M.
 Unser, A. Aldroubi and M. Eden, \"B-Spline Signal Processing: Part II
 --Efficient Design and Applications,\" IEEE Transactions on Signal
-Processing, vol. 41, no. 2, pp. 834-848, February 1993. And code obtained from bigwww.epfl.ch by Philippe Thevenaz
+Processing, vol. 41, no. 2, pp. 834-848, February 1993. And code
+obtained from bigwww.epfl.ch by Philippe Thevenaz
 
 Limitations: Spline order must be between 0 and 5. Spline order must
 be set before setting the image. Uses mirror boundary conditions.
@@ -6284,7 +6295,7 @@ This transform applies a versor rotation and translation & scale/skew
 to the space.
 
 
-The transform can be described as: $ (\\\\textbf{R}_v * \\\\textbf{S} * \\\\textbf{K})\\\\textbf{x} $ where $\\\\textbf{R}_v$ is the rotation matrix given the versor, where $\\\\textbf{S}$ is the diagonal scale matrix. where $\\\\textbf{K}$ is the upper triangle skew (shear) matrix.
+The transform can be described as: $ (\\\\textbf{R}_v * \\\\textbf{S} * \\\\textbf{K})\\\\textbf{x}  $ where $\\\\textbf{R}_v$ is the rotation matrix given the versor, where $\\\\textbf{S}$ is the diagonal scale matrix. where $\\\\textbf{K}$ is the upper triangle skew (shear) matrix.
 
 
 See:
@@ -9038,16 +9049,13 @@ Template Parameters (Input and Output)
 This filter has one required template parameter which defines the
 input image type. The pixel type of the input image is assumed to be a
 vector (e.g., itk::Vector , itk::RGBPixel , itk::FixedArray ). The scalar type of the vector components must be castable to
-floating point. Instantiating with an image of RGBPixel<unsigned
-short>, for example, is allowed, but the filter will convert it to an
-image of Vector<float,3> for processing.
+floating point. Instantiating with an image of RGBPixel<unsigned short>, for example, is allowed, but the filter will convert it to an image
+of Vector<float,3> for processing.
  The second template parameter, TRealType, can be optionally specified
 to define the scalar numerical type used in calculations. This is the
-component type of the output image, which will be of
-itk::Vector<TRealType, N>, where N is the number of channels in the
-multiple component input image. The default type of TRealType is
-float. For extra precision, you may safely change this parameter to
-double.
+component type of the output image, which will be of itk::Vector<TRealType, N>, where N is the number of channels in the multiple component input
+image. The default type of TRealType is float. For extra precision,
+you may safely change this parameter to double.
 
 The third template parameter is the output image type. The third
 parameter will be automatically constructed from the first and second
@@ -9256,6 +9264,8 @@ Consume an image, and set the displacement field.
 
 
 parameters
+
+
 WARNING:
 The ownership of the input displacement image is transferred to the
 constructed transform object. The input image is modified to be a
@@ -9741,15 +9751,9 @@ C++ includes: sitkElastixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddFixedImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddFixedImage "
 
 Adds an image to the end of the container of fixed images.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddFixedMask "
@@ -9759,15 +9763,9 @@ Adds an image to the end of the container of fixed masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddMovingImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddMovingImage "
 
 Adds an image to the end of the container of moving images.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddMovingMask "
@@ -9777,24 +9775,15 @@ Adds an image to the end of the container of moving masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 
 Adds a parameter specified by key, with the specified value to all parameter maps.
 
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 
 Adds a parameter specified by key, with the specified values to all parameter maps.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
@@ -9805,16 +9794,10 @@ Adds a parameter specified by key, with the specified value to the parameter map
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddParameter "
 
 Adds a parameter specified by key, with the specified values to the parameter map at the specified
 (zero-based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::AddParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::AddParameterMap "
@@ -9823,16 +9806,10 @@ Adds a parameter map to the container of parameter maps.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::DualExecuteInternal "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilter "
 
 Default-constructor.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::Execute "
@@ -9849,17 +9826,10 @@ must be either zero, or one, or equal to the number of moving images
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::Execute "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetDefaultParameterMap "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetDefaultParameterMap "
 
 Returns the default parameter map for the specified function arguments
-( transformName may be \"translation\", \"rigid\" , \"affine\", \"nonrigid\", or
-\"bspline\").
+( transformName may be \"translation\", \"rigid\" , \"affine\", or \"bspline\").
 
 ";
 
@@ -9870,15 +9840,9 @@ Retrieves a reference to the container of fixed images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
 
 Retrieves a reference to the fixed image at the specified (zero-based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
@@ -9888,15 +9852,9 @@ Retrieves a reference to the container of fixed masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
 
 Retrieves a reference to the fixed mask at the specified (zero-based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetFixedPointSetFileName "
@@ -9906,16 +9864,10 @@ fixed image.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetFixedPointSetFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetInitialTransformParameterFileName "
 
 Returns the initial transform parameter file name.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetInitialTransformParameterFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogFileName "
@@ -9924,16 +9876,10 @@ Returns the name of the current log file.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetLogFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogToConsole "
 
 Returns whether logging to console is switched on.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetLogToConsole "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetLogToFile "
@@ -9942,9 +9888,6 @@ Returns whether logging to file is switched on.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetLogToFile "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
 
 Retrieves a reference to the moving image at the specified (zero-
@@ -9953,16 +9896,10 @@ based) index.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
 
 Retrieves a reference to the moving image at the specified (zero-
 based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
@@ -9972,15 +9909,9 @@ Retrieves a reference to the container of moving masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
 
 Retrieves a reference to the moving mask at the specified (zero-based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetMovingPointSetFileName "
@@ -9990,16 +9921,7 @@ moving image.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetMovingPointSetFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetName "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetName "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedImages "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedImages "
@@ -10009,24 +9931,15 @@ Returns the number of fixed images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedMasks "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfFixedMasks "
 
 Returns the number of fixed masks.
 
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingImages "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingImages "
 
 Returns the number of moving images.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingMasks "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfMovingMasks "
@@ -10041,16 +9954,10 @@ Returns the number of parameter maps.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfParameterMaps "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfThreads "
 
 Returns the current maximum number of threads.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetNumberOfThreads "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetOutputDirectory "
@@ -10059,19 +9966,10 @@ Returns the current output directory.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetOutputDirectory "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
 
 Retrieves the values of the parameter specified by key, when there is only one parameter map.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameter "
@@ -10086,9 +9984,6 @@ Returns a copy of the parameter maps.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetParameterMap "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetParameterMaps "
 ";
 
@@ -10098,16 +9993,10 @@ Returns the result image.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetResultImage "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
 
 Returns all transform parameter maps.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
@@ -10116,22 +10005,10 @@ Returns the transform parameter map at the specified (zero-based) index.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::GetTransformParameterMap "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::IsEmpty "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOff "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOff "
 
 Switches logging to console off.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOn "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToConsoleOn "
@@ -10146,16 +10023,10 @@ Switches logging to file off.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOff "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOn "
 
 Switches logging to file on.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::LogToFileOn "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
@@ -10165,27 +10036,15 @@ Prints all parameter maps to standard output.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
 
 Prints the specified parameter map to standard output.
 
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
 
 Prints the specified parameter maps to standard output.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::PrintParameterMap "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::ReadParameterFile "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::ReadParameterFile "
@@ -10201,15 +10060,9 @@ Removes all fixed images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
 
 Removes an image at the specified (zero-based) index from the container of fixed images.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
@@ -10219,15 +10072,9 @@ Removes all fixed masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
 
 Removes an image at the specified (zero-based) index from the container of fixed masks.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedPointSetFileName "
@@ -10236,25 +10083,16 @@ Clears the current point set file name of points from the fixed image.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveFixedPointSetFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveInitialTransformParameterFileName "
 
 Clears the initial transform parameter file name.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveInitialTransformParameterFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveLogFileName "
 
 Clears the name of the current log file.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveLogFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
@@ -10264,15 +10102,9 @@ Removes all moving images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
 
 Removes an image at the specified (zero-based) index from the container of moving images.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
@@ -10282,15 +10114,9 @@ Removes all moving masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
 
 Removes an image at the specified (zero-based) index from the container of moving masks.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingPointSetFileName "
@@ -10300,20 +10126,11 @@ image.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveMovingPointSetFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveOutputDirectory "
 
 Clears the name of the current output directory. (Does not remove the
 actual directory.)
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveOutputDirectory "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
@@ -10323,15 +10140,9 @@ Removes the parameter specified by key from all parameter maps.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::RemoveParameter "
 
 Removes the parameter specified by key from the parameter map at the specified (zero-based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
@@ -10342,9 +10153,6 @@ images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedImage "
 
 Sets multiple fixed images. Stores the images into the container of
 fixed images.
@@ -10352,15 +10160,9 @@ fixed images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
 
 Sets a fixed mask. Stores the image into the container of fixed masks.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetFixedMask "
@@ -10376,20 +10178,11 @@ Specifies a set of points from the fixed image by a point set file, fixedPointSe
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::SetFixedPointSetFileName "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetInitialTransformParameterFileName "
-";
-
 %feature("docstring")  itk::simple::ElastixImageFilter::SetInitialTransformParameterFileName "
 
 Specifies the initial transformation by the specified transform
 parameter file name.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetLogFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogFileName "
@@ -10399,24 +10192,15 @@ Sets the name of the current log file.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogToConsole "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetLogToConsole "
 
 Switches logging to console on ( true) or off ( false), as specified by its function argument.
 
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetLogToFile "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetLogToFile "
 
 Switches logging to file on ( true) or off ( false), as specified by its function argument.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
@@ -10427,16 +10211,10 @@ images.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetMovingImage "
 
 Sets multiple moving images. Stores the images into the container of
 moving images.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
@@ -10447,16 +10225,10 @@ masks.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetMovingMask "
 
 Sets multiple moving masks. Stores the images into the container of
 moving masks.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetMovingPointSetFileName "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetMovingPointSetFileName "
@@ -10466,20 +10238,14 @@ Specifies a set of points from the moving image by a point set file, movingPoint
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetNumberOfThreads "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetNumberOfThreads "
 
 Sets the maximum number of threads to the specified number n.
 
 
 
-As a side effect, it may modify the global maximum number of threads, as it internally calls ITK's  MultiThreaderBase.SetGlobalMaximumNumberOfThreads.
+As a side effect, it may modify the global maximum number of threads, as it internally calls ITK's MultiThreaderBase.SetGlobalMaximumNumberOfThreads.
 
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetOutputDirectory "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetOutputDirectory "
@@ -10489,15 +10255,9 @@ Sets the output directory.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 
 Sets the value of the parameter specified by key, in all parameter maps.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
@@ -10507,15 +10267,9 @@ Sets the values of the parameter specified by key, in all parameter maps.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 
 Sets the value of the parameter specified by key, in the parameter map at the specified (zero-based) index.
 
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameter "
@@ -10525,25 +10279,16 @@ Sets the values of the parameter specified by key, in the parameter map at the s
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
 
 Specifies a single parameter map.
 
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
-";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
+Specifies the parameter map by a transformName (\"translation\", \"rigid\" , \"affine\", or \"bspline\"), and
+optionally numberOfResolutions and finalGridSpacingInPhysicalUnits.
 
-Specifies the parameter map by a transformName (\"translation\", \"rigid\" , \"affine\", \"nonrigid\", or
-\"bspline\"), and optionally numberOfResolutions and finalGridSpacingInPhysicalUnits.
-
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMap "
@@ -10553,9 +10298,6 @@ Specifies multiple parameter maps.
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::SetParameterMaps "
-";
-
-%feature("docstring")  itk::simple::ElastixImageFilter::WriteParameterFile "
 ";
 
 %feature("docstring")  itk::simple::ElastixImageFilter::WriteParameterFile "
@@ -10570,7 +10312,279 @@ Destructor.
 
 ";
 
-%feature("docstring")  itk::simple::ElastixImageFilter::~ElastixImageFilterImpl "
+
+%feature("docstring") itk::simple::ElastixImageFilter::ElastixImageFilterImpl "
+C++ includes: sitkElastixImageFilterImpl.h
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::AddParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::DualExecuteInternal "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::ElastixImageFilterImpl "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::Execute "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetDefaultParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetFixedPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetInitialTransformParameterFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetLogFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetLogToConsole "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetLogToFile "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetMovingPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetNumberOfFixedImages "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetNumberOfFixedMasks "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetNumberOfMovingImages "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetNumberOfMovingMasks "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetNumberOfParameterMaps "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetNumberOfThreads "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetOutputDirectory "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetResultImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::GetTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::IsEmpty "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::LogToConsoleOff "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::LogToConsoleOn "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::LogToFileOff "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::LogToFileOn "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::PrintParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::PrintParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::PrintParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::ReadParameterFile "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveFixedPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveInitialTransformParameterFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveLogFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveMovingPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveOutputDirectory "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::RemoveParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetFixedImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetFixedMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetFixedPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetInitialTransformParameterFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetLogFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetLogToConsole "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetLogToFile "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetMovingImage "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetMovingMask "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetMovingPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetNumberOfThreads "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetOutputDirectory "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameter "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::SetParameterMap "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::WriteParameterFile "
+";
+
+%feature("docstring")  itk::simple::ElastixImageFilter::ElastixImageFilterImpl::~ElastixImageFilterImpl "
 ";
 
 
@@ -12625,9 +12639,7 @@ Flips an image across user specified axes.
 
 
 FlipImageFilter flips an image across user specified axes. The flip axes are set via
-method SetFlipAxes( array ) where the input is a
-FixedArray<bool,ImageDimension>. The image is flipped across axes for
-which array[i] is true.
+method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.
 
 In terms of grid coordinates the image is flipped within the
 LargestPossibleRegion of the input image. As such, the
@@ -15158,10 +15170,14 @@ Generate an n-dimensional image of a grid.
 GridImageSource generates an image of a grid. From the abstract... \"Certain classes
 of images find disparate use amongst members of the ITK community for
 such purposes as visualization, simulation, testing, etc. Currently
-there exists two derived classes from the ImageSource class used for generating specific images for various applications,
-viz. RandomImageSource and GaussianImageSource. We propose to add to this set with the class GridImageSource which, obviously enough, produces a grid image. Such images are
-useful for visualizing deformation when used in conjunction with the WarpImageFilter, simulating magnetic resonance tagging images, or creating optical
-illusions with which to amaze your friends.\"
+there exists two derived classes from the ImageSource class used for
+generating specific images for various applications, viz.
+RandomImageSource and GaussianImageSource. We propose to add to this
+set with the class GridImageSource which, obviously enough, produces a
+grid image. Such images are useful for visualizing deformation when
+used in conjunction with the WarpImageFilter, simulating magnetic
+resonance tagging images, or creating optical illusions with which to
+amaze your friends.\"
 
 The output image may be of any dimension.
 
@@ -16664,11 +16680,10 @@ C++ includes: sitkImageFileReader.h
 
 %feature("docstring")  itk::simple::ImageFileReader::Execute "
 
-Set/Get The output PixelType of the image.
+Pure virtual method to execute the image reading.
 
-
-By default the value is sitkUnknown, which enable the output pixel
-type to be same as the file. If the pixel type is specified then the itk::ConvertPixelBuffer will be used to convert the pixels.
+This method is reimplemented in derived classes to perform the actual
+reading of the image.
 
 ";
 
@@ -16877,7 +16892,25 @@ An abstract base class for image readers.
 C++ includes: sitkImageReaderBase.h
 ";
 
+%feature("docstring")  itk::simple::ImageReaderBase::Execute "
+
+Pure virtual method to execute the image reading.
+
+This method is reimplemented in derived classes to perform the actual
+reading of the image.
+
+";
+
+%feature("docstring")  itk::simple::ImageReaderBase::GetRegisteredImageIOs "
+
+Get a vector of the names of registered itk ImageIOs.
+
+";
+
 %feature("docstring")  itk::simple::ImageReaderBase::ImageReaderBase "
+";
+
+%feature("docstring")  itk::simple::ImageReaderBase::ToString "
 ";
 
 %feature("docstring")  itk::simple::ImageReaderBase::~ImageReaderBase "
@@ -17457,15 +17490,23 @@ C++ includes: sitkImageSeriesReader.h
 
 %feature("docstring")  itk::simple::ImageSeriesReader::Execute "
 
-Set/Get The output PixelType of the image.
+Pure virtual method to execute the image reading.
 
-
-By default the value is sitkUnknown, which enable the output pixel
-type to be same as the file. If the pixel type is specified then the itk::ConvertPixelBuffer will be used to convert the pixels.
+This method is reimplemented in derived classes to perform the actual
+reading of the image.
 
 ";
 
+%feature("docstring")  itk::simple::ImageSeriesReader::ForceOrthogonalDirectionOff "
+";
+
+%feature("docstring")  itk::simple::ImageSeriesReader::ForceOrthogonalDirectionOn "
+";
+
 %feature("docstring")  itk::simple::ImageSeriesReader::GetFileNames "
+";
+
+%feature("docstring")  itk::simple::ImageSeriesReader::GetForceOrthogonalDirection "
 ";
 
 %feature("docstring")  itk::simple::ImageSeriesReader::GetMetaData "
@@ -17505,6 +17546,9 @@ return user readable name of the filter
 
 ";
 
+%feature("docstring")  itk::simple::ImageSeriesReader::GetReverseOrder "
+";
+
 %feature("docstring")  itk::simple::ImageSeriesReader::GetSpacingWarningRelThreshold "
 ";
 
@@ -17527,7 +17571,23 @@ respectively.
 
 ";
 
+%feature("docstring")  itk::simple::ImageSeriesReader::ReverseOrderOff "
+";
+
+%feature("docstring")  itk::simple::ImageSeriesReader::ReverseOrderOn "
+";
+
 %feature("docstring")  itk::simple::ImageSeriesReader::SetFileNames "
+";
+
+%feature("docstring")  itk::simple::ImageSeriesReader::SetForceOrthogonalDirection "
+
+Set/Get/OnOff whether to force orthogonal direction cosines.
+
+Do we want to force orthogonal direction cosines? On by default.
+Turning it off enables proper reading of DICOM series with gantry
+tilt.
+
 ";
 
 %feature("docstring")  itk::simple::ImageSeriesReader::SetMetaDataDictionaryArrayUpdate "
@@ -17535,6 +17595,15 @@ respectively.
 Set/Get whether the meta-data dictionaries for the slices should be
 read. Default value is false, because of the additional computation
 time.
+
+";
+
+%feature("docstring")  itk::simple::ImageSeriesReader::SetReverseOrder "
+
+Set/Get/OnOff whether to reverse the order of the input files.
+
+If true, the order of the input file names will be reversed before
+reading. Defaults to false.
 
 ";
 
@@ -17733,11 +17802,10 @@ C++ includes: sitkImportImageFilter.h
 
 %feature("docstring")  itk::simple::ImportImageFilter::Execute "
 
-Set/Get The output PixelType of the image.
+Pure virtual method to execute the image reading.
 
-
-By default the value is sitkUnknown, which enable the output pixel
-type to be same as the file. If the pixel type is specified then the itk::ConvertPixelBuffer will be used to convert the pixels.
+This method is reimplemented in derived classes to perform the actual
+reading of the image.
 
 ";
 
@@ -17829,8 +17897,7 @@ the input image. This operation is very common in visualization, and
 can also be applied as a convenient preprocessing operation for image
 segmentation.
 
-All computations are performed in the precision of the input pixel's
-RealType. Before assigning the computed value to the output pixel.
+All computations are performed in the precision of the input pixel's RealType. Before assigning the computed value to the output pixel.
 
 
 See:
@@ -20943,6 +21010,182 @@ Destructor
 ";
 
 
+%feature("docstring") itk::simple::LabelSetDilateImageFilter "
+
+Class for binary morphological erosion of label images.
+
+
+This filter is threaded.
+
+
+See:
+ itkLabelSetDilateErodeImageFilter
+
+Richard Beare, Department of Medicine, Monash University, Australia. Richard.Beare@monash.edu
+
+See:
+ itk::simple::LabelSetDilate for the procedural interface
+
+ itk::LabelSetDilateImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkLabelSetDilateImageFilter.h
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::GetRadius "
+
+Get the radius of the neighborhood used to compute the median
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::GetUseImageSpacing "
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::LabelSetDilateImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::SetRadius "
+
+Set the radius of the neighborhood used to compute the median.
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::SetRadius "
+
+Set the values of the Radius vector all to value
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::SetUseImageSpacing "
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::UseImageSpacingOff "
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::UseImageSpacingOn "
+
+Set the value of UseImageSpacing to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::LabelSetDilateImageFilter::~LabelSetDilateImageFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::LabelSetErodeImageFilter "
+
+Class for binary morphological erosion of label images.
+
+
+This filter will separate touching labels. If you don't want this then
+use a conventional binary erosion to mask the label image. This filter
+is threaded.
+
+
+See:
+ itkLabelSetDilateImageFilter
+
+Richard Beare, Department of Medicine, Monash University, Australia. Richard.Beare@monash.edu
+
+See:
+ itk::simple::LabelSetErode for the procedural interface
+
+ itk::LabelSetErodeImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkLabelSetErodeImageFilter.h
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::GetRadius "
+
+Get the radius of the neighborhood used to compute the median
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::GetUseImageSpacing "
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::LabelSetErodeImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::SetRadius "
+
+Set the radius of the neighborhood used to compute the median.
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::SetRadius "
+
+Set the values of the Radius vector all to value
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::SetUseImageSpacing "
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::UseImageSpacingOff "
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::UseImageSpacingOn "
+
+Set the value of UseImageSpacing to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::LabelSetErodeImageFilter::~LabelSetErodeImageFilter "
+
+Destructor
+
+";
+
+
 %feature("docstring") itk::simple::LabelShapeStatisticsImageFilter "
 
 Converts a label image to a label map and valuates the shape
@@ -21690,7 +21933,8 @@ INPUTS
 All input volumes to this filter must be segmentations of an image,
 that is, they must have discrete pixel values where each value
 represents a different segmented object.
- Input volumes must all contain the same size RequestedRegions. Not all input images must contain all possible labels, but all label
+ Input volumes must all contain the same size RequestedRegions. Not
+all input images must contain all possible labels, but all label
 values must have the same meaning in all images.
 
 OUTPUTS
@@ -22776,8 +23020,9 @@ for each iteration is computed in LevelSetMotionFunction.
 WARNING:
 This filter assumes that the fixed image type, moving image type and
 deformation field type all have the same number of dimensions.
- Ref: B.C. Vemuri, J. Ye, Y. Chen, C.M. Leonard. \" Image registration via level-set motion: applications to atlas-based
-segmentation\". Medical Image Analysis. Vol. 7. pp. 1-20. 2003.
+ Ref: B.C. Vemuri, J. Ye, Y. Chen, C.M. Leonard. \"Image registration
+via level-set motion: applications to atlas-based segmentation\".
+Medical Image Analysis. Vol. 7. pp. 1-20. 2003.
 
 
 See:
@@ -23640,8 +23885,7 @@ See:
 
  itk::simple::MaskedAssign for the procedural interface
 
- itk::MaskedAssignImageFilter for the Doxygen on the original ITK
-class.
+ itk::MaskedAssignImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMaskedAssignImageFilter.h
@@ -25524,7 +25768,8 @@ INPUTS
 All input volumes to this filter must be segmentations of an image,
 that is, they must have discrete pixel values where each value
 represents a different segmented object.
- Input volumes must all contain the same size RequestedRegions. Not all input images must contain all possible labels, but all label
+ Input volumes must all contain the same size RequestedRegions. Not
+all input images must contain all possible labels, but all label
 values must have the same meaning in all images.
 
 The filter can optionally be provided with estimates for the a priori
@@ -29221,8 +29466,8 @@ with the Gaussian kernel. This class implements the recursive
 filtering method proposed by R.Deriche in IEEE-PAMI Vol.12, No.1,
 January 1990, pp 78-87, \"Fast Algorithms for Low-Level Vision\"
 
-Details of the implementation are described in the technical report: R.
-Deriche, \"Recursively Implementing The Gaussian and Its
+Details of the implementation are described in the technical report:
+R. Deriche, \"Recursively Implementing The Gaussian and Its
 Derivatives\", INRIA, 1993, ftp://ftp.inria.fr/INRIA/tech-reports/RR/RR-1893.ps.gz
 
 Further improvements of the algorithm are described in: G. Farnebäck &
@@ -29268,7 +29513,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetOrder "
 
-     Set/Get the Order of the Gaussian to convolve with.
+    Set/Get the Order of the Gaussian to convolve with.
 
 
 ZeroOrder is equivalent to convolving with a Gaussian. This is the
@@ -29346,7 +29591,7 @@ other methods such as a discrete Gaussian kernel should be considered.
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetOrder "
 
-     Set/Get the Order of the Gaussian to convolve with.
+    Set/Get the Order of the Gaussian to convolve with.
 
 
 ZeroOrder is equivalent to convolving with a Gaussian. This is the
@@ -29747,6 +29992,141 @@ Print ourselves out
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::~RegionalMinimaImageFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::ReinitializeLevelSetImageFilter "
+
+Reinitialize the level set to the signed distance function.
+
+
+ReinitializeLevelSetImageFilter reinitializes the input level set to the approximated signed distance
+function from a particular level set. The output is a level set of the
+same type as the input.
+
+For some level set algorithms, it is useful to periodically
+reinitialize the level set function to prevent numerical accuracy
+problems in computing derivatives and curvature values where level
+sets are densely bunched together.
+
+This class is templated over the image type which represents the level
+set.
+
+This class supports narrowbanding. If the input narrowband is
+provided, the algorithm will only locate the level set within the
+input narrowband. For the output, the reinitialize level set is only
+valid for a distance of OutputNarrowBandwidth / 2 of either side of
+the level set of interest.
+
+Implementation of this class is based on Chapter 11 of \"Level Set
+Methods and Fast Marching Methods\", J.A. Sethian, Cambridge Press,
+Second edition, 1999.
+See:
+ itk::simple::ReinitializeLevelSet for the procedural interface
+
+ itk::ReinitializeLevelSetImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkReinitializeLevelSetImageFilter.h
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::GetInputNarrowBandwidth "
+
+Set/Get the input narrow bandwidth. The default value is 12.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::GetLevelSetValue "
+
+Set/Get the value of the level set to be located. The default value is
+0.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::GetNarrowBanding "
+
+Set/Get the narrowbanding flag. By default, narrowbanding is switched
+off.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::GetOutputNarrowBandwidth "
+
+Set/Get the output narrow bandwidth. The default value is 12.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::NarrowBandingOff "
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::NarrowBandingOn "
+
+Set the value of NarrowBanding to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::NarrowBandwidth "
+
+Set the bandwidth for both the input and output narrowband, By
+default, both the input and output are set to 12.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::ReinitializeLevelSetImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::SetInputNarrowBandwidth "
+
+Set/Get the input narrow bandwidth. The default value is 12.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::SetLevelSetValue "
+
+Set/Get the value of the level set to be located. The default value is
+0.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::SetNarrowBanding "
+
+Set/Get the narrowbanding flag. By default, narrowbanding is switched
+off.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::SetOutputNarrowBandwidth "
+
+Set/Get the output narrow bandwidth. The default value is 12.
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::ReinitializeLevelSetImageFilter::~ReinitializeLevelSetImageFilter "
 
 Destructor
 
@@ -30350,8 +30730,7 @@ The following equation gives the mapping of the intensity values
 \\\\[ outputPixel = ( inputPixel - inputMin) \\\\cdot
 \\\\frac{(outputMax - outputMin )}{(inputMax - inputMin)} + outputMin
 \\\\]
- All computations are performed in the precision of the input pixel's
-RealType. Before assigning the computed value to the output pixel.
+ All computations are performed in the precision of the input pixel's RealType. Before assigning the computed value to the output pixel.
 
 NOTE: In this filter the minimum and maximum values of the input image
 are computed internally using the MinimumMaximumImageCalculator . Users are not supposed to set those values in this filter. If you
@@ -32113,9 +32492,8 @@ Shift and scale the pixels in an image.
 
 ShiftScaleImageFilter shifts the input pixel by Shift (default 0.0) and then scales the
 pixel by Scale (default 1.0). All computations are performed in the
-precision of the input pixel's RealType. Before assigning the computed
-value to the output pixel, the value is clamped at the NonpositiveMin
-and max of the pixel type.
+precision of the input pixel's RealType. Before assigning the computed value to the output pixel, the value
+is clamped at the NonpositiveMin and max of the pixel type.
 See:
  itk::simple::ShiftScale for the procedural interface
 
@@ -32678,9 +33056,10 @@ input binary image. Normally this is zero and, as such, zero is the
 default value. Other than that, the usage is completely analogous to
 the itk::DanielssonDistanceImageFilter class except it does not return
 the Voronoi map.
- Reference: C. R. Maurer, Jr., R. Qi, and V. Raghavan, \"A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in
-Arbitrary Dimensions\", IEEE - Transactions on Pattern Analysis and
-Machine Intelligence, 25(2): 265-270, 2003.
+ Reference: C. R. Maurer, Jr., R. Qi, and V. Raghavan, \"A Linear Time
+Algorithm  for Computing Exact Euclidean Distance Transforms of Binary
+Images in  Arbitrary Dimensions\", IEEE - Transactions on Pattern
+Analysis and Machine Intelligence, 25(2): 265-270, 2003.
 See:
  itk::simple::SignedMaurerDistanceMap for the procedural interface
 
@@ -33374,7 +33753,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::GetNormalizeAcrossScale "
 
-     Set/Get the flag for normalizing the Gaussian over scale-space.
+    Set/Get the flag for normalizing the Gaussian over scale-space.
 This method does not effect the output of this filter.
 
 
@@ -33402,7 +33781,7 @@ Set the value of NormalizeAcrossScale to true or false respectfully.
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::SetNormalizeAcrossScale "
 
-     Set/Get the flag for normalizing the Gaussian over scale-space.
+    Set/Get the flag for normalizing the Gaussian over scale-space.
 This method does not effect the output of this filter.
 
 
@@ -35448,6 +35827,29 @@ See:
 C++ includes: sitkTransform.h
 ";
 
+%feature("docstring")  itk::simple::Transform::ApplyToImageMetadata "
+
+Apply the inverse of this transform to an image's origin, spacing and
+direction.
+
+
+This changes the image's origin, spacing, and direction such that
+physical points are mapped to the same voxel index as before, but as
+if the image itself had been transformed by this transform's inverse.
+This is a metadata-only operation, no resampling is performed and the
+pixel data is not modified.
+
+This transform must have an inverse and its dimension must match the
+image's dimension, otherwise an exception is thrown. This operation is
+only well-defined for linear transforms.
+
+
+See:
+ itk::Transform::ApplyToImageMetadata
+
+
+";
+
 %feature("docstring")  itk::simple::Transform::GetDimension "
 
 Return the dimension of the Transform ( 2D or 3D )
@@ -35488,10 +35890,8 @@ Return the number of optimizable parameters
 Get the TransformEnum of the underlying Transform.
 
 
-A SimpleITK Transform object can internally hold any ITK transform. This method returns the
-TransformEnum representing the internal ITK transform. This value may
-be used to identify which SimpleITK class the transform can be
-converted to.
+A SimpleITK Transform object can internally hold any ITK transform. This method returns the TransformEnum representing the internal ITK transform. This value may be used to
+identify which SimpleITK class the transform can be converted to.
 
 ";
 
@@ -35875,19 +36275,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::AddTransformParameter "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::AddTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::AddTransformParameter "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::AddTransformParameterMap "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::AddTransformParameterMap "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeformationFieldOff "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeformationFieldOff "
@@ -35896,16 +36284,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeformationFieldOn "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeformationFieldOn "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeterminantOfSpatialJacobianOff "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeterminantOfSpatialJacobianOff "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeterminantOfSpatialJacobianOn "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::ComputeDeterminantOfSpatialJacobianOn "
@@ -35914,25 +36293,10 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::ComputeSpatialJacobianOff "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::ComputeSpatialJacobianOff "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::ComputeSpatialJacobianOn "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::ComputeSpatialJacobianOn "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::Execute "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::Execute "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::ExecuteInternal "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetComputeDeformationField "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetComputeDeformationField "
@@ -35941,16 +36305,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::GetComputeDeterminantOfSpatialJacobian "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::GetComputeDeterminantOfSpatialJacobian "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::GetComputeSpatialJacobian "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetComputeSpatialJacobian "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetDeformationField "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetDeformationField "
@@ -35959,16 +36314,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::GetFixedPointSetFileName "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::GetFixedPointSetFileName "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::GetLogFileName "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetLogFileName "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetLogToConsole "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetLogToConsole "
@@ -35977,16 +36323,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::GetLogToFile "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::GetLogToFile "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::GetMovingImage "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetMovingImage "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetName "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetName "
@@ -35995,16 +36332,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::GetNumberOfTransformParameterMaps "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::GetNumberOfTransformParameterMaps "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::GetOutputDirectory "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetOutputDirectory "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetResultImage "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetResultImage "
@@ -36014,15 +36342,6 @@ C++ includes: sitkTransformixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameterMap "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameterMap "
@@ -36031,16 +36350,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::GetTransformParameterMaps "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::IsEmpty "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::LogToConsoleOff "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::LogToConsoleOff "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::LogToConsoleOn "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::LogToConsoleOn "
@@ -36049,22 +36359,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::LogToFileOff "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::LogToFileOff "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::LogToFileOn "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::LogToFileOn "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::PrintParameterMap "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::PrintParameterMap "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::PrintParameterMap "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::PrintParameterMap "
@@ -36079,16 +36374,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::ReadParameterFile "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::ReadParameterFile "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::RemoveFixedPointSetFileName "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::RemoveFixedPointSetFileName "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::RemoveLogFileName "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::RemoveLogFileName "
@@ -36097,19 +36383,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::RemoveMovingImage "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::RemoveMovingImage "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::RemoveOutputDirectory "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::RemoveOutputDirectory "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::RemoveTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::RemoveTransformParameter "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::RemoveTransformParameter "
@@ -36121,16 +36395,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::SetComputeDeformationField "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::SetComputeDeformationField "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::SetComputeDeterminantOfSpatialJacobian "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetComputeDeterminantOfSpatialJacobian "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetComputeSpatialJacobian "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::SetComputeSpatialJacobian "
@@ -36139,16 +36404,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::SetFixedPointSetFileName "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::SetFixedPointSetFileName "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::SetLogFileName "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetLogFileName "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetLogToConsole "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::SetLogToConsole "
@@ -36157,16 +36413,7 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::SetLogToFile "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::SetLogToFile "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::SetMovingImage "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetMovingImage "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetOutputDirectory "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::SetOutputDirectory "
@@ -36182,24 +36429,6 @@ C++ includes: sitkTransformixImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameter "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameterMap "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameterMap "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::SetTransformParameterMap "
@@ -36214,19 +36443,195 @@ C++ includes: sitkTransformixImageFilter.h
 %feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilter "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl "
-";
-
-%feature("docstring")  itk::simple::TransformixImageFilter::WriteParameterFile "
-";
-
 %feature("docstring")  itk::simple::TransformixImageFilter::WriteParameterFile "
 ";
 
 %feature("docstring")  itk::simple::TransformixImageFilter::~TransformixImageFilter "
 ";
 
-%feature("docstring")  itk::simple::TransformixImageFilter::~TransformixImageFilterImpl "
+
+%feature("docstring") itk::simple::TransformixImageFilter::TransformixImageFilterImpl "
+C++ includes: sitkTransformixImageFilterImpl.h
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::AddTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::AddTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::AddTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ComputeDeformationFieldOff "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ComputeDeformationFieldOn "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ComputeDeterminantOfSpatialJacobianOff "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ComputeDeterminantOfSpatialJacobianOn "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ComputeSpatialJacobianOff "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ComputeSpatialJacobianOn "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::Execute "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ExecuteInternal "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetComputeDeformationField "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetComputeDeterminantOfSpatialJacobian "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetComputeSpatialJacobian "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetDeformationField "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetFixedPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetLogFileName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetLogToConsole "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetLogToFile "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetMovingImage "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetNumberOfTransformParameterMaps "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetOutputDirectory "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetResultImage "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::GetTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::IsEmpty "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::LogToConsoleOff "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::LogToConsoleOn "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::LogToFileOff "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::LogToFileOn "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::PrintParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::PrintParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::PrintParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::ReadParameterFile "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::RemoveFixedPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::RemoveLogFileName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::RemoveMovingImage "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::RemoveOutputDirectory "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::RemoveTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::RemoveTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetComputeDeformationField "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetComputeDeterminantOfSpatialJacobian "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetComputeSpatialJacobian "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetFixedPointSetFileName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetLogFileName "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetLogToConsole "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetLogToFile "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetMovingImage "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetOutputDirectory "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetTransformParameter "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::SetTransformParameterMap "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::TransformixImageFilterImpl "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::WriteParameterFile "
+";
+
+%feature("docstring")  itk::simple::TransformixImageFilter::TransformixImageFilterImpl::~TransformixImageFilterImpl "
 ";
 
 
@@ -36478,7 +36883,8 @@ to achieve the edge enhancing effect. https://en.wikipedia.org/w/index.php?title
 It has configurable amount, radius (sigma) and threshold, and whether
 to clamp the resulting values to the range of output type.
 
-Formula: sharpened=original+[ itk::Math::abs (original-blurred)-threshold]*amount
+Formula: sharpened=original+[itk::Math::abs (original-
+blurred)-threshold]*amount
 
 If clamping is turned off (it is on by default), casting to output
 pixel format is done using C++ defaults, meaning that values are not
@@ -38836,671 +39242,7 @@ type
 
 
 %feature("docstring") itk::simple::MemberFunctionFactoryBase "
-
-A base class for the MemberFunctionFactory.
-
-
-This class is for specialization needed for different arity for the
-templated member function pointer
-
 C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
-%feature("docstring") itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 0 > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
-%feature("docstring") itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 1 > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
-%feature("docstring") itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 2 > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
-%feature("docstring") itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 3 > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
-%feature("docstring") itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 4 > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-
-%feature("docstring") itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 5 > "
-C++ includes: sitkMemberFunctionFactoryBase.h
-";
-
-%feature("docstring")  itk::Accessor::BioRadImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::bit_cast "
-";
-
-%feature("docstring")  itk::Accessor::BMPImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::BoxAccumulateFunction "
-";
-
-%feature("docstring")  itk::Accessor::BoxMeanCalculatorFunction "
-";
-
-%feature("docstring")  itk::Accessor::BoxSigmaCalculatorFunction "
-";
-
-%feature("docstring")  itk::Accessor::BoxSquareAccumulateFunction "
-";
-
-%feature("docstring")  itk::Accessor::Bruker2dseqImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::ClearContent "
-";
-
-%feature("docstring")  itk::Accessor::CompareDCMTKFileReaders "
-";
-
-%feature("docstring")  itk::Accessor::CompensatedSummationAddElement "
-";
-
-%feature("docstring")  itk::Accessor::CompensatedSummationAddElement "
-";
-
-%feature("docstring")  itk::Accessor::ComputeStartEnd "
-";
-
-%feature("docstring")  itk::Accessor::ConvertNumberToString "
-";
-
-%feature("docstring")  itk::Accessor::Copy "
-";
-
-%feature("docstring")  itk::Accessor::CopyLineToImage "
-";
-
-%feature("docstring")  itk::Accessor::CopyMeshToMesh "
-";
-
-%feature("docstring")  itk::Accessor::CopyMeshToMeshCellData "
-";
-
-%feature("docstring")  itk::Accessor::CopyMeshToMeshCells "
-";
-
-%feature("docstring")  itk::Accessor::CopyMeshToMeshEdgeCells "
-";
-
-%feature("docstring")  itk::Accessor::CopyMeshToMeshPointData "
-";
-
-%feature("docstring")  itk::Accessor::CopyMeshToMeshPoints "
-";
-
-%feature("docstring")  itk::Accessor::CornerOffsets "
-";
-
-%feature("docstring")  itk::Accessor::CrossProduct "
-";
-
-%feature("docstring")  itk::Accessor::CrossProduct "
-";
-
-%feature("docstring")  itk::Accessor::CrossProduct "
-";
-
-%feature("docstring")  itk::Accessor::CrossProduct "
-";
-
-%feature("docstring")  itk::Accessor::CrossProduct "
-";
-
-%feature("docstring")  itk::Accessor::CrossProduct "
-";
-
-%feature("docstring")  itk::Accessor::Deref "
-";
-
-%feature("docstring")  itk::Accessor::DoAnchorFace "
-";
-
-%feature("docstring")  itk::Accessor::DoFace "
-";
-
-%feature("docstring")  itk::Accessor::EncapsulateMetaData "
-";
-
-%feature("docstring")  itk::Accessor::EncapsulateMetaData "
-";
-
-%feature("docstring")  itk::Accessor::ExposeMetaData "
-";
-
-%feature("docstring")  itk::Accessor::FFTImageFilterInitFactoryRegisterManagerInstance "
-";
-
-%feature("docstring")  itk::Accessor::FillForwardExt "
-";
-
-%feature("docstring")  itk::Accessor::FillLineBuffer "
-";
-
-%feature("docstring")  itk::Accessor::FillReverseExt "
-";
-
-%feature("docstring")  itk::Accessor::GDCMImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::GE4ImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::GE5ImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::GenerateConnectedImageNeighborhoodShapeOffsets "
-";
-
-%feature("docstring")  itk::Accessor::GenerateImageNeighborhoodOffsets "
-";
-
-%feature("docstring")  itk::Accessor::GenerateRectangularImageNeighborhoodOffsets "
-";
-
-%feature("docstring")  itk::Accessor::Get64BitPragma "
-";
-
-%feature("docstring")  itk::Accessor::GetLinePixels "
-";
-
-%feature("docstring")  itk::Accessor::GetPixelDimension "
-";
-
-%feature("docstring")  itk::Accessor::GetTransformName "
-";
-
-%feature("docstring")  itk::Accessor::GetTypename "
-";
-
-%feature("docstring")  itk::Accessor::GetTypenameInString "
-";
-
-%feature("docstring")  itk::Accessor::GetValidTypename "
-";
-
-%feature("docstring")  itk::Accessor::GiplImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::HDF5ImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::HDF5TransformIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::ImageBufferRange "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::IMAGEIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::ImageIOFactoryRegisterManagerInstance "
-";
-
-%feature("docstring")  itk::Accessor::ImageRegion "
-";
-
-%feature("docstring")  itk::Accessor::ImageRegionRange "
-";
-
-%feature("docstring")  itk::Accessor::ImageScanlineConstIterator "
-";
-
-%feature("docstring")  itk::Accessor::ImageScanlineIterator "
-";
-
-%feature("docstring")  itk::Accessor::Int2EigenValueOrderEnum "
-";
-
-%feature("docstring")  itk::Accessor::IsGPUAvailable "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_DEFAULTCONVERTTRAITS_NATIVE_SPECIAL "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_ARRAY_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_ARRAY_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_COMPLEX_TYPE "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_COMPLEX_TYPE "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_FIXEDARRAY_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::ITK_MESH_DEFAULTCONVERTTRAITS_MATRIX_TYPE_ALL_TYPES_MACRO "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkEventMacroDeclaration "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelClassMacro "
-";
-
-%feature("docstring")  itk::Accessor::itkGPUKernelMacro "
-";
-
-%feature("docstring")  itk::Accessor::JPEG2000ImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::JPEGImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::LSMImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::make_unique_for_overwrite "
-";
-
-%feature("docstring")  itk::Accessor::MakeChainCodeTracePath "
-";
-
-%feature("docstring")  itk::Accessor::MakeEnlargedFace "
-";
-
-%feature("docstring")  itk::Accessor::MakeFilled "
-";
-
-%feature("docstring")  itk::Accessor::MakeFourierSeriesPathTraceChainCode "
-";
-
-%feature("docstring")  itk::Accessor::MakeImageBufferRange "
-";
-
-%feature("docstring")  itk::Accessor::MakeIndex "
-";
-
-%feature("docstring")  itk::Accessor::MakePoint "
-";
-
-%feature("docstring")  itk::Accessor::MakeSize "
-";
-
-%feature("docstring")  itk::Accessor::MakeVector "
-";
-
-%feature("docstring")  itk::Accessor::MatlabTransformIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MESHIOBASE_TYPEMAP "
-";
-
-%feature("docstring")  itk::Accessor::MetaImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::MINCImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::MINCTransformIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::MRCImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::MvtSunf "
-";
-
-%feature("docstring")  itk::Accessor::NeedToDoFace "
-";
-
-%feature("docstring")  itk::Accessor::NiftiImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::NrrdImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::OpenCLCheckError "
-";
-
-%feature("docstring")  itk::Accessor::OpenCLGetAvailableDevices "
-";
-
-%feature("docstring")  itk::Accessor::OpenCLGetLocalBlockSize "
-";
-
-%feature("docstring")  itk::Accessor::OpenCLGetMaxFlopsDev "
-";
-
-%feature("docstring")  itk::Accessor::OpenCLPrintDeviceInfo "
-";
-
-%feature("docstring")  itk::Accessor::OpenCLSelectPlatform "
-";
-
-%feature("docstring")  itk::Accessor::PNGImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::point "
-";
-
-%feature("docstring")  itk::Accessor::ReadImage "
-";
-
-%feature("docstring")  itk::Accessor::ReadMesh "
-";
-
-%feature("docstring")  itk::Accessor::ReadRawBytesAfterSwapping "
-";
-
-%feature("docstring")  itk::Accessor::setConnectivity "
-";
-
-%feature("docstring")  itk::Accessor::setConnectivityLater "
-";
-
-%feature("docstring")  itk::Accessor::setConnectivityPrevious "
-";
-
-%feature("docstring")  itk::Accessor::Singleton "
-";
-
-%feature("docstring")  itk::Accessor::StimulateImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::swap "
-";
-
-%feature("docstring")  itk::Accessor::TIFFImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::TransferAutoPointer "
-";
-
-%feature("docstring")  itk::Accessor::TransformIOFactoryRegisterManagerInstance "
-";
-
-%feature("docstring")  itk::Accessor::TxtTransformIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::VnlFFTImageFilterInitFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::VTKImageIOFactoryRegister__Private "
-";
-
-%feature("docstring")  itk::Accessor::WriteImage "
-";
-
-%feature("docstring")  itk::Accessor::WriteMesh "
-";
-
-%feature("docstring")  itk::Accessor::WriteRawBytesAfterSwapping "
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifference "
@@ -39717,8 +39459,8 @@ Function mapping enumeration names in std::string to values.
 
 This function is intended for use by the R bindings. R stores the
 enumeration values using the names : \"sitkUnknown\", \"sitkUInt8\",
-etc from PixelIDValueEnum above. This function is used to provide the
-integer values using calls like:
+etc from PixelIDValueEnum above. This function is used to provide the integer values using
+calls like:
 
 val = GetPixelIDValueFromString(\"sitkInt32\")
 
@@ -39726,8 +39468,7 @@ If the pixel type has not been instantiated then the sitkUnknown value
 (-1) will be returned. If the pixel type string is not recognized
 (i.e. is not in the set of tested names) then the return value is -99.
 The idea is to provide a warning (via the R package) if this function
-needs to be updated to match changes to PixelIDValueEnum - i.e. if a
-new pixel type is added.
+needs to be updated to match changes to PixelIDValueEnum - i.e. if a new pixel type is added.
 
 ";
 
@@ -40066,7 +39807,7 @@ generated.
 Convert an ITK style array of ITK fixed width vector to std::vector.
 
 
-An example input type is itk::FixedArray<itk::Point<3>, 3>
+An example input type is itk::FixedArray< itk::Point<3>, 3>
 
 ";
 
@@ -40278,7 +40019,6 @@ See:
  ImageTypeToPixelIDValue
 
 
-C++ includes: sitkPixelIDTypes.h
 ";
 
 
@@ -40416,7 +40156,6 @@ See:
  ImageTypeToPixelIDValue
 
 
-C++ includes: sitkPixelIDTypes.h
 ";
 
 
@@ -40503,7 +40242,6 @@ C++ includes: sitkDetail.h
 
 
 %feature("docstring") itk::simple::TypeListHasPixelIDValue "
-C++ includes: sitkPixelIDValues.h
 ";
 
 
