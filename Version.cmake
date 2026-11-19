@@ -9,8 +9,8 @@
 # Version info
 
 set(SimpleITK_VERSION_MAJOR 2)
-set(SimpleITK_VERSION_MINOR 5)
-set(SimpleITK_VERSION_PATCH 8)
+set(SimpleITK_VERSION_MINOR 6)
+set(SimpleITK_VERSION_PATCH 0)
 #set(SimpleITK_VERSION_TWEAK "")
 
 
