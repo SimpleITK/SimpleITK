@@ -19,6 +19,7 @@
 
 #include "itkMetaDataObject.h"
 #include "itkDataObject.h"
+#include "itkCommand.h"
 
 #include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.h"
@@ -123,6 +124,70 @@ Image::GetITKBase() const
   {
     return nullptr;
   }
+}
+
+namespace
+{
+// Local itk::Command which invokes an arbitrary std::function exactly once,
+// on its own destruction. Registering an instance as an itk::DeleteEvent
+// observer on an itk::Object ties the callback to that object's ITK
+// reference count: itk::Object's own observer-list clean-up releases this
+// Command automatically once the observed object is destroyed - no
+// explicit RemoveObserver call is needed (see itk::HolderCommand for the
+// same pattern used elsewhere in this codebase for a copyable payload).
+class StdFunctionDeleteCommand : public itk::Command
+{
+public:
+  using Self = StdFunctionDeleteCommand;
+  using Superclass = itk::Command;
+  using Pointer = itk::SmartPointer<Self>;
+
+  itkNewMacro(Self);
+
+  void
+  SetCallback(std::function<void()> callback)
+  {
+    m_Callback = std::move(callback);
+  }
+
+  void
+  Execute(itk::Object *, const itk::EventObject &) override
+  {}
+  void
+  Execute(const itk::Object *, const itk::EventObject &) override
+  {}
+
+  StdFunctionDeleteCommand(const StdFunctionDeleteCommand &) = delete;
+  void
+  operator=(const StdFunctionDeleteCommand &) = delete;
+
+protected:
+  StdFunctionDeleteCommand() = default;
+  ~StdFunctionDeleteCommand() override
+  {
+    if (m_Callback)
+    {
+      m_Callback();
+    }
+  }
+
+private:
+  std::function<void()> m_Callback;
+};
+} // namespace
+
+void
+Image::TieBufferLifetime(std::function<void()> releaseCallback)
+{
+  itk::DataObject * itkBase = this->GetITKBase();
+  if (!itkBase)
+  {
+    sitkExceptionMacro("Unable to tie buffer lifetime: image has been moved.");
+  }
+
+  StdFunctionDeleteCommand::Pointer cmd = StdFunctionDeleteCommand::New();
+  cmd->SetCallback(std::move(releaseCallback));
+  itkBase->AddObserver(itk::DeleteEvent(), cmd);
 }
 
 PixelIDValueType

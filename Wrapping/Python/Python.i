@@ -67,6 +67,7 @@
 // is declared static.
 %{
 #include "sitkNumpyArrayConversion.cxx"
+#include "sitkGetImageViewFromArray.cxx"
 
 // Helper function to extract sitk::Image* from a SWIG-wrapped PyObject
 // This function is used by sitkImageBuffer.cxx
@@ -88,6 +89,7 @@ itk::simple::Image* sitk_GetImagePointerFromPyObject(PyObject* pyImage)
 %}
 // Numpy array conversion support
 %native(_SetImageFromArray) PyObject *sitk_SetImageFromArray( PyObject *self, PyObject *args );
+%native(_GetImageViewFromArray) PyObject *sitk_GetImageViewFromArray( PyObject *self, PyObject *args );
 
 // Enable Python classes derived from Command Execute method to be
 // called from C++
