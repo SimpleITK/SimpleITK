@@ -194,6 +194,8 @@ SimpleITK Filters
      - Shift the zero-frequency components of a Fourier transform to the center of the image.
    * - `FastApproximateRankImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastApproximateRankImageFilter.html>`_
      - A separable rank filter.
+   * - `FastBilateralImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastBilateralImageFilter.html>`_
+     - A fast approximation to the bilateral filter.
    * - `FastMarchingBaseImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastMarchingBaseImageFilter.html>`_
      - Apply the Fast Marching method to solve an Eikonal equation on an image.
    * - `FastMarchingImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1FastMarchingImageFilter.html>`_
