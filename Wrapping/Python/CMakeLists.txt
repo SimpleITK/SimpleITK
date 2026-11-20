@@ -49,8 +49,19 @@ if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.26" AND
 else ()
   set(_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT OFF)
 endif()
-option( SimpleITK_PYTHON_USE_LIMITED_API "Use Python limited API, for minor version compatibility." ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT} )
-mark_as_advanced( SimpleITK_PYTHON_USE_LIMITED_API )
+if (SKBUILD)
+  # scikit-build-core decides the limited API (wheel.py-api); the module must match the wheel tag.
+  if (SKBUILD_SABI_VERSION MATCHES "^3\\.[0-9]+$")
+    set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+  elseif (SKBUILD_SABI_VERSION STREQUAL "")
+    set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+  else ()
+    message(FATAL_ERROR "Unsupported SKBUILD_SABI_VERSION: ${SKBUILD_SABI_VERSION}")
+  endif()
+else ()
+  option( SimpleITK_PYTHON_USE_LIMITED_API "Use Python limited API, for minor version compatibility." ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT} )
+  mark_as_advanced( SimpleITK_PYTHON_USE_LIMITED_API )
+endif()
 
 if (SimpleITK_PYTHON_USE_LIMITED_API)
   find_package( Python REQUIRED COMPONENTS Interpreter Development.SABIModule)
@@ -63,6 +74,23 @@ if (SimpleITK_PYTHON_USE_LIMITED_API AND NOT _SimpleITK_PYTHON_USE_LIMITED_API_D
   message(WARNING "Development.SABIModule_FOUND: ${Development.SABIModule_FOUND}")
   message(FATAL_ERROR "Python limited API is not supported for this Python version and SWIG version.")
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+endif()
+
+if (SimpleITK_PYTHON_USE_LIMITED_API)
+  if (SKBUILD AND SKBUILD_SABI_VERSION MATCHES "^3\\.([0-9]+)$")
+    set(_SABI_MINOR "${CMAKE_MATCH_1}")
+  elseif (DEFINED Python_VERSION_MINOR AND NOT Python_VERSION_MINOR STREQUAL "")
+    set(_SABI_MINOR "${Python_VERSION_MINOR}")
+  else ()
+    message(FATAL_ERROR "Unable to determine the Python limited API minor version.")
+  endif()
+  # Py_buffer is only in the Limited API from 3.11.
+  if (_SABI_MINOR LESS 11)
+    message(FATAL_ERROR "Python limited API target 3.${_SABI_MINOR} is not supported; 3.11 or newer is required.")
+  endif()
+  # PEP 384: Py_LIMITED_API is 0x03MM0000 for Python 3.MM.
+  math(EXPR _SABI_HEX "0x03000000 + (${_SABI_MINOR} * 65536)" OUTPUT_FORMAT HEXADECIMAL)
+  set(SITK_PYTHON_ABI_VER_HEX "${_SABI_HEX}")
 endif()
 
 
@@ -114,7 +142,7 @@ if (SimpleITK_PYTHON_USE_LIMITED_API)
   # https://docs.python.org/3/c-api/stable.html
 
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::SABIModule )
-  target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -DPy_LIMITED_API=0x030b0000)
+  target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -DPy_LIMITED_API=${SITK_PYTHON_ABI_VER_HEX})
 
   message(STATUS "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}")
   set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOSABI}${_suffix}")
@@ -172,27 +200,26 @@ configure_file(
 
 set(SimpleITK_Py_Files "__init__.py" "extra.py" "py.typed" )
 
-if(DEFINED SKBUILD)
-  # Currently this installation
+if(SKBUILD)
   install(FILES
       ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
       ${SimpleITK_DOC_FILES}
       "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
     DESTINATION SimpleITK
-    COMPONENT Runtime
+    COMPONENT Python
     )
 
   foreach( _file ${SimpleITK_Py_Files})
     install(FILES
      "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
       DESTINATION SimpleITK
-      COMPONENT Runtime
+      COMPONENT Python
     )
   endforeach()
 
   install(TARGETS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME DESTINATION SimpleITK COMPONENT Runtime
-    LIBRARY DESTINATION SimpleITK COMPONENT Runtime
+    RUNTIME DESTINATION SimpleITK COMPONENT Python
+    LIBRARY DESTINATION SimpleITK COMPONENT Python
     )
 else()
   include(LegacyPackaging.cmake)

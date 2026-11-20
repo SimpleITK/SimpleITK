@@ -148,6 +148,8 @@ if ( WRAP_PYTHON )
     Python_INCLUDE_DIR
     Python_LIBRARY_DEBUG
     Python_LIBRARY_RELEASE
+    Python_FIND_REGISTRY
+    Python_SABI_LIBRARY
     )
   # Support CMake < 3.24 by explicitly passing _Python_VERSION variables to workaround issue fixed
   # in kitware/cmake@ece3bedbf (FindPython: fix error on multiple queries with different COMPONENTS)
