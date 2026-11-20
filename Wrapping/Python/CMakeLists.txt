@@ -18,8 +18,16 @@ find_package(
     Development.SABIModule
 )
 
-# Free-threaded Python (PEP 703) requires CMake >= 3.30 for correct FindPython support.
+# Detect free-threaded Python (PEP 703) from its distinctive SOABI suffix ('t').
+# This is the only signal available on CMake < 4.4, which lacks Python_FREE_THREADED.
 if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
+  set(_SimpleITK_PYTHON_SOABI_FREE_THREADED ON)
+else()
+  set(_SimpleITK_PYTHON_SOABI_FREE_THREADED OFF)
+endif()
+
+# Free-threaded Python (PEP 703) requires CMake >= 3.30 for correct FindPython support.
+if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
   if(CMAKE_VERSION VERSION_LESS "3.30")
     message(
       FATAL_ERROR
@@ -78,6 +86,9 @@ if(
     Python_VERSION
       VERSION_GREATER_EQUAL
       "3.11.0"
+  AND
+    NOT
+      _SimpleITK_PYTHON_SOABI_FREE_THREADED
 )
   set(_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT ON)
 else()
@@ -127,6 +138,15 @@ if(
     WARNING
     "Development.SABIModule_FOUND: ${Development.SABIModule_FOUND}"
   )
+  if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
+    message(
+      FATAL_ERROR
+      "Python limited API is not supported for free-threaded Python "
+      "(detected SOABI: '${Python_SOABI}'); the free-threaded headers do not "
+      "declare symbols required under the Py_LIMITED_API pin used here. "
+      "Set SimpleITK_PYTHON_USE_LIMITED_API=OFF."
+    )
+  endif()
   message(
     FATAL_ERROR
     "Python limited API is not supported for this Python version and SWIG version."
