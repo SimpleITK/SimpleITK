@@ -33,6 +33,7 @@
 #include <itkExceptionObject.h>
 
 #include <cmath>
+#include <string>
 #include <itksys/SystemTools.hxx>
 
 namespace
@@ -867,6 +868,135 @@ TEST(IO, ImageSeriesReader_Spacing)
   // check that the warning was issued contains "nonuniformity"
   EXPECT_NE(logger.m_DisplayWarningText.str().find("nonuniformity"), std::string::npos)
     << "Checking expected warning in " << logger.m_DisplayWarningText.str();
+}
+
+// Regression test for SimpleITK#2292: ImageSeriesReader computed an
+// incorrect direction matrix when the slice order implied negative
+// inter-slice spacing. With the file names given top-to-bottom (Image
+// Position (Patient) z decreasing from 70 to -445), the third direction
+// column was reported as +1 instead of -1, so the voxel planes stayed in
+// ascending Image Position (Patient) order while the direction matrix made
+// their reported physical z coordinates run the opposite way. The same
+// series read bottom-to-top was reported correctly, so the result depended
+// on the input order. The sign of SpacingBetweenSlices (0018,0088) also
+// affected the reported direction, even though the spacing itself was
+// computed correctly from the inter-slice distance.
+//
+// The geometry is fixed upstream in ITK#5357 (backported in ITK#6930,
+// shipped in SimpleITK 2.5.7). This test pins the corrected contract at
+// the SimpleITK level with a synthetic DICOM series, so it cannot
+// silently regress: the direction must follow the order the files were
+// given, and the physical position of every voxel plane must agree with
+// the Image Position (Patient) tags of the files.
+TEST(IO, ImageSeriesReader_DirectionFromSliceOrder)
+{
+  // 3-slice axial series from the issue report: Image Position (Patient)
+  // z decreases along the files, Image Orientation (Patient) is axial
+  // (row (1,0,0), column (0,1,0)).
+  const std::vector<std::string> positions{ "-216.500\\-216.500\\70.000",
+                                            "-216.500\\-216.500\\-187.500",
+                                            "-216.500\\-216.500\\-445.000" };
+  const std::string              orientation = "1.000000\\0.000000\\0.000000\\0.000000\\1.000000\\0.000000";
+
+  // SpacingBetweenSlices variants: absent, positive, negative. The empty
+  // string means the tag is not written at all.
+  const std::vector<std::pair<std::string, std::string>> spacingBetweenSlicesCases{
+    { "absent", "" },
+    { "plus", "1" },
+    { "minus", "-1" },
+  };
+
+  auto image = sitk::Image(2, 2, (unsigned int)positions.size(), sitk::sitkUInt16);
+
+  sitk::ImageFileWriter writer;
+  writer.KeepOriginalImageUIDOn();
+
+  for (const auto & spacingCase : spacingBetweenSlicesCases)
+  {
+    const sitk::PathType caseDir = dataFinder.GetOutputDirectory() + "/IO.ImageSeriesReader_DirectionFromSliceOrder/"
+                                 + spacingCase.first;
+    if (itksys::SystemTools::FileExists(caseDir))
+    {
+      itksys::SystemTools::RemoveADirectory(caseDir);
+    }
+    itksys::SystemTools::MakeDirectory(caseDir);
+
+    std::vector<std::string> fileNames;
+    for (size_t i = 0; i < positions.size(); ++i)
+    {
+      auto slice = sitk::Extract(image, { 2, 2, 1 }, { 0, 0, static_cast<int>(i) });
+      slice.SetMetaData("0020|0032", positions[i]); // Image Position (Patient)
+      slice.SetMetaData("0020|0037", orientation);  // Image Orientation (Patient)
+      slice.SetMetaData("0008|0060", "CT");         // Modality
+      slice.SetMetaData("0020|0013", std::to_string(i + 1)); // Instance Number
+      slice.SetMetaData("0010|0010", "Test^Patient");
+      // A distinct Series Instance UID per slice mirrors the reproducer in
+      // the issue.
+      slice.SetMetaData("0020|000e", "1.2.3.4.5.6.7.8." + std::to_string(i + 1));
+      if (!spacingCase.second.empty())
+      {
+        slice.SetMetaData("0018|0088", spacingCase.second); // Spacing Between Slices
+      }
+
+      const sitk::PathType fileName = caseDir + "/" + std::to_string(i) + ".dcm";
+      writer.SetFileName(fileName);
+      writer.Execute(slice);
+      fileNames.push_back(fileName);
+    }
+
+    // NOTE: this test intentionally does not assert the SpacingBetweenSlices
+    // value written to the files. The value that lands on disk for
+    // (0018,0088) is not reliably the value set on the slice: GDCM's writer
+    // derives it from image spacing, and once a DICOM read has happened in
+    // the same process the written value can differ from the one set here
+    // (observed via the Python bindings: after a DICOM read, later writes
+    // stamped SpacingBetweenSlices "1" regardless of the value set on the
+    // slice). The geometry assertions below are unaffected by that: with
+    // the ITK#5357 fix the direction is correct for every value of
+    // SpacingBetweenSlices, and without it the top-to-bottom direction is
+    // wrong for the positive/absent cases, so the test still fails on the
+    // buggy behavior.
+    sitk::ImageSeriesReader reader;
+
+    // Top-to-bottom order: the slices step in -z, so the third direction
+    // column must be (0,0,-1) and the origin is the first slice position.
+    reader.SetFileNames(fileNames);
+    sitk::Image imageTopToBottom = reader.Execute();
+    EXPECT_EQ(imageTopToBottom.GetSize(), std::vector<unsigned int>({ 2, 2, 3 }));
+    EXPECT_EQ(imageTopToBottom.GetOrigin(), std::vector<double>({ -216.5, -216.5, 70.0 }))
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_EQ(imageTopToBottom.GetDirection(),
+              std::vector<double>({ 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, -1.0 }))
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_NEAR(imageTopToBottom.GetSpacing()[2], 257.5, 1e-6)
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    // Physical z of the first and last voxel planes must match the
+    // Image Position (Patient) tags of the first and last files given.
+    EXPECT_NEAR(imageTopToBottom.TransformIndexToPhysicalPoint({ 0, 0, 0 })[2], 70.0, 1e-6)
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_NEAR(imageTopToBottom.TransformIndexToPhysicalPoint({ 0, 0, 2 })[2], -445.0, 1e-6)
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+
+    // Bottom-to-top order: the slices step in +z, so the third direction
+    // column must be (0,0,+1) and the origin is the last slice position.
+    // The result must differ from the top-to-bottom read only in the
+    // origin and the sign of the third direction column.
+    std::vector<std::string> reversedFileNames(fileNames.rbegin(), fileNames.rend());
+    reader.SetFileNames(reversedFileNames);
+    sitk::Image imageBottomToTop = reader.Execute();
+    EXPECT_EQ(imageBottomToTop.GetSize(), std::vector<unsigned int>({ 2, 2, 3 }));
+    EXPECT_EQ(imageBottomToTop.GetOrigin(), std::vector<double>({ -216.5, -216.5, -445.0 }))
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_EQ(imageBottomToTop.GetDirection(),
+              std::vector<double>({ 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 }))
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_NEAR(imageBottomToTop.GetSpacing()[2], 257.5, 1e-6)
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_NEAR(imageBottomToTop.TransformIndexToPhysicalPoint({ 0, 0, 0 })[2], -445.0, 1e-6)
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+    EXPECT_NEAR(imageBottomToTop.TransformIndexToPhysicalPoint({ 0, 0, 2 })[2], 70.0, 1e-6)
+      << "SpacingBetweenSlices case '" << spacingCase.first << "'";
+  }
 }
 
 
