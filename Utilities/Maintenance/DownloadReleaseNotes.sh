@@ -3,7 +3,7 @@
 # DownloadReleaseNotes.sh
 #
 # Downloads release notes from all SimpleITK GitHub releases and saves them as
-# Sphinx-ready Markdown files in docs/source/releases/.
+# Sphinx-ready Markdown files in docs/source/release_notes/.
 #
 # Each release's body is saved as notes-{tag}.md with the following processing:
 #   - A top-level "# SimpleITK Release {tag}" header is prepended
@@ -24,7 +24,7 @@ set -euo pipefail
 
 REPO="SimpleITK/SimpleITK"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-OUTPUT_DIR="${SCRIPT_DIR}/../../docs/source/releases"
+OUTPUT_DIR="${SCRIPT_DIR}/../../docs/source/release_notes"
 
 echo "Fetching release list for ${REPO}..."
 tags=$(gh release list --repo "${REPO}" --limit 200 --json tagName --jq '.[].tagName')
