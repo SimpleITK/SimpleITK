@@ -30,6 +30,12 @@ repos:
     - id: clang-format
       args: ['--style=file']
       files: '\.(c|cc|h|cxx|hxx)$'
+- repo: https://github.com/SimpleITK/CommentSpellCheck.git
+  rev: v0.4.4
+  hooks:
+    - id: comment-spell-check
+      args: ['--miss', '--dict','.github/workflows/additional_dictionary.txt']
+      exclude: Ancillary/
 - repo: local
   hooks:
     - id: local-prepare-commit-msg
