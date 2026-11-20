@@ -19,6 +19,7 @@
 #include "sitkImageBuffer.h"
 #include "sitkImage.h"
 #include "sitkPixelIDValues.h"
+#include "sitkConditional.h"
 #include <cstring>
 #include <iostream>
 
@@ -85,9 +86,9 @@ GetFormatString(sitk::PixelIDValueEnum pixelID)
       return "I"; // unsigned int
     case sitk::sitkInt32:
       return "i"; // signed int
-    case sitk::sitkUInt64:
+    case sitk::ConditionalValue<sitk::sitkUInt64 != sitk::sitkUnknown, sitk::sitkUInt64, -2>::Value:
       return "Q"; // unsigned long long
-    case sitk::sitkInt64:
+    case sitk::ConditionalValue<sitk::sitkInt64 != sitk::sitkUnknown, sitk::sitkInt64, -3>::Value:
       return "q"; // signed long long
     case sitk::sitkFloat32:
       return "f"; // float
@@ -109,9 +110,9 @@ GetFormatString(sitk::PixelIDValueEnum pixelID)
       return "I";
     case sitk::sitkVectorInt32:
       return "i";
-    case sitk::sitkVectorUInt64:
+    case sitk::ConditionalValue<sitk::sitkVectorUInt64 != sitk::sitkUnknown, sitk::sitkVectorUInt64, -4>::Value:
       return "Q";
-    case sitk::sitkVectorInt64:
+    case sitk::ConditionalValue<sitk::sitkVectorInt64 != sitk::sitkUnknown, sitk::sitkVectorInt64, -5>::Value:
       return "q";
     case sitk::sitkVectorFloat32:
       return "f";
@@ -123,7 +124,7 @@ GetFormatString(sitk::PixelIDValueEnum pixelID)
       return "H";
     case sitk::sitkLabelUInt32:
       return "I";
-    case sitk::sitkLabelUInt64:
+    case sitk::ConditionalValue<sitk::sitkLabelUInt64 != sitk::sitkUnknown, sitk::sitkLabelUInt64, -6>::Value:
       return "Q";
     default:
       return "B"; // fallback to unsigned char
@@ -193,8 +194,8 @@ IsVectorPixelType(sitk::PixelIDValueEnum pixelID)
     case sitk::sitkVectorInt16:
     case sitk::sitkVectorUInt32:
     case sitk::sitkVectorInt32:
-    case sitk::sitkVectorUInt64:
-    case sitk::sitkVectorInt64:
+    case sitk::ConditionalValue<sitk::sitkVectorUInt64 != sitk::sitkUnknown, sitk::sitkVectorUInt64, -4>::Value:
+    case sitk::ConditionalValue<sitk::sitkVectorInt64 != sitk::sitkUnknown, sitk::sitkVectorInt64, -5>::Value:
     case sitk::sitkVectorFloat32:
     case sitk::sitkVectorFloat64:
       return true;
