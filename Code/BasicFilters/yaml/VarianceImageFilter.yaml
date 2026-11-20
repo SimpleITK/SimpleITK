@@ -1,0 +1,51 @@
+name: VarianceImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 1
+doc: ''
+pixel_types: BasicPixelIDTypeList
+members:
+- name: Radius
+  type: unsigned int
+  default: std::vector<unsigned int>(3, 1)
+  dim_vec: true
+  set_as_scalar: true
+  doc: ''
+  itk_type: typename FilterType::RadiusType
+tests:
+- tag: defaults
+  description: Test VarianceImageFilter with default parameters on a float image
+  md5hash: 0c7d33831503eb05ef56636f69c3258c
+  settings: []
+  inputs:
+  - Input/2th_cthead1_distance.nrrd
+- tag: by231
+  description: Test with an anisotropic radius on a 3d float image
+  md5hash: 29acf16430857373d343eacf77b83601
+  settings:
+  - parameter: Radius
+    type: unsigned int
+    dim_vec: true
+    value:
+    - 2
+    - 3
+    - 1
+  inputs:
+  - Input/RA-Float.nrrd
+briefdescription: Applies a variance filter to an image.
+detaileddescription: >-
+  Computes an image where a given pixel is the sample variance of the pixels in a neighborhood about the corresponding input
+  pixel.
+
+
+  A variance filter is a nonlinear (quadratic) neighborhood filter.
+
+
+  \see MeanImageFilter
+
+
+
+  \see NoiseImageFilter
+itk_module: AdaptiveDenoising
+itk_group: AdaptiveDenoising
+in_place: false
