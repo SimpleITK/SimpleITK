@@ -20,7 +20,7 @@ After you have cloned and forked the SimpleITK repository run the following comm
 ./Utilities/SetupForDevelopment.sh
 ```
 
-This script will configure your local checkout with the `upstream` repository and your own fork. Additionally, local hooks and aliases are added.
+This script will configure your local checkout with the `upstream` repository and your own fork. Additionally, local hooks and aliases are added, including a [pre-commit](https://pre-commit.com/) git hook that runs formatting and linting checks automatically on each commit — see [Style](#style) below.
 
 ## Workflow
 
@@ -115,6 +115,29 @@ Once you push it, go to your fork repo
 <username>/SimpleITK
 ```
 You will not see the green "Compare & pull request" button again. That means your request has been updated. You can now go to your pull request (PR) at https://github.com/SimpleITK/SimpleITK.git, click the pull request tab, then click on your PR and check the comments and more.
+
+## Style
+
+### Code formatting
+
+SimpleITK uses [pre-commit](https://pre-commit.com/) to catch formatting and style issues before they reach a pull request. `./Utilities/SetupForDevelopment.sh` installs the git hook so checks such as `black` (Python), `clang-format` (C++), and `gersemi` (CMake) run automatically on every commit — see [.pre-commit-config.yaml](../.pre-commit-config.yaml) for the full list. The same checks run in CI, so a pull request with unformatted code will fail. If a hook modifies files to fix an issue, review the changes, `git add` them, and commit again.
+
+### Commit messages
+
+Commit messages should start with one of the following prefixes to summarize the type of change:
+
+```
+BUG:    - fix for runtime crash or incorrect result
+COMP:   - compiler error or warning fix
+DOC:    - documentation change
+ENH:    - new functionality
+PERF:   - performance improvement
+STYLE:  - no logic impact (indentation, comments)
+CI:     - changes in continuous integration, packaging and GitHub Actions
+WIP:    - work in progress not ready for merge
+```
+
+The first line should be 78 characters or less, followed by a blank line, then a more descriptive summary of the change if needed.
 
 ## Branches
 
