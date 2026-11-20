@@ -31,7 +31,7 @@ set(
   CACHE STRING
   "Google Test repository"
 )
-set(GOOGLETEST_VERSION "1.17.0" CACHE STRING "Google Test version tag")
+set(GOOGLETEST_VERSION "1.18.0" CACHE STRING "Google Test version tag")
 mark_as_advanced(
   GOOGLETEST_GIT_REPOSITORY
   GOOGLETEST_VERSION
