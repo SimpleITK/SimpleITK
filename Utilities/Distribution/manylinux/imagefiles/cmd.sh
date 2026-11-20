@@ -41,6 +41,7 @@ build_simpleitk() {
     cmake \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
+        -DSimpleITK_DEAD_STRIP:BOOL=ON \
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DBUILD_TESTING:BOOL=ON \
         -DBUILD_EXAMPLES:BOOL=OFF \
@@ -78,6 +79,7 @@ build_simpleitk_python() {
         -DSimpleITK_PYTHON_USE_LIMITED_API:BOOL=${USE_LIMITED_API:-OFF} \
         -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON \
         -DSimpleITK_BUILD_STRIP:BOOL=ON \
+        -DSimpleITK_DEAD_STRIP:BOOL=ON \
         -DSimpleITK_PYTHON_WHEEL:BOOL=ON \
         -DSimpleITK_Python_EXECUTABLE:FILEPATH=${SimpleITK_Python_EXECUTABLE} \
         -DPython_EXECUTABLE:FILEPATH=${Python_EXECUTABLE} \
@@ -106,6 +108,7 @@ if [[ ! -z ${BUILD_CSHARP:+x} && "${BUILD_CSHARP}" -ne 0 ]]; then
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
             -DSimpleITK_CSHARP_ARCH:STRING="linux_$(arch)" \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
+            -DSimpleITK_DEAD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/CSharp &&
         cmake --build "${BLD_DIR}-csharp" --target dist &&
         find "${BLD_DIR}-csharp/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
@@ -124,6 +127,7 @@ if [[ ! -z ${BUILD_JAVA:+x} && "${BUILD_JAVA}" -ne 0 ]]; then
             -DSWIG_DIR:PATH=${BLD_DIR}/Swig/ \
             -DSimpleITK_JAVA_ARCH:STRING="linux_$(arch)" \
             -DSimpleITK_BUILD_STRIP:BOOL=ON \
+            -DSimpleITK_DEAD_STRIP:BOOL=ON \
             ${SRC_DIR}/Wrapping/Java &&
         cmake --build "${BLD_DIR}-java" --target dist &&
         find "${BLD_DIR}-java/dist" -name "SimpleITK*.zip" -exec cp -v {} "${OUT_DIR}" \;
