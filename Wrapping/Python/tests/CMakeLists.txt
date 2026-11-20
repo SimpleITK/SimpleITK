@@ -69,6 +69,11 @@ sitk_add_pytest_test(
   "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageProtocolTest.py"
 )
 
+sitk_add_pytest_test(
+  Test.SyNImageRegistrationMethod
+  "${CMAKE_CURRENT_SOURCE_DIR}/sitkSyNImageRegistrationMethodTest.py"
+)
+
 if(SimpleITK_USE_ELASTIX)
   sitk_add_pytest_test(
     Test.TransformixImageFilterTest

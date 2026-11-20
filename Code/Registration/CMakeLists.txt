@@ -3,6 +3,7 @@ set(
   src/sitkImageRegistrationMethod.cxx
   src/sitkImageRegistrationMethod_CreateOptimizer.cxx
   src/sitkImageRegistrationMethod_CreateMetric.cxx
+  src/sitkSyNImageRegistrationMethod.cxx
 )
 
 set(
@@ -40,6 +41,7 @@ target_sources(
       FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/include/sitkImageRegistrationMethod.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/sitkRegistration.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/sitkSyNImageRegistrationMethod.h
 )
 target_sources(
   SimpleITKRegistration
@@ -50,6 +52,7 @@ target_sources(
       FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/sitkImageRegistrationMethod_CreateMetric.hxx
         ${CMAKE_CURRENT_SOURCE_DIR}/src/sitkImageRegistrationMethod_CreateParametersAdaptor.hxx
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/sitkSyNImageRegistrationMethod.hxx
 )
 
 # FILE_SET automatically adds BASE_DIRS to INCLUDE_DIRECTORIES and INTERFACE_INCLUDE_DIRECTORIES
