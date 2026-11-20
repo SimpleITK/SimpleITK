@@ -18,9 +18,11 @@ find_package(
     Development.SABIModule
 )
 
-# Detect free-threaded Python (PEP 703) from its distinctive SOABI suffix ('t').
+# Detect free-threaded Python (PEP 703) from the 't' ABI flag following the
+# version digits in the SOABI, optionally followed by the debug flag 'd'
+# (e.g. cpython-315t-darwin, cpython-315td-darwin, cp315t-win_amd64).
 # This is the only signal available on CMake < 4.4, which lacks Python_FREE_THREADED.
-if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
+if(Python_SOABI MATCHES "[0-9]td?(-|$)")
   set(_SimpleITK_PYTHON_SOABI_FREE_THREADED ON)
 else()
   set(_SimpleITK_PYTHON_SOABI_FREE_THREADED OFF)
@@ -115,16 +117,6 @@ else()
   mark_as_advanced(SimpleITK_PYTHON_USE_LIMITED_API)
 endif()
 
-if(SimpleITK_PYTHON_USE_LIMITED_API)
-  find_package(
-    Python
-    REQUIRED
-    COMPONENTS
-      Interpreter
-      Development.SABIModule
-  )
-endif()
-
 if(
   SimpleITK_PYTHON_USE_LIMITED_API
   AND
@@ -134,10 +126,7 @@ if(
   message(WARNING "SWIG_VERSION (>=4.2.0): ${SWIG_VERSION}")
   message(WARNING "Python_VERSION (>=3.11.0): ${Python_VERSION}")
   message(WARNING "CMAKE_VERSION (>=3.26): ${CMAKE_VERSION}")
-  message(
-    WARNING
-    "Development.SABIModule_FOUND: ${Development.SABIModule_FOUND}"
-  )
+
   if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
     message(
       FATAL_ERROR
@@ -152,6 +141,16 @@ if(
     "Python limited API is not supported for this Python version and SWIG version."
   )
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+endif()
+
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  find_package(
+    Python
+    REQUIRED
+    COMPONENTS
+      Interpreter
+      Development.SABIModule
+  )
 endif()
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
