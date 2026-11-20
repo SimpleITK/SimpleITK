@@ -93,7 +93,7 @@ namespace itk.simple.examples
             Console.WriteLine("Pixel value total: {0}", total);
 
             // Set buffer of new SimpleITK Image from managed array.
-            // bufferAsArray could also have come from a bmp,png,etc...
+            // bufferAsArray could also have come from a BMP,PNG,etc...
 
             uint width = input.GetWidth();
             uint height = input.GetHeight();
