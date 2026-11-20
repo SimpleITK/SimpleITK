@@ -2,7 +2,7 @@
 
 We welcome contributions from the community!
 
-SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on GitHub, at [SimpleITK/SimpleITK](https://github.com/SimpleITK/SimpleITK.git) and the [Insight Software Consortium](https://github.com/InsightSoftwareConsortium/SimpleITK). GitHub is also used for pull requests and issue tracking.
+SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on GitHub at [SimpleITK/SimpleITK](https://github.com/SimpleITK/SimpleITK.git); GitHub is also used for pull requests and issue tracking. A read-only mirror is also maintained under the [Insight Software Consortium](https://github.com/InsightSoftwareConsortium/SimpleITK) organization — issues and pull requests should be opened against the primary repository, not the mirror.
 
 There are many ways to contribute to SimpleITK:
  - Report Bugs and Issues
@@ -24,7 +24,7 @@ This script will configure your local checkout with the `upstream` repository an
 
 ## Workflow
 
-Submitting code to SimpleITK follows the standard pull request GitHub workflow. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://guides.github.com/introduction/flow/) regarding the workflow and getting your computer setup.
+Submitting code to SimpleITK follows the standard pull request GitHub workflow. More information can be found [here](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project) and [here](https://docs.github.com/en/get-started/using-github/github-flow) regarding the workflow and getting your computer setup.
 
 SimpleITK uses a branchy workflow where each PR should be a new topic branch. Locally, you create a branch with a concise and precise name then commit your changes to that branch. The branch should be based on your target branch, which will usually be `main` for new features and improvements or `release` for back patches such as bug fixes.
 
