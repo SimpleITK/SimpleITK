@@ -1333,6 +1333,7 @@ gcount
 ge
 geekfeminism
 geq
+gersemi
 getenv
 geterr
 getitem
@@ -1567,6 +1568,7 @@ linearized
 liness
 lingua
 linspace
+linting
 linux
 linuxfoundation
 literalinclude
@@ -2162,6 +2164,7 @@ undef
 undefing
 undersegment
 underset
+unformatted
 unget
 unicode
 union
