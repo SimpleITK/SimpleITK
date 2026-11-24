@@ -832,6 +832,8 @@ Ysize
 Yushkevich
 ZYX
 Zach
+Zd
+Zf
 Zhang
 Zheng
 Zhu
@@ -841,6 +843,8 @@ Zou
 Zsize
 Zuerich
 aa
+abi
+abi3t
 abspath
 accesor
 accessor
@@ -959,6 +963,7 @@ buildsystems
 burton
 bwh
 byteorder
+buf
 cacheline
 callables
 cardinality
@@ -1481,6 +1486,7 @@ iteratively
 iterators
 iteritems
 itertools
+itemsize
 ith
 itk
 itkDefaultImageToImageMetricTraitsv
@@ -1582,6 +1588,9 @@ mbox
 md
 mediumblue
 mediumvioletred
+memoryview
+memoryviews
+metaio
 metaprogramming
 metrics
 metricv
@@ -1625,6 +1634,7 @@ multithreader
 multithreading
 mutable
 mutex
+mv
 myofiber
 na
 nabla
@@ -1825,6 +1835,7 @@ rc
 rdbuf
 rdstate
 readthedocs
+readonly
 reallocations
 recalibrate
 recoded
@@ -1866,6 +1877,7 @@ rindex
 rint
 rjwagner
 rms
+refcount
 roberto
 rockspec
 roi
@@ -1990,6 +2002,7 @@ subdirectory
 subimage
 subn
 subnormals
+suboffsets
 subpixel
 subrange
 subranges
@@ -2216,3 +2229,4 @@ yyy
 yz
 zz
 zzz
+segfault
