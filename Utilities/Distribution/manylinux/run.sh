@@ -16,9 +16,9 @@ fi
 
 proc=`uname -p`
 if [ "$proc" == "x86_64" ] ; then
-    DOCKERFILE=${DOCKERFILE:="Dockerfile-2014-x86_64 Dockerfile-2010-x86_64"}
+    DOCKERFILE=${DOCKERFILE:="Dockerfile-2-28-x86_64 Dockerfile-2014-x86_64"}
 elif [ "$proc" == "aarch64" ] ; then
-    DOCKERFILE=${DOCKERFILE:="Dockerfile-2014-aarch64"}
+    DOCKERFILE=${DOCKERFILE:="Dockerfile-2-28-aarch64 Dockerfile-2014-aarch64"}
 fi
 
 
