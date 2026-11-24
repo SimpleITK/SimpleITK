@@ -1,21 +1,41 @@
 include("${CMAKE_CURRENT_SOURCE_DIR}/../../CMake/sitkCMakeInit.cmake")
-cmake_minimum_required(VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION}...${SITK_CMAKE_POLICY_VERSION})
+cmake_minimum_required(
+  VERSION ${SITK_CMAKE_MINIMUM_REQUIRED_VERSION}...${SITK_CMAKE_POLICY_VERSION}
+)
 
-project( SimpleITK_Python )
+project(SimpleITK_Python)
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
-find_package( Python REQUIRED COMPONENTS Interpreter Development.Module OPTIONAL_COMPONENTS Development.SABIModule)
+find_package(
+  Python
+  REQUIRED
+  COMPONENTS
+    Interpreter
+    Development.Module
+  OPTIONAL_COMPONENTS
+    Development.SABIModule
+)
 
-# Free-threaded Python (PEP 703, e.g. Python 3.13t/3.14t) requires CMake >= 3.30 for
-# correct FindPython support. Earlier versions link against python3XX.lib instead of
-# python3XXt.lib, causing a crash (access violation) on module import.
-if (Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
-  if (CMAKE_VERSION VERSION_LESS "3.30")
-    message(FATAL_ERROR
+# Detect free-threaded Python (PEP 703) from the 't' ABI flag following the
+# version digits in the SOABI, optionally followed by the debug flag 'd'
+# (e.g. cpython-315t-darwin, cpython-315td-darwin, cp315t-win_amd64).
+# This is the only signal available on CMake < 4.4, which lacks Python_FREE_THREADED.
+if(Python_SOABI MATCHES "[0-9]td?(-|$)")
+  set(_SimpleITK_PYTHON_SOABI_FREE_THREADED ON)
+else()
+  set(_SimpleITK_PYTHON_SOABI_FREE_THREADED OFF)
+endif()
+
+# Free-threaded Python (PEP 703) requires CMake >= 3.30 for correct FindPython support.
+if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
+  if(CMAKE_VERSION VERSION_LESS "3.30")
+    message(
+      FATAL_ERROR
       "Free-threaded Python (detected SOABI: '${Python_SOABI}') requires CMake >= 3.30. "
       "CMake ${CMAKE_VERSION} will link against the wrong Python DLL, causing crashes. "
-      "Please upgrade CMake to 3.30 or later.")
+      "Please upgrade CMake to 3.30 or later."
+    )
   endif()
   # Required version for SWIG's -nogil flag, which declares the module thread-safe for free-threaded Python.
   if(SWIG_VERSION VERSION_LESS "4.4.0")
@@ -28,53 +48,136 @@ if (Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
   endif()
 endif()
 
-include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
+include_directories(
+  ${SimpleITK_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 #
 # Options
 #
-option ( SimpleITK_PYTHON_FLATSTATICMETHOD "Enable object_method functions for static class members. \
-This feature will be removed in the future. To disable requires SWIG>=4.1.0" ON )
-option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." ON )
-mark_as_advanced( SimpleITK_PYTHON_THREADS )
-option ( SimpleITK_PYTHON_EGG "Add building of python eggs to the dist target." OFF )
-mark_as_advanced( SimpleITK_PYTHON_EGG )
-option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." ON )
-mark_as_advanced( SimpleITK_PYTHON_WHEEL )
+option(
+  SimpleITK_PYTHON_FLATSTATICMETHOD
+  "Enable object_method functions for static class members. \
+This feature will be removed in the future. To disable requires SWIG>=4.1.0"
+  ON
+)
+option(
+  SimpleITK_PYTHON_THREADS
+  "Enable threaded python usage by unlocking the GIL."
+  ON
+)
+mark_as_advanced(SimpleITK_PYTHON_THREADS)
+if(SimpleITK_PYTHON_EGG)
+  message(
+    WARNING
+    "SimpleITK_PYTHON_EGG option is deprecated and no longer used."
+  )
+endif()
+option(
+  SimpleITK_PYTHON_WHEEL
+  "Add building of python wheels to the dist target."
+  ON
+)
+mark_as_advanced(SimpleITK_PYTHON_WHEEL)
 
-if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.26" AND
-        SWIG_VERSION VERSION_GREATER_EQUAL "4.2.0" AND
-        Python_VERSION VERSION_GREATER_EQUAL "3.11.0")
+if(
+  CMAKE_VERSION
+    VERSION_GREATER_EQUAL
+    "3.26"
+  AND
+    SWIG_VERSION
+      VERSION_GREATER_EQUAL
+      "4.2.0"
+  AND
+    Python_VERSION
+      VERSION_GREATER_EQUAL
+      "3.11.0"
+  AND
+    NOT
+      _SimpleITK_PYTHON_SOABI_FREE_THREADED
+)
   set(_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT ON)
-else ()
+else()
   set(_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT OFF)
 endif()
-option( SimpleITK_PYTHON_USE_LIMITED_API "Use Python limited API, for minor version compatibility." ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT} )
-mark_as_advanced( SimpleITK_PYTHON_USE_LIMITED_API )
+option(
+  SimpleITK_PYTHON_USE_LIMITED_API
+  "Use Python limited API, for minor version compatibility."
+  ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT}
+)
+mark_as_advanced(SimpleITK_PYTHON_USE_LIMITED_API)
 
-if (SimpleITK_PYTHON_USE_LIMITED_API)
-  find_package( Python REQUIRED COMPONENTS Interpreter Development.SABIModule)
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  find_package(
+    Python
+    REQUIRED
+    COMPONENTS
+      Interpreter
+      Development.SABIModule
+  )
 endif()
 
-if (SimpleITK_PYTHON_USE_LIMITED_API AND NOT _SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT)
-  message(WARNING "SWIG_VERSION (>=3.26): ${SWIG_VERSION}")
+if(
+  SimpleITK_PYTHON_USE_LIMITED_API
+  AND
+    NOT
+      _SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT
+)
+  message(WARNING "SWIG_VERSION (>=4.2.0): ${SWIG_VERSION}")
   message(WARNING "Python_VERSION (>=3.11.0): ${Python_VERSION}")
   message(WARNING "CMAKE_VERSION (>=3.26): ${CMAKE_VERSION}")
-  message(WARNING "Development.SABIModule_FOUND: ${Development.SABIModule_FOUND}")
-  message(FATAL_ERROR "Python limited API is not supported for this Python version and SWIG version.")
+
+  if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
+    message(
+      FATAL_ERROR
+      "Python limited API is not supported for free-threaded Python "
+      "(detected SOABI: '${Python_SOABI}'); the free-threaded headers do not "
+      "declare symbols required under the Py_LIMITED_API pin used here. "
+      "Set SimpleITK_PYTHON_USE_LIMITED_API=OFF."
+    )
+  endif()
+  message(
+    FATAL_ERROR
+    "Python limited API is not supported for this Python version and SWIG version."
+  )
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
 endif()
 
-
-set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
+set_source_files_properties(
+  SimpleITK.i
+  PROPERTIES
+    CPLUSPLUS
+      ON
+)
 
 # Run swig
-set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword )
-if( SimpleITK_PYTHON_THREADS )
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
+set(
+  CMAKE_SWIG_FLAGS
+  ${CMAKE_SWIG_GLOBAL_FLAGS}
+  -features
+  autodoc=1
+  -keyword
+)
+if(SimpleITK_PYTHON_THREADS)
+  set(
+    CMAKE_SWIG_FLAGS
+    ${CMAKE_SWIG_FLAGS}
+    -threads
+  )
 endif()
-if (SimpleITK_PYTHON_FLATSTATICMETHOD AND SWIG_VERSION VERSION_GREATER_EQUAL "4.1.0")
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -flatstaticmethod )
+if(
+  SimpleITK_PYTHON_FLATSTATICMETHOD
+  AND
+    SWIG_VERSION
+      VERSION_GREATER_EQUAL
+      "4.1.0"
+)
+  set(
+    CMAKE_SWIG_FLAGS
+    ${CMAKE_SWIG_FLAGS}
+    -flatstaticmethod
+  )
 endif()
 if(SWIG_VERSION VERSION_GREATER_EQUAL "4.4.0")
   # Declares the module thread-safe for free-threaded Python (PEP 703) via the
@@ -87,130 +190,242 @@ if(SWIG_VERSION VERSION_GREATER_EQUAL "4.4.0")
   )
 endif()
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK)
-set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+set(
+  SWIG_MODULE_SimpleITK_EXTRA_DEPS
+  ${SWIG_EXTRA_DEPS}
   ${CMAKE_CURRENT_SOURCE_DIR}/Python.i
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkImage.i
   ${CMAKE_CURRENT_SOURCE_DIR}/sitkTransform.i
-  ${CMAKE_CURRENT_SOURCE_DIR}/sitkPathType.i)
-SWIG_add_module ( SimpleITK python
+  ${CMAKE_CURRENT_SOURCE_DIR}/sitkPathType.i
+)
+swig_add_module( SimpleITK python
   SimpleITK.i
   sitkPyCommand.cxx
-  sitkImageBuffer.cxx )
-set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
-target_link_libraries( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
+  sitkImageBuffer.cxx
+)
+set(
+  SWIG_MODULE_SimpleITKPython_TARGET_NAME
+  "${SWIG_MODULE_SimpleITK_TARGET_NAME}"
+)
+target_link_libraries(
+  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  ${SimpleITK_LIBRARIES}
+)
 if(NOT Python_DEBUG_LIBRARY AND MSVC)
   # If there is not a specified debug library use the release library,
   # via a special sitkPython.h header.
-  target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  target_compile_definitions(
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     PRIVATE
-    $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>)
+      $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>
+  )
 endif()
 
-
-get_property (_suffix TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX)
-if (NOT _suffix)
-  set (_suffix "${CMAKE_SHARED_MODULE_SUFFIX}")
+get_property(
+  _suffix
+  TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PROPERTY SUFFIX
+)
+if(NOT _suffix)
+  set(_suffix "${CMAKE_SHARED_MODULE_SUFFIX}")
 endif()
-if (SimpleITK_PYTHON_USE_LIMITED_API)
+if(SimpleITK_PYTHON_USE_LIMITED_API)
   # https://docs.python.org/3/c-api/stable.html
 
-  sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::SABIModule )
-  target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PRIVATE -DPy_LIMITED_API=0x030b0000)
+  sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::SABIModule)
+  target_compile_definitions(
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+    PRIVATE
+      -DPy_LIMITED_API=0x030b0000
+  )
 
-  message(STATUS "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}")
-  set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOSABI}${_suffix}")
+  message(
+    STATUS
+    "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}"
+  )
+  if(NOT Python_SOSABI STREQUAL "")
+    set_property(
+      TARGET
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PROPERTY
+        SUFFIX
+          ".${Python_SOSABI}${_suffix}"
+    )
+  endif()
 else()
-  sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module )
-  message(STATUS "Setting ABI suffix for Python module to: '${Python_SOABI}${_suffix}' ")
-  set_property (TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} PROPERTY SUFFIX ".${Python_SOABI}${_suffix}")
+  sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module)
+  message(
+    STATUS
+    "Setting ABI suffix for Python module to: '${Python_SOABI}${_suffix}' "
+  )
+  if(NOT Python_SOABI STREQUAL "")
+    set_property(
+      TARGET
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PROPERTY
+        SUFFIX
+          ".${Python_SOABI}${_suffix}"
+    )
+  endif()
 endif()
 
-
-
-
-target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+target_include_directories(
+  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
-    ${Python_INCLUDE_DIRS} )
-target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+    ${Python_INCLUDE_DIRS}
+)
+target_include_directories(
+  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
   PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR} )
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
-set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SWIG_OUTDIR}")
-if ( MSVC )
-    foreach ( CMAKE_CONFIGURATION_TYPE ${CMAKE_CONFIGURATION_TYPES} )
-      string(TOUPPER ${CMAKE_CONFIGURATION_TYPE} CMAKE_CONFIGURATION_TYPE)
-      set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME}
-        PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CMAKE_SWIG_OUTDIR}")
-      set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME}
-        PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CMAKE_SWIG_OUTDIR}")
-    endforeach( )
+set_target_properties(
+  ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+  PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY
+      "${CMAKE_SWIG_OUTDIR}"
+)
+if(MSVC)
+  foreach(CMAKE_CONFIGURATION_TYPE ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${CMAKE_CONFIGURATION_TYPE} CMAKE_CONFIGURATION_TYPE)
+    set_target_properties(
+      ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+      PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE}
+          "${CMAKE_SWIG_OUTDIR}"
+    )
+    set_target_properties(
+      ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+      PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE}
+          "${CMAKE_SWIG_OUTDIR}"
+    )
+  endforeach()
 endif()
 
 # TODO add check to determine if compiler support linker script
-if (UNIX AND NOT APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if(UNIX AND NOT APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(VERSION_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/symbols.map")
-  set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES
-    LINK_DEPENDS "${VERSION_SCRIPT}")
-  set_property(TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME} APPEND_STRING PROPERTY
-    LINK_FLAGS " -Wl,--version-script=${VERSION_SCRIPT}")
+  set_target_properties(
+    ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+    PROPERTIES
+      LINK_DEPENDS
+        "${VERSION_SCRIPT}"
+  )
+  set_property(
+    TARGET
+      ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+    APPEND_STRING
+    PROPERTY
+      LINK_FLAGS
+        " -Wl,--version-script=${VERSION_SCRIPT}"
+  )
 endif()
 
-set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+target_compile_options(
+  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
+)
 sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 
-
-
 # Installation
-set( SimpleITK_PYTHON_PACKAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}" )
-file( TO_NATIVE_PATH "${SimpleITK_PYTHON_PACKAGE_DIR}" SimpleITK_PYTHON_PACKAGE_DIR )
+set(SimpleITK_PYTHON_PACKAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+file(
+  TO_NATIVE_PATH
+  "${SimpleITK_PYTHON_PACKAGE_DIR}"
+  SimpleITK_PYTHON_PACKAGE_DIR
+)
 
-set(SimpleITK_PYTHON_TEST_EXECUTABLE "${Python_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
-
-
+include(sitkPythonVersion)
+sitk_get_pep440_version(SITK_PYTHON_VERSION)
+message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py" )
+  "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+)
 
-set(SimpleITK_Py_Files "__init__.py" "extra.py" "py.typed" )
+set(
+  SimpleITK_Py_Files
+  "__init__.py"
+  "extra.py"
+  "py.typed"
+)
 
-if(DEFINED SKBUILD)
-  # Currently this installation
-  install(FILES
-      ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
-      ${SimpleITK_DOC_FILES}
-      "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+install(
+  FILES
+    ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
+    ${SimpleITK_DOC_FILES}
+    "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+  DESTINATION SimpleITK
+  COMPONENT Python
+  EXCLUDE_FROM_ALL
+)
+
+foreach(_file ${SimpleITK_Py_Files})
+  install(
+    FILES
+      "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
     DESTINATION SimpleITK
-    COMPONENT Runtime
-    )
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  )
+endforeach()
 
-  foreach( _file ${SimpleITK_Py_Files})
-    install(FILES
-     "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    )
-  endforeach()
+install(
+  TARGETS
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  RUNTIME
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  LIBRARY
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+)
 
-  install(TARGETS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME DESTINATION SimpleITK COMPONENT Runtime
-    LIBRARY DESTINATION SimpleITK COMPONENT Runtime
-    )
-else()
-  include(LegacyPackaging.cmake)
+include(sitkPythonTestingEnvironment)
+include(sitkPythonDistribution)
+
+set(PYPROJECT_TOML_EXTRA "")
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  # SimpleITK_PYTHON_USE_LIMITED_API targets a hardcoded Python 3.11 ABI (see
+  # Py_LIMITED_API=0x030b0000 above); keep the wheel tag in sync.
+  set(
+    PYPROJECT_TOML_EXTRA
+    "${PYPROJECT_TOML_EXTRA}\nwheel.py-api = \"cp311\"\n"
+  )
 endif()
 
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
+)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/scikit-build-Packaging.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt"
+  COPYONLY
+)
 
-
-if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
+if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
   set(WRAP_PYTHON 1)
 
-  add_subdirectory("${SimpleITK_SOURCE_DIR}/Testing/Unit/Python" "${CMAKE_BINARY_DIR}/Testing/Unit")
+  add_subdirectory(
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/Python"
+    "${CMAKE_BINARY_DIR}/Testing/Unit"
+  )
 
   if(BUILD_EXAMPLES)
-    add_subdirectory("${SimpleITK_SOURCE_DIR}/Examples" "${CMAKE_BINARY_DIR}/Examples")
+    add_subdirectory(
+      "${SimpleITK_SOURCE_DIR}/Examples"
+      "${CMAKE_BINARY_DIR}/Examples"
+    )
   endif()
 
-  if(COMMAND ExternalData_Add_Target )
-    ExternalData_Add_Target( SimpleITKData )
+  if(COMMAND ExternalData_Add_Target)
+    ExternalData_Add_Target(SimpleITKData)
   endif()
 endif()
