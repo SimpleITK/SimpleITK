@@ -17,10 +17,18 @@ find_package(
     Development.SABIModule
 )
 
-# Free-threaded Python (PEP 703, e.g. Python 3.13t/3.14t) requires CMake >= 3.30 for
-# correct FindPython support. Earlier versions link against python3XX.lib instead of
-# python3XXt.lib, causing a crash (access violation) on module import.
-if(Python_SOABI MATCHES "t-" OR Python_SOABI MATCHES "t$")
+# Detect free-threaded Python (PEP 703) from the 't' ABI flag following the
+# version digits in the SOABI, optionally followed by the debug flag 'd'
+# (e.g. cpython-315t-darwin, cpython-315td-darwin, cp315t-win_amd64).
+# This is the only signal available on CMake < 4.4, which lacks Python_FREE_THREADED.
+if(Python_SOABI MATCHES "[0-9]td?(-|$)")
+  set(_SimpleITK_PYTHON_SOABI_FREE_THREADED ON)
+else()
+  set(_SimpleITK_PYTHON_SOABI_FREE_THREADED OFF)
+endif()
+
+# Free-threaded Python (PEP 703) requires CMake >= 3.30 for correct FindPython support.
+if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
   if(CMAKE_VERSION VERSION_LESS "3.30")
     message(
       FATAL_ERROR
@@ -85,6 +93,9 @@ if(
     Python_VERSION
       VERSION_GREATER_EQUAL
       "3.11.0"
+  AND
+    NOT
+      _SimpleITK_PYTHON_SOABI_FREE_THREADED
 )
   set(_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT ON)
 else()
@@ -113,13 +124,19 @@ if(
     NOT
       _SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT
 )
-  message(WARNING "SWIG_VERSION (>=3.26): ${SWIG_VERSION}")
+  message(WARNING "SWIG_VERSION (>=4.2.0): ${SWIG_VERSION}")
   message(WARNING "Python_VERSION (>=3.11.0): ${Python_VERSION}")
   message(WARNING "CMAKE_VERSION (>=3.26): ${CMAKE_VERSION}")
-  message(
-    WARNING
-    "Development.SABIModule_FOUND: ${Development.SABIModule_FOUND}"
-  )
+
+  if(_SimpleITK_PYTHON_SOABI_FREE_THREADED)
+    message(
+      FATAL_ERROR
+      "Python limited API is not supported for free-threaded Python "
+      "(detected SOABI: '${Python_SOABI}'); the free-threaded headers do not "
+      "declare symbols required under the Py_LIMITED_API pin used here. "
+      "Set SimpleITK_PYTHON_USE_LIMITED_API=OFF."
+    )
+  endif()
   message(
     FATAL_ERROR
     "Python limited API is not supported for this Python version and SWIG version."
@@ -226,26 +243,30 @@ if(SimpleITK_PYTHON_USE_LIMITED_API)
     STATUS
     "Setting limited ABI suffix for Python module to: '${Python_SOSABI}${_suffix}' libraries: ${Python_LIBRARIES}"
   )
-  set_property(
-    TARGET
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    PROPERTY
-      SUFFIX
-        ".${Python_SOSABI}${_suffix}"
-  )
+  if(NOT Python_SOSABI STREQUAL "")
+    set_property(
+      TARGET
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PROPERTY
+        SUFFIX
+          ".${Python_SOSABI}${_suffix}"
+    )
+  endif()
 else()
   sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} Python::Module)
   message(
     STATUS
     "Setting ABI suffix for Python module to: '${Python_SOABI}${_suffix}' "
   )
-  set_property(
-    TARGET
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    PROPERTY
-      SUFFIX
-        ".${Python_SOABI}${_suffix}"
-  )
+  if(NOT Python_SOABI STREQUAL "")
+    set_property(
+      TARGET
+        ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+      PROPERTY
+        SUFFIX
+          ".${Python_SOABI}${_suffix}"
+    )
+  endif()
 endif()
 
 target_include_directories(
@@ -302,11 +323,11 @@ if(UNIX AND NOT APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   )
 endif()
 
-set_source_files_properties(
-  ${swig_generated_file_fullname}
-  PROPERTIES
-    COMPILE_FLAGS
-      "-w"
+target_compile_options(
+  ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS}
+    -w
 )
 sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 
