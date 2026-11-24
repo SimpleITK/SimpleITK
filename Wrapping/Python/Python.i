@@ -23,6 +23,7 @@
 // https://github.com/swig/swig/pull/2856
 #define NOMINMAX
 #include "stdlib.h"
+#include "sitkImageBuffer.h"
 %}
 
 %{
@@ -30,6 +31,12 @@
 %}
 
 %init %{
+    // Initialize the ImageBuffer type when the module loads
+    if (InitImageBufferType(m) < 0) {
+        // SWIG_mod_exec (the Py_mod_exec slot function for the multi-phase
+        // init module, PEP 489) returns int, not PyObject*.
+        return -1;
+    }
 %}
 
 %include "PythonDocstrings.i"
@@ -57,6 +64,24 @@
 // is declared static.
 %{
 #include "sitkNumpyArrayConversion.cxx"
+
+// Helper function to extract sitk::Image* from a SWIG-wrapped PyObject
+// This function is used by sitkImageBuffer.cxx
+itk::simple::Image* sitk_GetImagePointerFromPyObject(PyObject* pyImage)
+{
+    if (!pyImage) {
+        return nullptr;
+    }
+
+    void* voidImage;
+    int res = SWIG_ConvertPtr(pyImage, &voidImage, SWIGTYPE_p_itk__simple__Image, 0);
+    if (!SWIG_IsOK(res)) {
+        return nullptr;
+    }
+
+    return reinterpret_cast<itk::simple::Image*>(voidImage);
+}
+
 %}
 // Numpy array conversion support
 %native(_GetMemoryViewFromImage) PyObject *sitk_GetMemoryViewFromImage( PyObject *self, PyObject *args );
