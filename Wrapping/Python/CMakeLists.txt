@@ -60,12 +60,12 @@ option(
   ON
 )
 mark_as_advanced(SimpleITK_PYTHON_THREADS)
-option(
-  SimpleITK_PYTHON_EGG
-  "Add building of python eggs to the dist target."
-  OFF
-)
-mark_as_advanced(SimpleITK_PYTHON_EGG)
+if(SimpleITK_PYTHON_EGG)
+  message(
+    WARNING
+    "SimpleITK_PYTHON_EGG option is deprecated and no longer used."
+  )
+endif()
 option(
   SimpleITK_PYTHON_WHEEL
   "Add building of python wheels to the dist target."
@@ -318,14 +318,9 @@ file(
   SimpleITK_PYTHON_PACKAGE_DIR
 )
 
-set(
-  SimpleITK_PYTHON_TEST_EXECUTABLE
-  "${Python_EXECUTABLE}"
-  CACHE INTERNAL
-  "Python executable for testing."
-  FORCE
-)
-
+include(sitkPythonVersion)
+sitk_get_pep440_version(SITK_PYTHON_VERSION)
+message(STATUS "Python version: ${SITK_PYTHON_VERSION}")
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/_version.py.in"
   "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
@@ -338,39 +333,61 @@ set(
   "py.typed"
 )
 
-if(DEFINED SKBUILD)
-  # Currently this installation
+install(
+  FILES
+    ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
+    ${SimpleITK_DOC_FILES}
+    "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+  DESTINATION SimpleITK
+  COMPONENT Python
+  EXCLUDE_FROM_ALL
+)
+
+foreach(_file ${SimpleITK_Py_Files})
   install(
     FILES
-      ${CMAKE_SWIG_OUTDIR}/SimpleITK.py
-      ${SimpleITK_DOC_FILES}
-      "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK/_version.py"
+      "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
     DESTINATION SimpleITK
-    COMPONENT Runtime
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
   )
+endforeach()
 
-  foreach(_file ${SimpleITK_Py_Files})
-    install(
-      FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/SimpleITK/${_file}"
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    )
-  endforeach()
+install(
+  TARGETS
+    ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  RUNTIME
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+  LIBRARY
+    DESTINATION SimpleITK
+    COMPONENT Python
+    EXCLUDE_FROM_ALL
+)
 
-  install(
-    TARGETS
-      ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-    RUNTIME
-      DESTINATION SimpleITK
-      COMPONENT Runtime
-    LIBRARY
-      DESTINATION SimpleITK
-      COMPONENT Runtime
+include(sitkPythonTestingEnvironment)
+include(sitkPythonDistribution)
+
+set(PYPROJECT_TOML_EXTRA "")
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  # SimpleITK_PYTHON_USE_LIMITED_API targets a hardcoded Python 3.11 ABI (see
+  # Py_LIMITED_API=0x030b0000 above); keep the wheel tag in sync.
+  set(
+    PYPROJECT_TOML_EXTRA
+    "${PYPROJECT_TOML_EXTRA}\nwheel.py-api = \"cp311\"\n"
   )
-else()
-  include(LegacyPackaging.cmake)
 endif()
+
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/pyproject.toml.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/pyproject.toml"
+)
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/scikit-build-Packaging.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt"
+  COPYONLY
+)
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
   set(WRAP_PYTHON 1)
