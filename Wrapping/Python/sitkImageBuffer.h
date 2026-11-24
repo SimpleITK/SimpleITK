@@ -19,8 +19,8 @@
 #ifndef sitkImageBuffer_h
 #define sitkImageBuffer_h
 
+#include "sitkPython.h"
 #include "sitkImage.h"
-#include <Python.h>
 
 #ifdef __cplusplus
 extern "C"
