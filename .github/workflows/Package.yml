@@ -31,9 +31,9 @@ jobs:
       matrix:
         include:
           - os: ubuntu-22.04-arm
-            dockerfile: Dockerfile-2014-aarch64
+            dockerfile: Dockerfile-2-28-aarch64
           - os: ubuntu-latest
-            dockerfile: Dockerfile-2014-x86_64
+            dockerfile: Dockerfile-2-28-x86_64
     steps:
       - uses: actions/checkout@v7
         with:
