@@ -8,10 +8,10 @@
 # be skipped such as `black`.
 
 fail_fast: true
-default_stages: [commit]
+default_stages: [pre-commit]
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
    - id: detect-private-key
    - id: forbid-submodules
@@ -19,13 +19,16 @@ repos:
    - id: check-illegal-windows-names
    - id: check-json
    - id: check-yaml
+   - id: check-xml
+   - id: check-executables-have-shebangs
+     exclude: '\.bat$'
 - repo: https://github.com/psf/black
-  rev: 24.2.0
+  rev: 26.10.1
   hooks: # check conformance to black formatting
    - id: black
      args: ['--diff', '-v'] # if run without arguments, will fail and will format the files
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v19.1.7
+  rev: v21.1.2
   hooks:
     - id: clang-format
       args: ['--style=file']
@@ -47,6 +50,7 @@ repos:
       name: 'Check version of SetupForDevelopment'
       entry: 'Utilities/Hooks/check-setup-for-development'
       language: system
+      pass_filenames: false
       stages: [pre-commit]
     - id: commit-msg
       name: 'commit-msg'
@@ -58,6 +62,7 @@ repos:
       entry: 'Utilities/Hooks/kw-pre-commit'
       language: system
       stages: [pre-commit]
+      pass_filenames: false
     - id: forbid-txx
       name: 'forbid txx extensions'
       entry: Files with the .txx extension are deprecated -- please use .hxx instead
