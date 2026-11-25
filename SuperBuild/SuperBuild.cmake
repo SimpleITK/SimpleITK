@@ -174,6 +174,15 @@ if(NOT BUILDNAME)
 endif()
 
 #------------------------------------------------------------------------------
+# Forward every SKBUILD/SKBUILD_* variable scikit-build-core may set (e.g.
+# SKBUILD, SKBUILD_SABI_VERSION, SKBUILD_PROJECT_VERSION_FULL, ...), rather
+# than enumerating each one, so new variables scikit-build-core adds don't
+# need a corresponding change here.
+#------------------------------------------------------------------------------
+get_cmake_property(_sitk_skbuild_vars VARIABLES)
+list(FILTER _sitk_skbuild_vars INCLUDE REGEX "^SKBUILD(_.*)?$")
+
+#------------------------------------------------------------------------------
 # Common Build Options to pass to all subsequent tools
 #------------------------------------------------------------------------------
 list( APPEND ep_common_list
@@ -277,7 +286,7 @@ list( APPEND ep_common_list
   SITE
   BUILDNAME
 
-  SKBUILD
+  ${_sitk_skbuild_vars}
 
   CMAKE_OSX_SYSROOT
   CMAKE_OSX_DEPLOYMENT_TARGET
