@@ -25,6 +25,7 @@ mkdir -p ${BLD_DIR} && \
           -DWRAP_DEFAULT=OFF\
           -DPython_EXECUTABLE=$(which python | which python3)\
           -DSimpleITK_BUILD_DISTRIBUTE:BOOL=ON\
+          ${SIMPLEITK_USE_ELASTIX:+-DSimpleITK_USE_ELASTIX:BOOL=ON}\
           ${SRC_DIR}/SuperBuild/ && \
     cmake --build . --target SimpleITK-doc && \
     cd ${BLD_DIR}/SimpleITK-build/Documentation/ && \

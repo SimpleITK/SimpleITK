@@ -14,5 +14,9 @@ docker build -f Dockerfile -t simpleitk-doxygen .
     --mount type=bind,source=/home/blowekamp/src/SimpleITK,destination=/work/SimpleITK,readonly \
     --name sitk-dox simpleitk-doxygen
 
+To build the documentation with Elastix support enabled, also pass
+  --env SIMPLEITK_USE_ELASTIX=1
+to docker run.
+
 docker cp sitk-dox:/SimpleITKDoxygen.tar.gz SimpleITKDoxygen${TAG:+-${TAG}}.tar.gz
 docker rm sitk-dox
