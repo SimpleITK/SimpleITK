@@ -4,7 +4,7 @@ template_test_filename: ImageFilter
 constant_type: double
 number_of_inputs: 2
 doc: Some global documentation
-pixel_types: BasicPixelIDTypeList
+pixel_types: typelist2::append<BasicPixelIDTypeList, VectorPixelIDTypeList>::type
 members:
 - name: Alpha
   type: double
@@ -34,6 +34,15 @@ tests:
   inputs:
   - Input/RA-Short.nrrd
   - Input/RA-Short.nrrd
+- tag: 2d_rgb
+  description: 2D-RGB
+  settings:
+  - parameter: Alpha
+    value: 0.25
+  md5hash: c11079ef178e6949829b6bb483742deb
+  inputs:
+  - Input/VM1111Shrink-RGBFloat.nrrd
+  - Input/VM1111Shrink-RGBNorm.nrrd
 briefdescription: Computes a weighted sum of two images pixel-wise.
 detaileddescription: >-
   This class is templated over the types of the two input images and the type of the output image. Numeric conversions
