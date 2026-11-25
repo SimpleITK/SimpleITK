@@ -101,12 +101,25 @@ if(
 else()
   set(_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT OFF)
 endif()
-option(
-  SimpleITK_PYTHON_USE_LIMITED_API
-  "Use Python limited API, for minor version compatibility."
-  ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT}
-)
-mark_as_advanced(SimpleITK_PYTHON_USE_LIMITED_API)
+if(SKBUILD)
+  if(SKBUILD_SABI_VERSION MATCHES "^3\\.[0-9]+$")
+    set(SimpleITK_PYTHON_USE_LIMITED_API ON)
+  elseif(SKBUILD_SABI_VERSION STREQUAL "")
+    set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+  else()
+    message(
+      FATAL_ERROR
+      "Unsupported SKBUILD_SABI_VERSION: ${SKBUILD_SABI_VERSION}"
+    )
+  endif()
+else()
+  option(
+    SimpleITK_PYTHON_USE_LIMITED_API
+    "Use Python limited API, for minor version compatibility."
+    ${_SimpleITK_PYTHON_USE_LIMITED_API_DEFAULT}
+  )
+  mark_as_advanced(SimpleITK_PYTHON_USE_LIMITED_API)
+endif()
 
 if(SimpleITK_PYTHON_USE_LIMITED_API)
   find_package(
@@ -142,6 +155,19 @@ if(
     "Python limited API is not supported for this Python version and SWIG version."
   )
   set(SimpleITK_PYTHON_USE_LIMITED_API OFF)
+endif()
+
+if(SimpleITK_PYTHON_USE_LIMITED_API)
+  if(SKBUILD AND SKBUILD_SABI_VERSION MATCHES "^3\\.([0-9]+)$")
+    set(_SABI_MINOR "${CMAKE_MATCH_1}")
+    # Py_buffer is only in the Limited API from 3.11.
+    if(_SABI_MINOR LESS 11)
+      message(
+        FATAL_ERROR
+        "Python limited API target 3.${_SABI_MINOR} is not supported; 3.11 or newer is required."
+      )
+    endif()
+  endif()
 endif()
 
 set_source_files_properties(

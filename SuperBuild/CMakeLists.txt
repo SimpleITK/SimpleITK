@@ -46,4 +46,28 @@ endif()
 set(${CMAKE_PROJECT_NAME}_DEPENDENCIES "") #Dependencies will be determined during superbuild stage.
 include("${CMAKE_CURRENT_SOURCE_DIR}/SuperBuild.cmake")
 
+# A plain `cmake --install <this-build-dir> --component Python` (what
+# scikit-build-core does) would otherwise be a no-op: the inner SimpleITK
+# ExternalProject's own install step runs as part of the outer `cmake
+# --build`, not this outer project's own install(), and its Python
+# install() rules are COMPONENT Python / EXCLUDE_FROM_ALL so its default
+# (no-component) install step skips them anyway. Re-run `cmake --install`
+# against the inner EP's build tree directly at outer-install time,
+# targeting whatever prefix/config the outer install invocation uses.
+# EXCLUDE_FROM_ALL keeps this out of a plain `cmake --install` with no
+# --component, matching the inner install() rules it re-runs.
+ExternalProject_Get_Property(SimpleITK BINARY_DIR)
+install(
+  CODE
+    "execute_process(
+  COMMAND \"${CMAKE_COMMAND}\" --install \"${BINARY_DIR}\"
+          --config \"\${CMAKE_INSTALL_CONFIG_NAME}\"
+          --prefix \"\${CMAKE_INSTALL_PREFIX}\"
+          --component Python
+)
+"
+  COMPONENT Python
+  EXCLUDE_FROM_ALL
+)
+
 
