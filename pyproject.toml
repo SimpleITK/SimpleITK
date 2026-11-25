@@ -53,6 +53,11 @@ cmake.version = ">=3.19"
 cmake.build-type = "Release"
 wheel.packages = []
 install.components = ["Python"]
+# Defense-in-depth beyond .gitignore: scikit-build-core's sdist walks the
+# filesystem and only excludes what a .gitignore file it can see matches, not
+# what `git ls-files` would report, so stray local build/worktree directories
+# can otherwise leak into an sdist built from an unclean working tree.
+sdist.exclude = ["build*/", ".claude/"]
 
 [tool.scikit-build.cmake.define]
 WRAP_DEFAULT = "OFF"
