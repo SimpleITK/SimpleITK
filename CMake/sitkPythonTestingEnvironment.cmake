@@ -29,8 +29,6 @@ if(CMAKE_OSX_ARCHITECTURES)
 endif()
 
 if(SimpleITK_PYTHON_USE_VIRTUALENV)
-  #TODO Check python version
-
   #
   # Setup Python Virtual Environment for testing and packaging
   #
@@ -41,8 +39,8 @@ if(SimpleITK_PYTHON_USE_VIRTUALENV)
   get_filename_component(_Python_EXECUTABLE_NAME ${Python_EXECUTABLE} NAME)
 
   # virtualenv places the python executable in different
-  # locations. Also note than on windows installations where python is
-  # installed only for a single user the may be a missing dll issue.
+  # locations. Also, note that on windows installations where Python
+  # is installed for a single user, a missing DLL issue may occur.
   if(WIN32)
     set(
       VIRTUAL_PYTHON_EXECUTABLE
