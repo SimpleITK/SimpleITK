@@ -50,6 +50,7 @@ jobs:
           BUILD_CSHARP: ${{ contains(matrix.os, 'arm') && '0' || '1' }}
           BUILD_JAVA: 1
           BUILD_PYTHON_LIMITED_API: 1
+          SIMPLEITK_USE_ELASTIX: 1
         run: |
           echo "BUILD_CSHARP: ${BUILD_CSHARP}"
           echo "BUILD_JAVA: ${BUILD_JAVA}"
@@ -59,6 +60,7 @@ jobs:
                --env BUILD_CSHARP \
                --env BUILD_JAVA \
                --env BUILD_PYTHON_LIMITED_API \
+               --env SIMPLEITK_USE_ELASTIX \
                --env SIMPLEITK_SRC_DIR="/work/src" \
                -v "${{ github.workspace }}:/work/src" \
                -v "${{ github.workspace }}/Utilities/Distribution/manylinux:/work/io" \
@@ -175,6 +177,7 @@ jobs:
             WRAP_DEFAULT:BOOL=OFF
             BUILD_EXAMPLES:BOOL=ON
             BUILD_TESTING:BOOL=ON
+            SimpleITK_USE_ELASTIX:BOOL=ON
             ${{ matrix.ctest-cache }}
         run: |
           cmake --version
@@ -251,6 +254,7 @@ jobs:
       - name: Docker Doxygen generation
         run: |
           docker run \
+                 --env SIMPLEITK_USE_ELASTIX=1 \
                  --mount type=bind,source=$GITHUB_WORKSPACE,destination=/work/SimpleITK,readonly \
                  --name sitk-dox simpleitk-doxygen
           mkdir -p artifacts
