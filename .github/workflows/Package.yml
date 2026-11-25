@@ -78,6 +78,27 @@ jobs:
         working-directory: Utilities/Distribution/manylinux
         run: |
           ls -lhR .
+      # cmd.sh does not abort when a C# or Java build fails, so check the packages exist.
+      - name: Verify C# package
+        if: matrix.build_csharp == 1
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux
+        run: |
+          if ! compgen -G "SimpleITK-*-CSharp-linux*.zip" > /dev/null; then
+            echo "::error::BUILD_CSHARP is enabled but no Linux C# package was produced"
+            exit 1
+          fi
+          ls -lh SimpleITK-*-CSharp-linux*.zip
+      - name: Verify Java package
+        if: matrix.build_java == 1
+        shell: bash
+        working-directory: Utilities/Distribution/manylinux
+        run: |
+          if ! compgen -G "SimpleITK-*-Java-linux*.zip" > /dev/null; then
+            echo "::error::BUILD_JAVA is enabled but no Linux Java package was produced"
+            exit 1
+          fi
+          ls -lh SimpleITK-*-Java-linux*.zip
       - name: Upload Artifacts
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
