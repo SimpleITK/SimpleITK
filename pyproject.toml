@@ -1,0 +1,77 @@
+[build-system]
+requires = [
+  "scikit-build-core~=1.0.0",
+  "setuptools-scm>=8.0",
+  "swig~=4.5.0"
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "simpleitk"
+readme = {file = "Readme.md", content-type = "text/markdown"}
+authors = [
+    {name = "Insight Software Consortium", email = "insight-users@itk.org"}
+]
+description = "SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation"
+license = {text = "Apache-2.0"}
+keywords = ["SimpleITK", "ITK", "InsightToolkit", "segmentation", "registration", "medical imaging", "image processing", "computer vision", "DICOM"]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: C++",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Education",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: MacOS"
+]
+requires-python = ">=3.10"
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = ["numpy>=1.25.0", "pytest"]
+
+[[tool.dynamic-metadata]]
+provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "no-local-version"
+version_file = "Wrapping/Python/SimpleITK/_version.py"
+tag_regex = "^v(?P<version>[^\\+]+)(?P<suffix>.*)?$"
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+cmake.source-dir = "SuperBuild"
+cmake.version = ">=3.19"
+cmake.build-type = "Release"
+wheel.packages = []
+install.components = ["Python"]
+
+[tool.scikit-build.cmake.define]
+WRAP_DEFAULT = "OFF"
+WRAP_PYTHON = "ON"
+BUILD_TESTING = "OFF"
+BUILD_EXAMPLES = "OFF"
+BUILD_SHARED_LIBS = "OFF"
+SimpleITK_BUILD_DISTRIBUTE = "ON"
+# Use the swig PyPI build dependency (on PATH in the build environment)
+# instead of SuperBuild building its own SWIG from source.
+SimpleITK_USE_SYSTEM_SWIG = "ON"
+
+[[tool.scikit-build.overrides]]
+if.python-version = ">=3.11"
+wheel.py-api = "cp311"
+
+[project.urls]
+homepage = "https://simpleitk.org/"
+source = "https://github.com/SimpleITK/SimpleITK"
+download = "https://pypi.org/project/simpleitk/#files"
+issues = "https://github.com/SimpleITK/SimpleITK/issues"
+documentation = "https://simpleitk.readthedocs.io/en/release/"
