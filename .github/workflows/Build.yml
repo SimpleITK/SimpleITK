@@ -54,6 +54,7 @@ jobs:
             ctest-cache: |
               WRAP_PYTHON:BOOL=ON
               WRAP_JAVA:BOOL=ON
+              SimpleITK_USE_ELASTIX:BOOL=ON
           - os: ubuntu-24.04-arm
             cmake-build-type: "Release"
             cmake-generator: "Ninja"
@@ -121,7 +122,6 @@ jobs:
           WRAP_DEFAULT:BOOL=OFF
           BUILD_EXAMPLES:BOOL=ON
           BUILD_TESTING:BOOL=ON
-          SimpleITK_USE_ELASTIX:BOOL=ON
           Python_EXECUTABLE:FILEPATH=${{ steps.cpy.outputs.python-path }}
           ${{ matrix.ctest-cache }}
       run: |
