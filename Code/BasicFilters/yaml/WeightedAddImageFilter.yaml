@@ -20,8 +20,8 @@ tests:
   description: 2D
   settings:
   - parameter: Alpha
-    value: 0.3
-  md5hash: bd9d65ff00901e32d98e1a21142d0c29
+    value: 0.25
+  md5hash: df1707ecfcc0b69c7d7dc6ede237c328
   inputs:
   - Input/STAPLE1.png
   - Input/STAPLE2.png
@@ -29,7 +29,7 @@ tests:
   description: 3D
   settings:
   - parameter: Alpha
-    value: 0.7
+    value: 0.75
   md5hash: a963bd6a755b853103a2d195e01a50d3
   inputs:
   - Input/RA-Short.nrrd
