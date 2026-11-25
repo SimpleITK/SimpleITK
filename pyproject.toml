@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "scikit-build-core~=1.0.0",
+  "scikit-build-core~=1.1.0",
   "setuptools-scm>=8.0",
   "swig~=4.5.0"
 ]
@@ -66,7 +66,10 @@ SimpleITK_BUILD_DISTRIBUTE = "ON"
 SimpleITK_USE_SYSTEM_SWIG = "ON"
 
 [[tool.scikit-build.overrides]]
+# Free-threaded builds (abi-flags containing "t") can't use the
+# Py_LIMITED_API-based limited API, so they're excluded here.
 if.python-version = ">=3.11"
+if.not.abi-flags = "t"
 wheel.py-api = "cp311"
 
 [project.urls]
