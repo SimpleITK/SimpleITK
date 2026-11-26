@@ -1,0 +1,168 @@
+name: StructuralSimilarityImageFilter
+template_code_filename: ImageFilter
+template_test_filename: ImageFilter
+number_of_inputs: 2
+doc: ''
+pixel_types: BasicPixelIDTypeList
+filter_type: itk::StructuralSimilarityImageFilter<InputImageType, OutputImageType>
+output_pixel_type: float
+members:
+- name: GaussianSigma
+  type: double
+  default: '1.5'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the standard deviation sigma of the Gaussian window used to compute local
+    luminance, contrast, and structure statistics. Default 1.5, matching Wang et al. 2004.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the standard deviation sigma of the Gaussian window.
+- name: MaximumKernelWidth
+  type: unsigned int
+  default: '11u'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the maximum width (per dimension) of the discrete Gaussian kernel. Default
+    11, giving an 11x11 window in 2D when sigma=1.5, matching the canonical SSIM window.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the maximum width of the discrete Gaussian kernel.
+- name: K1
+  type: double
+  default: '0.01'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the K1 stability constant used to compute C1=(K1*L)^2. Default 0.01.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the K1 stability constant.
+- name: K2
+  type: double
+  default: '0.03'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the K2 stability constant used to compute C2=(K2*L)^2. Default 0.03.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the K2 stability constant.
+- name: DynamicRange
+  type: double
+  default: '0.0'
+  custom_itk_cast: |-
+    if (this->m_DynamicRange > 0.0) filter->SetDynamicRange(this->m_DynamicRange);
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the dynamic range L of the pixel values, used to compute the stability
+    constants C1=(K1*L)^2 and C2=(K2*L)^2. A value of 0.0 (default) causes the
+    filter to auto-detect the range from the input pixel type (e.g. 255 for uint8,
+    65535 for uint16, 1.0 for float/double). Set this explicitly for floating-point
+    images whose data does not span [0, 1].
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the dynamic range L. Returns 0.0 when auto-detection from the pixel type
+    is active.
+- name: LuminanceExponent
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the exponent alpha on the luminance comparison term. Default 1.0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the exponent alpha on the luminance comparison term.
+- name: ContrastExponent
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the exponent beta on the contrast comparison term. Default 1.0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the exponent beta on the contrast comparison term.
+- name: StructureExponent
+  type: double
+  default: '1.0'
+  briefdescriptionSet: ''
+  detaileddescriptionSet: >-
+    Set the exponent gamma on the structure comparison term. Default 1.0.
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Get the exponent gamma on the structure comparison term.
+measurements:
+- name: MeanSSIM
+  type: double
+  default: '0.0'
+  briefdescriptionGet: ''
+  detaileddescriptionGet: >-
+    Return the mean SSIM scalar over the valid (non-boundary) region of the image.
+    Available after Update().
+tests:
+- tag: same_image_float
+  description: SSIM of a float 3D image with itself; output should be all-ones and MeanSSIM=1
+  settings: []
+  tolerance: 1.0e-06
+  measurements_results:
+  - name: MeanSSIM
+    value: 1.0
+    tolerance: 1.0e-06
+  inputs:
+  - Input/RA-Float.nrrd
+  - Input/RA-Float.nrrd
+- tag: different_3d_volumes
+  description: SSIM between two different 3D brain MRI volumes
+  settings: []
+  tolerance: 1.0e-04
+  measurements_results:
+  - name: MeanSSIM
+    value: 0.85749089820840962
+    tolerance: 1.0e-06
+  inputs:
+  - Input/OAS1_0001_MR1_mpr-1_anon.nrrd
+  - Input/OAS1_0002_MR1_mpr-1_anon.nrrd
+- tag: custom_sigma
+  description: Custom Gaussian sigma and stability constants
+  settings:
+  - parameter: GaussianSigma
+    value: '2.0'
+  - parameter: K1
+    value: '0.02'
+  - parameter: K2
+    value: '0.06'
+  tolerance: 1.0e-04
+  measurements_results:
+  - name: MeanSSIM
+    value: 1.0
+    tolerance: 1.0e-06
+  inputs:
+  - Input/RA-Float.nrrd
+  - Input/RA-Float.nrrd
+briefdescription: Computes the Structural Similarity Index Measure (SSIM) between two images.
+detaileddescription: >-
+  This filter computes the Structural Similarity Index Measure (SSIM) as described by
+  Wang et al. (IEEE TIP 2004) between two input images of identical geometry. The output
+  image stores the per-pixel SSIM map. The scalar mean SSIM over the valid (non-boundary)
+  region is available via GetMeanSSIM() after Update().
+
+
+  For two images x and y, local statistics are computed by convolving with a discrete
+  Gaussian kernel of standard deviation sigma (default 1.5). The three SSIM components
+  are luminance l(x,y), contrast c(x,y), and structure s(x,y), combined as
+
+
+  SSIM(x,y) = [l(x,y)]^alpha * [c(x,y)]^beta * [s(x,y)]^gamma.
+
+
+  With default exponents alpha=beta=gamma=1, this collapses to the simplified form
+  matching the reference implementation by Wang et al. and skimage.metrics.structural_similarity.
+
+
+  The SSIM index is bounded above by 1. For identical images the per-pixel SSIM is
+  exactly 1 and MeanSSIM is exactly 1. Values can be slightly negative for anti-correlated regions.
+
+
+  \see SimilarityIndexImageFilter
+
+  \see DiscreteGaussianImageFilter
+itk_module: StructuralSimilarity
+itk_group: StructuralSimilarity
+in_place: false
