@@ -95,6 +95,7 @@
 #endif
 
 #include "sitkImageRegistrationMethod.h"
+#include "sitkSyNImageRegistrationMethod.h"
 
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"
