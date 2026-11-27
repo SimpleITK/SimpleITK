@@ -388,6 +388,8 @@ SimpleITK Filters
      - Computes the modulus (x % dividend) pixel-wise.
    * - `MomentsThresholdImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1MomentsThresholdImageFilter.html>`_
      - Threshold an image using the Moments Threshold.
+   * - `MorphologicalContourInterpolatorImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1MorphologicalContourInterpolatorImageFilter.html>`_
+     - Interpolates contours between slices.
    * - `MorphologicalGradientImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1MorphologicalGradientImageFilter.html>`_
      - gray scale dilation of an image
    * - `MorphologicalWatershedFromMarkersImageFilter <https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1MorphologicalWatershedFromMarkersImageFilter.html>`_

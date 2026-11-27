@@ -120,6 +120,8 @@ jobs:
           message(STATUS "NPROC: \${NPROC}")
 
           set(CTEST_TEST_ARGS \${CTEST_TEST_ARGS} PARALLEL_LEVEL \${NPROC})
+          # RLEImage asserts in Debug and MCI DSC tests exceed the coverage timeout (ITK issue 7067)
+          set(CTEST_TEST_ARGS \${CTEST_TEST_ARGS} EXCLUDE "^(RLEImage|itkMCI_DSC_)")
 
           set( CTEST_TEST_TIMEOUT \$ENV{CTEST_TEST_TIMEOUT} )
 
@@ -136,6 +138,7 @@ jobs:
             Module_SimpleITKFilters:BOOL=ON
             Module_GenericLabelInterpolator:BOOL=ON
             Module_LabelErodeDilate:BOOL=ON
+            Module_MorphologicalContourInterpolation:BOOL=ON
             ${{ matrix.ctest-cache }}
           ")
 
