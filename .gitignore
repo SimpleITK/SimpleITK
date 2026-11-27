@@ -15,3 +15,6 @@ venv*
 # CLion temporary files, and default build paths
 .idea/
 cmake-build*
+
+/Wrapping/Python/SimpleITK/_version.py
+.claude/worktrees/
